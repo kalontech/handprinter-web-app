@@ -1,0 +1,88 @@
+definitions:
+  anchors:
+    authenticate-to-gcp: &authenticate-to-gcp |
+      echo $GCP_SERVICE_ACCOUNT_KEY | base64 --decode --ignore-garbage > ./gcp-service-account-key.json
+      gcloud auth activate-service-account --key-file gcp-service-account-key.json
+    install-and-configure-kubectl: &install-and-configure-kubectl |
+      apt-get install kubectl
+      gcloud config set compute/zone $GCP_COMPUTE_ZONE
+      gcloud config set core/project $GCP_PROJECT_NAME
+      gcloud container clusters get-credentials $GCP_CLUSTER_NAME
+  caches:
+    node-modules: node_modules
+    yarn-lock: yarn.lock
+  steps:
+    - install-dependencies: &install-dependencies
+        caches:
+          - node-modules
+          - yarn-lock
+        image: node:alpine
+        name: Install dependencies
+        script:
+          - yarn
+    - test: &test
+        caches:
+          - node-modules
+          - yarn-lock
+        image: node:alpine
+        name: Test
+        script:
+          - yarn test
+    - deploy-docker-image: &deploy-docker-image
+        image: google/cloud-sdk:latest
+        name: Deploy Docker image
+        script:
+          - docker build --tag $GCR_IMAGE_PATH:$BITBUCKET_COMMIT .
+          - *authenticate-to-gcp
+          - gcloud auth configure-docker
+          - docker push $GCR_IMAGE_PATH:$BITBUCKET_COMMIT
+        services:
+          - docker
+    - deploy-to-production: &deploy-to-production
+        deployment: production
+        image: google/cloud-sdk:latest
+        name: Deploy to production
+        script:
+          - *authenticate-to-gcp
+          - *install-and-configure-kubectl
+          - kubectl set image deployment/$GKE_PRODUCTION_DEPLOYMENT_NAME $GCR_IMAGE_NAME=$GCR_IMAGE_PATH:$BITBUCKET_COMMIT
+        services:
+          - docker
+        trigger: manual
+    - deploy-to-staging: &deploy-to-staging
+        deployment: staging
+        image: google/cloud-sdk:latest
+        name: Deploy to staging
+        script:
+          - *authenticate-to-gcp
+          - *install-and-configure-kubectl
+          - kubectl set image deployment/$GKE_STAGING_DEPLOYMENT_NAME $GCR_IMAGE_NAME=$GCR_IMAGE_PATH:$BITBUCKET_COMMIT
+        services:
+          - docker
+    - deploy-to-test: &deploy-to-test
+        deployment: test
+        image: google/cloud-sdk:latest
+        name: Deploy to test
+        script:
+          - *authenticate-to-gcp
+          - *install-and-configure-kubectl
+          - kubectl set image deployment/$GKE_TEST_DEPLOYMENT_NAME $GCR_IMAGE_NAME=$GCR_IMAGE_PATH:$BITBUCKET_COMMIT
+        services:
+          - docker
+        trigger: manual
+pipelines:
+  default:
+    - step: *install-dependencies
+    - step: *test
+  branches:
+    master:
+      - step: *install-dependencies
+      - step: *test
+      - step: *deploy-docker-image
+      - step: *deploy-to-staging
+      - step: *deploy-to-production
+    feature/*:
+      - step: *install-dependencies
+      - step: *test
+      - step: *deploy-docker-image
+      - step: *deploy-to-test
