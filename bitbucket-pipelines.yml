@@ -30,6 +30,7 @@ definitions:
           - yarn test
     - deploy-docker-image: &deploy-docker-image
         image: google/cloud-sdk:latest
+        max-time: 5
         name: Deploy Docker image
         script:
           - docker build --tag $GCR_IMAGE_PATH:$BITBUCKET_COMMIT .
