@@ -2,14 +2,19 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 
 import { Creators as AccountCreators } from './../../redux/accountStore'
+import LocaleSelector from './../../components/LocaleSelector'
 
 const LogInPage = ({ isLoggingIn, logInRequest, token }) => (
   <div>
-    <h1>Log in</h1>
+    <h1>
+      <FormattedMessage id="app.logInPage.title" />
+    </h1>
+    <LocaleSelector />
     <p>
-      Token: <code>{token}</code>
+      Token: <code>{token || 'N/A'}</code>
     </p>
     <button
       onClick={() => logInRequest('andriy.tsaryov@eleken.co', 'qwerty123')}
