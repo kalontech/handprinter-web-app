@@ -7,7 +7,7 @@ import accountStore from './accountStore'
 import appStore from './appStore'
 import rootSaga from './../sagas'
 import locales from './../locales'
-import persistConfig from './../config/persistConfig'
+import persistConfig from './../config/persist'
 
 const configureStore = () => {
   const initialState = {

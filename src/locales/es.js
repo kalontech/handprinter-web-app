@@ -1,3 +1,3 @@
 export default {
-  'app.logInPage.title': 'Autorizar',
+  'app.loginPage.title': 'Autorizar',
 }

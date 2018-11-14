@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout } from 'antd'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -11,37 +11,51 @@ import LoadingPage from './pages/LoadingPage'
 
 const RouteWrapper = ({
   component: Component,
-  withHeader = true,
-  withFooter = true,
   ready,
+  requireAuthentication,
+  token,
+  withoutHeader,
+  withoutFooter,
   ...rest
 }) => (
   <Route
     {...rest}
-    render={props => (
-      <Layout>
-        {ready ? (
-          <React.Fragment>
-            {withHeader && <Header />}
+    render={props => {
+      if (ready) {
+        if (requireAuthentication && !token) {
+          return <Redirect to="/account/login" />
+        } else {
+          return (
+            <Layout>
+              {!withoutHeader && <Header />}
+              <Layout.Content>
+                <Component {...props} />
+              </Layout.Content>
+              {!withoutFooter && <Footer />}
+            </Layout>
+          )
+        }
+      } else {
+        return (
+          <Layout>
             <Layout.Content>
-              <Component {...props} />
+              <LoadingPage {...props} />
             </Layout.Content>
-            {withFooter && <Footer />}
-          </React.Fragment>
-        ) : (
-          <LoadingPage {...props} />
-        )}
-      </Layout>
-    )}
+          </Layout>
+        )
+      }
+    }}
   />
 )
 
 const mapStateToProps = state => ({
   ready: state.app.ready,
+  token: state.account.token,
 })
 
 RouteWrapper.propTypes = {
   ready: PropTypes.bool.isRequired,
+  token: PropTypes.string,
 }
 
 export default connect(mapStateToProps)(RouteWrapper)

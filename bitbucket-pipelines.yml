@@ -11,6 +11,9 @@ definitions:
   caches:
     node-modules: node_modules
     yarn-lock: yarn.lock
+  services:
+    docker:
+      memory: 2048
   steps:
     - install-dependencies: &install-dependencies
         caches:
