@@ -5,6 +5,10 @@ export const INITIAL_STATE = {
   isRegistering: false,
   logInError: null,
   registerError: null,
+  resetPasswordError: null,
+  resettingPassword: false,
+  setNewPasswordError: null,
+  settingNewPassword: false,
   token: null,
 }
 
@@ -21,6 +25,12 @@ export const { Types, Creators } = createActions({
   ],
   registerSuccess: ['token'],
   registerFailure: ['error'],
+  resetPasswordRequest: ['email'],
+  resetPasswordSuccess: null,
+  resetPasswordFailure: ['error'],
+  setNewPasswordRequest: ['code', 'password'],
+  setNewPasswordSuccess: null,
+  setNewPasswordFailure: ['error'],
 })
 
 export const logInRequest = (state = INITIAL_STATE, action) => ({
@@ -65,6 +75,42 @@ export const registerFailure = (state = INITIAL_STATE, action) => ({
   token: null,
 })
 
+export const resetPasswordRequest = (state = INITIAL_STATE, action) => ({
+  ...state,
+  resetPasswordError: null,
+  resettingPassword: true,
+})
+
+export const resetPasswordSuccess = (state = INITIAL_STATE, action) => ({
+  ...state,
+  resetPasswordError: null,
+  resettingPassword: false,
+})
+
+export const resetPasswordFailure = (state = INITIAL_STATE, action) => ({
+  ...state,
+  resetPasswordError: action.error,
+  resettingPassword: false,
+})
+
+export const setNewPasswordRequest = (state = INITIAL_STATE, action) => ({
+  ...state,
+  setNewPasswordError: null,
+  settingNewPassword: true,
+})
+
+export const setNewPasswordSuccess = (state = INITIAL_STATE, action) => ({
+  ...state,
+  setNewPasswordError: null,
+  settingNewPassword: false,
+})
+
+export const setNewPasswordFailure = (state = INITIAL_STATE, action) => ({
+  ...state,
+  setNewPasswordError: action.error,
+  settingNewPassword: false,
+})
+
 export const HANDLERS = {
   [Types.LOG_IN_REQUEST]: logInRequest,
   [Types.LOG_IN_SUCCESS]: logInSuccess,
@@ -72,6 +118,12 @@ export const HANDLERS = {
   [Types.REGISTER_REQUEST]: registerRequest,
   [Types.REGISTER_SUCCESS]: registerSuccess,
   [Types.REGISTER_FAILURE]: registerFailure,
+  [Types.RESET_PASSWORD_REQUEST]: resetPasswordRequest,
+  [Types.RESET_PASSWORD_SUCCESS]: resetPasswordSuccess,
+  [Types.RESET_PASSWORD_FAILURE]: resetPasswordFailure,
+  [Types.SET_NEW_PASSWORD_REQUEST]: setNewPasswordRequest,
+  [Types.SET_NEW_PASSWORD_SUCCESS]: setNewPasswordSuccess,
+  [Types.SET_NEW_PASSWORD_FAILURE]: setNewPasswordFailure,
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS)

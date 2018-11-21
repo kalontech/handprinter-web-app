@@ -17,18 +17,18 @@ import {
   Input,
   FormItem,
 } from './../../components/Styled'
+import getValidationRules from './../../config/validationRules'
+import InputForPassword from './../../components/InputForPassword'
+import handleFormError from './../../utils/handleFormError'
 
 import registerActionCardImage from './../../assets/images/registerActionCard.jpg'
 import arrowDownIcon from './../../assets/icons/arrowDown.svg'
-import eyeFillIcon from './../../assets/icons/eyeFill.svg'
-import eyeSlashFillIcon from './../../assets/icons/eyeSlashFill.svg'
 import infoFillIcon from './../../assets/icons/infoFill.svg'
 import infoOutlineIcon from './../../assets/icons/infoOutline.svg'
 
 class RegisterPage extends Component {
   state = {
     showInvitationCodeTooltip: false,
-    showPassword: false,
   }
 
   handleSubmit = e => {
@@ -50,25 +50,8 @@ class RegisterPage extends Component {
     this.setState({ showInvitationCodeTooltip })
   }
 
-  toggleShowPassword = () => {
-    this.setState({ showPassword: !this.state.showPassword })
-  }
-
   componentDidUpdate = prevProps => {
-    const {
-      form: { setFields },
-      intl: { formatMessage },
-      registerError,
-    } = this.props
-    if (prevProps.registerError !== registerError) {
-      setFields({
-        formError: {
-          errors: registerError
-            ? [new Error(formatMessage({ id: registerError }))]
-            : [],
-        },
-      })
-    }
+    handleFormError('registerError', prevProps, this.props)
   }
 
   render() {
@@ -78,7 +61,7 @@ class RegisterPage extends Component {
       intl: { formatMessage },
       isRegistering,
     } = this.props
-    const { showInvitationCodeTooltip, showPassword } = this.state
+    const { showInvitationCodeTooltip } = this.state
     return (
       <ActionCardWrapper>
         <ActionCard>
@@ -93,14 +76,7 @@ class RegisterPage extends Component {
               <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
                   {getFieldDecorator('fullName', {
-                    rules: [
-                      {
-                        required: true,
-                        message: formatMessage({
-                          id: 'app.forms.fullName.required',
-                        }),
-                      },
-                    ],
+                    rules: getValidationRules(formatMessage).fullName,
                   })(
                     <Input
                       type="text"
@@ -112,20 +88,7 @@ class RegisterPage extends Component {
                 </FormItem>
                 <FormItem>
                   {getFieldDecorator('email', {
-                    rules: [
-                      {
-                        required: true,
-                        message: formatMessage({
-                          id: 'app.forms.email.required',
-                        }),
-                      },
-                      {
-                        type: 'email',
-                        message: formatMessage({
-                          id: 'app.forms.email.invalid',
-                        }),
-                      },
-                    ],
+                    rules: getValidationRules(formatMessage).email,
                   })(
                     <Input
                       type="email"
@@ -137,52 +100,12 @@ class RegisterPage extends Component {
                 </FormItem>
                 <FormItem>
                   {getFieldDecorator('password', {
-                    rules: [
-                      {
-                        required: true,
-                        message: formatMessage({
-                          id: 'app.forms.password.required',
-                        }),
-                      },
-                      {
-                        min: 8,
-                        message: formatMessage({
-                          id: 'app.forms.password.tooShort',
-                        }),
-                      },
-                      {
-                        max: 64,
-                        message: formatMessage({
-                          id: 'app.forms.password.tooLong',
-                        }),
-                      },
-                    ],
-                  })(
-                    <Input
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder={formatMessage({
-                        id: 'app.forms.createPassword',
-                      })}
-                      suffix={
-                        <img
-                          onClick={this.toggleShowPassword}
-                          src={showPassword ? eyeFillIcon : eyeSlashFillIcon}
-                          style={{ cursor: 'pointer' }}
-                        />
-                      }
-                    />,
-                  )}
+                    rules: getValidationRules(formatMessage).password,
+                  })(<InputForPassword />)}
                 </FormItem>
                 <FormItem style={{ marginTop: '-3px' }}>
                   {getFieldDecorator('country', {
-                    rules: [
-                      {
-                        required: true,
-                        message: formatMessage({
-                          id: 'app.forms.country.required',
-                        }),
-                      },
-                    ],
+                    rules: getValidationRules(formatMessage).country,
                   })(
                     <Select
                       showSearch

@@ -3,6 +3,8 @@ import styled, { createGlobalStyle } from 'styled-components'
 
 import colors from './../../config/colors'
 
+import backgroundOceanContainerImage from './../../assets/images/backgroundOceanContainer.png'
+
 export const ActionCard = styled(Ant.Row)`
   border-radius: 5px;
   height: 579px;
@@ -145,4 +147,48 @@ export const Input = styled(Ant.Input)`
   .ant-input:hover {
     border-color: ${colors.green};
   }
+`
+
+export const OceanContainer = styled.div`
+  align-items: center;
+  background-color: ${colors.ocean};
+  background-image: url(${backgroundOceanContainerImage});
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+`
+
+export const OceanModal = styled.div`
+  background-color: ${colors.white};
+  border-radius: 4px;
+  padding: 70px;
+  width: 440px;
+`
+
+export const OceanImage = styled.div`
+  img {
+    display: block;
+    margin: 0 auto 30px;
+  }
+`
+
+export const OceanTitle = styled.h1`
+  color: ${colors.dark};
+  font-size: 28px;
+  line-height: 35px;
+  text-align: center;
+`
+
+export const OceanDescription = styled.h1`
+  color: ${colors.darkGray};
+  font-size: 14px;
+  line-height: 20px;
+  margin-top: 15px;
+  text-align: center;
+`
+
+export const OceanForm = styled.div`
+  margin-top: 40px;
 `

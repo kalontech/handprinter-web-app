@@ -19,16 +19,13 @@ import {
   FormItem,
   Input,
 } from './../../components/Styled'
+import getValidationRules from './../../config/validationRules'
+import InputForPassword from './../../components/InputForPassword'
+import handleFormError from './../../utils/handleFormError'
 
 import loginActionCardImage from './../../assets/images/loginActionCard.jpg'
-import eyeFillIcon from './../../assets/icons/eyeFill.svg'
-import eyeSlashFillIcon from './../../assets/icons/eyeSlashFill.svg'
 
 class LoginPage extends Component {
-  state = {
-    showPassword: false,
-  }
-
   handleSubmit = e => {
     e.preventDefault()
     const {
@@ -43,25 +40,8 @@ class LoginPage extends Component {
     })
   }
 
-  toggleShowPassword = () => {
-    this.setState({ showPassword: !this.state.showPassword })
-  }
-
   componentDidUpdate = prevProps => {
-    const {
-      form: { setFields },
-      intl: { formatMessage },
-      logInError,
-    } = this.props
-    if (prevProps.logInError !== logInError) {
-      setFields({
-        error: {
-          errors: logInError
-            ? [new Error(formatMessage({ id: logInError }))]
-            : [],
-        },
-      })
-    }
+    handleFormError('logInError', prevProps, this.props)
   }
 
   render() {
@@ -70,7 +50,6 @@ class LoginPage extends Component {
       intl: { formatMessage },
       isLoggingIn,
     } = this.props
-    const { showPassword } = this.state
     return (
       <ActionCardWrapper>
         <ActionCard>
@@ -85,20 +64,7 @@ class LoginPage extends Component {
               <Form onSubmit={this.handleSubmit}>
                 <FormItem>
                   {getFieldDecorator('email', {
-                    rules: [
-                      {
-                        required: true,
-                        message: formatMessage({
-                          id: 'app.forms.email.required',
-                        }),
-                      },
-                      {
-                        type: 'email',
-                        message: formatMessage({
-                          id: 'app.forms.email.invalid',
-                        }),
-                      },
-                    ],
+                    rules: getValidationRules(formatMessage).email,
                   })(
                     <Input
                       type="email"
@@ -108,39 +74,8 @@ class LoginPage extends Component {
                 </FormItem>
                 <FormItem>
                   {getFieldDecorator('password', {
-                    rules: [
-                      {
-                        required: true,
-                        message: formatMessage({
-                          id: 'app.forms.password.required',
-                        }),
-                      },
-                      {
-                        min: 8,
-                        message: formatMessage({
-                          id: 'app.forms.password.tooShort',
-                        }),
-                      },
-                      {
-                        max: 64,
-                        message: formatMessage({
-                          id: 'app.forms.password.tooLong',
-                        }),
-                      },
-                    ],
-                  })(
-                    <Input
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder={formatMessage({ id: 'app.forms.password' })}
-                      suffix={
-                        <img
-                          onClick={this.toggleShowPassword}
-                          src={showPassword ? eyeFillIcon : eyeSlashFillIcon}
-                          style={{ cursor: 'pointer' }}
-                        />
-                      }
-                    />,
-                  )}
+                    rules: getValidationRules(formatMessage).password,
+                  })(<InputForPassword />)}
                 </FormItem>
                 <ActionCardForgotPasswordBlock>
                   <Link to="/account/reset-password">
@@ -153,10 +88,10 @@ class LoginPage extends Component {
                   style={{ width: '100%' }}
                   loading={isLoggingIn}
                 >
-                  Login
+                  <FormattedMessage id="app.loginPage.login" />
                 </Button>
                 <FormItem>
-                  {getFieldDecorator('error')(<Input type="hidden" />)}
+                  {getFieldDecorator('formError')(<Input type="hidden" />)}
                 </FormItem>
                 <ActionCardRegisterBlock>
                   <span>

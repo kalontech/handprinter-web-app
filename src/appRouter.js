@@ -5,6 +5,7 @@ import createBrowserHistory from 'history/createBrowserHistory'
 import Route from './routeWrapper'
 
 import ActionsPage from './pages/ActionsPage'
+import CheckYourEmailPage from './pages/CheckYourEmailPage'
 import DashboardPage from './pages/DashboardPage'
 import FaqPage from './pages/FaqPage'
 import ForOrganizationsPage from './pages/ForOrganizationsPage'
@@ -24,6 +25,12 @@ const AppRouter = () => (
     <Switch>
       <Route path="/" exact component={HomePage} />
       <Route path="/actions" component={ActionsPage} />
+      <Route
+        path="/account/check-your-email"
+        component={CheckYourEmailPage}
+        withoutHeader
+        withoutFooter
+      />
       <Route
         path="/account/dashboard"
         component={DashboardPage}
@@ -52,7 +59,7 @@ const AppRouter = () => (
         withoutFooter
       />
       <Route
-        path="/account/set-new-password"
+        path="/account/set-new-password/:code"
         component={SetNewPasswordPage}
         withoutHeader
         withoutFooter

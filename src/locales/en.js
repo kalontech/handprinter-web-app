@@ -15,6 +15,7 @@ export default {
   'app.errors.12': 'Endpoint is not found',
   'app.loginPage.title': 'Login',
   'app.loginPage.forgotPassword': 'Forgot password',
+  'app.loginPage.login': 'Login',
   'app.loginPage.doNotHaveAnAccount': 'Do not have an account?',
   'app.loginPage.register': 'Register',
   'app.registerPage.title': 'Registration',
@@ -36,4 +37,14 @@ export default {
   'app.forms.invitationCode': 'Invitation code (optional)',
   'app.forms.invitationCode.hint':
     'Curabitur sagittis enim vel libero ornare tincidunt. Cras libero metus, tempus ut nulla non, dignissim scelerisque nisi. Proin malesuada, ante vitae.',
+  'app.resetPasswordPage.title': 'Reset password',
+  'app.resetPasswordPage.description':
+    'Enter the e-mail address you used to register and we will send you instructions on how to change your password.',
+  'app.resetPasswordPage.send': 'Send',
+  'app.checkYourEmailPage.title': 'Recovery mail sent',
+  'app.checkYourEmailPage.description':
+    'Didn’t receive the email?<br />Please check the email address you used to make sure it matches the address on your account, look in your spam folder, or request another e-mail below.',
+  'app.checkYourEmailPage.sendAgain': 'Send again',
+  'app.setNewPasswordPage.title': 'Set a new password',
+  'app.setNewPasswordPage.changePassword': 'Change password',
 }
