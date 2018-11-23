@@ -1,7 +1,7 @@
 import * as Ant from 'antd'
 import styled, { createGlobalStyle } from 'styled-components'
 import hexToRgba from './../../utils/hexToRgba'
-
+import arrowDownIcon from '../../assets/icons/arrowDown.svg'
 import colors from './../../config/colors'
 
 import backgroundOceanContainerImage from './../../assets/images/backgroundOceanContainer.png'
@@ -243,6 +243,67 @@ export const ScrollButton = styled(ArrowButton)`
     &&.active,
     &&:active {
       background-color: ${colors.lightGray};
+  }
+`
+
+export const Collapse = styled(Ant.Collapse)`
+  position: relative;
+  z-index: 1;
+  margin-bottom: 80px;
+  border-radius: 6px;
+  padding: 12px 0;
+  background-color: ${colors.white};
+  > .ant-collapse-item {
+    border-bottom: 1px solid ${hexToRgba(`${colors.dark}`, 0.08)};
+    :last-child {
+      border-bottom: none;
+    }
+  }
+  box-shadow: 0 1px 10px 0 ${hexToRgba(`${colors.dark}`, 0.08)};
+`
+
+export const CollapsePanel = styled(Ant.Collapse.Panel)`
+  position: relative;
+  margin: 0 30px 1px;
+  &.ant-collapse-item-active {
+    && > .ant-collapse-header {
+      .arrow {
+        top: 0;
+        transform: rotate(180deg);
+      }
+    }
+  }
+  && > .ant-collapse-header {
+    color: inherit;
+    font-size: 19px;
+    line-height: 26px;
+    font-family: 'Noto Serif', serif;
+
+    .arrow {
+      width: 15px;
+      height: 10px;
+      left: auto;
+      right: 10px;
+      top: 12px;
+      bottom: 0;
+      margin: auto;
+      background: #fff url(${arrowDownIcon}) no-repeat center;
+      svg {
+        display: none;
+      }
+    }
+  }
+  .ant-collapse-content {
+    color: inherit;
+    p {
+      line-height: 23px;
+    }
+  }
+  && > .ant-collapse-content {
+    margin-top: -12px;
+    & .ant-collapse-content-box {
+      padding: 0 10px 28px;
+    }
   }
 `
 

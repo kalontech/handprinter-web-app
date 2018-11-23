@@ -110,4 +110,30 @@ export default {
   'app.actionCardLabel.tooltip.text':
     'You can reduce your footprint for {value} {unit} on the {category} category.',
   'app.actionsSlider.link': 'View all actions',
+  'app.faqPage.title': 'FAQ',
+  'app.faqPage.0.question': 'What is handprint?',
+  'app.faqPage.0.answer':
+    'Footprint - odio ac turpis mollis vehicula. Sed\n' +
+    '                        scelerisque orci non urna facilisis, vitae tristique\n' +
+    '                        erat auctor. Maecenas at posuere dolor. Donec sed mauris\n' +
+    '                        nec felis scelerisque posuere ac ut velit. Vivamus\n' +
+    '                        pharetra aliquam porta. Nulla egestas consectetur felis\n' +
+    '                        et ultricies. Fusce pharetra, tortor eget placerat\n' +
+    '                        lacinia, magna augue efficitur mauris, in auctor quam\n' +
+    '                        lorem vitae ante. Phasellus tincidunt, enim non\n' +
+    '                        tincidunt sagittis, ex nibh tempor purus, sed\n' +
+    '                        sollicitudin leo magna sit amet lacus. Nulla\n' +
+    '                        sollicitudin nec tellus ut fermentum. Aenean facilisis\n' +
+    '                        augue non sapien euismod, ut scelerisque dui pulvinar.\n' +
+    '                        Vivamus nisi eros, placerat sed justo sit amet,\n' +
+    '                        ullamcorper viverra erat. Curabitur vehicula ante\n' +
+    '                        turpis, sed eleifend augue pharetra nec.',
+  'app.faqPage.1.question': 'What is footprint?',
+  'app.faqPage.1.answer': 'Footprint - odio ac turpis mollis vehicula.',
+  'app.faqPage.2.question': 'How to get net-positive status?',
+  'app.faqPage.2.answer': 'Footprint - odio ac turpis mollis vehicula.',
+  'app.faqPage.3.question': 'How can I increase my handprint?',
+  'app.faqPage.3.answer': 'Footprint - odio ac turpis mollis vehicula.',
+  'app.faqPage.4.question': 'How to add my idea?',
+  'app.faqPage.4.answer': 'Footprint - odio ac turpis mollis vehicula.',
 }
