@@ -235,4 +235,85 @@ export default {
     '                  organizations too, including ones you’re a part of. Make sure\n' +
     '                  they know: There’s room for everyone. We’re incomplete without\n' +
     '                  you.',
+  'app.measurementPage.Hero.Title':
+    'How do we <strong>measure</strong> Action Impacts and\n' +
+    '                Handprints?',
+  'app.measurementPage.Hero.Text':
+    'How — and why — would we measure impacts \n' +
+    'in "days", "hours" and "minutes"?',
+  'app.measurementPage.ScrollText': 'I want to know more',
+  'app.measurementPage.Meaning.Title':
+    'Most measurement units don&apos;t mean much to most of us',
+  'app.measurementPage.Meaning.Text1':
+    'Footprints and Handprints are usually measured in different\n' +
+    '                    units that depend on the kind of impact we&apos;re talking\n' +
+    '                    about. So water footprints can be measured in gallons or\n' +
+    '                    liters of water, human health footprints can be measured in\n' +
+    '                    years of life lost, carbon footprints in tons of carbon\n' +
+    '                    dioxide (CO2), and so-on.',
+  'app.measurementPage.Meaning.Text2':
+    'Most of these units don’t mean much to most of us.\n' +
+    '                    We&apos;ve never seen a ton of CO2, and would that be a\n' +
+    '                    large or small share of our carbon footprint?',
+  'app.measurementPage.Problem.Title':
+    'In Handprinter, <br /> we solve this problem',
+  'app.measurementPage.Problem.Text1':
+    'Our solution is to relate all impacts to your footprint. Your\n' +
+    '                footprint happens on a yearly basis, so we can express your full\n' +
+    '                footprint as 365 days of your footprint. Half of this amount\n' +
+    '                would be about 180 days of your footprint. One tenth of your\n' +
+    '                yearly footprint would be about 36 days of your footprint. One\n' +
+    '                tenth of 1 percent of your footprint would be close to 10 hours\n' +
+    '                of your footprint.',
+  'app.measurementPage.Problem.Text2':
+    '<strong>This works for all impact categories.</strong> So rather\n' +
+    '                than a whole soup of footprint units that most of us don&apos;t\n' +
+    '                understand, we can all work with just one unit that we all\n' +
+    '                understand: time.',
+  'app.measurementPage.Info.Text1':
+    'We all know what minutes, hours, days, and years are.',
+  'app.measurementPage.Info.Text2':
+    'So now we can know right away how much of a dent a given\n' +
+    '                    action will make to our total footprint.',
+  'app.measurementPage.Impact.Title':
+    'Cut time from your footprint, create Net Positive time with\n' +
+    '                  your handprints',
+  'app.measurementPage.Impact.Text':
+    'Every action card shows you how much impact the action can\n' +
+    '                  create, expressed in days or hours or minutes of the average\n' +
+    '                  global citizen’s footprint.',
+  'app.measurementPage.Impact.ListTitle': 'Impact labels system',
+  'app.measurementPage.Impact.ListItemBlue': 'Days are <strong>blue</strong>',
+  'app.measurementPage.Impact.ListItemDarkGreen':
+    'Hours are <strong>dark green</strong>',
+  'app.measurementPage.Impact.ListItemLightGreen':
+    'Minutes are <strong>light green</strong>',
+  'app.measurementPage.Impact.ListItemGray':
+    'Negative are <strong>gray and striked out</strong>',
+  'app.measurementPage.Card.Title': 'Impact for this card',
+  'app.measurementPage.Card.Item1':
+    '<strong> 10 days </strong> of climate footprint',
+  'app.measurementPage.Card.Item2':
+    '<strong>2 days</strong> of ecosystem footprint',
+  'app.measurementPage.Card.Item3':
+    '<strong>20 hours</strong> of waste footprint',
+  'app.measurementPage.Card.Item4':
+    '<strong> 1 hour</strong> of water footprint',
+  'app.measurementPage.Card.Item5':
+    '<strong>5 minutes</strong> of health footprint',
+  'app.measurementPage.CommonBasis.Title':
+    'A common basis <br />\n' + 'for communication',
+  'app.measurementPage.CommonBasis.Text1':
+    'When we speak with everyone, action impacts are expressed in\n' +
+    '                relation to an average global citizen&apos;s footprint. Then for\n' +
+    '                your personally, handprinter calculates and shows you the\n' +
+    '                impacts of your actions in relation to your own footprint. If\n' +
+    '                your footprint is twice as large as the average global\n' +
+    '                citizen&apos;s footprint, then taking an action with &Prime;2\n' +
+    '                days&Prime; of global citizen water benefits will reduce your\n' +
+    '                water footprint by 1 day.',
+  'app.measurementPage.CommonBasis.Text2':
+    'The cool thing is that <strong> the smaller your footprint gets, the more powerful each action will become </strong> when handprinter calculates the action’s effect on your footprint.',
+  'app.measurementPage.Animation.Title':
+    'Make your handprint bigger than your footprint. Become <strong>Net Positive</strong>',
 }

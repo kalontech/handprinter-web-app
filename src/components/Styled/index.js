@@ -186,6 +186,12 @@ export const BlockSubTitle = styled.h2`
   }
 `
 
+export const BlockSubTitleGreen = styled(BlockSubTitle)`
+  strong {
+    color: ${colors.green};
+  }
+`
+
 export const CardHeading = styled.h3`
   font-size: 19px;
   line-height: 1.37;
