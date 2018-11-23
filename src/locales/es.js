@@ -127,4 +127,103 @@ export default {
   'app.faqPage.3.answer': 'Footprint - odio ac turpis mollis vehicula.',
   'app.faqPage.4.question': 'How to add my idea?',
   'app.faqPage.4.answer': 'Footprint - odio ac turpis mollis vehicula.',
+  'app.ourVision.hero.title':
+    'With enough handprints we can' +
+    '                <strong> heal</strong> the planet',
+  'app.ourVision.hero.text': 'From footprinters to handprinters',
+  'app.ourVision.negativeImpacts.title': 'What is my Footprint?',
+  'app.ourVision.negativeImpacts.text':
+    'Footprint - the sum of all the negative impacts on the planet\n' +
+    '                  we share, of all the activities it takes to provide each of us\n' +
+    '                  with the products and services we buy and use in a year,\n' +
+    '                  including the impacts from using and disposing of them.',
+  'app.ourVision.about.title':
+    'We&apos;ve all heard about our <strong>negative</strong> impacts, but…',
+  'app.ourVision.negativeImpactsItem1.title': 'Global supply chains',
+  'app.ourVision.negativeImpactsItem1.text':
+    'Global chains of activities provide is with the products\n' +
+    '                      and services in our lives. Even “locally grown vegetables”\n' +
+    '                      have a global supply chain when you look deeply',
+  'app.ourVision.negativeImpactsItem2.title': 'A footprint for every product',
+  'app.ourVision.negativeImpactsItem2.text':
+    'Each activity in the supply chain can have negative\n' +
+    '                      impacts. The sum of all the negative impacts across its\n' +
+    '                      full supply chain are its footprint.',
+  'app.ourVision.negativeImpactsItem3.title': 'Many footprints actually',
+  'app.ourVision.negativeImpactsItem3.text':
+    'The impacts of a single product are diverse, and can\n' +
+    '                      include ocean pollution, air pollution, water depletion,\n' +
+    '                      human health impacts, ecosystem impacts, wastes, and more.',
+  'app.ourVision.negativeImpactsItem4.title': 'Daily steps to yearly totals',
+  'app.ourVision.negativeImpactsItem4.text':
+    'My annual footprints are the sums of the footprints of all\n' +
+    '                      the goods and services that I buy and use in a year. They\n' +
+    '                      are like the cost, to everyone else, of me being here for\n' +
+    '                      a year and living my life the way that I do.',
+  'app.ourVision.slider.title':
+    'Reducing your footprint <br /> is a great place to start',
+  'app.ourVision.slider.text':
+    'Just take one of the actions from the list! There are so many\n' +
+    '                ways to shrink your footprint. Hundreds of people are using\n' +
+    '                these ideas to reduce their footprints.',
+  'app.ourVision.what.title':
+    'But I want to be really <strong>positive</strong>. Not just\n' +
+    '                  less bad.',
+  'app.ourVision.what.subtitle': 'What is a handprint?',
+  'app.ourVision.what.text':
+    'Handprints are positive impacts that you create, beyond the\n' +
+    '                  boundaries of your own footprint. Like planting a tree, and\n' +
+    '                  helping others to take positive actions.',
+  'app.ourVision.what.link': 'Start handprinting',
+  'app.ourVision.steps.title': 'What can I do to handprint?',
+  'app.ourVision.step1.title': '<strong>Encourage</strong> other people',
+  'app.ourVision.step1.text':
+    'Encourage, inform, and inspire existing members about how they\n' +
+    '                  can reduce their footprints, recommending existing actions to\n' +
+    '                  friends and to other organizations. Maybe invite them to try\n' +
+    '                  an action that recently worked for you.',
+  'app.ourVision.step2.title':
+    '<strong>Give a gift </strong> that <br /> handprints',
+  'app.ourVision.step2.text':
+    ' Maybe you can pump up your friends’ tires, or offer them an\n' +
+    '                  LED light bulb, or help them to plant some vegetables, to\n' +
+    '                  build a composter, or to set up a clothesline. It’s like\n' +
+    '                  Encouraging, but goes farther, through the generosity of your\n' +
+    '                  time, effort, presence, and maybe spending some money too.',
+  'app.ourVision.step3.title': 'Participate in a <strong> Save Wave</strong>',
+  'app.ourVision.step3.text':
+    'This builds on the gift idea, and takes it farther, because\n' +
+    '                  you pay a gift forward to 1 or more people. For example, if a\n' +
+    '                  friend gave you an LED light bulb, use some of the money\n' +
+    '                  you’ll save to buy two more bulbs, and offer them to two new\n' +
+    '                  friends, inviting them to be part of the wave with you.',
+  'app.ourVision.stepScheme.text1': 'You buy a LED light bulb and save money.',
+  'app.ourVision.stepScheme.text2':
+    'Use some of the money you saved to buy two more bulbs, and\n' +
+    '                    offer them to two new friends',
+  'app.ourVision.stepScheme.text3':
+    'They save money to and buy their frends 2 more LED light\n' +
+    '                    bulbs and continue Save Wave.',
+  'app.ourVision.step4.title':
+    'Create your handprint <strong> idea</strong>, and share it with the world',
+  'app.ourVision.step4.text':
+    'Be sure you tried it out yourself first, and share ideas about\n' +
+    '                  how to make it work. Another part of idea creation is modeling\n' +
+    '                  the impacts of an action idea so that we can all understand\n' +
+    '                  what impacts it has in the world.',
+  'app.ourVision.step5.title':
+    'Take a <strong>Pure <br /> Positive </strong>action',
+  'app.ourVision.step5.text':
+    'Planting a tree is a wonderful example. So is restoring\n' +
+    '                  habitat so that it purifies water and provides places for life\n' +
+    '                  to thrive. Rather than reducing somebody&apos;s footprint,\n' +
+    '                  it&apos;s creating new positive impacts, some of which may be\n' +
+    '                  measurable in footprint units.',
+  'app.ourVision.step6.title':
+    'Grow the handprinting <strong> community</strong>',
+  'app.ourVision.step6.text':
+    'Strengthen and broaden the movement. Invite new people. Invite\n' +
+    '                  organizations too, including ones you’re a part of. Make sure\n' +
+    '                  they know: There’s room for everyone. We’re incomplete without\n' +
+    '                  you.',
 }

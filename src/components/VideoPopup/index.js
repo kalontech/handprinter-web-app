@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import ModalVideo from 'react-modal-video'
 import WatchVideoIcon from '../../assets/icons/WatchVideoIcon'
 import { FormattedMessage } from 'react-intl'
-import { DefaultButton } from './../Styled'
+import { DefaultButton, SecondaryButton } from './../Styled'
 import '../../../node_modules/react-modal-video/css/modal-video.min.css'
 
 class VideoPopup extends React.Component {
@@ -21,25 +21,38 @@ class VideoPopup extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <ModalVideo
           channel="youtube"
           ratio="16:9"
           isOpen={this.state.isOpen}
           videoId={this.props.id}
           onClose={() => this.setState({ isOpen: false })}
+          onClick={this.openModal}
         />
-        <DefaultButton onClick={this.openModal}>
-          <WatchVideoIcon />
-          <FormattedMessage id="app.button.video" />
-        </DefaultButton>
-      </div>
+        {this.props.reverse ? (
+          <SecondaryButton onClick={this.openModal}>
+            <WatchVideoIcon />
+            <FormattedMessage id="app.button.video" />
+          </SecondaryButton>
+        ) : (
+          <DefaultButton onClick={this.openModal}>
+            <WatchVideoIcon />
+            <FormattedMessage id="app.button.video" />
+          </DefaultButton>
+        )}
+      </React.Fragment>
     )
   }
 }
 
+VideoPopup.defaultProp = {
+  reverse: false,
+}
+
 VideoPopup.propTypes = {
   id: PropTypes.string.isRequired,
+  reverse: PropTypes.bool,
 }
 
 export default VideoPopup
