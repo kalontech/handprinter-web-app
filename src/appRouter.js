@@ -29,6 +29,7 @@ const AppRouter = () => (
         path="/account/check-your-email"
         component={CheckYourEmailPage}
         withoutHeader
+        withoutCTA
         withoutFooter
       />
       <Route
@@ -36,12 +37,13 @@ const AppRouter = () => (
         component={DashboardPage}
         requireAuthentication
       />
-      <Route path="/pages/faq" component={FaqPage} />
+      <Route path="/pages/faq" component={FaqPage} withoutCTA />
       <Route path="/pages/for-organizations" component={ForOrganizationsPage} />
       <Route
         path="/account/login"
         component={LoginPage}
         withoutHeader
+        withoutCTA
         withoutFooter
       />
       <Route path="/pages/measurement-units" component={MeasurementUnitsPage} />
@@ -50,18 +52,21 @@ const AppRouter = () => (
         path="/account/register"
         component={RegisterPage}
         withoutHeader
+        withoutCTA
         withoutFooter
       />
       <Route
         path="/account/reset-password"
         component={ResetPasswordPage}
         withoutHeader
+        withoutCTA
         withoutFooter
       />
       <Route
         path="/account/set-new-password/:code"
         component={SetNewPasswordPage}
         withoutHeader
+        withoutCTA
         withoutFooter
       />
       <Route component={NotFoundPage} />

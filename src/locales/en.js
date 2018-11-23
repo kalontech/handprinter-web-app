@@ -47,4 +47,67 @@ export default {
   'app.checkYourEmailPage.sendAgain': 'Send again',
   'app.setNewPasswordPage.title': 'Set a new password',
   'app.setNewPasswordPage.changePassword': 'Change password',
+  'app.languages.en': 'English',
+  'app.languages.es': 'Español',
+  'app.logInPage.title': 'Log in',
+  'app.homePage.hero.title':
+    'Want to take <strong>doing good</strong> to a global scale?\n' +
+    '                You’re not alone',
+  'app.homePage.hero.text':
+    'Through Handprinter, creative individual actions and outreach\n' +
+    '                generate ripple effects to touch and heal your community and the\n' +
+    '                globe.',
+  'app.homePage.hero.link': 'Join handprinters',
+  'app.button.join': 'Join handprinters',
+  'app.button.video': 'Watch video',
+  'app.homePage.scrollText': 'I want to know more',
+  'app.homePage.actionsTitle':
+    'Yes shrink your footprint. <br />\n' +
+    '                But also grow your handprint!',
+  'app.homePage.actionsDescription':
+    'We all want to do more good than harm. Handprinter helps you\n' +
+    '                live it. Add ideas and inspiration, calculate and track your\n' +
+    '                impacts, watch your handprint grow to exceed your footprint.\n' +
+    '                Launch and join micro-movements to reach the world and heal it.',
+  'app.homePage.actionsLink': 'What are footprints and handprints?',
+  'app.homePage.aboutTitle': 'What are handprints?',
+  'app.homePage.aboutText':
+    'We&apos;ve all heard about our footprints: negative impacts of\n' +
+    '                the things we buy and use. We need to reduce them, but\n' +
+    '                footprints are only part of the story.',
+  'app.homePage.aboutText2':
+    'We can also have handprints:\n' +
+    '                <strong>positive impacts in the world</strong>, including ways\n' +
+    '                we help others to reduce their footprints. Handprinter lets you\n' +
+    '                work with people in your neighborhood and around the world to\n' +
+    '                grow your handprint &mdash; and reduce your footprint too. Get\n' +
+    '                started today!',
+  'app.homePage.aboutText3': 'With enough handprints, we can heal the planet!',
+  'app.homePage.aboutLink': 'Our vision',
+  'app.header.menu.actions': 'Actions',
+  'app.header.menu.organizations': 'For organizations',
+  'app.header.menu.about': 'About',
+  'app.header.menu.howItWorks': 'How it works',
+  'app.header.menu.measurement': 'Measurement Units',
+  'app.header.menu.faq': 'FAQ',
+  'app.header.menu.login': 'Login',
+  'app.header.link': 'Join handprinters',
+
+  'app.footer.menu.actions': 'Actions',
+  'app.footer.menu.organizations': 'For organizations',
+  'app.footer.menu.about': 'About',
+  'app.footer.menu.howItWorks': 'How it works',
+  'app.footer.menu.measurement': 'Measurement Units',
+  'app.footer.menu.faq': 'FAQ',
+  'app.footer.menu.contact': 'Contact us',
+  'app.footer.menu.termsOfUse': 'Terms of use',
+  'app.footer.menu.privacyPolicy': 'Privacy Policy',
+  'app.footer.copyright': 'Copyright. All rights reserved',
+  'app.footer.cta.title': 'Be part of a positive future',
+  'app.footer.cta.link': 'Join handprinters',
+  'app.actionCardLabel.tooltip.link':
+    'How we measure action impacts and handprints.',
+  'app.actionCardLabel.tooltip.text':
+    'You can reduce your footprint for {value} {unit} on the {category} category.',
+  'app.actionsSlider.link': 'View all actions',
 }

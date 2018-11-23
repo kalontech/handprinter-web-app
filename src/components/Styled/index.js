@@ -1,5 +1,6 @@
 import * as Ant from 'antd'
 import styled, { createGlobalStyle } from 'styled-components'
+import hexToRgba from './../../utils/hexToRgba'
 
 import colors from './../../config/colors'
 
@@ -42,6 +43,85 @@ export const ActionCardRightHalf = styled(Ant.Col)`
   justify-content: center;
 `
 
+export const HeaderPopover = styled(Ant.Menu)`
+  .ant-menu-item {
+    display: flex;
+    algn-items: center;
+    padding: 0 6px;
+    margin: 0;
+    font-size: 16px;
+    :not(:last-child) {
+      margin: 0;
+    }
+    .ant-menu-item-selected,
+    :hover {
+      background: #f8fafa;
+      border-radius: 4px;
+    }
+  }
+
+  &.ant-menu-item &.ant-menu-inline,
+  &.ant-menu-vertical,
+  &.ant-menu-vertical-left {
+    border-right: none;
+    margin-left: -10px;
+    margin-right: -10px;
+    min-width: 167px;
+    margin-top: -2px;
+    margin-bottom: -2px;
+  }
+`
+
+export const PrimaryButton = styled(Ant.Button)`
+  min-width: 170px;
+  border: none;
+  &:hover,
+  &:focus {
+    background: ${colors.btnPrimaryHover};
+  }
+  &:active {
+    background: ${colors.btnPrimaryActive};
+  }
+`
+
+export const SecondaryButton = styled(Ant.Button)`
+  min-width: 170px;
+  color: ${colors.white};
+  background: ${colors.ocean};
+  border-color: ${colors.ocean};
+  border: none;
+
+  &:hover,
+  &:focus {
+    color: ${colors.white};
+    background: ${colors.btnSecondaryHover};
+  }
+
+  &:active {
+    color: ${colors.white};
+    background: ${colors.btnSecondaryActive};
+  }
+`
+
+export const DefaultButton = styled(Ant.Button)`
+  min-width: 160px;
+  color: ${colors.ocean};
+  background-color: ${hexToRgba(colors.ocean, 0.1)};
+  border: none;
+  
+  &&:hover,
+  &&:focus {
+    background-color: ${hexToRgba(colors.ocean, 0.18)};
+    color: ${colors.ocean};
+  }
+  &&.active,
+  &&:active {
+    background-color: ${hexToRgba(colors.ocean, 0.26)};
+    color: ${colors.ocean};
+  }
+}
+`
+
 export const ActionCardRegisterBlock = styled.div`
   color: ${colors.darkGray};
   display: flex;
@@ -78,16 +158,131 @@ export const FormItem = styled(Ant.Form.Item)`
   }
 `
 
+export const BlockContainer = styled.div`
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+`
+
+export const BlockTitle = styled.h1`
+  font-size: 48px;
+  line-height: 1.27;
+  font-family: 'Noto Serif', serif;
+`
+
+export const BlockTitleGreen = styled(BlockTitle)`
+  strong {
+    color: ${colors.green};
+  }
+`
+
+export const BlockSubTitle = styled.h2`
+  font-size: 37px;
+  line-height: 1.24;
+  font-weight: 700;
+  font-family: 'Noto Serif', serif;
+  + p {
+    margin-top: 20px;
+  }
+`
+
+export const CardHeading = styled.h3`
+  font-size: 19px;
+  line-height: 1.37;
+  font-family: 'Noto Serif', serif;
+`
+
+export const TextLarge = styled.p`
+  font-size: 19px;
+  line-height: 28px;
+`
+
+export const TextMedium = styled.p`
+  font-size: 16px;
+  line-height: 1.75;
+`
+
+export const TextMediumGroup = styled(TextMedium)`
+  margin-bottom: 20px;
+`
+
+export const ArrowButton = styled(Ant.Button)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  width: 45px;
+  height: 45px;
+  border-radius: 2px;
+  border: none;
+  &:after {
+    display: none;
+  }
+  &&:hover,
+  &&:focus,
+  &&.active,
+  &&:active {
+    color: inherit;
+    box-shadow: none;
+  }
+`
+
+export const ScrollToSection = styled.section`
+  text-align: center;
+  p {
+    margin-bottom: 10px;
+    color: ${colors.darkGray};
+  }
+`
+
+export const ScrollButton = styled(ArrowButton)`
+    margin: 10px auto 0
+    background-color: ${colors.lightGray};
+    &&:hover,
+    &&:focus,
+    &&.active,
+    &&:active {
+      background-color: ${colors.lightGray};
+  }
+`
+
 export const GlobalStyle = createGlobalStyle`
   body {
     -webkit-font-smoothing: antialiased;
-    -webkit-text-stroke: 0.01em rgba(0, 0, 0, 0.1);
   }
-
+  
+  p {
+    margin: 0;
+  }
+  
+  .ant-layout {
+    background: #fff;
+  }
+  
+  .ant-popover-placement-bottomLeft > .ant-popover-content > .ant-popover-arrow {
+      left: 30px;
+  }  
+  
   .ant-tooltip {
     .ant-tooltip-inner {
       padding: 15px;
       text-align: center;
+    }
+  }
+  
+  .ant-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+  
+    a {
+      color: inherit;
+    }
+  
+    .anticon + a,
+    .anticon + span {
+      margin-left: 10px;
     }
   }
 
@@ -127,6 +322,7 @@ export const GlobalStyle = createGlobalStyle`
       margin-top: -12px;
     }
   }
+
 `
 
 export const Input = styled(Ant.Input)`

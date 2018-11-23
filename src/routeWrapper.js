@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
+import Cta from './components/Cta'
 
 import LoadingPage from './pages/LoadingPage'
 
@@ -15,6 +16,7 @@ const RouteWrapper = ({
   requireAuthentication,
   token,
   withoutHeader,
+  withoutCTA,
   withoutFooter,
   ...rest
 }) => (
@@ -31,6 +33,7 @@ const RouteWrapper = ({
               <Layout.Content>
                 <Component {...props} />
               </Layout.Content>
+              {!withoutCTA && <Cta />}
               {!withoutFooter && <Footer />}
             </Layout>
           )

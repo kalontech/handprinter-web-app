@@ -10,4 +10,10 @@ export default {
   lightGreen: '#B0D66D',
   blue: '#1568B9',
   orange: '#E57423',
+  btnPrimaryHover: '#81B02A',
+  btnPrimaryActive: '#7BA32F',
+  btnSecondaryHover: '#1A8274',
+  btnSecondaryActive: '#1D756A',
+  footerDropdownBg: '#2B3736',
+  menuLink: '#858f8e',
 }

@@ -17,11 +17,18 @@
 // @normal-color : #d9d9d9;
 @normal-color : #d9d9d9;
 
+// Custom variables
+@menu-link-color: #858f8e;
+@menu-active-link-bg: #F8FAFA;
+@dark-custom-menu-bg: #2B3736;
+@dark-custom-submenu-bg: #2B3736;
+@dark-custom-active-bg: #2B3736;
+@dark: #344442;
+@btn-padding: 20px;
+
 // Color used by default to control hover and active backgrounds and for
 // alert info backgrounds.
-@primary-1: color(
-  ~`colorPalette("@{primary-color}", 1) `
-); // replace tint(@primary-color, 90%)
+@primary-1: #81B02A; // replace tint(@primary-color, 90%)
 @primary-2: color(
   ~`colorPalette("@{primary-color}", 2) `
 ); // replace tint(@primary-color, 80%)
@@ -141,8 +148,8 @@
 @btn-primary-bg : @primary-color;
 
 @btn-default-color : @text-color;
-@btn-default-bg : #fff;
-@btn-default-border : @border-color-base;
+@btn-default-bg : fade(#fff, 90%);
+@btn-default-border : transparent;
 
 @btn-danger-color : @error-color;
 @btn-danger-bg : @background-color-base;
@@ -152,22 +159,22 @@
 @btn-disable-bg : @disabled-bg;
 @btn-disable-border : @border-color-base;
 
-@btn-padding-base : 0 @padding-md - 1px;
-@btn-font-size-lg : @font-size-lg;
+@btn-padding-base : 0 @btn-padding;
+@btn-font-size-lg : @font-size-base;
 @btn-font-size-sm : @font-size-base;
-@btn-padding-lg : @btn-padding-base;
+@btn-padding-lg : 0 @btn-padding + 5px;
 @btn-padding-sm : 0 @padding-xs - 1px;
 
 // @btn-height-base : 32px;
 @btn-height-base : 50px;
-@btn-height-lg : 40px;
+@btn-height-lg : @btn-height-base;
 @btn-height-sm : 24px;
 
 @btn-circle-size : @btn-height-base;
 @btn-circle-size-lg : @btn-height-lg;
 @btn-circle-size-sm : @btn-height-sm;
 
-@btn-group-border : @primary-5;
+@btn-group-border : transparent;
 
 // Checkbox
 @checkbox-size : 16px;
@@ -295,7 +302,7 @@
 // @tooltip-bg: rgba(0, 0, 0, 0.75);
 @tooltip-bg: #344442;
 //** Tooltip arrow width
-@tooltip-arrow-width: 5px;
+@tooltip-arrow-width: 10px;
 //** Tooltip distance with trigger
 @tooltip-distance: @tooltip-arrow-width - 1px + 4px;
 //** Tooltip arrow color
@@ -310,14 +317,14 @@
 //** Popover maximum width
 @popover-min-width: 177px;
 //** Popover arrow width
-@popover-arrow-width: 6px;
+@popover-arrow-width: 10px;
 //** Popover arrow color
 @popover-arrow-color: @popover-bg;
 //** Popover outer arrow width
 //** Popover outer arrow color
 @popover-arrow-outer-color: @popover-bg;
 //** Popover distance with trigger
-@popover-distance: @popover-arrow-width + 4px;
+@popover-distance: @popover-arrow-width;
 
 // Modal
 // --
@@ -337,18 +344,18 @@
 @menu-collapsed-width: 80px;
 @menu-bg: transparent;
 @menu-popup-bg: @component-background;
-@menu-item-color: @text-color;
-@menu-highlight-color: @primary-color;
-@menu-item-active-bg: @item-active-bg;
+@menu-item-color: @menu-link-color;
+@menu-highlight-color: @text-color;
+@menu-item-active-bg: @menu-active-link-bg;
 @menu-item-active-border-width: 3px;
 @menu-item-group-title-color: @text-color-secondary;
 // dark theme
 @menu-dark-color: @text-color-secondary-dark;
-@menu-dark-bg: @layout-header-background;
+@menu-dark-bg: @dark-custom-menu-bg;
 @menu-dark-arrow-color: #fff;
-@menu-dark-submenu-bg: #000c17;
+@menu-dark-submenu-bg: @dark-custom-submenu-bg;
 @menu-dark-highlight-color: #fff;
-@menu-dark-item-active-bg: @primary-color;
+@menu-dark-item-active-bg: @dark-custom-active-bg;
 
 // Spin
 // ---
