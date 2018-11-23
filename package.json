@@ -84,7 +84,7 @@
     "build": "node scripts/build.js",
     "test": "yarn eslint && yarn stylelint && node scripts/test.js",
     "serve": "serve -s build",
-    "eslint": "eslint src/**/*.js",
+    "eslint": "eslint src/**/**/*.js",
     "eslint:fix": "yarn eslint --fix",
     "stylelint": "stylelint src/**/*.css",
     "stylelint:fix": "yarn stylelint --fix"
