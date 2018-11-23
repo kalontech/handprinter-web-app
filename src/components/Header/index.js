@@ -6,8 +6,9 @@ import styled from 'styled-components'
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import FingerPrintIcon from '../../assets/icons/FingerPrintIcon'
 import HeaderLanguageSelector from './../HeaderLanguageSelector'
-import { PrimaryButton, HeaderPopover } from './../Styled'
+import { PrimaryButton, HeaderPopover, Affix } from './../Styled'
 import colors from './../../config/colors'
+import hexToRgba from '../../utils/hexToRgba'
 
 import logo from './assets/logo.jpg'
 
@@ -32,7 +33,11 @@ const HeaderWrap = styled(Layout.Header)`
   justify-content: space-between;
   font-size: 16px;
 
-  .ant-menu-item:hover,
+  .ant-menu-item:hover {
+    color: ${hexToRgba(colors.dark, 0.8)};
+    border-bottom: 3px solid transparent;
+  }
+
   .ant-menu-item-active,
   .ant-menu-item-selected {
     border-bottom: 3px solid ${colors.green};
@@ -95,72 +100,74 @@ const MenuWrap = styled.div`
 class Header extends React.Component {
   render() {
     return (
-      <HeaderWrap>
-        <LeftMenu>
-          <Logo>
-            <Link to="/">
-              <img src={logo} alt="Handprinter" />
-            </Link>
-          </Logo>
-          <MenuWrap>
-            <Menu mode="horizontal">
-              <Menu.Item key="actions">
-                <Link to="/actions">
-                  <FormattedMessage id="app.header.menu.actions" />
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="organizations">
-                <Link to="/pages/for-organizations">
-                  <FormattedMessage id="app.header.menu.organizations" />
+      <Affix>
+        <HeaderWrap>
+          <LeftMenu>
+            <Logo>
+              <Link to="/">
+                <img src={logo} alt="Handprinter" />
+              </Link>
+            </Logo>
+            <MenuWrap>
+              <Menu mode="horizontal">
+                <Menu.Item key="actions">
+                  <Link to="/actions">
+                    <FormattedMessage id="app.header.menu.actions" />
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="organizations">
+                  <Link to="/pages/for-organizations">
+                    <FormattedMessage id="app.header.menu.organizations" />
+                  </Link>
+                </Menu.Item>
+              </Menu>
+              <Popover
+                placement="bottomLeft"
+                content={
+                  <HeaderPopover mode="vertical" theme="light">
+                    <Menu.Item key="works">
+                      <Link to="/pages/our-vision">
+                        <FormattedMessage id="app.header.menu.howItWorks" />
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="measurement">
+                      <Link to="/pages/measurement-units">
+                        <FormattedMessage id="app.header.menu.measurement" />
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="faq">
+                      <Link to="/pages/faq">
+                        <FormattedMessage id="app.header.menu.faq" />
+                      </Link>
+                    </Menu.Item>
+                  </HeaderPopover>
+                }
+              >
+                <PopoverTitle>
+                  <FormattedMessage id="app.header.menu.about" />
+                  <ExpandMoreIcon />
+                </PopoverTitle>
+              </Popover>
+              <HeaderLanguageSelector />
+            </MenuWrap>
+          </LeftMenu>
+          <RightMenu>
+            <Menu theme="light" mode="horizontal">
+              <Menu.Item key="login">
+                <Link to="/account/login">
+                  <FormattedMessage id="app.header.menu.login" />
                 </Link>
               </Menu.Item>
             </Menu>
-            <Popover
-              placement="bottomLeft"
-              content={
-                <HeaderPopover mode="vertical" theme="light">
-                  <Menu.Item key="works">
-                    <Link to="/pages/our-vision">
-                      <FormattedMessage id="app.header.menu.howItWorks" />
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item key="measurement">
-                    <Link to="/pages/measurement-units">
-                      <FormattedMessage id="app.header.menu.measurement" />
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item key="faq">
-                    <Link to="/pages/faq">
-                      <FormattedMessage id="app.header.menu.faq" />
-                    </Link>
-                  </Menu.Item>
-                </HeaderPopover>
-              }
-            >
-              <PopoverTitle>
-                <FormattedMessage id="app.header.menu.about" />
-                <ExpandMoreIcon />
-              </PopoverTitle>
-            </Popover>
-            <HeaderLanguageSelector />
-          </MenuWrap>
-        </LeftMenu>
-        <RightMenu>
-          <Menu theme="light" mode="horizontal">
-            <Menu.Item key="login">
-              <Link to="/account/login">
-                <FormattedMessage id="app.header.menu.login" />
-              </Link>
-            </Menu.Item>
-          </Menu>
-          <Link to="/account/register">
-            <PrimaryButton type="primary" size="large">
-              <FingerPrintIcon />
-              <FormattedMessage id="app.header.link" />
-            </PrimaryButton>
-          </Link>
-        </RightMenu>
-      </HeaderWrap>
+            <Link to="/account/register">
+              <PrimaryButton type="primary" size="large">
+                <FingerPrintIcon />
+                <FormattedMessage id="app.header.link" />
+              </PrimaryButton>
+            </Link>
+          </RightMenu>
+        </HeaderWrap>
+      </Affix>
     )
   }
 }

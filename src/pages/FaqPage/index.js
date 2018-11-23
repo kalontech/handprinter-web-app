@@ -12,6 +12,7 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 
 import faqImg from './../../assets/faq/cat.png'
 import fingerPrintleft from './../../assets/faq/fingerprint-left.png'
+import fingerPrintRight from './../../assets/faq/fingerprint-right.svg'
 
 const Wrapper = styled.section`
   background-color: ${colors.lightGray};
@@ -22,7 +23,8 @@ const Wrapper = styled.section`
     left: 0;
     right: 0;
     height: 300px;
-    background: ${colors.ocean} url(${fingerPrintleft}) no-repeat left top;
+    background: url(${fingerPrintleft}) no-repeat left top,
+      ${colors.ocean} url(${fingerPrintRight}) no-repeat right bottom;
     content: '';
   }
 `
