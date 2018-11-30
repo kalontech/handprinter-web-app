@@ -41,7 +41,7 @@ class LoginPage extends Component {
   }
 
   componentDidUpdate = prevProps => {
-    handleFormError('logInError', prevProps, this.props)
+    handleFormError('logInError', 'formError', prevProps, this.props)
   }
 
   render() {

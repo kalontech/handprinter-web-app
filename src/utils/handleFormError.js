@@ -14,7 +14,12 @@
  * - Current props object (this.props).
  */
 
-const handleFormError = (propertyToWatch, prevProps, currProps) => {
+const handleFormError = (
+  propertyToWatch,
+  errorFieldName,
+  prevProps,
+  currProps,
+) => {
   const {
     form: { setFields },
     intl: { formatMessage },
@@ -22,7 +27,7 @@ const handleFormError = (propertyToWatch, prevProps, currProps) => {
   } = currProps
   if (prevProps[propertyToWatch] !== value) {
     setFields({
-      formError: {
+      [errorFieldName]: {
         errors: value ? [new Error(formatMessage({ id: value }))] : [],
       },
     })

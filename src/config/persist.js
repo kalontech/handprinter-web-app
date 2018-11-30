@@ -1,6 +1,11 @@
 import storage from 'redux-persist/lib/storage'
 
 const persistConfig = {
+  user: {
+    key: 'user',
+    storage,
+    whitelist: [],
+  },
   account: {
     key: 'account',
     storage,

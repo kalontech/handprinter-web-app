@@ -17,6 +17,7 @@ import OurVisionPage from './pages/OurVisionPage'
 import RegisterPage from './pages/RegisterPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import SetNewPasswordPage from './pages/SetNewPasswordPage'
+import ProfilePage from './pages/ProfilePage'
 
 export const history = createBrowserHistory()
 
@@ -37,11 +38,18 @@ const AppRouter = () => (
         component={DashboardPage}
         requireAuthentication
       />
+      <Route
+        path="/account/profile"
+        component={ProfilePage}
+        requireAuthentication
+      />
       <Route path="/pages/faq" component={FaqPage} withoutCTA />
       <Route path="/pages/for-organizations" component={ForOrganizationsPage} />
       <Route
         path="/account/login"
         component={LoginPage}
+        headerType="minimal"
+        unauthorizedOnly
         withoutHeader
         withoutCTA
         withoutFooter
@@ -51,6 +59,8 @@ const AppRouter = () => (
       <Route
         path="/account/register"
         component={RegisterPage}
+        headerType="minimal"
+        unauthorizedOnly
         withoutHeader
         withoutCTA
         withoutFooter
@@ -58,6 +68,8 @@ const AppRouter = () => (
       <Route
         path="/account/reset-password"
         component={ResetPasswordPage}
+        headerType="minimal"
+        unauthorizedOnly
         withoutHeader
         withoutCTA
         withoutFooter
@@ -65,6 +77,8 @@ const AppRouter = () => (
       <Route
         path="/account/set-new-password/:code"
         component={SetNewPasswordPage}
+        headerType="minimal"
+        unauthorizedOnly
         withoutHeader
         withoutCTA
         withoutFooter

@@ -313,13 +313,12 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
   }
 `
 
-export const Affix = styled(Ant.Affix)`
-  > div {
+export const GlobalStyle = createGlobalStyle`
+
+  .ant-affix {
     box-shadow: 0 1px 10px 0 ${hexToRgba(colors.dark, 0.08)};
   }
-`
-
-export const GlobalStyle = createGlobalStyle`
+  
   body {
     -webkit-font-smoothing: antialiased;
   }
@@ -333,8 +332,8 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   .ant-popover-placement-bottomLeft > .ant-popover-content > .ant-popover-arrow {
-      left: 30px;
-  }  
+    left: 30px;
+  }
   
   .ant-tooltip {
     .ant-tooltip-inner {

@@ -35,7 +35,7 @@ class ResetPasswordPage extends Component {
   }
 
   componentDidUpdate = prevProps => {
-    handleFormError('resetPasswordError', prevProps, this.props)
+    handleFormError('resetPasswordError', 'formError', prevProps, this.props)
   }
 
   render() {

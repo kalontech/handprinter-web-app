@@ -14,7 +14,6 @@ const PopoverTitle = styled.div`
   display: flex;
   align-items: center;
   line-height: 1;
-  margin-right: 40px;
   color: ${colors.menuLink};
   cursor: pointer;
 

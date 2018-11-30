@@ -10,11 +10,22 @@ import Cta from './components/Cta'
 
 import LoadingPage from './pages/LoadingPage'
 
+const renderLoader = props => (
+  <Layout>
+    <Layout.Content>
+      <LoadingPage {...props} />
+    </Layout.Content>
+  </Layout>
+)
+
 const RouteWrapper = ({
   component: Component,
   ready,
   requireAuthentication,
   token,
+  headerType,
+  unauthorizedOnly,
+  user,
   withoutHeader,
   withoutCTA,
   withoutFooter,
@@ -26,10 +37,21 @@ const RouteWrapper = ({
       if (ready) {
         if (requireAuthentication && !token) {
           return <Redirect to="/account/login" />
+        } else if (unauthorizedOnly && token) {
+          return <Redirect to="/account/dashboard" />
         } else {
+          if (requireAuthentication && !user) {
+            return renderLoader(props)
+          }
           return (
             <Layout>
-              {!withoutHeader && <Header />}
+              {!withoutHeader && (
+                <Header
+                  type={
+                    headerType || (requireAuthentication ? 'private' : 'public')
+                  }
+                />
+              )}
               <Layout.Content>
                 <Component {...props} />
               </Layout.Content>
@@ -39,13 +61,7 @@ const RouteWrapper = ({
           )
         }
       } else {
-        return (
-          <Layout>
-            <Layout.Content>
-              <LoadingPage {...props} />
-            </Layout.Content>
-          </Layout>
-        )
+        return renderLoader(props)
       }
     }}
   />
@@ -54,6 +70,7 @@ const RouteWrapper = ({
 const mapStateToProps = state => ({
   ready: state.app.ready,
   token: state.account.token,
+  user: state.user.data,
 })
 
 RouteWrapper.propTypes = {

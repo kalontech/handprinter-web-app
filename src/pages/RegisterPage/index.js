@@ -51,7 +51,7 @@ class RegisterPage extends Component {
   }
 
   componentDidUpdate = prevProps => {
-    handleFormError('registerError', prevProps, this.props)
+    handleFormError('registerError', 'formError', prevProps, this.props)
   }
 
   render() {

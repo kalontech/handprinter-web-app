@@ -25,6 +25,7 @@
     "eslint-loader": "2.1.1",
     "eslint-plugin-flowtype": "2.50.1",
     "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jest": "^22.1.0",
     "eslint-plugin-jsx-a11y": "6.1.2",
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-prettier": "^3.0.0",
@@ -106,7 +107,8 @@
       "react",
       "prettier",
       "standard",
-      "unicorn"
+      "unicorn",
+      "jest"
     ],
     "parserOptions": {
       "sourceType": "module",
@@ -116,9 +118,17 @@
     },
     "env": {
       "es6": true,
-      "node": true
+      "node": true,
+      "jest/globals": true
     },
     "globals": {
+      "File": true,
+      "atob": true,
+      "Blob": true,
+      "Headers": true,
+      "FormData": true,
+      "FileReader": true,
+      "Image": true,
       "fetch": true,
       "it": true
     },

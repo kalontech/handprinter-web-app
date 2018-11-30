@@ -72,10 +72,52 @@ const resetPasswordRequest = email =>
     method: 'POST',
   })
 
+const getMe = token =>
+  fetchHelper(`${apiBaseUrl}/users/me`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    method: 'GET',
+  })
+
+const updateMePhoto = async (payload, token) => {
+  const options = {
+    method: 'PUT',
+    body: new FormData(),
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  }
+
+  options.body.append('file', payload.file)
+
+  const { data, error, success } = await (await fetch(
+    `${apiBaseUrl}/users/me`,
+    options,
+  )).json()
+  if (success) {
+    return data
+  } else {
+    throw error
+  }
+}
+
+const updateMe = (data, token) =>
+  fetchHelper(`${apiBaseUrl}/users/me`, {
+    body: data,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    method: 'PUT',
+  })
+
 export default {
   getCountries,
   logIn,
   register,
+  getMe,
+  updateMe,
+  updateMePhoto,
   resetPasswordConfirm,
   resetPasswordRequest,
 }

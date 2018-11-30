@@ -42,7 +42,7 @@ class SetNewPasswordPage extends Component {
   }
 
   componentDidUpdate = prevProps => {
-    handleFormError('setNewPasswordError', prevProps, this.props)
+    handleFormError('setNewPasswordError', 'formError', prevProps, this.props)
   }
 
   render() {

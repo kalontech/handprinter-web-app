@@ -5,6 +5,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 
 import accountStore from './accountStore'
 import appStore from './appStore'
+import userStore from './userStore'
 import rootSaga from './../sagas'
 import locales from './../locales'
 import persistConfig from './../config/persist'
@@ -17,6 +18,7 @@ const configureStore = () => {
   }
   const rootReducer = combineReducers({
     account: persistReducer(persistConfig.account, accountStore),
+    user: persistReducer(persistConfig.user, userStore),
     app: persistReducer(persistConfig.app, appStore),
     intl: persistReducer(persistConfig.intl, intlReducer),
   })

@@ -3,14 +3,20 @@ import { call, put } from 'redux-saga/effects'
 import { history } from './../appRouter'
 import api from './../api'
 import decodeError from './../utils/decodeError'
+import { Types as AccountStoreTypes } from '../redux/accountStore'
+import { prepareUserProfile } from './helpers'
 
 function* logIn({ email, password }) {
   try {
     const { token } = yield call(api.logIn, email, password)
-    yield put({ type: 'LOG_IN_SUCCESS', token })
+    yield put({ type: AccountStoreTypes.LOG_IN_SUCCESS, token })
+    yield call(prepareUserProfile)
     yield call(history.push, '/account/dashboard')
   } catch (error) {
-    yield put({ type: 'LOG_IN_FAILURE', error: decodeError(error) })
+    yield put({
+      type: AccountStoreTypes.LOG_IN_FAILURE,
+      error: decodeError(error),
+    })
   }
 }
 
@@ -24,10 +30,14 @@ function* register({ email, password, fullName, country, invitationCode }) {
       country,
       invitationCode,
     )
-    yield put({ type: 'REGISTER_SUCCESS', token })
+    yield put({ type: AccountStoreTypes.REGISTER_SUCCESS, token })
+    yield call(prepareUserProfile)
     yield call(history.push, '/account/dashboard')
   } catch (error) {
-    yield put({ type: 'REGISTER_FAILURE', error: decodeError(error) })
+    yield put({
+      type: AccountStoreTypes.REGISTER_FAILURE,
+      error: decodeError(error),
+    })
   }
 }
 
