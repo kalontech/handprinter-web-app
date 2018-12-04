@@ -6,7 +6,7 @@ import { Types as UserStoreTypes } from '../redux/userStore'
 
 function* getMe({ token }) {
   try {
-    const user = yield call(api.getMe, token)
+    const { user } = yield call(api.getMe, token)
     yield put.resolve({ type: UserStoreTypes.GET_ME_SUCCESS, user })
   } catch (error) {
     yield put.resolve({
@@ -21,7 +21,7 @@ function* updateMeInfo({ data }) {
     const {
       account: { token },
     } = yield select()
-    const user = yield call(api.updateMe, data, token)
+    const { user } = yield call(api.updateMe, data, token)
     yield put.resolve({ type: UserStoreTypes.UPDATE_ME_INFO_SUCCESS, user })
   } catch (error) {
     yield put.resolve({
@@ -36,7 +36,7 @@ function* updateMePhoto({ data }) {
     const {
       account: { token },
     } = yield select()
-    const user = yield call(api.updateMePhoto, data, token)
+    const { user } = yield call(api.updateMePhoto, data, token)
     yield put.resolve({ type: UserStoreTypes.UPDATE_ME_PHOTO_SUCCESS, user })
   } catch (error) {
     yield put.resolve({
@@ -51,7 +51,7 @@ function* updateMePassword({ data }) {
     const {
       account: { token },
     } = yield select()
-    const user = yield call(api.updateMe, data, token)
+    const { user } = yield call(api.updateMe, data, token)
     yield put.resolve({ type: UserStoreTypes.UPDATE_ME_PASSWORD_SUCCESS, user })
   } catch (error) {
     yield put.resolve({

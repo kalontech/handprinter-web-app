@@ -26,9 +26,6 @@ export function getImageWidthHeight(img, sideSize) {
   }
 }
 
-export const getFileUrl = id =>
-  `${process.env.REACT_APP_API_BASE_URL}/files/${id}`
-
 export function convertBase64ToFile(base64img) {
   const byteString = atob(base64img.split(',')[1])
   const ab = new ArrayBuffer(byteString.length)

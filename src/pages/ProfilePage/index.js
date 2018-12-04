@@ -14,11 +14,7 @@ import {
   DefaultButton,
 } from './../../components/Styled'
 import colors from './../../config/colors'
-import {
-  getFileUrl,
-  convertBase64ToFile,
-  croppResizeProfilePhoto,
-} from '../../utils/file'
+import { convertBase64ToFile, croppResizeProfilePhoto } from '../../utils/file'
 import getValidationRules from './../../config/validationRules'
 import { PROFILE_PHOTO_SIZE, ACCEPT_IMAGE_FORMATS } from '../../config/files'
 import handleFormError from './../../utils/handleFormError'
@@ -377,11 +373,11 @@ class ProfilePage extends Component {
 
         <ProfileImgBackground>
           {((photoToUpload && photoToUpload) ||
-            (user.photo ? getFileUrl(user.photo) : null)) && (
+            (user.photo ? user.photo : null)) && (
             <ProfileImg
               src={
                 (photoToUpload && photoToUpload) ||
-                (user.photo ? getFileUrl(user.photo) : null)
+                (user.photo ? user.photo : null)
               }
             />
           )}

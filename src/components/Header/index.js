@@ -12,7 +12,6 @@ import HeaderLanguageSelector from './../HeaderLanguageSelector'
 import { PrimaryButton, HeaderPopover } from './../Styled'
 import colors from './../../config/colors'
 import hexToRgba from '../../utils/hexToRgba'
-import { getFileUrl } from '../../utils/file'
 import { Creators as AccountCreators } from './../../redux/accountStore'
 
 import fullLogoImg from './assets/fullLogo.jpg'
@@ -324,9 +323,7 @@ const Header = ({ logOut, type, user }) => (
               }
             >
               <PopoverTitle>
-                <Avatar>
-                  {user.photo && <img src={getFileUrl(user.photo)} alt="" />}
-                </Avatar>
+                <Avatar>{user.photo && <img src={user.photo} alt="" />}</Avatar>
               </PopoverTitle>
             </Popover>
           </RightAlign>
