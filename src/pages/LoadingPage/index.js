@@ -1,5 +1,7 @@
 import React from 'react'
 
-const LoadingPage = () => <h1>Loading...</h1>
+import Spinner from './../../components/Spinner'
+
+const LoadingPage = () => <Spinner />
 
 export default LoadingPage

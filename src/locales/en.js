@@ -336,4 +336,7 @@ export default {
     'The cool thing is that <strong> the smaller your footprint gets, the more powerful each action will become </strong> when handprinter calculates the action’s effect on your footprint.',
   'app.measurementPage.Animation.Title':
     'Make your handprint bigger than your footprint. Become <strong>Net Positive</strong>',
+  'app.actions.takeAction': 'Take action',
+  'app.actions.congratulations': 'Congratulations',
+  'app.actions.handprintIncreased': 'Your handprint just increased!',
 }

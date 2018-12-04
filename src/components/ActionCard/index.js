@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+
 import ActionCardLabelSet from '../ActionCardLabelSet'
 import colors from './../../config/colors'
 import hexToRgba from './../../utils/hexToRgba'
@@ -45,27 +47,40 @@ const CardWrapper = styled.div`
   padding: 20px;
 `
 
+const ActionCardLabelSetWrapper = styled.div`
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+`
+
 const ActionCard = props => {
-  const { cardImg, cardTitle, cardArr } = props
+  const { linkPrefix, slug, picture, name, impacts } = props
   return (
-    <CardWrap>
-      <CardContainer>
-        <CardImage>
-          <img src={cardImg} alt="" />
-        </CardImage>
-        <CardWrapper>
-          <CardHeading>{cardTitle}</CardHeading>
-          <ActionCardLabelSet arr={cardArr} />
-        </CardWrapper>
-      </CardContainer>
-    </CardWrap>
+    <Link to={`${linkPrefix}/${slug}`}>
+      <CardWrap>
+        <CardContainer>
+          <CardImage>
+            <img src={picture} alt={name} />
+          </CardImage>
+          <CardWrapper>
+            <CardHeading>{name}</CardHeading>
+            <ActionCardLabelSetWrapper>
+              <ActionCardLabelSet impacts={impacts} />
+            </ActionCardLabelSetWrapper>
+          </CardWrapper>
+        </CardContainer>
+      </CardWrap>
+    </Link>
   )
 }
 
 ActionCard.propTypes = {
-  cardArr: PropTypes.array,
-  cardTitle: PropTypes.string,
-  cardImg: PropTypes.string,
+  linkPrefix: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  impacts: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
+  placeholder: PropTypes.bool,
 }
 
 export default ActionCard

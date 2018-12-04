@@ -5,30 +5,40 @@ import styled from 'styled-components'
 
 const CardLabelWrap = styled.div`
   display: flex;
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
 `
 
 const ActionCardLabelSet = props => {
-  const { arr } = props
+  const { impacts } = props
   return (
     <CardLabelWrap>
-      {arr.map((item, index) => (
-        <ActionCardLabel
-          key={index}
-          category={item.category}
-          unit={item.unit}
-          value={item.value}
-          variant={item.variant}
-        />
-      ))}
+      {Object.entries(impacts.footprint)
+        .filter(([category, timeValue]) => timeValue.minutes > 0)
+        .map(([category, timeValue], index) => (
+          <ActionCardLabel
+            key={index}
+            category={category}
+            unit={timeValue.humanReadable.unit}
+            value={timeValue.humanReadable.value}
+            variant="positive"
+          />
+        ))}
+      {Object.entries(impacts.handprint)
+        .filter(([category, timeValue]) => timeValue.minutes > 0)
+        .map(([category, timeValue], index) => (
+          <ActionCardLabel
+            key={index}
+            category={category}
+            unit={timeValue.humanReadable.unit}
+            value={timeValue.humanReadable.value}
+            variant="negative"
+          />
+        ))}
     </CardLabelWrap>
   )
 }
 
 ActionCardLabelSet.propTypes = {
-  arr: PropTypes.array,
+  impacts: PropTypes.array.isRequired,
 }
 
 export default ActionCardLabelSet

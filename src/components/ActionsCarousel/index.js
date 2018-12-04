@@ -86,12 +86,14 @@ class ActionsCarousel extends React.Component {
             variableWidth={true}
             beforeChange={(item, index) => this.disableArrows(item, index)}
           >
-            {this.props.actions.map((item, index) => (
+            {this.props.actions.map((action, index) => (
               <ActionCard
                 key={index}
-                cardImg={item.cardImg}
-                cardTitle={item.cardTitle}
-                cardArr={item.cardArr}
+                linkPrefix={this.props.actionLinkPrefix}
+                slug={action.slug}
+                picture={action.picture}
+                name={action.name}
+                impacts={action.impacts}
               />
             ))}
           </Carousel>

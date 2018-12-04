@@ -1,5 +1,6 @@
 import get from 'lodash/get'
 import has from 'lodash/has'
+import queryString from 'query-string'
 
 const apiBaseUrl =
   window.location.hostname === 'localhost'
@@ -31,7 +32,27 @@ const fetchHelper = async (url, options) => {
   }
 }
 
+const findAction = ({ actionId, slug }) =>
+  fetchHelper(`${apiBaseUrl}/actions/find_one`, {
+    body: {
+      actionId,
+      slug,
+    },
+    method: 'POST',
+  })
+
+const getActions = (query = {}) =>
+  fetchHelper(`${apiBaseUrl}/actions?${queryString.stringify(query)}`)
+
 const getCountries = () => fetchHelper(`${apiBaseUrl}/countries`)
+
+const getMe = token =>
+  fetchHelper(`${apiBaseUrl}/users/me`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    method: 'GET',
+  })
 
 const logIn = (email, password) =>
   fetchHelper(`${apiBaseUrl}/auth/login`, {
@@ -72,12 +93,24 @@ const resetPasswordRequest = email =>
     method: 'POST',
   })
 
-const getMe = token =>
-  fetchHelper(`${apiBaseUrl}/users/me`, {
+const takeAction = (actionId, token) =>
+  fetchHelper(`${apiBaseUrl}/actions/take`, {
+    body: {
+      actionId,
+    },
     headers: {
       authorization: `Bearer ${token}`,
     },
-    method: 'GET',
+    method: 'POST',
+  })
+
+const updateMe = (data, token) =>
+  fetchHelper(`${apiBaseUrl}/users/me`, {
+    body: data,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    method: 'PUT',
   })
 
 const updateMePhoto = async (payload, token) => {
@@ -88,9 +121,7 @@ const updateMePhoto = async (payload, token) => {
       authorization: `Bearer ${token}`,
     },
   }
-
   options.body.append('file', payload.file)
-
   const { data, error, success } = await (await fetch(
     `${apiBaseUrl}/users/me`,
     options,
@@ -102,20 +133,14 @@ const updateMePhoto = async (payload, token) => {
   }
 }
 
-const updateMe = (data, token) =>
-  fetchHelper(`${apiBaseUrl}/users/me`, {
-    body: data,
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-    method: 'PUT',
-  })
-
 export default {
+  findAction,
+  getActions,
   getCountries,
+  getMe,
   logIn,
   register,
-  getMe,
+  takeAction,
   updateMe,
   updateMePhoto,
   resetPasswordConfirm,

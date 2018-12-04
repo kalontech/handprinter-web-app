@@ -314,11 +314,6 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
 `
 
 export const GlobalStyle = createGlobalStyle`
-
-  .ant-affix {
-    box-shadow: 0 1px 10px 0 ${hexToRgba(colors.dark, 0.08)};
-  }
-  
   body {
     -webkit-font-smoothing: antialiased;
   }
@@ -395,6 +390,13 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-affix {
+    box-shadow: 0 1px 10px 0 ${hexToRgba(colors.dark, 0.08)};
+  }
+
+  .ant-carousel .slick-list .slick-slide {
+    pointer-events: all;
+  }
 `
 
 export const Input = styled(Ant.Input)`
@@ -459,4 +461,10 @@ export const OceanDescription = styled.h1`
 
 export const OceanForm = styled.div`
   margin-top: 40px;
+`
+
+export const Pagination = styled(Ant.Pagination)`
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
 `

@@ -8,6 +8,14 @@ import hexToRgba from './../../utils/hexToRgba'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import PropTypes from 'prop-types'
 
+export const TimeValueAbbreviations = {
+  MINUTES: 'MINS',
+  HOURS: 'HRS',
+  DAYS: 'DAYS',
+  MONTHS: 'MTHS',
+  YEARS: 'YRS',
+}
+
 const ActionCardLabel = props => {
   const { category, value, variant, unit } = props
 
@@ -31,11 +39,11 @@ const ActionCardLabel = props => {
     border: 1px solid transparent;
     margin-right: 6px;
     border-color: ${() =>
-      unit === 'days' && variant === 'positive'
+      unit === TimeValueAbbreviations.DAYS && variant === 'positive'
         ? hexToRgba(`${colors.blue}`, 0.3)
-        : unit === 'hrs' && variant === 'positive'
+        : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
           ? hexToRgba(`${colors.ocean}`, 0.3)
-          : unit === 'min' && variant === 'positive'
+          : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
             ? hexToRgba(`${colors.green}`, 0.3)
             : hexToRgba(`${colors.darkGray}`, 0.3)};
     border-radius: 4px;
@@ -53,21 +61,21 @@ const ActionCardLabel = props => {
   justify-content: center;
   width: 26px;
   background-color: ${() =>
-    unit === 'days' && variant === 'positive'
+    unit === TimeValueAbbreviations.DAYS && variant === 'positive'
       ? hexToRgba(`${colors.blue}`, 0.1)
-      : unit === 'hrs' && variant === 'positive'
+      : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
         ? hexToRgba(`${colors.ocean}`, 0.1)
-        : unit === 'min' && variant === 'positive'
+        : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
           ? hexToRgba(`${colors.green}`, 0.1)
           : hexToRgba(`${colors.darkGray}`, 0.1)};
       
     .anticon {
       color: ${() =>
-        unit === 'days' && variant === 'positive'
+        unit === TimeValueAbbreviations.DAYS && variant === 'positive'
           ? `${colors.blue}`
-          : unit === 'hrs' && variant === 'positive'
+          : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
             ? `${colors.ocean}`
-            : unit === 'min' && variant === 'positive'
+            : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
               ? `${colors.green}`
               : `${colors.darkGray}`}
   }
@@ -76,11 +84,11 @@ const ActionCardLabel = props => {
   const Caption = styled.div`
     text-transform: uppercase;
     color: ${() =>
-      unit === 'days' && variant === 'positive'
+      unit === TimeValueAbbreviations.DAYS && variant === 'positive'
         ? `${colors.blue}`
-        : unit === 'hrs' && variant === 'positive'
+        : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
           ? `${colors.ocean}`
-          : unit === 'min' && variant === 'positive'
+          : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
             ? `${colors.green}`
             : `${colors.darkGray}`};
     font-size: 10px;
@@ -139,7 +147,13 @@ ActionCardLabel.propTypes = {
     'water',
     'waste',
   ]).isRequired,
-  unit: PropTypes.oneOf(['days', 'hrs', 'min']).isRequired,
+  unit: PropTypes.oneOf([
+    TimeValueAbbreviations.MINUTES,
+    TimeValueAbbreviations.HOURS,
+    TimeValueAbbreviations.DAYS,
+    TimeValueAbbreviations.MONTHS,
+    TimeValueAbbreviations.YEARS,
+  ]).isRequired,
   variant: PropTypes.oneOf(['positive', 'negative']).isRequired,
   value: PropTypes.string.isRequired,
 }

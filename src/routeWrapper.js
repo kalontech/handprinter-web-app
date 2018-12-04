@@ -3,6 +3,7 @@ import { Layout } from 'antd'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { ModalContainer } from 'react-router-modal'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -25,6 +26,7 @@ const RouteWrapper = ({
   token,
   headerType,
   unauthorizedOnly,
+  useAuthentication,
   user,
   withoutHeader,
   withoutCTA,
@@ -48,7 +50,11 @@ const RouteWrapper = ({
               {!withoutHeader && (
                 <Header
                   type={
-                    headerType || (requireAuthentication ? 'private' : 'public')
+                    headerType || useAuthentication
+                      ? token
+                        ? 'private'
+                        : 'public'
+                      : false || (requireAuthentication ? 'private' : 'public')
                   }
                 />
               )}
@@ -57,6 +63,7 @@ const RouteWrapper = ({
               </Layout.Content>
               {!withoutCTA && <Cta />}
               {!withoutFooter && <Footer />}
+              <ModalContainer />
             </Layout>
           )
         }
