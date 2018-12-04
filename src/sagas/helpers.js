@@ -2,6 +2,7 @@ import { put, select, call } from 'redux-saga/effects'
 
 import api from './../api'
 import { Creators as UserStoreCreators } from '../redux/userStore'
+import { Creators as AccountStoreCreators } from '../redux/accountStore'
 import { history } from './../appRouter'
 
 export function* prepareUserProfile() {
@@ -10,9 +11,15 @@ export function* prepareUserProfile() {
   } = yield select()
   if (token) {
     try {
-      const user = yield call(api.getMe, token)
-      if (user) yield put.resolve(UserStoreCreators.setUser(user))
+      const { user } = yield call(api.getMe, token)
+      if (user) {
+        yield put.resolve(UserStoreCreators.setUser(user))
+      } else {
+        yield put.resolve(AccountStoreCreators.logOut())
+        yield call(history.push, '/account/login')
+      }
     } catch (error) {
+      yield put.resolve(AccountStoreCreators.logOut())
       yield call(history.push, '/account/login')
     }
   }
