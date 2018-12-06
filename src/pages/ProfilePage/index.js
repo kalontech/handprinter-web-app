@@ -14,9 +14,17 @@ import {
   DefaultButton,
 } from './../../components/Styled'
 import colors from './../../config/colors'
-import { convertBase64ToFile, croppResizeProfilePhoto } from '../../utils/file'
+import {
+  convertBase64ToFile,
+  croppResizeProfilePhoto,
+  convertBytesToMegabytes,
+} from '../../utils/file'
 import getValidationRules from './../../config/validationRules'
-import { PROFILE_PHOTO_SIZE, ACCEPT_IMAGE_FORMATS } from '../../config/files'
+import {
+  PROFILE_PHOTO_SIZE_LIMIT,
+  PROFILE_PHOTO_WEIGHT_LIMIT,
+  ACCEPT_IMAGE_FORMATS,
+} from '../../config/files'
 import handleFormError from './../../utils/handleFormError'
 
 import profileLeavesBackgroundImage from '../../assets/images/profileLeavesBackgroundImage.png'
@@ -323,16 +331,21 @@ class ProfilePage extends Component {
 
     if (!file) return
 
+    if (convertBytesToMegabytes(file.size, 0) > PROFILE_PHOTO_WEIGHT_LIMIT) {
+      this.setState({ uploadImageError: 'app.errors.image.wrongWeight' })
+      return
+    }
+
     const { error, photo } = await croppResizeProfilePhoto({
       file,
-      size: PROFILE_PHOTO_SIZE,
+      size: PROFILE_PHOTO_SIZE_LIMIT,
       canvas: this.canvasRef.current,
     })
 
     if (error) {
       this.setState({ uploadImageError: error })
     } else {
-      this.setState({ photoToUpload: photo })
+      this.setState({ photoToUpload: photo, uploadImageError: null })
     }
   }
 

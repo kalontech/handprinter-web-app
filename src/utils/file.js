@@ -92,3 +92,7 @@ export async function croppResizeProfilePhoto({ file, size, canvas }) {
     return { error }
   }
 }
+
+export function convertBytesToMegabytes(bytes, decimal = 2) {
+  return Number((bytes / 1024 / 1024).toFixed(decimal))
+}

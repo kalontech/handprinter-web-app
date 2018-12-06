@@ -1,8 +1,12 @@
-import { PROFILE_PHOTO_SIZE } from '../config/files'
+import {
+  PROFILE_PHOTO_SIZE_LIMIT,
+  PROFILE_PHOTO_WEIGHT_LIMIT,
+} from '../config/files'
 
 export default {
   'app.errors.unknown': 'Unknown error',
-  'app.errors.image.wrongSize': `Image must be greater than ${PROFILE_PHOTO_SIZE}x${PROFILE_PHOTO_SIZE}px`,
+  'app.errors.image.wrongSize': `Image must be greater than ${PROFILE_PHOTO_SIZE_LIMIT}x${PROFILE_PHOTO_SIZE_LIMIT}px`,
+  'app.errors.image.wrongWeight': `Image must be less than ${PROFILE_PHOTO_WEIGHT_LIMIT} megabytes`,
   'app.errors.image.parsing': 'Problem with input file.',
   'app.errors.0': 'Incorrect password',
   'app.errors.1': 'User not found',
