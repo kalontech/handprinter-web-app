@@ -408,11 +408,6 @@ export const Input = styled(Ant.Input)`
     padding: 0 15px;
   }
 
-  &,
-  .ant-input {
-    border-color: ${colors.gray};
-  }
-
   &:hover,
   .ant-input:hover {
     border-color: ${colors.green};
