@@ -16,6 +16,7 @@ definitions:
         image: node:alpine
         name: Test
         script:
+          - yarn
           - yarn test
     - deploy-docker-image: &deploy-docker-image
         image: google/cloud-sdk:latest
