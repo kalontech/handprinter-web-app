@@ -12,11 +12,6 @@ definitions:
     docker:
       memory: 2048
   steps:
-    - install-dependencies: &install-dependencies
-        image: node:alpine
-        name: Install dependencies
-        script:
-          - yarn
     - test: &test
         image: node:alpine
         name: Test
@@ -67,17 +62,14 @@ definitions:
         trigger: manual
 pipelines:
   default:
-    - step: *install-dependencies
     - step: *test
   branches:
     master:
-      - step: *install-dependencies
       - step: *test
       - step: *deploy-docker-image
       - step: *deploy-to-staging
       - step: *deploy-to-production
     feature/*:
-      - step: *install-dependencies
       - step: *test
       - step: *deploy-docker-image
       - step: *deploy-to-test
