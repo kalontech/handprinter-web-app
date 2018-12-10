@@ -8,25 +8,16 @@ definitions:
       gcloud config set compute/zone $GCP_COMPUTE_ZONE
       gcloud config set core/project $GCP_PROJECT_NAME
       gcloud container clusters get-credentials $GCP_CLUSTER_NAME
-  caches:
-    node-modules: node_modules
-    yarn-lock: yarn.lock
   services:
     docker:
       memory: 2048
   steps:
     - install-dependencies: &install-dependencies
-        caches:
-          - node-modules
-          - yarn-lock
         image: node:alpine
         name: Install dependencies
         script:
           - yarn
     - test: &test
-        caches:
-          - node-modules
-          - yarn-lock
         image: node:alpine
         name: Test
         script:
