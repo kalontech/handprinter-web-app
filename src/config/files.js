@@ -3,7 +3,8 @@ export const PROFILE_PHOTO_WEIGHT_LIMIT = 2 // megabytes
 
 export const ACCEPT_IMAGE_FORMATS = {
   JPEG: 'image/jpeg',
-  PNG: 'image/x-png',
+  PNG: 'image/png',
+  X_PNG: 'image/x-png',
   GIF: 'image/gif',
 }
 
