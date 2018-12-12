@@ -69,11 +69,6 @@ const Footer = () => (
                 </Link>
               </li>
               <li>
-                <Link to="/pages/for-organizations">
-                  <FormattedMessage id="app.footer.menu.organizations" />
-                </Link>
-              </li>
-              <li>
                 <Link to="/pages/our-vision">
                   <FormattedMessage id="app.footer.menu.howItWorks" />
                 </Link>
@@ -88,23 +83,8 @@ const Footer = () => (
           <Col span={6}>
             <FooterMenu>
               <li>
-                <Link to="/">
-                  <FormattedMessage id="app.footer.menu.contact" />
-                </Link>
-              </li>
-              <li>
                 <Link to="/pages/faq">
                   <FormattedMessage id="app.footer.menu.faq" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/">
-                  <FormattedMessage id="app.footer.menu.termsOfUse" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/">
-                  <FormattedMessage id="app.footer.menu.privacyPolicy" />
                 </Link>
               </li>
             </FooterMenu>

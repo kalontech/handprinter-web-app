@@ -209,11 +209,6 @@ const Header = ({ logOut, type, user }) => (
                   <FormattedMessage id="app.header.menu.actions" />
                 </Link>
               </Menu.Item>
-              <Menu.Item key="organizations">
-                <Link to="/pages/for-organizations">
-                  <FormattedMessage id="app.header.menu.forOrganizations" />
-                </Link>
-              </Menu.Item>
             </Menu>
             <Popover
               placement="bottomLeft"
@@ -281,21 +276,6 @@ const Header = ({ logOut, type, user }) => (
             <Menu.Item key="actions">
               <Link to="/actions">
                 <FormattedMessage id="app.header.menu.actions" />
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="news">
-              <Link to="/">
-                <FormattedMessage id="app.header.menu.news" />
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="groups">
-              <Link to="/">
-                <FormattedMessage id="app.header.menu.groups" />
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="organizations">
-              <Link to="/pages/for-organizations">
-                <FormattedMessage id="app.header.menu.organizations" />
               </Link>
             </Menu.Item>
           </Menu>
