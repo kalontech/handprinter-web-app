@@ -62,6 +62,7 @@ class RegisterPage extends Component {
       isRegistering,
     } = this.props
     const { showInvitationCodeTooltip } = this.state
+
     return (
       <ActionCardWrapper>
         <ActionCard>

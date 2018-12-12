@@ -5,7 +5,7 @@ import AppRouter from './appRouter'
 import configureStore from './redux'
 import { GlobalStyle } from './components/Styled'
 
-const store = configureStore()
+export const store = configureStore()
 
 const App = () => (
   <Provider store={store}>

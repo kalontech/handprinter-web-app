@@ -377,12 +377,11 @@ class ProfilePage extends Component {
       >
         <LeavesTopBackgroundImage src={profileLeavesBackgroundImage} />
 
-        {!photoToUpload &&
-          user.photo && (
-            <OuterPlusButton>
-              <Icon type="plus" />
-            </OuterPlusButton>
-          )}
+        {!photoToUpload && user.photo && (
+          <OuterPlusButton>
+            <Icon type="plus" />
+          </OuterPlusButton>
+        )}
 
         <ProfileImgBackground>
           {((photoToUpload && photoToUpload) ||
@@ -394,17 +393,16 @@ class ProfilePage extends Component {
               }
             />
           )}
-          {!photoToUpload &&
-            !user.photo && (
-              <AddPhotoHint>
-                <InnerPlusButton>
-                  <Icon type="plus" />
-                </InnerPlusButton>
-                <div>
-                  <FormattedMessage id="app.profilePage.addPhoto" />
-                </div>
-              </AddPhotoHint>
-            )}
+          {!photoToUpload && !user.photo && (
+            <AddPhotoHint>
+              <InnerPlusButton>
+                <Icon type="plus" />
+              </InnerPlusButton>
+              <div>
+                <FormattedMessage id="app.profilePage.addPhoto" />
+              </div>
+            </AddPhotoHint>
+          )}
         </ProfileImgBackground>
       </ProfileImgWrap>
 

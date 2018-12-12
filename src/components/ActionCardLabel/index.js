@@ -42,10 +42,10 @@ const ActionCardLabel = props => {
       unit === TimeValueAbbreviations.DAYS && variant === 'positive'
         ? hexToRgba(`${colors.blue}`, 0.3)
         : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
-          ? hexToRgba(`${colors.ocean}`, 0.3)
-          : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-            ? hexToRgba(`${colors.green}`, 0.3)
-            : hexToRgba(`${colors.darkGray}`, 0.3)};
+        ? hexToRgba(`${colors.ocean}`, 0.3)
+        : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
+        ? hexToRgba(`${colors.green}`, 0.3)
+        : hexToRgba(`${colors.darkGray}`, 0.3)};
     border-radius: 4px;
     overflow: hidden;
     cursor: pointer;
@@ -64,20 +64,20 @@ const ActionCardLabel = props => {
     unit === TimeValueAbbreviations.DAYS && variant === 'positive'
       ? hexToRgba(`${colors.blue}`, 0.1)
       : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
-        ? hexToRgba(`${colors.ocean}`, 0.1)
-        : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-          ? hexToRgba(`${colors.green}`, 0.1)
-          : hexToRgba(`${colors.darkGray}`, 0.1)};
+      ? hexToRgba(`${colors.ocean}`, 0.1)
+      : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
+      ? hexToRgba(`${colors.green}`, 0.1)
+      : hexToRgba(`${colors.darkGray}`, 0.1)};
       
     .anticon {
       color: ${() =>
         unit === TimeValueAbbreviations.DAYS && variant === 'positive'
           ? `${colors.blue}`
           : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
-            ? `${colors.ocean}`
-            : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-              ? `${colors.green}`
-              : `${colors.darkGray}`}
+          ? `${colors.ocean}`
+          : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
+          ? `${colors.green}`
+          : `${colors.darkGray}`}
   }
 `
 
@@ -87,10 +87,10 @@ const ActionCardLabel = props => {
       unit === TimeValueAbbreviations.DAYS && variant === 'positive'
         ? `${colors.blue}`
         : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
-          ? `${colors.ocean}`
-          : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-            ? `${colors.green}`
-            : `${colors.darkGray}`};
+        ? `${colors.ocean}`
+        : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
+        ? `${colors.green}`
+        : `${colors.darkGray}`};
     font-size: 10px;
     font-weight: bold;
     line-height: 1.4;

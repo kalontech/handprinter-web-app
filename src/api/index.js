@@ -1,6 +1,9 @@
 import get from 'lodash/get'
 import has from 'lodash/has'
 import queryString from 'query-string'
+import * as Sentry from '@sentry/browser'
+
+import { store } from '../app'
 
 const apiBaseUrl =
   window.location.hostname === 'localhost'
@@ -25,6 +28,20 @@ const fetchHelper = async (url, options) => {
     url,
     transformedOptions,
   )).json()
+
+  const user = store.getState().user.data
+  Sentry.addBreadcrumb({
+    category: 'fetch',
+    type: 'http',
+    level: 'info',
+    data: {
+      user: user && user,
+      url,
+      payload: transformedOptions,
+      error,
+    },
+  })
+
   if (success) {
     return data
   } else {

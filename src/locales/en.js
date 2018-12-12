@@ -22,6 +22,9 @@ export default {
   'app.errors.11': 'This user was deactivated',
   'app.errors.12': 'Endpoint is not found',
   'app.errors.13': 'This email is already in use',
+  'app.errorHandlerPage.pleaseSendReportAndReloadPage':
+    'An error occured during render. Please, send report and reload the page.',
+  'app.errorHandlerPage.sendReport': 'Send report',
   'app.loginPage.title': 'Login',
   'app.loginPage.forgotPassword': 'Forgot password',
   'app.loginPage.login': 'Login',

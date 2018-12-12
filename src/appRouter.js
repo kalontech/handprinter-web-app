@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Redirect, Router, Switch } from 'react-router-dom'
 import { ModalRoute } from 'react-router-modal'
 import createBrowserHistory from 'history/createBrowserHistory'
+import ErrorCatcher from './utils/errorCatcher'
 
 import Route from './routeWrapper'
 
@@ -27,7 +28,7 @@ const handleBackdropClick = ({ parentPath }) =>
 
 const AppRouter = () => (
   <Router history={history}>
-    <Fragment>
+    <ErrorCatcher>
       <Switch>
         <Redirect exact from="/" to="/pages/home" />
         <Route path="/pages/home" component={HomePage} />
@@ -115,7 +116,7 @@ const AppRouter = () => (
         }
         component={ActionModalPage}
       />
-    </Fragment>
+    </ErrorCatcher>
   </Router>
 )
 

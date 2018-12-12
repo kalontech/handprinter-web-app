@@ -2,6 +2,8 @@ import { combineReducers, createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { intlReducer } from 'react-intl-redux'
 import { persistStore, persistReducer } from 'redux-persist'
+import * as Sentry from '@sentry/browser'
+import createSentryMiddleware from 'redux-sentry-middleware'
 
 import accountStore from './accountStore'
 import appStore from './appStore'
@@ -26,7 +28,7 @@ const configureStore = () => {
   const store = createStore(
     rootReducer,
     initialState,
-    applyMiddleware(sagaMiddleware),
+    applyMiddleware(sagaMiddleware, createSentryMiddleware(Sentry)),
   )
   persistStore(store)
   sagaMiddleware.run(rootSaga)
