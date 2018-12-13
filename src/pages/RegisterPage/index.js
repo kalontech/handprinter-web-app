@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { Button, Form, Select, Tooltip } from 'antd'
 import { Link } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
 
 import { Creators as AccountCreators } from './../../redux/accountStore'
 import {
@@ -20,15 +21,137 @@ import {
 import getValidationRules from './../../config/validationRules'
 import InputForPassword from './../../components/InputForPassword'
 import handleFormError from './../../utils/handleFormError'
+import decodeError from './../../utils/decodeError'
 
+import api from './../../api'
+
+import registerFingerprintTop from './../../assets/images/registerFingerprintTop.png'
+import registerFingerprintBot from './../../assets/images/registerFingerprintBot.png'
 import registerActionCardImage from './../../assets/images/registerActionCard.jpg'
+import registerBrandedPhotoLeaves from './../../assets/images/registerBrandedPhotoLeaves.png'
 import arrowDownIcon from './../../assets/icons/arrowDown.svg'
 import infoFillIcon from './../../assets/icons/infoFill.svg'
 import infoOutlineIcon from './../../assets/icons/infoOutline.svg'
+import colors from '../../config/colors'
+
+export const BrandedBlockWrap = styled.div`
+  position: relative;
+  height: 100%;
+  color: ${colors.white};
+`
+
+export const BrandedBlock = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 50px;
+  text-align: center;
+  position: relative;
+`
+
+export const BrandedBlockPhotoWrap = styled.div`
+  height: 133px;
+  width: 133px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 28px;
+`
+
+export const BrandedBlockPhoto = styled.img`
+  position: relative;
+  width: 100%;
+`
+
+export const BrandedBlockPhotoBg = styled.div`
+  background-color: white;
+  height: 100%;
+  position: relative;
+`
+
+export const BrandedBlockReferrerName = styled.div`
+  height: 100%;
+  color: ${colors.green};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 48px;
+`
+
+export const BrandedBlockLeaves = styled.img`
+  height: 70px;
+  width: auto;
+  position: absolute;
+  top: 90px;
+  right: 149px;
+`
+
+export const BrandedBlockHeading = styled.h2`
+  color: ${colors.white};
+  font-size: 28px;
+  margin: 0 0 20px 0;
+  line-height: 37px;
+  max-width: 300px;
+`
+
+export const BrandedBlockDescription = styled.p`
+  font-size: 16px;
+`
+
+export const BrandedBlockFingerprintTopImg = styled.img`
+  position: absolute;
+  top: 0;
+  height: 160px;
+  width: auto;
+`
+
+export const BrandedBlockFingerprintBotImg = styled.img`
+  position: absolute;
+  bottom: 0;
+  right: 0px;
+  height: 80px;
+  width: auto;
+`
 
 class RegisterPage extends Component {
   state = {
     showInvitationCodeTooltip: false,
+    referrer: null,
+    getReferrerError: null,
+  }
+
+  componentDidMount() {
+    const {
+      match: {
+        params: { invitationCode },
+      },
+    } = this.props
+
+    if (invitationCode) this.fetchReferrer(invitationCode)
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    handleFormError('registerError', 'formError', prevProps, this.props)
+  }
+
+  fetchReferrer = async invitationCode => {
+    const {
+      intl: { formatMessage },
+      form: { setFieldsValue, setFields },
+    } = this.props
+    try {
+      const { user } = await api.getUser({ invitationCode })
+      if (user) this.setState({ referrer: user })
+      setFieldsValue({ invitationCode: user.invitationCode })
+    } catch (error) {
+      setFields({
+        formError: {
+          errors: [new Error(formatMessage({ id: decodeError(error) }))],
+        },
+      })
+    }
   }
 
   handleSubmit = e => {
@@ -41,17 +164,22 @@ class RegisterPage extends Component {
       if (!err) {
         delete values.formError
         const { email, password, fullName, country, invitationCode } = values
-        registerRequest(email, password, fullName, country, invitationCode)
+        const data = {
+          email,
+          password,
+          fullName,
+          country,
+        }
+
+        if (invitationCode) data.invitationCode = invitationCode
+
+        registerRequest(data)
       }
     })
   }
 
   toggleInvitationCodeTooltip = showInvitationCodeTooltip => {
     this.setState({ showInvitationCodeTooltip })
-  }
-
-  componentDidUpdate = prevProps => {
-    handleFormError('registerError', 'formError', prevProps, this.props)
   }
 
   render() {
@@ -61,13 +189,45 @@ class RegisterPage extends Component {
       intl: { formatMessage },
       isRegistering,
     } = this.props
-    const { showInvitationCodeTooltip } = this.state
+    const { showInvitationCodeTooltip, referrer } = this.state
 
     return (
       <ActionCardWrapper>
         <ActionCard>
           <ActionCardLeftHalf span={12}>
-            <img src={registerActionCardImage} />
+            {referrer ? (
+              <BrandedBlockWrap>
+                <BrandedBlockFingerprintTopImg src={registerFingerprintTop} />
+                <BrandedBlock>
+                  <BrandedBlockPhotoWrap>
+                    <BrandedBlockLeaves src={registerBrandedPhotoLeaves} />
+                    <BrandedBlockPhotoBg>
+                      {referrer.photo ? (
+                        <BrandedBlockPhoto src={referrer.photo} />
+                      ) : (
+                        <BrandedBlockReferrerName>
+                          {referrer.fullName.slice(0, 1).toUpperCase()}
+                        </BrandedBlockReferrerName>
+                      )}
+                    </BrandedBlockPhotoBg>
+                  </BrandedBlockPhotoWrap>
+                  <BrandedBlockHeading>
+                    <FormattedMessage id="app.registerPage.brandedBlock.heading" />
+                  </BrandedBlockHeading>
+                  <BrandedBlockDescription>
+                    <FormattedMessage
+                      id="app.registerPage.brandedBlock.description"
+                      values={{
+                        referrerFullName: referrer.fullName,
+                      }}
+                    />
+                  </BrandedBlockDescription>
+                </BrandedBlock>
+                <BrandedBlockFingerprintBotImg src={registerFingerprintBot} />
+              </BrandedBlockWrap>
+            ) : (
+              <img src={registerActionCardImage} />
+            )}
           </ActionCardLeftHalf>
           <ActionCardRightHalf span={12}>
             <div style={{ width: '300px' }}>
@@ -191,24 +351,20 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      registerRequest: (email, password, fullName, country, invitationCode) =>
-        AccountCreators.registerRequest(
-          email,
-          password,
-          fullName,
-          country,
-          invitationCode,
-        ),
+      registerRequest: data => AccountCreators.registerRequest(data),
     },
     dispatch,
   )
 
 RegisterPage.propTypes = {
   countries: PropTypes.array.isRequired,
-  form: {
+  form: PropTypes.shape({
     setFields: PropTypes.func.isRequired,
-  },
+  }),
   intl: PropTypes.object.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.object.isRequired,
+  }),
   isRegistering: PropTypes.bool.isRequired,
   registerError: PropTypes.string,
   registerRequest: PropTypes.func.isRequired,

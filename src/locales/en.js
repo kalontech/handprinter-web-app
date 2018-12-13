@@ -21,7 +21,8 @@ export default {
   'app.errors.10': 'File not found',
   'app.errors.11': 'This user was deactivated',
   'app.errors.12': 'Endpoint is not found',
-  'app.errors.13': 'This email is already in use',
+  'app.errors.13': 'Action is not found',
+  'app.errors.14': 'This email is already in use',
   'app.errorHandlerPage.pleaseSendReportAndReloadPage':
     'An error occured during render. Please, send report and reload the page.',
   'app.errorHandlerPage.sendReport': 'Send report',
@@ -33,6 +34,11 @@ export default {
   'app.registerPage.title': 'Registration',
   'app.registerPage.register': 'Join Handprinters',
   'app.registerPage.alreadyHaveAnAccount': 'Already have an account?',
+  'app.registerPage.brandedBlock.heading':
+    'Make the world better and keep your results',
+  'app.registerPage.brandedBlock.description': `Your friend {referrerFullName} invites you to the
+    handprinter service. Sign up to confirm your invitation.
+    Start your positive impact on the planet!`,
   'app.registerPage.login': 'Login',
   'app.profilePage.addPhoto': 'Add photo',
   'app.profilePage.generalInformation': 'General information',
@@ -42,6 +48,27 @@ export default {
   'app.profilePage.changePassword.saveNewPassword': 'Save new password',
   'app.profilePage.form.password': 'Enter your current password',
   'app.profilePage.form.newPassword': 'Enter new password',
+  'app.increaseHandprintPage.title': 'Increate your handprint!',
+  // TODO:
+  // need change "app.increaseHandprintPage.description" translation
+  'app.increaseHandprintPage.description': `Donec fringilla euismod velit, vitae placerat ex euismod sit amet. Nulla
+    ornare nibh a libero rhoncus, ac iaculis arcu tempor. Proin at
+    vestibulum nisi, in tincidunt ipsum. Suspendisse at porttitor eros.
+    Quisque risus dui, tincidunt ac eros vel, lacinia blandit magna.`,
+  'app.increaseHandprintPage.form.yourPersonalPromocode':
+    'Your personal promo code',
+  'app.increaseHandprintPage.form.shareYourLinkWithCode':
+    'Share your link with code',
+  'app.increaseHandprintPage.form.copyButton': 'Copy',
+  'app.increaseHandprintPage.form.sendInvitationByEmail':
+    'Send invitation by mail',
+  'app.increaseHandprintPage.form.sendInvites': 'Send invites',
+  'app.increaseHandprintPage.form.or': 'OR',
+  'app.increaseHandprintPage.emptyError':
+    'To send invites add at least one email',
+  'app.increaseHandprintPage.form.enterEmailAddress': 'Enter email address',
+  'app.increaseHandprintPage.form.addEmail': 'Add email',
+  'app.increaseHandprintPage.form.add': 'Add',
   'app.forms.email': 'Email',
   'app.forms.email.required': 'Email is required',
   'app.forms.email.invalid': 'This is not email',

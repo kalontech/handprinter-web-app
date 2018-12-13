@@ -44,20 +44,26 @@ function* register({ email, password, fullName, country, invitationCode }) {
 function* resetPassword({ email, password }) {
   try {
     yield call(api.resetPasswordRequest, email)
-    yield put({ type: 'RESET_PASSWORD_SUCCESS' })
+    yield put({ type: AccountStoreTypes.RESET_PASSWORD_SUCCESS })
     yield call(history.push, '/account/check-your-email')
   } catch (error) {
-    yield put({ type: 'RESET_PASSWORD_FAILURE', error: decodeError(error) })
+    yield put({
+      type: AccountStoreTypes.RESET_PASSWORD_FAILURE,
+      error: decodeError(error),
+    })
   }
 }
 
 function* setNewPassword({ code, password }) {
   try {
     yield call(api.resetPasswordConfirm, code, password)
-    yield put({ type: 'SET_NEW_PASSWORD_SUCCESS' })
+    yield put({ type: AccountStoreTypes.SET_NEW_PASSWORD_SUCCESS })
     yield call(history.push, '/account/login')
   } catch (error) {
-    yield put({ type: 'SET_NEW_PASSWORD_FAILURE', error: decodeError(error) })
+    yield put({
+      type: AccountStoreTypes.SET_NEW_PASSWORD_FAILURE,
+      error: decodeError(error),
+    })
   }
 }
 

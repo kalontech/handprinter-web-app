@@ -16,10 +16,11 @@ import LoginPage from './pages/LoginPage'
 import MeasurementUnitsPage from './pages/MeasurementUnitsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import OurVisionPage from './pages/OurVisionPage'
-import ProfilePage from './pages/ProfilePage'
 import RegisterPage from './pages/RegisterPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import SetNewPasswordPage from './pages/SetNewPasswordPage'
+import ProfilePage from './pages/ProfilePage'
+import IncreaseHandprintPage from './pages/IncreaseHandprintPage'
 
 export const history = createBrowserHistory()
 
@@ -45,6 +46,12 @@ const AppRouter = () => (
           component={DashboardPage}
           requireAuthentication
         />
+        <Route
+          path="/account/code"
+          component={IncreaseHandprintPage}
+          requireAuthentication
+          withoutCTA
+        />
         <Route path="/pages/faq" component={FaqPage} withoutCTA />
         <Route
           path="/account/login"
@@ -64,9 +71,10 @@ const AppRouter = () => (
           path="/account/profile"
           component={ProfilePage}
           requireAuthentication
+          withoutCTA
         />
         <Route
-          path="/account/register"
+          path="/account/register/:invitationCode?"
           component={RegisterPage}
           headerType="minimal"
           unauthorizedOnly

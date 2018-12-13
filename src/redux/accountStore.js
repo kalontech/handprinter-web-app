@@ -16,13 +16,10 @@ export const { Types, Creators } = createActions({
   logInRequest: ['email', 'password'],
   logInSuccess: ['token'],
   logInFailure: ['error'],
-  registerRequest: [
-    'email',
-    'password',
-    'fullName',
-    'country',
-    'invitationCode',
-  ],
+  registerRequest: data => ({
+    type: Types.REGISTER_REQUEST,
+    ...data,
+  }),
   registerSuccess: ['token'],
   registerFailure: ['error'],
   resetPasswordRequest: ['email'],

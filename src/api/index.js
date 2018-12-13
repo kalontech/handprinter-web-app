@@ -9,7 +9,9 @@ const apiBaseUrl =
   window.location.hostname === 'localhost'
     ? process.env.REACT_APP_API_BASE_URL
     : `${window.location.protocol}//${window.location.host}/api`
-const webAppBaseUrl = `${window.location.protocol}//${window.location.host}`
+export const webAppBaseUrl = `${window.location.protocol}//${
+  window.location.host
+}`
 
 const fetchHelper = async (url, options) => {
   const body = has(options, 'body')
@@ -150,6 +152,21 @@ const updateMePhoto = async (payload, token) => {
   }
 }
 
+const shareInvitationCode = (data, token) =>
+  fetchHelper(`${apiBaseUrl}/users/me/code/share`, {
+    body: data,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    method: 'POST',
+  })
+
+const getUser = (data, token) =>
+  fetchHelper(`${apiBaseUrl}/users/find_one`, {
+    body: data,
+    method: 'POST',
+  })
+
 export default {
   findAction,
   getActions,
@@ -157,9 +174,11 @@ export default {
   getMe,
   logIn,
   register,
+  getUser,
   takeAction,
   updateMe,
   updateMePhoto,
   resetPasswordConfirm,
   resetPasswordRequest,
+  shareInvitationCode,
 }

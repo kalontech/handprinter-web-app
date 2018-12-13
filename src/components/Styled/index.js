@@ -26,13 +26,7 @@ export const ActionCardFormWrapper = styled.div`
 
 export const ActionCardLeftHalf = styled(Ant.Col)`
   height: 100%;
-
-  img {
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    width: 100%;
-  }
+  background: ${colors.green};
 `
 
 export const ActionCardRightHalf = styled(Ant.Col)`
@@ -55,7 +49,7 @@ export const HeaderPopover = styled(Ant.Menu)`
     }
     .ant-menu-item-selected,
     :hover {
-      background: #f8fafa;
+      background: ${colors.lightGray};
       border-radius: 4px;
     }
   }

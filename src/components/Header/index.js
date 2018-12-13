@@ -292,7 +292,7 @@ const Header = ({ logOut, type, user }) => (
                     <Link to="/account/profile">
                       <FormattedMessage id="app.header.menu.profileSettings" />
                     </Link>
-                    <Link to="/">
+                    <Link to="/account/code">
                       <FormattedMessage id="app.header.menu.increaseHandprint" />
                     </Link>
                     <a onClick={logOut}>
