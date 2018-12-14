@@ -229,8 +229,8 @@ class ActionsPage extends Component {
                       searchData.searching ? (
                         <Spin size="small" />
                       ) : !searchData.searching &&
-                      Number.isInteger(searchData.total) &&
-                      searchData.total === 0 ? (
+                        Number.isInteger(searchData.total) &&
+                        searchData.total === 0 ? (
                         <FormattedMessage id="app.actionsPage.searchNotFound" />
                       ) : null
                     }
