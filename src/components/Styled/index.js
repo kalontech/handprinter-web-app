@@ -401,6 +401,18 @@ export const GlobalStyle = createGlobalStyle`
   .ant-carousel .slick-list .slick-slide {
     pointer-events: all;
   }
+
+  .ant-modal-confirm__override-for__profile-page {
+    .ant-modal-confirm-title {
+      font-size: 18px
+    }
+    .ant-modal-confirm-btns {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
 `
 
 export const Input = styled(Ant.Input)`

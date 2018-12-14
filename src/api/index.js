@@ -152,6 +152,14 @@ const updateMePhoto = async (payload, token) => {
   }
 }
 
+const deleteMe = token =>
+  fetchHelper(`${apiBaseUrl}/users/me`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    method: 'DELETE',
+  })
+
 const shareInvitationCode = (data, token) =>
   fetchHelper(`${apiBaseUrl}/users/me/code/share`, {
     body: data,
@@ -180,5 +188,6 @@ export default {
   updateMePhoto,
   resetPasswordConfirm,
   resetPasswordRequest,
+  deleteMe,
   shareInvitationCode,
 }

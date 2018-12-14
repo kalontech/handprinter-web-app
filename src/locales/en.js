@@ -46,8 +46,20 @@ export default {
   'app.profilePage.changePassword': 'Change password',
   'app.profilePage.changePassword.cancel': 'Cancel',
   'app.profilePage.changePassword.saveNewPassword': 'Save new password',
+  'app.profilePage.deleteAccount': 'Delete account',
+  'app.profilePage.deleteAccount.successTitle':
+    'Account was successfully deleted',
+  'app.profilePage.deleteAccount.successRedirectMessage':
+    'You will be redirected to login page.',
   'app.profilePage.form.password': 'Enter your current password',
   'app.profilePage.form.newPassword': 'Enter new password',
+  'app.profilePage.deleteAccountModal.title':
+    'Are you sure delete your account?',
+  'app.profilePage.deleteAccountModal.context':
+    'Your account will be deleted and can`t be recovered',
+  'app.profilePage.deleteAccountModal.confirmButton': 'Delete',
+  'app.profilePage.deleteAccountModal.cancelButton': 'Cancel',
+  'app.profilePage.deleteAccountModal.closeButton': 'Close',
   'app.increaseHandprintPage.title': 'Increate your handprint!',
   // TODO:
   // need change "app.increaseHandprintPage.description" translation
