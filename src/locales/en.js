@@ -156,6 +156,8 @@ export default {
   'app.actionCardLabel.tooltip.text':
     'You can reduce your footprint for {value} {unit} on the {category} category.',
   'app.actionsSlider.link': 'View all actions',
+  'app.actionsPage.searchPlaceholder': 'Search',
+  'app.actionsPage.searchNotFound': 'Not found',
   'app.faqPage.title': 'FAQ',
   'app.faqPage.0.question': 'What is handprint?',
   'app.faqPage.0.answer':

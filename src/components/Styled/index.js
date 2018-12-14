@@ -384,6 +384,16 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-select__override-for__actions-page {
+    .ant-select-dropdown-menu-item:hover,
+    .ant-select-dropdown-menu-item-active {
+      background-color: ${colors.lightGray};
+    }
+    .ant-select-selected-icon {
+      display: none !important;
+    }
+  }
+
   .ant-affix {
     box-shadow: 0 1px 10px 0 ${hexToRgba(colors.dark, 0.08)};
   }
