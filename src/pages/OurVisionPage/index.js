@@ -259,6 +259,35 @@ const SliderHeading = styled.div`
   text-align: center;
 `
 
+const StepFourScreenshotWrap = styled(ImgWrap)`
+  img {
+    top: 5px;
+    left: 20px;
+    position: relative;
+  }
+`
+
+const StepFourContentWrap = styled.div`
+  position: relative;
+  top: 2px;
+  span {
+    letter-spacing: 1px;
+  }
+  img {
+    padding-bottom: 38px;
+  }
+`
+
+const StepSixImage = styled.img`
+  position: relative;
+  left: 30px;
+`
+
+const StepSixContentWrap = styled(StepFourContentWrap)`
+  top: 31px;
+  left: -1px;
+`
+
 class OurVisionPage extends Component {
   state = {
     actions: [],
@@ -527,18 +556,20 @@ class OurVisionPage extends Component {
             <Step4>
               <Row gutter={20} type="flex" align="middle">
                 <Col span={10}>
-                  <ImgWrap>
-                    <img src={stepsImg4} alt="" />
-                  </ImgWrap>
+                  <StepFourScreenshotWrap>
+                    <img src={stepsImg4} alt="Add action" />
+                  </StepFourScreenshotWrap>
                 </Col>
                 <Col span={10} offset={2}>
-                  <Number src={num4} alt="4" />
-                  <SubtitleGreen as="h3">
-                    <FormattedHTMLMessage id="app.ourVision.step4.title" />
-                  </SubtitleGreen>
-                  <TextMedium>
-                    <FormattedMessage id="app.ourVision.step4.text" />
-                  </TextMedium>
+                  <StepFourContentWrap>
+                    <Number src={num4} alt="4" />
+                    <SubtitleGreen as="h3">
+                      <FormattedHTMLMessage id="app.ourVision.step4.title" />
+                    </SubtitleGreen>
+                    <TextMedium>
+                      <FormattedMessage id="app.ourVision.step4.text" />
+                    </TextMedium>
+                  </StepFourContentWrap>
                 </Col>
               </Row>
             </Step4>
@@ -564,17 +595,19 @@ class OurVisionPage extends Component {
               <Row gutter={20} type="flex" align="middle">
                 <Col span={10}>
                   <ImgWrap>
-                    <img src={stepsImg6} alt="" />
+                    <StepSixImage src={stepsImg6} alt="Network" />
                   </ImgWrap>
                 </Col>
                 <Col span={10} offset={2}>
-                  <Number src={num6} alt="6" />
-                  <SubtitleGreen as="h3">
-                    <FormattedHTMLMessage id="app.ourVision.step6.title" />
-                  </SubtitleGreen>
-                  <TextMedium>
-                    <FormattedMessage id="app.ourVision.step6.text" />
-                  </TextMedium>
+                  <StepSixContentWrap>
+                    <Number src={num6} alt="6" />
+                    <SubtitleGreen as="h3">
+                      <FormattedHTMLMessage id="app.ourVision.step6.title" />
+                    </SubtitleGreen>
+                    <TextMedium>
+                      <FormattedMessage id="app.ourVision.step6.text" />
+                    </TextMedium>
+                  </StepSixContentWrap>
                 </Col>
               </Row>
             </Step>
