@@ -481,4 +481,65 @@ export const Pagination = styled(Ant.Pagination)`
   display: flex;
   justify-content: center;
   margin-top: 25px;
+
+  .ant-pagination-item {
+    margin: 0 !important;
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    border-radius: 0px;
+    background-color: transparent;
+    font-weight: bold;
+    border: 1px solid ${colors.gray};
+    border-right: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:nth-child(2) {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+
+    &:nth-last-child(2) {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      border-right: 1px solid ${colors.gray};
+    }
+
+    a {
+      color: ${colors.darkGray};
+      display: block;
+      padding: 7px;
+      margin: 0;
+    }
+  }
+  .ant-pagination-item-active {
+    border-color: ${colors.gray};
+    a {
+      color: black;
+    }
+  }
+  .ant-pagination-jump-next,
+  .ant-pagination-jump-prev {
+    height: 45px;
+    border: 1px solid ${colors.gray};
+    border-right: none;
+    border-radius: 0;
+    margin: 0;
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    a {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .anticon {
+      color: ${colors.darkGray};
+    }
+  }
 `
