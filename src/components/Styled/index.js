@@ -175,6 +175,7 @@ export const BlockSubTitle = styled.h2`
   line-height: 1.24;
   font-weight: 700;
   font-family: 'Noto Serif', serif;
+  letter-spacing: 1px;
   + p {
     margin-top: 20px;
   }

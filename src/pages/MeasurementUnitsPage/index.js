@@ -135,6 +135,9 @@ const CardListContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
+  left: -28px;
+  top: -14px;
 `
 
 const CardList = styled.ul`
@@ -188,6 +191,8 @@ const CardSection = styled.section`
 
 const CardImage = styled.img`
   margin-top: -51px;
+  left: 10px;
+  position: relative;
 `
 
 const ImgWrapRight = styled.div`
@@ -223,6 +228,54 @@ const Animation = styled.video`
   }
 `
 
+const HeroBlockImage = styled(ImgWrapCentered)`
+  position: relative;
+  top: -14px;
+  left: -9px;
+`
+
+const MeaningBlockImage = styled.img`
+  position: relative;
+  top: 13px;
+  left: -13px;
+`
+
+const ProblemBlockImage = styled.img`
+  position: relative;
+  top: -13px;
+`
+
+const ImpactBlockWrap = styled.div`
+  position: relative;
+  top: 16px;
+  left: -1px;
+`
+
+const CardListWrap = styled.div`
+  position: relative;
+  top: 19px;
+  left: 5px;
+  p {
+    margin-bottom: 5px;
+  }
+  ul {
+    margin: 0;
+    li {
+      margin-bottom: 7px;
+    }
+  }
+`
+
+const CommonBasisImg = styled.img`
+  position: relative;
+  left: -15px;
+  top: -10px;
+`
+
+const Scales = styled(Animation)`
+  max-width: 760px;
+`
+
 const MeasurementUnitsPage = () => {
   return (
     <Fragment>
@@ -238,9 +291,9 @@ const MeasurementUnitsPage = () => {
               </HeroText>
             </Col>
             <Col span={12}>
-              <ImgWrapCentered>
-                <img src={heroImg} alt="" />
-              </ImgWrapCentered>
+              <HeroBlockImage>
+                <img src={heroImg} alt="Car" />
+              </HeroBlockImage>
             </Col>
           </Row>
         </BlockContainer>
@@ -280,7 +333,7 @@ const MeasurementUnitsPage = () => {
               </Col>
               <Col span={14}>
                 <ImgWrapRight>
-                  <img src={meaningImg} alt="" />
+                  <MeaningBlockImage src={meaningImg} alt="" />
                 </ImgWrapRight>
               </Col>
             </Row>
@@ -293,7 +346,7 @@ const MeasurementUnitsPage = () => {
           <Row gutter={20} type="flex" align="middle">
             <Col span={12}>
               <div>
-                <img src={problemImg} alt="" />
+                <ProblemBlockImage src={problemImg} alt="" />
               </div>
             </Col>
             <Col span={10}>
@@ -353,35 +406,37 @@ const MeasurementUnitsPage = () => {
 
           <Row type="flex" align="middle">
             <Col span={8} offset={2}>
-              <HeadingMiddle as="h3">
-                <FormattedMessage id="app.measurementPage.Impact.ListTitle" />
-              </HeadingMiddle>
-              <ImpactContainer>
-                <ImpactItem>
-                  <ImpactLabelImg src={blueLabel} alt="" />
-                  <ImpactLabelTextBlue>
-                    <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemBlue" />
-                  </ImpactLabelTextBlue>
-                </ImpactItem>
-                <ImpactItem>
-                  <ImpactLabelImg src={darkGreenLabel} alt="" />
-                  <ImpactLabelTextOcean>
-                    <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemDarkGreen" />
-                  </ImpactLabelTextOcean>
-                </ImpactItem>
-                <ImpactItem>
-                  <ImpactLabelImg src={lightGreenLabel} alt="" />
-                  <ImpactLabelTextGreen>
-                    <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemLightGreen" />
-                  </ImpactLabelTextGreen>
-                </ImpactItem>
-                <ImpactItem>
-                  <ImpactLabelImg src={grayLabel} alt="" />
-                  <ImpactLabelTextGray>
-                    <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemGray" />
-                  </ImpactLabelTextGray>
-                </ImpactItem>
-              </ImpactContainer>
+              <ImpactBlockWrap>
+                <HeadingMiddle as="h3">
+                  <FormattedMessage id="app.measurementPage.Impact.ListTitle" />
+                </HeadingMiddle>
+                <ImpactContainer>
+                  <ImpactItem>
+                    <ImpactLabelImg src={blueLabel} alt="" />
+                    <ImpactLabelTextBlue>
+                      <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemBlue" />
+                    </ImpactLabelTextBlue>
+                  </ImpactItem>
+                  <ImpactItem>
+                    <ImpactLabelImg src={darkGreenLabel} alt="" />
+                    <ImpactLabelTextOcean>
+                      <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemDarkGreen" />
+                    </ImpactLabelTextOcean>
+                  </ImpactItem>
+                  <ImpactItem>
+                    <ImpactLabelImg src={lightGreenLabel} alt="" />
+                    <ImpactLabelTextGreen>
+                      <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemLightGreen" />
+                    </ImpactLabelTextGreen>
+                  </ImpactItem>
+                  <ImpactItem>
+                    <ImpactLabelImg src={grayLabel} alt="" />
+                    <ImpactLabelTextGray>
+                      <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemGray" />
+                    </ImpactLabelTextGray>
+                  </ImpactItem>
+                </ImpactContainer>
+              </ImpactBlockWrap>
             </Col>
             <Col span={14}>
               <ImgWrapRight>
@@ -402,38 +457,40 @@ const MeasurementUnitsPage = () => {
             </Col>
             <Col span={10} offset={2}>
               <CardListContainer>
-                <TextMedium>
-                  <strong>
-                    <FormattedMessage id="app.measurementPage.Card.Title" />
-                  </strong>
-                </TextMedium>
-                <CardList>
-                  <CardListBlue>
-                    <TextMedium>
-                      <FormattedHTMLMessage id="app.measurementPage.Card.Item1" />
-                    </TextMedium>
-                  </CardListBlue>
-                  <CardListBlue>
-                    <TextMedium>
-                      <FormattedHTMLMessage id="app.measurementPage.Card.Item2" />
-                    </TextMedium>
-                  </CardListBlue>
-                  <CardListOcean>
-                    <TextMedium>
-                      <FormattedHTMLMessage id="app.measurementPage.Card.Item3" />
-                    </TextMedium>
-                  </CardListOcean>
-                  <CardListOcean>
-                    <TextMedium>
-                      <FormattedHTMLMessage id="app.measurementPage.Card.Item4" />
-                    </TextMedium>
-                  </CardListOcean>
-                  <CardListGreen>
-                    <TextMedium>
-                      <FormattedHTMLMessage id="app.measurementPage.Card.Item5" />
-                    </TextMedium>
-                  </CardListGreen>
-                </CardList>
+                <CardListWrap>
+                  <TextMedium>
+                    <strong>
+                      <FormattedMessage id="app.measurementPage.Card.Title" />
+                    </strong>
+                  </TextMedium>
+                  <CardList>
+                    <CardListBlue>
+                      <TextMedium>
+                        <FormattedHTMLMessage id="app.measurementPage.Card.Item1" />
+                      </TextMedium>
+                    </CardListBlue>
+                    <CardListBlue>
+                      <TextMedium>
+                        <FormattedHTMLMessage id="app.measurementPage.Card.Item2" />
+                      </TextMedium>
+                    </CardListBlue>
+                    <CardListOcean>
+                      <TextMedium>
+                        <FormattedHTMLMessage id="app.measurementPage.Card.Item3" />
+                      </TextMedium>
+                    </CardListOcean>
+                    <CardListOcean>
+                      <TextMedium>
+                        <FormattedHTMLMessage id="app.measurementPage.Card.Item4" />
+                      </TextMedium>
+                    </CardListOcean>
+                    <CardListGreen>
+                      <TextMedium>
+                        <FormattedHTMLMessage id="app.measurementPage.Card.Item5" />
+                      </TextMedium>
+                    </CardListGreen>
+                  </CardList>
+                </CardListWrap>
               </CardListContainer>
             </Col>
           </Row>
@@ -456,7 +513,7 @@ const MeasurementUnitsPage = () => {
             </Col>
             <Col span={12} offset={2}>
               <ImgWrapCentered>
-                <img src={footImg} alt="" />
+                <CommonBasisImg src={footImg} alt="Foot" />
               </ImgWrapCentered>
             </Col>
           </Row>
@@ -472,9 +529,9 @@ const MeasurementUnitsPage = () => {
               </BlockSubTitleGreen>
             </Col>
           </Row>
-          <Animation autoPlay={true} loop={true} muted={true}>
+          <Scales autoPlay={true} loop={true} muted={true}>
             <source src={animation} type="video/mp4" />
-          </Animation>
+          </Scales>
         </BlockContainer>
       </AnimationSection>
     </Fragment>
