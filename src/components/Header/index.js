@@ -262,7 +262,7 @@ const Header = ({ logOut, type, user }) => (
     {type === 'private' && (
       <HeaderWrap>
         <LogoSmall>
-          <Link to="/">
+          <Link to="/account/dashboard">
             <img src={partialLogoImg} alt="Handprinter" />
           </Link>
         </LogoSmall>

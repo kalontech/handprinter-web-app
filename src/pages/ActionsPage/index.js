@@ -20,11 +20,10 @@ const Wrapper = styled.div`
   background-color: ${colors.lightGray};
   position: relative;
   height: 100%;
-  top: -25px;
 `
 
 const InnerContainer = styled.div`
-  margin: 25px 0 35px;
+  padding: 25px 0 35px;
 `
 
 const ActionSearchDropdownPicture = styled.img`

@@ -32,8 +32,8 @@ const AppRouter = () => (
     <ErrorCatcher>
       <Switch>
         <Redirect exact from="/" to="/pages/home" />
-        <Route path="/pages/home" component={HomePage} />
-        <Route path="/actions" component={ActionsPage} useAuthentication />
+        <Route path="/pages/home" component={HomePage} useAuthentication />
+        <Route path="/actions" component={ActionsPage} useAuthentication withoutCTA  />
         <Route
           path="/account/check-your-email"
           component={CheckYourEmailPage}
@@ -45,6 +45,7 @@ const AppRouter = () => (
           path="/account/dashboard"
           component={DashboardPage}
           requireAuthentication
+          withoutCTA
         />
         <Route
           path="/account/code"
@@ -52,7 +53,7 @@ const AppRouter = () => (
           requireAuthentication
           withoutCTA
         />
-        <Route path="/pages/faq" component={FaqPage} withoutCTA />
+        <Route path="/pages/faq" component={FaqPage} withoutCTA useAuthentication />
         <Route
           path="/account/login"
           component={LoginPage}
@@ -65,8 +66,9 @@ const AppRouter = () => (
         <Route
           path="/pages/measurement-units"
           component={MeasurementUnitsPage}
+          useAuthentication
         />
-        <Route path="/pages/our-vision" component={OurVisionPage} />
+        <Route path="/pages/our-vision" component={OurVisionPage} useAuthentication />
         <Route
           path="/account/profile"
           component={ProfilePage}
@@ -107,6 +109,7 @@ const AppRouter = () => (
         parentPath="/actions"
         onBackdropClick={() => handleBackdropClick({ parentPath: '/actions' })}
         component={ActionModalPage}
+        withoutCTA
       />
       <ModalRoute
         path="/pages/home/actions/:actionSlug"
