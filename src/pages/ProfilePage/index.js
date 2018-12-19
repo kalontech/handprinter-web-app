@@ -31,8 +31,7 @@ import decodeError from './../../utils/decodeError'
 import Spinner from './../../components/Spinner'
 import profileLeavesBackgroundImage from '../../assets/images/profileLeavesBackgroundImage.png'
 import arrowDownIcon from './../../assets/icons/arrowDown.svg'
-import { history } from './../../appRouter'
-import { Creators as AccountStoreCreators } from './../../redux/accountStore'
+import { logOut } from './../../redux/accountStore'
 import hexToRgba from './../../utils/hexToRgba'
 
 export const Wrapper = styled.div`
@@ -289,8 +288,7 @@ class ProfilePage extends Component {
       this.setState({ isDeletingAccount: false, deletingAccountSuccess: true })
       // Delay between show user screen with "account delete info" and redirect
       await new Promise(resolve => setTimeout(resolve, 4000))
-      this.props.logOut()
-      history.push('/account/login')
+      logOut()
     } catch (error) {
       this.showModal({
         type: PROFILE_MODAL_TYPES.DELETE_ACCOUNT_FAILURE,
@@ -698,7 +696,6 @@ const mapDispatchToProps = dispatch =>
       updateMePasswordRequest: data =>
         UserCreators.updateMePasswordRequest(data),
       updateMePhotoRequest: data => UserCreators.updateMePhotoRequest(data),
-      logOut: () => AccountStoreCreators.logOut(),
     },
     dispatch,
   )
@@ -716,7 +713,6 @@ ProfilePage.propTypes = {
     PropTypes.object,
     PropTypes.string,
   ]),
-  logOut: PropTypes.func.isRequired,
   updateMePhotoError: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   updateMeInfoError: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   updateMeInfoRequest: PropTypes.func.isRequired,

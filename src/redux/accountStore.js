@@ -1,5 +1,9 @@
 import { createActions, createReducer } from 'reduxsauce'
 
+import { store } from './../app'
+import { history } from './../appRouter'
+import { Types as UserStoreTypes } from './userStore'
+
 export const INITIAL_STATE = {
   isLoggingIn: false,
   isRegistering: false,
@@ -28,7 +32,7 @@ export const { Types, Creators } = createActions({
   setNewPasswordRequest: ['code', 'password'],
   setNewPasswordSuccess: null,
   setNewPasswordFailure: ['error'],
-  logOut: null,
+  resetToken: null,
 })
 
 export const logInRequest = (state = INITIAL_STATE, action) => ({
@@ -109,10 +113,20 @@ export const setNewPasswordFailure = (state = INITIAL_STATE, action) => ({
   settingNewPassword: false,
 })
 
-export const logOut = (state = INITIAL_STATE) => ({
+export const resetToken = (state = INITIAL_STATE) => ({
   ...state,
   token: null,
 })
+
+export function logOut() {
+  store.dispatch({
+    type: Types.RESET_TOKEN,
+  })
+  store.dispatch({
+    type: UserStoreTypes.RESET_USER,
+  })
+  history.push('/account/login')
+}
 
 export const HANDLERS = {
   [Types.LOG_IN_REQUEST]: logInRequest,
@@ -127,7 +141,7 @@ export const HANDLERS = {
   [Types.SET_NEW_PASSWORD_REQUEST]: setNewPasswordRequest,
   [Types.SET_NEW_PASSWORD_SUCCESS]: setNewPasswordSuccess,
   [Types.SET_NEW_PASSWORD_FAILURE]: setNewPasswordFailure,
-  [Types.LOG_OUT]: logOut,
+  [Types.RESET_TOKEN]: resetToken,
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS)

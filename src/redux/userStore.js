@@ -26,6 +26,7 @@ export const { Types, Creators } = createActions({
   updateMePhotoSuccess: ['user'],
   updateMePhotoFailure: ['error'],
   setUser: ['user'],
+  resetUser: null,
 })
 
 export const getMeRequest = (state = INITIAL_STATE, action) => ({
@@ -109,6 +110,11 @@ export const setUser = (state = INITIAL_STATE, action) => ({
   data: action.user,
 })
 
+export const resetUser = (state = INITIAL_STATE) => ({
+  ...state,
+  data: null,
+})
+
 export const HANDLERS = {
   [Types.GET_ME_REQUEST]: getMeRequest,
   [Types.GET_ME_SUCCESS]: getMeSuccess,
@@ -123,6 +129,7 @@ export const HANDLERS = {
   [Types.UPDATE_ME_PHOTO_SUCCESS]: updateMePhotoSuccess,
   [Types.UPDATE_ME_PHOTO_FAILURE]: updateMePhotoFailure,
   [Types.SET_USER]: setUser,
+  [Types.RESET_USER]: resetUser,
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS)

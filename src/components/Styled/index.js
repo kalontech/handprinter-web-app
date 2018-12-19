@@ -11,6 +11,8 @@ export const ActionCard = styled(Ant.Row)`
   height: 579px;
   overflow: hidden;
   width: 920px;
+  position: relative;
+  top: -50px;
 `
 
 export const ActionCardForgotPasswordBlock = styled.div`

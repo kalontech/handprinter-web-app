@@ -31,6 +31,7 @@ const RouteWrapper = ({
   withoutHeader,
   withoutCTA,
   withoutFooter,
+  withoutHeaderContent,
   ...rest
 }) => (
   <Route
@@ -49,6 +50,7 @@ const RouteWrapper = ({
             <Layout>
               {!withoutHeader && (
                 <Header
+                  withoutHeaderContent={withoutHeaderContent}
                   type={
                     headerType || useAuthentication
                       ? token

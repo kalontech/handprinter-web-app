@@ -59,7 +59,7 @@ const AppRouter = () => (
           component={LoginPage}
           headerType="minimal"
           unauthorizedOnly
-          withoutHeader
+          withoutHeaderContent
           withoutCTA
           withoutFooter
         />
@@ -80,7 +80,7 @@ const AppRouter = () => (
           component={RegisterPage}
           headerType="minimal"
           unauthorizedOnly
-          withoutHeader
+          withoutHeaderContent
           withoutCTA
           withoutFooter
         />
@@ -89,7 +89,7 @@ const AppRouter = () => (
           component={ResetPasswordPage}
           headerType="minimal"
           unauthorizedOnly
-          withoutHeader
+          withoutHeaderContent
           withoutCTA
           withoutFooter
         />
@@ -98,7 +98,7 @@ const AppRouter = () => (
           component={SetNewPasswordPage}
           headerType="minimal"
           unauthorizedOnly
-          withoutHeader
+          withoutHeaderContent
           withoutCTA
           withoutFooter
         />

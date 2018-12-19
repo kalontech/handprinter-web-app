@@ -1,5 +1,4 @@
-import React from 'react'
-import { bindActionCreators } from 'redux'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Popover, Affix } from 'antd'
@@ -12,7 +11,7 @@ import HeaderLanguageSelector from './../HeaderLanguageSelector'
 import { PrimaryButton, HeaderPopover } from './../Styled'
 import colors from './../../config/colors'
 import hexToRgba from '../../utils/hexToRgba'
-import { Creators as AccountCreators } from './../../redux/accountStore'
+import { logOut } from './../../redux/accountStore'
 
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
@@ -181,7 +180,7 @@ const UserInfo = styled.div`
   padding: 8px 4px;
 `
 
-const Header = ({ logOut, type, user }) => (
+const Header = ({ type, user, withoutHeaderContent }) => (
   <Affix>
     {type === 'minimal' && (
       <HeaderWrap>
@@ -202,61 +201,69 @@ const Header = ({ logOut, type, user }) => (
               <img src={fullLogoImg} alt="Handprinter" />
             </Link>
           </Logo>
-          <MenuWrap>
-            <Menu mode="horizontal">
-              <Menu.Item key="actions">
-                <Link to="/actions">
-                  <FormattedMessage id="app.header.menu.actions" />
-                </Link>
-              </Menu.Item>
-            </Menu>
-            <Popover
-              placement="bottomLeft"
-              content={
-                <HeaderPopover mode="vertical" theme="light">
-                  <Menu.Item key="works">
-                    <Link to="/pages/our-vision">
-                      <FormattedMessage id="app.header.menu.howItWorks" />
+          {!withoutHeaderContent && (
+            <Fragment>
+              <MenuWrap>
+                <Menu mode="horizontal">
+                  <Menu.Item key="actions">
+                    <Link to="/actions">
+                      <FormattedMessage id="app.header.menu.actions" />
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="measurement">
-                    <Link to="/pages/measurement-units">
-                      <FormattedMessage id="app.header.menu.measurement" />
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item key="faq">
-                    <Link to="/pages/faq">
-                      <FormattedMessage id="app.header.menu.faq" />
-                    </Link>
-                  </Menu.Item>
-                </HeaderPopover>
-              }
-            >
-              <LeftAlign>
-                <PopoverTitle>
-                  <FormattedMessage id="app.header.menu.about" />
-                  <ExpandMoreIcon />
-                </PopoverTitle>
-              </LeftAlign>
-            </Popover>
-            <HeaderLanguageSelector />
-          </MenuWrap>
+                </Menu>
+                <Popover
+                  placement="bottomLeft"
+                  content={
+                    <HeaderPopover mode="vertical" theme="light">
+                      <Menu.Item key="works">
+                        <Link to="/pages/our-vision">
+                          <FormattedMessage id="app.header.menu.howItWorks" />
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="measurement">
+                        <Link to="/pages/measurement-units">
+                          <FormattedMessage id="app.header.menu.measurement" />
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="faq">
+                        <Link to="/pages/faq">
+                          <FormattedMessage id="app.header.menu.faq" />
+                        </Link>
+                      </Menu.Item>
+                    </HeaderPopover>
+                  }
+                >
+                  <LeftAlign>
+                    <PopoverTitle>
+                      <FormattedMessage id="app.header.menu.about" />
+                      <ExpandMoreIcon />
+                    </PopoverTitle>
+                  </LeftAlign>
+                </Popover>
+                <HeaderLanguageSelector />
+              </MenuWrap>
+            </Fragment>
+          )}
         </LeftMenu>
-        <RightMenu>
-          <Menu theme="light" mode="horizontal">
-            <Menu.Item key="login">
-              <Link to="/account/login">
-                <FormattedMessage id="app.header.menu.login" />
+        {!withoutHeaderContent && (
+          <Fragment>
+            <RightMenu>
+              <Menu theme="light" mode="horizontal">
+                <Menu.Item key="login">
+                  <Link to="/account/login">
+                    <FormattedMessage id="app.header.menu.login" />
+                  </Link>
+                </Menu.Item>
+              </Menu>
+              <Link to="/account/register">
+                <PrimaryButton type="primary" size="large">
+                  <FingerPrintIcon />
+                  <FormattedMessage id="app.header.link" />
+                </PrimaryButton>
               </Link>
-            </Menu.Item>
-          </Menu>
-          <Link to="/account/register">
-            <PrimaryButton type="primary" size="large">
-              <FingerPrintIcon />
-              <FormattedMessage id="app.header.link" />
-            </PrimaryButton>
-          </Link>
-        </RightMenu>
+            </RightMenu>
+          </Fragment>
+        )}
       </HeaderWrap>
     )}
     {type === 'private' && (
@@ -317,25 +324,14 @@ const mapStateToProps = state => ({
   user: state.user.data,
 })
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      logOut: () => AccountCreators.logOut(),
-    },
-    dispatch,
-  )
-
 Header.defaultProps = {
   user: null,
 }
 
 Header.propTypes = {
-  logOut: PropTypes.func.isRequired,
+  withoutHeaderContent: PropTypes.bool.isRequired,
   type: PropTypes.oneOf(['minimal', 'public', 'private']).isRequired,
   user: PropTypes.object,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Header)
+export default connect(mapStateToProps)(Header)

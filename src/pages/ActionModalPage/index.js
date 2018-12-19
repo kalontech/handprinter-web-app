@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 
+import { history } from './../../appRouter'
 import api from './../../api'
 import ActionCardLabelSet from './../../components/ActionCardLabelSet'
 import colors from './../../config/colors'
@@ -134,12 +135,15 @@ class ActionModalPage extends Component {
   }
 
   takeAction = async () => {
+    const { user, token } = this.props
+    if (!user) {
+      history.push('/account/register')
+      return
+    }
+
     this.setState({ takeActionError: null, takingAction: true })
     try {
-      const { takenAction } = await api.takeAction(
-        this.state.action._id,
-        this.props.token,
-      )
+      const { takenAction } = await api.takeAction(this.state.action._id, token)
       this.setState({
         step: ActionModalPageSteps.ACTION_TAKEN_VIEW,
         takeActionError: null,
@@ -253,10 +257,12 @@ ActionModalPage.propTypes = {
       actionSlug: PropTypes.string.isRequired,
     },
   },
+  user: PropTypes.oneOf([null, PropTypes.object]),
   token: PropTypes.string,
 }
 
 const mapStateToProps = state => ({
+  user: state.user.data,
   token: state.account.token,
 })
 
