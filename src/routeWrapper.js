@@ -50,6 +50,7 @@ const RouteWrapper = ({
             <Layout>
               {!withoutHeader && (
                 <Header
+                  location={props.location}
                   withoutHeaderContent={withoutHeaderContent}
                   type={
                     headerType || useAuthentication

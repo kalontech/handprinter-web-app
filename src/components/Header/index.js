@@ -180,7 +180,7 @@ const UserInfo = styled.div`
   padding: 8px 4px;
 `
 
-const Header = ({ type, user, withoutHeaderContent }) => (
+const Header = ({ type, user, withoutHeaderContent, location }) => (
   <Affix>
     {type === 'minimal' && (
       <HeaderWrap>
@@ -204,8 +204,8 @@ const Header = ({ type, user, withoutHeaderContent }) => (
           {!withoutHeaderContent && (
             <Fragment>
               <MenuWrap>
-                <Menu mode="horizontal">
-                  <Menu.Item key="actions">
+                <Menu mode="horizontal" selectedKeys={[location.pathname]}>
+                  <Menu.Item key="/actions">
                     <Link to="/actions">
                       <FormattedMessage id="app.header.menu.actions" />
                     </Link>
@@ -215,21 +215,23 @@ const Header = ({ type, user, withoutHeaderContent }) => (
                   placement="bottomLeft"
                   content={
                     <HeaderPopover mode="vertical" theme="light">
-                      <Menu.Item key="works">
-                        <Link to="/pages/our-vision">
-                          <FormattedMessage id="app.header.menu.howItWorks" />
-                        </Link>
-                      </Menu.Item>
-                      <Menu.Item key="measurement">
-                        <Link to="/pages/measurement-units">
-                          <FormattedMessage id="app.header.menu.measurement" />
-                        </Link>
-                      </Menu.Item>
-                      <Menu.Item key="faq">
-                        <Link to="/pages/faq">
-                          <FormattedMessage id="app.header.menu.faq" />
-                        </Link>
-                      </Menu.Item>
+                      <Menu selectedKeys={[location.pathname]}>
+                        <Menu.Item key="/pages/our-vision">
+                          <Link to="/pages/our-vision">
+                            <FormattedMessage id="app.header.menu.howItWorks" />
+                          </Link>
+                        </Menu.Item>
+                        <Menu.Item key="/pages/measurement-units">
+                          <Link to="/pages/measurement-units">
+                            <FormattedMessage id="app.header.menu.measurement" />
+                          </Link>
+                        </Menu.Item>
+                        <Menu.Item key="/pages/faq">
+                          <Link to="/pages/faq">
+                            <FormattedMessage id="app.header.menu.faq" />
+                          </Link>
+                        </Menu.Item>
+                      </Menu>
                     </HeaderPopover>
                   }
                 >
@@ -248,8 +250,12 @@ const Header = ({ type, user, withoutHeaderContent }) => (
         {!withoutHeaderContent && (
           <Fragment>
             <RightMenu>
-              <Menu theme="light" mode="horizontal">
-                <Menu.Item key="login">
+              <Menu
+                theme="light"
+                mode="horizontal"
+                selectedKeys={[location.pathname]}
+              >
+                <Menu.Item key="/account/login">
                   <Link to="/account/login">
                     <FormattedMessage id="app.header.menu.login" />
                   </Link>
@@ -274,13 +280,13 @@ const Header = ({ type, user, withoutHeaderContent }) => (
           </Link>
         </LogoSmall>
         <CenterMenu defaultSelectedKeys="actions">
-          <Menu mode="horizontal">
-            <Menu.Item key="dashboard">
+          <Menu mode="horizontal" selectedKeys={[location.pathname]}>
+            <Menu.Item key="/account/dashboard">
               <Link to="/account/dashboard">
                 <FormattedMessage id="app.header.menu.dashboard" />
               </Link>
             </Menu.Item>
-            <Menu.Item key="actions">
+            <Menu.Item key="/actions">
               <Link to="/actions">
                 <FormattedMessage id="app.header.menu.actions" />
               </Link>
@@ -310,7 +316,9 @@ const Header = ({ type, user, withoutHeaderContent }) => (
               }
             >
               <PopoverTitle>
-                <Avatar>{user.photo && <img src={user.photo} alt="" />}</Avatar>
+                <Avatar>
+                  {user.photo && <img src={user.photo} alt="Avatar" />}
+                </Avatar>
               </PopoverTitle>
             </Popover>
           </RightAlign>
@@ -329,6 +337,9 @@ Header.defaultProps = {
 }
 
 Header.propTypes = {
+  location: {
+    pathname: PropTypes.string.isRequired,
+  },
   withoutHeaderContent: PropTypes.bool.isRequired,
   type: PropTypes.oneOf(['minimal', 'public', 'private']).isRequired,
   user: PropTypes.object,
