@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Layout, Row, Col } from 'antd'
 import styled from 'styled-components'
+import { animateScroll } from 'react-scroll'
+
 import footerLogo from './assets/footer_image.png'
 import FooterLanguageSelector from './../FooterLanguageSelector'
 import colors from './../../config/colors'
@@ -64,17 +66,23 @@ const Footer = () => (
           <Col span={6}>
             <FooterMenu>
               <li>
-                <Link to="/actions">
+                <Link to="/actions" onClick={animateScroll.scrollToTop}>
                   <FormattedMessage id="app.footer.menu.actions" />
                 </Link>
               </li>
               <li>
-                <Link to="/pages/our-vision">
+                <Link
+                  to="/pages/our-vision"
+                  onClick={animateScroll.scrollToTop}
+                >
                   <FormattedMessage id="app.footer.menu.howItWorks" />
                 </Link>
               </li>
               <li>
-                <Link to="/pages/measurement-units">
+                <Link
+                  to="/pages/measurement-units"
+                  onClick={animateScroll.scrollToTop}
+                >
                   <FormattedMessage id="app.footer.menu.measurement" />
                 </Link>
               </li>
@@ -83,7 +91,7 @@ const Footer = () => (
           <Col span={6}>
             <FooterMenu>
               <li>
-                <Link to="/pages/faq">
+                <Link to="/pages/faq" onClick={animateScroll.scrollToTop}>
                   <FormattedMessage id="app.footer.menu.faq" />
                 </Link>
               </li>
