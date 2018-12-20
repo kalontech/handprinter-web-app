@@ -395,6 +395,9 @@ export const GlobalStyle = createGlobalStyle`
     .ant-select-selected-icon {
       display: none !important;
     }
+    .ant-select-dropdown-menu {
+      max-height: 500px
+    }
   }
 
   .ant-affix {
