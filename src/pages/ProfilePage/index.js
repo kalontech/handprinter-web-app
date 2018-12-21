@@ -288,7 +288,7 @@ class ProfilePage extends Component {
       this.setState({ isDeletingAccount: false, deletingAccountSuccess: true })
       // Delay between show user screen with "account delete info" and redirect
       await new Promise(resolve => setTimeout(resolve, 4000))
-      logOut()
+      logOut({ redirectUrl: '/' })
     } catch (error) {
       this.showModal({
         type: PROFILE_MODAL_TYPES.DELETE_ACCOUNT_FAILURE,

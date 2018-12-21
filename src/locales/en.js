@@ -50,7 +50,7 @@ export default {
   'app.profilePage.deleteAccount.successTitle':
     'Account was successfully deleted',
   'app.profilePage.deleteAccount.successRedirectMessage':
-    'You will be redirected to login page.',
+    'You will be redirected to the main page.',
   'app.profilePage.form.password': 'Enter your current password',
   'app.profilePage.form.newPassword': 'Enter new password',
   'app.profilePage.deleteAccountModal.title':

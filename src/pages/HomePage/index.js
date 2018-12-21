@@ -7,6 +7,7 @@ import ScrollableAnchor, {
   configureAnchors,
   removeHash,
 } from 'react-scrollable-anchor'
+import { animateScroll } from 'react-scroll'
 
 import {
   PrimaryButton,
@@ -231,7 +232,10 @@ class HomePage extends Component {
                   </strong>
                 </AboutText>
                 <AboutButtons>
-                  <Link to="/pages/our-vision">
+                  <Link
+                    to="/pages/our-vision"
+                    onClick={animateScroll.scrollToTop}
+                  >
                     <SecondaryButton>
                       <FormattedMessage id="app.homePage.aboutLink" />
                     </SecondaryButton>
