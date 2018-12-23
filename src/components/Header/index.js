@@ -135,10 +135,14 @@ const MenuWrap = styled.div`
 const Avatar = styled.div`
   height: 42px;
   width: 42px;
-  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
   border-radius: 50px;
   background: ${colors.white};
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${colors.green};
   img {
     width: 100%;
     height: 100%;
@@ -317,7 +321,11 @@ const Header = ({ type, user, withoutHeaderContent, location }) => (
             >
               <PopoverTitle>
                 <Avatar>
-                  {user.photo && <img src={user.photo} alt="Avatar" />}
+                  {user.photo ? (
+                    <img src={user.photo} alt="Avatar" />
+                  ) : (
+                    user.fullName.slice(0, 1).toUpperCase()
+                  )}
                 </Avatar>
               </PopoverTitle>
             </Popover>
