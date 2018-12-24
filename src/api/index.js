@@ -175,6 +175,13 @@ const getUser = (data, token) =>
     method: 'POST',
   })
 
+const getDashboardData = token =>
+  fetchHelper(`${apiBaseUrl}/users/me/dashboard_data`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  })
+
 export default {
   findAction,
   getActions,
@@ -190,4 +197,5 @@ export default {
   resetPasswordRequest,
   deleteMe,
   shareInvitationCode,
+  getDashboardData,
 }

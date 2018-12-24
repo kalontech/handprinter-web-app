@@ -19,7 +19,7 @@ const ActionCardLabelSet = props => {
             category={category}
             unit={timeValue.humanReadable.unit}
             value={timeValue.humanReadable.value}
-            variant="positive"
+            variant="negative"
           />
         ))}
       {Object.entries(impacts.handprint)
@@ -30,7 +30,7 @@ const ActionCardLabelSet = props => {
             category={category}
             unit={timeValue.humanReadable.unit}
             value={timeValue.humanReadable.value}
-            variant="negative"
+            variant="positive"
           />
         ))}
     </CardLabelWrap>

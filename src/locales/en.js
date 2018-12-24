@@ -379,5 +379,15 @@ export default {
   'app.actions.takeAction': 'Take action',
   'app.actions.congratulations': 'Congratulations',
   'app.actions.handprintIncreased': 'Your handprint just increased!',
+  'app.dashboardPage.usersInvited': 'Users invited',
+  'app.dashboardPage.actionsTaken': 'Actions taken',
+  'app.dashboardPage.netPositiveDays': 'Net-positive days',
+  'app.dashboardPage.networkUsers': 'Network users',
+  'app.dashboardPage.myNetPositiveDays': 'My Net Positive days',
+  'app.dashboardPage.goodRatio': 'Good ratio',
+  'app.dashboardPage.myNetwork': 'My network',
+  'app.dashboardPage.myNetworkDescription':
+    'People that are part of my handprint',
+  'app.dashboardPage.memberSince': 'Member since',
   'app.actions.reduceFootprint': 'Your reduced your footprint',
 }
