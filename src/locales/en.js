@@ -379,4 +379,5 @@ export default {
   'app.actions.takeAction': 'Take action',
   'app.actions.congratulations': 'Congratulations',
   'app.actions.handprintIncreased': 'Your handprint just increased!',
+  'app.actions.reduceFootprint': 'Your reduced your footprint',
 }

@@ -12,6 +12,7 @@ import colors from './../../config/colors'
 import clearIcon from './../../assets/icons/clear.svg'
 import Spinner from './../../components/Spinner'
 import treeImage from './../../assets/actions/tree.png'
+import pigImage from './../../assets/actions/pig.png'
 import decodeError from './../../utils/decodeError'
 import { FormItem } from './../../components/Styled'
 
@@ -112,7 +113,8 @@ const TakenActionDescription = styled.p`
 const ActionModalPageSteps = {
   LOADING: 'LOADING',
   ACTION_VIEW: 'ACTION_VIEW',
-  ACTION_TAKEN_VIEW: 'ACTION_TAKEN_VIEW',
+  ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW: 'ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW',
+  ACTION_TAKEN_INCREACE_HANDPRINT_VIEW: 'ACTION_TAKEN_INCREACE_HANDPRINT_VIEW',
 }
 
 class ActionModalPage extends Component {
@@ -136,16 +138,25 @@ class ActionModalPage extends Component {
 
   takeAction = async () => {
     const { user, token } = this.props
+    const { action } = this.state
     if (!user) {
       history.push('/account/register')
       return
     }
 
+    let modalType = ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW
+
+    Object.values(action.impacts.handprint).forEach(impact => {
+      if (impact.minutes > 0) {
+        modalType = ActionModalPageSteps.ACTION_TAKEN_INCREACE_HANDPRINT_VIEW
+      }
+    })
+
     this.setState({ takeActionError: null, takingAction: true })
     try {
-      const { takenAction } = await api.takeAction(this.state.action._id, token)
+      const { takenAction } = await api.takeAction(action._id, token)
       this.setState({
-        step: ActionModalPageSteps.ACTION_TAKEN_VIEW,
+        step: modalType,
         takeActionError: null,
         takenAction,
         takingAction: false,
@@ -197,18 +208,28 @@ class ActionModalPage extends Component {
     })
   }
 
-  renderActionTakenView = () => {
+  renderActionTakenView = ({ type }) => {
     const { action } = this.state
     return this.renderInContainer({
       children: (
         <Fragment>
           <TakenActionPanel>
-            <img src={treeImage} />
+            {type ===
+            ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW ? (
+              <img src={pigImage} />
+            ) : (
+              <img src={treeImage} />
+            )}
             <TakenActionTitle>
               <FormattedMessage id="app.actions.congratulations" />
             </TakenActionTitle>
             <TakenActionDescription>
-              <FormattedMessage id="app.actions.handprintIncreased" />
+              {type ===
+              ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW ? (
+                <FormattedMessage id="app.actions.reduceFootprint" />
+              ) : (
+                <FormattedMessage id="app.actions.handprintIncreased" />
+              )}
             </TakenActionDescription>
             <ActionCardLabelSet impacts={action.impacts} />
           </TakenActionPanel>
@@ -243,8 +264,14 @@ class ActionModalPage extends Component {
         return this.renderLoading()
       case ActionModalPageSteps.ACTION_VIEW:
         return this.renderActionView()
-      case ActionModalPageSteps.ACTION_TAKEN_VIEW:
-        return this.renderActionTakenView()
+      case ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW:
+        return this.renderActionTakenView({
+          type: ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW,
+        })
+      case ActionModalPageSteps.ACTION_TAKEN_INCREACE_HANDPRINT_VIEW:
+        return this.renderActionTakenView({
+          type: ActionModalPageSteps.ACTION_TAKEN_INCREACE_HANDPRINT_VIEW,
+        })
     }
   }
 }
