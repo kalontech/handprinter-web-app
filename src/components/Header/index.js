@@ -219,23 +219,21 @@ const Header = ({ type, user, withoutHeaderContent, location }) => (
                   placement="bottomLeft"
                   content={
                     <HeaderPopover mode="vertical" theme="light">
-                      <Menu selectedKeys={[location.pathname]}>
-                        <Menu.Item key="/pages/our-vision">
-                          <Link to="/pages/our-vision">
-                            <FormattedMessage id="app.header.menu.howItWorks" />
-                          </Link>
-                        </Menu.Item>
-                        <Menu.Item key="/pages/measurement-units">
-                          <Link to="/pages/measurement-units">
-                            <FormattedMessage id="app.header.menu.measurement" />
-                          </Link>
-                        </Menu.Item>
-                        <Menu.Item key="/pages/faq">
-                          <Link to="/pages/faq">
-                            <FormattedMessage id="app.header.menu.faq" />
-                          </Link>
-                        </Menu.Item>
-                      </Menu>
+                      <Menu.Item key="/pages/our-vision">
+                        <Link to="/pages/our-vision">
+                          <FormattedMessage id="app.header.menu.howItWorks" />
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="/pages/measurement-units">
+                        <Link to="/pages/measurement-units">
+                          <FormattedMessage id="app.header.menu.measurement" />
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="/pages/faq">
+                        <Link to="/pages/faq">
+                          <FormattedMessage id="app.header.menu.faq" />
+                        </Link>
+                      </Menu.Item>
                     </HeaderPopover>
                   }
                 >
@@ -296,6 +294,36 @@ const Header = ({ type, user, withoutHeaderContent, location }) => (
               </Link>
             </Menu.Item>
           </Menu>
+          <Popover
+            placement="bottomLeft"
+            content={
+              <HeaderPopover mode="vertical" theme="light">
+                <Menu.Item key="/pages/our-vision">
+                  <Link to="/pages/our-vision">
+                    <FormattedMessage id="app.header.menu.howItWorks" />
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="/pages/measurement-units">
+                  <Link to="/pages/measurement-units">
+                    <FormattedMessage id="app.header.menu.measurement" />
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="/pages/faq">
+                  <Link to="/pages/faq">
+                    <FormattedMessage id="app.header.menu.faq" />
+                  </Link>
+                </Menu.Item>
+              </HeaderPopover>
+            }
+          >
+            <LeftAlign>
+              <PopoverTitle>
+                <FormattedMessage id="app.header.menu.about" />
+                <ExpandMoreIcon />
+              </PopoverTitle>
+            </LeftAlign>
+          </Popover>
+          <HeaderLanguageSelector />
         </CenterMenu>
         <div>
           <RightAlign>
