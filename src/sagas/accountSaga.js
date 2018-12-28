@@ -32,7 +32,7 @@ function* register({ email, password, fullName, country, invitationCode }) {
     )
     yield put({ type: AccountStoreTypes.REGISTER_SUCCESS, token })
     yield call(prepareUserProfile)
-    yield call(history.push, '/account/dashboard')
+    yield call(history.push, '/pages/our-vision')
   } catch (error) {
     yield put({
       type: AccountStoreTypes.REGISTER_FAILURE,
