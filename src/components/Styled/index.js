@@ -39,6 +39,26 @@ export const ActionCardRightHalf = styled(Ant.Col)`
   justify-content: center;
 `
 
+export const PopoverTitle = styled.div`
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  color: ${({ color }) => color || colors.darkGray};
+  cursor: pointer;
+  transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+    border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+    background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+    padding 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  &:hover {
+    color: ${({ hoverColor }) => hoverColor || colors.darkGray};
+  }
+
+  &.ant-popover-open {
+    color: ${colors.dark};
+  }
+`
+
 export const HeaderPopover = styled(Ant.Menu)`
   .ant-menu-item {
     display: flex;
@@ -46,8 +66,13 @@ export const HeaderPopover = styled(Ant.Menu)`
     padding: 0 6px;
     margin: 0;
     font-size: 16px;
+    color: ${({ color }) => color || colors.darkGray};
+    margin-right: 40px;
     :not(:last-child) {
       margin: 0;
+    }
+    a {
+      color: ${({ color }) => color || colors.darkGray};
     }
     .ant-menu-item-selected,
     :hover {

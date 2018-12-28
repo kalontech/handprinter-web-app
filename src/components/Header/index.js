@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import FingerPrintIcon from '../../assets/icons/FingerPrintIcon'
 import HeaderLanguageSelector from './../HeaderLanguageSelector'
-import { PrimaryButton, HeaderPopover } from './../Styled'
+import { PrimaryButton, HeaderPopover, PopoverTitle } from './../Styled'
 import colors from './../../config/colors'
 import hexToRgba from '../../utils/hexToRgba'
 import { logOut } from './../../redux/accountStore'
@@ -16,24 +16,16 @@ import { logOut } from './../../redux/accountStore'
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
 
-const PopoverTitle = styled.div`
-  display: flex;
-  align-items: center;
-  line-height: 1;
-  color: ${colors.menuLink};
-  cursor: pointer;
-
-  &.ant-popover-open {
-    color: ${colors.dark};
-  }
+const LeftAlignPublic = styled.div`
+  margin-right: 34px;
 `
 
-const LeftAlign = styled.div`
-  margin-right: 30px;
+const LeftAlignPrivate = styled.div`
+  margin-right: 40px;
 `
 
 const RightAlign = styled.div`
-  margin-left: 30px;
+  margin-left: 40px;
 `
 
 const HeaderWrap = styled(Layout.Header)`
@@ -45,6 +37,10 @@ const HeaderWrap = styled(Layout.Header)`
   font-size: 16px;
 
   .ant-menu-item {
+    a {
+      color: ${({ color }) => color || colors.darkGray};
+    }
+
     &:hover,
     &.ant-menu-item-active {
       color: ${hexToRgba(colors.dark, 0.8)};
@@ -83,7 +79,7 @@ const LeftMenu = styled.div`
   align-items: center;
 
   .ant-menu-item {
-    margin-right: 35px;
+    margin-right: 34px;
     line-height: 87px;
   }
 
@@ -94,7 +90,7 @@ const LeftMenu = styled.div`
 
 const CenterMenu = styled(LeftMenu)`
   .ant-menu-item {
-    margin: 0 18px;
+    margin-right: 40px;
   }
 `
 
@@ -130,6 +126,12 @@ const LogoSmall = styled.div`
 const MenuWrap = styled.div`
   display: flex;
   align-items: center;
+  color: ${({ color }) => color || colors.dark};
+  .ant-menu-item {
+    &:hover {
+      color: ${({ hoverColor }) => hoverColor || colors.dark};
+    }
+  }
 `
 
 const Avatar = styled.div`
@@ -198,7 +200,7 @@ const Header = ({ type, user, withoutHeaderContent, location }) => (
       </HeaderWrap>
     )}
     {type === 'public' && (
-      <HeaderWrap>
+      <HeaderWrap color={colors.dark}>
         <LeftMenu>
           <Logo>
             <Link to="/">
@@ -207,7 +209,7 @@ const Header = ({ type, user, withoutHeaderContent, location }) => (
           </Logo>
           {!withoutHeaderContent && (
             <Fragment>
-              <MenuWrap>
+              <MenuWrap color={colors.dark}>
                 <Menu mode="horizontal" selectedKeys={[location.pathname]}>
                   <Menu.Item key="/actions">
                     <Link to="/actions">
@@ -218,7 +220,11 @@ const Header = ({ type, user, withoutHeaderContent, location }) => (
                 <Popover
                   placement="bottomLeft"
                   content={
-                    <HeaderPopover mode="vertical" theme="light">
+                    <HeaderPopover
+                      mode="vertical"
+                      theme="light"
+                      color={colors.dark}
+                    >
                       <Menu.Item key="/pages/our-vision">
                         <Link to="/pages/our-vision">
                           <FormattedMessage id="app.header.menu.howItWorks" />
@@ -237,14 +243,14 @@ const Header = ({ type, user, withoutHeaderContent, location }) => (
                     </HeaderPopover>
                   }
                 >
-                  <LeftAlign>
-                    <PopoverTitle>
+                  <LeftAlignPublic>
+                    <PopoverTitle color={colors.dark} hoverColor={colors.dark}>
                       <FormattedMessage id="app.header.menu.about" />
                       <ExpandMoreIcon />
                     </PopoverTitle>
-                  </LeftAlign>
+                  </LeftAlignPublic>
                 </Popover>
-                <HeaderLanguageSelector />
+                <HeaderLanguageSelector color={colors.dark} />
               </MenuWrap>
             </Fragment>
           )}
@@ -316,12 +322,12 @@ const Header = ({ type, user, withoutHeaderContent, location }) => (
               </HeaderPopover>
             }
           >
-            <LeftAlign>
-              <PopoverTitle>
+            <LeftAlignPrivate>
+              <PopoverTitle hoverColor={colors.dark}>
                 <FormattedMessage id="app.header.menu.about" />
                 <ExpandMoreIcon />
               </PopoverTitle>
-            </LeftAlign>
+            </LeftAlignPrivate>
           </Popover>
           <HeaderLanguageSelector />
         </CenterMenu>

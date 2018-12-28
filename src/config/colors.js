@@ -18,5 +18,4 @@ export default {
   btnSecondaryHover: '#1A8274',
   btnSecondaryActive: '#1D756A',
   footerDropdownBg: '#2B3736',
-  menuLink: '#858f8e',
 }
