@@ -22,6 +22,7 @@ import getValidationRules from './../../config/validationRules'
 import InputForPassword from './../../components/InputForPassword'
 import handleFormError from './../../utils/handleFormError'
 import decodeError from './../../utils/decodeError'
+import { getBrandedHostnamePrefix } from './../../config/branded'
 
 import api from './../../api'
 
@@ -169,10 +170,9 @@ class RegisterPage extends Component {
           password,
           fullName,
           country,
+          belongsToBrand: getBrandedHostnamePrefix(),
         }
-
         if (invitationCode) data.invitationCode = invitationCode
-
         registerRequest(data)
       }
     })

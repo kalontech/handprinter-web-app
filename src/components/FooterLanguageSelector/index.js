@@ -13,8 +13,9 @@ import hexToRgba from '../../utils/hexToRgba'
 const FooterDropdown = styled(Ant.Dropdown)`
   margin-top: -2px;
   max-width: 148px;
-  margin-left: 25px;
+  width: 100%;
   cursor: pointer;
+  margin-left: 25px;
 `
 
 const LangTitle = styled.div`
@@ -59,9 +60,10 @@ const Image = styled.img`
   margin-right: 6px;
 `
 
-const FooterLanguageSelector = ({ intl, setLocale }) => {
+const FooterLanguageSelector = ({ intl, setLocale, className }) => {
   return (
     <FooterDropdown
+      className={className}
       trigger={['click']}
       overlay={
         <FooterDropdownMenu
@@ -95,6 +97,12 @@ const FooterLanguageSelector = ({ intl, setLocale }) => {
   )
 }
 
+FooterLanguageSelector.propTypes = {
+  intl: PropTypes.object.isRequired,
+  setLocale: PropTypes.func.isRequired,
+  className: PropTypes.string,
+}
+
 const mapStateToProps = state => ({
   intl: state.intl,
 })
@@ -106,11 +114,6 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch,
   )
-
-FooterLanguageSelector.propTypes = {
-  intl: PropTypes.object.isRequired,
-  setLocale: PropTypes.func.isRequired,
-}
 
 export default connect(
   mapStateToProps,

@@ -5,10 +5,9 @@ import * as Sentry from '@sentry/browser'
 
 import { store } from '../app'
 
-const apiBaseUrl =
-  window.location.hostname === 'localhost'
-    ? process.env.REACT_APP_API_BASE_URL
-    : `${window.location.protocol}//${window.location.host}/api`
+const apiBaseUrl = window.location.hostname.includes('localhost')
+  ? process.env.REACT_APP_API_BASE_URL
+  : `${window.location.protocol}//${window.location.host}/api`
 export const webAppBaseUrl = `${window.location.protocol}//${
   window.location.host
 }`
@@ -82,7 +81,14 @@ const logIn = (email, password) =>
     method: 'POST',
   })
 
-const register = (email, password, fullName, country, invitationCode) =>
+const register = (
+  email,
+  password,
+  fullName,
+  country,
+  invitationCode,
+  belongsToBrand,
+) =>
   fetchHelper(`${apiBaseUrl}/auth/register`, {
     body: {
       email,
@@ -90,6 +96,7 @@ const register = (email, password, fullName, country, invitationCode) =>
       fullName,
       country,
       invitationCode,
+      belongsToBrand,
     },
     method: 'POST',
   })

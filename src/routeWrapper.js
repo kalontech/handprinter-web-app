@@ -8,7 +8,7 @@ import { ModalContainer } from 'react-router-modal'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Cta from './components/Cta'
-
+import { getBrandedConfig } from './config/branded'
 import LoadingPage from './pages/LoadingPage'
 
 const renderLoader = props => (
@@ -33,49 +33,60 @@ const RouteWrapper = ({
   withoutFooter,
   withoutHeaderContent,
   ...rest
-}) => (
-  <Route
-    {...rest}
-    render={props => {
-      if (ready) {
-        if (requireAuthentication && !token) {
-          return <Redirect to="/account/login" />
-        } else if (unauthorizedOnly && token) {
-          return <Redirect to="/account/dashboard" />
-        } else {
-          if (requireAuthentication && !user) {
-            return renderLoader(props)
+}) => {
+  const brandedConfig = getBrandedConfig()
+  return (
+    <Route
+      {...rest}
+      render={props => {
+        if (ready) {
+          if (requireAuthentication && !token) {
+            return <Redirect to="/account/login" />
+          } else if (unauthorizedOnly && token) {
+            return <Redirect to="/account/dashboard" />
+          } else {
+            if (requireAuthentication && !user) {
+              return renderLoader(props)
+            }
+            return (
+              <Layout>
+                {!withoutHeader && (
+                  <Header
+                    location={props.location}
+                    withoutHeaderContent={withoutHeaderContent}
+                    type={
+                      headerType || useAuthentication
+                        ? token
+                          ? 'private'
+                          : 'public'
+                        : false ||
+                          (requireAuthentication ? 'private' : 'public')
+                    }
+                    overrides={brandedConfig && brandedConfig.headerOverrides}
+                  />
+                )}
+                <Layout.Content>
+                  <Component {...props} />
+                </Layout.Content>
+                {!withoutCTA &&
+                  ((brandedConfig && <brandedConfig.ctaComponent />) || (
+                    <Cta />
+                  ))}
+                {!withoutFooter &&
+                  ((brandedConfig && <brandedConfig.footerComponent />) || (
+                    <Footer />
+                  ))}
+                <ModalContainer />
+              </Layout>
+            )
           }
-          return (
-            <Layout>
-              {!withoutHeader && (
-                <Header
-                  location={props.location}
-                  withoutHeaderContent={withoutHeaderContent}
-                  type={
-                    headerType || useAuthentication
-                      ? token
-                        ? 'private'
-                        : 'public'
-                      : false || (requireAuthentication ? 'private' : 'public')
-                  }
-                />
-              )}
-              <Layout.Content>
-                <Component {...props} />
-              </Layout.Content>
-              {!withoutCTA && <Cta />}
-              {!withoutFooter && <Footer />}
-              <ModalContainer />
-            </Layout>
-          )
+        } else {
+          return renderLoader(props)
         }
-      } else {
-        return renderLoader(props)
-      }
-    }}
-  />
-)
+      }}
+    />
+  )
+}
 
 const mapStateToProps = state => ({
   ready: state.app.ready,

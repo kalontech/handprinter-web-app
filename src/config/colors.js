@@ -12,6 +12,7 @@ export default {
   green: '#87BD24',
   lightGreen: '#B0D66D',
   blue: '#1568B9',
+  darkBlue: '#005EB8',
   orange: '#E57423',
   btnPrimaryHover: '#81B02A',
   btnPrimaryActive: '#7BA32F',

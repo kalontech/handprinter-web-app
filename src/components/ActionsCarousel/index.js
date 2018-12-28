@@ -75,6 +75,7 @@ class ActionsCarousel extends React.Component {
   }
 
   render() {
+    const { hideControls } = this.props
     return (
       <SliderContainer>
         <SliderWrap>
@@ -97,29 +98,31 @@ class ActionsCarousel extends React.Component {
               />
             ))}
           </Carousel>
-          <SliderControls>
-            <Link to="/actions">
-              <PrimaryButton type="primary">
-                <FormattedMessage id="app.actionsSlider.link" />
-              </PrimaryButton>
-            </Link>
-            <SliderArrows>
-              <SliderButton
-                direction="left"
-                onClick={this.previous}
-                disabled={!this.state.disableLeftArrow}
-              >
-                <ExpandMoreIcon />
-              </SliderButton>
-              <SliderButton
-                direction="right"
-                onClick={this.next}
-                disabled={!this.state.disableRightArrow}
-              >
-                <ExpandMoreIcon />
-              </SliderButton>
-            </SliderArrows>
-          </SliderControls>
+          {!hideControls && (
+            <SliderControls>
+              <Link to="/actions">
+                <PrimaryButton type="primary">
+                  <FormattedMessage id="app.actionsSlider.link" />
+                </PrimaryButton>
+              </Link>
+              <SliderArrows>
+                <SliderButton
+                  direction="left"
+                  onClick={this.previous}
+                  disabled={!this.state.disableLeftArrow}
+                >
+                  <ExpandMoreIcon />
+                </SliderButton>
+                <SliderButton
+                  direction="right"
+                  onClick={this.next}
+                  disabled={!this.state.disableRightArrow}
+                >
+                  <ExpandMoreIcon />
+                </SliderButton>
+              </SliderArrows>
+            </SliderControls>
+          )}
         </SliderWrap>
       </SliderContainer>
     )
@@ -128,6 +131,7 @@ class ActionsCarousel extends React.Component {
 
 SliderButton.propTypes = {
   direction: PropTypes.oneOf(['left', 'right']).isRequired,
+  hideControls: PropTypes.bool,
 }
 
 export default ActionsCarousel

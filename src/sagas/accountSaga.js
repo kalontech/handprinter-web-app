@@ -20,7 +20,14 @@ function* logIn({ email, password }) {
   }
 }
 
-function* register({ email, password, fullName, country, invitationCode }) {
+function* register({
+  email,
+  password,
+  fullName,
+  country,
+  invitationCode,
+  belongsToBrand,
+}) {
   try {
     const { token } = yield call(
       api.register,
@@ -29,6 +36,7 @@ function* register({ email, password, fullName, country, invitationCode }) {
       fullName,
       country,
       invitationCode,
+      belongsToBrand,
     )
     yield put({ type: AccountStoreTypes.REGISTER_SUCCESS, token })
     yield call(prepareUserProfile)

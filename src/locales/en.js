@@ -154,7 +154,7 @@ export default {
   'app.header.menu.profileSettings': 'Profile settings',
   'app.header.menu.increaseHandprint': 'Increase handprint',
   'app.header.link': 'Join handprinters',
-
+  'app.brandedHeader.link': 'Become Green Guardian',
   'app.footer.menu.actions': 'Actions',
   'app.footer.menu.about': 'About',
   'app.footer.menu.howItWorks': 'How it works',
@@ -379,6 +379,14 @@ export default {
   'app.actions.takeAction': 'Take action',
   'app.actions.congratulations': 'Congratulations',
   'app.actions.handprintIncreased': 'Your handprint just increased!',
+  'app.eatonFooter.text':
+    'Eaton is dedicated to improving the quality of life and the\n' +
+    '                environment through the use of power management technologies and\n' +
+    '                services. Eaton has approximately 96,000 employees and sells\n' +
+    '                products to customers in more than 175 countries.',
+  'app.eatonFooter.cta.link': 'Learn more',
+  'app.eatonFooter.poweredBy': 'Powered by',
+  'app.eatonFooter.copyright': '&copy; 2018 NewEarth B. All Rights Reserved.',
   'app.dashboardPage.usersInvited': 'Users invited',
   'app.dashboardPage.actionsTaken': 'Actions taken',
   'app.dashboardPage.netPositiveDays': 'Net-positive days',
@@ -390,4 +398,21 @@ export default {
     'People that are part of my handprint',
   'app.dashboardPage.memberSince': 'Member since',
   'app.actions.reduceFootprint': 'Your reduced your footprint',
+  'app.aboutEatonPage.hero.title': 'Become an Eaton Green Guardian',
+  'app.aboutEatonPage.hero.description':
+    'With Green Guardian Handprint, your individual actions can create a positive impact at work, in your community, and around the world.',
+  'app.aboutEatonPage.seeHow': 'See how',
+  'app.aboutEatonPage.growYourHandprint.title':
+    'Be a Part of a Positive Future. Reduce your footprint.\nGrow your handprint!',
+  'app.aboutEatonPage.growYourHandprint.description':
+    'Green Guardian Handprint lets you calculate and track your impacts with the goal of becoming <strong>Net Positive</strong>. You can watch your handprint grow to exceed your footprint and inspire others to do the same. <strong>What are footprints and handprints?</strong>',
+  'app.aboutEatonPage.whatAreHandprints.title': 'What are handprints?',
+  'app.aboutEatonPage.whatAreHandprints.description.1':
+    'We’ve heard about footprints: the negative impacts of the things we buy and use. We need to reduce our footprint, but that is only a part of the story.',
+  'app.aboutEatonPage.whatAreHandprints.description.2':
+    'We also have handprints: <strong>positive impacts of our actions.</strong> Handprints include helping others reduce their footprints. Green Guardian Handprint lets Eaton employees grow their handprints and reduce their footprints too.',
+  'app.aboutEatonPage.whatAreHandprints.getStartedToday': 'Get started today!',
+  'app.aboutEatonPage.becomeGuardian.title': 'Become an Eaton Green Guardian',
+  'app.aboutEatonPage.becomeGuarding.description':
+    'What can you do to make your community, your work, your planet more sustainable?',
 }

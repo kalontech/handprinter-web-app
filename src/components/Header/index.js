@@ -109,7 +109,6 @@ const RightMenu = styled.div`
 `
 
 const Logo = styled.div`
-  margin-top: -20px;
   display: block;
   margin-right: 40px;
 `
@@ -186,14 +185,17 @@ const UserInfo = styled.div`
   padding: 8px 4px;
 `
 
-const Header = ({ type, user, withoutHeaderContent, location }) => (
+const Header = ({ type, user, withoutHeaderContent, location, overrides }) => (
   <Affix>
     {type === 'minimal' && (
       <HeaderWrap>
         <LeftMenu>
           <Logo>
             <Link to="/">
-              <img src={fullLogoImg} alt="Handprinter" />
+              <img
+                src={(overrides && overrides.fullLogo) || fullLogoImg}
+                alt="Handprinter"
+              />
             </Link>
           </Logo>
         </LeftMenu>
@@ -204,7 +206,10 @@ const Header = ({ type, user, withoutHeaderContent, location }) => (
         <LeftMenu>
           <Logo>
             <Link to="/">
-              <img src={fullLogoImg} alt="Handprinter" />
+              <img
+                src={(overrides && overrides.fullLogo) || fullLogoImg}
+                alt={(overrides && overrides.brandName) || 'Handprinter'}
+              />
             </Link>
           </Logo>
           {!withoutHeaderContent && (
@@ -272,7 +277,11 @@ const Header = ({ type, user, withoutHeaderContent, location }) => (
               <Link to="/account/register">
                 <PrimaryButton type="primary" size="large">
                   <FingerPrintIcon />
-                  <FormattedMessage id="app.header.link" />
+                  <FormattedMessage
+                    id={
+                      overrides ? 'app.brandedHeader.link' : 'app.header.link'
+                    }
+                  />
                 </PrimaryButton>
               </Link>
             </RightMenu>
@@ -284,7 +293,10 @@ const Header = ({ type, user, withoutHeaderContent, location }) => (
       <HeaderWrap>
         <LogoSmall>
           <Link to="/account/dashboard">
-            <img src={partialLogoImg} alt="Handprinter" />
+            <img
+              src={(overrides && overrides.partialLogo) || partialLogoImg}
+              alt="Handprinter"
+            />
           </Link>
         </LogoSmall>
         <CenterMenu defaultSelectedKeys="actions">
@@ -299,6 +311,14 @@ const Header = ({ type, user, withoutHeaderContent, location }) => (
                 <FormattedMessage id="app.header.menu.actions" />
               </Link>
             </Menu.Item>
+            {overrides && overrides.inLinkLogo && (
+              <Menu.Item key="/pages/home">
+                <Link to="/">
+                  <FormattedMessage id="app.header.menu.about" />{' '}
+                  <img src={overrides.inLinkLogo} />
+                </Link>
+              </Menu.Item>
+            )}
           </Menu>
           <Popover
             placement="bottomLeft"
@@ -385,6 +405,7 @@ Header.propTypes = {
   withoutHeaderContent: PropTypes.bool.isRequired,
   type: PropTypes.oneOf(['minimal', 'public', 'private']).isRequired,
   user: PropTypes.object,
+  overrides: PropTypes.object,
 }
 
 export default connect(mapStateToProps)(Header)

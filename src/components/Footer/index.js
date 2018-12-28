@@ -78,6 +78,10 @@ const Footer = () => (
                   <FormattedMessage id="app.footer.menu.howItWorks" />
                 </Link>
               </li>
+            </FooterMenu>
+          </Col>
+          <Col span={6}>
+            <FooterMenu>
               <li>
                 <Link
                   to="/pages/measurement-units"
@@ -86,10 +90,6 @@ const Footer = () => (
                   <FormattedMessage id="app.footer.menu.measurement" />
                 </Link>
               </li>
-            </FooterMenu>
-          </Col>
-          <Col span={6}>
-            <FooterMenu>
               <li>
                 <Link to="/pages/faq" onClick={animateScroll.scrollToTop}>
                   <FormattedMessage id="app.footer.menu.faq" />
