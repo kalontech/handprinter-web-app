@@ -8,13 +8,14 @@ const CardLabelWrap = styled.div`
 `
 
 const ActionCardLabelSet = props => {
-  const { impacts } = props
+  const { impacts, hideTooltip } = props
   return (
     <CardLabelWrap>
       {Object.entries(impacts.footprint)
         .filter(([category, timeValue]) => timeValue.minutes > 0)
         .map(([category, timeValue], index) => (
           <ActionCardLabel
+            hideTooltip={hideTooltip}
             key={index}
             category={category}
             unit={timeValue.humanReadable.unit}
@@ -39,6 +40,7 @@ const ActionCardLabelSet = props => {
 
 ActionCardLabelSet.propTypes = {
   impacts: PropTypes.array.isRequired,
+  hideTooltip: PropTypes.bool,
 }
 
 export default ActionCardLabelSet

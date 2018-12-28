@@ -17,7 +17,9 @@ export const TimeValueAbbreviations = {
 }
 
 const ActionCardLabel = props => {
-  const { category, value, variant, unit } = props
+  const { category, value, variant, unit, hideTooltip } = props
+  const tooltipProps = {}
+  if (hideTooltip) tooltipProps.visible = false
 
   const TooltipContainer = styled.div`
     line-height: 20px;
@@ -107,6 +109,7 @@ const ActionCardLabel = props => {
 
   return (
     <Tooltip
+      {...tooltipProps}
       title={() => (
         <TooltipContainer>
           <FormattedHTMLMessage

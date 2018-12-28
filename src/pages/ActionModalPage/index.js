@@ -231,7 +231,7 @@ class ActionModalPage extends Component {
                 <FormattedMessage id="app.actions.handprintIncreased" />
               )}
             </TakenActionDescription>
-            <ActionCardLabelSet impacts={action.impacts} />
+            <ActionCardLabelSet impacts={action.impacts} hideTooltip={true} />
           </TakenActionPanel>
         </Fragment>
       ),
