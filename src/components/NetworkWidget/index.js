@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import d3 from 'd3'
 import PropTypes from 'prop-types'
 
+import api from './../../api'
+
 // Returns node size depending on the depth level
 const getNodeSize = depth => {
   switch (depth) {
@@ -130,9 +132,37 @@ class NetworkWidget extends Component {
       .append('g')
       .attr('class', 'node')
       .attr('transform', d => `translate(${d.x}, ${d.y})`)
+      .on('mouseover', function(d) {
+        widget
+          .append('foreignObject')
+          .attr({
+            x: d.x - 50,
+            width: 100,
+            class: 'd3-tooltip',
+            ...(d.y > 100
+              ? {
+                  y: d.y - getNodeSize(d.depth) / 2 - 40,
+                  height: 29,
+                }
+              : { y: d.y + getNodeSize(d.depth) / 2 + 12, height: 0 }),
+          })
+          .append('xhtml:div')
+          .append('div')
+          .attr({
+            class: 'd3-tooltip-container',
+          })
+          .append('p')
+          .html(d.fullName || 'Deleted user')
+      })
+      .on('mouseout', function() {
+        widget.selectAll('.d3-tooltip').remove()
+      })
       .call(force.drag)
       .append('image')
-      .attr('xlink:href', d => d.photo)
+      .attr(
+        'xlink:href',
+        d => d.photo || api.getUserInitialAvatar(d.fullName || '?'),
+      )
       .attr('x', d => -(getNodeSize(d.depth) / 2))
       .attr('y', d => -(getNodeSize(d.depth) / 2))
       .attr('height', d => getNodeSize(d.depth))

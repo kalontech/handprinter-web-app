@@ -189,6 +189,9 @@ const getDashboardData = token =>
     },
   })
 
+const getUserInitialAvatar = fullName =>
+  `https://ui-avatars.com/api/?background=87bb24&color=ffffff&length=1&name=${fullName}&size=256`
+
 export default {
   findAction,
   getActions,
@@ -205,4 +208,5 @@ export default {
   deleteMe,
   shareInvitationCode,
   getDashboardData,
+  getUserInitialAvatar,
 }

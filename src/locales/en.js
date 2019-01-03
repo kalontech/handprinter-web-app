@@ -23,6 +23,11 @@ export default {
   'app.errors.12': 'Endpoint is not found',
   'app.errors.13': 'Action is not found',
   'app.errors.14': 'This email is already in use',
+  'app.impactCategories.climate': 'Climate',
+  'app.impactCategories.waste': 'Waste',
+  'app.impactCategories.water': 'Water',
+  'app.impactCategories.ecosystem': 'Ecosystem',
+  'app.impactCategories.health': 'Health',
   'app.errorHandlerPage.pleaseSendReportAndReloadPage':
     'An error occured during render. Please, send report and reload the page.',
   'app.errorHandlerPage.sendReport': 'Send report',

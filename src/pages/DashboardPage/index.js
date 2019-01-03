@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Col, Row } from 'antd'
+import { Col, Row, Tabs, Icon } from 'antd'
 import styled, { css } from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -16,6 +16,7 @@ import Spinner from './../../components/Spinner'
 import { BlockContainer } from './../../components/Styled'
 import fingerprintImage from './../../assets/dashboard/fingerprint.png'
 import treeImage from './../../assets/dashboard/tree.png'
+import icons from './../../components/ActionCardLabel/icons'
 
 const PageContainer = styled.div`
   background-color: ${colors.lightGray};
@@ -27,6 +28,12 @@ const WidgetContainer = styled.div`
   border-radius: 4px;
   box-shadow: 0 1px 10px 0 rgba(52, 68, 66, 0.08);
   padding: 40px 30px;
+
+  ${props =>
+    props.noPaddings &&
+    css`
+      padding: 0;
+    `};
 `
 
 const WidgetTitle = styled.p`
@@ -103,12 +110,38 @@ const DashboardHeaderUserSince = styled.div`
   margin-top: 4px;
 `
 
+const ImpactCategorySelector = styled(Tabs)`
+  .ant-tabs-nav-scroll {
+    text-align: center;
+  }
+
+  .ant-tabs-tab {
+    padding: 16.5px 16px;
+
+    span {
+      align-items: center;
+      display: flex;
+      font-size: 16px;
+    }
+  }
+
+  .ant-tabs-bar {
+    border-bottom: none;
+    margin: 0;
+  }
+
+  .ant-tabs-ink-bar {
+    height: 4px;
+  }
+`
+
 class DashboardPage extends Component {
   state = {
     calendar: null,
     network: null,
     ratio: null,
     stats: null,
+    currentImpactCategory: 'climate',
   }
 
   componentDidMount() {
@@ -123,8 +156,18 @@ class DashboardPage extends Component {
     this.setState({ calendar, network, ratio, stats })
   }
 
+  handleImpactCategoryChange = category => {
+    this.setState({ currentImpactCategory: category })
+  }
+
   render() {
-    const { calendar, network, ratio, stats } = this.state
+    const {
+      calendar,
+      network,
+      ratio,
+      stats,
+      currentImpactCategory,
+    } = this.state
     const { user } = this.props
     return (
       <PageContainer>
@@ -140,7 +183,11 @@ class DashboardPage extends Component {
                 <BlockContainer style={{ zIndex: 1 }}>
                   <DashboardHeaderBackgrounds />
                   <DashboardHeaderUserPicture>
-                    <img src={user.photo} />
+                    <img
+                      src={
+                        user.photo || api.getUserInitialAvatar(user.fullName)
+                      }
+                    />
                   </DashboardHeaderUserPicture>
                 </BlockContainer>
               </DashboardHeaderGreenLine>
@@ -183,7 +230,11 @@ class DashboardPage extends Component {
                           </Col>
                           <Col span={8}>
                             <DashboardHeaderUserName>
-                              {stats.personal.netPositiveDays}
+                              {Math.round(
+                                stats.personal.netPositiveDays[
+                                  currentImpactCategory
+                                ],
+                              )}
                             </DashboardHeaderUserName>
                             <DashboardHeaderUserSince>
                               <FormattedMessage id="app.dashboardPage.netPositiveDays" />
@@ -198,6 +249,74 @@ class DashboardPage extends Component {
             </DashboardHeader>
             <BlockContainer>
               <Row gutter={20}>
+                <Col span={24}>
+                  <WidgetContainer noPaddings>
+                    <WidgetContent>
+                      <ImpactCategorySelector
+                        defaultActiveKey={currentImpactCategory}
+                        onChange={this.handleImpactCategoryChange}
+                      >
+                        <Tabs.TabPane
+                          tab={
+                            <span>
+                              <Icon
+                                component={() => icons['positive']['climate']}
+                              />
+                              <FormattedMessage id="app.impactCategories.climate" />
+                            </span>
+                          }
+                          key="climate"
+                        />
+                        <Tabs.TabPane
+                          tab={
+                            <span>
+                              <Icon
+                                component={() => icons['positive']['waste']}
+                              />
+                              <FormattedMessage id="app.impactCategories.waste" />
+                            </span>
+                          }
+                          key="waste"
+                        />
+                        <Tabs.TabPane
+                          tab={
+                            <span>
+                              <Icon
+                                component={() => icons['positive']['water']}
+                              />
+                              <FormattedMessage id="app.impactCategories.water" />
+                            </span>
+                          }
+                          key="water"
+                        />
+                        <Tabs.TabPane
+                          tab={
+                            <span>
+                              <Icon
+                                component={() => icons['positive']['ecosystem']}
+                              />
+                              <FormattedMessage id="app.impactCategories.ecosystem" />
+                            </span>
+                          }
+                          key="ecosystem"
+                        />
+                        <Tabs.TabPane
+                          tab={
+                            <span>
+                              <Icon
+                                component={() => icons['positive']['health']}
+                              />
+                              <FormattedMessage id="app.impactCategories.health" />
+                            </span>
+                          }
+                          key="health"
+                        />
+                      </ImpactCategorySelector>
+                    </WidgetContent>
+                  </WidgetContainer>
+                </Col>
+              </Row>
+              <Row gutter={20} style={{ marginTop: '20px' }}>
                 <Col span={12}>
                   <WidgetContainer>
                     <WidgetHeader>
@@ -206,7 +325,9 @@ class DashboardPage extends Component {
                       </WidgetTitle>
                     </WidgetHeader>
                     <WidgetContent>
-                      <CalendarWidget activeDays={calendar} />
+                      <CalendarWidget
+                        activeDays={calendar[currentImpactCategory]}
+                      />
                     </WidgetContent>
                   </WidgetContainer>
                 </Col>
@@ -219,8 +340,12 @@ class DashboardPage extends Component {
                     </WidgetHeader>
                     <WidgetContent>
                       <GoodRatioWidget
-                        footprintDays={ratio.footprintDays}
-                        handprintDays={ratio.handprintDays}
+                        footprintDays={Math.round(
+                          ratio.footprintDays[currentImpactCategory],
+                        )}
+                        handprintDays={Math.round(
+                          ratio.handprintDays[currentImpactCategory],
+                        )}
                       />
                     </WidgetContent>
                   </WidgetContainer>
@@ -259,7 +384,11 @@ class DashboardPage extends Component {
                             </Col>
                             <Col span={8}>
                               <WidgetTitle>
-                                {stats.network.netPositiveDays}
+                                {Math.round(
+                                  stats.network.netPositiveDays[
+                                    currentImpactCategory
+                                  ],
+                                )}
                               </WidgetTitle>
                               <WidgetDescription>
                                 <FormattedMessage id="app.dashboardPage.netPositiveDays" />

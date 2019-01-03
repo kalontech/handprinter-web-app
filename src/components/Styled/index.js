@@ -444,6 +444,30 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .d3-tooltip-container {
+    background-color: black;
+    border-radius: 4px;
+
+    p {
+      color: white;
+      overflow: hidden;
+      padding: 4px;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .d3-tooltip-container:after{
+    background: inherit;
+    bottom: -5px;
+    content: '';
+    height: 10px;
+    left: 45px;
+    position: absolute;
+    transform: rotate(45deg);
+    width: 10px;
+  }
 `
 
 export const Input = styled(Ant.Input)`
