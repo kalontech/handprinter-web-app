@@ -4,8 +4,8 @@ const brandedConfig = {
     footerComponent: require('./../components/EatonFooter').default,
     headerOverrides: {
       brandName: 'Eaton',
-      fullLogo: require('./../assets/branded/logos/eatonFullLogo.svg'),
-      partialLogo: require('./../assets/branded/logos/eatonFullLogo.svg'),
+      fullLogo: require('./../assets/branded/logos/eatonFullLogo.png'),
+      partialLogo: require('./../assets/branded/logos/eatonFullLogo.png'),
       inLinkLogo: require('./../assets/branded/logos/eatonInLinkLogo.svg'),
     },
     homePageComponent: require('./../pages/AboutEatonPage').default,

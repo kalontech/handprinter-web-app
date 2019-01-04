@@ -418,6 +418,6 @@ export default {
     'We also have handprints: <strong>positive impacts of our actions.</strong> Handprints include helping others reduce their footprints. Green Guardian Handprint lets Eaton employees grow their handprints and reduce their footprints too.',
   'app.aboutEatonPage.whatAreHandprints.getStartedToday': 'Get started today!',
   'app.aboutEatonPage.becomeGuardian.title': 'Become an Eaton Green Guardian',
-  'app.aboutEatonPage.becomeGuarding.description':
+  'app.aboutEatonPage.becomeGuardian.description':
     'What can you do to make your community, your work, your planet more sustainable?',
 }
