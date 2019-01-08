@@ -12,11 +12,11 @@ import NetworkWidget from './../../components/NetworkWidget'
 import colors from './../../config/colors'
 import api from './../../api'
 import Spinner from './../../components/Spinner'
-
 import { BlockContainer } from './../../components/Styled'
 import fingerprintImage from './../../assets/dashboard/fingerprint.png'
 import treeImage from './../../assets/dashboard/tree.png'
 import icons from './../../components/ActionCardLabel/icons'
+import media from './../../utils/mediaQueryTemplate'
 
 const PageContainer = styled.div`
   background-color: ${colors.lightGray};
@@ -77,6 +77,21 @@ const DashboardHeaderWhiteLine = styled(Row)`
   height: 120px;
   justify-content: center;
   width: 100%;
+  ${media.tablet`
+    background-color: transparent;
+    margin-top: 90px;
+  `}
+`
+
+const DashboardHeaderUserNameCol = styled(Col)`
+  padding-left: 199px;
+  ${media.tablet`
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  `}
 `
 
 const DashboardHeaderBackgrounds = styled.div`
@@ -87,6 +102,10 @@ const DashboardHeaderBackgrounds = styled.div`
 `
 
 const DashboardHeaderUserPicture = styled.div`
+  ${media.tablet`
+    display: flex;
+    justify-content: center;
+  `}
   img {
     border: 4px solid ${colors.white};
     border-radius: 88px;
@@ -201,7 +220,8 @@ class DashboardPage extends Component {
                     }}
                   >
                     <Row style={{ width: '100%' }}>
-                      <Col span={16} style={{ paddingLeft: '199px' }}>
+                      {/* <Col span={16} style={{ paddingLeft: '199px' }} > */}
+                      <DashboardHeaderUserNameCol span={16} sm={24} >
                         <DashboardHeaderUserName>
                           {user.fullName}
                         </DashboardHeaderUserName>
@@ -209,7 +229,7 @@ class DashboardPage extends Component {
                           <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
                           {moment(user.createdAt).format('MMMM DD, YYYY')}
                         </DashboardHeaderUserSince>
-                      </Col>
+                      </DashboardHeaderUserNameCol>
                       <Col span={8}>
                         <Row>
                           <Col span={8}>
@@ -317,7 +337,7 @@ class DashboardPage extends Component {
                 </Col>
               </Row>
               <Row gutter={20} style={{ marginTop: '20px' }}>
-                <Col span={12}>
+                <Col span={12} sm={24} >
                   <WidgetContainer>
                     <WidgetHeader>
                       <WidgetTitle>
@@ -331,7 +351,7 @@ class DashboardPage extends Component {
                     </WidgetContent>
                   </WidgetContainer>
                 </Col>
-                <Col span={12}>
+                <Col span={12} sm={24}>
                   <WidgetContainer>
                     <WidgetHeader>
                       <WidgetTitle>
