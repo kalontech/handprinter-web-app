@@ -58,10 +58,9 @@ export default {
     'You will be redirected to the main page.',
   'app.profilePage.form.password': 'Enter your current password',
   'app.profilePage.form.newPassword': 'Enter new password',
-  'app.profilePage.deleteAccountModal.title':
-    'Are you sure delete your account?',
+  'app.profilePage.deleteAccountModal.title': 'Delete account',
   'app.profilePage.deleteAccountModal.context':
-    'Your account will be deleted and can`t be recovered',
+    'Are you sure that you want to delete your account? All statistics will be lost.',
   'app.profilePage.deleteAccountModal.confirmButton': 'Delete',
   'app.profilePage.deleteAccountModal.cancelButton': 'Cancel',
   'app.profilePage.deleteAccountModal.closeButton': 'Close',

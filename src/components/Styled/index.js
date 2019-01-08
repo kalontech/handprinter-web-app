@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import hexToRgba from './../../utils/hexToRgba'
 import arrowDownIcon from '../../assets/icons/arrowDown.svg'
 import colors from './../../config/colors'
+import media from './../../utils/mediaQueryTemplate'
 
 import backgroundOceanContainerImage from './../../assets/images/backgroundOceanContainer.png'
 
@@ -434,13 +435,65 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .ant-modal-confirm__override-for__profile-page {
+    .anticon {
+      display: none;
+    }
     .ant-modal-confirm-title {
-      font-size: 18px
+      font-size: 28px
+      text-align: center;
+      color: ${colors.dark};
+    }
+    .ant-modal-confirm-content {
+      font-size: 14px;
+      color: ${colors.darkGray};
+      text-align: center;
     }
     .ant-modal-confirm-btns {
       display: flex;
-      width: 100%;
       justify-content: center;
+      align-items: center;
+      width: 100%;
+      ${media.phone`
+        flex-direction: column;
+      `}
+      .ant-btn {
+        color: ${colors.ocean};
+        background-color: ${hexToRgba(colors.ocean, 0.1)};
+        border: none;
+        width: 150px;
+        margin: 0 auto;
+        ${media.tablet`
+          width: 100%;
+          max-width: 250px;
+        `}
+        ${media.phone`
+          max-width: 100%;
+          margin-bottom: 10px;
+        `}
+        &&:hover,
+        &&:focus {
+          background-color: ${hexToRgba(colors.ocean, 0.18)};
+          color: ${colors.ocean};
+        }
+        &&.active,
+        &&:active {
+          background-color: ${hexToRgba(colors.ocean, 0.26)};
+          color: ${colors.ocean};
+        }
+      }
+      .ant-btn-danger {
+        background: ${colors.orange};
+        color: ${colors.white};
+        width: 150px;
+        margin: 0 auto;
+        ${media.tablet`
+          width: 100%;
+          max-width: 250px;
+        `}
+        ${media.phone`
+          max-width: 100%;
+        `}
+      }
     }
   }
 

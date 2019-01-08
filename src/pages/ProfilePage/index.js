@@ -33,6 +33,7 @@ import profileLeavesBackgroundImage from '../../assets/images/profileLeavesBackg
 import arrowDownIcon from './../../assets/icons/arrowDown.svg'
 import { logOut } from './../../redux/accountStore'
 import hexToRgba from './../../utils/hexToRgba'
+import media from './../../utils/mediaQueryTemplate'
 
 export const Wrapper = styled.div`
   background-color: ${colors.lightGray};
@@ -41,6 +42,9 @@ export const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   padding-bottom: 100px;
+  ${media.tablet`
+    padding-bottom: 60px;
+  `}
 `
 
 export const FormWrapper = styled.div`
@@ -48,7 +52,11 @@ export const FormWrapper = styled.div`
   padding: 25px 28px;
   border-radius: 5px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  min-width: 575px;
+  width: 575px;
+  ${media.phone`
+    padding: 15px;
+    width: 290px;
+  `}
 `
 
 export const ProfileImgWrap = styled.div`
@@ -110,6 +118,9 @@ export const OuterPlusButton = styled.div`
 
 export const SaveButton = styled(PrimaryButton)`
   width: 50%;
+  ${media.phone`
+    width: 100%;
+  `}
 `
 
 export const InnerPlusButton = styled.div`
@@ -153,6 +164,9 @@ export const ChangePasswordButtonsWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 16px;
+  ${media.phone`
+    flex-direction: column-reverse;
+  `}
 `
 
 export const FormSectionHeading = styled.div`
@@ -167,6 +181,10 @@ export const ChangePssswordSectionHeading = styled(FormSectionHeading)`
 export const CancelButton = styled(DefaultButton)`
   margin-right: 15px;
   width: 50%;
+  ${media.phone`
+    width: 100%;
+    margin-top: 10px;
+  `}
 `
 
 export const HiddenPictureCanvas = styled.canvas`
@@ -190,6 +208,12 @@ export const StyledSaveChangesButton = styled(Button)`
 export const DeleteButtonWrap = styled.div`
   text-align: center;
   margin-top: 10px;
+  ${media.tablet`
+    margin-top: 20px;
+  `}
+  ${media.phone`
+    margin-top: 10px;
+  `}
   .ant-btn-loading {
     padding: 0 100px !important; // use important to rewrite original styles
   }
@@ -200,6 +224,9 @@ export const DeleteAccountButton = styled(DefaultButton)`
   display: inline-block;
   padding: 0 100px;
   color: ${colors.orange};
+  ${media.phone`
+    padding: 0 95px;
+  `}
 
   &&:hover,
   &&:focus {
