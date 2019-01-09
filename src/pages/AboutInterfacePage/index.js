@@ -17,9 +17,12 @@ import React, { Fragment } from 'react'
 // clear URL hash
 // removeHash()
 
+import PageMetadata from '../../components/PageMetadata'
+
 const AboutEatonPage = () => {
   return (
     <Fragment>
+      <PageMetadata pageName="aboutEatonPage" />
       <h1>Interface page</h1>
     </Fragment>
   )

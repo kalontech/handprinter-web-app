@@ -4,6 +4,9 @@ import {
 } from '../config/files'
 
 export default {
+  'app.defaultData.head.title': 'Welcome to Handprinter!',
+  'app.defaultData.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.defaultData.head.description': 'Description of page',
   'app.errors.unknown': 'Unknown error',
   'app.errors.image.wrongSize': `Image must be greater than ${PROFILE_PHOTO_SIZE_LIMIT}x${PROFILE_PHOTO_SIZE_LIMIT}px`,
   'app.errors.image.wrongWeight': `Image must be less than ${PROFILE_PHOTO_WEIGHT_LIMIT} megabytes`,
@@ -31,11 +34,17 @@ export default {
   'app.errorHandlerPage.pleaseSendReportAndReloadPage':
     'An error occured during render. Please, send report and reload the page.',
   'app.errorHandlerPage.sendReport': 'Send report',
+  'app.loginPage.head.title': 'Welcome to Handprinter!',
+  'app.loginPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.loginPage.head.description': 'Description of page',
   'app.loginPage.title': 'Login',
   'app.loginPage.forgotPassword': 'Forgot password',
   'app.loginPage.login': 'Login',
   'app.loginPage.doNotHaveAnAccount': 'Do not have an account?',
   'app.loginPage.register': 'Register',
+  'app.registerPage.head.title': 'Welcome to Handprinter!',
+  'app.registerPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.registerPage.head.description': 'Description of page',
   'app.registerPage.title': 'Registration',
   'app.registerPage.register': 'Join Handprinters',
   'app.registerPage.alreadyHaveAnAccount': 'Already have an account?',
@@ -45,6 +54,9 @@ export default {
     handprinter service. Sign up to confirm your invitation.
     Start your positive impact on the planet!`,
   'app.registerPage.login': 'Login',
+  'app.profilePage.head.title': 'Welcome to Handprinter!',
+  'app.profilePage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.profilePage.head.description': 'Description of page',
   'app.profilePage.addPhoto': 'Add photo',
   'app.profilePage.generalInformation': 'General information',
   'app.profilePage.saveChanges': 'Save changes',
@@ -64,6 +76,9 @@ export default {
   'app.profilePage.deleteAccountModal.confirmButton': 'Delete',
   'app.profilePage.deleteAccountModal.cancelButton': 'Cancel',
   'app.profilePage.deleteAccountModal.closeButton': 'Close',
+  'app.increaseHandprintPage.head.title': 'Welcome to Handprinter!',
+  'app.increaseHandprintPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.increaseHandprintPage.head.description': 'Description of page',
   'app.increaseHandprintPage.title': 'Increate your handprint!',
   // TODO:
   // need change "app.increaseHandprintPage.description" translation
@@ -100,19 +115,31 @@ export default {
   'app.forms.invitationCode': 'Invitation code (optional)',
   'app.forms.invitationCode.hint':
     'Curabitur sagittis enim vel libero ornare tincidunt. Cras libero metus, tempus ut nulla non, dignissim scelerisque nisi. Proin malesuada, ante vitae.',
+  'app.resetPasswordPage.head.title': 'Welcome to Handprinter!',
+  'app.resetPasswordPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.resetPasswordPage.head.description': 'Description of page',
   'app.resetPasswordPage.title': 'Reset password',
   'app.resetPasswordPage.description':
     'Enter the e-mail address you used to register and we will send you instructions on how to change your password.',
   'app.resetPasswordPage.send': 'Send',
+  'app.checkYourEmailPage.head.title': 'Welcome to Handprinter!',
+  'app.checkYourEmailPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.checkYourEmailPage.head.description': 'Description of page',
   'app.checkYourEmailPage.title': 'Recovery mail sent',
   'app.checkYourEmailPage.description':
     'Didn’t receive the email?<br />Please check the email address you used to make sure it matches the address on your account, look in your spam folder, or request another e-mail below.',
   'app.checkYourEmailPage.sendAgain': 'Send again',
+  'app.setNewPasswordPage.head.title': 'Welcome to Handprinter!',
+  'app.setNewPasswordPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.setNewPasswordPage.head.description': 'Description of page',
   'app.setNewPasswordPage.title': 'Set a new password',
   'app.setNewPasswordPage.changePassword': 'Change password',
   'app.languages.en': 'English',
   'app.languages.es': 'Español',
   'app.logInPage.title': 'Log in',
+  'app.homePage.head.title': 'Welcome to Handprinter!',
+  'app.homePage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.homePage.head.description': 'Description of page',
   'app.homePage.hero.title':
     'Want to take <strong>doing good</strong> to a global scale?\n' +
     '                You’re not alone',
@@ -172,8 +199,14 @@ export default {
   'app.actionCardLabel.tooltip.text':
     'You can reduce your footprint for {value} {unit} on the {category} category.',
   'app.actionsSlider.link': 'View all actions',
+  'app.actionsPage.head.title': 'Welcome to Handprinter!',
+  'app.actionsPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.actionsPage.head.description': 'Description of page',
   'app.actionsPage.searchPlaceholder': 'Search',
   'app.actionsPage.searchNotFound': 'Not found',
+  'app.faqPage.head.title': 'Welcome to Handprinter!',
+  'app.faqPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.faqPage.head.description': 'Description of page',
   'app.faqPage.title': 'FAQ',
   'app.faqPage.0.question': 'What is handprint?',
   'app.faqPage.0.answer':
@@ -200,6 +233,9 @@ export default {
   'app.faqPage.3.answer': 'Footprint - odio ac turpis mollis vehicula.',
   'app.faqPage.4.question': 'How to add my idea?',
   'app.faqPage.4.answer': 'Footprint - odio ac turpis mollis vehicula.',
+  'app.ourVision.head.title': 'Welcome to Handprinter!',
+  'app.ourVision.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.ourVision.head.description': 'Description of page',
   'app.ourVision.hero.title':
     'With enough handprints we can' +
     '                <strong> heal</strong> the planet',
@@ -299,6 +335,9 @@ export default {
     '                  organizations too, including ones you’re a part of. Make sure\n' +
     '                  they know: There’s room for everyone. We’re incomplete without\n' +
     '                  you.',
+  'app.measurementPage.head.title': 'Welcome to Handprinter!',
+  'app.measurementPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.measurementPage.head.description': 'Description of page',
   'app.measurementPage.Hero.Title':
     'How do we <strong>measure</strong> Action Impacts and\n' +
     '                Handprints?',
@@ -391,6 +430,9 @@ export default {
   'app.eatonFooter.cta.link': 'Learn more',
   'app.eatonFooter.poweredBy': 'Powered by',
   'app.eatonFooter.copyright': '&copy; 2018 NewEarth B. All Rights Reserved.',
+  'app.dashboardPage.head.title': 'Welcome to Handprinter!',
+  'app.dashboardPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.dashboardPage.head.description': 'Description of page',
   'app.dashboardPage.usersInvited': 'Users invited',
   'app.dashboardPage.actionsTaken': 'Actions taken',
   'app.dashboardPage.netPositiveDays': 'Net-positive days',
@@ -402,6 +444,9 @@ export default {
     'People that are part of my handprint',
   'app.dashboardPage.memberSince': 'Member since',
   'app.actions.reduceFootprint': 'Your reduced your footprint',
+  'app.aboutEatonPage.head.title': 'Welcome to Handprinter!',
+  'app.aboutEatonPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.aboutEatonPage.head.description': 'Description of page',
   'app.aboutEatonPage.hero.title': 'Become an Eaton Green Guardian',
   'app.aboutEatonPage.hero.description':
     'With Green Guardian Handprint, your individual actions can create a positive impact at work, in your community, and around the world.',

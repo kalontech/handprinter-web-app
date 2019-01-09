@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Form } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
@@ -17,6 +17,7 @@ import { Creators as AccountCreators } from './../../redux/accountStore'
 import getValidationRules from './../../config/validationRules'
 import InputForPassword from './../../components/InputForPassword'
 import handleFormError from './../../utils/handleFormError'
+import PageMetadata from '../../components/PageMetadata'
 
 class SetNewPasswordPage extends Component {
   state = {
@@ -52,33 +53,36 @@ class SetNewPasswordPage extends Component {
       settingNewPassword,
     } = this.props
     return (
-      <OceanContainer>
-        <OceanModal>
-          <OceanTitle>
-            <FormattedMessage id="app.setNewPasswordPage.title" />
-          </OceanTitle>
-          <OceanForm>
-            <Form onSubmit={this.handleSubmit}>
-              <FormItem>
-                {getFieldDecorator('password', {
-                  rules: getValidationRules(formatMessage).password,
-                })(<InputForPassword />)}
-              </FormItem>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ width: '100%' }}
-                loading={settingNewPassword}
-              >
-                <FormattedMessage id="app.setNewPasswordPage.changePassword" />
-              </Button>
-              <FormItem>
-                {getFieldDecorator('formError')(<Input type="hidden" />)}
-              </FormItem>
-            </Form>
-          </OceanForm>
-        </OceanModal>
-      </OceanContainer>
+      <Fragment>
+        <PageMetadata pageName="resetPasswordPage" />
+        <OceanContainer>
+          <OceanModal>
+            <OceanTitle>
+              <FormattedMessage id="app.setNewPasswordPage.title" />
+            </OceanTitle>
+            <OceanForm>
+              <Form onSubmit={this.handleSubmit}>
+                <FormItem>
+                  {getFieldDecorator('password', {
+                    rules: getValidationRules(formatMessage).password,
+                  })(<InputForPassword />)}
+                </FormItem>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ width: '100%' }}
+                  loading={settingNewPassword}
+                >
+                  <FormattedMessage id="app.setNewPasswordPage.changePassword" />
+                </Button>
+                <FormItem>
+                  {getFieldDecorator('formError')(<Input type="hidden" />)}
+                </FormItem>
+              </Form>
+            </OceanForm>
+          </OceanModal>
+        </OceanContainer>
+      </Fragment>
     )
   }
 }

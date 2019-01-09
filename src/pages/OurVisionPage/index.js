@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col } from 'antd'
 import styled from 'styled-components'
@@ -12,6 +12,7 @@ import {
   TextLarge,
   TextMedium,
 } from './../../components/Styled'
+import PageMetadata from '../../components/PageMetadata'
 import heroBg from './../../assets/our-vision/hero-bg.jpg'
 import planet from './../../assets/our-vision/planet.png'
 import aboutImg1 from './../../assets/our-vision/section2.1.png'
@@ -303,317 +304,320 @@ class OurVisionPage extends Component {
   render = () => {
     const { actions } = this.state
     return (
-      <OurVisionWrap>
-        <Hero>
-          <BlockContainer>
-            <Row type="flex" justify="center">
-              <Col span={12}>
-                <img src={planet} alt="" />
-                <HeroTitle>
-                  <FormattedHTMLMessage id="app.ourVision.hero.title" />
-                </HeroTitle>
-                <TextLarge>
-                  <FormattedMessage id="app.ourVision.hero.text" />
-                </TextLarge>
-                <HeroButton>
-                  <VideoPopup id="CtH6M5CXruU" reverse />
-                </HeroButton>
-              </Col>
-            </Row>
-          </BlockContainer>
-          <HeroBg src={heroBg} alt="" />
-        </Hero>
-        <section>
-          <BlockContainer>
-            <Row type="flex" justify="center">
-              <Col span={11}>
-                <SubtitleCenteredSm>
-                  <SubtitleGray>
-                    <FormattedHTMLMessage id="app.ourVision.about.title" />
-                  </SubtitleGray>
-                </SubtitleCenteredSm>
-              </Col>
-            </Row>
-          </BlockContainer>
-          <AboutContainer>
+      <Fragment>
+        <PageMetadata pageName="ourVision" />
+        <OurVisionWrap>
+          <Hero>
             <BlockContainer>
-              <Row type="flex" align="middle">
-                <Col span={10}>
-                  <HeadingH3>
-                    <FormattedMessage id="app.ourVision.negativeImpacts.title" />
-                  </HeadingH3>
-                  <TextMedium>
-                    <FormattedMessage id="app.ourVision.negativeImpacts.text" />
-                  </TextMedium>
-                </Col>
-              </Row>
-              <NegativeImpacts>
-                <Row gutter={20}>
-                  <Col span={6}>
-                    <NegativeImpactsItem>
-                      <ImpactsItemImage>
-                        <img src={aboutImg1} alt="" />
-                      </ImpactsItemImage>
-                      <HeadingSmall>
-                        <FormattedMessage id="app.ourVision.negativeImpactsItem1.title" />
-                      </HeadingSmall>
-                      <p>
-                        <FormattedMessage id="app.ourVision.negativeImpactsItem1.text" />
-                      </p>
-                    </NegativeImpactsItem>
-                  </Col>
-                  <Col span={6}>
-                    <NegativeImpactsItem>
-                      <ImpactsItemImage>
-                        <img src={aboutImg2} alt="" />
-                      </ImpactsItemImage>
-                      <HeadingSmall>
-                        <FormattedMessage id="app.ourVision.negativeImpactsItem2.title" />
-                      </HeadingSmall>
-                      <p>
-                        <FormattedMessage id="app.ourVision.negativeImpactsItem2.text" />
-                      </p>
-                    </NegativeImpactsItem>
-                  </Col>
-                  <Col span={6}>
-                    <NegativeImpactsItem>
-                      <ImpactsItemImage>
-                        <img src={aboutImg3} alt="" />
-                      </ImpactsItemImage>
-                      <HeadingSmall>
-                        <FormattedMessage id="app.ourVision.negativeImpactsItem3.title" />
-                      </HeadingSmall>
-                      <p>
-                        <FormattedMessage id="app.ourVision.negativeImpactsItem3.text" />
-                      </p>
-                    </NegativeImpactsItem>
-                  </Col>
-                  <Col span={6}>
-                    <NegativeImpactsItem>
-                      <ImpactsItemImage>
-                        <img src={aboutImg4} alt="" />
-                      </ImpactsItemImage>
-
-                      <HeadingSmall>
-                        <FormattedMessage id="app.ourVision.negativeImpactsItem4.title" />
-                      </HeadingSmall>
-
-                      <p>
-                        <FormattedMessage id="app.ourVision.negativeImpactsItem4.text" />
-                      </p>
-                    </NegativeImpactsItem>
-                  </Col>
-                </Row>
-              </NegativeImpacts>
-            </BlockContainer>
-          </AboutContainer>
-        </section>
-        <section>
-          <BlockContainer>
-            <Row type="flex" justify="center">
-              <Col span={13}>
-                <SliderHeading>
-                  <BlockSubTitle>
-                    <FormattedHTMLMessage id="app.ourVision.slider.title" />
-                  </BlockSubTitle>
-                  <TextMedium>
-                    <FormattedMessage id="app.ourVision.slider.text" />
-                  </TextMedium>
-                </SliderHeading>
-              </Col>
-            </Row>
-          </BlockContainer>
-          <ActionsCarousel
-            actions={actions}
-            actionLinkPrefix="/pages/our-vision/actions"
-          />
-        </section>
-        <section>
-          <BlockContainer>
-            <Row type="flex" justify="center">
-              <Col span={12}>
-                <SubtitleCentered>
-                  <Quote src={quote} alt="" />
-                  <SubtitleGreen>
-                    <FormattedHTMLMessage id="app.ourVision.what.title" />
-                  </SubtitleGreen>
-                </SubtitleCentered>
-              </Col>
-            </Row>
-          </BlockContainer>
-          <WhatContainer>
-            <BlockContainer>
-              <Row gutter={20}>
-                <Col span={9} offset={12}>
-                  <HeadingH3>
-                    <FormattedMessage id="app.ourVision.what.subtitle" />
-                  </HeadingH3>
-                  <TextMedium>
-                    <FormattedMessage id="app.ourVision.what.text" />
-                  </TextMedium>
-                  <Link to="/account/register">
-                    <PrimaryButton type="primary">
-                      <FingerPrintIcon />
-                      <FormattedMessage id="app.ourVision.what.link" />
-                    </PrimaryButton>
-                  </Link>
-                </Col>
-              </Row>
-            </BlockContainer>
-          </WhatContainer>
-        </section>
-        <Steps>
-          <BlockContainer>
-            <SubtitleCentered>
-              <BlockSubTitle>
-                <FormattedMessage id="app.ourVision.steps.title" />
-              </BlockSubTitle>
-            </SubtitleCentered>
-            <Step1>
-              <Row gutter={20} type="flex" align="middle">
-                <Col span={10}>
-                  <Number src={num1} alt="1" />
-                  <SubtitleGreen as="h3">
-                    <FormattedHTMLMessage id="app.ourVision.step1.title" />
-                  </SubtitleGreen>
-                  <TextMedium>
-                    <FormattedMessage id="app.ourVision.step1.text" />
-                  </TextMedium>
-                </Col>
-                <Col span={12} offset={2}>
-                  <ImgWrap>
-                    <Step1Img src={stepsImg1} alt="" />
-                  </ImgWrap>
-                </Col>
-              </Row>
-            </Step1>
-            <Step2>
-              <Row gutter={20}>
+              <Row type="flex" justify="center">
                 <Col span={12}>
-                  <div>
-                    <Step2Img src={stepsImg2} alt="" />
-                  </div>
-                </Col>
-                <Col span={10}>
-                  <Number src={num2} alt="2" />
-                  <SubtitleGreen as="h3">
-                    <FormattedHTMLMessage id="app.ourVision.step2.title" />
-                  </SubtitleGreen>
-                  <TextMedium>
-                    <FormattedMessage id="app.ourVision.step2.text" />
-                  </TextMedium>
+                  <img src={planet} alt="" />
+                  <HeroTitle>
+                    <FormattedHTMLMessage id="app.ourVision.hero.title" />
+                  </HeroTitle>
+                  <TextLarge>
+                    <FormattedMessage id="app.ourVision.hero.text" />
+                  </TextLarge>
+                  <HeroButton>
+                    <VideoPopup id="CtH6M5CXruU" reverse />
+                  </HeroButton>
                 </Col>
               </Row>
-            </Step2>
-            <Step3>
-              <Row type="flex" justify="center" gutter={20}>
-                <Col span={16}>
-                  <Number src={num3} alt="3" />
-
-                  <SubtitleGreen as="h3">
-                    <FormattedHTMLMessage id="app.ourVision.step3.title" />
-                  </SubtitleGreen>
-                  <TextMedium>
-                    <FormattedMessage id="app.ourVision.step3.text" />
-                  </TextMedium>
+            </BlockContainer>
+            <HeroBg src={heroBg} alt="" />
+          </Hero>
+          <section>
+            <BlockContainer>
+              <Row type="flex" justify="center">
+                <Col span={11}>
+                  <SubtitleCenteredSm>
+                    <SubtitleGray>
+                      <FormattedHTMLMessage id="app.ourVision.about.title" />
+                    </SubtitleGray>
+                  </SubtitleCenteredSm>
                 </Col>
               </Row>
-              <StepsScheme>
-                <Row gutter={20}>
-                  <Col span={8}>
-                    <div>
-                      <StepsSchemeImg>
-                        <img src={stepsImg3a} alt="" />
-                      </StepsSchemeImg>
-                      <TextMedium>
-                        <FormattedMessage id="app.ourVision.stepScheme.text1" />
-                      </TextMedium>
-                    </div>
-                  </Col>
-                  <Col span={8}>
-                    <div>
-                      <StepsSchemeImg>
-                        <img src={stepsImg3b} alt="" />
-                      </StepsSchemeImg>
-                      <p>
-                        <FormattedMessage id="app.ourVision.stepScheme.text2" />
-                      </p>
-                    </div>
-                  </Col>
-                  <Col span={8}>
-                    <div>
-                      <LastImage>
-                        <img src={stepsImg3c} alt="" />
-                      </LastImage>
-                      <p>
-                        <FormattedMessage id="app.ourVision.stepScheme.text3" />
-                      </p>
-                    </div>
+            </BlockContainer>
+            <AboutContainer>
+              <BlockContainer>
+                <Row type="flex" align="middle">
+                  <Col span={10}>
+                    <HeadingH3>
+                      <FormattedMessage id="app.ourVision.negativeImpacts.title" />
+                    </HeadingH3>
+                    <TextMedium>
+                      <FormattedMessage id="app.ourVision.negativeImpacts.text" />
+                    </TextMedium>
                   </Col>
                 </Row>
-              </StepsScheme>
-            </Step3>
-            <Step4>
-              <Row gutter={20} type="flex" align="middle">
-                <Col span={10}>
-                  <StepFourScreenshotWrap>
-                    <img src={stepsImg4} alt="Add action" />
-                  </StepFourScreenshotWrap>
+                <NegativeImpacts>
+                  <Row gutter={20}>
+                    <Col span={6}>
+                      <NegativeImpactsItem>
+                        <ImpactsItemImage>
+                          <img src={aboutImg1} alt="" />
+                        </ImpactsItemImage>
+                        <HeadingSmall>
+                          <FormattedMessage id="app.ourVision.negativeImpactsItem1.title" />
+                        </HeadingSmall>
+                        <p>
+                          <FormattedMessage id="app.ourVision.negativeImpactsItem1.text" />
+                        </p>
+                      </NegativeImpactsItem>
+                    </Col>
+                    <Col span={6}>
+                      <NegativeImpactsItem>
+                        <ImpactsItemImage>
+                          <img src={aboutImg2} alt="" />
+                        </ImpactsItemImage>
+                        <HeadingSmall>
+                          <FormattedMessage id="app.ourVision.negativeImpactsItem2.title" />
+                        </HeadingSmall>
+                        <p>
+                          <FormattedMessage id="app.ourVision.negativeImpactsItem2.text" />
+                        </p>
+                      </NegativeImpactsItem>
+                    </Col>
+                    <Col span={6}>
+                      <NegativeImpactsItem>
+                        <ImpactsItemImage>
+                          <img src={aboutImg3} alt="" />
+                        </ImpactsItemImage>
+                        <HeadingSmall>
+                          <FormattedMessage id="app.ourVision.negativeImpactsItem3.title" />
+                        </HeadingSmall>
+                        <p>
+                          <FormattedMessage id="app.ourVision.negativeImpactsItem3.text" />
+                        </p>
+                      </NegativeImpactsItem>
+                    </Col>
+                    <Col span={6}>
+                      <NegativeImpactsItem>
+                        <ImpactsItemImage>
+                          <img src={aboutImg4} alt="" />
+                        </ImpactsItemImage>
+
+                        <HeadingSmall>
+                          <FormattedMessage id="app.ourVision.negativeImpactsItem4.title" />
+                        </HeadingSmall>
+
+                        <p>
+                          <FormattedMessage id="app.ourVision.negativeImpactsItem4.text" />
+                        </p>
+                      </NegativeImpactsItem>
+                    </Col>
+                  </Row>
+                </NegativeImpacts>
+              </BlockContainer>
+            </AboutContainer>
+          </section>
+          <section>
+            <BlockContainer>
+              <Row type="flex" justify="center">
+                <Col span={13}>
+                  <SliderHeading>
+                    <BlockSubTitle>
+                      <FormattedHTMLMessage id="app.ourVision.slider.title" />
+                    </BlockSubTitle>
+                    <TextMedium>
+                      <FormattedMessage id="app.ourVision.slider.text" />
+                    </TextMedium>
+                  </SliderHeading>
                 </Col>
-                <Col span={10} offset={2}>
-                  <StepFourContentWrap>
-                    <Number src={num4} alt="4" />
+              </Row>
+            </BlockContainer>
+            <ActionsCarousel
+              actions={actions}
+              actionLinkPrefix="/pages/our-vision/actions"
+            />
+          </section>
+          <section>
+            <BlockContainer>
+              <Row type="flex" justify="center">
+                <Col span={12}>
+                  <SubtitleCentered>
+                    <Quote src={quote} alt="" />
+                    <SubtitleGreen>
+                      <FormattedHTMLMessage id="app.ourVision.what.title" />
+                    </SubtitleGreen>
+                  </SubtitleCentered>
+                </Col>
+              </Row>
+            </BlockContainer>
+            <WhatContainer>
+              <BlockContainer>
+                <Row gutter={20}>
+                  <Col span={9} offset={12}>
+                    <HeadingH3>
+                      <FormattedMessage id="app.ourVision.what.subtitle" />
+                    </HeadingH3>
+                    <TextMedium>
+                      <FormattedMessage id="app.ourVision.what.text" />
+                    </TextMedium>
+                    <Link to="/account/register">
+                      <PrimaryButton type="primary">
+                        <FingerPrintIcon />
+                        <FormattedMessage id="app.ourVision.what.link" />
+                      </PrimaryButton>
+                    </Link>
+                  </Col>
+                </Row>
+              </BlockContainer>
+            </WhatContainer>
+          </section>
+          <Steps>
+            <BlockContainer>
+              <SubtitleCentered>
+                <BlockSubTitle>
+                  <FormattedMessage id="app.ourVision.steps.title" />
+                </BlockSubTitle>
+              </SubtitleCentered>
+              <Step1>
+                <Row gutter={20} type="flex" align="middle">
+                  <Col span={10}>
+                    <Number src={num1} alt="1" />
                     <SubtitleGreen as="h3">
-                      <FormattedHTMLMessage id="app.ourVision.step4.title" />
+                      <FormattedHTMLMessage id="app.ourVision.step1.title" />
                     </SubtitleGreen>
                     <TextMedium>
-                      <FormattedMessage id="app.ourVision.step4.text" />
+                      <FormattedMessage id="app.ourVision.step1.text" />
                     </TextMedium>
-                  </StepFourContentWrap>
-                </Col>
-              </Row>
-            </Step4>
-            <Step5>
-              <Row gutter={20}>
-                <Col span={10}>
-                  <Number src={num5} alt="5" />
-                  <SubtitleGreen as="h3">
-                    <FormattedHTMLMessage id="app.ourVision.step5.title" />
-                  </SubtitleGreen>
-                  <TextMedium>
-                    <FormattedMessage id="app.ourVision.step5.text" />
-                  </TextMedium>
-                </Col>
-                <Col span={12} offset={2}>
-                  <ImgCentered>
-                    <img src={stepsImg5} alt="" />
-                  </ImgCentered>
-                </Col>
-              </Row>
-            </Step5>
-            <Step>
-              <Row gutter={20} type="flex" align="middle">
-                <Col span={10}>
-                  <ImgWrap>
-                    <StepSixImage src={stepsImg6} alt="Network" />
-                  </ImgWrap>
-                </Col>
-                <Col span={10} offset={2}>
-                  <StepSixContentWrap>
-                    <Number src={num6} alt="6" />
+                  </Col>
+                  <Col span={12} offset={2}>
+                    <ImgWrap>
+                      <Step1Img src={stepsImg1} alt="" />
+                    </ImgWrap>
+                  </Col>
+                </Row>
+              </Step1>
+              <Step2>
+                <Row gutter={20}>
+                  <Col span={12}>
+                    <div>
+                      <Step2Img src={stepsImg2} alt="" />
+                    </div>
+                  </Col>
+                  <Col span={10}>
+                    <Number src={num2} alt="2" />
                     <SubtitleGreen as="h3">
-                      <FormattedHTMLMessage id="app.ourVision.step6.title" />
+                      <FormattedHTMLMessage id="app.ourVision.step2.title" />
                     </SubtitleGreen>
                     <TextMedium>
-                      <FormattedMessage id="app.ourVision.step6.text" />
+                      <FormattedMessage id="app.ourVision.step2.text" />
                     </TextMedium>
-                  </StepSixContentWrap>
-                </Col>
-              </Row>
-            </Step>
-          </BlockContainer>
-        </Steps>
-      </OurVisionWrap>
+                  </Col>
+                </Row>
+              </Step2>
+              <Step3>
+                <Row type="flex" justify="center" gutter={20}>
+                  <Col span={16}>
+                    <Number src={num3} alt="3" />
+
+                    <SubtitleGreen as="h3">
+                      <FormattedHTMLMessage id="app.ourVision.step3.title" />
+                    </SubtitleGreen>
+                    <TextMedium>
+                      <FormattedMessage id="app.ourVision.step3.text" />
+                    </TextMedium>
+                  </Col>
+                </Row>
+                <StepsScheme>
+                  <Row gutter={20}>
+                    <Col span={8}>
+                      <div>
+                        <StepsSchemeImg>
+                          <img src={stepsImg3a} alt="" />
+                        </StepsSchemeImg>
+                        <TextMedium>
+                          <FormattedMessage id="app.ourVision.stepScheme.text1" />
+                        </TextMedium>
+                      </div>
+                    </Col>
+                    <Col span={8}>
+                      <div>
+                        <StepsSchemeImg>
+                          <img src={stepsImg3b} alt="" />
+                        </StepsSchemeImg>
+                        <p>
+                          <FormattedMessage id="app.ourVision.stepScheme.text2" />
+                        </p>
+                      </div>
+                    </Col>
+                    <Col span={8}>
+                      <div>
+                        <LastImage>
+                          <img src={stepsImg3c} alt="" />
+                        </LastImage>
+                        <p>
+                          <FormattedMessage id="app.ourVision.stepScheme.text3" />
+                        </p>
+                      </div>
+                    </Col>
+                  </Row>
+                </StepsScheme>
+              </Step3>
+              <Step4>
+                <Row gutter={20} type="flex" align="middle">
+                  <Col span={10}>
+                    <StepFourScreenshotWrap>
+                      <img src={stepsImg4} alt="Add action" />
+                    </StepFourScreenshotWrap>
+                  </Col>
+                  <Col span={10} offset={2}>
+                    <StepFourContentWrap>
+                      <Number src={num4} alt="4" />
+                      <SubtitleGreen as="h3">
+                        <FormattedHTMLMessage id="app.ourVision.step4.title" />
+                      </SubtitleGreen>
+                      <TextMedium>
+                        <FormattedMessage id="app.ourVision.step4.text" />
+                      </TextMedium>
+                    </StepFourContentWrap>
+                  </Col>
+                </Row>
+              </Step4>
+              <Step5>
+                <Row gutter={20}>
+                  <Col span={10}>
+                    <Number src={num5} alt="5" />
+                    <SubtitleGreen as="h3">
+                      <FormattedHTMLMessage id="app.ourVision.step5.title" />
+                    </SubtitleGreen>
+                    <TextMedium>
+                      <FormattedMessage id="app.ourVision.step5.text" />
+                    </TextMedium>
+                  </Col>
+                  <Col span={12} offset={2}>
+                    <ImgCentered>
+                      <img src={stepsImg5} alt="" />
+                    </ImgCentered>
+                  </Col>
+                </Row>
+              </Step5>
+              <Step>
+                <Row gutter={20} type="flex" align="middle">
+                  <Col span={10}>
+                    <ImgWrap>
+                      <StepSixImage src={stepsImg6} alt="Network" />
+                    </ImgWrap>
+                  </Col>
+                  <Col span={10} offset={2}>
+                    <StepSixContentWrap>
+                      <Number src={num6} alt="6" />
+                      <SubtitleGreen as="h3">
+                        <FormattedHTMLMessage id="app.ourVision.step6.title" />
+                      </SubtitleGreen>
+                      <TextMedium>
+                        <FormattedMessage id="app.ourVision.step6.text" />
+                      </TextMedium>
+                    </StepSixContentWrap>
+                  </Col>
+                </Row>
+              </Step>
+            </BlockContainer>
+          </Steps>
+        </OurVisionWrap>
+      </Fragment>
     )
   }
 }

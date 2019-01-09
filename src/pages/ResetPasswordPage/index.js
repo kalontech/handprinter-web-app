@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Form } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
@@ -17,6 +17,7 @@ import {
 import { Creators as AccountCreators } from './../../redux/accountStore'
 import getValidationRules from './../../config/validationRules'
 import handleFormError from './../../utils/handleFormError'
+import PageMetadata from '../../components/PageMetadata'
 
 class ResetPasswordPage extends Component {
   handleSubmit = e => {
@@ -45,41 +46,44 @@ class ResetPasswordPage extends Component {
       resettingPassword,
     } = this.props
     return (
-      <OceanContainer>
-        <OceanModal>
-          <OceanTitle>
-            <FormattedMessage id="app.resetPasswordPage.title" />
-          </OceanTitle>
-          <OceanDescription>
-            <FormattedMessage id="app.resetPasswordPage.description" />
-          </OceanDescription>
-          <OceanForm>
-            <Form onSubmit={this.handleSubmit}>
-              <FormItem>
-                {getFieldDecorator('email', {
-                  rules: getValidationRules(formatMessage).email,
-                })(
-                  <Input
-                    type="email"
-                    placeholder={formatMessage({ id: 'app.forms.email' })}
-                  />,
-                )}
-              </FormItem>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ width: '100%' }}
-                loading={resettingPassword}
-              >
-                <FormattedMessage id="app.resetPasswordPage.send" />
-              </Button>
-              <FormItem>
-                {getFieldDecorator('formError')(<Input type="hidden" />)}
-              </FormItem>
-            </Form>
-          </OceanForm>
-        </OceanModal>
-      </OceanContainer>
+      <Fragment>
+        <PageMetadata pageName="resetPasswordPage" />
+        <OceanContainer>
+          <OceanModal>
+            <OceanTitle>
+              <FormattedMessage id="app.resetPasswordPage.title" />
+            </OceanTitle>
+            <OceanDescription>
+              <FormattedMessage id="app.resetPasswordPage.description" />
+            </OceanDescription>
+            <OceanForm>
+              <Form onSubmit={this.handleSubmit}>
+                <FormItem>
+                  {getFieldDecorator('email', {
+                    rules: getValidationRules(formatMessage).email,
+                  })(
+                    <Input
+                      type="email"
+                      placeholder={formatMessage({ id: 'app.forms.email' })}
+                    />,
+                  )}
+                </FormItem>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ width: '100%' }}
+                  loading={resettingPassword}
+                >
+                  <FormattedMessage id="app.resetPasswordPage.send" />
+                </Button>
+                <FormItem>
+                  {getFieldDecorator('formError')(<Input type="hidden" />)}
+                </FormItem>
+              </Form>
+            </OceanForm>
+          </OceanModal>
+        </OceanContainer>
+      </Fragment>
     )
   }
 }

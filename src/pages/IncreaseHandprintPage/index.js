@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -17,6 +17,7 @@ import hexToRgba from '../../utils/hexToRgba'
 import savePlanetImg from '../../assets/increase-handprint/save_planet.png'
 import { getInvitationLink } from '../../utils/helpers'
 import api from './../../api'
+import PageMetadata from '../../components/PageMetadata'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -448,10 +449,13 @@ class IncreaseHandprintPage extends Component {
 
   render() {
     return (
-      <Wrapper>
-        {this.renderTitleSection()}
-        {this.renderFormSection(this.state, this.props)}
-      </Wrapper>
+      <Fragment>
+        <PageMetadata pageName="increaseHandprintPage" />
+        <Wrapper>
+          {this.renderTitleSection()}
+          {this.renderFormSection(this.state, this.props)}
+        </Wrapper>
+      </Fragment>
     )
   }
 }

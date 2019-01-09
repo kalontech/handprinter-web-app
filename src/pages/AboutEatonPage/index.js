@@ -16,6 +16,7 @@ import instagramImg from './../../assets/about-eaton/insta_photos.png'
 import BecomeGuardianImg from './../../assets/about-eaton/bc.jpg'
 import { Link } from 'react-router-dom'
 import api from './../../api'
+import PageMetadata from '../../components/PageMetadata'
 
 configureAnchors({ scrollDuration: 1200 })
 
@@ -241,6 +242,7 @@ class AboutEatonPage extends Component {
     const { actions } = this.state
     return (
       <Fragment>
+        <PageMetadata pageName="aboutEatonPage" />
         <Hero>
           <BlockContainer>
             <HeroTitle>
