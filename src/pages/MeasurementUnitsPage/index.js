@@ -2,11 +2,12 @@ import React, { Fragment } from 'react'
 import { Row, Col } from 'antd'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import styled from 'styled-components'
-import colors from './../../config/colors'
 import ScrollableAnchor, {
   configureAnchors,
   removeHash,
 } from 'react-scrollable-anchor'
+
+import colors from './../../config/colors'
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import {
   BlockContainer,
@@ -19,7 +20,7 @@ import {
   TextMedium,
   TextMediumGroup,
 } from './../../components/Styled'
-
+import PageMetadata from '../../components/PageMetadata'
 import heroImg from './../../assets/measurement/measurement-hero-img.png'
 import meaningImg from './../../assets/measurement/sheep.png'
 import problemImg from './../../assets/measurement/rabbit.png'
@@ -279,6 +280,8 @@ const Scales = styled(Animation)`
 const MeasurementUnitsPage = () => {
   return (
     <Fragment>
+      <PageMetadata pageName="measurementPage" />
+
       <HeroSection>
         <BlockContainer>
           <Row gutter={20} type="flex" align="middle">

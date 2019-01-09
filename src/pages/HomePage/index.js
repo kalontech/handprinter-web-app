@@ -32,6 +32,7 @@ import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import FingerPrintIcon from '../../assets/icons/FingerPrintIcon'
 import colors from './../../config/colors'
 import api from './../../api'
+import PageMetadata from '../../components/PageMetadata'
 
 configureAnchors({ scrollDuration: 1200 })
 
@@ -132,6 +133,7 @@ class HomePage extends Component {
     const { actions } = this.state
     return (
       <Fragment>
+        <PageMetadata pageName="homePage" />
         <Hero>
           <BlockContainer>
             <Row type="flex" justify="space-between" align="middle">

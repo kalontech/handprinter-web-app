@@ -1,18 +1,19 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import colors from './../../config/colors'
 import { Row, Col } from 'antd'
+import { injectIntl, FormattedMessage } from 'react-intl'
+
+import colors from './../../config/colors'
+import PageMetadata from '../../components/PageMetadata'
+import faqImg from './../../assets/faq/cat.png'
+import fingerPrintleft from './../../assets/faq/fingerprint-left.png'
+import fingerPrintRight from './../../assets/faq/fingerprint-right.svg'
 import {
   BlockContainer,
   Collapse,
   CollapsePanel,
 } from './../../components/Styled'
-import { injectIntl, FormattedMessage } from 'react-intl'
-
-import faqImg from './../../assets/faq/cat.png'
-import fingerPrintleft from './../../assets/faq/fingerprint-left.png'
-import fingerPrintRight from './../../assets/faq/fingerprint-right.svg'
 
 const Wrapper = styled.section`
   background-color: ${colors.lightGray};
@@ -49,63 +50,66 @@ const Heading = styled.h1`
 
 const FaqPage = props => {
   return (
-    <Wrapper>
-      <BlockContainer>
-        <Row>
-          <Col span={16} offset={4} gutter={20}>
-            <Content>
-              <Heading>
-                <FormattedMessage id="app.faqPage.title" />
-              </Heading>
-              <Collapse accordion defaultActiveKey={['1']} bordered={false}>
-                <CollapsePanel
-                  header={props.intl.formatMessage({
-                    id: 'app.faqPage.0.question',
-                  })}
-                  key="1"
-                >
-                  <p>
-                    <FormattedMessage id="app.faqPage.0.answer" />
-                  </p>
-                </CollapsePanel>
-                <CollapsePanel
-                  header={<FormattedMessage id="app.faqPage.1.question" />}
-                  key="2"
-                >
-                  <p>
-                    <FormattedMessage id="app.faqPage.1.answer" />
-                  </p>
-                </CollapsePanel>
-                <CollapsePanel
-                  header={<FormattedMessage id="app.faqPage.2.question" />}
-                  key="3"
-                >
-                  <p>
-                    <FormattedMessage id="app.faqPage.2.answer" />
-                  </p>
-                </CollapsePanel>
-                <CollapsePanel
-                  header={<FormattedMessage id="app.faqPage.3.question" />}
-                  key="4"
-                >
-                  <p>
-                    <FormattedMessage id="app.faqPage.3.answer" />
-                  </p>
-                </CollapsePanel>
-                <CollapsePanel
-                  header={<FormattedMessage id="app.faqPage.4.question" />}
-                  key="5"
-                >
-                  <p>
-                    <FormattedMessage id="app.faqPage.4.answer" />
-                  </p>
-                </CollapsePanel>
-              </Collapse>
-            </Content>
-          </Col>
-        </Row>
-      </BlockContainer>
-    </Wrapper>
+    <Fragment>
+      <PageMetadata pageName="dashboardPage" />
+      <Wrapper>
+        <BlockContainer>
+          <Row>
+            <Col span={16} offset={4} gutter={20}>
+              <Content>
+                <Heading>
+                  <FormattedMessage id="app.faqPage.title" />
+                </Heading>
+                <Collapse accordion defaultActiveKey={['1']} bordered={false}>
+                  <CollapsePanel
+                    header={props.intl.formatMessage({
+                      id: 'app.faqPage.0.question',
+                    })}
+                    key="1"
+                  >
+                    <p>
+                      <FormattedMessage id="app.faqPage.0.answer" />
+                    </p>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.1.question" />}
+                    key="2"
+                  >
+                    <p>
+                      <FormattedMessage id="app.faqPage.1.answer" />
+                    </p>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.2.question" />}
+                    key="3"
+                  >
+                    <p>
+                      <FormattedMessage id="app.faqPage.2.answer" />
+                    </p>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.3.question" />}
+                    key="4"
+                  >
+                    <p>
+                      <FormattedMessage id="app.faqPage.3.answer" />
+                    </p>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.4.question" />}
+                    key="5"
+                  >
+                    <p>
+                      <FormattedMessage id="app.faqPage.4.answer" />
+                    </p>
+                  </CollapsePanel>
+                </Collapse>
+              </Content>
+            </Col>
+          </Row>
+        </BlockContainer>
+      </Wrapper>
+    </Fragment>
   )
 }
 

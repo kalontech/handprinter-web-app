@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -17,10 +17,15 @@ import hexToRgba from '../../utils/hexToRgba'
 import savePlanetImg from '../../assets/increase-handprint/save_planet.png'
 import { getInvitationLink } from '../../utils/helpers'
 import api from './../../api'
+import media from './../../utils/mediaQueryTemplate'
+import PageMetadata from '../../components/PageMetadata'
 
 export const Wrapper = styled.div`
   display: flex;
   min-height: 660px;
+  ${media.desktop`
+    flex-direction: column;
+  `}
 `
 
 export const TitleSectionWrap = styled.div`
@@ -30,7 +35,20 @@ export const TitleSectionWrap = styled.div`
   flex-direction: column;
   width: 50%;
   text-align: center;
+  padding: 30px;
   background-color: ${colors.lightGray};
+  ${media.desktop`
+    height: 524px;
+    width: 100%;
+  `}
+  ${media.phone`
+    padding: 30px 10px;
+  `}
+`
+
+const TitleSectionContent = styled.div`
+  position: relative;
+  top: 0px;
 `
 
 export const FormSectionWrap = styled.div`
@@ -40,13 +58,28 @@ export const FormSectionWrap = styled.div`
   align-items: center;
   flex-direction: column;
   width: 50%;
+  ${media.desktop`
+    padding: 60px 25px;
+    width: 100%;
+  `}
+  ${media.phone`
+    padding: 60px 15px;
+  `}
 `
 
 export const FormWrap = styled.div`
   background-color: ${colors.white};
   border-radius: 5px;
-  min-width: 580px;
-  min-height: 500px;
+  width: 580px;
+  ${media.largeDesktop`
+    width: 420px;
+  `}
+  ${media.desktop`
+    width: 580px;
+  `}
+  ${media.phone`
+    width: 290px;
+  `}
 `
 
 export const FormSectionHeading = styled.div`
@@ -59,22 +92,47 @@ export const TitleSectionDescription = styled.p`
   max-width: 463px;
   font-size: 16px;
   font-family: 'Noto Sans', serif;
+  ${media.desktop`
+    top: 5px;
+    position: relative;
+  `}
+  ${media.phone`
+    font-size: 14px;
+    line-height: 24px;
+  `}
 `
 
 export const TitleSectionHeading = styled.h1`
   font-size: 28px;
   position: relative;
   top: -5px;
+  ${media.desktop`
+    top: auto;
+  `}
+  ${media.phone`
+    margin-bottom: 0;
+    line-height: 37px;
+    top: -13px;
+    left: -4px;
+  `}
 `
 
 export const SavePlanetImg = styled.img`
   height: 180px;
   position: relative;
   top: -31px;
+  ${media.phone`
+    height: 140px;
+    width: 230px;
+    top: -41px;
+  `}
 `
 
 export const FormSectionContent = styled.div`
   padding: 30px;
+  ${media.phone`
+    padding: 30px 10px;
+  `}
 `
 
 export const ShareBlock = styled.div`
@@ -91,6 +149,9 @@ export const InvitationCodeBlockWrap = styled.div`
   padding: 25px;
   height: 180px;
   text-align: center;
+  ${media.phone`
+    padding: 25px 10px;
+  `}
 `
 
 export const InvitationCodeBlock = styled.div`
@@ -98,15 +159,39 @@ export const InvitationCodeBlock = styled.div`
   font-size: 38px;
   border: dotted 1px ${colors.green};
   border-radius: 5px;
-  margin-top: 8px;
   width: 400px;
   padding: 10px 0;
+  ${media.largeDesktop`
+    padding: 10px 40px;
+    width: 350px;
+  `}
+  ${media.tablet`
+    padding: 10px 30px;
+    width: 260px;
+  `}
+  ${media.phone`
+    padding: 10px 15px;
+  `}
+`
+
+export const CopyToClipboardInput = styled(Input)`
+  ${media.phone`
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-right: none;
+  `}
 `
 
 export const CopyToClipboardButton = styled(DefaultButton)`
   min-width: 132px;
-  height: 47px;
+  height: 46px;
   margin-left: 7px;
+  font-weight: bold;
+  ${media.phone`
+    margin-left: 0;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+  `}
 `
 
 export const SendInvitesButton = styled(DefaultButton)`
@@ -116,6 +201,12 @@ export const SendInvitesButton = styled(DefaultButton)`
   height: 47px;
   display: inline-block;
   margin-left: 7px;
+  font-weight: bold;
+  ${media.phone`
+    margin-top: 15px;
+    width: 100%;
+    margin-left: 0;
+  `}
 `
 
 export const ShareSendBlockDivideLine = styled.hr`
@@ -145,7 +236,6 @@ export const InvitationEmailsWrap = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  max-width: 390px;
   .ant-tag {
     margin: 5px;
   }
@@ -157,6 +247,10 @@ export const InvitationEmailsWrap = styled.div`
 export const SendInvitationForm = styled(Form)`
   display: flex;
   justify-content: center;
+  align-items: center;
+  ${media.phone`
+    flex-direction: column;
+  `}
 `
 
 export const AddEmailButton = styled(Tag)`
@@ -322,13 +416,15 @@ class IncreaseHandprintPage extends Component {
 
   renderTitleSection = () => (
     <TitleSectionWrap>
-      <SavePlanetImg src={savePlanetImg} />
-      <TitleSectionHeading>
-        <FormattedMessage id="app.increaseHandprintPage.title" />
-      </TitleSectionHeading>
-      <TitleSectionDescription>
-        <FormattedMessage id="app.increaseHandprintPage.description" />
-      </TitleSectionDescription>
+      <TitleSectionContent>
+        <SavePlanetImg src={savePlanetImg} />
+        <TitleSectionHeading>
+          <FormattedMessage id="app.increaseHandprintPage.title" />
+        </TitleSectionHeading>
+        <TitleSectionDescription>
+          <FormattedMessage id="app.increaseHandprintPage.description" />
+        </TitleSectionDescription>
+      </TitleSectionContent>
     </TitleSectionWrap>
   )
 
@@ -376,7 +472,7 @@ class IncreaseHandprintPage extends Component {
               <FormattedMessage id="app.increaseHandprintPage.form.shareYourLinkWithCode" />
             </FormSectionHeading>
             <ShareBlock>
-              <Input
+              <CopyToClipboardInput
                 ref={this.shareInviteRef}
                 value={invitationLink}
                 readOnly
@@ -448,10 +544,13 @@ class IncreaseHandprintPage extends Component {
 
   render() {
     return (
-      <Wrapper>
-        {this.renderTitleSection()}
-        {this.renderFormSection(this.state, this.props)}
-      </Wrapper>
+      <Fragment>
+        <PageMetadata pageName="increaseHandprintPage" />
+        <Wrapper>
+          {this.renderTitleSection()}
+          {this.renderFormSection(this.state, this.props)}
+        </Wrapper>
+      </Fragment>
     )
   }
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -22,7 +22,7 @@ import {
 import getValidationRules from './../../config/validationRules'
 import InputForPassword from './../../components/InputForPassword'
 import handleFormError from './../../utils/handleFormError'
-
+import PageMetadata from '../../components/PageMetadata'
 import loginActionCardImage from './../../assets/images/loginActionCard.jpg'
 
 class LoginPage extends Component {
@@ -51,61 +51,64 @@ class LoginPage extends Component {
       isLoggingIn,
     } = this.props
     return (
-      <ActionCardWrapper>
-        <ActionCard>
-          <ActionCardLeftHalf span={12}>
-            <img src={loginActionCardImage} />
-          </ActionCardLeftHalf>
-          <ActionCardRightHalf span={12}>
-            <ActionCardFormWrapper>
-              <ActionCardTitle>
-                <FormattedMessage id="app.loginPage.title" />
-              </ActionCardTitle>
-              <Form onSubmit={this.handleSubmit}>
-                <FormItem>
-                  {getFieldDecorator('email', {
-                    rules: getValidationRules(formatMessage).email,
-                  })(
-                    <Input
-                      type="email"
-                      placeholder={formatMessage({ id: 'app.forms.email' })}
-                    />,
-                  )}
-                </FormItem>
-                <FormItem>
-                  {getFieldDecorator('password', {
-                    rules: getValidationRules(formatMessage).password,
-                  })(<InputForPassword />)}
-                </FormItem>
-                <ActionCardForgotPasswordBlock>
-                  <Link to="/account/reset-password">
-                    <FormattedMessage id="app.loginPage.forgotPassword" />
-                  </Link>
-                </ActionCardForgotPasswordBlock>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  style={{ width: '100%' }}
-                  loading={isLoggingIn}
-                >
-                  <FormattedMessage id="app.loginPage.login" />
-                </Button>
-                <FormItem>
-                  {getFieldDecorator('formError')(<Input type="hidden" />)}
-                </FormItem>
-                <ActionCardRegisterBlock>
-                  <span>
-                    <FormattedMessage id="app.loginPage.doNotHaveAnAccount" />{' '}
-                    <Link to="/account/register">
-                      <FormattedMessage id="app.loginPage.register" />
+      <Fragment>
+        <PageMetadata pageName="loginPage" />
+        <ActionCardWrapper>
+          <ActionCard>
+            <ActionCardLeftHalf span={12}>
+              <img src={loginActionCardImage} />
+            </ActionCardLeftHalf>
+            <ActionCardRightHalf span={12}>
+              <ActionCardFormWrapper>
+                <ActionCardTitle>
+                  <FormattedMessage id="app.loginPage.title" />
+                </ActionCardTitle>
+                <Form onSubmit={this.handleSubmit}>
+                  <FormItem>
+                    {getFieldDecorator('email', {
+                      rules: getValidationRules(formatMessage).email,
+                    })(
+                      <Input
+                        type="email"
+                        placeholder={formatMessage({ id: 'app.forms.email' })}
+                      />,
+                    )}
+                  </FormItem>
+                  <FormItem>
+                    {getFieldDecorator('password', {
+                      rules: getValidationRules(formatMessage).password,
+                    })(<InputForPassword />)}
+                  </FormItem>
+                  <ActionCardForgotPasswordBlock>
+                    <Link to="/account/reset-password">
+                      <FormattedMessage id="app.loginPage.forgotPassword" />
                     </Link>
-                  </span>
-                </ActionCardRegisterBlock>
-              </Form>
-            </ActionCardFormWrapper>
-          </ActionCardRightHalf>
-        </ActionCard>
-      </ActionCardWrapper>
+                  </ActionCardForgotPasswordBlock>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{ width: '100%' }}
+                    loading={isLoggingIn}
+                  >
+                    <FormattedMessage id="app.loginPage.login" />
+                  </Button>
+                  <FormItem>
+                    {getFieldDecorator('formError')(<Input type="hidden" />)}
+                  </FormItem>
+                  <ActionCardRegisterBlock>
+                    <span>
+                      <FormattedMessage id="app.loginPage.doNotHaveAnAccount" />{' '}
+                      <Link to="/account/register">
+                        <FormattedMessage id="app.loginPage.register" />
+                      </Link>
+                    </span>
+                  </ActionCardRegisterBlock>
+                </Form>
+              </ActionCardFormWrapper>
+            </ActionCardRightHalf>
+          </ActionCard>
+        </ActionCardWrapper>
+      </Fragment>
     )
   }
 }

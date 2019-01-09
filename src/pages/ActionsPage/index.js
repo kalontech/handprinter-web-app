@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Row, Col, Select, Spin, Icon } from 'antd'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
@@ -15,6 +15,7 @@ import api from './../../api'
 import Spinner from './../../components/Spinner'
 import colors from './../../config/colors'
 import { history } from './../../appRouter'
+import PageMetadata from '../../components/PageMetadata'
 
 const Wrapper = styled.div`
   background-color: ${colors.lightGray};
@@ -212,96 +213,101 @@ class ActionsPage extends Component {
     const { actions, limit, loading, page, total, searchData } = this.state
 
     return (
-      <Wrapper>
-        <BlockContainer>
-          <InnerContainer>
-            <Row>
-              <SearchWrapper>
-                <SearchFieldWrap>
-                  <SearchField
-                    placeholder={formatMessage({
-                      id: 'app.actionsPage.searchPlaceholder',
-                    })}
-                    value={searchData.searchFieldValue}
-                    dropdownClassName="ant-select__override-for__actions-page"
-                    notFoundContent={
-                      searchData.searching ? (
-                        <Spin size="small" />
-                      ) : !searchData.searching &&
-                        Number.isInteger(searchData.total) &&
-                        searchData.total === 0 ? (
-                        <FormattedMessage id="app.actionsPage.searchNotFound" />
-                      ) : null
-                    }
-                    showSearch
-                    suffixIcon={
-                      searchData.searching ? <Spin size="small" /> : <span />
-                    }
-                    ref={this.searchSelect}
-                    /*
-                     * Filter by match searched value and option value.
-                     *
-                     * How it works:
-                     * Search option has 2 values: [ picture, name ].
-                     * We filter option value (option.props.children[1]) with
-                     * search value (value from search input)
-                     *
-                     * Why we use it:
-                     * We need filter data from search response and
-                     * show to user matched data
-                     */
-                    filterOption={(input, option) =>
-                      option.props.children[1]
-                        .toLowerCase()
-                        .indexOf(input.toLowerCase()) >= 0
-                    }
-                    onSearch={value =>
-                      value.length > 0 && this.searchActions({ name: value })
-                    }
-                    onChange={this.handleSearchFieldChange}
-                    onSelect={this.handleSearchedItemSelect}
-                    onDropdownVisibleChange={this.handleDropdownVisibleChange}
-                  >
-                    {searchData.searchedActions.map(action => (
-                      <Select.Option
-                        key={action.picture}
-                        onClick={() => this.handleOpenActionCard(action)}
-                      >
-                        <ActionSearchDropdownPicture src={action.picture} />
-                        {action.name}
-                      </Select.Option>
-                    ))}
-                  </SearchField>
-                  {!searchData.searching && <StyledSearchIcon type="search" />}
-                </SearchFieldWrap>
-              </SearchWrapper>
-            </Row>
-            {loading ? (
-              <Spinner />
-            ) : (
+      <Fragment>
+        <PageMetadata pageName="actionsPage" />
+        <Wrapper>
+          <BlockContainer>
+            <InnerContainer>
               <Row>
-                {actions.map(action => (
-                  <Col key={action._id} span={8}>
-                    <ActionCard
-                      linkPrefix="/actions"
-                      slug={action.slug}
-                      picture={action.picture}
-                      name={action.name}
-                      impacts={action.impacts}
-                    />
-                  </Col>
-                ))}
+                <SearchWrapper>
+                  <SearchFieldWrap>
+                    <SearchField
+                      placeholder={formatMessage({
+                        id: 'app.actionsPage.searchPlaceholder',
+                      })}
+                      value={searchData.searchFieldValue}
+                      dropdownClassName="ant-select__override-for__actions-page"
+                      notFoundContent={
+                        searchData.searching ? (
+                          <Spin size="small" />
+                        ) : !searchData.searching &&
+                          Number.isInteger(searchData.total) &&
+                          searchData.total === 0 ? (
+                          <FormattedMessage id="app.actionsPage.searchNotFound" />
+                        ) : null
+                      }
+                      showSearch
+                      suffixIcon={
+                        searchData.searching ? <Spin size="small" /> : <span />
+                      }
+                      ref={this.searchSelect}
+                      /*
+                       * Filter by match searched value and option value.
+                       *
+                       * How it works:
+                       * Search option has 2 values: [ picture, name ].
+                       * We filter option value (option.props.children[1]) with
+                       * search value (value from search input)
+                       *
+                       * Why we use it:
+                       * We need filter data from search response and
+                       * show to user matched data
+                       */
+                      filterOption={(input, option) =>
+                        option.props.children[1]
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      }
+                      onSearch={value =>
+                        value.length > 0 && this.searchActions({ name: value })
+                      }
+                      onChange={this.handleSearchFieldChange}
+                      onSelect={this.handleSearchedItemSelect}
+                      onDropdownVisibleChange={this.handleDropdownVisibleChange}
+                    >
+                      {searchData.searchedActions.map(action => (
+                        <Select.Option
+                          key={action.picture}
+                          onClick={() => this.handleOpenActionCard(action)}
+                        >
+                          <ActionSearchDropdownPicture src={action.picture} />
+                          {action.name}
+                        </Select.Option>
+                      ))}
+                    </SearchField>
+                    {!searchData.searching && (
+                      <StyledSearchIcon type="search" />
+                    )}
+                  </SearchFieldWrap>
+                </SearchWrapper>
               </Row>
-            )}
-            <Pagination
-              current={page}
-              itemRender={this.paginationItemRender}
-              pageSize={limit}
-              total={total}
-            />
-          </InnerContainer>
-        </BlockContainer>
-      </Wrapper>
+              {loading ? (
+                <Spinner />
+              ) : (
+                <Row>
+                  {actions.map(action => (
+                    <Col key={action._id} span={8}>
+                      <ActionCard
+                        linkPrefix="/actions"
+                        slug={action.slug}
+                        picture={action.picture}
+                        name={action.name}
+                        impacts={action.impacts}
+                      />
+                    </Col>
+                  ))}
+                </Row>
+              )}
+              <Pagination
+                current={page}
+                itemRender={this.paginationItemRender}
+                pageSize={limit}
+                total={total}
+              />
+            </InnerContainer>
+          </BlockContainer>
+        </Wrapper>
+      </Fragment>
     )
   }
 }
