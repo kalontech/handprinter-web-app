@@ -77,20 +77,30 @@ const DashboardHeaderWhiteLine = styled(Row)`
   height: 120px;
   justify-content: center;
   width: 100%;
-  ${media.tablet`
+  ${media.desktop`
     background-color: transparent;
     margin-top: 90px;
   `}
 `
 
 const DashboardHeaderUserNameCol = styled(Col)`
-  padding-left: 199px;
-  ${media.tablet`
-    padding: 0;
+  ${media.desktop`
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+  `}
+`
+
+const DashboardHeaderUserRow = styled(Row)`
+  width: 100%;
+  padding: 0 199px;
+  ${media.largeDesktop`
+    padding: 0 80px 0 229px;
+  `}
+  ${media.desktop`
+    padding: 0;
+    margin-top: 32px;
   `}
 `
 
@@ -99,10 +109,16 @@ const DashboardHeaderBackgrounds = styled.div`
   background-position: top 90px right, top 20px left 80px;
   background-repeat: no-repeat, no-repeat;
   height: 140px;
+  ${media.largeDesktop`
+    background-position: top 90px right, top 20px left 120px;
+  `}
 `
 
 const DashboardHeaderUserPicture = styled.div`
-  ${media.tablet`
+  ${media.largeDesktop`
+    padding: 0 50px;
+  `}
+  ${media.desktop`
     display: flex;
     justify-content: center;
   `}
@@ -110,9 +126,9 @@ const DashboardHeaderUserPicture = styled.div`
     border: 4px solid ${colors.white};
     border-radius: 88px;
     box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
-    height: 176px;
+    height: 190px;
     margin-top: -88px;
-    width: 176px;
+    width: 190px;
   }
 `
 
@@ -120,6 +136,13 @@ const DashboardHeaderUserName = styled.div`
   color: ${colors.dark};
   font-size: 28px;
   line-height: 35px;
+`
+
+const DashboardHeaderUserInfoCol = styled(Col)`
+  ${media.desktop`
+    text-align: center;
+    padding: 0 170px;
+  `}
 `
 
 const DashboardHeaderUserSince = styled.div`
@@ -219,9 +242,9 @@ class DashboardPage extends Component {
                       height: '100%',
                     }}
                   >
-                    <Row style={{ width: '100%' }}>
+                    <DashboardHeaderUserRow>
                       {/* <Col span={16} style={{ paddingLeft: '199px' }} > */}
-                      <DashboardHeaderUserNameCol span={16} sm={24} >
+                      <DashboardHeaderUserNameCol span={16} sm={24} lg={12} >
                         <DashboardHeaderUserName>
                           {user.fullName}
                         </DashboardHeaderUserName>
@@ -230,7 +253,7 @@ class DashboardPage extends Component {
                           {moment(user.createdAt).format('MMMM DD, YYYY')}
                         </DashboardHeaderUserSince>
                       </DashboardHeaderUserNameCol>
-                      <Col span={8}>
+                      <DashboardHeaderUserInfoCol span={8} sm={24} lg={12}>
                         <Row>
                           <Col span={8}>
                             <DashboardHeaderUserName>
@@ -261,8 +284,8 @@ class DashboardPage extends Component {
                             </DashboardHeaderUserSince>
                           </Col>
                         </Row>
-                      </Col>
-                    </Row>
+                      </DashboardHeaderUserInfoCol>
+                    </DashboardHeaderUserRow>
                   </BlockContainer>
                 </Col>
               </DashboardHeaderWhiteLine>
@@ -371,7 +394,7 @@ class DashboardPage extends Component {
                   </WidgetContainer>
                 </Col>
               </Row>
-              <Row gutter={20} style={{ marginTop: '20px' }}>
+              {/* <Row gutter={20} style={{ marginTop: '20px' }}>
                 <Col span={24}>
                   <WidgetContainer>
                     <WidgetHeader withBorder>
@@ -423,7 +446,7 @@ class DashboardPage extends Component {
                     </WidgetContent>
                   </WidgetContainer>
                 </Col>
-              </Row>
+              </Row> */}
             </BlockContainer>
           </Fragment>
         )}
