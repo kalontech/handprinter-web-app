@@ -251,7 +251,7 @@ class AboutEatonPage extends Component {
             <HeroDescription>
               <FormattedMessage id="app.aboutEatonPage.hero.description" />
             </HeroDescription>
-            <Link to="/account/register">
+            <Link to="/pages/our-vision">
               <WhiteBorderedButton type="ghost" size="large">
                 <FormattedMessage id="app.aboutEatonPage.seeHow" />
               </WhiteBorderedButton>
@@ -298,7 +298,7 @@ class AboutEatonPage extends Component {
                   <Text>
                     <FormattedHTMLMessage id="app.aboutEatonPage.whatAreHandprints.description.2" />
                   </Text>
-                  <Link to="/account/register">
+                  <Link to="/actions">
                     <BlueBorderedButton type="ghost" size="large">
                       <FormattedMessage id="app.aboutEatonPage.whatAreHandprints.getStartedToday" />
                     </BlueBorderedButton>

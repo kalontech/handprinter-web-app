@@ -466,14 +466,14 @@ export default {
   'app.aboutEatonPage.growYourHandprint.title':
     'Be a Part of a Positive Future. Reduce your footprint.\nGrow your handprint!',
   'app.aboutEatonPage.growYourHandprint.description':
-    'Green Guardian Handprint lets you calculate and track your impacts with the goal of becoming <strong>Net Positive</strong>. You can watch your handprint grow to exceed your footprint and inspire others to do the same. <strong>What are footprints and handprints?</strong>',
+    'Green Guardian Handprint lets you calculate and track your impacts with the goal of becoming <strong>Net Positive</strong>. You can watch your handprint grow to exceed your footprint and inspire others to do the same. <strong>What are footprints and handprints?</strong>',     
   'app.aboutEatonPage.whatAreHandprints.title': 'What are handprints?',
   'app.aboutEatonPage.whatAreHandprints.description.1':
     'We’ve heard about footprints: the negative impacts of the things we buy and use. We need to reduce our footprint, but that is only a part of the story.',
   'app.aboutEatonPage.whatAreHandprints.description.2':
-    'We also have handprints: <strong>positive impacts of our actions.</strong> Handprints include helping others reduce their footprints. Green Guardian Handprint lets Eaton employees grow their handprints and reduce their footprints too.',
+    'We also have handprints: <strong>positive impacts of our actions.</strong> Handprints include helping others reduce their footprints. Green Guardian Handprint lets Eaton employees grow their handprints and reduce their footprints too. Get started today!',
   'app.aboutEatonPage.whatAreHandprints.getStartedToday': 'Get started today!',
   'app.aboutEatonPage.becomeGuardian.title': 'Become an Eaton Green Guardian',
   'app.aboutEatonPage.becomeGuardian.description':
-    'What can you do to make your community, your work, your planet more sustainable?',
+    'With Green Guardian Handprint, your individual actions can create a positive impact at work, in your community, and around the world.',
 }
