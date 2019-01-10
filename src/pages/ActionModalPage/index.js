@@ -1,19 +1,20 @@
 import React, { Component, Fragment } from 'react'
-import { Row, Col, Button } from 'antd'
+import { Row, Button, Icon } from 'antd'
 import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 
-import { history } from './../../appRouter'
+import { history, handleBackdropClick } from './../../appRouter'
 import api from './../../api'
 import ActionCardLabelSet from './../../components/ActionCardLabelSet'
 import colors from './../../config/colors'
-import clearIcon from './../../assets/icons/clear.svg'
 import Spinner from './../../components/Spinner'
 import treeImage from './../../assets/actions/tree.png'
 import pigImage from './../../assets/actions/pig.png'
 import decodeError from './../../utils/decodeError'
+import media from './../../utils/mediaQueryTemplate'
+import hexToRgba from '../../utils/hexToRgba'
 import { FormItem } from './../../components/Styled'
 
 const Container = styled(Row)`
@@ -22,7 +23,7 @@ const Container = styled(Row)`
   display: flex;
   height: 580px;
   justify-content: center;
-  overflow: hidden;
+  overflow: scroll;
 
   ${props =>
     props.width === 'half' &&
@@ -33,11 +34,26 @@ const Container = styled(Row)`
     props.width === 'full' &&
     css`
       width: 920px;
+      ${media.desktop`
+        max-width: 700px;
+        height: 100vh;
+      `}
+      ${media.tablet`
+        max-width: 100%;
+        flex-direction: column;
+        justify-content: flex-start;
+      `}
     `};
 `
 
-const LeftPanel = styled(Col)`
+const LeftPanel = styled.div`
   height: 100%;
+  width: 50%;
+
+  ${media.tablet`
+    width: 100%;
+    height: 222px;
+  `}
 
   img {
     height: 100%;
@@ -46,21 +62,35 @@ const LeftPanel = styled(Col)`
   }
 `
 
-const RightPanel = styled(Col)`
+const RightPanel = styled.div`
   height: 100%;
   padding: 60px;
+  width: 50%;
+  ${media.desktop`
+    width: 460px;
+  `}
+  ${media.tablet`
+    width: 100%;
+    height: auto;
+    padding: 30px 15px 120px 15px;
+  `}
 `
 
-const CloseButton = styled.div`
+const CloseButton = styled(Icon)`
   align-items: center;
   cursor: pointer;
   display: flex;
-  height: 50px;
+  height: 63px;
   justify-content: center;
   position: absolute;
   right: 0;
   top: 0;
-  width: 50px;
+  width: 55px;
+  font-size: 20px;
+  color: ${colors.darkGray};
+  ${media.phone`
+    color: ${colors.white};
+  `}
 `
 
 const ActionName = styled.h1`
@@ -78,10 +108,14 @@ const ActionDescription = styled.p`
 `
 
 const BottomPanel = styled.div`
-  bottom: 60px;
-  left: 60px;
-  position: absolute;
-  right: 60px;
+  width: 100%;
+  padding: 18px 15px;
+  background: ${colors.white};
+  ${media.tablet`
+    position: fixed;
+    bottom: 0;
+    box-shadow: 0 1px 70px 0 ${hexToRgba(`${colors.dark}`, 0.1)};
+  `}
 `
 
 const TakenActionPanel = styled.div`
@@ -108,6 +142,18 @@ const TakenActionDescription = styled.p`
   line-height: 22px;
   margin-bottom: 25px;
   margin-top: -10px;
+`
+
+const ModalContentWrap = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center
+  justify-content: space-between;
+  flex-direction: column;
+`
+
+const TakeActionButton = styled(Button)`
+  width: 100%;
 `
 
 const ActionModalPageSteps = {
@@ -177,30 +223,36 @@ class ActionModalPage extends Component {
     return this.renderInContainer({
       children: (
         <Fragment>
-          <LeftPanel span={12}>
+          <LeftPanel>
             <img src={action.picture} />
           </LeftPanel>
-          <RightPanel span={12}>
-            <ActionCardLabelSet impacts={action.impacts} />
-            <ActionName>{action.name}</ActionName>
-            <ActionDescription>{action.description}</ActionDescription>
-            <BottomPanel>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ width: '100%' }}
-                loading={takingAction}
-                onClick={this.takeAction}
-              >
-                <FormattedMessage id="app.actions.takeAction" />
-              </Button>
-              {takeActionError && (
-                <FormItem
-                  validateStatus="error"
-                  help={formatMessage({ id: takeActionError })}
+          <RightPanel>
+            <ModalContentWrap>
+              <div>
+                <ActionCardLabelSet
+                  impacts={action.impacts}
+                  mobileFixedWidth={true}
                 />
-              )}
-            </BottomPanel>
+                <ActionName>{action.name}</ActionName>
+                <ActionDescription>{action.description}</ActionDescription>
+              </div>
+              <BottomPanel>
+                <TakeActionButton
+                  type="primary"
+                  htmlType="submit"
+                  loading={takingAction}
+                  onClick={this.takeAction}
+                >
+                  <FormattedMessage id="app.actions.takeAction" />
+                </TakeActionButton>
+                {takeActionError && (
+                  <FormItem
+                    validateStatus="error"
+                    help={formatMessage({ id: takeActionError })}
+                  />
+                )}
+              </BottomPanel>
+            </ModalContentWrap>
           </RightPanel>
         </Fragment>
       ),
@@ -231,7 +283,11 @@ class ActionModalPage extends Component {
                 <FormattedMessage id="app.actions.handprintIncreased" />
               )}
             </TakenActionDescription>
-            <ActionCardLabelSet impacts={action.impacts} hideTooltip={true} />
+            <ActionCardLabelSet
+              impacts={action.impacts}
+              mobileFixedWidth={true}
+              hideTooltip={true}
+            />
           </TakenActionPanel>
         </Fragment>
       ),
@@ -239,17 +295,15 @@ class ActionModalPage extends Component {
     })
   }
 
-  renderInContainer = ({ children, width }) => {
-    const { closeModal } = this.props
-    return (
-      <Container width={width}>
-        {children}
-        <CloseButton onClick={closeModal}>
-          <img src={clearIcon} />
-        </CloseButton>
-      </Container>
-    )
-  }
+  renderInContainer = ({ children, width }) => (
+    <Container width={width}>
+      {children}
+      <CloseButton
+        type="close"
+        onClick={() => handleBackdropClick({ parentPath: '/actions' })}
+      />
+    </Container>
+  )
 
   renderLoading = () => {
     return this.renderInContainer({

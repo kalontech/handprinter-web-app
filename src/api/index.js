@@ -1,6 +1,6 @@
 import get from 'lodash/get'
 import has from 'lodash/has'
-import queryString from 'query-string'
+import qs from 'qs'
 import * as Sentry from '@sentry/browser'
 
 import { store } from '../app'
@@ -59,8 +59,12 @@ const findAction = ({ actionId, slug }) =>
     method: 'POST',
   })
 
-const getActions = (query = {}) =>
-  fetchHelper(`${apiBaseUrl}/actions?${queryString.stringify(query)}`)
+const getActions = (query = {}) => 
+  fetchHelper(`${apiBaseUrl}/actions?${qs.stringify(query)}`)
+
+const getTimeValues = (query = {}) => 
+  fetchHelper(`${apiBaseUrl}/actions/time_values`)
+
 
 const getCountries = () => fetchHelper(`${apiBaseUrl}/countries`)
 
@@ -196,6 +200,7 @@ export default {
   findAction,
   getActions,
   getCountries,
+  getTimeValues,
   getMe,
   logIn,
   register,

@@ -364,9 +364,16 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   .ant-tooltip {
+    height: 0px;
+    width: 0px
     .ant-tooltip-inner {
+      position: relative;
       padding: 15px;
       text-align: center;
+      width: 70px;
+      left: -30px;
+      top: 10px;
+      height: 30px;
     }
   }
   
@@ -424,6 +431,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .ant-select__override-for__actions-page {
+    z-index: 1061;
     .ant-select-dropdown-menu-item:hover,
     .ant-select-dropdown-menu-item-active {
       background-color: ${colors.lightGray};
@@ -432,8 +440,12 @@ export const GlobalStyle = createGlobalStyle`
       display: none !important;
     }
     .ant-select-dropdown-menu {
-      max-height: 500px
+      max-height: 500px;    
     }
+  }
+
+  .ant-popover {
+    z-index: 1061;
   }
 
   .ant-affix {
@@ -507,6 +519,25 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-tooltip, .ant-tooltip-inner  {
+    box-shadow: none;
+    border-radius: 30px;
+    background: transparent;
+  }
+  .ant-tooltip-arrow {
+    display: none;
+  }
+  .react-router-modal__container {
+    z-index: 1065;
+  }
+  .react-router-modal__modal--in {
+    ${media.tablet`
+      width: 100%;
+      border: none;
+      border-radius: 0px;
+      height: 100vh;
+    `}
+  }
   .d3-tooltip-container {
     background-color: black;
     border-radius: 4px;

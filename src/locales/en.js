@@ -204,6 +204,8 @@ export default {
   'app.actionsPage.head.description': 'Description of page',
   'app.actionsPage.searchPlaceholder': 'Search',
   'app.actionsPage.searchNotFound': 'Not found',
+  'app.actionsPage.clearAllFilters': 'Clear all filters',
+  'app.actionsPage.actionsNotFound': 'Actions not found',
   'app.faqPage.head.title': 'Welcome to Handprinter!',
   'app.faqPage.head.keywords': 'handprinter, nature, footprint, handprint',
   'app.faqPage.head.description': 'Description of page',
@@ -422,6 +424,16 @@ export default {
   'app.actions.takeAction': 'Take action',
   'app.actions.congratulations': 'Congratulations',
   'app.actions.handprintIncreased': 'Your handprint just increased!',
+  'app.actions.timeValues.one.MINS': 'Min',
+  'app.actions.timeValues.other.MINS': 'Mins',
+  'app.actions.timeValues.one.HRS': 'Hour',
+  'app.actions.timeValues.other.HRS': 'Hours',
+  'app.actions.timeValues.one.DAYS': 'Day',
+  'app.actions.timeValues.other.DAYS': 'Days',
+  'app.actions.timeValues.one.MTHS': 'Month',
+  'app.actions.timeValues.other.MTHS': 'Months',
+  'app.actions.timeValues.one.YRS': 'Year',
+  'app.actions.timeValues.other.YRS': 'Years',
   'app.eatonFooter.text':
     'Eaton is dedicated to improving the quality of life and the\n' +
     '                environment through the use of power management technologies and\n' +

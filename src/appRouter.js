@@ -25,7 +25,7 @@ import IncreaseHandprintPage from './pages/IncreaseHandprintPage'
 
 export const history = createBrowserHistory()
 
-const handleBackdropClick = ({ parentPath }) =>
+export const handleBackdropClick = ({ parentPath }) =>
   history.length > 1 ? history.goBack() : history.push(parentPath)
 
 const AppRouter = () => {

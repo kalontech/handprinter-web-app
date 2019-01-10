@@ -2,11 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Icon, Tooltip } from 'antd'
+import PropTypes from 'prop-types'
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+
 import colors from './../../config/colors'
 import icons from './icons'
 import hexToRgba from './../../utils/hexToRgba'
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
-import PropTypes from 'prop-types'
+import media from './../../utils/mediaQueryTemplate'
+import { IMPACT_CATEGORIES } from '../../utils/constants'
 
 export const TimeValueAbbreviations = {
   MINUTES: 'MINS',
@@ -70,16 +73,20 @@ const ActionCardLabel = props => {
       : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
       ? hexToRgba(`${colors.green}`, 0.1)
       : hexToRgba(`${colors.darkGray}`, 0.1)};
+
+  ${media.phone`
+    width: 20px;
+  `}
       
-    .anticon {
-      color: ${() =>
-        unit === TimeValueAbbreviations.DAYS && variant === 'positive'
-          ? `${colors.blue}`
-          : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
-          ? `${colors.ocean}`
-          : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-          ? `${colors.green}`
-          : `${colors.darkGray}`}
+  .anticon {
+    color: ${() =>
+      unit === TimeValueAbbreviations.DAYS && variant === 'positive'
+        ? `${colors.blue}`
+        : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
+        ? `${colors.ocean}`
+        : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
+        ? `${colors.green}`
+        : `${colors.darkGray}`}
   }
 `
 
@@ -143,22 +150,10 @@ const ActionCardLabel = props => {
 }
 
 ActionCardLabel.propTypes = {
-  category: PropTypes.oneOf([
-    'health',
-    'climate',
-    'ecosystem',
-    'water',
-    'waste',
-  ]).isRequired,
-  unit: PropTypes.oneOf([
-    TimeValueAbbreviations.MINUTES,
-    TimeValueAbbreviations.HOURS,
-    TimeValueAbbreviations.DAYS,
-    TimeValueAbbreviations.MONTHS,
-    TimeValueAbbreviations.YEARS,
-  ]).isRequired,
+  category: PropTypes.oneOf(Object.values(IMPACT_CATEGORIES)).isRequired,
+  unit: PropTypes.oneOf(Object.values(TimeValueAbbreviations)).isRequired,
   variant: PropTypes.oneOf(['positive', 'negative']).isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 }
 
 export default ActionCardLabel

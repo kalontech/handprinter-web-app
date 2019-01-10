@@ -371,6 +371,12 @@ const ProfileMenu = styled.div`
   }
 `
 
+const StyledAffix = styled(Affix)`
+  .ant-affix {
+    z-index: 1062;
+  }
+`
+
 const BlueBorderedButton = styled(Button)`
   border: 2px solid ${colors.darkBlue};
   border-radius: 0;
@@ -415,7 +421,7 @@ class Header extends Component {
     const isTablet = this.state.width < 1200
     const isMobile = this.state.width < 768
     return (
-      <Affix>
+      <StyledAffix>
         {type === 'minimal' && (
           <HeaderWrap>
             <Logo>
@@ -841,7 +847,7 @@ class Header extends Component {
             )}
           </HeaderWrap>
         )}
-      </Affix>
+      </StyledAffix>
     )
   }
 }
@@ -855,10 +861,10 @@ Header.defaultProps = {
 }
 
 Header.propTypes = {
-  location: {
+  location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
-  },
-  withoutHeaderContent: PropTypes.bool.isRequired,
+  }),
+  withoutHeaderContent: PropTypes.bool,
   type: PropTypes.oneOf(['minimal', 'public', 'private']).isRequired,
   user: PropTypes.object,
   overrides: PropTypes.object,
