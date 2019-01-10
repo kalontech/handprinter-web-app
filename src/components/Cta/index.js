@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import ctaImg from './assets/cta-image.png'
 import ctaBg from './assets/cta-left-fingerprint.png'
+import ctaBgRight from './assets/cta-right-fingerprint.png'
 import colors from './../../config/colors'
 import { FormattedMessage } from 'react-intl'
 import { PrimaryButton, BlockContainer, BlockSubTitle } from './../Styled'
 import FingerPrintIcon from '../../assets/icons/FingerPrintIcon'
+import media from '../../utils/mediaQueryTemplate'
 
 const CtaTitle = styled(BlockSubTitle)`
   color: ${colors.white};
@@ -17,17 +19,42 @@ const CtaImage = styled.img`
   position: absolute;
   right: 100px;
   bottom: 0;
+  ${media.largeDesktop`
+   right: 15px;
+  `};
+  ${media.desktop`
+   display: none;
+  `};
 `
 
 const CtaWrap = styled.section`
   position: relative;
   background: ${colors.ocean} url("${ctaBg}") no-repeat left center;
- 
+ ${media.desktop`
+   text-align: center;
+   background: url("${ctaBg}") no-repeat left center, ${
+   colors.ocean
+ } url("${ctaBgRight}") no-repeat right center;
+  `};
 
 `
 
 const Wrap = styled(BlockContainer)`
-  padding: 80px 0;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  ${media.desktop`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `};
+  ${media.phone`
+    padding-top: 40px;
+    padding-bottom: 40px;
+  `};
+  ${CtaTitle} {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
 `
 
 const Cta = () => (

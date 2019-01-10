@@ -179,11 +179,22 @@ export const FormItem = styled(Ant.Form.Item)`
     text-transform: uppercase;
   }
 `
-
 export const BlockContainer = styled.div`
   position: relative;
   max-width: 1180px;
   margin: 0 auto;
+  ${media.largeDesktop`
+   padding-left: 34px;
+    padding-right: 34px;
+  `};
+  ${media.phone`
+   padding-left: 15px;
+    padding-right: 15px;
+  `};
+  @media (max-width: 767px) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 `
 
 export const BlockTitle = styled.h1`

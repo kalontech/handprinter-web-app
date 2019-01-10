@@ -9,6 +9,7 @@ import colors from './../../config/colors'
 import { FormattedMessage } from 'react-intl'
 import hexToRgba from '../../utils/hexToRgba'
 import { BlockContainer } from './../Styled'
+import media from '../../utils/mediaQueryTemplate'
 
 const FooterWrap = styled(Layout.Footer)`
   padding: 0;
@@ -21,9 +22,9 @@ const FooterContent = styled.section`
   background: #5d676f;
   color: ${colors.white};
   font-family: Arial;
-  @media (max-width: 1024px) {
-    padding-bottom: 40px;
-  }
+  ${media.largeDesktop`
+   padding-bottom: 40px;
+  `};
 `
 
 const FooterMenu = styled.ul`
@@ -37,9 +38,9 @@ const FooterMenu = styled.ul`
     &:hover {
       color: ${colors.white};
     }
-    @media (max-width: 767px) {
+    ${media.phone`
       line-height: 46px;
-    }
+    `};
   }
 `
 
@@ -57,31 +58,31 @@ const Text = styled.div`
 const Container = styled.div`
   margin-left: -20px;
   margin-right: -20px;
-  @media (max-width: 767px) {
+  ${media.largeDesktop`
     margin-left: 0;
     margin-right: 0;
-  }
+  `};
 `
+
 const RowWrapper = styled(Row)`
   margin-bottom: 20px;
-  @media (max-width: 767px) {
+  ${media.phone`
     margin-top: 40px;
-  }
+  `};
 `
 const Langs = styled(FooterLanguageSelector)`
-  margin-left: 0;
-  @media (max-width: 767px) {
+  ${media.phone`
     max-width: 100%;
-  }
+  `};
 `
 const LangsWrap = styled(Col)`
-  @media (max-width: 1024px) {
+  ${media.largeDesktop`
     display: flex;
     align-items: center;
-  }
-  @media (max-width: 767px) {
+  `};
+  ${media.phone`
     display: block;
-  }
+  `};
 `
 
 const Copyright = styled.div`
@@ -100,10 +101,10 @@ const CopyrightContent = styled.div`
   font-size: 12px;
   height: 60px;
   color: ${hexToRgba(colors.white, 0.43)};
-  @media (max-width: 767px) {
+  ${media.phone`
     flex-direction: column;
     align-items: center;
-  }
+  `};
 `
 
 const SmallLogo = styled.div`
@@ -116,7 +117,7 @@ const EatonFooter = () => (
     <FooterContent>
       <BlockContainer>
         <Container>
-          <Row gutter={20}>
+          <Row gutter={{ md: 20 }}>
             <Col xs={24} md={12} xl={8}>
               <Logo>
                 <img src={footerLogo} alt="" />
@@ -126,7 +127,7 @@ const EatonFooter = () => (
               </Text>
             </Col>
             <Col xs={24} md={12} xl={12}>
-              <RowWrapper gutter={20}>
+              <RowWrapper gutter={{ md: 20 }}>
                 <Col xs={12} md={12} xl={12}>
                   <FooterMenu>
                     <li>
