@@ -68,7 +68,6 @@ export const HeaderPopover = styled(Ant.Menu)`
     margin: 0;
     font-size: 16px;
     color: ${({ color }) => color || colors.darkGray};
-    margin-right: 40px;
     :not(:last-child) {
       margin: 0;
     }

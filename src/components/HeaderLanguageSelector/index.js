@@ -8,12 +8,13 @@ import { FormattedMessage } from 'react-intl'
 import { Menu, Popover } from 'antd'
 import { HeaderPopover, PopoverTitle } from '../../components/Styled'
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
+import colors from '../../config/colors'
 
 const Image = styled.img`
   margin-right: 12px;
 `
 
-const HeaderLanguageSelector = ({ intl, setLocale, color }) => {
+const HeaderLanguageSelector = ({ intl, setLocale, overrides }) => {
   return (
     <Popover
       placement="bottomLeft"
@@ -22,7 +23,6 @@ const HeaderLanguageSelector = ({ intl, setLocale, color }) => {
           mode="vertical"
           theme="light"
           onClick={item => setLocale(item.key, intl.locales[item.key])}
-          color={color}
         >
           {Object.keys(intl.locales).map(locale => (
             <Menu.Item key={locale}>
@@ -36,11 +36,17 @@ const HeaderLanguageSelector = ({ intl, setLocale, color }) => {
         </HeaderPopover>
       }
     >
-      <PopoverTitle color={color}>
+      <PopoverTitle>
         <FormattedMessage id={`app.languages.${intl.locale}`}>
           {message => <span>{message.substr(0, 3)}</span>}
         </FormattedMessage>
-        <ExpandMoreIcon />
+        <ExpandMoreIcon
+          style={
+            (!overrides && { color: `${colors.green}` }) || {
+              color: `${colors.darkBlue}`,
+            }
+          }
+        />
       </PopoverTitle>
     </Popover>
   )
@@ -62,6 +68,7 @@ HeaderLanguageSelector.propTypes = {
   intl: PropTypes.object.isRequired,
   setLocale: PropTypes.func.isRequired,
   color: PropTypes.string,
+  overrides: PropTypes.object,
 }
 
 export default connect(
