@@ -475,5 +475,5 @@ export default {
   'app.aboutEatonPage.whatAreHandprints.getStartedToday': 'Get started today!',
   'app.aboutEatonPage.becomeGuardian.title': 'Become an Eaton Green Guardian',
   'app.aboutEatonPage.becomeGuardian.description':
-    'With Green Guardian Handprint, your individual actions can create a positive impact at work, in your community, and around the world.',
+    'What can you do to make your community, your work, your planet more sustainable?',
 }
