@@ -292,6 +292,10 @@ export const Collapse = styled(Ant.Collapse)`
   border-radius: 6px;
   padding: 12px 0;
   background-color: ${colors.white};
+  ${media.phone`
+    margin-bottom: 48px;
+    padding: 0;
+  `};
   > .ant-collapse-item {
     border-bottom: 1px solid ${hexToRgba(`${colors.dark}`, 0.08)};
     :last-child {
@@ -304,6 +308,10 @@ export const Collapse = styled(Ant.Collapse)`
 export const CollapsePanel = styled(Ant.Collapse.Panel)`
   position: relative;
   margin: 0 30px 1px;
+  ${media.phone`
+    margin-left: 15px;
+    margin-right: 15px;
+  `};
   &.ant-collapse-item-active {
     && > .ant-collapse-header {
       .arrow {
@@ -317,6 +325,14 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
     font-size: 19px;
     line-height: 26px;
     font-family: 'Noto Serif', serif;
+    padding-right: 35px;
+    ${media.phone`
+      font-size: 16px;
+      height: 84px;
+      padding: 0 35px 0 0;
+      display: flex;
+      align-items: center;
+    `};
 
     .arrow {
       width: 15px;
@@ -342,6 +358,10 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
     margin-top: -12px;
     & .ant-collapse-content-box {
       padding: 0 10px 28px;
+      ${media.phone`
+        padding-left: 5px;
+        padding-right: 5px;
+      `};
     }
   }
 `

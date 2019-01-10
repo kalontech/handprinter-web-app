@@ -25,6 +25,7 @@ const FooterContent = styled.section`
 const Wrap = styled(BlockContainer)`
   padding: 80px 0;
   margin-top: -1px;
+  overflow: hidden;
   ${media.phone`
    padding-top: 40px;
     padding-bottom: 40px;
@@ -80,15 +81,6 @@ const CopyrightTablet = styled(Copyright)`
   `};
 `
 
-const Container = styled.div`
-  margin-left: -20px;
-  margin-right: -20px;
-  ${media.largeDesktop`
-    margin-left: 0;
-    margin-right: 0;
-  `};
-`
-
 const RowWrapper = styled(Row)`
   margin-bottom: 20px;
   ${media.phone`
@@ -116,83 +108,90 @@ const Footer = () => (
   <FooterWrap>
     <FooterContent>
       <Wrap>
-        <Container>
-          <Row gutter={{ md: 20 }}>
-            <Col md={24} xl={8}>
-              <Logo>
-                <img src={footerLogo} alt="" />
-              </Logo>
-              <Copyright>
-                &copy;
-                <FormattedMessage id="app.footer.copyright" />
-              </Copyright>
-            </Col>
-            <Col md={24} xl={12}>
-              <RowWrapper gutter={{ md: 20 }}>
-                <Col xs={12} md={12} xl={12}>
-                  <FooterMenu>
-                    <li>
-                      <Link to="/actions" onClick={animateScroll.scrollToTop}>
-                        <FormattedMessage id="app.footer.menu.actions" />
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/pages/our-vision"
-                        onClick={animateScroll.scrollToTop}
-                      >
-                        <FormattedMessage id="app.footer.menu.howItWorks" />
-                      </Link>
-                    </li>
-                  </FooterMenu>
-                </Col>
-                <Col xs={12} md={12} xl={12}>
-                  <FooterMenu>
-                    <li>
-                      <Link
-                        to="/pages/measurement-units"
-                        onClick={animateScroll.scrollToTop}
-                      >
-                        <FormattedMessage id="app.footer.menu.measurement" />
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/pages/faq">
-                        <FormattedMessage
-                          id="app.footer.menu.faq"
+        <Row>
+          <Col md={{ span: 18, offset: 3 }} xl={{ span: 24, offset: 0 }}>
+            <Row gutter={{ md: 20 }}>
+              <Col md={24} xl={8}>
+                <Logo>
+                  <img src={footerLogo} alt="" />
+                </Logo>
+                <Copyright>
+                  &copy;
+                  <FormattedMessage id="app.footer.copyright" />
+                </Copyright>
+              </Col>
+              <Col md={24} xl={12}>
+                <RowWrapper gutter={{ md: 20 }}>
+                  <Col xs={12} md={10} xl={12}>
+                    <FooterMenu>
+                      <li>
+                        <Link to="/actions" onClick={animateScroll.scrollToTop}>
+                          <FormattedMessage id="app.footer.menu.actions" />
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/pages/our-vision"
                           onClick={animateScroll.scrollToTop}
-                        />
-                      </Link>
-                    </li>
-                  </FooterMenu>
-                </Col>
-              </RowWrapper>
-            </Col>
-            <LangsWrap md={24} xl={4}>
-              <div style={{ width: '100%' }}>
-                <Row gutter={{ md: 20 }} type="flex">
-                  <Col
-                    xs={{ span: 24, order: 2 }}
-                    sm={{ span: 12, order: 1 }}
-                    xl={24}
-                  >
-                    <CopyrightTablet>
-                      &copy;
-                      <FormattedMessage id="app.footer.copyright" />
-                    </CopyrightTablet>
+                        >
+                          <FormattedMessage id="app.footer.menu.howItWorks" />
+                        </Link>
+                      </li>
+                    </FooterMenu>
                   </Col>
                   <Col
-                    xs={{ span: 24, order: 1 }}
-                    sm={{ span: 12, order: 2 }}
-                    xl={24}
+                    xs={12}
+                    md={{ span: 10, offset: 4 }}
+                    xl={{ span: 12, offset: 0 }}
                   >
-                    <Langs />
+                    <FooterMenu>
+                      <li>
+                        <Link
+                          to="/pages/measurement-units"
+                          onClick={animateScroll.scrollToTop}
+                        >
+                          <FormattedMessage id="app.footer.menu.measurement" />
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/pages/faq">
+                          <FormattedMessage
+                            id="app.footer.menu.faq"
+                            onClick={animateScroll.scrollToTop}
+                          />
+                        </Link>
+                      </li>
+                    </FooterMenu>
                   </Col>
-                </Row>
-              </div>
-            </LangsWrap>
-          </Row>
-        </Container>
+                </RowWrapper>
+              </Col>
+              <LangsWrap md={24} xl={4}>
+                <div style={{ width: '100%' }}>
+                  <Row gutter={{ md: 20 }} type="flex">
+                    <Col
+                      xs={{ span: 24, order: 2 }}
+                      sm={{ span: 10, order: 1 }}
+                      xl={24}
+                    >
+                      <CopyrightTablet>
+                        &copy;
+                        <FormattedMessage id="app.footer.copyright" />
+                      </CopyrightTablet>
+                    </Col>
+                    <Col
+                      xs={{ span: 24, order: 1 }}
+                      sm={{ span: 10, order: 2, offset: 2 }}
+                      md={{ offset: 4 }}
+                      xl={24}
+                    >
+                      <Langs />
+                    </Col>
+                  </Row>
+                </div>
+              </LangsWrap>
+            </Row>
+          </Col>
+        </Row>
       </Wrap>
     </FooterContent>
   </FooterWrap>
