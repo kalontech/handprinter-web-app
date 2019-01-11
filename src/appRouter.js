@@ -54,6 +54,7 @@ const AppRouter = () => {
             withoutHeader
             withoutCTA
             withoutFooter
+            withoutHeaderContent
           />
           <Route
             path="/account/dashboard"

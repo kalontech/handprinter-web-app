@@ -1,6 +1,6 @@
 import { css } from "styled-components";
 
-const sizes = {
+export const sizes = {
   largeDesktop: 1200,
   desktop: 992,
   tablet: 768,

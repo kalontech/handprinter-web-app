@@ -9,11 +9,17 @@ import backgroundOceanContainerImage from './../../assets/images/backgroundOcean
 
 export const ActionCard = styled(Ant.Row)`
   border-radius: 5px;
-  height: 579px;
   overflow: hidden;
   width: 920px;
   position: relative;
   top: -50px;
+  height: 579px;
+  display: flex;
+  justify-content: center;
+  ${media.tablet`
+    margin-top: 60px;
+    height: auto;
+  `}
 `
 
 export const ActionCardForgotPasswordBlock = styled.div`
@@ -30,6 +36,14 @@ export const ActionCardFormWrapper = styled.div`
 export const ActionCardLeftHalf = styled(Ant.Col)`
   height: 100%;
   background: ${colors.green};
+  overflow: hidden;
+  ${media.desktop`
+    width: 241px;
+  `}
+  ${media.tablet`
+    ${props => props.hideOnTablet && 'display: none;'}
+    width: 100%;
+  `}
 `
 
 export const ActionCardRightHalf = styled(Ant.Col)`
@@ -38,6 +52,9 @@ export const ActionCardRightHalf = styled(Ant.Col)`
   display: flex;
   height: 100%;
   justify-content: center;
+  ${media.tablet`
+    width: 100%;
+  `}
 `
 
 export const PopoverTitle = styled.div`
@@ -164,8 +181,17 @@ export const ActionCardWrapper = styled.div`
     ${colors.lightGray} 50%
   );
   display: flex;
-  height: 100vh;
   justify-content: center;
+  padding: 30px;
+  height: 100vh;
+  ${media.desktop`
+    background: ${colors.ocean};
+  `}
+  ${media.tablet`
+    background: ${colors.white};
+    padding: 15px;
+    height: auto;
+  `}
 `
 
 export const FormItem = styled(Ant.Form.Item)`
@@ -608,6 +634,10 @@ export const OceanContainer = styled.div`
   display: flex;
   height: 100vh;
   justify-content: center;
+  ${media.tablet`
+    background: ${colors.white};
+    height: auto;
+  `}
 `
 
 export const OceanModal = styled.div`
@@ -615,6 +645,9 @@ export const OceanModal = styled.div`
   border-radius: 4px;
   padding: 70px;
   width: 440px;
+  ${media.tablet`
+    padding: 15px;
+  `}
 `
 
 export const OceanImage = styled.div`

@@ -68,7 +68,7 @@ const RouteWrapper = ({
                 <Layout.Content>
                   <Component {...props} />
                 </Layout.Content>
-                {!withoutCTA &&
+                {!withoutCTA && !user &&
                   ((brandedConfig && <brandedConfig.ctaComponent />) || (
                     <Cta />
                   ))}
