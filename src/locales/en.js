@@ -77,7 +77,8 @@ export default {
   'app.profilePage.deleteAccountModal.cancelButton': 'Cancel',
   'app.profilePage.deleteAccountModal.closeButton': 'Close',
   'app.increaseHandprintPage.head.title': 'Welcome to Handprinter!',
-  'app.increaseHandprintPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.increaseHandprintPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.increaseHandprintPage.head.description': 'Description of page',
   'app.increaseHandprintPage.title': 'Increate your handprint!',
   // TODO:
@@ -116,21 +117,24 @@ export default {
   'app.forms.invitationCode.hint':
     'Curabitur sagittis enim vel libero ornare tincidunt. Cras libero metus, tempus ut nulla non, dignissim scelerisque nisi. Proin malesuada, ante vitae.',
   'app.resetPasswordPage.head.title': 'Welcome to Handprinter!',
-  'app.resetPasswordPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.resetPasswordPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.resetPasswordPage.head.description': 'Description of page',
   'app.resetPasswordPage.title': 'Reset password',
   'app.resetPasswordPage.description':
     'Enter the e-mail address you used to register and we will send you instructions on how to change your password.',
   'app.resetPasswordPage.send': 'Send',
   'app.checkYourEmailPage.head.title': 'Welcome to Handprinter!',
-  'app.checkYourEmailPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.checkYourEmailPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.checkYourEmailPage.head.description': 'Description of page',
   'app.checkYourEmailPage.title': 'Recovery mail sent',
   'app.checkYourEmailPage.description':
     'Didn’t receive the email?<br />Please check the email address you used to make sure it matches the address on your account, look in your spam folder, or request another e-mail below.',
   'app.checkYourEmailPage.sendAgain': 'Send again',
   'app.setNewPasswordPage.head.title': 'Welcome to Handprinter!',
-  'app.setNewPasswordPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.setNewPasswordPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.setNewPasswordPage.head.description': 'Description of page',
   'app.setNewPasswordPage.title': 'Set a new password',
   'app.setNewPasswordPage.changePassword': 'Change password',
@@ -338,7 +342,8 @@ export default {
     '                  they know: There’s room for everyone. We’re incomplete without\n' +
     '                  you.',
   'app.measurementPage.head.title': 'Welcome to Handprinter!',
-  'app.measurementPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.measurementPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.measurementPage.head.description': 'Description of page',
   'app.measurementPage.Hero.Title':
     'How do we <strong>measure</strong> Action Impacts and\n' +
@@ -443,7 +448,8 @@ export default {
   'app.eatonFooter.poweredBy': 'Powered by',
   'app.eatonFooter.copyright': '&copy; 2018 NewEarth B. All Rights Reserved.',
   'app.dashboardPage.head.title': 'Welcome to Handprinter!',
-  'app.dashboardPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.dashboardPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.dashboardPage.head.description': 'Description of page',
   'app.dashboardPage.usersInvited': 'Users invited',
   'app.dashboardPage.actionsTaken': 'Actions taken',
@@ -457,7 +463,8 @@ export default {
   'app.dashboardPage.memberSince': 'Member since',
   'app.actions.reduceFootprint': 'Your reduced your footprint',
   'app.aboutEatonPage.head.title': 'Welcome to Handprinter!',
-  'app.aboutEatonPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.aboutEatonPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.aboutEatonPage.head.description': 'Description of page',
   'app.aboutEatonPage.hero.title': 'Become an Eaton Green Guardian',
   'app.aboutEatonPage.hero.description':
@@ -466,7 +473,7 @@ export default {
   'app.aboutEatonPage.growYourHandprint.title':
     'Be a Part of a Positive Future. Reduce your footprint.\nGrow your handprint!',
   'app.aboutEatonPage.growYourHandprint.description':
-    'Green Guardian Handprint lets you calculate and track your impacts with the goal of becoming <strong>Net Positive</strong>. You can watch your handprint grow to exceed your footprint and inspire others to do the same. <strong>What are footprints and handprints?</strong>',     
+    'Green Guardian Handprint lets you calculate and track your impacts with the goal of becoming <strong>Net Positive</strong>. You can watch your handprint grow to exceed your footprint and inspire others to do the same. <strong>What are footprints and handprints?</strong>',
   'app.aboutEatonPage.whatAreHandprints.title': 'What are handprints?',
   'app.aboutEatonPage.whatAreHandprints.description.1':
     'We’ve heard about footprints: the negative impacts of the things we buy and use. We need to reduce our footprint, but that is only a part of the story.',
