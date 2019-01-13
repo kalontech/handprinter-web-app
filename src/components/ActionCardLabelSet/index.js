@@ -8,7 +8,7 @@ import media from '../../utils/mediaQueryTemplate'
 const CardLabelWrap = styled.div`
   display: flex;
   ${media.phone`
-    ${props => props.mobileFixedWidth && 'width: 285px;'}
+    ${props => props.mobileFixedWidth && 'max-width: 285px;'}
   `}
 `
 

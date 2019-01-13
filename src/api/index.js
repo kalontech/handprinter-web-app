@@ -4,6 +4,7 @@ import qs from 'qs'
 import * as Sentry from '@sentry/browser'
 
 import { store } from '../app'
+import { getTemporaryToken } from './../utils/temporaryToken'
 
 const apiBaseUrl = window.location.hostname.includes('localhost')
   ? process.env.REACT_APP_API_BASE_URL
@@ -80,6 +81,7 @@ const logIn = (email, password) =>
     body: {
       email,
       password,
+      temporaryToken: getTemporaryToken(),
     },
     method: 'POST',
   })
@@ -100,6 +102,7 @@ const register = (
       country,
       invitationCode,
       belongsToBrand,
+      temporaryToken: getTemporaryToken(),
     },
     method: 'POST',
   })
@@ -126,6 +129,7 @@ const takeAction = (actionId, token) =>
   fetchHelper(`${apiBaseUrl}/actions/take`, {
     body: {
       actionId,
+      temporaryToken: getTemporaryToken(),
     },
     headers: {
       authorization: `Bearer ${token}`,
@@ -192,6 +196,18 @@ const getDashboardData = token =>
     },
   })
 
+const engageAction = (action, emails, token) =>
+  fetchHelper(`${apiBaseUrl}/actions/engage`, {
+    body: {
+      action,
+      emails,
+    },
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    method: 'POST',
+  })
+
 const getUserInitialAvatar = fullName =>
   `https://ui-avatars.com/api/?background=87bb24&color=ffffff&length=1&name=${fullName}&size=256`
 
@@ -220,5 +236,6 @@ export default {
   shareInvitationCode,
   getDashboardData,
   getUserInitialAvatar,
+  engageAction,
   getNews,
 }
