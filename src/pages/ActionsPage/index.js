@@ -156,7 +156,7 @@ class ActionsPage extends Component {
       // if value will be defined
       searchFieldValue: undefined,
     },
-    showFilter: true,
+    showFilter: false,
     filterValuesFromQuery: null,
     activeFiltersCount: 0,
   }

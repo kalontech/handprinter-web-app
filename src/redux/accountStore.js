@@ -118,14 +118,18 @@ export const resetToken = (state = INITIAL_STATE) => ({
   token: null,
 })
 
-export function logOut({ redirectUrl = '/account/login' }) {
+export function logOut({ hard = false, redirectUrl = '/account/login' }) {
   store.dispatch({
     type: Types.RESET_TOKEN,
   })
   store.dispatch({
     type: UserStoreTypes.RESET_USER,
   })
-  history.push(redirectUrl)
+  if (hard) {
+    window.location.reload()
+  } else {
+    history.push(redirectUrl)
+  }
 }
 
 export const HANDLERS = {
