@@ -686,6 +686,11 @@ class Header extends Component {
                           <FormattedMessage id="app.header.menu.actions" />
                         </Link>
                       </Menu.Item>
+                      <Menu.Item key="/account/news">
+                        <Link to="/account/news">
+                          <FormattedMessage id="app.header.menu.news" />
+                        </Link>
+                      </Menu.Item>
                       {overrides && overrides.inLinkLogo && (
                         <Menu.Item key="/pages/home">
                           <Link to="/">

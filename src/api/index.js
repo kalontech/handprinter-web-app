@@ -59,12 +59,11 @@ const findAction = ({ actionId, slug }) =>
     method: 'POST',
   })
 
-const getActions = (query = {}) => 
+const getActions = (query = {}) =>
   fetchHelper(`${apiBaseUrl}/actions?${qs.stringify(query)}`)
 
-const getTimeValues = (query = {}) => 
+const getTimeValues = (query = {}) =>
   fetchHelper(`${apiBaseUrl}/actions/time_values`)
-
 
 const getCountries = () => fetchHelper(`${apiBaseUrl}/countries`)
 
@@ -196,6 +195,13 @@ const getDashboardData = token =>
 const getUserInitialAvatar = fullName =>
   `https://ui-avatars.com/api/?background=87bb24&color=ffffff&length=1&name=${fullName}&size=256`
 
+const getNews = (query = {}, token) =>
+  fetchHelper(`${apiBaseUrl}/actions/news?${qs.stringify(query)}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  })
+
 export default {
   findAction,
   getActions,
@@ -214,4 +220,5 @@ export default {
   shareInvitationCode,
   getDashboardData,
   getUserInitialAvatar,
+  getNews,
 }

@@ -188,6 +188,7 @@ export default {
   'app.header.menu.signOut': 'Sign out',
   'app.header.menu.profileSettings': 'Profile settings',
   'app.header.menu.increaseHandprint': 'Increase handprint',
+  'app.header.menu.news': 'News',
   'app.header.link': 'Join handprinters',
   'app.brandedHeader.link': 'Become Green Guardian',
   'app.footer.menu.actions': 'Actions',
@@ -483,4 +484,11 @@ export default {
   'app.aboutEatonPage.becomeGuardian.title': 'Become an Eaton Green Guardian',
   'app.aboutEatonPage.becomeGuardian.description':
     'What can you do to make your community, your work, your planet more sustainable?',
+  'app.newsPage.title': 'My handprinting news',
+  'app.newsPage.news.userDidAction':
+    '<strong>{user}</strong> did action <strong>{action}</strong>',
+  'app.newsPage.ranges.network': 'Network',
+  'app.newsPage.ranges.world': 'World',
+  'app.newsPage.userWithoutName': 'User without name',
+  'app.newsPage.loadMoreNews': 'Load next 30 news',
 }
