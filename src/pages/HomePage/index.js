@@ -31,6 +31,7 @@ import hpActionImg from './../../assets/homepage/actions-image.png'
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import FingerPrintIcon from '../../assets/icons/FingerPrintIcon'
 import colors from './../../config/colors'
+import media from '../../utils/mediaQueryTemplate'
 import api from './../../api'
 import PageMetadata from '../../components/PageMetadata'
 
@@ -45,22 +46,80 @@ const HeroTitle = styled(BlockTitleGreen)`
 
 const HeroText = styled(TextLarge)`
   margin-bottom: 24px;
+  ${media.phone`
+    display: none;
+  `};
 `
 
 const HeroButtons = styled.div`
   margin-top: 35px;
   display: flex;
-  button {
+  ${media.desktop`
+    justify-content: center;
+    margin-bottom: 20px
+  `};
+  ${media.phone`
+    margin-top: 0;
+    margin-bottom: 0;
+    flex-direction: column;
+  `};
+  > * {
     margin-right: 24px;
+    ${media.phone`
+      margin-right: 0;
+      margin-bottom: 8px;
+      button {
+        width: 100%;
+      }
+  `};
+    &:last-child {
+      margin-right: 0;
+      margin-bottom: 0;
+    }
   }
 `
 
 const HeroImage = styled.div`
   text-align: right;
+  img {
+    max-width: 100%;
+  }
+  ${media.largeDesktop`
+    text-align: center;
+    margin-top: 55px;
+    img {
+      width: 100%;
+      max-width: 413px;
+    }
+  `};
+  ${media.phone`
+    margin-top: 0;
+    margin-bottom: 5px;
+    img {
+      max-width: 190px;
+    }
+  `};
 `
 
 const Hero = styled.section`
   padding: 150px 0 200px;
+  ${media.largeDesktop`
+    padding-bottom: 100px;
+  `};
+  ${media.desktop`
+    padding-top: 30px;
+    padding-bottom: 10px;
+    text-align: center;
+    ${BlockContainer}{
+      max-width: 590px;
+    }
+    .ant-row-flex {
+      justify-content: center;
+    }
+  `};
+  ${media.phone`
+    padding: 0;
+  `};
 `
 
 export const ActionsLink = styled.span`
@@ -81,40 +140,131 @@ export const ActionsLink = styled.span`
 
 const ActionsTop = styled.div`
   padding-bottom: 95px;
+  ${media.phone`
+    padding-bottom: 55px;
+  `};
 `
 
 const ActionsImage = styled.div`
   text-align: right;
+  img {
+    max-width: 100%;
+  }
+  ${media.largeDesktop`
+    margin-top: 20px;
+    text-align: center;
+  `};
+  ${media.desktop`
+    display: none;
+  `};
 `
 
 const Actions = styled.section`
   position: relative;
   padding-top: 150px;
+  ${media.largeDesktop`
+    padding-top: 137px;
+  `};
+  ${media.phone`
+    padding-top: 80px;
+  `};
 `
 
 const AboutTitle = styled(BlockSubTitle)`
   text-align: center;
   margin-bottom: 75px;
+  ${media.phone`
+    margin-bottom: 20px;
+  `};
 `
 
 const AboutText = styled(TextMediumGroup)`
   max-width: 480px;
+  ${media.largeDesktop`
+    max-width: 100%;
+  `};
 `
 
 const AboutImage = styled.div`
-  text-align: right;
+  ${media.largeDesktop`
+    margin-bottom: 60px;
+    text-align: center;
+    img {
+      max-width: 100%;
+    }
+  `};
+  ${media.phone`
+    margin-bottom: 10px;
+    img {
+      max-width: 290px;
+    }
+  `};
 `
 
 const AboutButtons = styled.div`
   margin-top: 40px;
+  ${media.desktop`
+    display: flex;
+    justify-content: center;
+  `};
+  ${media.phone`
+    margin-top: 30px;
+    a,button {
+      width: 100%;
+    }
+  `};
 `
 
 const About = styled.section`
   padding: 140px 0;
+  ${media.largeDesktop`
+    .ant-row-flex{
+      justify-content: center;
+    }
+  `};
+  ${media.desktop`
+    padding: 120px 0;
+  `};
+  ${media.phone`
+    padding: 70px 0 40px;
+  `};
 `
 
 const Clients = styled.section`
-  padding: 60px 0;
+  padding: 60px 0 30px;
+  ${media.desktop`
+    padding: 40px 0 10px;
+  `};
+  ${media.phone`
+    ${BlockContainer}{
+      padding: 0;
+    }
+  `};
+  > div {
+    display: flex;
+    justify-content: center;
+  }
+`
+
+const ClientsWrap = styled(Row)`
+  width: 100%;
+  > div {
+    margin-bottom: 30px;
+  }
+  ${media.desktop`
+    width: 90%;
+    img {
+      width: 100%;
+      max-width: 90px;
+    }
+  `};
+  ${media.phone`
+    width: 100%;
+    img {
+      width: 100%;
+      max-width: 80px;
+    }
+  `};
 `
 
 class HomePage extends Component {
@@ -137,7 +287,7 @@ class HomePage extends Component {
         <Hero>
           <BlockContainer>
             <Row type="flex" justify="space-between" align="middle">
-              <Col span={11}>
+              <Col xs={{ span: 24, order: 2 }} md={{ order: 1 }} xl={11}>
                 <HeroTitle>
                   <FormattedHTMLMessage id="app.homePage.hero.title" />
                 </HeroTitle>
@@ -154,7 +304,7 @@ class HomePage extends Component {
                   <VideoPopup id="CtH6M5CXruU" />
                 </HeroButtons>
               </Col>
-              <Col span={10}>
+              <Col xs={{ span: 24, order: 1 }} md={{ order: 2 }} xl={10}>
                 <HeroImage>
                   <img src={heroImg} alt="hero" />
                 </HeroImage>
@@ -183,7 +333,7 @@ class HomePage extends Component {
             <ActionsTop>
               <BlockContainer>
                 <Row type="flex">
-                  <Col span={14}>
+                  <Col md={24} xl={14}>
                     <BlockSubTitle>
                       <FormattedHTMLMessage id="app.homePage.actionsTitle" />
                     </BlockSubTitle>
@@ -196,7 +346,7 @@ class HomePage extends Component {
                       </ActionsLink>
                     </TextMedium>
                   </Col>
-                  <Col span={10}>
+                  <Col md={24} xl={10}>
                     <ActionsImage>
                       <img src={hpActionImg} alt="" />
                     </ActionsImage>
@@ -215,13 +365,13 @@ class HomePage extends Component {
             <AboutTitle>
               <FormattedMessage id="app.homePage.aboutTitle" />
             </AboutTitle>
-            <Row type="flex" align="middle" gutter={80}>
-              <Col span={12}>
+            <Row type="flex" align="middle">
+              <Col md={24} xl={12}>
                 <AboutImage>
                   <img src={hpAboutImg} alt="hero" />
                 </AboutImage>
               </Col>
-              <Col span={12}>
+              <Col md={24} xl={12}>
                 <AboutText>
                   <FormattedHTMLMessage id="app.homePage.aboutText" />
                 </AboutText>
@@ -249,23 +399,28 @@ class HomePage extends Component {
         </About>
         <Clients>
           <BlockContainer>
-            <Row type="flex" justify="center" align="middle" gutter={80}>
-              <Col>
+            <ClientsWrap
+              type="flex"
+              justify="center"
+              align="middle"
+              gutter={{ xs: 25, sm: 25, md: 30, xl: 80 }}
+            >
+              <Col xs={{ order: 1 }} xl={{ order: 1 }}>
                 <img src={client2} alt="logo" />
               </Col>
-              <Col>
+              <Col xs={{ order: 2 }} xl={{ order: 2 }}>
                 <img src={client2} alt="logo" />
               </Col>
-              <Col>
+              <Col xs={{ order: 4 }} xl={{ order: 3 }}>
                 <img src={client1} alt="logo" />
               </Col>
-              <Col>
+              <Col xs={{ order: 3 }} xl={{ order: 4 }}>
                 <img src={client2} alt="logo" />
               </Col>
-              <Col>
+              <Col xs={{ order: 5 }} xl={{ order: 5 }}>
                 <img src={client1} alt="logo" />
               </Col>
-            </Row>
+            </ClientsWrap>
           </BlockContainer>
         </Clients>
       </Fragment>

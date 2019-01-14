@@ -10,19 +10,16 @@ import { CardHeading } from './../Styled'
 import media from './../../utils/mediaQueryTemplate'
 
 const CardWrap = styled.div`
-  max-width: 400px;
   padding-top: 10px;
   padding-bottom: 10px;
   margin: 0 auto;
   display: inline-block;
-  ${media.largeDesktop`
-    max-width: 100%;
-  `}
 `
 const CardContainer = styled.div`
   display: block;
   position: relative;
-  max-width: 380px;
+  max-width: ${props => (props.isSlide ? '380px' : '100%')}
+  margin-right: ${props => (props.isSlide ? '20px' : '0')}
   height: 364px;
   border-radius: 4px;
   box-shadow: 0 1px 10px 0 ${hexToRgba(colors.dark, 0.08)};
@@ -30,10 +27,11 @@ const CardContainer = styled.div`
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s;
-  ${media.largeDesktop`
-    max-width: 100%;
+  ${media.phone`
+    margin-right: 0;
+    max-width: calc(100% - 15px);
   `}
-
+  
   &:hover {
     transform: translateY(-4px);
   }
@@ -72,10 +70,11 @@ const ActionCardLabelSetWrapper = styled.div`
 
 const ActionCard = props => {
   const { linkPrefix, slug, picture, name, impacts } = props
+  console.log('props', props)
   return (
     <Link to={`${linkPrefix}/${slug}`}>
       <CardWrap>
-        <CardContainer>
+        <CardContainer {...props}>
           <CardImage>
             <img src={picture} alt={name} />
           </CardImage>

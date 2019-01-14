@@ -226,6 +226,9 @@ export const BlockTitle = styled.h1`
   font-size: 48px;
   line-height: 1.27;
   font-family: 'Noto Serif', serif;
+  ${media.phone`
+    font-size: 25px;
+  `};
 `
 
 export const BlockTitleGreen = styled(BlockTitle)`
@@ -240,8 +243,16 @@ export const BlockSubTitle = styled.h2`
   font-weight: 700;
   font-family: 'Noto Serif', serif;
   letter-spacing: 1px;
+  ${media.phone`
+    font-size: 22px;
+    line-height: 1.4;
+    letter-spacing: 0;
+  `};
   + p {
     margin-top: 20px;
+    ${media.phone`
+    margin-top: 12px;
+  `};
   }
 `
 
@@ -265,6 +276,9 @@ export const TextLarge = styled.p`
 export const TextMedium = styled.p`
   font-size: 16px;
   line-height: 1.75;
+  ${media.phone`
+    font-size: 14px;
+  `};
 `
 
 export const TextMediumGroup = styled(TextMedium)`
@@ -298,6 +312,10 @@ export const ScrollToSection = styled.section`
     margin-bottom: 10px;
     color: ${colors.darkGray};
   }
+  ${media.phone`
+    height: 0;
+    opacity: 0;
+  `};
 `
 
 export const ScrollButton = styled(ArrowButton)`
