@@ -50,7 +50,7 @@ const RouteWrapper = ({
             }
             return (
               <Layout>
-                {/* {!withoutHeader && (
+                {!withoutHeader && (
                   <Header
                     location={props.location}
                     withoutHeaderContent={withoutHeaderContent}
@@ -64,18 +64,18 @@ const RouteWrapper = ({
                     }
                     overrides={brandedConfig && brandedConfig.headerOverrides}
                   />
-                )} */}
+                )}
                 <Layout.Content>
                   <Component {...props} />
                 </Layout.Content>
-                {/* {!withoutCTA &&
+                {!withoutCTA && !user &&
                   ((brandedConfig && <brandedConfig.ctaComponent />) || (
                     <Cta />
                   ))}
                 {!withoutFooter &&
                   ((brandedConfig && <brandedConfig.footerComponent />) || (
                     <Footer />
-                  ))} */}
+                ))}
                 <ModalContainer />
               </Layout>
             )

@@ -77,7 +77,8 @@ export default {
   'app.profilePage.deleteAccountModal.cancelButton': 'Cancel',
   'app.profilePage.deleteAccountModal.closeButton': 'Close',
   'app.increaseHandprintPage.head.title': 'Welcome to Handprinter!',
-  'app.increaseHandprintPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.increaseHandprintPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.increaseHandprintPage.head.description': 'Description of page',
   'app.increaseHandprintPage.title': 'Increate your handprint!',
   // TODO:
@@ -116,21 +117,24 @@ export default {
   'app.forms.invitationCode.hint':
     'Curabitur sagittis enim vel libero ornare tincidunt. Cras libero metus, tempus ut nulla non, dignissim scelerisque nisi. Proin malesuada, ante vitae.',
   'app.resetPasswordPage.head.title': 'Welcome to Handprinter!',
-  'app.resetPasswordPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.resetPasswordPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.resetPasswordPage.head.description': 'Description of page',
   'app.resetPasswordPage.title': 'Reset password',
   'app.resetPasswordPage.description':
     'Enter the e-mail address you used to register and we will send you instructions on how to change your password.',
   'app.resetPasswordPage.send': 'Send',
   'app.checkYourEmailPage.head.title': 'Welcome to Handprinter!',
-  'app.checkYourEmailPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.checkYourEmailPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.checkYourEmailPage.head.description': 'Description of page',
   'app.checkYourEmailPage.title': 'Recovery mail sent',
   'app.checkYourEmailPage.description':
     'Didn’t receive the email?<br />Please check the email address you used to make sure it matches the address on your account, look in your spam folder, or request another e-mail below.',
   'app.checkYourEmailPage.sendAgain': 'Send again',
   'app.setNewPasswordPage.head.title': 'Welcome to Handprinter!',
-  'app.setNewPasswordPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.setNewPasswordPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.setNewPasswordPage.head.description': 'Description of page',
   'app.setNewPasswordPage.title': 'Set a new password',
   'app.setNewPasswordPage.changePassword': 'Change password',
@@ -184,6 +188,7 @@ export default {
   'app.header.menu.signOut': 'Sign out',
   'app.header.menu.profileSettings': 'Profile settings',
   'app.header.menu.increaseHandprint': 'Increase handprint',
+  'app.header.menu.news': 'News',
   'app.header.link': 'Join handprinters',
   'app.brandedHeader.link': 'Become Green Guardian',
   'app.footer.menu.actions': 'Actions',
@@ -204,6 +209,13 @@ export default {
   'app.actionsPage.head.description': 'Description of page',
   'app.actionsPage.searchPlaceholder': 'Search',
   'app.actionsPage.searchNotFound': 'Not found',
+  'app.actionsPage.engage.subtitle': 'You want to share action',
+  'app.actionsPage.engage.title': 'Use reusable shopping bags instead of paper',
+  'app.actionsPage.engage.successSent': 'Engage was successfully sent.',
+  'app.actionsPage.engage.send': 'Send',
+  'app.actionsPage.engage.inputPlaceholder': "Enter a user's name or their email",
+  'app.actionsPage.clearAllFilters': 'Clear all filters',
+  'app.actionsPage.actionsNotFound': 'Actions not found',
   'app.faqPage.head.title': 'Welcome to Handprinter!',
   'app.faqPage.head.keywords': 'handprinter, nature, footprint, handprint',
   'app.faqPage.head.description': 'Description of page',
@@ -336,7 +348,8 @@ export default {
     '                  they know: There’s room for everyone. We’re incomplete without\n' +
     '                  you.',
   'app.measurementPage.head.title': 'Welcome to Handprinter!',
-  'app.measurementPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.measurementPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.measurementPage.head.description': 'Description of page',
   'app.measurementPage.Hero.Title':
     'How do we <strong>measure</strong> Action Impacts and\n' +
@@ -419,9 +432,24 @@ export default {
     'The cool thing is that <strong> the smaller your footprint gets, the more powerful each action will become </strong> when handprinter calculates the action’s effect on your footprint.',
   'app.measurementPage.Animation.Title':
     'Make your handprint bigger than your footprint. Become <strong>Net Positive</strong>',
+  'app.actions.engage': 'Engage',
   'app.actions.takeAction': 'Take action',
   'app.actions.congratulations': 'Congratulations',
+  'app.actions.congratulations.wantToSaveResults': 'Want to save your results?',
+  'app.actions.congratulations.login': 'Login',
+  'app.actions.congratulations.or': 'or',
+  'app.actions.congratulations.register': 'Register',
   'app.actions.handprintIncreased': 'Your handprint just increased!',
+  'app.actions.timeValues.one.MINS': 'Min',
+  'app.actions.timeValues.other.MINS': 'Mins',
+  'app.actions.timeValues.one.HRS': 'Hour',
+  'app.actions.timeValues.other.HRS': 'Hours',
+  'app.actions.timeValues.one.DAYS': 'Day',
+  'app.actions.timeValues.other.DAYS': 'Days',
+  'app.actions.timeValues.one.MTHS': 'Month',
+  'app.actions.timeValues.other.MTHS': 'Months',
+  'app.actions.timeValues.one.YRS': 'Year',
+  'app.actions.timeValues.other.YRS': 'Years',
   'app.eatonFooter.text':
     'Eaton is dedicated to improving the quality of life and the\n' +
     '                environment through the use of power management technologies and\n' +
@@ -431,7 +459,8 @@ export default {
   'app.eatonFooter.poweredBy': 'Powered by',
   'app.eatonFooter.copyright': '&copy; 2018 NewEarth B. All Rights Reserved.',
   'app.dashboardPage.head.title': 'Welcome to Handprinter!',
-  'app.dashboardPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.dashboardPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.dashboardPage.head.description': 'Description of page',
   'app.dashboardPage.usersInvited': 'Users invited',
   'app.dashboardPage.actionsTaken': 'Actions taken',
@@ -445,7 +474,8 @@ export default {
   'app.dashboardPage.memberSince': 'Member since',
   'app.actions.reduceFootprint': 'Your reduced your footprint',
   'app.aboutEatonPage.head.title': 'Welcome to Handprinter!',
-  'app.aboutEatonPage.head.keywords': 'handprinter, nature, footprint, handprint',
+  'app.aboutEatonPage.head.keywords':
+    'handprinter, nature, footprint, handprint',
   'app.aboutEatonPage.head.description': 'Description of page',
   'app.aboutEatonPage.hero.title': 'Become an Eaton Green Guardian',
   'app.aboutEatonPage.hero.description':
@@ -459,9 +489,16 @@ export default {
   'app.aboutEatonPage.whatAreHandprints.description.1':
     'We’ve heard about footprints: the negative impacts of the things we buy and use. We need to reduce our footprint, but that is only a part of the story.',
   'app.aboutEatonPage.whatAreHandprints.description.2':
-    'We also have handprints: <strong>positive impacts of our actions.</strong> Handprints include helping others reduce their footprints. Green Guardian Handprint lets Eaton employees grow their handprints and reduce their footprints too.',
+    'We also have handprints: <strong>positive impacts of our actions.</strong> Handprints include helping others reduce their footprints. Green Guardian Handprint lets Eaton employees grow their handprints and reduce their footprints too. Get started today!',
   'app.aboutEatonPage.whatAreHandprints.getStartedToday': 'Get started today!',
   'app.aboutEatonPage.becomeGuardian.title': 'Become an Eaton Green Guardian',
   'app.aboutEatonPage.becomeGuardian.description':
     'What can you do to make your community, your work, your planet more sustainable?',
+  'app.newsPage.title': 'My handprinting news',
+  'app.newsPage.news.userDidAction':
+    '<strong>{user}</strong> did action <strong>{action}</strong>',
+  'app.newsPage.ranges.network': 'Network',
+  'app.newsPage.ranges.world': 'World',
+  'app.newsPage.userWithoutName': 'User without name',
+  'app.newsPage.loadMoreNews': 'Load next 30 news',
 }

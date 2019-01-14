@@ -5,6 +5,7 @@ import { Row, Col } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import colors from './../../config/colors'
+import media from '../../utils/mediaQueryTemplate'
 import PageMetadata from '../../components/PageMetadata'
 import faqImg from './../../assets/faq/cat.png'
 import fingerPrintleft from './../../assets/faq/fingerprint-left.png'
@@ -46,6 +47,9 @@ const Heading = styled.h1`
   margin-top: 40px;
   margin-bottom: 27px;
   color: ${colors.white};
+  ${media.phone`
+    visibility: hidden;
+  `};
 `
 
 const FaqPage = props => {
@@ -55,7 +59,7 @@ const FaqPage = props => {
       <Wrapper>
         <BlockContainer>
           <Row>
-            <Col span={16} offset={4} gutter={20}>
+            <Col xl={{ span: 16, offset: 4 }}>
               <Content>
                 <Heading>
                   <FormattedMessage id="app.faqPage.title" />

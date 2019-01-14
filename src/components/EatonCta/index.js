@@ -53,7 +53,7 @@ const EatonCta = () => (
       <CtaTitle>
         <FormattedMessage id="app.footer.cta.title" />
       </CtaTitle>
-      <Link to="/account/register">
+      <Link to="/pages/our-vision">
         <CtaButton type="ghost" size="large">
           <FormattedMessage id="app.eatonFooter.cta.link" />
         </CtaButton>

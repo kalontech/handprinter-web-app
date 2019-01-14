@@ -1,16 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ActionCardLabel from '../ActionCardLabel'
 import styled from 'styled-components'
+
+import ActionCardLabel from '../ActionCardLabel'
+import media from '../../utils/mediaQueryTemplate'
 
 const CardLabelWrap = styled.div`
   display: flex;
+  ${media.phone`
+    ${props => props.mobileFixedWidth && 'max-width: 285px;'}
+  `}
 `
 
 const ActionCardLabelSet = props => {
-  const { impacts, hideTooltip } = props
+  const { impacts, hideTooltip, mobileFixedWidth } = props
   return (
-    <CardLabelWrap>
+    <CardLabelWrap mobileFixedWidth={mobileFixedWidth}>
       {Object.entries(impacts.footprint)
         .filter(([category, timeValue]) => timeValue.minutes > 0)
         .map(([category, timeValue], index) => (
@@ -43,8 +48,9 @@ const ActionCardLabelSet = props => {
 }
 
 ActionCardLabelSet.propTypes = {
-  impacts: PropTypes.array.isRequired,
+  impacts: PropTypes.object.isRequired,
   hideTooltip: PropTypes.bool,
+  mobileFixedWidth: PropTypes.bool,
 }
 
 export default ActionCardLabelSet

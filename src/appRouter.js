@@ -15,6 +15,7 @@ import FaqPage from './pages/FaqPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import MeasurementUnitsPage from './pages/MeasurementUnitsPage'
+import NewsPage from './pages/NewsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import OurVisionPage from './pages/OurVisionPage'
 import RegisterPage from './pages/RegisterPage'
@@ -25,7 +26,7 @@ import IncreaseHandprintPage from './pages/IncreaseHandprintPage'
 
 export const history = createBrowserHistory()
 
-const handleBackdropClick = ({ parentPath }) =>
+export const handleBackdropClick = ({ parentPath }) =>
   history.length > 1 ? history.goBack() : history.push(parentPath)
 
 const AppRouter = () => {
@@ -54,6 +55,7 @@ const AppRouter = () => {
             withoutHeader
             withoutCTA
             withoutFooter
+            withoutHeaderContent
           />
           <Route
             path="/account/dashboard"
@@ -86,6 +88,12 @@ const AppRouter = () => {
             path="/pages/measurement-units"
             component={MeasurementUnitsPage}
             useAuthentication
+          />
+          <Route
+            path="/account/news"
+            component={NewsPage}
+            requireAuthentication
+            withoutCTA
           />
           <Route
             path="/pages/our-vision"

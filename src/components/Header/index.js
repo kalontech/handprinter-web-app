@@ -1,20 +1,31 @@
-import React, { Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Layout, Menu, Popover, Affix } from 'antd'
+import { Layout, Menu, Popover, Affix, Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import FingerPrintIcon from '../../assets/icons/FingerPrintIcon'
+import MenuIcon from '../../assets/icons/MenuIcon'
+import CloseIcon from '../../assets/icons/CloseIcon'
 import HeaderLanguageSelector from './../HeaderLanguageSelector'
-import { PrimaryButton, HeaderPopover, PopoverTitle } from './../Styled'
+import CollapsedMenu from './../CollapsedMenu'
+import {
+  PrimaryButton,
+  DefaultButton,
+  HeaderPopover,
+  PopoverTitle,
+} from './../Styled'
 import colors from './../../config/colors'
+import media from './../../utils/mediaQueryTemplate'
 import hexToRgba from '../../utils/hexToRgba'
 import { logOut } from './../../redux/accountStore'
 
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
+import CollapseLanguageSelector from '../CollapseLanguageSelector'
+const SubMenu = Menu.SubMenu
 
 const LeftAlignPublic = styled.div`
   margin-right: 34px;
@@ -29,13 +40,21 @@ const RightAlign = styled.div`
 `
 
 const HeaderWrap = styled(Layout.Header)`
+  position: relative;
+  z-index: 2;
   background: ${colors.white};
   height: 90px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 16px;
-
+  ${media.largeDesktop`
+    padding: 0 34px;
+  `}
+  ${media.phone`
+    height: 70px;
+    padding: 0 15px;
+  `}
   .ant-menu-item {
     a {
       color: ${({ color }) => color || colors.darkGray};
@@ -51,7 +70,8 @@ const HeaderWrap = styled(Layout.Header)`
     }
 
     &.ant-menu-item-selected {
-      border-bottom: 3px solid ${colors.green};
+      border-color: inherit;
+
       color: ${colors.dark};
       a {
         color: inherit;
@@ -92,6 +112,9 @@ const CenterMenu = styled(LeftMenu)`
   .ant-menu-item {
     margin-right: 40px;
   }
+  .ant-menu-horizontal {
+    border-color: ${({ borderColor }) => borderColor || colors.green};
+  }
 `
 
 const RightMenu = styled.div`
@@ -115,7 +138,6 @@ const Logo = styled.div`
 
 const LogoSmall = styled.div`
   display: block;
-  margin-right: 40px;
   a {
     display: flex;
     aligh-items: center;
@@ -124,12 +146,17 @@ const LogoSmall = styled.div`
 
 const MenuWrap = styled.div`
   display: flex;
+  width: 100%;
   align-items: center;
+  justify-content: space-between;
   color: ${({ color }) => color || colors.dark};
   .ant-menu-item {
     &:hover {
       color: ${({ hoverColor }) => hoverColor || colors.dark};
     }
+  }
+  .ant-menu-horizontal {
+    border-color: ${({ borderColor }) => borderColor || colors.green};
   }
 `
 
@@ -156,6 +183,7 @@ const Name = styled.p`
   font-family: 'Noto Serif', serif;
   font-size: 19px;
   line-height: 27px;
+  color: inherit;
 `
 
 const Email = styled.p`
@@ -185,210 +213,649 @@ const UserInfo = styled.div`
   padding: 8px 4px;
 `
 
-const Header = ({ type, user, withoutHeaderContent, location, overrides }) => (
-  <Affix>
-    {type === 'minimal' && (
-      <HeaderWrap>
-        <LeftMenu>
-          <Logo>
-            <Link to="/">
-              <img
-                src={(overrides && overrides.fullLogo) || fullLogoImg}
-                alt="Handprinter"
-              />
-            </Link>
-          </Logo>
-        </LeftMenu>
-      </HeaderWrap>
-    )}
-    {type === 'public' && (
-      <HeaderWrap color={colors.dark}>
-        <LeftMenu>
-          <Logo>
-            <Link to="/">
-              <img
-                src={(overrides && overrides.fullLogo) || fullLogoImg}
-                alt={(overrides && overrides.brandName) || 'Handprinter'}
-              />
-            </Link>
-          </Logo>
-          {!withoutHeaderContent && (
-            <Fragment>
-              <MenuWrap color={colors.dark}>
-                <Menu mode="horizontal" selectedKeys={[location.pathname]}>
-                  <Menu.Item key="/actions">
-                    <Link to="/actions">
-                      <FormattedMessage id="app.header.menu.actions" />
-                    </Link>
-                  </Menu.Item>
-                </Menu>
-                <Popover
-                  placement="bottomLeft"
-                  content={
-                    <HeaderPopover
-                      mode="vertical"
-                      theme="light"
-                      color={colors.dark}
-                    >
-                      <Menu.Item key="/pages/our-vision">
-                        <Link to="/pages/our-vision">
-                          <FormattedMessage id="app.header.menu.howItWorks" />
-                        </Link>
-                      </Menu.Item>
-                      <Menu.Item key="/pages/measurement-units">
-                        <Link to="/pages/measurement-units">
-                          <FormattedMessage id="app.header.menu.measurement" />
-                        </Link>
-                      </Menu.Item>
-                      <Menu.Item key="/pages/faq">
-                        <Link to="/pages/faq">
-                          <FormattedMessage id="app.header.menu.faq" />
-                        </Link>
-                      </Menu.Item>
-                    </HeaderPopover>
-                  }
-                >
-                  <LeftAlignPublic>
-                    <PopoverTitle color={colors.dark} hoverColor={colors.dark}>
-                      <FormattedMessage id="app.header.menu.about" />
-                      <ExpandMoreIcon />
-                    </PopoverTitle>
-                  </LeftAlignPublic>
-                </Popover>
-                <HeaderLanguageSelector color={colors.dark} />
-              </MenuWrap>
-            </Fragment>
-          )}
-        </LeftMenu>
-        {!withoutHeaderContent && (
-          <Fragment>
-            <RightMenu>
-              <Menu
-                theme="light"
-                mode="horizontal"
-                selectedKeys={[location.pathname]}
-              >
-                <Menu.Item key="/account/login">
-                  <Link to="/account/login">
-                    <FormattedMessage id="app.header.menu.login" />
-                  </Link>
-                </Menu.Item>
-              </Menu>
-              <Link to="/account/register">
-                <PrimaryButton type="primary" size="large">
-                  <FingerPrintIcon />
-                  <FormattedMessage
-                    id={
-                      overrides ? 'app.brandedHeader.link' : 'app.header.link'
-                    }
+const Hamburger = styled.div`
+  display: flex;
+  align-items: center;
+  color: ${colors.dark};
+  cursor: pointer;
+  &:hover {
+    color: #000;
+  }
+`
+
+const CollapseMenu = styled(CollapsedMenu)`
+  z-index: 1;
+  position: fixed;
+  top: 90px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: ${colors.white};
+  color: ${colors.dark} !important;
+  ${media.phone`
+    top: 70px;
+  `}
+`
+
+const CollapseTop = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 28px 15px;
+  background: ${colors.lightGray};
+  ${media.phone`
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 15px;
+  `}
+  a {
+    display: flex;
+    justify-content: center;
+    margin-right: 15px;
+    &:last-child {
+      margin-right: 0;
+      margin-bottom: 0;
+    }
+    .ant-btn {
+      width: 300px;
+    }
+    ${media.phone`
+      margin-bottom: 10px;
+      margin-right: 0;
+    `}
+  }
+`
+const CollapseSubmenuTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 16px;
+  padding: 0 45px;
+  ${media.phone`
+    padding: 0 15px;
+  `}
+`
+
+const CollapseContent = styled.div`
+  padding: 0 35px;
+  .ant-menu-inline {
+    .ant-menu-item {
+      padding-left: 0;
+      margin: 0;
+      padding-right: 0;
+      border-bottom: 1px solid ${hexToRgba(colors.dark, 0.17)};
+      height: auto;
+      font-size: 16px;
+      color: ${colors.dark};
+      &.ant-menu-item-active,
+      &.ant-menu-item-selected {
+        background: none;
+        color: ${colors.dark};
+        &:after {
+          display: none;
+        }
+      }
+      a {
+        padding: 0 45px;
+        line-height: 80px;
+        white-space: nowrap;
+        color: inherit;
+        ${media.phone`
+          padding: 0 15px;
+        `}
+      }
+    }
+
+    .ant-menu-submenu {
+      padding: 20px 0;
+      border-bottom: 1px solid ${hexToRgba(colors.dark, 0.17)};
+      .ant-menu-submenu-title {
+        height: auto;
+      }
+      .ant-menu-item {
+        border: none;
+        height: auto;
+        margin-top: 25px;
+        line-height: normal;
+        color: ${colors.dark};
+        a {
+          padding-left: 105px;
+          line-height: normal;
+          color: inherit;
+          ${media.phone`
+            padding-left: 30px;
+          `}
+        }
+      }
+    }
+
+    .ant-menu-submenu-arrow {
+      display: none;
+    }
+
+    .ant-menu-submenu-open {
+      .anticon {
+        transform: rotate(-180deg);
+      }
+    }
+
+    .anticon {
+      margin-right: -15px;
+      transition: transform 0.3s;
+      ${media.phone`
+       margin-right: 0;
+      `}
+    }
+
+    .ant-menu-submenu-title {
+      padding-left: 0;
+      padding-right: 0;
+      margin: 0;
+      display: flex;
+      overflow: visible;
+      color: ${colors.dark};
+    }
+  }
+  ${media.phone`
+    padding: 0 15px;
+  `}
+`
+
+const ProfileMenu = styled.div`
+  color: inherit;
+  div${Avatar} {
+    margin-right: 15px;
+  }
+  p${Name} {
+    color: ${colors.dark};
+  }
+`
+
+const StyledAffix = styled(Affix)`
+  .ant-affix {
+    z-index: 1062;
+  }
+`
+
+const BlueBorderedButton = styled(Button)`
+  border: 2px solid ${colors.darkBlue};
+  border-radius: 0;
+  color: ${colors.darkBlue};
+  &&:hover,
+  &&:focus {
+    border-color: ${colors.darkBlue};
+    background: ${colors.darkBlue};
+    color: ${colors.white};
+    }
+  }
+`
+
+class Header extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      collapsed: true,
+      width: window.innerWidth,
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange)
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth })
+  }
+
+  onClick = () => {
+    this.setState({ collapsed: !this.state.collapsed })
+  }
+
+  render() {
+    const { type, user, withoutHeaderContent, location, overrides } = this.props
+    const isTablet = this.state.width < 1200
+    const isMobile = this.state.width < 768
+    return (
+      <StyledAffix>
+        {type === 'minimal' && (
+          <HeaderWrap>
+            <Logo>
+              <Link to="/">
+                {(!isMobile && (
+                  <img
+                    src={(overrides && overrides.fullLogo) || fullLogoImg}
+                    alt="Handprinter"
                   />
-                </PrimaryButton>
+                )) || (
+                  <img
+                    src={(overrides && overrides.partialLogo) || partialLogoImg}
+                    alt="Handprinter"
+                  />
+                )}
               </Link>
-            </RightMenu>
-          </Fragment>
+            </Logo>
+          </HeaderWrap>
         )}
-      </HeaderWrap>
-    )}
-    {type === 'private' && (
-      <HeaderWrap>
-        <LogoSmall>
-          <Link to="/account/dashboard">
-            <img
-              src={(overrides && overrides.partialLogo) || partialLogoImg}
-              alt="Handprinter"
-            />
-          </Link>
-        </LogoSmall>
-        <CenterMenu defaultSelectedKeys="actions">
-          <Menu mode="horizontal" selectedKeys={[location.pathname]}>
-            <Menu.Item key="/account/dashboard">
-              <Link to="/account/dashboard">
-                <FormattedMessage id="app.header.menu.dashboard" />
+        {type === 'public' && (
+          <HeaderWrap>
+            <Logo>
+              <Link to="/">
+                {(!isMobile && (
+                  <img
+                    src={(overrides && overrides.fullLogo) || fullLogoImg}
+                    alt="Handprinter"
+                    style={(!overrides && { marginTop: '-20px' }) || null}
+                  />
+                )) || (
+                  <img
+                    src={(overrides && overrides.partialLogo) || partialLogoImg}
+                    alt="Handprinter"
+                  />
+                )}
               </Link>
-            </Menu.Item>
-            <Menu.Item key="/actions">
-              <Link to="/actions">
-                <FormattedMessage id="app.header.menu.actions" />
-              </Link>
-            </Menu.Item>
-            {overrides && overrides.inLinkLogo && (
-              <Menu.Item key="/pages/home">
-                <Link to="/">
-                  <FormattedMessage id="app.header.menu.about" />{' '}
-                  <img src={overrides.inLinkLogo} />
-                </Link>
-              </Menu.Item>
+            </Logo>
+            {!withoutHeaderContent && (
+              <Fragment>
+                {(!isTablet && (
+                  <MenuWrap
+                    borderColor={(overrides && colors.darkBlue) || colors.green}
+                  >
+                    <LeftMenu>
+                      <Menu
+                        mode="horizontal"
+                        selectedKeys={[location.pathname]}
+                      >
+                        <Menu.Item key="/actions">
+                          <Link to="/actions">
+                            <FormattedMessage id="app.header.menu.actions" />
+                          </Link>
+                        </Menu.Item>
+                      </Menu>
+                      <Popover
+                        placement="bottomLeft"
+                        content={
+                          <HeaderPopover mode="vertical" theme="light">
+                            <Menu.Item key="/pages/our-vision">
+                              <Link to="/pages/our-vision">
+                                <FormattedMessage id="app.header.menu.howItWorks" />
+                              </Link>
+                            </Menu.Item>
+                            <Menu.Item key="/pages/measurement-units">
+                              <Link to="/pages/measurement-units">
+                                <FormattedMessage id="app.header.menu.measurement" />
+                              </Link>
+                            </Menu.Item>
+                            <Menu.Item key="/pages/faq">
+                              <Link to="/pages/faq">
+                                <FormattedMessage id="app.header.menu.faq" />
+                              </Link>
+                            </Menu.Item>
+                          </HeaderPopover>
+                        }
+                      >
+                        <LeftAlignPublic>
+                          <PopoverTitle hoverColor={colors.dark}>
+                            <FormattedMessage id="app.header.menu.about" />
+                            <ExpandMoreIcon
+                              style={
+                                (!overrides && {
+                                  color: `${colors.green}`,
+                                }) || {
+                                  color: `${colors.darkBlue}`,
+                                }
+                              }
+                            />
+                          </PopoverTitle>
+                        </LeftAlignPublic>
+                      </Popover>
+                      <HeaderLanguageSelector overrides={overrides} />
+                      {overrides && overrides.inLinkLogo && (
+                        <Menu
+                          mode="horizontal"
+                          selectedKeys={[location.pathname]}
+                          style={{ marginLeft: '40px' }}
+                        >
+                          <Menu.Item key="/pages/home">
+                            <Link to="/">
+                              <FormattedMessage id="app.header.menu.about" />{' '}
+                              <img src={overrides.inLinkLogo} />
+                            </Link>
+                          </Menu.Item>
+                        </Menu>
+                      )}
+                    </LeftMenu>
+                    <RightMenu>
+                      <Menu
+                        theme="light"
+                        mode="horizontal"
+                        selectedKeys={[location.pathname]}
+                      >
+                        <Menu.Item key="/account/login">
+                          <Link to="/account/login">
+                            <FormattedMessage id="app.header.menu.login" />
+                          </Link>
+                        </Menu.Item>
+                      </Menu>
+                      <Link to="/account/register">
+                        <PrimaryButton type="primary" size="large">
+                          <FingerPrintIcon />
+                          <FormattedMessage
+                            id={
+                              overrides
+                                ? 'app.brandedHeader.link'
+                                : 'app.header.link'
+                            }
+                          />
+                        </PrimaryButton>
+                      </Link>
+                    </RightMenu>
+                  </MenuWrap>
+                )) || (
+                  <Hamburger onClick={this.onClick}>
+                    {this.state.collapsed && <MenuIcon />}
+                    {!this.state.collapsed && <CloseIcon />}
+                  </Hamburger>
+                )}
+                {!this.state.collapsed && isTablet && (
+                  <CollapseMenu>
+                    <CollapseTop>
+                      <Link to="/account/register">
+                        <PrimaryButton
+                          type="primary"
+                          size="large"
+                          style={overrides && { borderRadius: '0' }}
+                        >
+                          <FingerPrintIcon />
+                          <FormattedMessage
+                            id={
+                              overrides
+                                ? 'app.brandedHeader.link'
+                                : 'app.header.link'
+                            }
+                          />
+                        </PrimaryButton>
+                      </Link>
+                      <Link to="/account/login">
+                        {(overrides && (
+                          <BlueBorderedButton>
+                            <FormattedMessage id="app.header.menu.login" />
+                          </BlueBorderedButton>
+                        )) || (
+                          <DefaultButton type="primary" size="large">
+                            <FormattedMessage id="app.header.menu.login" />
+                          </DefaultButton>
+                        )}
+                      </Link>
+                    </CollapseTop>
+                    <CollapseContent>
+                      <Menu
+                        mode="inline"
+                        inlineIndent={0}
+                        selectedKeys={[location.pathname]}
+                        onClick={this.onClick}
+                      >
+                        <Menu.Item key="/actions">
+                          <Link to="/actions">
+                            <FormattedMessage id="app.header.menu.actions" />
+                          </Link>
+                        </Menu.Item>
+                        <SubMenu
+                          key="lang"
+                          title={
+                            <CollapseSubmenuTitle>
+                              <FormattedMessage id="app.header.menu.about" />
+                              <ExpandMoreIcon
+                                style={
+                                  (!overrides && {
+                                    color: `${colors.green}`,
+                                  }) || { color: `${colors.darkBlue}` }
+                                }
+                              />
+                            </CollapseSubmenuTitle>
+                          }
+                        >
+                          <Menu.Item key="/pages/our-vision">
+                            <Link to="/pages/our-vision">
+                              <FormattedMessage id="app.header.menu.howItWorks" />
+                            </Link>
+                          </Menu.Item>
+                          <Menu.Item key="/pages/measurement-units">
+                            <Link to="/pages/measurement-units">
+                              <FormattedMessage id="app.header.menu.measurement" />
+                            </Link>
+                          </Menu.Item>
+                          <Menu.Item key="/pages/faq">
+                            <Link to="/pages/faq">
+                              <FormattedMessage id="app.header.menu.faq" />
+                            </Link>
+                          </Menu.Item>
+                        </SubMenu>
+                        {overrides && overrides.inLinkLogo && (
+                          <Menu.Item key="/pages/home">
+                            <Link to="/">
+                              <FormattedMessage id="app.header.menu.about" />{' '}
+                              <img src={overrides.inLinkLogo} />
+                            </Link>
+                          </Menu.Item>
+                        )}
+                      </Menu>
+                      <CollapseLanguageSelector overrides={overrides} />
+                    </CollapseContent>
+                  </CollapseMenu>
+                )}
+              </Fragment>
             )}
-          </Menu>
-          <Popover
-            placement="bottomLeft"
-            content={
-              <HeaderPopover mode="vertical" theme="light">
-                <Menu.Item key="/pages/our-vision">
-                  <Link to="/pages/our-vision">
-                    <FormattedMessage id="app.header.menu.howItWorks" />
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="/pages/measurement-units">
-                  <Link to="/pages/measurement-units">
-                    <FormattedMessage id="app.header.menu.measurement" />
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="/pages/faq">
-                  <Link to="/pages/faq">
-                    <FormattedMessage id="app.header.menu.faq" />
-                  </Link>
-                </Menu.Item>
-              </HeaderPopover>
-            }
-          >
-            <LeftAlignPrivate>
-              <PopoverTitle hoverColor={colors.dark}>
-                <FormattedMessage id="app.header.menu.about" />
-                <ExpandMoreIcon />
-              </PopoverTitle>
-            </LeftAlignPrivate>
-          </Popover>
-          <HeaderLanguageSelector />
-        </CenterMenu>
-        <div>
-          <RightAlign>
-            <Popover
-              placement="bottomRight"
-              content={
-                <UserInfo>
-                  <Name>{user.fullName}</Name>
-                  <Email>{user.email}</Email>
-                  <Links>
-                    <Link to="/account/profile">
-                      <FormattedMessage id="app.header.menu.profileSettings" />
-                    </Link>
-                    <Link to="/account/code">
-                      <FormattedMessage id="app.header.menu.increaseHandprint" />
-                    </Link>
-                    <a onClick={logOut}>
-                      <FormattedMessage id="app.header.menu.signOut" />
-                    </a>
-                  </Links>
-                </UserInfo>
-              }
-            >
-              <PopoverTitle>
-                <Avatar>
-                  {user.photo ? (
-                    <img src={user.photo} alt="Avatar" />
-                  ) : (
-                    user.fullName.slice(0, 1).toUpperCase()
-                  )}
-                </Avatar>
-              </PopoverTitle>
-            </Popover>
-          </RightAlign>
-        </div>
-      </HeaderWrap>
-    )}
-  </Affix>
-)
+          </HeaderWrap>
+        )}
+        {type === 'private' && (
+          <HeaderWrap>
+            {isTablet && (
+              <Hamburger onClick={this.onClick}>
+                {this.state.collapsed && <MenuIcon />}
+                {!this.state.collapsed && <CloseIcon />}
+              </Hamburger>
+            )}
+            <LogoSmall>
+              <Link to="/account/dashboard">
+                <img
+                  src={(overrides && overrides.partialLogo) || partialLogoImg}
+                  alt="Handprinter"
+                />
+              </Link>
+            </LogoSmall>
+            <Fragment>
+              {(!isTablet && (
+                <Fragment>
+                  <CenterMenu
+                    defaultSelectedKeys="actions"
+                    borderColor={(overrides && colors.darkBlue) || colors.green}
+                  >
+                    <Menu mode="horizontal" selectedKeys={[location.pathname]}>
+                      <Menu.Item key="/account/dashboard">
+                        <Link to="/account/dashboard">
+                          <FormattedMessage id="app.header.menu.dashboard" />
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="/actions">
+                        <Link to="/actions">
+                          <FormattedMessage id="app.header.menu.actions" />
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="/account/news">
+                        <Link to="/account/news">
+                          <FormattedMessage id="app.header.menu.news" />
+                        </Link>
+                      </Menu.Item>
+                      {overrides && overrides.inLinkLogo && (
+                        <Menu.Item key="/pages/home">
+                          <Link to="/">
+                            <FormattedMessage id="app.header.menu.about" />{' '}
+                            <img src={overrides.inLinkLogo} />
+                          </Link>
+                        </Menu.Item>
+                      )}
+                    </Menu>
+                    <Popover
+                      placement="bottomLeft"
+                      content={
+                        <HeaderPopover mode="vertical" theme="light">
+                          <Menu.Item key="/pages/our-vision">
+                            <Link to="/pages/our-vision">
+                              <FormattedMessage id="app.header.menu.howItWorks" />
+                            </Link>
+                          </Menu.Item>
+                          <Menu.Item key="/pages/measurement-units">
+                            <Link to="/pages/measurement-units">
+                              <FormattedMessage id="app.header.menu.measurement" />
+                            </Link>
+                          </Menu.Item>
+                          <Menu.Item key="/pages/faq">
+                            <Link to="/pages/faq">
+                              <FormattedMessage id="app.header.menu.faq" />
+                            </Link>
+                          </Menu.Item>
+                        </HeaderPopover>
+                      }
+                    >
+                      <LeftAlignPrivate>
+                        <PopoverTitle hoverColor={colors.dark}>
+                          <FormattedMessage id="app.header.menu.about" />
+                          <ExpandMoreIcon
+                            style={
+                              (!overrides && { color: `${colors.green}` }) || {
+                                color: `${colors.darkBlue}`,
+                              }
+                            }
+                          />
+                        </PopoverTitle>
+                      </LeftAlignPrivate>
+                    </Popover>
+                    <HeaderLanguageSelector overrides={overrides} />
+                  </CenterMenu>
+                  <RightAlign>
+                    <Popover
+                      placement="bottomRight"
+                      content={
+                        <UserInfo>
+                          <Name>{user.fullName}</Name>
+                          <Email>{user.email}</Email>
+                          <Links>
+                            <Link to="/account/profile">
+                              <FormattedMessage id="app.header.menu.profileSettings" />
+                            </Link>
+                            <Link to="/account/code">
+                              <FormattedMessage id="app.header.menu.increaseHandprint" />
+                            </Link>
+                            <a onClick={logOut}>
+                              <FormattedMessage id="app.header.menu.signOut" />
+                            </a>
+                          </Links>
+                        </UserInfo>
+                      }
+                    >
+                      <PopoverTitle>
+                        <Avatar>
+                          {user.photo ? (
+                            <img src={user.photo} alt="Avatar" />
+                          ) : (
+                            user.fullName.slice(0, 1).toUpperCase()
+                          )}
+                        </Avatar>
+                      </PopoverTitle>
+                    </Popover>
+                  </RightAlign>
+                </Fragment>
+              )) || <div />}
+            </Fragment>
+            {!this.state.collapsed && isTablet && (
+              <CollapseMenu>
+                <CollapseTop />
+                <CollapseContent>
+                  <Menu
+                    mode="inline"
+                    inlineIndent={0}
+                    selectedKeys={[location.pathname]}
+                    onClick={this.onClick}
+                  >
+                    <Menu.Item key="/account/dashboard">
+                      <Link to="/account/dashboard">
+                        <FormattedMessage id="app.header.menu.dashboard" />
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="/actions">
+                      <Link to="/actions">
+                        <FormattedMessage id="app.header.menu.actions" />
+                      </Link>
+                    </Menu.Item>
+                    {overrides && overrides.inLinkLogo && (
+                      <Menu.Item key="/pages/home">
+                        <Link to="/">
+                          <FormattedMessage id="app.header.menu.about" />{' '}
+                          <img src={overrides.inLinkLogo} />
+                        </Link>
+                      </Menu.Item>
+                    )}
+                    <SubMenu
+                      key="lang"
+                      title={
+                        <CollapseSubmenuTitle>
+                          <ProfileMenu>
+                            <PopoverTitle>
+                              <Avatar>
+                                {user.photo ? (
+                                  <img src={user.photo} alt="Avatar" />
+                                ) : (
+                                  user.fullName.slice(0, 1).toUpperCase()
+                                )}
+                              </Avatar>
+                              <div>
+                                <Name>{user.fullName}</Name>
+                                <Email>{user.email}</Email>
+                              </div>
+                            </PopoverTitle>
+                          </ProfileMenu>
+                          <ExpandMoreIcon
+                            style={
+                              (!overrides && { color: `${colors.green}` }) || {
+                                color: `${colors.darkBlue}`,
+                              }
+                            }
+                          />
+                        </CollapseSubmenuTitle>
+                      }
+                    >
+                      <Menu.Item key="/account/profile">
+                        <Link to="/account/profile">
+                          <FormattedMessage id="app.header.menu.profileSettings" />
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="/account/code">
+                        <Link to="/account/code">
+                          <FormattedMessage id="app.header.menu.increaseHandprint" />
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="logOut">
+                        <a onClick={logOut}>
+                          <FormattedMessage id="app.header.menu.signOut" />
+                        </a>
+                      </Menu.Item>
+                    </SubMenu>
+                  </Menu>
+                  <CollapseLanguageSelector />
+                </CollapseContent>
+              </CollapseMenu>
+            )}
+          </HeaderWrap>
+        )}
+      </StyledAffix>
+    )
+  }
+}
 
 const mapStateToProps = state => ({
   user: state.user.data,
@@ -399,10 +866,10 @@ Header.defaultProps = {
 }
 
 Header.propTypes = {
-  location: {
+  location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
-  },
-  withoutHeaderContent: PropTypes.bool.isRequired,
+  }),
+  withoutHeaderContent: PropTypes.bool,
   type: PropTypes.oneOf(['minimal', 'public', 'private']).isRequired,
   user: PropTypes.object,
   overrides: PropTypes.object,

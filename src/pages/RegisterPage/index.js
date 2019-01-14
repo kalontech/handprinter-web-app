@@ -27,17 +27,22 @@ import api from './../../api'
 import registerFingerprintTop from './../../assets/images/registerFingerprintTop.png'
 import registerFingerprintBot from './../../assets/images/registerFingerprintBot.png'
 import registerActionCardImage from './../../assets/images/registerActionCard.jpg'
+import registerActionCardImageTablet from './../../assets/images/registerActionCardImageTablet.png'
 import registerBrandedPhotoLeaves from './../../assets/images/registerBrandedPhotoLeaves.png'
 import arrowDownIcon from './../../assets/icons/arrowDown.svg'
 import infoFillIcon from './../../assets/icons/infoFill.svg'
 import infoOutlineIcon from './../../assets/icons/infoOutline.svg'
 import colors from '../../config/colors'
 import PageMetadata from '../../components/PageMetadata'
+import media from '../../utils/mediaQueryTemplate'
 
 export const BrandedBlockWrap = styled.div`
   position: relative;
   height: 100%;
   color: ${colors.white};
+  ${media.tablet`
+    height: 275px;
+  `}
 `
 
 export const BrandedBlock = styled.div`
@@ -49,14 +54,26 @@ export const BrandedBlock = styled.div`
   padding: 50px;
   text-align: center;
   position: relative;
+  ${media.desktop`
+    padding: 15px;
+  `}
+  ${media.tablet`
+    padding: 10px;
+    top: 5px
+  `}
 `
 
-export const BrandedBlockPhotoWrap = styled.div`
+export const BrandedBlockPhotoBlock = styled.div`
   height: 133px;
   width: 133px;
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 28px;
+  ${media.tablet`
+    height: 64px;
+    width: 64px;
+    margin-bottom: 10px;
+  `}
 `
 
 export const BrandedBlockPhoto = styled.img`
@@ -65,7 +82,7 @@ export const BrandedBlockPhoto = styled.img`
 `
 
 export const BrandedBlockPhotoBg = styled.div`
-  background-color: white;
+  background-color: ${colors.white};
   height: 100%;
   position: relative;
 `
@@ -84,8 +101,17 @@ export const BrandedBlockLeaves = styled.img`
   height: 70px;
   width: auto;
   position: absolute;
-  top: 90px;
-  right: 149px;
+  top: -33px;
+  right: -11px;
+  ${media.desktop`
+    top: -37px;
+    right: -10px;
+  `}
+  ${media.tablet`
+    height: 33px;
+    top: -15px;
+    right: -3px;
+  `}
 `
 
 export const BrandedBlockHeading = styled.h2`
@@ -94,10 +120,16 @@ export const BrandedBlockHeading = styled.h2`
   margin: 0 0 20px 0;
   line-height: 37px;
   max-width: 300px;
+  ${media.desktop`
+    display: none;
+  `}
 `
 
 export const BrandedBlockDescription = styled.p`
   font-size: 16px;
+  ${media.tablet`
+    max-width: 300px;
+  `}
 `
 
 export const BrandedBlockFingerprintTopImg = styled.img`
@@ -113,6 +145,43 @@ export const BrandedBlockFingerprintBotImg = styled.img`
   right: 0px;
   height: 80px;
   width: auto;
+`
+
+const StyledActionCard = styled(ActionCard)`
+  ${media.tablet`
+    flex-direction: column;
+  `}
+`
+
+const StyledActionCardWrapper = styled(ActionCardWrapper)`
+  ${media.tablet`
+    padding: 0px;
+  `}
+`
+
+const FormWrap = styled.div`
+  width: 300px;
+  ${media.tablet`
+    margin-top: 30px;
+  `}
+`
+
+const DogImgDesktop = styled.img`
+  display: block;
+  ${media.desktop`
+    display: none;
+  `}
+`
+
+const DogImgTablet = styled.img`
+  display: none;
+  ${media.desktop`
+    display: block;
+  `}
+`
+
+const BrandedBlockPhotoWrap = styled.div`
+  position: relative;
 `
 
 class RegisterPage extends Component {
@@ -192,25 +261,27 @@ class RegisterPage extends Component {
 
     return (
       <Fragment>
-        <PageMetadata pageName="profilePage" />
-        <ActionCardWrapper>
-          <ActionCard>
-            <ActionCardLeftHalf span={12}>
+        <PageMetadata pageName="registerPage" />
+        <StyledActionCardWrapper>
+          <StyledActionCard>
+            <ActionCardLeftHalf span={12} hideOnTablet={!referrer}>
               {referrer ? (
                 <BrandedBlockWrap>
                   <BrandedBlockFingerprintTopImg src={registerFingerprintTop} />
                   <BrandedBlock>
                     <BrandedBlockPhotoWrap>
                       <BrandedBlockLeaves src={registerBrandedPhotoLeaves} />
-                      <BrandedBlockPhotoBg>
-                        {referrer.photo ? (
-                          <BrandedBlockPhoto src={referrer.photo} />
-                        ) : (
-                          <BrandedBlockReferrerName>
-                            {referrer.fullName.slice(0, 1).toUpperCase()}
-                          </BrandedBlockReferrerName>
-                        )}
-                      </BrandedBlockPhotoBg>
+                      <BrandedBlockPhotoBlock>
+                        <BrandedBlockPhotoBg>
+                          {referrer.photo ? (
+                            <BrandedBlockPhoto src={referrer.photo} />
+                          ) : (
+                            <BrandedBlockReferrerName>
+                              {referrer.fullName.slice(0, 1).toUpperCase()}
+                            </BrandedBlockReferrerName>
+                          )}
+                        </BrandedBlockPhotoBg>
+                      </BrandedBlockPhotoBlock>
                     </BrandedBlockPhotoWrap>
                     <BrandedBlockHeading>
                       <FormattedMessage id="app.registerPage.brandedBlock.heading" />
@@ -227,11 +298,14 @@ class RegisterPage extends Component {
                   <BrandedBlockFingerprintBotImg src={registerFingerprintBot} />
                 </BrandedBlockWrap>
               ) : (
-                <img src={registerActionCardImage} />
+                <Fragment>
+                  <DogImgTablet src={registerActionCardImageTablet} />
+                  <DogImgDesktop src={registerActionCardImage} />
+                </Fragment>
               )}
             </ActionCardLeftHalf>
             <ActionCardRightHalf span={12}>
-              <div style={{ width: '300px' }}>
+              <FormWrap>
                 <ActionCardTitle>
                   <FormattedMessage id="app.registerPage.title" />
                 </ActionCardTitle>
@@ -335,10 +409,10 @@ class RegisterPage extends Component {
                     </span>
                   </ActionCardRegisterBlock>
                 </Form>
-              </div>
+              </FormWrap>
             </ActionCardRightHalf>
-          </ActionCard>
-        </ActionCardWrapper>
+          </StyledActionCard>
+        </StyledActionCardWrapper>
       </Fragment>
     )
   }

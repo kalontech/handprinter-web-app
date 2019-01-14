@@ -15,7 +15,6 @@ const FooterDropdown = styled(Ant.Dropdown)`
   max-width: 148px;
   width: 100%;
   cursor: pointer;
-  margin-left: 25px;
 `
 
 const LangTitle = styled.div`

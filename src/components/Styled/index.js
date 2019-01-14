@@ -9,11 +9,17 @@ import backgroundOceanContainerImage from './../../assets/images/backgroundOcean
 
 export const ActionCard = styled(Ant.Row)`
   border-radius: 5px;
-  height: 579px;
   overflow: hidden;
   width: 920px;
   position: relative;
   top: -50px;
+  height: 579px;
+  display: flex;
+  justify-content: center;
+  ${media.tablet`
+    margin-top: 60px;
+    height: auto;
+  `}
 `
 
 export const ActionCardForgotPasswordBlock = styled.div`
@@ -30,6 +36,14 @@ export const ActionCardFormWrapper = styled.div`
 export const ActionCardLeftHalf = styled(Ant.Col)`
   height: 100%;
   background: ${colors.green};
+  overflow: hidden;
+  ${media.desktop`
+    width: 241px;
+  `}
+  ${media.tablet`
+    ${props => props.hideOnTablet && 'display: none;'}
+    width: 100%;
+  `}
 `
 
 export const ActionCardRightHalf = styled(Ant.Col)`
@@ -38,6 +52,9 @@ export const ActionCardRightHalf = styled(Ant.Col)`
   display: flex;
   height: 100%;
   justify-content: center;
+  ${media.tablet`
+    width: 100%;
+  `}
 `
 
 export const PopoverTitle = styled.div`
@@ -68,7 +85,6 @@ export const HeaderPopover = styled(Ant.Menu)`
     margin: 0;
     font-size: 16px;
     color: ${({ color }) => color || colors.darkGray};
-    margin-right: 40px;
     :not(:last-child) {
       margin: 0;
     }
@@ -165,8 +181,17 @@ export const ActionCardWrapper = styled.div`
     ${colors.lightGray} 50%
   );
   display: flex;
-  height: 100vh;
   justify-content: center;
+  padding: 30px;
+  height: 100vh;
+  ${media.desktop`
+    background: ${colors.ocean};
+  `}
+  ${media.tablet`
+    background: ${colors.white};
+    padding: 15px;
+    height: auto;
+  `}
 `
 
 export const FormItem = styled(Ant.Form.Item)`
@@ -179,11 +204,22 @@ export const FormItem = styled(Ant.Form.Item)`
     text-transform: uppercase;
   }
 `
-
 export const BlockContainer = styled.div`
   position: relative;
   max-width: 1180px;
   margin: 0 auto;
+  ${media.largeDesktop`
+   padding-left: 34px;
+    padding-right: 34px;
+  `};
+  ${media.phone`
+   padding-left: 15px;
+    padding-right: 15px;
+  `};
+  @media (max-width: 767px) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 `
 
 export const BlockTitle = styled.h1`
@@ -282,6 +318,10 @@ export const Collapse = styled(Ant.Collapse)`
   border-radius: 6px;
   padding: 12px 0;
   background-color: ${colors.white};
+  ${media.phone`
+    margin-bottom: 48px;
+    padding: 0;
+  `};
   > .ant-collapse-item {
     border-bottom: 1px solid ${hexToRgba(`${colors.dark}`, 0.08)};
     :last-child {
@@ -294,6 +334,10 @@ export const Collapse = styled(Ant.Collapse)`
 export const CollapsePanel = styled(Ant.Collapse.Panel)`
   position: relative;
   margin: 0 30px 1px;
+  ${media.phone`
+    margin-left: 15px;
+    margin-right: 15px;
+  `};
   &.ant-collapse-item-active {
     && > .ant-collapse-header {
       .arrow {
@@ -307,6 +351,14 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
     font-size: 19px;
     line-height: 26px;
     font-family: 'Noto Serif', serif;
+    padding-right: 35px;
+    ${media.phone`
+      font-size: 16px;
+      height: 84px;
+      padding: 0 35px 0 0;
+      display: flex;
+      align-items: center;
+    `};
 
     .arrow {
       width: 15px;
@@ -332,6 +384,10 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
     margin-top: -12px;
     & .ant-collapse-content-box {
       padding: 0 10px 28px;
+      ${media.phone`
+        padding-left: 5px;
+        padding-right: 5px;
+      `};
     }
   }
 `
@@ -354,9 +410,16 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   .ant-tooltip {
+    height: 0px;
+    width: 0px
     .ant-tooltip-inner {
+      position: relative;
       padding: 15px;
       text-align: center;
+      width: 70px;
+      left: -30px;
+      top: 10px;
+      height: 30px;
     }
   }
   
@@ -414,6 +477,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .ant-select__override-for__actions-page {
+    z-index: 1061;
     .ant-select-dropdown-menu-item:hover,
     .ant-select-dropdown-menu-item-active {
       background-color: ${colors.lightGray};
@@ -422,8 +486,12 @@ export const GlobalStyle = createGlobalStyle`
       display: none !important;
     }
     .ant-select-dropdown-menu {
-      max-height: 500px
+      max-height: 500px;    
     }
+  }
+
+  .ant-popover {
+    z-index: 1061;
   }
 
   .ant-affix {
@@ -497,6 +565,25 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-tooltip, .ant-tooltip-inner  {
+    box-shadow: none;
+    border-radius: 30px;
+    background: transparent;
+  }
+  .ant-tooltip-arrow {
+    display: none;
+  }
+  .react-router-modal__container {
+    z-index: 1065;
+  }
+  .react-router-modal__modal--in {
+    ${media.tablet`
+      width: 100%;
+      border: none;
+      border-radius: 0px;
+      height: 100vh;
+    `}
+  }
   .d3-tooltip-container {
     background-color: black;
     border-radius: 4px;
@@ -547,6 +634,10 @@ export const OceanContainer = styled.div`
   display: flex;
   height: 100vh;
   justify-content: center;
+  ${media.tablet`
+    background: ${colors.white};
+    height: auto;
+  `}
 `
 
 export const OceanModal = styled.div`
@@ -554,6 +645,9 @@ export const OceanModal = styled.div`
   border-radius: 4px;
   padding: 70px;
   width: 440px;
+  ${media.tablet`
+    padding: 15px;
+  `}
 `
 
 export const OceanImage = styled.div`

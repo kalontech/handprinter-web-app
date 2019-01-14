@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { Button, Form } from 'antd'
 import { Link } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
 
 import { Creators as AccountCreators } from './../../redux/accountStore'
 import {
@@ -24,6 +25,22 @@ import InputForPassword from './../../components/InputForPassword'
 import handleFormError from './../../utils/handleFormError'
 import PageMetadata from '../../components/PageMetadata'
 import loginActionCardImage from './../../assets/images/loginActionCard.jpg'
+import loginActionCardImageTablet from './../../assets/images/loginActionCardTablet.jpg'
+import media from '../../utils/mediaQueryTemplate'
+
+const CatImgDesktop = styled.img`
+  display: block;
+  ${media.desktop`
+    display: none;
+  `}
+`
+
+const CatImgTablet = styled.img`
+  display: none;
+  ${media.desktop`
+    display: block;
+  `}
+`
 
 class LoginPage extends Component {
   handleSubmit = e => {
@@ -50,13 +67,15 @@ class LoginPage extends Component {
       intl: { formatMessage },
       isLoggingIn,
     } = this.props
+
     return (
       <Fragment>
         <PageMetadata pageName="loginPage" />
         <ActionCardWrapper>
           <ActionCard>
-            <ActionCardLeftHalf span={12}>
-              <img src={loginActionCardImage} />
+            <ActionCardLeftHalf span={12} hideOnTablet>
+              <CatImgTablet src={loginActionCardImageTablet} />
+              <CatImgDesktop src={loginActionCardImage} />
             </ActionCardLeftHalf>
             <ActionCardRightHalf span={12}>
               <ActionCardFormWrapper>

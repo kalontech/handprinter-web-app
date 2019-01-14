@@ -28,10 +28,10 @@ export function* prepareUserProfile() {
         }
         yield put.resolve(UserStoreCreators.setUser(user))
       } else {
-        logOut()
+        logOut({ hard: true })
       }
     } catch (error) {
-      logOut()
+      logOut({ hard: true })
     }
   }
 }

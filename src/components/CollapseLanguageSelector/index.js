@@ -6,8 +6,9 @@ import { updateIntl } from 'react-intl-redux'
 import { FormattedMessage } from 'react-intl'
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import styled from 'styled-components'
-import colors from './../../config/colors'
+import media from './../../utils/mediaQueryTemplate'
 import { Menu } from 'antd'
+import colors from '../../config/colors'
 const SubMenu = Menu.SubMenu
 
 const LangTitle = styled.div`
@@ -15,17 +16,37 @@ const LangTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: Arial;
   font-size: 16px;
+  padding: 0 45px;
+  ${media.phone`
+    padding: 0 15px;
+  `}
 `
 
 const Image = styled.img`
   margin-right: 6px;
 `
+const LangMenu = styled(Menu)`
+  .ant-menu-sub {
+    padding-left: 105px;
+    ${media.phone`
+      padding-left: 30px;
+    `}
+  }
+  .anticon {
+    color: inherit;
+  }
+`
 
-const CollapseLanguageSelector = ({ intl, setLocale }) => {
+const CollapseLanguageSelector = ({
+  intl,
+  setLocale,
+  className,
+  overrides,
+}) => {
   return (
-    <Menu
+    <LangMenu
+      className={className}
       mode="inline"
       inlineIndent={0}
       onClick={item => setLocale(item.key, intl.locales[item.key])}
@@ -43,7 +64,11 @@ const CollapseLanguageSelector = ({ intl, setLocale }) => {
               <FormattedMessage id={`app.languages.${intl.locale}`} />
             </div>
             <ExpandMoreIcon
-              style={{ color: `${colors.darkBlue}`, transform: 'none' }}
+              style={
+                (!overrides && { color: `${colors.green}` }) || {
+                  color: `${colors.darkBlue}`,
+                }
+              }
             />
           </LangTitle>
         }
@@ -58,7 +83,7 @@ const CollapseLanguageSelector = ({ intl, setLocale }) => {
           </Menu.Item>
         ))}
       </SubMenu>
-    </Menu>
+    </LangMenu>
   )
 }
 
@@ -77,6 +102,8 @@ const mapDispatchToProps = dispatch =>
 CollapseLanguageSelector.propTypes = {
   intl: PropTypes.object.isRequired,
   setLocale: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  overrides: PropTypes.object,
 }
 
 export default connect(
