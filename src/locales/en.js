@@ -207,6 +207,8 @@ export default {
   'app.actionsPage.head.title': 'Welcome to Handprinter!',
   'app.actionsPage.head.keywords': 'handprinter, nature, footprint, handprint',
   'app.actionsPage.head.description': 'Description of page',
+  'app.actionsPage.tabs.discover': 'Discover',
+  'app.actionsPage.tabs.suggested': 'Suggested',
   'app.actionsPage.searchPlaceholder': 'Search',
   'app.actionsPage.searchNotFound': 'Not found',
   'app.actionsPage.engage.subtitle': 'You want to share action',
@@ -432,6 +434,7 @@ export default {
     'The cool thing is that <strong> the smaller your footprint gets, the more powerful each action will become </strong> when handprinter calculates the action’s effect on your footprint.',
   'app.measurementPage.Animation.Title':
     'Make your handprint bigger than your footprint. Become <strong>Net Positive</strong>',
+  'app.actions.card.by': 'by <span class="name">{username}</span>', // suggested user, example: by Tom Smith
   'app.actions.engage': 'Engage',
   'app.actions.takeAction': 'Take action',
   'app.actions.congratulations': 'Congratulations',

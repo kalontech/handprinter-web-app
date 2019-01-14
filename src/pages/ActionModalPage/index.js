@@ -108,13 +108,13 @@ const CloseButton = styled(Icon)`
   ${props =>
     props.color
       ? `
-      color: ${colors.white};
-    `
+        color: ${props.color};
+      `
       : `
-      color: ${colors.darkGray};
-      ${media.phone`
-        color: ${colors.white};
+        color: ${colors.darkGray};
       `}
+  ${media.tablet`
+    color: ${colors.white};
   `}
 `
 

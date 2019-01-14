@@ -43,8 +43,9 @@ const AppRouter = () => {
             }
             useAuthentication
           />
+          <Redirect exact from="/actions" to="/actions/discover" />
           <Route
-            path="/actions"
+            path="/actions/:subset"
             component={ActionsPage}
             useAuthentication
             withoutCTA
@@ -136,7 +137,7 @@ const AppRouter = () => {
           <Route component={NotFoundPage} />
         </Switch>
         <ModalRoute
-          path="/actions/:actionSlug"
+          path="/actions/:subset/:actionSlug"
           parentPath="/actions"
           onBackdropClick={() =>
             handleBackdropClick({ parentPath: '/actions' })

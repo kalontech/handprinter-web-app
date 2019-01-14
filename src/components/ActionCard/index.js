@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { FormattedHTMLMessage } from 'react-intl'
+import { Icon } from 'antd'
+import moment from 'moment'
 
 import ActionCardLabelSet from '../ActionCardLabelSet'
 import colors from './../../config/colors'
@@ -29,7 +32,6 @@ const CardContainer = styled.div`
   transition: transform 0.3s;
   ${media.phone`
     margin-right: 0;
-    max-width: calc(100% - 15px);
   `}
   
   &:hover {
@@ -68,9 +70,50 @@ const ActionCardLabelSetWrapper = styled.div`
   `}
 `
 
+const SuggestedInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: ${colors.darkGray};
+  padding: 0 12px;
+`
+
+const SuggestedInfoInitiator = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span.name {
+    color: ${colors.dark};
+    margin-left: 3px;
+  }
+`
+
+const SuggestedInfoDate = styled.div`
+  font-style: italic;
+  i {
+    margin-right: 5px;
+  }
+`
+
+const SuggestedInfoInitiatorPhoto = styled.div`
+  background-image: url('${props => props.src}');
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+`
+
 const ActionCard = props => {
-  const { linkPrefix, slug, picture, name, impacts } = props
-  console.log('props', props)
+  const {
+    linkPrefix,
+    slug,
+    picture,
+    name,
+    impacts,
+    suggestedBy,
+    suggestedAt,
+  } = props
   return (
     <Link to={`${linkPrefix}/${slug}`}>
       <CardWrap>
@@ -86,6 +129,23 @@ const ActionCard = props => {
           </CardWrapper>
         </CardContainer>
       </CardWrap>
+      {suggestedBy && suggestedAt && (
+        <SuggestedInfo>
+          <SuggestedInfoInitiator>
+            <SuggestedInfoInitiatorPhoto src={suggestedBy.photo} />
+            <FormattedHTMLMessage
+              id="app.actions.card.by"
+              values={{
+                username: suggestedBy.fullName,
+              }}
+            />{' '}
+          </SuggestedInfoInitiator>
+          <SuggestedInfoDate>
+            <Icon type="clock-circle" />
+            {moment(suggestedAt, 'YYYYMMDD').fromNow()}
+          </SuggestedInfoDate>
+        </SuggestedInfo>
+      )}
     </Link>
   )
 }
@@ -97,6 +157,8 @@ ActionCard.propTypes = {
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
   placeholder: PropTypes.bool,
+  suggestedBy: PropTypes.object,
+  suggestedAt: PropTypes.string,
 }
 
 export default ActionCard

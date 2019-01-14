@@ -209,17 +209,13 @@ export const BlockContainer = styled.div`
   max-width: 1180px;
   margin: 0 auto;
   ${media.largeDesktop`
-   padding-left: 34px;
+    padding-left: 34px;
     padding-right: 34px;
   `};
   ${media.phone`
-   padding-left: 15px;
-    padding-right: 15px;
-  `};
-  @media (max-width: 767px) {
     padding-left: 15px;
     padding-right: 15px;
-  }
+  `};
 `
 
 export const BlockTitle = styled.h1`
@@ -457,6 +453,10 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-menu-submenu-popup {
+    z-index: 1062;
+  }
+
   .ant-select__override-for__register-page {
     .ant-select-selection {
       height: 46px;
@@ -509,7 +509,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .ant-popover {
-    z-index: 1061;
+    z-index: 1070;
   }
 
   .ant-affix {
@@ -592,7 +592,7 @@ export const GlobalStyle = createGlobalStyle`
     display: none;
   }
   .react-router-modal__container {
-    z-index: 1065;
+    z-index: 1070;
   }
   .react-router-modal__modal--in {
     ${media.tablet`

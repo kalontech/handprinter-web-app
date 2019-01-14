@@ -13,3 +13,8 @@ export const TimeValueAbbreviations = {
   MONTHS: 'MTHS',
   YEARS: 'YRS',
 }
+
+export const ACTIONS_SUBSETS = {
+  DISCOVER: 'discover',
+  SUGGESTED: 'suggested',
+}

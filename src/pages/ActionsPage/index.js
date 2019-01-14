@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Row, Col, Select, Spin, Icon } from 'antd'
+import { Row, Col, Select, Spin, Icon, Menu, Popover } from 'antd'
 import { Link } from 'react-router-dom'
 import qs from 'qs'
 import get from 'lodash/get'
@@ -8,8 +8,13 @@ import styled from 'styled-components'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import debounce from 'lodash/debounce'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import { BlockContainer, Pagination } from './../../components/Styled'
+import {
+  BlockContainer,
+  Pagination,
+  HeaderPopover,
+} from './../../components/Styled'
 import ActionCard from './../../components/ActionCard'
 import ActionsFilters from './ActionFilter'
 import api from './../../api'
@@ -19,8 +24,9 @@ import { history } from './../../appRouter'
 import filterToggleImg from './../../assets/actions-page/ic_filter_list.png'
 import filterToggleActiveImg from './../../assets/actions-page/ic_filter_list_active.png'
 import media from './../../utils/mediaQueryTemplate'
-import { IMPACT_CATEGORIES } from '../../utils/constants'
+import { IMPACT_CATEGORIES, ACTIONS_SUBSETS } from '../../utils/constants'
 import PageMetadata from '../../components/PageMetadata'
+import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 
 const Wrapper = styled.div`
   background-color: ${colors.lightGray};
@@ -31,10 +37,7 @@ const Wrapper = styled.div`
 const InnerContainer = styled.div`
   padding: 25px 0;
   ${media.largeDesktop`
-    padding: 25px 35px;
-  `}
-  ${media.phone`
-    padding: 25px 15px;
+    padding: 15px 0;
   `}
 `
 
@@ -138,6 +141,92 @@ const FilterWrap = styled.div`
   margin-top: 45px;
 `
 
+const ActionTabsWrap = styled.div`
+  background-color: ${colors.dark};
+  color: ${colors.white};
+  position: relative;
+  z-index: 1063;
+`
+
+const ActionTabsRow = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`
+
+const ActionTabItem = styled.li`
+  font-size: 16px;
+  color: ${props => (props.active ? colors.white : colors.darkGray)};
+  margin-right: 45px;
+  list-style-type: none;
+  cursor: pointer;
+  &:last-child {
+    margin-right: 0px;
+  }
+  i {
+    margin-right: 8px;
+  }
+`
+
+const ActionTabItemList = styled.ul`
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  ${media.phone`
+    display: none;
+  `}
+`
+
+const ActionTabItemListMobile = styled(HeaderPopover)`
+  border-bottom: none !important; // override ant menu styles
+  .ant-menu-submenu-title {
+    color: ${colors.white};
+    padding: 0;
+  }
+  .ant-menu-submenu {
+    border-bottom: none !important;
+  }
+  .ant-menu-item {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .ant-menu-item-selected {
+    border-bottom: none;
+    background: ${colors.lightGray};
+  }
+
+  ${media.phone`
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+  `}
+`
+
+const ActionTabsInnerContainer = styled(InnerContainer)`
+  padding-top: 12px;
+  padding-bottom: 12px;
+  ${media.phone`
+    padding-top: 3px;
+    padding-bottom: 3px;
+  `}
+`
+
+const AcionTabDropdown = styled.span`
+  align-items: center;
+  justify-content: center;
+  display: none;
+  ${media.phone`
+    display: flex;
+  `}
+  i {
+    margin-right: 8px;
+  }
+`
+
 class ActionsPage extends Component {
   state = {
     actions: [],
@@ -159,15 +248,34 @@ class ActionsPage extends Component {
     showFilter: false,
     filterValuesFromQuery: null,
     activeFiltersCount: 0,
+    subset: null,
+    subsetDropdownVisible: false,
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {
+      ...prevState,
+      subset: (() => {
+        switch (nextProps.match.params.subset) {
+          case 'discover':
+            return ACTIONS_SUBSETS.DISCOVER
+          case 'suggested':
+            return ACTIONS_SUBSETS.SUGGESTED
+          default:
+            return ACTIONS_SUBSETS.DISCOVER
+        }
+      })(),
+    }
   }
 
   componentDidMount = async () => {
+    const subset = get(this.props, 'match.params.subset', {})
     const search = get(this.props, 'location.search', {})
     const queryParams = qs.parse(search, { ignoreQueryPrefix: true })
 
     this.handleParamsForFilter(queryParams)
 
-    await this.fetchActions(queryParams)
+    await this.fetchActions(queryParams, subset)
     await this.fetchTimeValues()
   }
 
@@ -191,9 +299,22 @@ class ActionsPage extends Component {
     }
   }
 
-  fetchActions = async query => {
+  fetchActions = async (query, subset) => {
     if (query.page && query.page === this.state.page.toString()) {
       return
+    }
+
+    let request
+
+    switch (subset) {
+      case ACTIONS_SUBSETS.DISCOVER:
+        request = api.getActions
+        break
+      case ACTIONS_SUBSETS.SUGGESTED:
+        request = api.getSuggestedActions
+        break
+      default:
+        request = api.getActions
     }
 
     this.setState({ loading: true }, () => {
@@ -201,9 +322,13 @@ class ActionsPage extends Component {
     })
     const {
       actions: { docs: actions, limit, totalDocs: total, page },
-    } = await api.getActions(query)
+    } = await request(query, this.props.token)
     if (Object.keys(query).length > 0) {
-      history.push(`/actions?${qs.stringify(query, { encode: false })}`)
+      history.push(
+        `/actions/${subset}?${qs.stringify(query, {
+          encode: false,
+        })}`,
+      )
     }
     this.setState({
       actions,
@@ -248,13 +373,17 @@ class ActionsPage extends Component {
     const currSearch = get(this.props, 'location.search')
     if (!isEmpty(currSearch) && prevSearch !== currSearch) {
       const query = qs.parse(currSearch, { ignoreQueryPrefix: true })
-      await this.fetchActions(query)
+      await this.fetchActions(query, this.state.subset)
     }
   }
 
-  paginationItemRender(current, type, originalElement) {
+  paginationItemRender = (current, type, originalElement) => {
     if (type === 'page') {
-      return <Link to={`/actions?page=${current}`}>{originalElement}</Link>
+      return (
+        <Link to={`/actions/${this.state.subset}?page=${current}`}>
+          {originalElement}
+        </Link>
+      )
     }
     if (type === 'prev' || type === 'next') {
       return null
@@ -273,8 +402,26 @@ class ActionsPage extends Component {
     })
   }
 
+  handleTabItemSelect = async subset => {
+    if (this.state.subsetDropdownVisible) {
+      this.setState({ subsetDropdownVisible: false })
+    }
+
+    if (this.state.subset === subset) {
+      return
+    }
+    switch (subset) {
+      case ACTIONS_SUBSETS.DISCOVER:
+        await this.fetchActions({}, subset)
+        return history.push('/actions/discover')
+      case ACTIONS_SUBSETS.SUGGESTED:
+        await this.fetchActions({}, subset)
+        return history.push('/actions/suggested')
+    }
+  }
+
   handleOpenActionCard = ({ slug }) => {
-    history.push(`/actions/${slug}`)
+    history.push(`/actions/${this.state.subset}${slug}`)
   }
 
   handleSearchedItemSelect = async () => {
@@ -307,7 +454,7 @@ class ActionsPage extends Component {
 
   handleOnAfterFiltersChange = debounce(({ data, activeFilterCount }) => {
     this.setState({ activeFiltersCount: activeFilterCount })
-    this.fetchActions(data)
+    this.fetchActions(data, this.state.subset)
   }, 600)
 
   handlePaginationChange = page => {
@@ -315,11 +462,45 @@ class ActionsPage extends Component {
       ignoreQueryPrefix: true,
     })
     delete queryParams.page
-    history.push(`/actions?page=${page}&${qs.stringify(queryParams)}`)
+    history.push(
+      `/actions/${this.state.subset}?page=${page}&${qs.stringify(queryParams)}`,
+    )
+  }
+
+  handleSubsetDropdownVisibleChange = visible => {
+    this.setState({ visible })
+  }
+
+  handleSubsetDropdownClick = () => {
+    if (!this.state.subsetDropdownVisible) {
+      this.setState({ subsetDropdownVisible: true })
+    }
   }
 
   toggleFilter = () => {
     this.setState({ showFilter: !this.state.showFilter })
+  }
+
+  getTabItemContent = subset => {
+    let data = {}
+    switch (subset) {
+      case ACTIONS_SUBSETS.DISCOVER:
+        data.type = 'compass'
+        data.id = 'app.actionsPage.tabs.discover'
+        break
+      case ACTIONS_SUBSETS.SUGGESTED:
+        data.type = 'compass'
+        data.id = 'app.actionsPage.tabs.suggested'
+        break
+      default:
+        return
+    }
+    return (
+      <Fragment>
+        <Icon type={data.type} />
+        <FormattedMessage id={data.id} />
+      </Fragment>
+    )
   }
 
   searchSelect = React.createRef()
@@ -327,6 +508,7 @@ class ActionsPage extends Component {
   render() {
     const {
       intl: { formatMessage },
+      user,
     } = this.props
     const {
       actions,
@@ -339,106 +521,185 @@ class ActionsPage extends Component {
       activeFiltersCount,
       filterValuesFromQuery,
       timeValues,
+      subset,
+      subsetDropdownVisible,
     } = this.state
 
     return (
       <Fragment>
         <PageMetadata pageName="actionsPage" />
         <Wrapper>
+          {user && (
+            <ActionTabsWrap>
+              <BlockContainer>
+                <ActionTabsInnerContainer>
+                  <ActionTabsRow>
+                    <ActionTabItemList>
+                      <ActionTabItem
+                        onClick={() =>
+                          this.handleTabItemSelect(ACTIONS_SUBSETS.DISCOVER)
+                        }
+                        active={subset === ACTIONS_SUBSETS.DISCOVER}
+                      >
+                        {this.getTabItemContent(ACTIONS_SUBSETS.DISCOVER)}
+                      </ActionTabItem>
+                      <ActionTabItem
+                        onClick={() =>
+                          this.handleTabItemSelect(ACTIONS_SUBSETS.SUGGESTED)
+                        }
+                        active={subset === ACTIONS_SUBSETS.SUGGESTED}
+                      >
+                        {this.getTabItemContent(ACTIONS_SUBSETS.SUGGESTED)}
+                      </ActionTabItem>
+                    </ActionTabItemList>
+                    <Popover
+                      placement="bottomLeft"
+                      visible={subsetDropdownVisible}
+                      onVisibleChange={this.handleSubsetDropdownVisibleChange}
+                      content={
+                        <ActionTabItemListMobile
+                          mode="vertical"
+                          theme="light"
+                          selectedKeys={[subset]}
+                        >
+                          <Menu.Item
+                            key={ACTIONS_SUBSETS.DISCOVER}
+                            onClick={() =>
+                              this.handleTabItemSelect(ACTIONS_SUBSETS.DISCOVER)
+                            }
+                          >
+                            {this.getTabItemContent(ACTIONS_SUBSETS.DISCOVER)}
+                          </Menu.Item>
+                          <Menu.Item
+                            key={ACTIONS_SUBSETS.SUGGESTED}
+                            onClick={() =>
+                              this.handleTabItemSelect(
+                                ACTIONS_SUBSETS.SUGGESTED,
+                              )
+                            }
+                          >
+                            {this.getTabItemContent(ACTIONS_SUBSETS.SUGGESTED)}
+                          </Menu.Item>
+                        </ActionTabItemListMobile>
+                      }
+                    >
+                      <AcionTabDropdown
+                        onClick={this.handleSubsetDropdownClick}
+                      >
+                        {this.getTabItemContent(subset)}
+                        <ExpandMoreIcon
+                          style={{
+                            color: `${colors.green}`,
+                          }}
+                        />
+                      </AcionTabDropdown>
+                    </Popover>
+                  </ActionTabsRow>
+                </ActionTabsInnerContainer>
+              </BlockContainer>
+            </ActionTabsWrap>
+          )}
           <BlockContainer>
             <InnerContainer>
               <Row span={8} xl={8} lg={12} md={12} xs={24}>
                 <Col>
-                  <SearchWrapper>
-                    <SearchFieldWrap>
-                      <ToggleFilterButton onClick={this.toggleFilter}>
-                        <img
-                          src={
-                            showFilter ? filterToggleActiveImg : filterToggleImg
+                  {subset === ACTIONS_SUBSETS.DISCOVER && (
+                    <SearchWrapper>
+                      <SearchFieldWrap>
+                        <ToggleFilterButton onClick={this.toggleFilter}>
+                          <img
+                            src={
+                              showFilter
+                                ? filterToggleActiveImg
+                                : filterToggleImg
+                            }
+                          />
+                          {activeFiltersCount > 0 && (
+                            <ToggleFilterActiveIcon>
+                              {activeFiltersCount}
+                            </ToggleFilterActiveIcon>
+                          )}
+                        </ToggleFilterButton>
+                        <SearchField
+                          placeholder={formatMessage({
+                            id: 'app.actionsPage.searchPlaceholder',
+                          })}
+                          value={searchData.searchFieldValue}
+                          dropdownClassName="ant-select__override-for__actions-page"
+                          notFoundContent={
+                            searchData.searching ? (
+                              <Spin size="small" />
+                            ) : !searchData.searching &&
+                              Number.isInteger(searchData.total) &&
+                              searchData.total === 0 ? (
+                              <FormattedMessage id="app.actionsPage.searchNotFound" />
+                            ) : null
                           }
-                        />
-                        {activeFiltersCount > 0 && (
-                          <ToggleFilterActiveIcon>
-                            {activeFiltersCount}
-                          </ToggleFilterActiveIcon>
+                          showSearch
+                          suffixIcon={
+                            searchData.searching ? (
+                              <Spin size="small" />
+                            ) : (
+                              <span />
+                            )
+                          }
+                          ref={this.searchSelect}
+                          /*
+                           * Filter by match searched value and option value.
+                           *
+                           * How it works:
+                           * Search option has 2 values: [ picture, name ].
+                           * We filter option value (option.props.children[1]) with
+                           * search value (value from search input)
+                           *
+                           * Why we use it:
+                           * We need filter data from search response and
+                           * show to user matched data
+                           */
+                          filterOption={(input, option) =>
+                            option.props.children[1]
+                              .toLowerCase()
+                              .indexOf(input.toLowerCase()) >= 0
+                          }
+                          onSearch={value =>
+                            value.length > 0 &&
+                            this.searchActions({ name: value })
+                          }
+                          onChange={this.handleSearchFieldChange}
+                          onSelect={this.handleSearchedItemSelect}
+                          onDropdownVisibleChange={
+                            this.handleDropdownVisibleChange
+                          }
+                        >
+                          {searchData.searchedActions.map(action => (
+                            <Select.Option
+                              key={action.picture}
+                              onClick={() => this.handleOpenActionCard(action)}
+                            >
+                              <ActionSearchDropdownPicture
+                                src={action.picture}
+                              />
+                              {action.name}
+                            </Select.Option>
+                          ))}
+                        </SearchField>
+                        {!searchData.searching && (
+                          <StyledSearchIcon type="search" />
                         )}
-                      </ToggleFilterButton>
-                      <SearchField
-                        placeholder={formatMessage({
-                          id: 'app.actionsPage.searchPlaceholder',
-                        })}
-                        value={searchData.searchFieldValue}
-                        dropdownClassName="ant-select__override-for__actions-page"
-                        notFoundContent={
-                          searchData.searching ? (
-                            <Spin size="small" />
-                          ) : !searchData.searching &&
-                            Number.isInteger(searchData.total) &&
-                            searchData.total === 0 ? (
-                            <FormattedMessage id="app.actionsPage.searchNotFound" />
-                          ) : null
-                        }
-                        showSearch
-                        suffixIcon={
-                          searchData.searching ? (
-                            <Spin size="small" />
-                          ) : (
-                            <span />
-                          )
-                        }
-                        ref={this.searchSelect}
-                        /*
-                         * Filter by match searched value and option value.
-                         *
-                         * How it works:
-                         * Search option has 2 values: [ picture, name ].
-                         * We filter option value (option.props.children[1]) with
-                         * search value (value from search input)
-                         *
-                         * Why we use it:
-                         * We need filter data from search response and
-                         * show to user matched data
-                         */
-                        filterOption={(input, option) =>
-                          option.props.children[1]
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                        }
-                        onSearch={value =>
-                          value.length > 0 &&
-                          this.searchActions({ name: value })
-                        }
-                        onChange={this.handleSearchFieldChange}
-                        onSelect={this.handleSearchedItemSelect}
-                        onDropdownVisibleChange={
-                          this.handleDropdownVisibleChange
-                        }
-                      >
-                        {searchData.searchedActions.map(action => (
-                          <Select.Option
-                            key={action.picture}
-                            onClick={() => this.handleOpenActionCard(action)}
-                          >
-                            <ActionSearchDropdownPicture src={action.picture} />
-                            {action.name}
-                          </Select.Option>
-                        ))}
-                      </SearchField>
-                      {!searchData.searching && (
-                        <StyledSearchIcon type="search" />
+                      </SearchFieldWrap>
+                      {timeValues.length > 0 && showFilter && (
+                        <FilterWrap>
+                          <ActionsFilters
+                            timeValues={timeValues}
+                            values={filterValuesFromQuery}
+                            onReset={this.handleFilterReset}
+                            onAfterChange={this.handleOnAfterFiltersChange}
+                            actionsPageSubset={subset}
+                          />
+                        </FilterWrap>
                       )}
-                    </SearchFieldWrap>
-                    {timeValues.length > 0 && showFilter && (
-                      <FilterWrap>
-                        <ActionsFilters
-                          timeValues={timeValues}
-                          values={filterValuesFromQuery}
-                          onReset={this.handleFilterReset}
-                          onAfterChange={this.handleOnAfterFiltersChange}
-                        />
-                      </FilterWrap>
-                    )}
-                  </SearchWrapper>
+                    </SearchWrapper>
+                  )}
                 </Col>
               </Row>
               {loading ? (
@@ -450,11 +711,13 @@ class ActionsPage extends Component {
                   {actions.map(action => (
                     <Col key={action._id} xl={8} lg={12} md={12} xs={24}>
                       <ActionCard
-                        linkPrefix="/actions"
+                        linkPrefix={`/actions/${subset}`}
                         slug={action.slug}
                         picture={action.picture}
                         name={action.name}
                         impacts={action.impacts}
+                        suggestedBy={action.suggestedBy}
+                        suggestedAt={action.suggestedAt}
                       />
                     </Col>
                   ))}
@@ -466,13 +729,15 @@ class ActionsPage extends Component {
                   )}
                 </Row>
               )}
-              <Pagination
-                current={page}
-                itemRender={this.paginationItemRender}
-                pageSize={limit}
-                total={total}
-                onChange={this.handlePaginationChange}
-              />
+              {total > 1 && (
+                <Pagination
+                  current={page}
+                  itemRender={this.paginationItemRender}
+                  pageSize={limit}
+                  total={total}
+                  onChange={this.handlePaginationChange}
+                />
+              )}
             </InnerContainer>
           </BlockContainer>
         </Wrapper>
@@ -482,9 +747,16 @@ class ActionsPage extends Component {
 }
 
 ActionsPage.propTypes = {
-  intl: PropTypes.shape({
+  intl: {
     formatMessage: PropTypes.func.isRequired,
-  }),
+  },
+  user: PropTypes.object,
+  token: PropTypes.string,
 }
 
-export default injectIntl(ActionsPage)
+const mapStateToProps = state => ({
+  user: state.user.data,
+  token: state.account.token,
+})
+
+export default connect(mapStateToProps)(injectIntl(ActionsPage))
