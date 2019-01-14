@@ -142,7 +142,7 @@ const ActionCard = props => {
           </SuggestedInfoInitiator>
           <SuggestedInfoDate>
             <Icon type="clock-circle" />
-            {moment(suggestedAt, 'YYYYMMDD').fromNow()}
+            {moment(suggestedAt).fromNow()}
           </SuggestedInfoDate>
         </SuggestedInfo>
       )}
