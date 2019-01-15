@@ -33,7 +33,7 @@ const LangTitle = styled.div`
 `
 
 const FooterDropdownMenu = styled(Ant.Menu)`
-  background: ${colors.dark};
+  background: ${({ bg }) => bg || colors.dark};
   padding: 5px 0;
 `
 
@@ -43,7 +43,7 @@ const FooterDropdownItem = styled(Ant.Menu.Item)`
   padding: 0;
   border-radius: 4px;
   font-size: 16px;
-  color: ${hexToRgba(colors.white, 0.6)};
+  color: ${({ color }) => color || `${hexToRgba(colors.white, 0.6)}`};
   &.ant-dropdown-menu-item-selected,
   &:hover {
     background-color: ${colors.footerDropdownBg};
@@ -59,17 +59,19 @@ const Image = styled.img`
   margin-right: 6px;
 `
 
-const FooterLanguageSelector = ({ intl, setLocale, className }) => {
+const FooterLanguageSelector = props => {
+  const { intl, setLocale, className } = props
   return (
     <FooterDropdown
       className={className}
       trigger={['click']}
       overlay={
         <FooterDropdownMenu
+          {...props}
           onClick={item => setLocale(item.key, intl.locales[item.key])}
         >
           {Object.keys(intl.locales).map(locale => (
-            <FooterDropdownItem key={locale}>
+            <FooterDropdownItem key={locale} {...props}>
               <Wrapper>
                 <Image
                   src={require(`../../assets/languages/${locale}.svg`)}
@@ -100,6 +102,7 @@ FooterLanguageSelector.propTypes = {
   intl: PropTypes.object.isRequired,
   setLocale: PropTypes.func.isRequired,
   className: PropTypes.string,
+  bg: PropTypes.string,
 }
 
 const mapStateToProps = state => ({

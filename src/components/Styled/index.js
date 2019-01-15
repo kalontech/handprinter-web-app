@@ -442,6 +442,7 @@ export const GlobalStyle = createGlobalStyle`
       top: 10px;
       height: 30px;
     }
+    
   }
   
   .ant-btn {
@@ -595,6 +596,7 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 30px;
     background: transparent;
   }
+  
   .ant-tooltip-arrow {
     display: none;
   }
@@ -621,6 +623,23 @@ export const GlobalStyle = createGlobalStyle`
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+  }
+  .ant-tooltip {
+    &.action-tooltip {
+    height: auto;
+    width: auto;
+    .ant-tooltip-inner  {
+      position: static;
+      width: auto;
+      height: auto;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      background: ${colors.dark};
+    }
+    .ant-tooltip-arrow {
+      display: block;
+    }
+  }
   }
 
   .d3-tooltip-container:after{

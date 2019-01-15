@@ -14,7 +14,12 @@ const Image = styled.img`
   margin-right: 12px;
 `
 
-const HeaderLanguageSelector = ({ intl, setLocale, overrides }) => {
+const Icon = styled(ExpandMoreIcon)`
+  color: ${({ color }) => color || colors.green};
+`
+
+const HeaderLanguageSelector = props => {
+  const { intl, setLocale } = props
   return (
     <Popover
       placement="bottomLeft"
@@ -40,13 +45,7 @@ const HeaderLanguageSelector = ({ intl, setLocale, overrides }) => {
         <FormattedMessage id={`app.languages.${intl.locale}`}>
           {message => <span>{message.substr(0, 3)}</span>}
         </FormattedMessage>
-        <ExpandMoreIcon
-          style={
-            (!overrides && { color: `${colors.green}` }) || {
-              color: `${colors.darkBlue}`,
-            }
-          }
-        />
+        <Icon {...props} />
       </PopoverTitle>
     </Popover>
   )

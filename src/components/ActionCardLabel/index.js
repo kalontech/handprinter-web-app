@@ -117,6 +117,7 @@ const ActionCardLabel = props => {
   return (
     <Tooltip
       {...tooltipProps}
+      overlayClassName="action-tooltip"
       title={() => (
         <TooltipContainer>
           <FormattedHTMLMessage

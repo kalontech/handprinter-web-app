@@ -33,6 +33,7 @@ const CardContainer = styled.div`
   transition: transform 0.3s;
   ${media.phone`
     margin-right: 0;
+    max-width: ${props => (props.isSlide ? 'calc(100% - 15px)' : '100%')};
   `}
   
   &:hover {

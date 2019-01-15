@@ -478,6 +478,7 @@ export default {
     '                products to customers in more than 175 countries.',
   'app.eatonFooter.cta.link': 'Learn more',
   'app.eatonFooter.poweredBy': 'Powered by',
+  'app.eatonFooter.logoCaption': 'Eaton Green Guardians',
   'app.eatonFooter.copyright': '&copy; 2018 NewEarth B. All Rights Reserved.',
   'app.dashboardPage.head.title': 'Welcome to Handprinter!',
   'app.dashboardPage.head.keywords':
@@ -522,4 +523,33 @@ export default {
   'app.newsPage.ranges.world': 'World',
   'app.newsPage.userWithoutName': 'User without name',
   'app.newsPage.loadMoreNews': 'Load next 30 news',
+  'app.interfaceCta.text':
+    'Together we can have a positive impact on the planet.',
+  'app.interfaceCta.link': 'learn more',
+  'app.interfaceFooter.logo': 'interface',
+  'app.interfaceFooter.copyright':
+    '&copy; 2018 NewEarth B. All Rights Reserved.',
+  'app.interfaceFooter.text':
+    'Interface, Inc. is a global commercial flooring company with an integrated collection of carpet tiles and resilient flooring. Our modular system helps customers create beautiful interior spaces which positively impact the people who use them and our planet.Our mission, Climate Take Back&trade;, invites other companies to join us as we commit to running our business in a way that is restorative to the planet and creates a climate fit for life.',
+  'app.aboutInterfacePage.hero.title':
+    'Join the Climate Take Back and Help Us Create A Climate Fit For Life',
+  'app.aboutInterfacePage.hero.link': 'see how',
+  'app.aboutInterfacePage.actions.title':
+    'You can take action to reduce your carbon footprint or create a carbon Handprint.\n' +
+    'Imagine the impact if we all took action!',
+  'app.aboutInterfacePage.bePart.title':
+    'Be part of the solution to global warming.',
+  'app.aboutInterfacePage.bePart.description':
+    'Reduce your carbon footprint, and create your carbon Handprint. Together we can make a difference.',
+  'app.aboutInterfacePage.bePart.link': 'see how',
+  'app.aboutInterfacePage.whatAreHandprints.link': 'get started today!',
+  'app.aboutInterfacePage.whatAreHandprints.title': 'What are handprints?',
+  'app.aboutInterfacePage.whatAreHandprints.text1':
+    'We’ve heard about footprints: the negative impacts of the things we buy and use. We need to reduce our footprint, but that is only a part of the story.',
+  'app.aboutInterfacePage.whatAreHandprints.text2':
+    'We also have handprints: positive impacts of our actions. Handprints include helping others reduce their footprints. Green Guardian Handprint lets Interface employees grow their handprints and reduce their footprints too.',
+  'app.aboutInterfacePage.climateFit.title':
+    'Help Us Create A Climate Fit For Life',
+  'app.aboutInterfacePage.climateFit.text':
+    'What can you do to take action at work, in your community and how can you encourage others?',
 }

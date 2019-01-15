@@ -7,8 +7,20 @@ const brandedConfig = {
       fullLogo: require('./../assets/branded/logos/eatonFullLogo.png'),
       partialLogo: require('./../assets/branded/logos/eatonFullLogo.png'),
       inLinkLogo: require('./../assets/branded/logos/eatonInLinkLogo.svg'),
+      logInOnly: false,
     },
     homePageComponent: require('./../pages/AboutEatonPage').default,
+  },
+  interface: {
+    ctaComponent: require('./../components/InterfaceCta').default,
+    footerComponent: require('./../components/InterfaceFooter').default,
+    headerOverrides: {
+      brandName: 'Interface',
+      fullLogo: require('./../assets/branded/logos/interfaceLogo.png'),
+      inLinkLogo: require('./../assets/branded/logos/interfaceInLinkLogo.png'),
+      logInOnly: true,
+    },
+    homePageComponent: require('./../pages/AboutInterfacePage').default,
   },
 }
 

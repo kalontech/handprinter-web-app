@@ -2,41 +2,52 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Layout, Row, Col } from 'antd'
 import styled from 'styled-components'
-import footerLogo from './assets/footerLogo.svg'
-import footerLogoSmall from './assets/footerLogoSmall.svg'
+import footerLogo from './assets/footer-logo.png'
+import footerLogoSmall from './assets/hp-logo.png'
 import FooterLanguageSelector from './../FooterLanguageSelector'
 import colors from './../../config/colors'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
-import hexToRgba from '../../utils/hexToRgba'
 import { BlockContainer } from './../Styled'
 import media from '../../utils/mediaQueryTemplate'
 
 const FooterWrap = styled(Layout.Footer)`
   padding: 0;
-  background: #5d676f;
+  margin: 50px 20px 20px;
+  ${media.desktop`
+    margin: 30px 34px 34px;
+  `};
+  ${media.phone`
+    margin: 30px 15px 15px;
+  `};
+`
+
+const Wrap = styled(BlockContainer)`
+  padding: 0 20px;
 `
 
 const FooterContent = styled.section`
   padding: 60px 0;
-  min-height: 325px;
-  background: #5d676f;
+  min-height: 270px;
+  background: ${colors.interfaceFooterBg};
   color: ${colors.white};
-  font-family: Arial;
-  ${media.largeDesktop`
-   padding-bottom: 40px;
+  font-family: 'Helvetica Neue', sans-serif;
+  ${media.phone`
+   padding-top 50px;
+   padding-bottom: 30px;
   `};
 `
 
 const FooterMenu = styled.ul`
   list-style: none;
   padding-left: 0;
+  margin-bottom: 0;
   a {
     text-decoration: none;
-    line-height: 36px;
-    font-size: 16px;
-    color: ${hexToRgba(colors.white, 0.7)};
+    line-height: 40px;
+    font-size: 14px;
+    color: ${colors.interfaceFooterColor};
     &:hover {
-      color: ${colors.white};
+      color: ${colors.dark};
     }
     ${media.phone`
       line-height: 46px;
@@ -45,14 +56,20 @@ const FooterMenu = styled.ul`
 `
 
 const Logo = styled.div`
-  margin-top: -20px;
   margin-bottom: 15px;
+  ${media.phone`
+  margin-bottom: 25px;
+  `};
 `
 
 const Text = styled.div`
-  font-size: 12px;
-  line-height: 20px;
-  max-width: 300px;
+  font-size: 11px;
+  line-height: 18px;
+  max-width: 445px;
+  color: ${colors.interfaceFooterColor2};
+  ${media.phone`
+    max-width: 100%;
+  `};
 `
 
 const Container = styled.div`
@@ -65,33 +82,34 @@ const Container = styled.div`
 `
 
 const RowWrapper = styled(Row)`
-  margin-bottom: 20px;
-  ${media.phone`
+  ${media.largeDesktop`
     margin-top: 40px;
   `};
 `
 const Langs = styled(FooterLanguageSelector)`
+  background: ${colors.interfaceLanguageSelectorBg};
+  color: ${colors.interfaceFooterColor2};
   ${media.phone`
     max-width: 100%;
   `};
 `
 const LangsWrap = styled(Col)`
   ${media.largeDesktop`
+    margin-top: 50px;
     display: flex;
     align-items: center;
   `};
   ${media.phone`
     display: block;
+    margin-top: 40px;
   `};
 `
 
 const Copyright = styled.div`
   font-size: 12px;
-  color: ${hexToRgba(colors.white, 0.43)};
-  background-color: #353f47;
-  font-size: 12px;
+  background-color: ${colors.interfaceCopyright};
   line-height: 20px;
-  font-family: Arial;
+  font-family: 'Helvetica Neue', sans-serif;x
 `
 
 const CopyrightContent = styled.div`
@@ -100,33 +118,37 @@ const CopyrightContent = styled.div`
   justify-content: space-between;
   font-size: 12px;
   height: 60px;
-  color: ${hexToRgba(colors.white, 0.43)};
+  color: ${colors.interfaceFooterColor3};
   ${media.phone`
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 75px;
   `};
-`
-
-const SmallLogo = styled.div`
-  display: flex;
-  align-items: flex-end;
 `
 
 const EatonFooter = () => (
   <FooterWrap>
     <FooterContent>
-      <BlockContainer>
+      <Wrap>
         <Container>
           <Row gutter={{ md: 20 }}>
-            <Col xs={24} md={12} xl={8}>
+            <Col xs={24} md={12} xl={10}>
               <Logo>
-                <img src={footerLogo} alt="" />
+                <img
+                  src={footerLogo}
+                  alt={<FormattedMessage id="app.footer.menu.actions" />}
+                />
               </Logo>
               <Text>
-                <FormattedMessage id="app.eatonFooter.text" />
+                <FormattedHTMLMessage id="app.interfaceFooter.text" />
               </Text>
             </Col>
-            <Col xs={24} md={12} xl={12}>
+            <Col
+              xs={24}
+              md={{ span: 10, offset: 2 }}
+              xl={{ span: 10, offset: 0 }}
+            >
               <RowWrapper gutter={{ md: 20 }}>
                 <Col xs={12} md={12} xl={12}>
                   <FooterMenu>
@@ -158,22 +180,25 @@ const EatonFooter = () => (
                 </Col>
               </RowWrapper>
             </Col>
-            <LangsWrap xs={24} md={12} xl={4}>
-              <Langs />
+            <LangsWrap xs={24} md={24} xl={4}>
+              <Langs
+                bg={colors.interfaceLanguageSelectorBg}
+                color={colors.interfaceFooterColor2}
+              />
             </LangsWrap>
           </Row>
         </Container>
-      </BlockContainer>
+      </Wrap>
     </FooterContent>
     <Copyright>
       <BlockContainer>
         <CopyrightContent>
-          <SmallLogo>
-            <FormattedMessage id="app.eatonFooter.poweredBy" />{' '}
-            <img src={footerLogoSmall} alt="app.eatonFooter.logoCaption" />
-          </SmallLogo>
+          <img
+            src={footerLogoSmall}
+            alt={<FormattedMessage id="app.interfaceFooter.logoCaption" />}
+          />
           <div>
-            <FormattedHTMLMessage id="app.eatonFooter.copyright" />
+            <FormattedHTMLMessage id="app.interfaceFooter.copyright" />
           </div>
         </CopyrightContent>
       </BlockContainer>

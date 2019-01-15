@@ -66,9 +66,13 @@ const RouteWrapper = ({
                   />
                 )}
                 <Layout.Content>
-                  <Component {...props} />
+                  <Component
+                    {...props}
+                    overrides={brandedConfig && brandedConfig.headerOverrides}
+                  />
                 </Layout.Content>
-                {!withoutCTA && !user &&
+                {!withoutCTA &&
+                  !user &&
                   ((brandedConfig && <brandedConfig.ctaComponent />) || (
                     <Cta />
                   ))}
