@@ -166,6 +166,9 @@ const DashboardHeaderUserName = styled.div`
   ${media.desktop`
     line-height: 35px;
   `}
+  ${media.phone`
+    font-size: 16px;
+  `}
 `
 
 const DashboardHeaderUserInfoCol = styled(Col)`
@@ -173,6 +176,9 @@ const DashboardHeaderUserInfoCol = styled(Col)`
   ${media.desktop`
     text-align: center;
     padding: 0 70px;
+  `}
+  ${media.phone`
+    padding: 0;
   `}
 `
 
@@ -224,6 +230,12 @@ const ImpactCategorySelector = styled(Tabs)`
   }
 `
 
+const ImpactCategorySelectorName = styled.span`
+  ${media.phone`
+    display: none;
+  `}
+`
+
 const GoodRatioCol = styled(Col)`
   ${media.desktop`
     margin-top: 20px;
@@ -233,6 +245,19 @@ const GoodRatioCol = styled(Col)`
 const DashboardHeaderUserInfoRow = styled(Row)`
   ${media.desktop`
     margin: 40px 0 30px 0;
+  `}
+  ${media.phone`
+    margin: 15px 0 18px 0;
+
+  `}
+`
+
+const HeaderUserInfoRowCol = styled(Col)`
+  ${media.phone`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
   `}
 `
 
@@ -308,7 +333,7 @@ class DashboardPage extends Component {
                       }}
                     >
                       <DashboardHeaderUserRow>
-                        <DashboardHeaderUserNameCol span={16} sm={24} lg={12}>
+                        <DashboardHeaderUserNameCol span={16} sm={24} lg={12} xs={24}>
                           <DashboardHeaderUserName>
                             {user.fullName}
                           </DashboardHeaderUserName>
@@ -317,25 +342,25 @@ class DashboardPage extends Component {
                             {moment(user.createdAt).format('MMMM DD, YYYY')}
                           </DashboardHeaderUserSince>
                         </DashboardHeaderUserNameCol>
-                        <DashboardHeaderUserInfoCol span={8} sm={24} lg={12}>
+                        <DashboardHeaderUserInfoCol span={8} sm={24} lg={12} xs={24}>
                           <DashboardHeaderUserInfoRow>
-                            <Col span={8} lg={8}>
+                            <HeaderUserInfoRowCol span={8} lg={8} xs={24}>
                               <DashboardHeaderUserName>
                                 {stats.personal.usersInvited}
                               </DashboardHeaderUserName>
                               <DashboardHeaderUserSince>
                                 <FormattedMessage id="app.dashboardPage.usersInvited" />
                               </DashboardHeaderUserSince>
-                            </Col>
-                            <Col span={8} lg={8}>
+                            </HeaderUserInfoRowCol>
+                            <HeaderUserInfoRowCol span={8} lg={8} xs={24}>
                               <DashboardHeaderUserName>
                                 {stats.personal.actionsTaken}
                               </DashboardHeaderUserName>
                               <DashboardHeaderUserSince>
                                 <FormattedMessage id="app.dashboardPage.actionsTaken" />
                               </DashboardHeaderUserSince>
-                            </Col>
-                            <Col span={8} lg={8}>
+                            </HeaderUserInfoRowCol>
+                            <HeaderUserInfoRowCol span={8} lg={8} xs={24}>
                               <DashboardHeaderUserName>
                                 {Math.round(
                                   stats.personal.netPositiveDays[
@@ -346,7 +371,7 @@ class DashboardPage extends Component {
                               <DashboardHeaderUserSince>
                                 <FormattedMessage id="app.dashboardPage.netPositiveDays" />
                               </DashboardHeaderUserSince>
-                            </Col>
+                            </HeaderUserInfoRowCol>
                           </DashboardHeaderUserInfoRow>
                         </DashboardHeaderUserInfoCol>
                       </DashboardHeaderUserRow>
@@ -369,7 +394,9 @@ class DashboardPage extends Component {
                                 <Icon
                                   component={() => icons['positive']['climate']}
                                 />
-                                <FormattedMessage id="app.impactCategories.climate" />
+                                <ImpactCategorySelectorName>
+                                  <FormattedMessage id="app.impactCategories.climate" />
+                                </ImpactCategorySelectorName>
                               </span>
                             }
                             key="climate"
