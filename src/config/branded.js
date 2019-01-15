@@ -17,6 +17,7 @@ const brandedConfig = {
     headerOverrides: {
       brandName: 'Interface',
       fullLogo: require('./../assets/branded/logos/interfaceLogo.png'),
+      partialLogo: require('./../assets/branded/logos/interfaceLogo.png'),
       inLinkLogo: require('./../assets/branded/logos/interfaceInLinkLogo.png'),
       logInOnly: true,
     },
