@@ -18,6 +18,7 @@ const CardWrap = styled.div`
   margin: 0 auto;
   display: inline-block;
 `
+
 const CardContainer = styled.div`
   display: block;
   position: relative;

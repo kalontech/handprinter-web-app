@@ -50,3 +50,43 @@ export default formatMessage => ({
     },
   ],
 })
+
+export const required = message => ({
+  required: true,
+  message,
+})
+
+export const fileSize = ({ message, ...params }) => (
+  { field },
+  value,
+  callback,
+) => {
+  callback(
+    value && value.file.size > params.maxSize
+      ? [{ message, field }]
+      : undefined,
+  )
+}
+
+export const imageDimensions = ({ message, ...params }) => (
+  { field },
+  value,
+  cb,
+) => {
+  if (!value) return cb()
+
+  let image = new Image()
+  image.src = value.fileUrl
+
+  image.addEventListener('load', () => {
+    const { width, height } = image
+
+    cb(
+      width >= params.width || height >= params.height
+        ? undefined
+        : [{ message, field }],
+    ) // eslint-disable-line standard/no-callback-literal
+
+    image = undefined
+  })
+}

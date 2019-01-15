@@ -26,6 +26,11 @@ export default {
   'app.errors.12': 'Endpoint is not found',
   'app.errors.13': 'Action is not found',
   'app.errors.14': 'This email is already in use',
+
+  'app.errors.isRequired': 'This field is required',
+  'app.errors.maxLength': 'Max length is {count}',
+  'app.errors.maxFileSize': 'Max file size is {size}',
+
   'app.impactCategories.climate': 'Climate',
   'app.impactCategories.waste': 'Waste',
   'app.impactCategories.water': 'Water',
@@ -113,6 +118,11 @@ export default {
   'app.forms.invitationCode': 'Invitation code (optional)',
   'app.forms.invitationCode.hint':
     'This is the unique invitation code for the person or organization that has invited you to join handprinter',
+  'app.forms.actionName': 'Action name',
+  'app.forms.updatePhoto': 'Select another image',
+  'app.forms.actionDescription': 'Description',
+  'app.errors.createAction.imageDimensions':
+    'the image must be bigger than \n{size} on the smaller side',
   'app.resetPasswordPage.head.title': 'Welcome to Handprinter!',
   'app.resetPasswordPage.head.keywords':
     'handprinter, nature, footprint, handprint',
@@ -187,6 +197,16 @@ export default {
   'app.header.menu.increaseHandprint': 'Increase handprint',
   'app.header.menu.news': 'News',
   'app.header.link': 'Join handprinters',
+
+  'app.headerActions.addAction': 'Add action',
+
+  'app.actionCreatePage.title': 'Add action',
+  'app.actionCreatePage.submitSucceededTitle': 'Your idea was submitted',
+  'app.actionCreatePage.submitSucceededDescription':
+    'Our moderators will check your idea as soon as possible and when approved it will appear on the action page. From that moment onward all users will be able to take your action and be part of your handprint! Also, our modelers will be invited to model the impacts of your action so that those impacts can be taken into account.',
+  'app.actionCreatePage.submitSucceededGoBack': 'Go back',
+  'app.actionCreatePage.cancel': 'Cancel',
+
   'app.brandedHeader.link': 'Become Green Guardian',
   'app.footer.menu.actions': 'Actions',
   'app.footer.menu.about': 'About',
@@ -212,7 +232,8 @@ export default {
   'app.actionsPage.engage.title': 'Use reusable shopping bags instead of paper',
   'app.actionsPage.engage.successSent': 'Engage was successfully sent.',
   'app.actionsPage.engage.send': 'Send',
-  'app.actionsPage.engage.inputPlaceholder': "Enter a user's name or their email",
+  'app.actionsPage.engage.inputPlaceholder':
+    "Enter a user's name or their email",
   'app.actionsPage.clearAllFilters': 'Clear all filters',
   'app.actionsPage.actionsNotFound': 'Actions not found',
   'app.faqPage.head.title': 'Welcome to Handprinter!',

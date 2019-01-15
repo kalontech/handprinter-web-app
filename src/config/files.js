@@ -1,5 +1,6 @@
 export const PROFILE_PHOTO_SIZE_LIMIT = 400 // 400x400 px
 export const PROFILE_PHOTO_WEIGHT_LIMIT = 10 // megabytes
+export const FILE_SIZE_LIMIT = 10 * 1024 * 1024 // 10 MB in bytes
 
 export const ACCEPT_IMAGE_FORMATS = {
   JPEG: 'image/jpeg',

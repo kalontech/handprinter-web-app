@@ -15,6 +15,11 @@ export default {
   'app.errors.12': 'Este usuario fue desactivado.',
   'app.errors.13': 'No se encuentra el punto final',
   'app.errors.14': 'Las contraseñas no son iguales',
+
+  'app.errors.isRequired': 'Este campo es requerido',
+  'app.errors.maxLength': 'La longitud máxima es {count}',
+  'app.errors.maxFileSize': 'El tamaño máximo del archivo es {size}',
+
   'app.loginPage.title': 'Iniciar sesión',
   'app.loginPage.forgotPassword': 'Se te olvidó tu contraseña',
   'app.loginPage.doNotHaveAnAccount': '¿No tiene una cuenta?',
@@ -39,6 +44,11 @@ export default {
   'app.forms.invitationCode': 'Código de invitación (opcional)',
   'app.forms.invitationCode.hint':
     'Este es el código único de invitación para la persona u organización que lo ha invitado a unirse a handprinter',
+  'app.forms.actionName': 'Nombre de la acción',
+  'app.forms.updatePhoto': 'Selecciona otra imagen',
+  'app.forms.actionDescription': 'Descripción',
+  'app.errors.createAction.imageDimensions':
+    'La imagen debe ser mas grande que\n{size} en el lado más pequeño',
   'app.languages.en': 'Inglés',
   'app.languages.es': 'Español',
   'app.logInPage.title': 'Iniciar sesión',
@@ -75,6 +85,15 @@ export default {
   'app.header.menu.profileSettings': 'Configuración de perfil',
   'app.header.menu.increaseHandprint': 'Aumentar la huella de la mano',
   'app.header.link': 'Únete a handprinters',
+
+  'app.headerActions.addAction': 'Añadir acción',
+
+  'app.actionCreatePage.title': 'Añadir acciónn',
+  'app.actionCreatePage.submitSucceededTitle': 'Tu idea fue enviada',
+  'app.actionCreatePage.submitSucceededDescription':
+    'Nuestros moderadores comprobarán su idea lo antes posible y, una vez aprobada, aparecerán en la página de acciones. A partir de ese momento, todos los usuarios podrán realizar su acción y ser parte de su huella digital. Además, nuestros modeladores serán invitados a modelar los impactos de su acción para que esos impactos puedan ser tomados en cuenta.',
+  'app.actionCreatePage.submitSucceededGoBack': 'Regresa',
+  'app.actionCreatePage.cancel': 'Cancelar',
 
   'app.footer.menu.actions': 'Comportamiento',
   'app.footer.menu.about': 'Acerca de',
@@ -150,7 +169,7 @@ export default {
   'app.ourVision.stepScheme.text3':
     'Ahorran dinero y compran sus lámparas 2 bombillas LED más  ny continúan a Save Wave.',
   'app.ourVision.step4.title':
-    'Crea tu idea <strong> </ strong> de la mano y compártela con el mundo',
+    'Crea tu idea de la mano y compártela con el mundo',
   'app.ourVision.step4.text':
     'Asegúrese de probarlo usted mismo primero y comparta ideas sobre cómo hacer que funcione. Otra parte de la creación de ideas es modelar los impactos de una idea de acción para que todos podamos comprender los impactos que tiene en el mundo.',
   'app.ourVision.step5.title':
@@ -158,7 +177,7 @@ export default {
   'app.ourVision.step5.text':
     'Plantar un árbol es un maravilloso ejemplo. Así es restaurar el hábitat para que purifique el agua y proporcione lugares para que la vida prospere. En lugar de reducir la huella de alguien, \n crea nuevos impactos positivos, algunos de los cuales pueden medirse en unidades de huella.',
   'app.ourVision.step6.title':
-    'Crecer la comunidad <strong> handprinting </ strong>',
+    'Crecer la comunidad <strong> handprinting </strong>',
   'app.ourVision.step6.text':
     'Fortalecer y ampliar el movimiento. Invitar a nuevas personas. Invitar a las organizaciones también, incluidas aquellas de las que forma parte. Asegúrese de que \n lo saben: hay espacio para todos. Estamos incompletos sin ti.',
   'app.measurementPage.Hero.Title':

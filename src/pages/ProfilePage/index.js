@@ -93,7 +93,7 @@ export const ProfileImgBackground = styled.div`
 `
 
 export const AddPhotoHint = styled.div`
-  position absolute;
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -113,7 +113,7 @@ export const OuterPlusButton = styled.div`
   justify-content: center;
   position: absolute;
   top: 13px;
-  left: 3px
+  left: 3px;
   z-index: 2;
 `
 
@@ -143,14 +143,15 @@ export const AppleBackgroundSection = styled.div`
 
 export const ChangePasswordButton = styled.button`
   background-color: white;
-  border: none
+  border: none;
   color: ${colors.ocean};
-  cursor: pointer
+  cursor: pointer;
   font-weight: bold;
-  padding: 10px 25px
+  padding: 10px 25px;
   width: 100%;
-  &:focus,&:active {
-    outline: none
+  &:focus,
+  &:active {
+    outline: none;
   }
 `
 

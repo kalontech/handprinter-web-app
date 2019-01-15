@@ -2,6 +2,7 @@ import React from 'react'
 import { Redirect, Router, Switch } from 'react-router-dom'
 import { ModalRoute } from 'react-router-modal'
 import createBrowserHistory from 'history/createBrowserHistory'
+
 import ErrorCatcher from './utils/errorCatcher'
 import { getBrandedConfig } from './config/branded'
 
@@ -9,6 +10,8 @@ import Route from './routeWrapper'
 
 import ActionModalPage from './pages/ActionModalPage'
 import ActionsPage from './pages/ActionsPage'
+import ActionCreate from './pages/ActionCreatePage'
+
 import CheckYourEmailPage from './pages/CheckYourEmailPage'
 import DashboardPage from './pages/DashboardPage'
 import FaqPage from './pages/FaqPage'
@@ -136,31 +139,63 @@ const AppRouter = () => {
           />
           <Route component={NotFoundPage} />
         </Switch>
-        <ModalRoute
-          path="/actions/:subset/:actionSlug"
-          parentPath="/actions"
-          onBackdropClick={() =>
-            handleBackdropClick({ parentPath: '/actions' })
-          }
-          component={ActionModalPage}
-          withoutCTA
-        />
-        <ModalRoute
-          path="/pages/home/actions/:actionSlug"
-          parentPath="/pages/home"
-          onBackdropClick={() =>
-            handleBackdropClick({ parentPath: '/pages/home' })
-          }
-          component={ActionModalPage}
-        />
-        <ModalRoute
-          path="/pages/our-vision/actions/:actionSlug"
-          parentPath="/pages/our-vision"
-          onBackdropClick={() =>
-            handleBackdropClick({ parentPath: '/pages/our-vision' })
-          }
-          component={ActionModalPage}
-        />
+
+        <Switch>
+          <ModalRoute
+            path="/account/dashboard/suggest-idea"
+            parentPath="/account/dashboard"
+            onBackdropClick={() =>
+              handleBackdropClick({ parentPath: '/account/dashboard' })
+            }
+            component={ActionCreate}
+          />
+
+          <ModalRoute
+            path="/actions/discover/suggest-idea"
+            parentPath="/actions/discover"
+            onBackdropClick={() =>
+              handleBackdropClick({ parentPath: '/actions/discover' })
+            }
+            component={ActionCreate}
+          />
+
+          <ModalRoute
+            path="/actions/suggested/suggest-idea"
+            parentPath="/actions/suggested"
+            onBackdropClick={() =>
+              handleBackdropClick({ parentPath: '/actions/suggested' })
+            }
+            component={ActionCreate}
+          />
+
+          <ModalRoute
+            path="/actions/:subset/:actionSlug"
+            parentPath="/actions"
+            onBackdropClick={() =>
+              handleBackdropClick({ parentPath: '/actions' })
+            }
+            component={ActionModalPage}
+            withoutCTA
+          />
+
+          <ModalRoute
+            path="/pages/home/actions/:actionSlug"
+            parentPath="/pages/home"
+            onBackdropClick={() =>
+              handleBackdropClick({ parentPath: '/pages/home' })
+            }
+            component={ActionModalPage}
+          />
+
+          <ModalRoute
+            path="/pages/our-vision/actions/:actionSlug"
+            parentPath="/pages/our-vision"
+            onBackdropClick={() =>
+              handleBackdropClick({ parentPath: '/pages/our-vision' })
+            }
+            component={ActionModalPage}
+          />
+        </Switch>
       </ErrorCatcher>
     </Router>
   )

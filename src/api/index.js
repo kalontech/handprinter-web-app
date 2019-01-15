@@ -15,22 +15,31 @@ export const webAppBaseUrl = `${window.location.protocol}//${
 }`
 
 const fetchHelper = async (url, options) => {
-  const body = has(options, 'body')
-    ? { body: JSON.stringify(options.body) }
-    : {}
-  const headers = get(options, 'headers', {})
+  const hasBody = has(options, 'body')
+  const isFormData = hasBody && options.body instanceof FormData
+
+  let body
+
+  if (hasBody) {
+    body = isFormData ? options.body : JSON.stringify(options.body)
+  }
+
+  const headers = isFormData
+    ? {}
+    : {
+        'Content-Type': 'application/json',
+        ...get(options, 'headers', {}),
+      }
+
   const transformedOptions = {
     ...options,
-    ...body,
-    headers: {
-      'Content-Type': 'application/json',
-      ...headers,
-    },
+    body,
+    headers,
   }
-  const { data, error, success } = await (await fetch(
-    url,
-    transformedOptions,
-  )).json()
+
+  const { data, error, success } = await fetch(url, transformedOptions).then(
+    response => response.json(),
+  )
 
   const user = store.getState().user.data
   Sentry.addBreadcrumb({
@@ -220,6 +229,12 @@ const engageAction = (action, emails, token) =>
 const getUserInitialAvatar = fullName =>
   `https://ui-avatars.com/api/?background=87bb24&color=ffffff&length=1&name=${fullName}&size=256`
 
+const addActionRequest = body =>
+  fetchHelper(`${apiBaseUrl}/actions/add_idea`, {
+    body,
+    method: 'POST',
+  })
+
 const getNews = (query = {}, token) =>
   fetchHelper(`${apiBaseUrl}/actions/news?${qs.stringify(query)}`, {
     headers: {
@@ -248,4 +263,5 @@ export default {
   getUserInitialAvatar,
   engageAction,
   getNews,
+  addActionRequest,
 }

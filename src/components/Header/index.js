@@ -5,12 +5,14 @@ import { Layout, Menu, Popover, Affix, Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import FingerPrintIcon from '../../assets/icons/FingerPrintIcon'
 import MenuIcon from '../../assets/icons/MenuIcon'
 import CloseIcon from '../../assets/icons/CloseIcon'
 import HeaderLanguageSelector from './../HeaderLanguageSelector'
 import CollapsedMenu from './../CollapsedMenu'
+import HeaderUserActions from './../HeaderUserActions'
 import {
   PrimaryButton,
   DefaultButton,
@@ -100,7 +102,7 @@ const LeftMenu = styled.div`
 
   .ant-menu-item {
     margin-right: 34px;
-    line-height: 87px;
+    line-height: 85px;
   }
 
   .anticon {
@@ -150,6 +152,7 @@ const MenuWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   color: ${({ color }) => color || colors.dark};
+
   .ant-menu-item {
     &:hover {
       color: ${({ hoverColor }) => hoverColor || colors.dark};
@@ -389,6 +392,8 @@ const BlueBorderedButton = styled(Button)`
     }
   }
 `
+
+const USER_ACTIONS_ROUTES = ['/dashboard']
 
 class Header extends Component {
   constructor(props) {
@@ -772,6 +777,7 @@ class Header extends Component {
                 </Fragment>
               )) || <div />}
             </Fragment>
+
             {!this.state.collapsed && isTablet && (
               <CollapseMenu>
                 <CollapseTop />
@@ -852,6 +858,11 @@ class Header extends Component {
             )}
           </HeaderWrap>
         )}
+
+        {type === 'private' &&
+          USER_ACTIONS_ROUTES.find(route =>
+            location.pathname.includes(route),
+          ) && <HeaderUserActions />}
       </StyledAffix>
     )
   }

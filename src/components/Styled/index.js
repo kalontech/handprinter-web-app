@@ -322,13 +322,13 @@ export const ScrollToSection = styled.section`
 `
 
 export const ScrollButton = styled(ArrowButton)`
-    margin: 10px auto 0
+  margin: 10px auto 0;
+  background-color: ${colors.lightGray};
+  &&:hover,
+  &&:focus,
+  &&.active,
+  &&:active {
     background-color: ${colors.lightGray};
-    &&:hover,
-    &&:focus,
-    &&.active,
-    &&:active {
-      background-color: ${colors.lightGray};
   }
 `
 
@@ -532,7 +532,7 @@ export const GlobalStyle = createGlobalStyle`
       display: none;
     }
     .ant-modal-confirm-title {
-      font-size: 28px
+      font-size: 28px;
       text-align: center;
       color: ${colors.dark};
     }
