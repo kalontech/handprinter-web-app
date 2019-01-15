@@ -30,10 +30,14 @@ const WidgetContainer = styled.div`
   box-shadow: 0 1px 10px 0 rgba(52, 68, 66, 0.08);
   padding: 40px 30px;
 
+  ${media.phone`
+    padding: 30px 10px 30px 10px;
+  `}
+
   ${props =>
     props.noPaddings &&
     css`
-      padding: 0;
+      padding: 0 !important;
     `};
 `
 
@@ -64,11 +68,19 @@ const WidgetContent = styled.div`
   ${props => props.useWidgetMinHeight && `
     min-height: 500px;
   `}
+  ${media.phone`
+    ${props => props.useWidgetMinHeight && `
+      min-height: auto;
+    `}
+  `}
 `
 
 const DashboardHeader = styled.div`
   border-bottom: 1px solid ${colors.whiteSmoke};
   margin-bottom: 20px;
+  ${media.phone`
+    margin-bottom: 25px;
+  `}
 `
 
 const DashboardHeaderGreenLine = styled.div`
@@ -169,15 +181,15 @@ const DashboardHeaderUserName = styled.div`
 `
 
 const DashboardHeaderUserInfoValue = styled.div`
-color: ${colors.dark};
-font-size: 22px;
-font-weight: bold;
-${media.desktop`
-  line-height: 35px;
-`}
-${media.phone`
-  font-size: 16px;
-`}
+  color: ${colors.dark};
+  font-size: 22px;
+  font-weight: bold;
+  ${media.desktop`
+    line-height: 35px;
+  `}
+  ${media.phone`
+    font-size: 16px;
+  `}
 `
 
 const DashboardHeaderUserInfoCol = styled(Col)`
@@ -270,6 +282,13 @@ const HeaderUserInfoRowCol = styled(Col)`
     justify-content: space-between;
     align-items: center;
     flex-direction: row-reverse;
+  `}
+`
+
+const WidgetBlockContainer = styled(BlockContainer)`
+  ${media.phone`
+    padding: 0;
+    overflow: hidden;
   `}
 `
 
@@ -391,7 +410,7 @@ class DashboardPage extends Component {
                   </Col>
                 </DashboardHeaderWhiteLine>
               </DashboardHeader>
-              <BlockContainer>
+              <WidgetBlockContainer>
                 <Row gutter={20}>
                   <Col span={24}>
                     <WidgetContainer noPaddings>
@@ -473,7 +492,7 @@ class DashboardPage extends Component {
                   </Col>
                 </Row>
                 <Row gutter={20} style={{ marginTop: '20px' }}>
-                  <Col span={12} sm={24} lg={12}>
+                  <Col span={12} sm={24} lg={12} xs={24}>
                     <WidgetContainer>
                       <WidgetHeader>
                         <WidgetTitle>
@@ -487,7 +506,7 @@ class DashboardPage extends Component {
                       </WidgetContent>
                     </WidgetContainer> 
                   </Col>
-                  <GoodRatioCol span={12} sm={24} lg={12}>
+                  <GoodRatioCol span={12} sm={24} lg={12} xs={24}>
                     <WidgetContainer>
                       <WidgetHeader>
                         <WidgetTitle>
@@ -560,7 +579,7 @@ class DashboardPage extends Component {
                   </WidgetContainer>
                 </Col>
               </Row>
-              </BlockContainer>
+              </WidgetBlockContainer>
             </Fragment>
           )}
         </PageContainer>

@@ -9,12 +9,23 @@ import media from './../../utils/mediaQueryTemplate'
 const Wrap = styled.div`
   align-items: center;
   display: flex;
-  height: 498px;
   justify-content: center;
+  height: 498px;
   ${media.desktop`
-    position: repative;
+    position: relative;
     top: -10px;
   `}
+  ${media.phone`
+    height: auto;
+    display: block;
+    top: auto;
+  `}
+  svg {
+    height: 447px
+    ${media.phone`
+      height: auto;
+    `}
+  }
 `
 
 class GoodRatioWidget extends Component {
@@ -136,10 +147,10 @@ class GoodRatioWidget extends Component {
   render = () => {
     return (
       <Wrap>
-        <svg width={447} height={453} fill="none">
+        <svg fill="none" viewBox="0 0 447 453" xmlns="http://www.w3.org/2000/svg">
           <rect
             y={383}
-            width={446}
+            width={447}
             height={70}
             rx={35}
             fill={colors.lightGray}

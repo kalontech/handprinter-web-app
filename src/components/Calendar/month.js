@@ -15,8 +15,10 @@ const WeekDay = styled.div`
   flex: 1;
   padding: 8.5px 0;
   ${media.desktop`
-    // padding: 10px 0;
     padding: 8px 0;
+  `}
+  ${media.phone`
+    // padding: 14px 0;
   `}
 
   ${props =>
@@ -119,6 +121,10 @@ const WeekDayName = styled(WeekDay)`
   margin-top: 55px;
   ${media.desktop`
     margin-top: 46px;
+  `}
+  ${media.phone`
+    margin-top: 14px;
+    margin-bottom: 13px;
   `}
 
   ${props =>

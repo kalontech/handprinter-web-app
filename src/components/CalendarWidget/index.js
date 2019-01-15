@@ -7,6 +7,7 @@ import styled from 'styled-components'
 
 import DateSelector from './../../components/DateSelector'
 import Calendar from './../Calendar'
+import media from './../../utils/mediaQueryTemplate'
 
 const Tabs = styled(Ant.Tabs)`
   .ant-tabs-bar {
@@ -14,6 +15,10 @@ const Tabs = styled(Ant.Tabs)`
     margin-bottom: -35px;
     margin-left: 200px;
     width: calc(100% - 200px);
+    ${media.phone`
+      width: auto;
+      margin-left: 100px;
+    `}
   }
 
   .ant-tabs-nav-scroll {
