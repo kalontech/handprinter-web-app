@@ -97,7 +97,7 @@ const DashboardHeaderUserRow = styled(Row)`
   width: 100%;
   padding: 0 199px;
   ${media.largeDesktop`
-    padding: 0 80px 0 229px;
+    padding: 0 39px 0 199px;
   `}
   ${media.desktop`
     padding: 0;
@@ -107,18 +107,15 @@ const DashboardHeaderUserRow = styled(Row)`
 
 const DashboardHeaderBackgrounds = styled.div`
   background-image: url(${fingerprintImage}), url(${treeImage});
-  background-position: top 90px right, top 20px left 80px;
+  background-position: top 0px right, top 20px left 90px;
   background-repeat: no-repeat, no-repeat;
   height: 140px;
-  ${media.largeDesktop`
-    background-position: top 90px right, top 20px left 120px;
-  `}
 `
 
 const DashboardHeaderUserPicture = styled.div`
-  ${media.largeDesktop`
-    padding: 0 50px;
-  `}
+  // ${media.largeDesktop`
+  //   padding: 0 50px;
+  // `}
   ${media.desktop`
     display: flex;
     justify-content: center;
@@ -258,7 +255,7 @@ class DashboardPage extends Component {
                         </DashboardHeaderUserNameCol>
                         <DashboardHeaderUserInfoCol span={8} sm={24} lg={12}>
                           <Row>
-                            <Col span={8}>
+                            <Col span={8} lg={8}>
                               <DashboardHeaderUserName>
                                 {stats.personal.usersInvited}
                               </DashboardHeaderUserName>
@@ -266,7 +263,7 @@ class DashboardPage extends Component {
                                 <FormattedMessage id="app.dashboardPage.usersInvited" />
                               </DashboardHeaderUserSince>
                             </Col>
-                            <Col span={8}>
+                            <Col span={8} lg={8}>
                               <DashboardHeaderUserName>
                                 {stats.personal.actionsTaken}
                               </DashboardHeaderUserName>
@@ -274,7 +271,7 @@ class DashboardPage extends Component {
                                 <FormattedMessage id="app.dashboardPage.actionsTaken" />
                               </DashboardHeaderUserSince>
                             </Col>
-                            <Col span={8}>
+                            <Col span={8} lg={8}>
                               <DashboardHeaderUserName>
                                 {Math.round(
                                   stats.personal.netPositiveDays[
