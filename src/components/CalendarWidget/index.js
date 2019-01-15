@@ -22,6 +22,8 @@ const Tabs = styled(Ant.Tabs)`
 
   .ant-tabs-tab {
     font-size: 16px;
+    padding: 12px 0;
+    margin-right: 23px;
   }
 `
 

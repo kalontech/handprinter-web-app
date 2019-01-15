@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
 import d3 from 'd3'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 import api from './../../api'
+import media from './../../utils/mediaQueryTemplate'
+
+const Wrap = styled.div`
+  ${media.desktop`
+    min-height: 550px
+  `}
+`
 
 // Returns node size depending on the depth level
 const getNodeSize = depth => {
@@ -181,7 +189,7 @@ class NetworkWidget extends Component {
   }
 
   render() {
-    return <div id="network_widget" />
+    return <Wrap id="network_widget" />
   }
 }
 

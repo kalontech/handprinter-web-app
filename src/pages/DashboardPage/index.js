@@ -135,6 +135,9 @@ const DashboardHeaderUserName = styled.div`
   color: ${colors.dark};
   font-size: 28px;
   line-height: 35px;
+  ${media.desktop`
+    font-size: 22px;
+  `}
 `
 
 const DashboardHeaderUserInfoCol = styled(Col)`
@@ -264,7 +267,6 @@ class DashboardPage extends Component {
                       }}
                     >
                       <DashboardHeaderUserRow>
-                        {/* <Col span={16} style={{ paddingLeft: '199px' }} > */}
                         <DashboardHeaderUserNameCol span={16} sm={24} lg={12}>
                           <DashboardHeaderUserName>
                             {user.fullName}
@@ -397,6 +399,8 @@ class DashboardPage extends Component {
                       </WidgetContent>
                     </WidgetContainer>
                   </Col>
+                </Row>
+                <Row gutter={20} style={{ marginTop: '20px' }}>
                   <Col span={12} sm={24}>
                     <WidgetContainer>
                       <WidgetHeader>
@@ -417,12 +421,12 @@ class DashboardPage extends Component {
                     </WidgetContainer>
                   </Col>
                 </Row>
-                {/* <Row gutter={20} style={{ marginTop: '20px' }}>
+                <Row gutter={20} style={{ marginTop: '20px' }}>
                 <Col span={24}>
                   <WidgetContainer>
                     <WidgetHeader withBorder>
                       <Row>
-                        <Col span={16}>
+                        <Col span={16} sm={11} >
                           <WidgetTitle>
                             <FormattedMessage id="app.dashboardPage.myNetwork" />
                           </WidgetTitle>
@@ -430,7 +434,7 @@ class DashboardPage extends Component {
                             <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
                           </WidgetDescription>
                         </Col>
-                        <Col span={8}>
+                        <Col span={8} sm={13}>
                           <Row>
                             <Col span={8}>
                               <DashboardHeaderUserName>
@@ -469,7 +473,7 @@ class DashboardPage extends Component {
                     </WidgetContent>
                   </WidgetContainer>
                 </Col>
-              </Row> */}
+              </Row>
               </BlockContainer>
             </Fragment>
           )}

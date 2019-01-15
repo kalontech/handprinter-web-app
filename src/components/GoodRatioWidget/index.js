@@ -1,8 +1,21 @@
 import React, { Component } from 'react'
 import { linear } from 'everpolate'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 import colors from './../../config/colors'
+import media from './../../utils/mediaQueryTemplate'
+
+const Wrap = styled.div`
+  align-items: center;
+  display: flex;
+  height: 498px;
+  justify-content: center;
+  ${media.desktop`
+    position: repative;
+    top: -10px;
+  `}
+`
 
 class GoodRatioWidget extends Component {
   state = {
@@ -122,14 +135,7 @@ class GoodRatioWidget extends Component {
 
   render = () => {
     return (
-      <div
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          height: '498px',
-          justifyContent: 'center',
-        }}
-      >
+      <Wrap>
         <svg width={447} height={453} fill="none">
           <rect
             y={383}
@@ -524,7 +530,7 @@ class GoodRatioWidget extends Component {
             />
           </g>
         </svg>
-      </div>
+      </Wrap>
     )
   }
 }

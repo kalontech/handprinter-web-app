@@ -5,6 +5,7 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 
 import colors from './../../config/colors'
+import media from './../../utils/mediaQueryTemplate'
 
 const WeekRow = styled.div`
   display: flex;
@@ -13,6 +14,10 @@ const WeekRow = styled.div`
 const WeekDay = styled.div`
   flex: 1;
   padding: 8.5px 0;
+  ${media.desktop`
+    // padding: 10px 0;
+    padding: 8px 0;
+  `}
 
   ${props =>
     props.tiny &&
@@ -31,6 +36,10 @@ const WeekDay = styled.div`
   > div {
     height: 42px;
     width: 100%;
+
+    ${media.desktop`
+      height: 35px;
+    `}
 
     ${props =>
       props.active &&
@@ -109,10 +118,14 @@ const WeekDayName = styled(WeekDay)`
   margin-bottom: 15px;
   margin-top: 35px;
   padding: 0 0 15px;
+  ${media.desktop`
+    margin-top: 46px;
+    margin-bottom: 23px;
+  `}
 
   ${props =>
     props.tiny &&
-    css`
+    css`ß
       border-bottom: none;
       margin-bottom: 5px;
       padding: 0 2px;
