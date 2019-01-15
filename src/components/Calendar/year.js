@@ -16,6 +16,7 @@ const Wrap = styled.div`
 
 const StyledCol = styled(Col)`
   ${media.phone`
+    height: 105px;
     margin-bottom: 25px;
   `}
 `
