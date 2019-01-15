@@ -4,12 +4,9 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import api from './../../api'
-import media from './../../utils/mediaQueryTemplate'
 
 const Wrap = styled.div`
-  ${media.desktop`
-    min-height: 550px
-  `}
+  overflow: hidden;
 `
 
 // Returns node size depending on the depth level

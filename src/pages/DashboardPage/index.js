@@ -60,7 +60,11 @@ const WidgetHeader = styled.div`
     `};
 `
 
-const WidgetContent = styled.div``
+const WidgetContent = styled.div`
+  ${props => props.useWidgetMinHeight && `
+    min-height: 500px;
+  `}
+`
 
 const DashboardHeader = styled.div`
   border-bottom: 1px solid ${colors.whiteSmoke};
@@ -96,7 +100,7 @@ const DashboardHeaderUserNameCol = styled(Col)`
 
 const DashboardHeaderUserRow = styled(Row)`
   width: 100%;
-  padding: 0 199px;
+  padding: 0 0 0 199px;
   ${media.largeDesktop`
     padding: 0 39px 0 199px;
   `}
@@ -114,9 +118,6 @@ const DashboardHeaderBackgrounds = styled.div`
 `
 
 const DashboardHeaderUserPicture = styled.div`
-  // ${media.largeDesktop`
-  //   padding: 0 50px;
-  // `}
   ${media.desktop`
     display: flex;
     justify-content: center;
@@ -133,14 +134,14 @@ const DashboardHeaderUserPicture = styled.div`
 
 const DashboardHeaderUserName = styled.div`
   color: ${colors.dark};
-  font-size: 28px;
-  line-height: 35px;
+  font-size: 22px;
   ${media.desktop`
-    font-size: 22px;
+    line-height: 35px;
   `}
 `
 
 const DashboardHeaderUserInfoCol = styled(Col)`
+  padding-left: 40px;
   ${media.desktop`
     text-align: center;
     padding: 0 70px;
@@ -151,7 +152,9 @@ const DashboardHeaderUserSince = styled.div`
   color: ${colors.darkGray};
   font-size: 14px;
   line-height: 20px;
-  margin-top: 4px;
+  ${media.desktop`
+    margin-top: 4px;
+  `}
 `
 
 const ImpactCategorySelector = styled(Tabs)`
@@ -191,6 +194,12 @@ const ImpactCategorySelector = styled(Tabs)`
       }
     `}
   }
+`
+
+const GoodRatioCol = styled(Col)`
+  ${media.desktop`
+    margin-top: 20px;
+  `}
 `
 
 const DashboardHeaderUserInfoRow = styled(Row)`
@@ -385,30 +394,28 @@ class DashboardPage extends Component {
                   </Col>
                 </Row>
                 <Row gutter={20} style={{ marginTop: '20px' }}>
-                  <Col span={12} sm={24}>
+                  <Col span={12} sm={24} lg={12}>
                     <WidgetContainer>
                       <WidgetHeader>
                         <WidgetTitle>
                           <FormattedMessage id="app.dashboardPage.myNetPositiveDays" />
                         </WidgetTitle>
                       </WidgetHeader>
-                      <WidgetContent>
+                      <WidgetContent useWidgetMinHeight>
                         <CalendarWidget
                           activeDays={calendar[currentImpactCategory]}
                         />
                       </WidgetContent>
-                    </WidgetContainer>
+                    </WidgetContainer> 
                   </Col>
-                </Row>
-                <Row gutter={20} style={{ marginTop: '20px' }}>
-                  <Col span={12} sm={24}>
+                  <GoodRatioCol span={12} sm={24} lg={12}>
                     <WidgetContainer>
                       <WidgetHeader>
                         <WidgetTitle>
                           <FormattedMessage id="app.dashboardPage.goodRatio" />
                         </WidgetTitle>
                       </WidgetHeader>
-                      <WidgetContent>
+                      <WidgetContent useWidgetMinHeight>
                         <GoodRatioWidget
                           footprintDays={Math.round(
                             ratio.footprintDays[currentImpactCategory],
@@ -419,14 +426,14 @@ class DashboardPage extends Component {
                         />
                       </WidgetContent>
                     </WidgetContainer>
-                  </Col>
+                  </GoodRatioCol>
                 </Row>
                 <Row gutter={20} style={{ marginTop: '20px' }}>
                 <Col span={24}>
                   <WidgetContainer>
                     <WidgetHeader withBorder>
                       <Row>
-                        <Col span={16} sm={11} >
+                        <Col span={16} sm={11} lg={16}>
                           <WidgetTitle>
                             <FormattedMessage id="app.dashboardPage.myNetwork" />
                           </WidgetTitle>
@@ -434,7 +441,7 @@ class DashboardPage extends Component {
                             <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
                           </WidgetDescription>
                         </Col>
-                        <Col span={8} sm={13}>
+                        <Col span={8} sm={13} lg={8}>
                           <Row>
                             <Col span={8}>
                               <DashboardHeaderUserName>

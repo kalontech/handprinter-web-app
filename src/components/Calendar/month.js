@@ -34,9 +34,8 @@ const WeekDay = styled.div`
   }
 
   > div {
-    height: 42px;
     width: 100%;
-
+    height: 29px;
     ${media.desktop`
       height: 35px;
     `}
@@ -115,12 +114,11 @@ const WeekDay = styled.div`
 
 const WeekDayName = styled(WeekDay)`
   border-bottom: 1px solid ${colors.gray};
-  margin-bottom: 15px;
-  margin-top: 35px;
   padding: 0 0 15px;
+  margin-bottom: 23px;
+  margin-top: 55px;
   ${media.desktop`
     margin-top: 46px;
-    margin-bottom: 23px;
   `}
 
   ${props =>
