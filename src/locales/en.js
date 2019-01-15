@@ -80,13 +80,10 @@ export default {
   'app.increaseHandprintPage.head.keywords':
     'handprinter, nature, footprint, handprint',
   'app.increaseHandprintPage.head.description': 'Description of page',
-  'app.increaseHandprintPage.title': 'Increate your handprint!',
+  'app.increaseHandprintPage.title': 'Increase your handprint!',
   // TODO:
   // need change "app.increaseHandprintPage.description" translation
-  'app.increaseHandprintPage.description': `Donec fringilla euismod velit, vitae placerat ex euismod sit amet. Nulla
-    ornare nibh a libero rhoncus, ac iaculis arcu tempor. Proin at
-    vestibulum nisi, in tincidunt ipsum. Suspendisse at porttitor eros.
-    Quisque risus dui, tincidunt ac eros vel, lacinia blandit magna.`,
+  'app.increaseHandprintPage.description': `Handprints are positive impacts of which you're a cause, outside of your own footprint. When people and organizations join through your inviation, the impacts they create are part of your handprint. So invite others, and make sure they know they're welcome and they're needed.`,
   'app.increaseHandprintPage.form.yourPersonalPromocode':
     'Your personal promo code',
   'app.increaseHandprintPage.form.shareYourLinkWithCode':
@@ -115,7 +112,7 @@ export default {
   'app.forms.country.required': 'Country is required',
   'app.forms.invitationCode': 'Invitation code (optional)',
   'app.forms.invitationCode.hint':
-    'Curabitur sagittis enim vel libero ornare tincidunt. Cras libero metus, tempus ut nulla non, dignissim scelerisque nisi. Proin malesuada, ante vitae.',
+    'This is the unique invitation code for the person or organization that has invited you to join handprinter',
   'app.resetPasswordPage.head.title': 'Welcome to Handprinter!',
   'app.resetPasswordPage.head.keywords':
     'handprinter, nature, footprint, handprint',

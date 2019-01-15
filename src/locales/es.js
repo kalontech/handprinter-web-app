@@ -223,7 +223,7 @@ export default {
   'app.resetPasswordPage.send': 'Enviar',
   'app.increaseHandprintPage.title': 'Aumente su huella de la mano!',
   'app.increaseHandprintPage.description':
-    'Las huellas de manos son impactos positivos de los cuales usted es una causa, fuera de su propia huella. Cuando las personas y las organizaciones se unen a través de su inviación, los impactos que crean son parte de su huella. \n Así que invite a otros y asegúrese de que sepan que son bienvenidos y que son necesarios.',
+    'Las huellas de manos son impactos positivos de los cuales usted es una causa, fuera de su propia huella. Cuando las personas y las organizaciones se unen a través de su inviación, los impactos que crean son parte de su huella. Así que invite a otros y asegúrese de que sepan que son bienvenidos y que son necesarios.',
   'app.increaseHandprintPage.form.yourPersonalPromocode':
     'Su código de promoción personal',
   'app.dashboardPage.myNetwork': 'mi red',
