@@ -4,9 +4,18 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import api from './../../api'
+import media from './../../utils/mediaQueryTemplate'
 
 const Wrap = styled.div`
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  ${media.phone`
+    svg {
+      transform: scale(0.6);
+      position: relative;
+    }
+  `}
 `
 
 // Returns node size depending on the depth level
@@ -60,8 +69,8 @@ const flatten = root => {
 const getDimensions = () => {
   const targetNode = document.getElementById('network_widget')
   return {
-    width: (targetNode && targetNode.clientWidth) || window.innerWidth,
-    height: 500,
+    width: (targetNode && targetNode.clientWidth) || (window.innerWidth <= 576) ? 300 : window.innerWidth,
+    height: window.innerWidth > 576 ? 500 : (window.innerWidth <= 576) ? 350 : 500,
   }
 }
 

@@ -131,6 +131,9 @@ const HeaderFingerprintBackground = styled.div`
   background-position: top 0px right;
   background-repeat: no-repeat, no-repeat;
   height: 140px;
+  ${media.phone`
+    background-image: none;
+  `}
 `
 
 const DashboardHeaderUserPictureTree = styled.img`
@@ -292,6 +295,12 @@ const WidgetBlockContainer = styled(BlockContainer)`
   `}
 `
 
+const MyNetworkCol = styled(Col)`
+  ${media.phone`
+    margin-top: 30px;
+  `}
+`
+
 class DashboardPage extends Component {
   state = {
     calendar: null,
@@ -364,7 +373,7 @@ class DashboardPage extends Component {
                       }}
                     >
                       <DashboardHeaderUserRow>
-                        <DashboardHeaderUserNameCol span={16} sm={24} lg={12} xs={24}>
+                        <DashboardHeaderUserNameCol span={16} xs={24} lg={12} xs={24}>
                           <DashboardHeaderUserName>
                             {user.fullName}
                           </DashboardHeaderUserName>
@@ -375,7 +384,7 @@ class DashboardPage extends Component {
                         </DashboardHeaderUserNameCol>
                         <DashboardHeaderUserInfoCol span={8} sm={24} lg={12} xs={24}>
                           <DashboardHeaderUserInfoRow>
-                            <HeaderUserInfoRowCol span={8} lg={8} xs={24}>
+                            <HeaderUserInfoRowCol span={8} lg={8} xs={24} sm={8}>
                               <DashboardHeaderUserInfoValue>
                                 {stats.personal.usersInvited}
                               </DashboardHeaderUserInfoValue>
@@ -383,7 +392,7 @@ class DashboardPage extends Component {
                                 <FormattedMessage id="app.dashboardPage.usersInvited" />
                               </DashboardHeaderUserSince>
                             </HeaderUserInfoRowCol>
-                            <HeaderUserInfoRowCol span={8} lg={8} xs={24}>
+                            <HeaderUserInfoRowCol span={8} lg={8} xs={24} sm={8}>
                               <DashboardHeaderUserInfoValue>
                                 {stats.personal.actionsTaken}
                               </DashboardHeaderUserInfoValue>
@@ -391,7 +400,7 @@ class DashboardPage extends Component {
                                 <FormattedMessage id="app.dashboardPage.actionsTaken" />
                               </DashboardHeaderUserSince>
                             </HeaderUserInfoRowCol>
-                            <HeaderUserInfoRowCol span={8} lg={8} xs={24}>
+                            <HeaderUserInfoRowCol span={8} lg={8} xs={24} sm={8}>
                               <DashboardHeaderUserInfoValue>
                                 {Math.round(
                                   stats.personal.netPositiveDays[
@@ -531,7 +540,7 @@ class DashboardPage extends Component {
                   <WidgetContainer>
                     <WidgetHeader withBorder>
                       <Row>
-                        <Col span={16} sm={11} lg={16}>
+                        <Col span={16} sm={11} lg={16} xs={24}>
                           <WidgetTitle>
                             <FormattedMessage id="app.dashboardPage.myNetwork" />
                           </WidgetTitle>
@@ -539,25 +548,25 @@ class DashboardPage extends Component {
                             <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
                           </WidgetDescription>
                         </Col>
-                        <Col span={8} sm={13} lg={8}>
+                        <MyNetworkCol span={8} sm={13} lg={8} xs={24}>
                           <Row>
-                            <Col span={8}>
+                            <HeaderUserInfoRowCol span={8} lg={8} sm={8} xs={24}>
                               <DashboardHeaderUserName>
                                 {stats.personal.usersInvited}
                               </DashboardHeaderUserName>
                               <DashboardHeaderUserSince>
                                 <FormattedMessage id="app.dashboardPage.usersInvited" />
                               </DashboardHeaderUserSince>
-                            </Col>
-                            <Col span={8}>
+                            </HeaderUserInfoRowCol>
+                            <HeaderUserInfoRowCol span={8} lg={8} sm={8} xs={24}>
                               <DashboardHeaderUserName>
                                 {stats.personal.actionsTaken}
                               </DashboardHeaderUserName>
                               <DashboardHeaderUserSince>
                                 <FormattedMessage id="app.dashboardPage.actionsTaken" />
                               </DashboardHeaderUserSince>
-                            </Col>
-                            <Col span={8}>
+                            </HeaderUserInfoRowCol>
+                            <HeaderUserInfoRowCol span={8} lg={8} sm={8} xs={24}>
                               <DashboardHeaderUserName>
                                 {Math.round(
                                   stats.personal.netPositiveDays[
@@ -568,9 +577,9 @@ class DashboardPage extends Component {
                               <DashboardHeaderUserSince>
                                 <FormattedMessage id="app.dashboardPage.netPositiveDays" />
                               </DashboardHeaderUserSince>
-                            </Col>
+                            </HeaderUserInfoRowCol>
                           </Row>
-                        </Col>
+                        </MyNetworkCol>
                       </Row>
                     </WidgetHeader>
                     <WidgetContent>
