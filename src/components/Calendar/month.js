@@ -13,10 +13,7 @@ const WeekRow = styled.div`
 
 const WeekDay = styled.div`
   flex: 1;
-  padding: 8.5px 0;
-  ${media.desktop`
-    padding: 8px 0;
-  `}
+  padding: 8px 0;
 
   ${props =>
     props.tiny &&
@@ -34,9 +31,14 @@ const WeekDay = styled.div`
 
   > div {
     width: 100%;
-    height: 29px;
-    ${media.desktop`
-      height: 35px;
+    height: 35px;
+    // ${media.desktop`
+    //   height: 35px;
+    // `}
+    ${media.phone`
+      height: auto; // 10px;
+      font-weight: bold;
+      color: red //${colors.black};
     `}
 
     ${props =>
@@ -104,9 +106,14 @@ const WeekDay = styled.div`
       props.tiny &&
       css`
         font-size: 10px;
-        height: 15px;
         line-height: 10px;
-        width: 15px;
+        height: 15px;
+        width: 15px
+        ${props => !props.current && css`
+          color: ${colors.dark};
+          height: auto;
+          width: auto;
+        `}
       `};
   }
 `
@@ -115,10 +122,7 @@ const WeekDayName = styled(WeekDay)`
   border-bottom: 1px solid ${colors.gray};
   padding: 0 0 15px;
   margin-bottom: 23px;
-  margin-top: 55px;
-  ${media.desktop`
-    margin-top: 46px;
-  `}
+  margin-top: 46px;
   ${media.phone`
     margin-top: 14px;
     margin-bottom: 13px;
@@ -142,8 +146,23 @@ const WeekDayName = styled(WeekDay)`
       props.tiny &&
       css`
         line-height: 10px;
+
+        ${media.phone`
+          ${props => props.isHeader && css`
+            color: ${colors.darkGray};
+          `}
+        `}
       `};
   }
+`
+
+const MonthTextValue = styled.div`
+  text-align: center;
+  font-weight: bold;
+  display: none;
+  ${media.phone`
+    display: block;
+  `}
 `
 
 class Month extends Component {
@@ -178,7 +197,7 @@ class Month extends Component {
     return (
       <WeekRow key={key} tiny={tiny}>
         {days.map(day => (
-          <WeekDayName key={key} tiny={tiny}>
+          <WeekDayName key={key} tiny={tiny} isHeader>
             <div>
               <div>{day}</div>
             </div>
@@ -220,9 +239,12 @@ class Month extends Component {
   }
 
   render() {
-    const { month, tiny, year } = this.props
+    const { month, tiny, year, isYearView } = this.props
     return (
       <Fragment>
+        {isYearView && (
+        <MonthTextValue>{moment().month(month).format('MMMM')}</MonthTextValue>
+        )}
         {this.renderMonth(
           calendar(new Date(year, month), {
             weekStartDay: 1,
