@@ -166,9 +166,18 @@ const DashboardHeaderUserName = styled.div`
   ${media.desktop`
     line-height: 35px;
   `}
-  ${media.phone`
-    font-size: 16px;
-  `}
+`
+
+const DashboardHeaderUserInfoValue = styled.div`
+color: ${colors.dark};
+font-size: 22px;
+font-weight: bold;
+${media.desktop`
+  line-height: 35px;
+`}
+${media.phone`
+  font-size: 16px;
+`}
 `
 
 const DashboardHeaderUserInfoCol = styled(Col)`
@@ -201,6 +210,9 @@ const ImpactCategorySelector = styled(Tabs)`
     ${media.desktop`
       padding: 16.5px 0;
     `}
+    ${media.phone`
+      margin: 0 25px 0 0;
+    `}
 
     span {
       align-items: center;
@@ -230,7 +242,7 @@ const ImpactCategorySelector = styled(Tabs)`
   }
 `
 
-const ImpactCategorySelectorName = styled.span`
+const ImpactCategorySelectorName = styled.strong`
   ${media.phone`
     display: none;
   `}
@@ -345,29 +357,29 @@ class DashboardPage extends Component {
                         <DashboardHeaderUserInfoCol span={8} sm={24} lg={12} xs={24}>
                           <DashboardHeaderUserInfoRow>
                             <HeaderUserInfoRowCol span={8} lg={8} xs={24}>
-                              <DashboardHeaderUserName>
+                              <DashboardHeaderUserInfoValue>
                                 {stats.personal.usersInvited}
-                              </DashboardHeaderUserName>
+                              </DashboardHeaderUserInfoValue>
                               <DashboardHeaderUserSince>
                                 <FormattedMessage id="app.dashboardPage.usersInvited" />
                               </DashboardHeaderUserSince>
                             </HeaderUserInfoRowCol>
                             <HeaderUserInfoRowCol span={8} lg={8} xs={24}>
-                              <DashboardHeaderUserName>
+                              <DashboardHeaderUserInfoValue>
                                 {stats.personal.actionsTaken}
-                              </DashboardHeaderUserName>
+                              </DashboardHeaderUserInfoValue>
                               <DashboardHeaderUserSince>
                                 <FormattedMessage id="app.dashboardPage.actionsTaken" />
                               </DashboardHeaderUserSince>
                             </HeaderUserInfoRowCol>
                             <HeaderUserInfoRowCol span={8} lg={8} xs={24}>
-                              <DashboardHeaderUserName>
+                              <DashboardHeaderUserInfoValue>
                                 {Math.round(
                                   stats.personal.netPositiveDays[
                                     currentImpactCategory
                                   ],
                                 )}
-                              </DashboardHeaderUserName>
+                              </DashboardHeaderUserInfoValue>
                               <DashboardHeaderUserSince>
                                 <FormattedMessage id="app.dashboardPage.netPositiveDays" />
                               </DashboardHeaderUserSince>
@@ -407,7 +419,9 @@ class DashboardPage extends Component {
                                 <Icon
                                   component={() => icons['positive']['waste']}
                                 />
+                                <ImpactCategorySelectorName>
                                 <FormattedMessage id="app.impactCategories.waste" />
+                                </ImpactCategorySelectorName>
                               </span>
                             }
                             key="waste"
@@ -418,7 +432,9 @@ class DashboardPage extends Component {
                                 <Icon
                                   component={() => icons['positive']['water']}
                                 />
+                                <ImpactCategorySelectorName>
                                 <FormattedMessage id="app.impactCategories.water" />
+                                </ImpactCategorySelectorName>
                               </span>
                             }
                             key="water"
@@ -431,7 +447,9 @@ class DashboardPage extends Component {
                                     icons['positive']['ecosystem']
                                   }
                                 />
+                                <ImpactCategorySelectorName>
                                 <FormattedMessage id="app.impactCategories.ecosystem" />
+                                </ImpactCategorySelectorName>
                               </span>
                             }
                             key="ecosystem"
@@ -442,7 +460,9 @@ class DashboardPage extends Component {
                                 <Icon
                                   component={() => icons['positive']['health']}
                                 />
+                                <ImpactCategorySelectorName>
                                 <FormattedMessage id="app.impactCategories.health" />
+                                </ImpactCategorySelectorName>
                               </span>
                             }
                             key="health"
