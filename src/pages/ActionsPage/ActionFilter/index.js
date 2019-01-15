@@ -115,14 +115,14 @@ class ActionsFilters extends Component {
       },
       () => {
         this.props.onAfterChange(this.createQuery())
-        history.push(`/actions`)
+        history.push(`/actions/${this.props.actionsPageSubset}`)
       },
     )
   }
 
   render() {
     const { values, filterIsChanged } = this.state
-    const { timeValues } = this.props
+    const { timeValues, actionsPageSubset } = this.props
     return (
       <Fragment>
         <ImpactSlider

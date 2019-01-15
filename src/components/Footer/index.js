@@ -23,7 +23,7 @@ const FooterContent = styled.section`
 `
 
 const Wrap = styled(BlockContainer)`
-  padding: 80px 0;
+  padding: 80px 0 60px;
   margin-top: -1px;
   overflow: hidden;
   ${media.phone`
@@ -63,16 +63,18 @@ const Logo = styled.div`
 const Copyright = styled.p`
   font-size: 12px;
   font-weight: 500;
+  margin-bottom: 20px;
   color: ${hexToRgba(colors.white, 0.43)};
-  ${media.largeDesktop`
+  ${media.desktop`
     display: none;
+    margin-bottom: 0;
   `};
 `
 
 const CopyrightTablet = styled(Copyright)`
   display: none;
   line-height: 34px;
-  ${media.largeDesktop`
+  ${media.desktop`
     display: block;
     margin-bottom: 20px;
   `};

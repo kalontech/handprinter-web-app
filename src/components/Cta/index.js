@@ -18,7 +18,7 @@ const CtaTitle = styled(BlockSubTitle)`
 const CtaImage = styled.img`
   position: absolute;
   right: 100px;
-  bottom: 0;
+  bottom: -20px;
   ${media.largeDesktop`
    right: 15px;
   `};
@@ -35,6 +35,12 @@ const CtaWrap = styled.section`
    background: url("${ctaBg}") no-repeat left center, ${
    colors.ocean
  } url("${ctaBgRight}") no-repeat right center;
+  `};
+  ${media.phone`
+    a,
+    ${PrimaryButton}{
+      width: 100%;
+    }
   `};
 
 `

@@ -41,7 +41,7 @@ const RightAlign = styled.div`
 
 const HeaderWrap = styled(Layout.Header)`
   position: relative;
-  z-index: 2;
+  z-index: 1070;
   background: ${colors.white};
   height: 90px;
   display: flex;
@@ -373,7 +373,7 @@ const ProfileMenu = styled.div`
 
 const StyledAffix = styled(Affix)`
   .ant-affix {
-    z-index: 1062;
+    z-index: 1070;
   }
 `
 

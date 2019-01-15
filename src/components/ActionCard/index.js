@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { FormattedHTMLMessage } from 'react-intl'
+import { Icon } from 'antd'
+import moment from 'moment'
 
 import ActionCardLabelSet from '../ActionCardLabelSet'
 import colors from './../../config/colors'
@@ -10,19 +13,16 @@ import { CardHeading } from './../Styled'
 import media from './../../utils/mediaQueryTemplate'
 
 const CardWrap = styled.div`
-  max-width: 400px;
   padding-top: 10px;
   padding-bottom: 10px;
   margin: 0 auto;
   display: inline-block;
-  ${media.largeDesktop`
-    max-width: 100%;
-  `}
 `
 const CardContainer = styled.div`
   display: block;
   position: relative;
-  max-width: 380px;
+  max-width: ${props => (props.isSlide ? '380px' : '100%')}
+  margin-right: ${props => (props.isSlide ? '20px' : '0')}
   height: 364px;
   border-radius: 4px;
   box-shadow: 0 1px 10px 0 ${hexToRgba(colors.dark, 0.08)};
@@ -30,10 +30,10 @@ const CardContainer = styled.div`
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s;
-  ${media.largeDesktop`
-    max-width: 100%;
+  ${media.phone`
+    margin-right: 0;
   `}
-
+  
   &:hover {
     transform: translateY(-4px);
   }
@@ -70,12 +70,54 @@ const ActionCardLabelSetWrapper = styled.div`
   `}
 `
 
+const SuggestedInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: ${colors.darkGray};
+  padding: 0 12px;
+`
+
+const SuggestedInfoInitiator = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span.name {
+    color: ${colors.dark};
+    margin-left: 3px;
+  }
+`
+
+const SuggestedInfoDate = styled.div`
+  font-style: italic;
+  i {
+    margin-right: 5px;
+  }
+`
+
+const SuggestedInfoInitiatorPhoto = styled.div`
+  background-image: url('${props => props.src}');
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+`
+
 const ActionCard = props => {
-  const { linkPrefix, slug, picture, name, impacts } = props
+  const {
+    linkPrefix,
+    slug,
+    picture,
+    name,
+    impacts,
+    suggestedBy,
+    suggestedAt,
+  } = props
   return (
     <Link to={`${linkPrefix}/${slug}`}>
       <CardWrap>
-        <CardContainer>
+        <CardContainer {...props}>
           <CardImage>
             <img src={picture} alt={name} />
           </CardImage>
@@ -87,6 +129,23 @@ const ActionCard = props => {
           </CardWrapper>
         </CardContainer>
       </CardWrap>
+      {suggestedBy && suggestedAt && (
+        <SuggestedInfo>
+          <SuggestedInfoInitiator>
+            <SuggestedInfoInitiatorPhoto src={suggestedBy.photo} />
+            <FormattedHTMLMessage
+              id="app.actions.card.by"
+              values={{
+                username: suggestedBy.fullName,
+              }}
+            />{' '}
+          </SuggestedInfoInitiator>
+          <SuggestedInfoDate>
+            <Icon type="clock-circle" />
+            {moment(suggestedAt).fromNow()}
+          </SuggestedInfoDate>
+        </SuggestedInfo>
+      )}
     </Link>
   )
 }
@@ -98,6 +157,8 @@ ActionCard.propTypes = {
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
   placeholder: PropTypes.bool,
+  suggestedBy: PropTypes.object,
+  suggestedAt: PropTypes.string,
 }
 
 export default ActionCard
