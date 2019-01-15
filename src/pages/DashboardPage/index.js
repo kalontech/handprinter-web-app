@@ -81,6 +81,7 @@ const DashboardHeaderWhiteLine = styled(Row)`
   ${media.desktop`
     background-color: transparent;
     margin-top: 90px;
+    height: auto;
   `}
 `
 
@@ -101,7 +102,7 @@ const DashboardHeaderUserRow = styled(Row)`
   `}
   ${media.desktop`
     padding: 0;
-    margin-top: 32px;
+    margin-top: 18px;
   `}
 `
 
@@ -139,7 +140,7 @@ const DashboardHeaderUserName = styled.div`
 const DashboardHeaderUserInfoCol = styled(Col)`
   ${media.desktop`
     text-align: center;
-    padding: 0 170px;
+    padding: 0 70px;
   `}
 `
 
@@ -157,6 +158,9 @@ const ImpactCategorySelector = styled(Tabs)`
 
   .ant-tabs-tab {
     padding: 16.5px 16px;
+    ${media.desktop`
+      padding: 16.5px 0;
+    `}
 
     span {
       align-items: center;
@@ -173,6 +177,23 @@ const ImpactCategorySelector = styled(Tabs)`
   .ant-tabs-ink-bar {
     height: 4px;
   }
+
+  .ant-tabs-nav {
+    ${media.desktop`
+      padding: 0 20px;
+      > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    `}
+  }
+`
+
+const DashboardHeaderUserInfoRow = styled(Row)`
+  ${media.desktop`
+    margin: 40px 0 30px 0;
+  `}
 `
 
 class DashboardPage extends Component {
@@ -254,7 +275,7 @@ class DashboardPage extends Component {
                           </DashboardHeaderUserSince>
                         </DashboardHeaderUserNameCol>
                         <DashboardHeaderUserInfoCol span={8} sm={24} lg={12}>
-                          <Row>
+                          <DashboardHeaderUserInfoRow>
                             <Col span={8} lg={8}>
                               <DashboardHeaderUserName>
                                 {stats.personal.usersInvited}
@@ -283,7 +304,7 @@ class DashboardPage extends Component {
                                 <FormattedMessage id="app.dashboardPage.netPositiveDays" />
                               </DashboardHeaderUserSince>
                             </Col>
-                          </Row>
+                          </DashboardHeaderUserInfoRow>
                         </DashboardHeaderUserInfoCol>
                       </DashboardHeaderUserRow>
                     </BlockContainer>
