@@ -20,13 +20,17 @@ export const ActionCard = styled(Ant.Row)`
     margin-top: 60px;
     height: auto;
   `}
+  ${media.phone`
+    margin-top: 76px;
+    height: auto;
+  `}
 `
 
 export const ActionCardForgotPasswordBlock = styled.div`
   color: ${colors.darkGray};
   display: flex;
   justify-content: flex-end;
-  margin: -5px 0 12px;
+  margin: 12px 0 20px 0;
 `
 
 export const ActionCardFormWrapper = styled.div`
@@ -164,6 +168,9 @@ export const ActionCardRegisterBlock = styled.div`
   color: ${colors.darkGray};
   display: flex;
   justify-content: center;
+  ${media.phone`
+    margin-top: 20px;
+  `}
 `
 
 export const ActionCardTitle = styled.h1`

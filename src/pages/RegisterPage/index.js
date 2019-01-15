@@ -164,6 +164,9 @@ const FormWrap = styled.div`
   ${media.tablet`
     margin-top: 30px;
   `}
+  ${media.phone`
+    margin-top: 0;
+  `}
 `
 
 const DogImgDesktop = styled.img`
