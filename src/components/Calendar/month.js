@@ -129,8 +129,8 @@ const WeekDayName = styled(WeekDay)`
 
   ${props =>
     props.tiny &&
-    css`ß
-      border-bottom: none;
+    css`
+      ßborder-bottom: none;
       margin-bottom: 5px;
       padding: 0 2px;
     `};

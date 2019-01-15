@@ -21,11 +21,10 @@ const Wrap = styled.div`
     top: auto;
   `}
   svg {
-    height: 447px
-    ${media.phone`
+    height: 447px ${media.phone`
       height: 320px;
       width: 100%;
-    `}
+    `};
   }
 `
 
@@ -148,7 +147,11 @@ class GoodRatioWidget extends Component {
   render = () => {
     return (
       <Wrap>
-        <svg fill="none" viewBox="0 0 447 453" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          fill="none"
+          viewBox="0 0 447 453"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <rect
             y={383}
             width={447}

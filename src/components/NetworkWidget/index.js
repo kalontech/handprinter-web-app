@@ -69,8 +69,12 @@ const flatten = root => {
 const getDimensions = () => {
   const targetNode = document.getElementById('network_widget')
   return {
-    width: (targetNode && targetNode.clientWidth) || (window.innerWidth <= 576) ? 300 : window.innerWidth,
-    height: window.innerWidth > 576 ? 500 : (window.innerWidth <= 576) ? 350 : 500,
+    width:
+      (targetNode && targetNode.clientWidth) || window.innerWidth <= 576
+        ? 300
+        : window.innerWidth,
+    height:
+      window.innerWidth > 576 ? 500 : window.innerWidth <= 576 ? 350 : 500,
   }
 }
 

@@ -65,11 +65,15 @@ const WidgetHeader = styled.div`
 `
 
 const WidgetContent = styled.div`
-  ${props => props.useWidgetMinHeight && `
+  ${props =>
+    props.useWidgetMinHeight &&
+    `
     min-height: 500px;
   `}
   ${media.phone`
-    ${props => props.useWidgetMinHeight && `
+    ${props =>
+      props.useWidgetMinHeight &&
+      `
       min-height: auto;
     `}
   `}
@@ -122,9 +126,7 @@ const DashboardHeaderUserRow = styled(Row)`
   `}
 `
 
-const DashboardHeaderBackgrounds = styled.div`
-
-`
+const DashboardHeaderBackgrounds = styled.div``
 
 const HeaderFingerprintBackground = styled.div`
   background-image: url(${fingerprintImage});
@@ -348,9 +350,9 @@ class DashboardPage extends Component {
             <Fragment>
               <DashboardHeader>
                 <DashboardHeaderGreenLine>
-                <DashboardHeaderBackgrounds>
-                  <HeaderFingerprintBackground />
-                </DashboardHeaderBackgrounds>
+                  <DashboardHeaderBackgrounds>
+                    <HeaderFingerprintBackground />
+                  </DashboardHeaderBackgrounds>
                   <BlockContainer style={{ zIndex: 1 }}>
                     <DashboardHeaderUserPictureWrap>
                       <DashboardHeaderUserPictureTree src={treeImage} />
@@ -373,7 +375,7 @@ class DashboardPage extends Component {
                       }}
                     >
                       <DashboardHeaderUserRow>
-                        <DashboardHeaderUserNameCol span={16} xs={24} lg={12} xs={24}>
+                        <DashboardHeaderUserNameCol span={16} xs={24} lg={12}>
                           <DashboardHeaderUserName>
                             {user.fullName}
                           </DashboardHeaderUserName>
@@ -382,9 +384,19 @@ class DashboardPage extends Component {
                             {moment(user.createdAt).format('MMMM DD, YYYY')}
                           </DashboardHeaderUserSince>
                         </DashboardHeaderUserNameCol>
-                        <DashboardHeaderUserInfoCol span={8} sm={24} lg={12} xs={24}>
+                        <DashboardHeaderUserInfoCol
+                          span={8}
+                          sm={24}
+                          lg={12}
+                          xs={24}
+                        >
                           <DashboardHeaderUserInfoRow>
-                            <HeaderUserInfoRowCol span={8} lg={8} xs={24} sm={8}>
+                            <HeaderUserInfoRowCol
+                              span={8}
+                              lg={8}
+                              xs={24}
+                              sm={8}
+                            >
                               <DashboardHeaderUserInfoValue>
                                 {stats.personal.usersInvited}
                               </DashboardHeaderUserInfoValue>
@@ -392,7 +404,12 @@ class DashboardPage extends Component {
                                 <FormattedMessage id="app.dashboardPage.usersInvited" />
                               </DashboardHeaderUserSince>
                             </HeaderUserInfoRowCol>
-                            <HeaderUserInfoRowCol span={8} lg={8} xs={24} sm={8}>
+                            <HeaderUserInfoRowCol
+                              span={8}
+                              lg={8}
+                              xs={24}
+                              sm={8}
+                            >
                               <DashboardHeaderUserInfoValue>
                                 {stats.personal.actionsTaken}
                               </DashboardHeaderUserInfoValue>
@@ -400,7 +417,12 @@ class DashboardPage extends Component {
                                 <FormattedMessage id="app.dashboardPage.actionsTaken" />
                               </DashboardHeaderUserSince>
                             </HeaderUserInfoRowCol>
-                            <HeaderUserInfoRowCol span={8} lg={8} xs={24} sm={8}>
+                            <HeaderUserInfoRowCol
+                              span={8}
+                              lg={8}
+                              xs={24}
+                              sm={8}
+                            >
                               <DashboardHeaderUserInfoValue>
                                 {Math.round(
                                   stats.personal.netPositiveDays[
@@ -448,7 +470,7 @@ class DashboardPage extends Component {
                                   component={() => icons['positive']['waste']}
                                 />
                                 <ImpactCategorySelectorName>
-                                <FormattedMessage id="app.impactCategories.waste" />
+                                  <FormattedMessage id="app.impactCategories.waste" />
                                 </ImpactCategorySelectorName>
                               </span>
                             }
@@ -461,7 +483,7 @@ class DashboardPage extends Component {
                                   component={() => icons['positive']['water']}
                                 />
                                 <ImpactCategorySelectorName>
-                                <FormattedMessage id="app.impactCategories.water" />
+                                  <FormattedMessage id="app.impactCategories.water" />
                                 </ImpactCategorySelectorName>
                               </span>
                             }
@@ -476,7 +498,7 @@ class DashboardPage extends Component {
                                   }
                                 />
                                 <ImpactCategorySelectorName>
-                                <FormattedMessage id="app.impactCategories.ecosystem" />
+                                  <FormattedMessage id="app.impactCategories.ecosystem" />
                                 </ImpactCategorySelectorName>
                               </span>
                             }
@@ -489,7 +511,7 @@ class DashboardPage extends Component {
                                   component={() => icons['positive']['health']}
                                 />
                                 <ImpactCategorySelectorName>
-                                <FormattedMessage id="app.impactCategories.health" />
+                                  <FormattedMessage id="app.impactCategories.health" />
                                 </ImpactCategorySelectorName>
                               </span>
                             }
@@ -513,7 +535,7 @@ class DashboardPage extends Component {
                           activeDays={calendar[currentImpactCategory]}
                         />
                       </WidgetContent>
-                    </WidgetContainer> 
+                    </WidgetContainer>
                   </Col>
                   <GoodRatioCol span={12} sm={24} lg={12} xs={24}>
                     <WidgetContainer>
@@ -536,58 +558,73 @@ class DashboardPage extends Component {
                   </GoodRatioCol>
                 </Row>
                 <Row gutter={20} style={{ marginTop: '20px' }}>
-                <Col span={24}>
-                  <WidgetContainer>
-                    <WidgetHeader withBorder>
-                      <Row>
-                        <Col span={16} sm={11} lg={16} xs={24}>
-                          <WidgetTitle>
-                            <FormattedMessage id="app.dashboardPage.myNetwork" />
-                          </WidgetTitle>
-                          <WidgetDescription>
-                            <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
-                          </WidgetDescription>
-                        </Col>
-                        <MyNetworkCol span={8} sm={13} lg={8} xs={24}>
-                          <Row>
-                            <HeaderUserInfoRowCol span={8} lg={8} sm={8} xs={24}>
-                              <DashboardHeaderUserName>
-                                {stats.personal.usersInvited}
-                              </DashboardHeaderUserName>
-                              <DashboardHeaderUserSince>
-                                <FormattedMessage id="app.dashboardPage.usersInvited" />
-                              </DashboardHeaderUserSince>
-                            </HeaderUserInfoRowCol>
-                            <HeaderUserInfoRowCol span={8} lg={8} sm={8} xs={24}>
-                              <DashboardHeaderUserName>
-                                {stats.personal.actionsTaken}
-                              </DashboardHeaderUserName>
-                              <DashboardHeaderUserSince>
-                                <FormattedMessage id="app.dashboardPage.actionsTaken" />
-                              </DashboardHeaderUserSince>
-                            </HeaderUserInfoRowCol>
-                            <HeaderUserInfoRowCol span={8} lg={8} sm={8} xs={24}>
-                              <DashboardHeaderUserName>
-                                {Math.round(
-                                  stats.personal.netPositiveDays[
-                                    currentImpactCategory
-                                  ],
-                                )}
-                              </DashboardHeaderUserName>
-                              <DashboardHeaderUserSince>
-                                <FormattedMessage id="app.dashboardPage.netPositiveDays" />
-                              </DashboardHeaderUserSince>
-                            </HeaderUserInfoRowCol>
-                          </Row>
-                        </MyNetworkCol>
-                      </Row>
-                    </WidgetHeader>
-                    <WidgetContent>
-                      <NetworkWidget data={network} />
-                    </WidgetContent>
-                  </WidgetContainer>
-                </Col>
-              </Row>
+                  <Col span={24}>
+                    <WidgetContainer>
+                      <WidgetHeader withBorder>
+                        <Row>
+                          <Col span={16} sm={11} lg={16} xs={24}>
+                            <WidgetTitle>
+                              <FormattedMessage id="app.dashboardPage.myNetwork" />
+                            </WidgetTitle>
+                            <WidgetDescription>
+                              <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
+                            </WidgetDescription>
+                          </Col>
+                          <MyNetworkCol span={8} sm={13} lg={8} xs={24}>
+                            <Row>
+                              <HeaderUserInfoRowCol
+                                span={8}
+                                lg={8}
+                                sm={8}
+                                xs={24}
+                              >
+                                <DashboardHeaderUserName>
+                                  {stats.personal.usersInvited}
+                                </DashboardHeaderUserName>
+                                <DashboardHeaderUserSince>
+                                  <FormattedMessage id="app.dashboardPage.usersInvited" />
+                                </DashboardHeaderUserSince>
+                              </HeaderUserInfoRowCol>
+                              <HeaderUserInfoRowCol
+                                span={8}
+                                lg={8}
+                                sm={8}
+                                xs={24}
+                              >
+                                <DashboardHeaderUserName>
+                                  {stats.personal.actionsTaken}
+                                </DashboardHeaderUserName>
+                                <DashboardHeaderUserSince>
+                                  <FormattedMessage id="app.dashboardPage.actionsTaken" />
+                                </DashboardHeaderUserSince>
+                              </HeaderUserInfoRowCol>
+                              <HeaderUserInfoRowCol
+                                span={8}
+                                lg={8}
+                                sm={8}
+                                xs={24}
+                              >
+                                <DashboardHeaderUserName>
+                                  {Math.round(
+                                    stats.personal.netPositiveDays[
+                                      currentImpactCategory
+                                    ],
+                                  )}
+                                </DashboardHeaderUserName>
+                                <DashboardHeaderUserSince>
+                                  <FormattedMessage id="app.dashboardPage.netPositiveDays" />
+                                </DashboardHeaderUserSince>
+                              </HeaderUserInfoRowCol>
+                            </Row>
+                          </MyNetworkCol>
+                        </Row>
+                      </WidgetHeader>
+                      <WidgetContent>
+                        <NetworkWidget data={network} />
+                      </WidgetContent>
+                    </WidgetContainer>
+                  </Col>
+                </Row>
               </WidgetBlockContainer>
             </Fragment>
           )}
