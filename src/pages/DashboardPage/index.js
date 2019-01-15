@@ -111,25 +111,53 @@ const DashboardHeaderUserRow = styled(Row)`
 `
 
 const DashboardHeaderBackgrounds = styled.div`
-  background-image: url(${fingerprintImage}), url(${treeImage});
-  background-position: top 0px right, top 20px left 90px;
+
+`
+
+const HeaderFingerprintBackground = styled.div`
+  background-image: url(${fingerprintImage});
+  background-position: top 0px right;
   background-repeat: no-repeat, no-repeat;
   height: 140px;
 `
 
-const DashboardHeaderUserPicture = styled.div`
+const DashboardHeaderUserPictureTree = styled.img`
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  position: absolute;
+  left: 90px;
+  top: -120px;
+`
+
+const DashboardHeaderUserPictureWrap = styled.div`
+  position: relative;
   ${media.desktop`
     display: flex;
     justify-content: center;
+    width: 200px;
+    margin: 0 auto;
   `}
-  img {
-    border: 4px solid ${colors.white};
-    border-radius: 88px;
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
-    height: 190px;
-    margin-top: -88px;
-    width: 190px;
-  }
+`
+
+const DashboardHeaderUserPictureBackground = styled.div`
+  height: 30px;
+  width: 260px;
+  background: ${colors.white};
+  position: absolute;
+  ${media.desktop`
+    background: ${colors.lightGray};
+  `}
+`
+
+const DashboardHeaderUserPicture = styled.img`
+  border: 4px solid ${colors.white};
+  border-radius: 88px;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+  height: 190px;
+  margin-top: -88px;
+  width: 190px;
+  position: relative;
 `
 
 const DashboardHeaderUserName = styled.div`
@@ -255,15 +283,19 @@ class DashboardPage extends Component {
             <Fragment>
               <DashboardHeader>
                 <DashboardHeaderGreenLine>
+                <DashboardHeaderBackgrounds>
+                  <HeaderFingerprintBackground />
+                </DashboardHeaderBackgrounds>
                   <BlockContainer style={{ zIndex: 1 }}>
-                    <DashboardHeaderBackgrounds />
-                    <DashboardHeaderUserPicture>
-                      <img
+                    <DashboardHeaderUserPictureWrap>
+                      <DashboardHeaderUserPictureTree src={treeImage} />
+                      <DashboardHeaderUserPictureBackground />
+                      <DashboardHeaderUserPicture
                         src={
                           user.photo || api.getUserInitialAvatar(user.fullName)
                         }
                       />
-                    </DashboardHeaderUserPicture>
+                    </DashboardHeaderUserPictureWrap>
                   </BlockContainer>
                 </DashboardHeaderGreenLine>
                 <DashboardHeaderWhiteLine>
