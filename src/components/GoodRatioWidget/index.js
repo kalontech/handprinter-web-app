@@ -21,7 +21,7 @@ const Wrap = styled.div`
     top: auto;
   `}
   svg {
-      height: 447px ${media.phone`
+    height: 447px ${media.phone`
       height: 320px;
       width: 100%;
     `};

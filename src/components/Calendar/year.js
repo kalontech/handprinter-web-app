@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Col, Row } from 'antd'
 import get from 'lodash/get'
 import times from 'lodash/times'
@@ -16,7 +16,7 @@ const Wrap = styled.div`
   ${media.phone`
     margin-top: 38px;
   `}
-` 
+`
 
 const StyledCol = styled(Col)`
   ${media.phone`

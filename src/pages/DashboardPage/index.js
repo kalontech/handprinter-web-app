@@ -56,7 +56,6 @@ const WidgetDescription = styled.p`
 
 const WidgetHeader = styled.div`
   padding-bottom: 25px; // 55px; // 30px;
-  
 
   ${props =>
     props.withBorder &&

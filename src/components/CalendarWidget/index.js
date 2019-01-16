@@ -61,15 +61,15 @@ class CalendarWidget extends Component {
               onChange={this.handleCalendarDateChange}
             />
             <CalendarMonthWrap>
-            <Calendar.Month
-              activeDays={get(
-                activeDays,
-                `${calendarDate.year()}.${calendarDate.month()}`,
-                [],
-              )}
-              month={calendarDate.month()}
-              year={calendarDate.year()}
-            />
+              <Calendar.Month
+                activeDays={get(
+                  activeDays,
+                  `${calendarDate.year()}.${calendarDate.month()}`,
+                  [],
+                )}
+                month={calendarDate.month()}
+                year={calendarDate.year()}
+              />
             </CalendarMonthWrap>
           </Tabs.TabPane>
           <Tabs.TabPane tab="Year" key="year">

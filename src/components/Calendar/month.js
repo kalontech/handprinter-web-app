@@ -107,9 +107,11 @@ const WeekDay = styled.div`
         width: 15px
         font-weight: bold;
         color: ${colors.dark};
-        ${props => props.current && css`
-          color: ${colors.white};
-        `}
+        ${props =>
+          props.current &&
+          css`
+            color: ${colors.white};
+          `}
       `};
   }
 `
@@ -137,9 +139,11 @@ const WeekDayName = styled(WeekDay)`
       props.tiny &&
       css`
         line-height: 10px;
-        ${props => props.isHeader && css`
-          color: ${colors.darkGray};
-        `}
+        ${props =>
+          props.isHeader &&
+          css`
+            color: ${colors.darkGray};
+          `}
       `};
   }
 `
@@ -227,7 +231,11 @@ class Month extends Component {
     return (
       <Fragment>
         {isYearView && (
-          <MonthTextValue>{moment().month(month).format('MMMM')}</MonthTextValue>
+          <MonthTextValue>
+            {moment()
+              .month(month)
+              .format('MMMM')}
+          </MonthTextValue>
         )}
         {this.renderMonth(
           calendar(new Date(year, month), {
@@ -247,6 +255,7 @@ Month.propTypes = {
   month: PropTypes.number.isRequired,
   tiny: PropTypes.bool,
   year: PropTypes.number.isRequired,
+  isYearView: PropTypes.bool,
 }
 
 export default Month
