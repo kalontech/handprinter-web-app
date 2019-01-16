@@ -32,13 +32,9 @@ const WeekDay = styled.div`
   > div {
     width: 100%;
     height: 35px;
-    // ${media.desktop`
-    //   height: 35px;
-    // `}
     ${media.phone`
-      height: auto; // 10px;
+      height: auto;
       font-weight: bold;
-      color: red //${colors.black};
     `}
 
     ${props =>
@@ -109,10 +105,10 @@ const WeekDay = styled.div`
         line-height: 10px;
         height: 15px;
         width: 15px
-        ${props => !props.current && css`
-          color: ${colors.dark};
-          height: auto;
-          width: auto;
+        font-weight: bold;
+        color: ${colors.dark};
+        ${props => props.current && css`
+          color: ${colors.white};
         `}
       `};
   }
@@ -122,18 +118,13 @@ const WeekDayName = styled(WeekDay)`
   border-bottom: 1px solid ${colors.gray};
   padding: 0 0 15px;
   margin-bottom: 23px;
-  margin-top: 46px;
-  ${media.phone`
-    margin-top: 14px;
-    margin-bottom: 13px;
-  `}
 
   ${props =>
     props.tiny &&
     css`
       border-bottom: none;
       margin-bottom: 5px;
-      padding: 0 2px;
+      padding: 0 0px;
     `};
 
   > div > div {
@@ -146,11 +137,8 @@ const WeekDayName = styled(WeekDay)`
       props.tiny &&
       css`
         line-height: 10px;
-
-        ${media.phone`
-          ${props => props.isHeader && css`
-            color: ${colors.darkGray};
-          `}
+        ${props => props.isHeader && css`
+          color: ${colors.darkGray};
         `}
       `};
   }
@@ -159,10 +147,6 @@ const WeekDayName = styled(WeekDay)`
 const MonthTextValue = styled.div`
   text-align: center;
   font-weight: bold;
-  display: none;
-  ${media.phone`
-    display: block;
-  `}
 `
 
 class Month extends Component {
@@ -243,7 +227,7 @@ class Month extends Component {
     return (
       <Fragment>
         {isYearView && (
-        <MonthTextValue>{moment().month(month).format('MMMM')}</MonthTextValue>
+          <MonthTextValue>{moment().month(month).format('MMMM')}</MonthTextValue>
         )}
         {this.renderMonth(
           calendar(new Date(year, month), {

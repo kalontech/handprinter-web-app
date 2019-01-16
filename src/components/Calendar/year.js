@@ -9,8 +9,12 @@ import media from './../../utils/mediaQueryTemplate'
 import Month from './month'
 
 const Wrap = styled.div`
+  margin-top: 38px;
+  ${media.tablet`
+    margin-top: 55px;
+  `}
   ${media.phone`
-    margin-top: 35px;
+    margin-top: 38px;
   `}
 ` 
 

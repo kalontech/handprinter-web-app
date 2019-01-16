@@ -32,6 +32,13 @@ const Tabs = styled(Ant.Tabs)`
   }
 `
 
+const CalendarMonthWrap = styled.div`
+  margin-top: 55px;
+  ${media.phone`
+     margin-top: 10px;
+  `}
+`
+
 class CalendarWidget extends Component {
   state = {
     calendarDate: moment(),
@@ -53,6 +60,7 @@ class CalendarWidget extends Component {
               date={calendarDate}
               onChange={this.handleCalendarDateChange}
             />
+            <CalendarMonthWrap>
             <Calendar.Month
               activeDays={get(
                 activeDays,
@@ -62,6 +70,7 @@ class CalendarWidget extends Component {
               month={calendarDate.month()}
               year={calendarDate.year()}
             />
+            </CalendarMonthWrap>
           </Tabs.TabPane>
           <Tabs.TabPane tab="Year" key="year">
             <DateSelector

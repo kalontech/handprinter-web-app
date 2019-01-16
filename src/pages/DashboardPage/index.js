@@ -55,7 +55,8 @@ const WidgetDescription = styled.p`
 `
 
 const WidgetHeader = styled.div`
-  padding-bottom: 30px;
+  padding-bottom: 25px; // 55px; // 30px;
+  
 
   ${props =>
     props.withBorder &&
@@ -221,7 +222,6 @@ const ImpactCategorySelector = styled(Tabs)`
   .ant-tabs-nav-scroll {
     text-align: center;
   }
-
   .ant-tabs-tab {
     padding: 16.5px 16px;
     ${media.desktop`
