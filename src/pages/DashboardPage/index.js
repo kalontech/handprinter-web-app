@@ -182,9 +182,10 @@ const DashboardHeaderUserPicture = styled.img`
 
 const DashboardHeaderUserName = styled.div`
   color: ${colors.dark};
-  font-size: 22px;
+  font-size: 32px;
   ${media.desktop`
     line-height: 35px;
+    font-size: 22px;
   `}
 `
 
