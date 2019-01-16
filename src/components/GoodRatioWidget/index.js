@@ -11,10 +11,8 @@ const Wrap = styled.div`
   display: flex;
   justify-content: center;
   height: 498px;
-  ${media.desktop`
-    position: relative;
-    top: -10px;
-  `}
+  position: relative;
+  top: -40px;
   ${media.phone`
     height: auto;
     display: block;

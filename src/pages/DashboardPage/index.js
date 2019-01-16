@@ -28,7 +28,7 @@ const WidgetContainer = styled.div`
   background-color: ${colors.white};
   border-radius: 4px;
   box-shadow: 0 1px 10px 0 rgba(52, 68, 66, 0.08);
-  padding: 40px 30px;
+  padding: 40px 30px 20px 30px;
 
   ${media.phone`
     padding: 30px 10px 30px 10px;
@@ -55,7 +55,10 @@ const WidgetDescription = styled.p`
 `
 
 const WidgetHeader = styled.div`
-  padding-bottom: 25px; // 55px; // 30px;
+  padding-bottom: 55px;
+  ${media.desktop`
+    padding-bottom: 25px;
+  `}
 
   ${props =>
     props.withBorder &&
@@ -561,7 +564,7 @@ class DashboardPage extends Component {
                     <WidgetContainer>
                       <WidgetHeader withBorder>
                         <Row>
-                          <Col span={16} sm={11} lg={16} xs={24}>
+                          <Col span={16} sm={11} lg={15} xs={24}>
                             <WidgetTitle>
                               <FormattedMessage id="app.dashboardPage.myNetwork" />
                             </WidgetTitle>
