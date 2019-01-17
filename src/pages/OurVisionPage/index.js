@@ -4,6 +4,34 @@ import { Row, Col } from 'antd'
 import styled from 'styled-components'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 
+import heroBg from 'assets/our-vision/hero-bg.jpg'
+import planet from 'assets/our-vision/planet.png'
+import aboutImg1 from 'assets/our-vision/section2.1.png'
+import aboutImg2 from 'assets/our-vision/section2.2.png'
+import aboutImg3 from 'assets/our-vision/section2.3.png'
+import aboutImg4 from 'assets/our-vision/section2.4.png'
+import footBg from 'assets/our-vision/foot.svg'
+import handBg from 'assets/our-vision/handprint.svg'
+import quote from 'assets/our-vision/quote.svg'
+import num1 from 'assets/our-vision/number-1.svg'
+import num2 from 'assets/our-vision/number-2.svg'
+import num3 from 'assets/our-vision/number-3.svg'
+import num4 from 'assets/our-vision/number-4.svg'
+import num5 from 'assets/our-vision/number-5.svg'
+import num6 from 'assets/our-vision/number-6.svg'
+import stepsImg1 from 'assets/our-vision/section1.png'
+import stepsImg2 from 'assets/our-vision/section2.png'
+import stepsImg3a from 'assets/our-vision/section3.1.png'
+import stepsImg3b from 'assets/our-vision/section3.2.png'
+import stepsImg3c from 'assets/our-vision/section3.3.png'
+import stepsImg4 from 'assets/our-vision/section4.png'
+import stepsImg5 from 'assets/our-vision/section5.png'
+import stepsImg6 from 'assets/our-vision/section6.png'
+import arrow from 'assets/our-vision/arrow.png'
+
+import FingerPrintIcon from 'assets/icons/FingerPrintIcon'
+
+import media from 'utils/mediaQueryTemplate'
 import {
   PrimaryButton,
   BlockContainer,
@@ -11,37 +39,13 @@ import {
   BlockSubTitle,
   TextLarge,
   TextMedium,
-} from './../../components/Styled'
-import PageMetadata from '../../components/PageMetadata'
-import heroBg from './../../assets/our-vision/hero-bg.jpg'
-import planet from './../../assets/our-vision/planet.png'
-import aboutImg1 from './../../assets/our-vision/section2.1.png'
-import aboutImg2 from './../../assets/our-vision/section2.2.png'
-import aboutImg3 from './../../assets/our-vision/section2.3.png'
-import aboutImg4 from './../../assets/our-vision/section2.4.png'
-import footBg from './../../assets/our-vision/foot.svg'
-import handBg from './../../assets/our-vision/handprint.svg'
-import quote from './../../assets/our-vision/quote.svg'
-import num1 from './../../assets/our-vision/number-1.svg'
-import num2 from './../../assets/our-vision/number-2.svg'
-import num3 from './../../assets/our-vision/number-3.svg'
-import num4 from './../../assets/our-vision/number-4.svg'
-import num5 from './../../assets/our-vision/number-5.svg'
-import num6 from './../../assets/our-vision/number-6.svg'
-import stepsImg1 from './../../assets/our-vision/section1.png'
-import stepsImg2 from './../../assets/our-vision/section2.png'
-import stepsImg3a from './../../assets/our-vision/section3.1.png'
-import stepsImg3b from './../../assets/our-vision/section3.2.png'
-import stepsImg3c from './../../assets/our-vision/section3.3.png'
-import stepsImg4 from './../../assets/our-vision/section4.png'
-import stepsImg5 from './../../assets/our-vision/section5.png'
-import stepsImg6 from './../../assets/our-vision/section6.png'
-import arrow from './../../assets/our-vision/arrow.png'
-import FingerPrintIcon from '../../assets/icons/FingerPrintIcon'
-import VideoPopup from './../../components/VideoPopup'
-import ActionsCarousel from './../../components/ActionsCarousel'
-import colors from './../../config/colors'
-import api from './../../api'
+} from 'components/Styled'
+import PageMetadata from 'components/PageMetadata'
+import ImpactCarousel from 'components/ImpactCarousel'
+import VideoPopup from 'components/VideoPopup'
+import ActionsCarousel from 'components/ActionsCarousel'
+import colors from 'config/colors'
+import api from 'api'
 
 const OurVisionWrap = styled.div`
   background: ${colors.white};
@@ -54,6 +58,9 @@ const TitleGreen = styled(BlockTitle)`
 `
 
 const SubtitleGreen = styled(BlockSubTitle)`
+  max-width: 700px;
+  margin: 0 auto;
+
   strong {
     font-weight: bold;
     color: ${colors.green};
@@ -69,16 +76,20 @@ const SubtitleCentered = styled.div`
   padding-top: 140px;
   padding-bottom: 80px;
   text-align: center;
+
+  ${media.tablet`
+    padding-top: 75px;  
+  `}
+
+  ${media.phone`
+    padding-bottom: 20px;  
+  `}
 `
 
 const SubtitleCenteredSm = styled(SubtitleCentered)`
+  margin: 0 auto;
   padding-bottom: 65px;
-`
-
-const HeadingSmall = styled.h4`
-  font-size: 16px;
-  line-height: 1.75;
-  font-weight: bold;
+  max-width: 620px;
 `
 
 const HeadingH3 = styled.h3`
@@ -95,6 +106,7 @@ const Hero = styled.section`
 
 const HeroTitle = styled(TitleGreen)`
   margin: 20px auto 24px;
+  max-width: 760px;
 `
 
 const HeroBg = styled.img`
@@ -110,43 +122,15 @@ const HeroButton = styled.div`
   }
 `
 
-const NegativeImpacts = styled.div`
-  margin-top: 80px;
-`
-
-const NegativeImpactsItem = styled.div`
-  padding: 0 30px 30px;
-  height: 426px;
-  border-radius: 4px;
-  box-shadow: 0 1px 10px 0 rgba(52, 68, 66, 0.08);
-  background-color: ${colors.white};
-
-  h4 {
-    margin-bottom: 8px;
-  }
-`
-
-const ImpactsItemImage = styled.div`
-  height: 210px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const AboutContainer = styled.div`
+const AboutContainer = styled.section`
   position: relative;
   padding-top: 80px;
   padding-bottom: 60px;
   background: ${colors.lightGray} url(${footBg}) no-repeat left
     calc(50% + 480px) top 15px;
-  ::before {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 40px;
-    background: ${colors.white};
-    content: '';
+
+  .about__text {
+    max-width: 500px;
   }
 `
 
@@ -160,56 +144,79 @@ const WhatContainer = styled.div`
   padding: 80px 0;
   background: ${colors.lightGray} url(${handBg}) no-repeat left
     calc(50% - 370px) bottom -38px;
-  ::before {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: calc((100% - 1180px) / 2);
-    background: ${colors.white};
-    content: '';
-  }
 
   .ant-btn {
     margin-top: 20px;
   }
+
+  ${media.phone`
+    padding: 48px 0;
+
+    button {
+      width: 100%;
+    }
+  `}
 `
 
-const Steps = styled.section`
+const Steps = styled.article`
   position: relative;
 `
 
-const Step = styled.div`
+const Step = styled.section`
   padding-bottom: 200px;
+
+  ${media.desktop`
+
+    padding-bottom: 90px;
+
+    h3, p {
+      text-align: center;
+    }
+    
+    p {
+      margin-bottom: 50px;
+    }
+  `}
+
+  ${media.phone`
+    p {
+      margin-bottom: 24px;
+    }
+  `}
 `
 
-const Step1 = styled(Step)`
-  padding-bottom: 240px;
+const StepImg = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+
+  ${media.desktop`
+    display: block;
+    margin: 0 auto;
+  `}
+
+  ${media.phone`
+    max-width: 310px;
+    max-height: 268px;
+  `}
 `
 
-const Step1Img = styled.img`
-  position: relative;
-  top: 50px;
-`
-const Step2Img = styled.img`
-  position: relative;
+const Step2Img = styled(StepImg)`
   top: 20px;
-`
-const Step2 = styled(Step)`
-  padding-bottom: 220px;
+  position: relative;
+
+  ${media.desktop`
+    margin-bottom: 20px;
+    top: 0;
+  `}
 `
 
 const Step3 = styled(Step)`
   text-align: center;
   padding-bottom: 190px;
-`
 
-const Step4 = styled(Step)`
-  padding-bottom: 220px;
-`
-
-const Step5 = styled(Step)`
-  padding-bottom: 170px;
+  img[alt='3'] {
+    margin: 0 auto;
+  }
 `
 
 const ImgWrap = styled.div`
@@ -217,20 +224,37 @@ const ImgWrap = styled.div`
   justify-content: flex-end;
 `
 
-const ImgCentered = styled(ImgWrap)`
-  justify-content: center;
-`
-
 const Number = styled.img`
   padding-bottom: 35px;
+  display: block;
+
+  ${media.desktop`
+    margin: 0 auto;
+  `}
 `
+
 const StepsScheme = styled.div`
   padding-top: 150px;
+
   p {
     max-width: 240px;
     margin: 0 auto;
     line-height: 1.43;
   }
+
+  ${media.desktop`
+    padding-top: 50px;  
+  `}
+
+  ${media.tablet`
+    padding-top: 0;  
+  `}
+`
+
+const KittensWrap = styled.div`
+  ${media.tablet`
+    margin-bottom: 50px;  
+  `}
 `
 
 const StepsSchemeImg = styled.div`
@@ -240,32 +264,49 @@ const StepsSchemeImg = styled.div`
   align-items: flex-end;
   margin-bottom: 20px;
   position: relative;
+
   ::before {
     position: absolute;
     left: 100%;
     top: 0;
     content: url(${arrow});
     transform: translate(-50%);
+    display: ${({ isLast }) => (isLast ? 'none' : 'block')} ${media.tablet`
+      display: none
+    `};
   }
-`
 
-const LastImage = styled(StepsSchemeImg)`
-  ::before {
-    display: none;
+  img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
   }
 `
 
 const SliderHeading = styled.div`
-  padding: 130px 0 130px;
+  padding: 130px 0;
   text-align: center;
+
+  ${media.tablet`
+    padding: 75px 0;
+  `}
+
+  p {
+    margin: 20px auto 0;
+    max-width: 700px;
+  }
 `
 
-const StepFourScreenshotWrap = styled(ImgWrap)`
-  img {
-    top: 5px;
-    left: 20px;
-    position: relative;
-  }
+const StepFourScreenshotWrap = styled(StepImg)`
+  position: relative;
+  top: 5px;
+  left: 20px;
+
+  ${media.phone`
+    top: 0;
+    left: 5px;
+  `}
 `
 
 const StepFourContentWrap = styled.div`
@@ -279,9 +320,13 @@ const StepFourContentWrap = styled.div`
   }
 `
 
-const StepSixImage = styled.img`
+const StepSixImage = styled(StepImg)`
   position: relative;
   left: 30px;
+
+  ${media.desktop`
+    left: 0;
+  `}
 `
 
 const StepSixContentWrap = styled(StepFourContentWrap)`
@@ -310,8 +355,8 @@ class OurVisionPage extends Component {
           <Hero>
             <BlockContainer>
               <Row type="flex" justify="center">
-                <Col span={12}>
-                  <img src={planet} alt="" />
+                <Col span={18}>
+                  <img src={planet} alt="healthy Earth" />
                   <HeroTitle>
                     <FormattedHTMLMessage id="app.ourVision.hero.title" />
                   </HeroTitle>
@@ -326,10 +371,11 @@ class OurVisionPage extends Component {
             </BlockContainer>
             <HeroBg src={heroBg} alt="" />
           </Hero>
+
           <section>
             <BlockContainer>
               <Row type="flex" justify="center">
-                <Col span={11}>
+                <Col span={18}>
                   <SubtitleCenteredSm>
                     <SubtitleGray>
                       <FormattedHTMLMessage id="app.ourVision.about.title" />
@@ -338,83 +384,52 @@ class OurVisionPage extends Component {
                 </Col>
               </Row>
             </BlockContainer>
+
             <AboutContainer>
               <BlockContainer>
                 <Row type="flex" align="middle">
-                  <Col span={10}>
+                  <Col span={16}>
                     <HeadingH3>
                       <FormattedMessage id="app.ourVision.negativeImpacts.title" />
                     </HeadingH3>
-                    <TextMedium>
+                    <TextMedium className="about__text">
                       <FormattedMessage id="app.ourVision.negativeImpacts.text" />
                     </TextMedium>
                   </Col>
                 </Row>
-                <NegativeImpacts>
-                  <Row gutter={20}>
-                    <Col span={6}>
-                      <NegativeImpactsItem>
-                        <ImpactsItemImage>
-                          <img src={aboutImg1} alt="" />
-                        </ImpactsItemImage>
-                        <HeadingSmall>
-                          <FormattedMessage id="app.ourVision.negativeImpactsItem1.title" />
-                        </HeadingSmall>
-                        <p>
-                          <FormattedMessage id="app.ourVision.negativeImpactsItem1.text" />
-                        </p>
-                      </NegativeImpactsItem>
-                    </Col>
-                    <Col span={6}>
-                      <NegativeImpactsItem>
-                        <ImpactsItemImage>
-                          <img src={aboutImg2} alt="" />
-                        </ImpactsItemImage>
-                        <HeadingSmall>
-                          <FormattedMessage id="app.ourVision.negativeImpactsItem2.title" />
-                        </HeadingSmall>
-                        <p>
-                          <FormattedMessage id="app.ourVision.negativeImpactsItem2.text" />
-                        </p>
-                      </NegativeImpactsItem>
-                    </Col>
-                    <Col span={6}>
-                      <NegativeImpactsItem>
-                        <ImpactsItemImage>
-                          <img src={aboutImg3} alt="" />
-                        </ImpactsItemImage>
-                        <HeadingSmall>
-                          <FormattedMessage id="app.ourVision.negativeImpactsItem3.title" />
-                        </HeadingSmall>
-                        <p>
-                          <FormattedMessage id="app.ourVision.negativeImpactsItem3.text" />
-                        </p>
-                      </NegativeImpactsItem>
-                    </Col>
-                    <Col span={6}>
-                      <NegativeImpactsItem>
-                        <ImpactsItemImage>
-                          <img src={aboutImg4} alt="" />
-                        </ImpactsItemImage>
 
-                        <HeadingSmall>
-                          <FormattedMessage id="app.ourVision.negativeImpactsItem4.title" />
-                        </HeadingSmall>
-
-                        <p>
-                          <FormattedMessage id="app.ourVision.negativeImpactsItem4.text" />
-                        </p>
-                      </NegativeImpactsItem>
-                    </Col>
-                  </Row>
-                </NegativeImpacts>
+                <ImpactCarousel
+                  list={[
+                    {
+                      src: aboutImg1,
+                      title: 'app.ourVision.negativeImpactsItem1.title',
+                      text: 'app.ourVision.negativeImpactsItem1.text',
+                    },
+                    {
+                      src: aboutImg2,
+                      title: 'app.ourVision.negativeImpactsItem2.title',
+                      text: 'app.ourVision.negativeImpactsItem2.text',
+                    },
+                    {
+                      src: aboutImg3,
+                      title: 'app.ourVision.negativeImpactsItem3.title',
+                      text: 'app.ourVision.negativeImpactsItem3.text',
+                    },
+                    {
+                      src: aboutImg4,
+                      title: 'app.ourVision.negativeImpactsItem4.title',
+                      text: 'app.ourVision.negativeImpactsItem4.text',
+                    },
+                  ]}
+                />
               </BlockContainer>
             </AboutContainer>
           </section>
+
           <section>
             <BlockContainer>
               <Row type="flex" justify="center">
-                <Col span={13}>
+                <Col span={21}>
                   <SliderHeading>
                     <BlockSubTitle>
                       <FormattedHTMLMessage id="app.ourVision.slider.title" />
@@ -434,7 +449,7 @@ class OurVisionPage extends Component {
           <section>
             <BlockContainer>
               <Row type="flex" justify="center">
-                <Col span={12}>
+                <Col span={21}>
                   <SubtitleCentered>
                     <Quote src={quote} alt="" />
                     <SubtitleGreen>
@@ -444,10 +459,14 @@ class OurVisionPage extends Component {
                 </Col>
               </Row>
             </BlockContainer>
+
             <WhatContainer>
               <BlockContainer>
                 <Row gutter={20}>
-                  <Col span={9} offset={12}>
+                  <Col
+                    sm={{ span: 9, offset: 12 }}
+                    xs={{ span: 24, offset: 0 }}
+                  >
                     <HeadingH3>
                       <FormattedMessage id="app.ourVision.what.subtitle" />
                     </HeadingH3>
@@ -465,6 +484,7 @@ class OurVisionPage extends Component {
               </BlockContainer>
             </WhatContainer>
           </section>
+
           <Steps>
             <BlockContainer>
               <SubtitleCentered>
@@ -472,9 +492,10 @@ class OurVisionPage extends Component {
                   <FormattedMessage id="app.ourVision.steps.title" />
                 </BlockSubTitle>
               </SubtitleCentered>
-              <Step1>
-                <Row gutter={20} type="flex" align="middle">
-                  <Col span={10}>
+
+              <Step>
+                <Row gutter={20} type="flex" align="middle" justify="center">
+                  <Col lg={{ span: 10 }} md={{ span: 22 }}>
                     <Number src={num1} alt="1" />
                     <SubtitleGreen as="h3">
                       <FormattedHTMLMessage id="app.ourVision.step1.title" />
@@ -483,21 +504,29 @@ class OurVisionPage extends Component {
                       <FormattedMessage id="app.ourVision.step1.text" />
                     </TextMedium>
                   </Col>
-                  <Col span={12} offset={2}>
+                  <Col lg={{ span: 14 }} md={{ span: 22 }}>
                     <ImgWrap>
-                      <Step1Img src={stepsImg1} alt="" />
+                      <StepImg src={stepsImg1} alt="" />
                     </ImgWrap>
                   </Col>
                 </Row>
-              </Step1>
-              <Step2>
-                <Row gutter={20}>
-                  <Col span={12}>
+              </Step>
+
+              <Step>
+                <Row gutter={20} type="flex" align="middle" justify="center">
+                  <Col
+                    lg={{ span: 12, order: 0 }}
+                    md={{ span: 22, order: 2 }}
+                    xs={{ order: 2 }}
+                  >
                     <div>
                       <Step2Img src={stepsImg2} alt="" />
                     </div>
                   </Col>
-                  <Col span={10}>
+                  <Col
+                    lg={{ span: 10, offset: 2 }}
+                    md={{ span: 22, offset: 0 }}
+                  >
                     <Number src={num2} alt="2" />
                     <SubtitleGreen as="h3">
                       <FormattedHTMLMessage id="app.ourVision.step2.title" />
@@ -507,12 +536,12 @@ class OurVisionPage extends Component {
                     </TextMedium>
                   </Col>
                 </Row>
-              </Step2>
+              </Step>
+
               <Step3>
                 <Row type="flex" justify="center" gutter={20}>
                   <Col span={16}>
                     <Number src={num3} alt="3" />
-
                     <SubtitleGreen as="h3">
                       <FormattedHTMLMessage id="app.ourVision.step3.title" />
                     </SubtitleGreen>
@@ -521,49 +550,56 @@ class OurVisionPage extends Component {
                     </TextMedium>
                   </Col>
                 </Row>
+
                 <StepsScheme>
-                  <Row gutter={20}>
-                    <Col span={8}>
-                      <div>
+                  <Row gutter={20} type="flex" justify="center">
+                    <Col md={{ span: 8 }} sm={{ span: 20 }}>
+                      <KittensWrap>
                         <StepsSchemeImg>
                           <img src={stepsImg3a} alt="" />
                         </StepsSchemeImg>
                         <TextMedium>
                           <FormattedMessage id="app.ourVision.stepScheme.text1" />
                         </TextMedium>
-                      </div>
+                      </KittensWrap>
                     </Col>
-                    <Col span={8}>
-                      <div>
+                    <Col md={{ span: 8 }} sm={{ span: 20 }}>
+                      <KittensWrap>
                         <StepsSchemeImg>
                           <img src={stepsImg3b} alt="" />
                         </StepsSchemeImg>
                         <p>
                           <FormattedMessage id="app.ourVision.stepScheme.text2" />
                         </p>
-                      </div>
+                      </KittensWrap>
                     </Col>
-                    <Col span={8}>
-                      <div>
-                        <LastImage>
+                    <Col md={{ span: 8 }} sm={{ span: 20 }}>
+                      <KittensWrap>
+                        <StepsSchemeImg isLast>
                           <img src={stepsImg3c} alt="" />
-                        </LastImage>
+                        </StepsSchemeImg>
                         <p>
                           <FormattedMessage id="app.ourVision.stepScheme.text3" />
                         </p>
-                      </div>
+                      </KittensWrap>
                     </Col>
                   </Row>
                 </StepsScheme>
               </Step3>
-              <Step4>
-                <Row gutter={20} type="flex" align="middle">
-                  <Col span={10}>
-                    <StepFourScreenshotWrap>
-                      <img src={stepsImg4} alt="Add action" />
-                    </StepFourScreenshotWrap>
+
+              <Step>
+                <Row gutter={20} type="flex" align="middle" justify="center">
+                  <Col
+                    lg={{ span: 12, order: 0 }}
+                    md={{ span: 22, order: 2 }}
+                    xs={{ order: 2 }}
+                  >
+                    <StepFourScreenshotWrap src={stepsImg4} alt="Add action" />
                   </Col>
-                  <Col span={10} offset={2}>
+                  <Col
+                    lg={{ span: 10, offset: 2 }}
+                    md={{ span: 22, offset: 0 }}
+                  >
                     <StepFourContentWrap>
                       <Number src={num4} alt="4" />
                       <SubtitleGreen as="h3">
@@ -575,10 +611,11 @@ class OurVisionPage extends Component {
                     </StepFourContentWrap>
                   </Col>
                 </Row>
-              </Step4>
-              <Step5>
-                <Row gutter={20}>
-                  <Col span={10}>
+              </Step>
+
+              <Step>
+                <Row gutter={20} type="flex" align="middle" justify="center">
+                  <Col lg={{ span: 10 }} md={{ span: 22 }}>
                     <Number src={num5} alt="5" />
                     <SubtitleGreen as="h3">
                       <FormattedHTMLMessage id="app.ourVision.step5.title" />
@@ -587,21 +624,29 @@ class OurVisionPage extends Component {
                       <FormattedMessage id="app.ourVision.step5.text" />
                     </TextMedium>
                   </Col>
-                  <Col span={12} offset={2}>
-                    <ImgCentered>
-                      <img src={stepsImg5} alt="" />
-                    </ImgCentered>
+                  <Col lg={{ span: 14 }} md={{ span: 22 }}>
+                    <ImgWrap>
+                      <StepImg src={stepsImg5} alt="" />
+                    </ImgWrap>
                   </Col>
                 </Row>
-              </Step5>
+              </Step>
+
               <Step>
-                <Row gutter={20} type="flex" align="middle">
-                  <Col span={10}>
+                <Row gutter={20} type="flex" align="middle" justify="center">
+                  <Col
+                    lg={{ span: 12, order: 0 }}
+                    md={{ span: 22, order: 2 }}
+                    xs={{ order: 2 }}
+                  >
                     <ImgWrap>
                       <StepSixImage src={stepsImg6} alt="Network" />
                     </ImgWrap>
                   </Col>
-                  <Col span={10} offset={2}>
+                  <Col
+                    lg={{ span: 10, offset: 2 }}
+                    md={{ span: 22, offset: 0 }}
+                  >
                     <StepSixContentWrap>
                       <Number src={num6} alt="6" />
                       <SubtitleGreen as="h3">

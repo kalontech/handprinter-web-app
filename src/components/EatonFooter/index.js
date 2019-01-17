@@ -6,7 +6,7 @@ import footerLogo from './assets/footerLogo.svg'
 import footerLogoSmall from './assets/footerLogoSmall.svg'
 import FooterLanguageSelector from './../FooterLanguageSelector'
 import colors from './../../config/colors'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import hexToRgba from '../../utils/hexToRgba'
 import { BlockContainer } from './../Styled'
 import media from '../../utils/mediaQueryTemplate'
@@ -170,10 +170,10 @@ const EatonFooter = () => (
         <CopyrightContent>
           <SmallLogo>
             <FormattedMessage id="app.eatonFooter.poweredBy" />{' '}
-            <img src={footerLogoSmall} alt="Eaton Green Guardians" />
+            <img src={footerLogoSmall} alt="app.eatonFooter.logoCaption" />
           </SmallLogo>
           <div>
-            <FormattedMessage id="app.eatonFooter.copyright" />
+            <FormattedHTMLMessage id="app.eatonFooter.copyright" />
           </div>
         </CopyrightContent>
       </BlockContainer>

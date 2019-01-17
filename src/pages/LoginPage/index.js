@@ -67,7 +67,7 @@ class LoginPage extends Component {
       intl: { formatMessage },
       isLoggingIn,
     } = this.props
-
+    const overrides = this.props.overrides
     return (
       <Fragment>
         <PageMetadata pageName="loginPage" />
@@ -114,14 +114,16 @@ class LoginPage extends Component {
                   <FormItem>
                     {getFieldDecorator('formError')(<Input type="hidden" />)}
                   </FormItem>
-                  <ActionCardRegisterBlock>
-                    <span>
-                      <FormattedMessage id="app.loginPage.doNotHaveAnAccount" />{' '}
-                      <Link to="/account/register">
-                        <FormattedMessage id="app.loginPage.register" />
-                      </Link>
-                    </span>
-                  </ActionCardRegisterBlock>
+                  {((overrides && !overrides.logInOnly) || !overrides) && (
+                    <ActionCardRegisterBlock>
+                      <span>
+                        <FormattedMessage id="app.loginPage.doNotHaveAnAccount" />{' '}
+                        <Link to="/account/register">
+                          <FormattedMessage id="app.loginPage.register" />
+                        </Link>
+                      </span>
+                    </ActionCardRegisterBlock>
+                  )}
                 </Form>
               </ActionCardFormWrapper>
             </ActionCardRightHalf>
@@ -152,6 +154,7 @@ LoginPage.propTypes = {
   isLoggingIn: PropTypes.bool.isRequired,
   logInError: PropTypes.string,
   logInRequest: PropTypes.func.isRequired,
+  overrides: PropTypes.object,
 }
 
 export default connect(

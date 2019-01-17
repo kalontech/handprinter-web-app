@@ -12,6 +12,7 @@ import MenuIcon from '../../assets/icons/MenuIcon'
 import CloseIcon from '../../assets/icons/CloseIcon'
 import HeaderLanguageSelector from './../HeaderLanguageSelector'
 import CollapsedMenu from './../CollapsedMenu'
+import HeaderUserActions from './../HeaderUserActions'
 import {
   PrimaryButton,
   DefaultButton,
@@ -27,6 +28,7 @@ import api from './../../api'
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
 import CollapseLanguageSelector from '../CollapseLanguageSelector'
+
 const SubMenu = Menu.SubMenu
 
 const LeftAlignPublic = styled.div`
@@ -102,11 +104,7 @@ const LeftMenu = styled.div`
 
   .ant-menu-item {
     margin-right: 34px;
-    line-height: 87px;
-  }
-
-  .anticon {
-    color: ${colors.green};
+    line-height: 85px;
   }
 `
 
@@ -124,8 +122,9 @@ const RightMenu = styled.div`
   justify-content: flex-end;
   align-items: center;
 
-  .ant-menu-item {
-    margin: 0 35px;
+  a {
+    display: inline-block;
+    margin-left: 35px;
   }
 
   .ant-button {
@@ -152,6 +151,7 @@ const MenuWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   color: ${({ color }) => color || colors.dark};
+
   .ant-menu-item {
     &:hover {
       color: ${({ hoverColor }) => hoverColor || colors.dark};
@@ -381,6 +381,7 @@ const StyledAffix = styled(Affix)`
 
 const BlueBorderedButton = styled(Button)`
   border: 2px solid ${colors.darkBlue};
+  background: transparent;
   border-radius: 0;
   color: ${colors.darkBlue};
   &&:hover,
@@ -391,6 +392,21 @@ const BlueBorderedButton = styled(Button)`
     }
   }
 `
+const GrayBorderedButton = styled(Button)`
+  border: 1px solid ${colors.interfaceFooterColor2};
+  background: transparent;
+  border-radius: 0;
+  color: ${colors.interfaceFooterColor2};
+  &&:hover,
+  &&:focus {
+    border-color: ${colors.interfaceFooterColor2};
+    background: ${colors.interfaceFooterColor2};
+    color: ${colors.white};
+    }
+  }
+`
+
+const USER_ACTIONS_ROUTES = ['/dashboard']
 
 class Header extends Component {
   constructor(props) {
@@ -418,10 +434,19 @@ class Header extends Component {
     this.setState({ collapsed: !this.state.collapsed })
   }
 
+  get selectedMenuItem() {
+    const { location } = this.props
+
+    return location.pathname.includes('actions')
+      ? '/actions'
+      : location.pathname
+  }
+
   render() {
     const { type, user, withoutHeaderContent, location, overrides } = this.props
     const isTablet = this.state.width < 1200
     const isMobile = this.state.width < 768
+
     return (
       <StyledAffix>
         {type === 'minimal' && (
@@ -465,12 +490,18 @@ class Header extends Component {
               <Fragment>
                 {(!isTablet && (
                   <MenuWrap
-                    borderColor={(overrides && colors.darkBlue) || colors.green}
+                    borderColor={
+                      overrides && overrides.brandName === 'Eaton'
+                        ? colors.darkBlue
+                        : overrides && overrides.brandName === 'Interface'
+                        ? colors.interfaceFooterColor2
+                        : colors.green
+                    }
                   >
                     <LeftMenu>
                       <Menu
                         mode="horizontal"
-                        selectedKeys={[location.pathname]}
+                        selectedKeys={[this.selectedMenuItem]}
                       >
                         <Menu.Item key="/actions">
                           <Link to="/actions">
@@ -505,17 +536,26 @@ class Header extends Component {
                             <FormattedMessage id="app.header.menu.about" />
                             <ExpandMoreIcon
                               style={
-                                (!overrides && {
-                                  color: `${colors.green}`,
-                                }) || {
-                                  color: `${colors.darkBlue}`,
-                                }
+                                overrides && overrides.brandName === 'Eaton'
+                                  ? { color: `${colors.darkBlue}` }
+                                  : overrides &&
+                                    overrides.brandName === 'Interface'
+                                  ? { color: `${colors.interfaceFooterColor2}` }
+                                  : { color: `${colors.green}` }
                               }
                             />
                           </PopoverTitle>
                         </LeftAlignPublic>
                       </Popover>
-                      <HeaderLanguageSelector overrides={overrides} />
+                      <HeaderLanguageSelector
+                        color={
+                          overrides && overrides.brandName === 'Eaton'
+                            ? colors.darkBlue
+                            : overrides && overrides.brandName === 'Interface'
+                            ? colors.interfaceFooterColor2
+                            : colors.green
+                        }
+                      />
                       {overrides && overrides.inLinkLogo && (
                         <Menu
                           mode="horizontal"
@@ -523,9 +563,15 @@ class Header extends Component {
                           style={{ marginLeft: '40px' }}
                         >
                           <Menu.Item key="/pages/home">
-                            <Link to="/">
+                            <Link
+                              to="/"
+                              style={{ display: 'flex', alignItems: 'center' }}
+                            >
                               <FormattedMessage id="app.header.menu.about" />{' '}
-                              <img src={overrides.inLinkLogo} />
+                              <img
+                                src={overrides.inLinkLogo}
+                                style={{ marginLeft: '5px' }}
+                              />
                             </Link>
                           </Menu.Item>
                         </Menu>
@@ -543,18 +589,20 @@ class Header extends Component {
                           </Link>
                         </Menu.Item>
                       </Menu>
-                      <Link to="/account/register">
-                        <PrimaryButton type="primary" size="large">
-                          <FingerPrintIcon />
-                          <FormattedMessage
-                            id={
-                              overrides
-                                ? 'app.brandedHeader.link'
-                                : 'app.header.link'
-                            }
-                          />
-                        </PrimaryButton>
-                      </Link>
+                      {((overrides && !overrides.logInOnly) || !overrides) && (
+                        <Link to="/account/register">
+                          <PrimaryButton type="primary" size="large">
+                            <FingerPrintIcon />
+                            <FormattedMessage
+                              id={
+                                overrides
+                                  ? 'app.brandedHeader.link'
+                                  : 'app.header.link'
+                              }
+                            />
+                          </PrimaryButton>
+                        </Link>
+                      )}
                     </RightMenu>
                   </MenuWrap>
                 )) || (
@@ -566,28 +614,30 @@ class Header extends Component {
                 {!this.state.collapsed && isTablet && (
                   <CollapseMenu>
                     <CollapseTop>
-                      <Link to="/account/register">
-                        <PrimaryButton
-                          type="primary"
-                          size="large"
-                          style={overrides && { borderRadius: '0' }}
-                        >
-                          <FingerPrintIcon />
-                          <FormattedMessage
-                            id={
-                              overrides
-                                ? 'app.brandedHeader.link'
-                                : 'app.header.link'
-                            }
-                          />
-                        </PrimaryButton>
-                      </Link>
+                      {((overrides && !overrides.logInOnly) || !overrides) && (
+                        <Link to="/account/register">
+                          <PrimaryButton type="primary" size="large">
+                            <FingerPrintIcon />
+                            <FormattedMessage
+                              id={
+                                overrides
+                                  ? 'app.brandedHeader.link'
+                                  : 'app.header.link'
+                              }
+                            />
+                          </PrimaryButton>
+                        </Link>
+                      )}
                       <Link to="/account/login">
-                        {(overrides && (
+                        {overrides && overrides.brandName === 'Eaton' ? (
                           <BlueBorderedButton>
                             <FormattedMessage id="app.header.menu.login" />
                           </BlueBorderedButton>
-                        )) || (
+                        ) : overrides && overrides.brandName === 'Interface' ? (
+                          <GrayBorderedButton>
+                            <FormattedMessage id="app.header.menu.login" />
+                          </GrayBorderedButton>
+                        ) : (
                           <DefaultButton type="primary" size="large">
                             <FormattedMessage id="app.header.menu.login" />
                           </DefaultButton>
@@ -598,7 +648,7 @@ class Header extends Component {
                       <Menu
                         mode="inline"
                         inlineIndent={0}
-                        selectedKeys={[location.pathname]}
+                        selectedKeys={[this.selectedMenuItem]}
                         onClick={this.onClick}
                       >
                         <Menu.Item key="/actions">
@@ -613,9 +663,16 @@ class Header extends Component {
                               <FormattedMessage id="app.header.menu.about" />
                               <ExpandMoreIcon
                                 style={
-                                  (!overrides && {
-                                    color: `${colors.green}`,
-                                  }) || { color: `${colors.darkBlue}` }
+                                  overrides && overrides.brandName === 'Eaton'
+                                    ? { color: `${colors.darkBlue}` }
+                                    : overrides &&
+                                      overrides.brandName === 'Interface'
+                                    ? {
+                                        color: `${
+                                          colors.interfaceFooterColor2
+                                        }`,
+                                      }
+                                    : { color: `${colors.green}` }
                                 }
                               />
                             </CollapseSubmenuTitle>
@@ -639,14 +696,28 @@ class Header extends Component {
                         </SubMenu>
                         {overrides && overrides.inLinkLogo && (
                           <Menu.Item key="/pages/home">
-                            <Link to="/">
+                            <Link
+                              to="/"
+                              style={{ display: 'flex', alignItems: 'center' }}
+                            >
                               <FormattedMessage id="app.header.menu.about" />{' '}
-                              <img src={overrides.inLinkLogo} />
+                              <img
+                                src={overrides.inLinkLogo}
+                                style={{ marginLeft: '5px' }}
+                              />
                             </Link>
                           </Menu.Item>
                         )}
                       </Menu>
-                      <CollapseLanguageSelector overrides={overrides} />
+                      <CollapseLanguageSelector
+                        color={
+                          overrides && overrides.brandName === 'Eaton'
+                            ? colors.darkBlue
+                            : overrides && overrides.brandName === 'Interface'
+                            ? colors.interfaceFooterColor2
+                            : colors.green
+                        }
+                      />
                     </CollapseContent>
                   </CollapseMenu>
                 )}
@@ -675,29 +746,47 @@ class Header extends Component {
                 <Fragment>
                   <CenterMenu
                     defaultSelectedKeys="actions"
-                    borderColor={(overrides && colors.darkBlue) || colors.green}
+                    borderColor={
+                      overrides && overrides.brandName === 'Eaton'
+                        ? colors.darkBlue
+                        : overrides && overrides.brandName === 'Interface'
+                        ? colors.interfaceFooterColor2
+                        : colors.green
+                    }
                   >
-                    <Menu mode="horizontal" selectedKeys={[location.pathname]}>
+                    <Menu
+                      mode="horizontal"
+                      selectedKeys={[this.selectedMenuItem]}
+                    >
                       <Menu.Item key="/account/dashboard">
                         <Link to="/account/dashboard">
                           <FormattedMessage id="app.header.menu.dashboard" />
                         </Link>
                       </Menu.Item>
+
                       <Menu.Item key="/actions">
                         <Link to="/actions">
                           <FormattedMessage id="app.header.menu.actions" />
                         </Link>
                       </Menu.Item>
+
                       <Menu.Item key="/account/news">
                         <Link to="/account/news">
                           <FormattedMessage id="app.header.menu.news" />
                         </Link>
                       </Menu.Item>
+
                       {overrides && overrides.inLinkLogo && (
                         <Menu.Item key="/pages/home">
-                          <Link to="/">
+                          <Link
+                            to="/"
+                            style={{ display: 'flex', alignItems: 'center' }}
+                          >
                             <FormattedMessage id="app.header.menu.about" />{' '}
-                            <img src={overrides.inLinkLogo} />
+                            <img
+                              src={overrides.inLinkLogo}
+                              style={{ marginLeft: '5px' }}
+                            />
                           </Link>
                         </Menu.Item>
                       )}
@@ -729,15 +818,26 @@ class Header extends Component {
                           <FormattedMessage id="app.header.menu.about" />
                           <ExpandMoreIcon
                             style={
-                              (!overrides && { color: `${colors.green}` }) || {
-                                color: `${colors.darkBlue}`,
-                              }
+                              overrides && overrides.brandName === 'Eaton'
+                                ? { color: `${colors.darkBlue}` }
+                                : overrides &&
+                                  overrides.brandName === 'Interface'
+                                ? { color: `${colors.interfaceFooterColor2}` }
+                                : { color: `${colors.green}` }
                             }
                           />
                         </PopoverTitle>
                       </LeftAlignPrivate>
                     </Popover>
-                    <HeaderLanguageSelector overrides={overrides} />
+                    <HeaderLanguageSelector
+                      color={
+                        overrides && overrides.brandName === 'Eaton'
+                          ? colors.darkBlue
+                          : overrides && overrides.brandName === 'Interface'
+                          ? colors.interfaceFooterColor2
+                          : colors.green
+                      }
+                    />
                   </CenterMenu>
                   <RightAlign>
                     <Popover
@@ -776,6 +876,7 @@ class Header extends Component {
                 </Fragment>
               )) || <div />}
             </Fragment>
+
             {!this.state.collapsed && isTablet && (
               <CollapseMenu>
                 <CollapseTop />
@@ -783,7 +884,7 @@ class Header extends Component {
                   <Menu
                     mode="inline"
                     inlineIndent={0}
-                    selectedKeys={[location.pathname]}
+                    selectedKeys={[this.selectedMenuItem]}
                     onClick={this.onClick}
                   >
                     <Menu.Item key="/account/dashboard">
@@ -796,11 +897,22 @@ class Header extends Component {
                         <FormattedMessage id="app.header.menu.actions" />
                       </Link>
                     </Menu.Item>
+                    <Menu.Item key="/account/news">
+                      <Link to="/account/news">
+                        <FormattedMessage id="app.header.menu.news" />
+                      </Link>
+                    </Menu.Item>
                     {overrides && overrides.inLinkLogo && (
                       <Menu.Item key="/pages/home">
-                        <Link to="/">
+                        <Link
+                          to="/"
+                          style={{ display: 'flex', alignItems: 'center' }}
+                        >
                           <FormattedMessage id="app.header.menu.about" />{' '}
-                          <img src={overrides.inLinkLogo} />
+                          <img
+                            src={overrides.inLinkLogo}
+                            style={{ marginLeft: '5px' }}
+                          />
                         </Link>
                       </Menu.Item>
                     )}
@@ -827,9 +939,12 @@ class Header extends Component {
                           </ProfileMenu>
                           <ExpandMoreIcon
                             style={
-                              (!overrides && { color: `${colors.green}` }) || {
-                                color: `${colors.darkBlue}`,
-                              }
+                              overrides && overrides.brandName === 'Eaton'
+                                ? { color: `${colors.darkBlue}` }
+                                : overrides &&
+                                  overrides.brandName === 'Interface'
+                                ? { color: `${colors.interfaceFooterColor2}` }
+                                : { color: `${colors.green}` }
                             }
                           />
                         </CollapseSubmenuTitle>
@@ -852,12 +967,25 @@ class Header extends Component {
                       </Menu.Item>
                     </SubMenu>
                   </Menu>
-                  <CollapseLanguageSelector />
+                  <CollapseLanguageSelector
+                    color={
+                      overrides && overrides.brandName === 'Eaton'
+                        ? colors.darkBlue
+                        : overrides && overrides.brandName === 'Interface'
+                        ? colors.interfaceFooterColor2
+                        : colors.green
+                    }
+                  />
                 </CollapseContent>
               </CollapseMenu>
             )}
           </HeaderWrap>
         )}
+
+        {type === 'private' &&
+          USER_ACTIONS_ROUTES.find(route =>
+            location.pathname.includes(route),
+          ) && <HeaderUserActions />}
       </StyledAffix>
     )
   }

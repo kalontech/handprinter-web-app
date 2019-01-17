@@ -1,11 +1,12 @@
 import * as Ant from 'antd'
 import styled, { createGlobalStyle } from 'styled-components'
-import hexToRgba from './../../utils/hexToRgba'
-import arrowDownIcon from '../../assets/icons/arrowDown.svg'
-import colors from './../../config/colors'
-import media from './../../utils/mediaQueryTemplate'
 
-import backgroundOceanContainerImage from './../../assets/images/backgroundOceanContainer.png'
+import hexToRgba from 'utils/hexToRgba'
+import arrowDownIcon from 'assets/icons/arrowDown.svg'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
+
+import backgroundOceanContainerImage from 'assets/images/backgroundOceanContainer.png'
 
 export const ActionCard = styled(Ant.Row)`
   border-radius: 5px;
@@ -20,13 +21,17 @@ export const ActionCard = styled(Ant.Row)`
     margin-top: 60px;
     height: auto;
   `}
+  ${media.phone`
+    margin-top: 76px;
+    height: auto;
+  `}
 `
 
 export const ActionCardForgotPasswordBlock = styled.div`
   color: ${colors.darkGray};
   display: flex;
   justify-content: flex-end;
-  margin: -5px 0 12px;
+  margin: 12px 0 20px 0;
 `
 
 export const ActionCardFormWrapper = styled.div`
@@ -164,6 +169,9 @@ export const ActionCardRegisterBlock = styled.div`
   color: ${colors.darkGray};
   display: flex;
   justify-content: center;
+  ${media.phone`
+    margin-top: 20px;
+  `}
 `
 
 export const ActionCardTitle = styled.h1`
@@ -208,10 +216,12 @@ export const BlockContainer = styled.div`
   position: relative;
   max-width: 1180px;
   margin: 0 auto;
+
   ${media.largeDesktop`
     padding-left: 34px;
     padding-right: 34px;
   `};
+
   ${media.phone`
     padding-left: 15px;
     padding-right: 15px;
@@ -222,6 +232,11 @@ export const BlockTitle = styled.h1`
   font-size: 48px;
   line-height: 1.27;
   font-family: 'Noto Serif', serif;
+
+  ${media.tablet`
+    font-size: 35px;
+  `}
+
   ${media.phone`
     font-size: 25px;
   `};
@@ -237,13 +252,14 @@ export const BlockSubTitle = styled.h2`
   font-size: 37px;
   line-height: 1.24;
   font-weight: 700;
-  font-family: 'Noto Serif', serif;
   letter-spacing: 1px;
+
   ${media.phone`
     font-size: 22px;
     line-height: 1.4;
     letter-spacing: 0;
   `};
+
   + p {
     margin-top: 20px;
     ${media.phone`
@@ -315,13 +331,13 @@ export const ScrollToSection = styled.section`
 `
 
 export const ScrollButton = styled(ArrowButton)`
-    margin: 10px auto 0
+  margin: 10px auto 0;
+  background-color: ${colors.lightGray};
+  &&:hover,
+  &&:focus,
+  &&.active,
+  &&:active {
     background-color: ${colors.lightGray};
-    &&:hover,
-    &&:focus,
-    &&.active,
-    &&:active {
-      background-color: ${colors.lightGray};
   }
 `
 
@@ -411,6 +427,10 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
   
+  #root > .ant-layout {
+    overflow-x: hidden;
+  }
+  
   p {
     margin: 0;
   }
@@ -426,6 +446,7 @@ export const GlobalStyle = createGlobalStyle`
   .ant-tooltip {
     height: 0px;
     width: 0px
+
     .ant-tooltip-inner {
       position: relative;
       padding: 15px;
@@ -435,6 +456,7 @@ export const GlobalStyle = createGlobalStyle`
       top: 10px;
       height: 30px;
     }
+    
   }
   
   .ant-btn {
@@ -525,7 +547,7 @@ export const GlobalStyle = createGlobalStyle`
       display: none;
     }
     .ant-modal-confirm-title {
-      font-size: 28px
+      font-size: 28px;
       text-align: center;
       color: ${colors.dark};
     }
@@ -588,6 +610,7 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 30px;
     background: transparent;
   }
+  
   .ant-tooltip-arrow {
     display: none;
   }
@@ -614,6 +637,23 @@ export const GlobalStyle = createGlobalStyle`
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+  }
+  .ant-tooltip {
+    &.action-tooltip {
+    height: auto;
+    width: auto;
+    .ant-tooltip-inner  {
+      position: static;
+      width: auto;
+      height: auto;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      background: ${colors.dark};
+    }
+    .ant-tooltip-arrow {
+      display: block;
+    }
+  }
   }
 
   .d3-tooltip-container:after{

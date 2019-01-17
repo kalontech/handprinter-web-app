@@ -456,23 +456,28 @@ class ActionModalPage extends Component {
       children: (
         <Fragment>
           <TakenActionPanel showAuthBlock={!user}>
-            {type ===
-            ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW ? (
-              <img src={pigImage} />
-            ) : (
-              <img src={treeImage} />
-            )}
+            <img
+              src={
+                type === ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW
+                  ? pigImage
+                  : treeImage
+              }
+            />
             <TakenActionTitle>
               <FormattedMessage id="app.actions.congratulations" />
             </TakenActionTitle>
+
             <TakenActionDescription>
-              {type ===
-              ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW ? (
-                <FormattedMessage id="app.actions.reduceFootprint" />
-              ) : (
-                <FormattedMessage id="app.actions.handprintIncreased" />
-              )}
+              <FormattedMessage
+                id={
+                  type ===
+                  ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW
+                    ? 'app.actions.reduceFootprint'
+                    : 'app.actions.handprintIncreased'
+                }
+              />
             </TakenActionDescription>
+
             <ActionCardLabelSet
               impacts={action.impacts}
               mobileFixedWidth={true}

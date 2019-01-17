@@ -20,6 +20,7 @@
     "cookies-js": "^1.2.3",
     "css-loader": "^1.0.1",
     "dotenv": "6.0.0",
+    "dotenv-cli": "^1.4.0",
     "dotenv-expand": "4.2.0",
     "eslint": "5.6.0",
     "eslint-config-prettier": "^3.1.0",
@@ -99,66 +100,10 @@
     "eslint": "eslint src/**/**/*.js",
     "eslint:fix": "yarn eslint --fix",
     "stylelint": "stylelint src/**/*.css",
-    "stylelint:fix": "yarn stylelint --fix"
-  },
-  "eslintConfig": {
-    "extends": [
-      "standard",
-      "plugin:flowtype/recommended",
-      "plugin:react/recommended",
-      "plugin:unicorn/recommended",
-      "prettier",
-      "prettier/flowtype",
-      "prettier/react",
-      "prettier/standard",
-      "prettier/unicorn"
-    ],
-    "plugins": [
-      "flowtype",
-      "react",
-      "prettier",
-      "standard",
-      "unicorn",
-      "jest"
-    ],
-    "parserOptions": {
-      "sourceType": "module",
-      "ecmaFeatures": {
-        "jsx": true
-      }
-    },
-    "env": {
-      "es6": true,
-      "node": true,
-      "jest/globals": true
-    },
-    "globals": {
-      "File": true,
-      "atob": true,
-      "Blob": true,
-      "Headers": true,
-      "FormData": true,
-      "FileReader": true,
-      "Image": true,
-      "fetch": true,
-      "it": true
-    },
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "singleQuote": true,
-          "trailingComma": "all",
-          "semi": false
-        }
-      ],
-      "unicorn/filename-case": [
-        "error",
-        {
-          "case": "camelCase"
-        }
-      ]
-    }
+    "stylelint:fix": "yarn stylelint --fix",
+    "lokalise:push": "lokalise --token $LOKALISE_TOKEN import $LOKALISE_PROJECT_ID --file src/locales/en.json --lang_iso en",
+    "lokalise:pull": "lokalise --token $LOKALISE_TOKEN export $LOKALISE_PROJECT_ID --bundle_structure locales/%LANG_ISO%.%FORMAT% --export_empty base --type json --unzip_to src/",
+    "lokalise:sync": "yarn lokalise:push && yarn lokalise:pull"
   },
   "browserslist": [
     ">0.2%",

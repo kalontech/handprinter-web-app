@@ -60,7 +60,6 @@ const HeroDescription = styled.p`
 `
 const WhiteBorderedButton = styled(Button)`
   line-height: 29px;
-  font-size: 18px;
   max-width: 600px;
   margin: 0 auto;
   width: 280px;

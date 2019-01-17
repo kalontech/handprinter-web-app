@@ -5,15 +5,18 @@ import qs from 'qs'
 import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
 import styled from 'styled-components'
-import { injectIntl, FormattedMessage } from 'react-intl'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import debounce from 'lodash/debounce'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+
+import hexToRgba from 'utils/hexToRgba'
 
 import {
   BlockContainer,
   Pagination,
   HeaderPopover,
+  DefaultButton,
 } from './../../components/Styled'
 import ActionCard from './../../components/ActionCard'
 import ActionsFilters from './ActionFilter'
@@ -36,6 +39,7 @@ const Wrapper = styled.div`
 
 const InnerContainer = styled.div`
   padding: 25px 0;
+
   ${media.largeDesktop`
     padding: 15px 0;
   `}
@@ -79,7 +83,7 @@ const SearchField = styled(Select)`
   }
 
   .ant-select-selection__rendered {
-    margin 0 16px;
+    margin: 0 16px;
   }
 `
 
@@ -88,7 +92,6 @@ const StyledSearchIcon = styled(Icon)`
   color: ${colors.darkGray};
   font-weight: bold;
   position: absolute;
-  right: 0;
   right: 15px;
   top: 15px;
 `
@@ -107,6 +110,7 @@ const ToggleFilterButton = styled.button`
   border: none;
   position: relative;
   z-index: 1061;
+
   &:focus,
   &:hover {
     outline: none;
@@ -150,7 +154,7 @@ const ActionTabsWrap = styled.div`
 
 const ActionTabsRow = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
 `
 
@@ -206,9 +210,9 @@ const ActionTabItemListMobile = styled(HeaderPopover)`
   `}
 `
 
-const ActionTabsInnerContainer = styled(InnerContainer)`
-  padding-top: 12px;
-  padding-bottom: 12px;
+const ActionTabsInnerContainer = styled.div`
+  padding: 6px 0;
+
   ${media.phone`
     padding-top: 3px;
     padding-bottom: 3px;
@@ -224,6 +228,22 @@ const AcionTabDropdown = styled.span`
   `}
   i {
     margin-right: 8px;
+  }
+`
+
+const Button = styled(DefaultButton)`
+  color: ${hexToRgba(colors.white, 0.5)};
+  height: 44px;
+  min-width: 134px;
+
+  &&:hover,
+  &&:focus {
+    color: ${hexToRgba(colors.white, 0.7)};
+  }
+
+  &&.active,
+  &&:active {
+    color: ${hexToRgba(colors.white, 0.7)};
   }
 `
 
@@ -421,7 +441,7 @@ class ActionsPage extends Component {
   }
 
   handleOpenActionCard = ({ slug }) => {
-    history.push(`/actions/${this.state.subset}${slug}`)
+    history.push(`/actions/${this.state.subset}/${slug}`)
   }
 
   handleSearchedItemSelect = async () => {
@@ -509,7 +529,9 @@ class ActionsPage extends Component {
     const {
       intl: { formatMessage },
       user,
+      location,
     } = this.props
+
     const {
       actions,
       limit,
@@ -552,6 +574,7 @@ class ActionsPage extends Component {
                         {this.getTabItemContent(ACTIONS_SUBSETS.SUGGESTED)}
                       </ActionTabItem>
                     </ActionTabItemList>
+
                     <Popover
                       placement="bottomLeft"
                       visible={subsetDropdownVisible}
@@ -594,6 +617,14 @@ class ActionsPage extends Component {
                         />
                       </AcionTabDropdown>
                     </Popover>
+
+                    <div>
+                      <Link to={`${location.pathname}/suggest-idea`}>
+                        <Button>
+                          <FormattedMessage id="app.headerActions.addAction" />
+                        </Button>
+                      </Link>
+                    </div>
                   </ActionTabsRow>
                 </ActionTabsInnerContainer>
               </BlockContainer>
@@ -747,11 +778,10 @@ class ActionsPage extends Component {
 }
 
 ActionsPage.propTypes = {
-  intl: {
-    formatMessage: PropTypes.func.isRequired,
-  },
+  intl: intlShape.isRequired,
   user: PropTypes.object,
   token: PropTypes.string,
+  location: PropTypes.object,
 }
 
 const mapStateToProps = state => ({

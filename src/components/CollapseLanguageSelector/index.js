@@ -33,17 +33,14 @@ const LangMenu = styled(Menu)`
       padding-left: 30px;
     `}
   }
-  .anticon {
-    color: inherit;
-  }
 `
 
-const CollapseLanguageSelector = ({
-  intl,
-  setLocale,
-  className,
-  overrides,
-}) => {
+const Icon = styled(ExpandMoreIcon)`
+  color: ${({ color }) => color || colors.green};
+`
+
+const CollapseLanguageSelector = props => {
+  const { intl, setLocale, className } = props
   return (
     <LangMenu
       className={className}
@@ -63,13 +60,7 @@ const CollapseLanguageSelector = ({
               />
               <FormattedMessage id={`app.languages.${intl.locale}`} />
             </div>
-            <ExpandMoreIcon
-              style={
-                (!overrides && { color: `${colors.green}` }) || {
-                  color: `${colors.darkBlue}`,
-                }
-              }
-            />
+            <Icon {...props} />
           </LangTitle>
         }
       >

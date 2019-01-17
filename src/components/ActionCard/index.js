@@ -18,6 +18,7 @@ const CardWrap = styled.div`
   margin: 0 auto;
   display: inline-block;
 `
+
 const CardContainer = styled.div`
   display: block;
   position: relative;
@@ -32,6 +33,7 @@ const CardContainer = styled.div`
   transition: transform 0.3s;
   ${media.phone`
     margin-right: 0;
+    max-width: ${props => (props.isSlide ? 'calc(100% - 15px)' : '100%')};
   `}
   
   &:hover {

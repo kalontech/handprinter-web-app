@@ -8,6 +8,7 @@ import ScrollableAnchor, {
 } from 'react-scrollable-anchor'
 
 import colors from './../../config/colors'
+import media from './../../utils/mediaQueryTemplate'
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import {
   BlockContainer,
@@ -23,6 +24,7 @@ import {
 import PageMetadata from '../../components/PageMetadata'
 import heroImg from './../../assets/measurement/measurement-hero-img.png'
 import meaningImg from './../../assets/measurement/sheep.png'
+import meaningMobImg from './../../assets/measurement/sheep-mob.png'
 import problemImg from './../../assets/measurement/rabbit.png'
 import iconClock from './../../assets/measurement/clock_icon.png'
 import iconLeg from './../../assets/measurement/leg_icon.png'
@@ -31,10 +33,14 @@ import darkGreenLabel from './../../assets/measurement/darkgreen_label.png'
 import lightGreenLabel from './../../assets/measurement/lightgreen_label.png'
 import grayLabel from './../../assets/measurement/gray_label.png'
 import cowImg from './../../assets/measurement/cow.png'
+import cowImgMob from './../../assets/measurement/cow-mob.png'
+import cowImgMob2 from './../../assets/measurement/cow-mob2.png'
 import cardImg from './../../assets/measurement/card.png'
 import footImg from './../../assets/measurement/foot.png'
 import animation from './../../assets/measurement/scales.mp4'
 import finger from './../../assets/measurement/finger.svg'
+import printImg from './../../assets/measurement/print.png'
+import precisionImg from './../../assets/measurement/precision.png'
 
 configureAnchors({ scrollDuration: 1200 })
 
@@ -46,53 +52,263 @@ const HeadingMiddle = styled.h4`
   line-height: 1.23;
 `
 
+const ImgWrapRight = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  ${media.largeDesktop`
+    max-width: 100%;
+    justify-content: center;
+  `};
+`
+
+const ImgWrapCentered = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const HeroSection = styled.section`
   padding: 150px 0 250px;
+  ${media.largeDesktop`
+    padding-bottom: 150px;
+    .ant-row-flex {
+      justify-content: center;
+    }
+  `};
+  ${media.desktop`
+    padding: 30px 0 90px;
+    max-width: 630px;
+    margin: 0 auto;
+    text-align: center;
+    .ant-row-flex {
+      justify-content: center;
+    }
+  `};
+  ${media.phone`
+    padding-bottom: 70px;
+  `};
 `
 
 const HeroText = styled(TextLarge)`
   max-width: 425px;
+  ${media.desktop`
+    margin: 20px auto 0;
+  `};
+  ${media.phone`
+    display: none;
+  `};
+`
+const HeroBlockImage = styled(ImgWrapCentered)`
+  position: relative;
+  top: -14px;
+  left: -9px;
+  ${media.largeDesktop`
+    position: static;
+    margin-top: 20px;
+    img {
+      max-width: 100%;
+    }
+  `};
+  ${media.desktop`
+    margin-top: 60px;
+  `};
+  ${media.phone`
+    margin-top: 0;
+    margin-bottom: 30px;
+    img {
+      width: 240px;
+    }
+  `};
 `
 
 const MeaningSection = styled.section`
   padding: 188px 0 170px;
+  ${media.desktop`
+    padding: 130px 0 140px;
+  `};
+  ${media.phone`
+    padding: 0 0 70px;
+  `};
+`
+const MeaningContent = styled.div`
+  ${media.desktop`
+    max-width: 480px;
+    margin: 0 auto 50px;
+    text-align: center;
+  `};
+  ${media.phone`
+    max-width: 100%;
+    margin-bottom: 40px;
+    text-align: left;
+  `};
 `
 
-const InfoSection = styled.section`
-  padding: 110px 0 140px;
+const MeaningBlockImage = styled.img`
+  position: relative;
+  top: 13px;
+  left: -13px;
+  ${media.largeDesktop`
+    position: static;
+    img {
+      max-width: 100%;
+    }
+  `};
+  ${media.desktop`
+    max-width: 615px;
+  `};
+  ${media.phone`
+    display: none;
+  `};
+`
+
+const MobileImg = styled.img`
+  display: none;
+  max-width: 100%;
+  ${media.phone`
+    display: block;
+  `};
+`
+
+const TabletImg = styled.img`
+  display: none;
+  max-width: 100%;
+  ${media.desktop`
+    display: block;
+  `};
+  ${media.phone`
+    display: none;
+  `};
+`
+
+const ProblemBlockImage = styled.img`
+  position: relative;
+  top: -13px;
+  ${media.largeDesktop`
+    position: static;
+    max-width: 100%;
+  `};
+`
+
+const ProblemContent = styled.div`
+  ${media.desktop`
+    max-width: 480px;
+    margin: 0 auto 50px;
+    text-align: center;
+  `};
+  ${media.phone`
+    max-width: 100%;
+    margin-bottom: 40px;
+    text-align: left;
+  `};
+`
+const ProblemSection = styled.section`
+  padding-bottom: 110px;
+  ${media.largeDesktop`
+    .ant-row-flex {
+      justify-content: center;
+    }
+  `};
+  ${media.desktop`
+    padding-bottom: 140px;
+  `};
+  ${media.phone`
+    padding-bottom: 70px;
+  `};
 `
 
 const InfoWrap = styled.div`
-  padding: 50px 0 45px;
+  padding: 50px 0 5px;
   background-color: ${colors.lightGray};
+  ${media.largeDesktop`
+    padding-left: 90px;
+    padding-right: 90px;
+  `};
+  ${media.phone`
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: -15px;
+    margin-right: -15px;
+  `};
 `
 
 const InfoItem = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  margin-bottom: 40px;
   img {
     margin-right: 30px;
+    ${media.phone`
+      margin-right: 20px;
+    }
+  `};
   }
+`
+
+const ImpactSection = styled.section`
+  padding-top: 140px;
+  padding-bottom: 200px;
+  ${media.largeDesktop`
+    .ant-row-flex {
+      justify-content: center;
+    }
+  `};
+  ${media.desktop`
+    padding: 120px 0 160px;
+    ${MobileImg} {
+      display: block;
+    }
+  `};
+  ${media.phone`
+    padding: 70px 0 150px;
+    .ant-row-flex {
+      justify-content: stretch;
+      > div {
+        width: 100%;
+      }
+    }
+  `};
 `
 
 const BlockHeader = styled.div`
   text-align: center;
   padding-bottom: 80px;
-
   p {
     max-width: 600px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
   }
+  ${media.desktop`
+    max-width: 480px;
+    margin: 0 auto 50px;
+    padding-bottom: 0;
+  `};
+  ${media.phone`
+    max-width: 100%;
+    margin-bottom: 40px;
+  `};
 `
 
 const ImpactContainer = styled.div`
   margin-top: 40px;
+  ${media.phone`
+    margin-top: 30px;
+    margin-bottom: 40px;
+  `};
 `
 
 const ImpactItem = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 16px;
+`
+
+const ImpactImg = styled(ImgWrapRight)`
+  img {
+    max-width: 100%;
+  }
+  ${media.desktop`
+    display: none;
+  `};
 `
 
 const ImpactLabelText = styled.p`
@@ -139,6 +355,12 @@ const CardListContainer = styled.div`
   position: relative;
   left: -28px;
   top: -14px;
+  ${media.phone`
+    height: auto;
+    position: static;
+    margin-left: 15px;
+    margin-top: 40px;
+  `};
 `
 
 const CardList = styled.ul`
@@ -184,31 +406,84 @@ const CardListGreen = styled.li`
 `
 
 const CardSection = styled.section`
-  background-color: ${colors.lightGray};
+  background: ${colors.lightGray} url(${printImg}) no-repeat
+    calc((100% - 1180px) / 2 + 230px) center;
   height: 291px;
-  margin-top: 250px;
-  margin-bottom: 240px;
+  ${media.phone`
+    background: ${colors.lightGray};
+    height: auto;
+    padding-bottom: 50px;
+  `};
 `
 
 const CardImage = styled.img`
   margin-top: -51px;
   left: 10px;
   position: relative;
+  ${media.desktop`
+    max-width: 100%;
+    position: static;
+  `};
+  ${media.phone`
+    margin-top: -80px;
+  `};
 `
 
-const ImgWrapRight = styled.div`
-  display: flex;
-  justify-content: flex-end;
+const PrecisionSection = styled.section`
+  padding-top: 200px;
+  padding-bottom: 160px;
+  ${media.largeDesktop`
+    .ant-row-flex {
+      justify-content: center;
+    }
+  `};
+  ${media.desktop`
+    padding-top: 140px;
+    padding-bottom: 140px;
+  `};
+  ${media.phone`
+    padding-top: 50px;
+    padding-bottom: 70px;
+  `};
 `
 
-const ImgWrapCentered = styled.div`
-  display: flex;
-  justify-content: center;
+const CommonBasisSection = styled.section`
+  padding-bottom: 200px;
+  ${media.desktop`
+    padding-bottom: 140px;
+  `};
+
+  ${media.phone`
+    padding-bottom: 70px;
+  `};
+`
+
+const CommonBasisContent = styled.div`
+  ${media.desktop`
+    max-width: 480px;
+    margin: 0 auto 50px;
+    text-align: center;
+  `};
+  ${media.phone`
+    max-width: 100%;
+    margin-bottom: 40px;
+    text-align: left;
+  `};
+`
+
+const CommonBasisImg = styled.img`
+  position: relative;
+  left: -15px;
+  top: -10px;
+  ${media.largeDesktop`
+    position: static;
+    max-width: 100%;
+  `};
 `
 
 const AnimationSection = styled.section`
   position: relative;
-  margin: 200px 40px 40px;
+  margin: 0 40px 40px;
   padding-top: 110px;
   text-align: center;
   background-color: ${colors.lightGray};
@@ -219,6 +494,20 @@ const AnimationSection = styled.section`
     bottom: -6px;
     content: url(${finger});
   }
+  ${media.desktop`
+    padding-top: 50px;
+    margin: 0;
+    text-align: center;
+    ${BlockContainer} {
+      max-width: 630px;
+    }
+    &:before {
+      display: none;
+    }
+  `};
+  ${media.phone`
+    padding-top: 30px;
+  `};
 `
 
 const Animation = styled.video`
@@ -229,21 +518,12 @@ const Animation = styled.video`
   }
 `
 
-const HeroBlockImage = styled(ImgWrapCentered)`
-  position: relative;
-  top: -14px;
-  left: -9px;
-`
-
-const MeaningBlockImage = styled.img`
-  position: relative;
-  top: 13px;
-  left: -13px;
-`
-
-const ProblemBlockImage = styled.img`
-  position: relative;
-  top: -13px;
+const Scales = styled(Animation)`
+  max-width: 760px;
+  ${media.desktop`
+    margin-top: 30px;
+    max-width: 100%;
+  `};
 `
 
 const ImpactBlockWrap = styled.div`
@@ -256,6 +536,9 @@ const CardListWrap = styled.div`
   position: relative;
   top: 19px;
   left: 5px;
+  ${media.phone`
+    position: static;
+  `};
   p {
     margin-bottom: 5px;
   }
@@ -267,25 +550,14 @@ const CardListWrap = styled.div`
   }
 `
 
-const CommonBasisImg = styled.img`
-  position: relative;
-  left: -15px;
-  top: -10px;
-`
-
-const Scales = styled(Animation)`
-  max-width: 760px;
-`
-
 const MeasurementUnitsPage = () => {
   return (
     <Fragment>
       <PageMetadata pageName="measurementPage" />
-
       <HeroSection>
         <BlockContainer>
-          <Row gutter={20} type="flex" align="middle">
-            <Col span={12}>
+          <Row gutter={{ md: 20 }} type="flex" align="middle">
+            <Col xs={{ order: 2 }} md={{ order: 1 }} xl={12}>
               <BlockTitleGreen>
                 <FormattedHTMLMessage id="app.measurementPage.Hero.Title" />
               </BlockTitleGreen>
@@ -293,7 +565,7 @@ const MeasurementUnitsPage = () => {
                 <FormattedMessage id="app.measurementPage.Hero.Text" />
               </HeroText>
             </Col>
-            <Col span={12}>
+            <Col xs={{ order: 1 }} md={{ order: 2 }} xl={12}>
               <HeroBlockImage>
                 <img src={heroImg} alt="Car" />
               </HeroBlockImage>
@@ -320,9 +592,9 @@ const MeasurementUnitsPage = () => {
       <ScrollableAnchor id={'meaning'}>
         <MeaningSection>
           <BlockContainer>
-            <Row gutter={20}>
-              <Col span={10}>
-                <div>
+            <Row gutter={{ md: 20 }}>
+              <Col xl={10}>
+                <MeaningContent>
                   <BlockSubTitle>
                     <FormattedHTMLMessage id="app.measurementPage.Meaning.Title" />
                   </BlockSubTitle>
@@ -332,11 +604,12 @@ const MeasurementUnitsPage = () => {
                   <TextMediumGroup>
                     <FormattedHTMLMessage id="app.measurementPage.Meaning.Text2" />
                   </TextMediumGroup>
-                </div>
+                </MeaningContent>
               </Col>
-              <Col span={14}>
+              <Col xl={14}>
                 <ImgWrapRight>
                   <MeaningBlockImage src={meaningImg} alt="" />
+                  <MobileImg src={meaningMobImg} alt="" />
                 </ImgWrapRight>
               </Col>
             </Row>
@@ -344,34 +617,36 @@ const MeasurementUnitsPage = () => {
         </MeaningSection>
       </ScrollableAnchor>
 
-      <section>
+      <ProblemSection>
         <BlockContainer>
-          <Row gutter={20} type="flex" align="middle">
-            <Col span={12}>
+          <Row gutter={{ md: 20 }} type="flex" align="middle">
+            <Col xs={{ order: 2 }} xl={{ span: 12, order: 1 }}>
               <div>
                 <ProblemBlockImage src={problemImg} alt="" />
               </div>
             </Col>
-            <Col span={10}>
-              <BlockSubTitle>
-                <FormattedHTMLMessage id="app.measurementPage.Problem.Title" />
-              </BlockSubTitle>
-              <TextMediumGroup>
-                <FormattedMessage id="app.measurementPage.Problem.Text1" />
-              </TextMediumGroup>
-              <TextMediumGroup>
-                <FormattedHTMLMessage id="app.measurementPage.Problem.Text2" />
-              </TextMediumGroup>
+            <Col xs={{ order: 1 }} xl={{ span: 10, order: 2 }}>
+              <ProblemContent>
+                <BlockSubTitle>
+                  <FormattedHTMLMessage id="app.measurementPage.Problem.Title" />
+                </BlockSubTitle>
+                <TextMediumGroup>
+                  <FormattedMessage id="app.measurementPage.Problem.Text1" />
+                </TextMediumGroup>
+                <TextMediumGroup>
+                  <FormattedHTMLMessage id="app.measurementPage.Problem.Text2" />
+                </TextMediumGroup>
+              </ProblemContent>
             </Col>
           </Row>
         </BlockContainer>
-      </section>
+      </ProblemSection>
 
-      <InfoSection>
+      <section>
         <BlockContainer>
           <InfoWrap>
-            <Row gutter={20}>
-              <Col span={8} offset={2}>
+            <Row gutter={{ md: 20 }}>
+              <Col xl={{ span: 8, offset: 2 }}>
                 <InfoItem>
                   <img src={iconClock} alt="" />
                   <TextMedium>
@@ -379,7 +654,7 @@ const MeasurementUnitsPage = () => {
                   </TextMedium>
                 </InfoItem>
               </Col>
-              <Col span={10} offset={2}>
+              <Col xl={{ span: 10, offset: 2 }}>
                 <InfoItem>
                   <img src={iconLeg} alt="" />
                   <TextMedium>
@@ -390,13 +665,13 @@ const MeasurementUnitsPage = () => {
             </Row>
           </InfoWrap>
         </BlockContainer>
-      </InfoSection>
+      </section>
 
-      <section>
+      <ImpactSection>
         <BlockContainer>
           <BlockHeader>
             <Row type="flex" justify="center">
-              <Col span={16}>
+              <Col xl={16}>
                 <BlockSubTitle>
                   <FormattedMessage id="app.measurementPage.Impact.Title" />
                 </BlockSubTitle>
@@ -408,7 +683,7 @@ const MeasurementUnitsPage = () => {
           </BlockHeader>
 
           <Row type="flex" align="middle">
-            <Col span={8} offset={2}>
+            <Col xl={{ span: 8, offset: 2 }}>
               <ImpactBlockWrap>
                 <HeadingMiddle as="h3">
                   <FormattedMessage id="app.measurementPage.Impact.ListTitle" />
@@ -441,24 +716,30 @@ const MeasurementUnitsPage = () => {
                 </ImpactContainer>
               </ImpactBlockWrap>
             </Col>
-            <Col span={14}>
-              <ImgWrapRight>
+            <Col xl={14}>
+              <ImpactImg>
                 <img src={cowImg} alt="" />
-              </ImgWrapRight>
+              </ImpactImg>
+              <ImgWrapCentered>
+                <MobileImg src={cowImgMob2} alt="" />
+              </ImgWrapCentered>
             </Col>
           </Row>
+          <ImgWrapCentered>
+            <TabletImg src={cowImgMob} alt="" />
+          </ImgWrapCentered>
         </BlockContainer>
-      </section>
+      </ImpactSection>
 
       <CardSection>
         <BlockContainer>
           <Row>
-            <Col span={12}>
+            <Col md={12}>
               <ImgWrapRight>
                 <CardImage src={cardImg} alt="" />
               </ImgWrapRight>
             </Col>
-            <Col span={10} offset={2}>
+            <Col md={{ span: 10, offset: 2 }}>
               <CardListContainer>
                 <CardListWrap>
                   <TextMedium>
@@ -500,33 +781,60 @@ const MeasurementUnitsPage = () => {
         </BlockContainer>
       </CardSection>
 
-      <section>
+      <PrecisionSection>
         <BlockContainer>
-          <Row gutter={20}>
-            <Col span={10}>
-              <BlockSubTitle>
-                <FormattedHTMLMessage id="app.measurementPage.CommonBasis.Title" />
-              </BlockSubTitle>
-              <TextMediumGroup>
-                <FormattedHTMLMessage id="app.measurementPage.CommonBasis.Text1" />
-              </TextMediumGroup>
-              <TextMediumGroup>
-                <FormattedHTMLMessage id="app.measurementPage.CommonBasis.Text2" />
-              </TextMediumGroup>
-            </Col>
-            <Col span={12} offset={2}>
+          <Row gutter={{ md: 20 }} type="flex" align="middle">
+            <Col xs={{ order: 2 }} xl={{ span: 12, order: 1 }}>
               <ImgWrapCentered>
-                <CommonBasisImg src={footImg} alt="Foot" />
+                <CommonBasisImg src={precisionImg} alt="" />
+              </ImgWrapCentered>
+            </Col>
+            <Col xs={{ order: 1 }} xl={{ span: 12, order: 2 }}>
+              <CommonBasisContent>
+                <BlockSubTitle>
+                  <FormattedMessage id="app.measurementPage.Precision.Title" />
+                </BlockSubTitle>
+                <TextMediumGroup>
+                  <FormattedMessage id="app.measurementPage.Precision.Text1" />
+                </TextMediumGroup>
+                <TextMediumGroup>
+                  <FormattedHTMLMessage id="app.measurementPage.Precision.Text2" />
+                </TextMediumGroup>
+              </CommonBasisContent>
+            </Col>
+          </Row>
+        </BlockContainer>
+      </PrecisionSection>
+
+      <CommonBasisSection>
+        <BlockContainer>
+          <Row gutter={{ md: 20 }}>
+            <Col xl={10}>
+              <CommonBasisContent>
+                <BlockSubTitle>
+                  <FormattedHTMLMessage id="app.measurementPage.CommonBasis.Title" />
+                </BlockSubTitle>
+                <TextMediumGroup>
+                  <FormattedHTMLMessage id="app.measurementPage.CommonBasis.Text1" />
+                </TextMediumGroup>
+                <TextMediumGroup>
+                  <FormattedHTMLMessage id="app.measurementPage.CommonBasis.Text2" />
+                </TextMediumGroup>
+              </CommonBasisContent>
+            </Col>
+            <Col xl={{ span: 12, offset: 2 }}>
+              <ImgWrapCentered>
+                <CommonBasisImg src={footImg} alt="" />
               </ImgWrapCentered>
             </Col>
           </Row>
         </BlockContainer>
-      </section>
+      </CommonBasisSection>
 
       <AnimationSection>
         <BlockContainer>
           <Row type="flex" justify="center">
-            <Col span={16}>
+            <Col xl={16}>
               <BlockSubTitleGreen>
                 <FormattedHTMLMessage id="app.measurementPage.Animation.Title" />
               </BlockSubTitleGreen>

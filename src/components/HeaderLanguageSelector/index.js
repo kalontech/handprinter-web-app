@@ -6,15 +6,21 @@ import { updateIntl } from 'react-intl-redux'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import { Menu, Popover } from 'antd'
-import { HeaderPopover, PopoverTitle } from '../../components/Styled'
-import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
-import colors from '../../config/colors'
+
+import { HeaderPopover, PopoverTitle } from 'components/Styled'
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+import colors from 'config/colors'
 
 const Image = styled.img`
   margin-right: 12px;
 `
 
-const HeaderLanguageSelector = ({ intl, setLocale, overrides }) => {
+const Icon = styled(ExpandMoreIcon)`
+  color: ${({ color }) => color || colors.green};
+`
+
+const HeaderLanguageSelector = props => {
+  const { intl, setLocale } = props
   return (
     <Popover
       placement="bottomLeft"
@@ -40,13 +46,7 @@ const HeaderLanguageSelector = ({ intl, setLocale, overrides }) => {
         <FormattedMessage id={`app.languages.${intl.locale}`}>
           {message => <span>{message.substr(0, 3)}</span>}
         </FormattedMessage>
-        <ExpandMoreIcon
-          style={
-            (!overrides && { color: `${colors.green}` }) || {
-              color: `${colors.darkBlue}`,
-            }
-          }
-        />
+        <Icon />
       </PopoverTitle>
     </Popover>
   )
