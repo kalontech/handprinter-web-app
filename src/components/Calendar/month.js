@@ -83,6 +83,11 @@ const WeekDay = styled.div`
     line-height: 21px;
     width: 42px;
 
+    ${media.phone`
+      height: 32px;
+      width: 32px;
+    `}
+
     ${props =>
       props.current &&
       css`
@@ -95,6 +100,7 @@ const WeekDay = styled.div`
             background-color: ${colors.blue};
             color: ${colors.white};
             border: none;
+            padding: 7px;
           `};
       `};
 
@@ -103,8 +109,8 @@ const WeekDay = styled.div`
       css`
         font-size: 10px;
         line-height: 10px;
-        height: 15px;
-        width: 15px
+        height: 12px !important;
+        width: 12px !important;
         font-weight: bold;
         color: ${colors.dark};
         ${props =>
@@ -120,6 +126,10 @@ const WeekDayName = styled(WeekDay)`
   border-bottom: 1px solid ${colors.gray};
   padding: 0 0 15px;
   margin-bottom: 23px;
+
+  ${media.phone`
+    padding: 0 0 8px;
+  `}
 
   ${props =>
     props.tiny &&
@@ -151,6 +161,10 @@ const WeekDayName = styled(WeekDay)`
 const MonthTextValue = styled.div`
   text-align: center;
   font-weight: bold;
+  text-transform: uppercase;
+  font-size: 10px;
+  color: ${colors.black};
+  margin-bottom: 4px;
 `
 
 class Month extends Component {

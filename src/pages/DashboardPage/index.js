@@ -59,6 +59,9 @@ const WidgetHeader = styled.div`
   ${media.desktop`
     padding-bottom: 25px;
   `}
+  ${media.phone`
+    padding-bottom: 28px;
+  `}
 
   ${props =>
     props.withBorder &&
@@ -148,6 +151,10 @@ const DashboardHeaderUserPictureTree = styled.img`
   position: absolute;
   left: 90px;
   top: -120px;
+  ${media.phone`
+    left: 95px;
+    top: -125px;
+  `}
 `
 
 const DashboardHeaderUserPictureWrap = styled.div`

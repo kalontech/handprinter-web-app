@@ -35,7 +35,7 @@ const Tabs = styled(Ant.Tabs)`
 const CalendarMonthWrap = styled.div`
   margin-top: 55px;
   ${media.phone`
-     margin-top: 10px;
+     margin-top: 24px;
   `}
 `
 

@@ -20,8 +20,8 @@ const Wrap = styled.div`
 
 const StyledCol = styled(Col)`
   ${media.phone`
-    height: 105px;
-    margin-bottom: 25px;
+    height: 125px;
+    margin-bottom: 8px;
   `}
 `
 
