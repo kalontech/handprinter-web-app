@@ -136,7 +136,7 @@ const WeekDayName = styled(WeekDay)`
     css`
       border-bottom: none;
       margin-bottom: 5px;
-      padding: 0 0px;
+      padding: 0;
     `};
 
   > div > div {
