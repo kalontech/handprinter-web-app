@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import api from './../../api'
-import media from './../../utils/mediaQueryTemplate'
 import colors from './../../config/colors'
 
 const Wrap = styled.div`
@@ -65,7 +64,7 @@ const getDimensions = () => {
   const targetNode = document.getElementById('network_widget')
   return {
     width: (targetNode && targetNode.clientWidth) || window.innerWidth,
-    height: window.innerWidth < 576 ? 300 : 500
+    height: window.innerWidth < 576 ? 300 : 500,
   }
 }
 

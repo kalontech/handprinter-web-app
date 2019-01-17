@@ -241,10 +241,10 @@ class Month extends Component {
   }
 
   render() {
-    const { month, tiny, year, isYearView } = this.props
+    const { month, tiny, year } = this.props
     return (
       <Fragment>
-        {isYearView && (
+        {tiny && (
           <MonthTextValue>
             {moment()
               .month(month)
@@ -269,7 +269,6 @@ Month.propTypes = {
   month: PropTypes.number.isRequired,
   tiny: PropTypes.bool,
   year: PropTypes.number.isRequired,
-  isYearView: PropTypes.bool,
 }
 
 export default Month

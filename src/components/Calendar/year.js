@@ -38,7 +38,6 @@ const Year = ({ activeDays, year }) => (
                 month={month}
                 tiny
                 year={year}
-                isYearView={true}
               />
             </StyledCol>
           )
