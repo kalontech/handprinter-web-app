@@ -23,6 +23,7 @@ import colors from './../../config/colors'
 import media from './../../utils/mediaQueryTemplate'
 import hexToRgba from '../../utils/hexToRgba'
 import { logOut } from './../../redux/accountStore'
+import api from './../../api'
 
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
@@ -861,11 +862,13 @@ class Header extends Component {
                     >
                       <PopoverTitle>
                         <Avatar>
-                          {user.photo ? (
-                            <img src={user.photo} alt="Avatar" />
-                          ) : (
-                            user.fullName.slice(0, 1).toUpperCase()
-                          )}
+                          <img
+                            src={
+                              user.photo ||
+                              api.getUserInitialAvatar(user.fullName)
+                            }
+                            alt="Avatar"
+                          />
                         </Avatar>
                       </PopoverTitle>
                     </Popover>
@@ -920,11 +923,13 @@ class Header extends Component {
                           <ProfileMenu>
                             <PopoverTitle>
                               <Avatar>
-                                {user.photo ? (
-                                  <img src={user.photo} alt="Avatar" />
-                                ) : (
-                                  user.fullName.slice(0, 1).toUpperCase()
-                                )}
+                                <img
+                                  src={
+                                    user.photo ||
+                                    api.getUserInitialAvatar(user.fullName)
+                                  }
+                                  alt="Avatar"
+                                />
                               </Avatar>
                               <div>
                                 <Name>{user.fullName}</Name>

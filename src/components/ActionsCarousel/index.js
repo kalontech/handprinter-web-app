@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import { Carousel } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { FormattedMessage } from 'react-intl'
+
 import ActionCard from './../../components/ActionCard'
 import colors from './../../config/colors'
-import media from '../../utils/mediaQueryTemplate'
+import media, { sizes } from '../../utils/mediaQueryTemplate'
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import { PrimaryButton, ArrowButton } from './../../components/Styled'
-import { FormattedMessage } from 'react-intl'
 
 import hpSliderBg from './../../assets/homepage/actions-fingerprint.svg'
 
@@ -139,7 +140,7 @@ class ActionsCarousel extends React.Component {
     const { hideControls } = this.props
     const responsive = [
       {
-        breakpoint: 576,
+        breakpoint: sizes.phone,
         settings: {
           slidesToShow: 1,
           variableWidth: false,

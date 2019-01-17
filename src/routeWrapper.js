@@ -79,7 +79,7 @@ const RouteWrapper = ({
                 {!withoutFooter &&
                   ((brandedConfig && <brandedConfig.footerComponent />) || (
                     <Footer />
-                  ))}
+                ))}
                 <ModalContainer />
               </Layout>
             )

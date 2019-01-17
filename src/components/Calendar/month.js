@@ -5,6 +5,7 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 
 import colors from './../../config/colors'
+import media from './../../utils/mediaQueryTemplate'
 
 const WeekRow = styled.div`
   display: flex;
@@ -12,7 +13,7 @@ const WeekRow = styled.div`
 
 const WeekDay = styled.div`
   flex: 1;
-  padding: 8.5px 0;
+  padding: 8px 0;
 
   ${props =>
     props.tiny &&
@@ -29,8 +30,12 @@ const WeekDay = styled.div`
   }
 
   > div {
-    height: 42px;
     width: 100%;
+    height: 35px;
+    ${media.phone`
+      height: auto;
+      font-weight: bold;
+    `}
 
     ${props =>
       props.active &&
@@ -78,6 +83,11 @@ const WeekDay = styled.div`
     line-height: 21px;
     width: 42px;
 
+    ${media.phone`
+      height: 32px;
+      width: 32px;
+    `}
+
     ${props =>
       props.current &&
       css`
@@ -90,6 +100,7 @@ const WeekDay = styled.div`
             background-color: ${colors.blue};
             color: ${colors.white};
             border: none;
+            padding: 7px;
           `};
       `};
 
@@ -97,25 +108,35 @@ const WeekDay = styled.div`
       props.tiny &&
       css`
         font-size: 10px;
-        height: 15px;
         line-height: 10px;
-        width: 15px;
+        height: 12px !important;
+        width: 12px !important;
+        font-weight: bold;
+        color: ${colors.dark};
+        ${props =>
+          props.current &&
+          css`
+            color: ${colors.white};
+          `}
       `};
   }
 `
 
 const WeekDayName = styled(WeekDay)`
   border-bottom: 1px solid ${colors.gray};
-  margin-bottom: 15px;
-  margin-top: 35px;
   padding: 0 0 15px;
+  margin-bottom: 23px;
+
+  ${media.phone`
+    padding: 0 0 8px;
+  `}
 
   ${props =>
     props.tiny &&
     css`
       border-bottom: none;
       margin-bottom: 5px;
-      padding: 0 2px;
+      padding: 0;
     `};
 
   > div > div {
@@ -128,8 +149,22 @@ const WeekDayName = styled(WeekDay)`
       props.tiny &&
       css`
         line-height: 10px;
+        ${props =>
+          props.isHeader &&
+          css`
+            color: ${colors.darkGray};
+          `}
       `};
   }
+`
+
+const MonthTextValue = styled.div`
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 10px;
+  color: ${colors.black};
+  margin-bottom: 4px;
 `
 
 class Month extends Component {
@@ -164,7 +199,7 @@ class Month extends Component {
     return (
       <WeekRow key={key} tiny={tiny}>
         {days.map(day => (
-          <WeekDayName key={key} tiny={tiny}>
+          <WeekDayName key={key} tiny={tiny} isHeader>
             <div>
               <div>{day}</div>
             </div>
@@ -209,6 +244,13 @@ class Month extends Component {
     const { month, tiny, year } = this.props
     return (
       <Fragment>
+        {tiny && (
+          <MonthTextValue>
+            {moment()
+              .month(month)
+              .format('MMMM')}
+          </MonthTextValue>
+        )}
         {this.renderMonth(
           calendar(new Date(year, month), {
             weekStartDay: 1,

@@ -1,8 +1,17 @@
 import React, { Component } from 'react'
 import d3 from 'd3'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 import api from './../../api'
+import colors from './../../config/colors'
+import { sizes } from '../../utils/mediaQueryTemplate'
+
+const Wrap = styled.div`
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+`
 
 // Returns node size depending on the depth level
 const getNodeSize = depth => {
@@ -56,7 +65,7 @@ const getDimensions = () => {
   const targetNode = document.getElementById('network_widget')
   return {
     width: (targetNode && targetNode.clientWidth) || window.innerWidth,
-    height: 500,
+    height: window.innerWidth < sizes.phone ? 300 : 500,
   }
 }
 
@@ -124,7 +133,7 @@ class NetworkWidget extends Component {
       .enter()
       .insert('line')
       .attr('class', 'link')
-      .style('stroke', '#d7dbdb')
+      .style('stroke', colors.gray)
 
     // Draw nodes
     node
@@ -181,7 +190,7 @@ class NetworkWidget extends Component {
   }
 
   render() {
-    return <div id="network_widget" />
+    return <Wrap id="network_widget" />
   }
 }
 

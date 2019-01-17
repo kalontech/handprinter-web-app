@@ -7,6 +7,7 @@ import styled from 'styled-components'
 
 import DateSelector from './../../components/DateSelector'
 import Calendar from './../Calendar'
+import media from './../../utils/mediaQueryTemplate'
 
 const Tabs = styled(Ant.Tabs)`
   .ant-tabs-bar {
@@ -14,6 +15,10 @@ const Tabs = styled(Ant.Tabs)`
     margin-bottom: -35px;
     margin-left: 200px;
     width: calc(100% - 200px);
+    ${media.phone`
+      width: auto;
+      margin-left: 100px;
+    `}
   }
 
   .ant-tabs-nav-scroll {
@@ -22,7 +27,16 @@ const Tabs = styled(Ant.Tabs)`
 
   .ant-tabs-tab {
     font-size: 16px;
+    padding: 12px 0;
+    margin-right: 23px;
   }
+`
+
+const CalendarMonthWrap = styled.div`
+  margin-top: 55px;
+  ${media.phone`
+     margin-top: 24px;
+  `}
 `
 
 class CalendarWidget extends Component {
@@ -46,15 +60,17 @@ class CalendarWidget extends Component {
               date={calendarDate}
               onChange={this.handleCalendarDateChange}
             />
-            <Calendar.Month
-              activeDays={get(
-                activeDays,
-                `${calendarDate.year()}.${calendarDate.month()}`,
-                [],
-              )}
-              month={calendarDate.month()}
-              year={calendarDate.year()}
-            />
+            <CalendarMonthWrap>
+              <Calendar.Month
+                activeDays={get(
+                  activeDays,
+                  `${calendarDate.year()}.${calendarDate.month()}`,
+                  [],
+                )}
+                month={calendarDate.month()}
+                year={calendarDate.year()}
+              />
+            </CalendarMonthWrap>
           </Tabs.TabPane>
           <Tabs.TabPane tab="Year" key="year">
             <DateSelector
