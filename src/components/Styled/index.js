@@ -1,11 +1,12 @@
 import * as Ant from 'antd'
 import styled, { createGlobalStyle } from 'styled-components'
-import hexToRgba from './../../utils/hexToRgba'
-import arrowDownIcon from '../../assets/icons/arrowDown.svg'
-import colors from './../../config/colors'
-import media from './../../utils/mediaQueryTemplate'
 
-import backgroundOceanContainerImage from './../../assets/images/backgroundOceanContainer.png'
+import hexToRgba from 'utils/hexToRgba'
+import arrowDownIcon from 'assets/icons/arrowDown.svg'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
+
+import backgroundOceanContainerImage from 'assets/images/backgroundOceanContainer.png'
 
 export const ActionCard = styled(Ant.Row)`
   border-radius: 5px;
@@ -215,10 +216,12 @@ export const BlockContainer = styled.div`
   position: relative;
   max-width: 1180px;
   margin: 0 auto;
+
   ${media.largeDesktop`
     padding-left: 34px;
     padding-right: 34px;
   `};
+
   ${media.phone`
     padding-left: 15px;
     padding-right: 15px;
@@ -229,6 +232,11 @@ export const BlockTitle = styled.h1`
   font-size: 48px;
   line-height: 1.27;
   font-family: 'Noto Serif', serif;
+
+  ${media.tablet`
+    font-size: 35px;
+  `}
+
   ${media.phone`
     font-size: 25px;
   `};
@@ -244,13 +252,14 @@ export const BlockSubTitle = styled.h2`
   font-size: 37px;
   line-height: 1.24;
   font-weight: 700;
-  font-family: 'Noto Serif', serif;
   letter-spacing: 1px;
+
   ${media.phone`
     font-size: 22px;
     line-height: 1.4;
     letter-spacing: 0;
   `};
+
   + p {
     margin-top: 20px;
     ${media.phone`
@@ -418,6 +427,10 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
   
+  #root > .ant-layout {
+    overflow-x: hidden;
+  }
+  
   p {
     margin: 0;
   }
@@ -433,6 +446,7 @@ export const GlobalStyle = createGlobalStyle`
   .ant-tooltip {
     height: 0px;
     width: 0px
+
     .ant-tooltip-inner {
       position: relative;
       padding: 15px;

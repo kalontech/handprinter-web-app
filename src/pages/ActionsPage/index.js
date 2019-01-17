@@ -5,7 +5,7 @@ import qs from 'qs'
 import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
 import styled from 'styled-components'
-import { injectIntl, FormattedMessage } from 'react-intl'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import debounce from 'lodash/debounce'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -778,9 +778,7 @@ class ActionsPage extends Component {
 }
 
 ActionsPage.propTypes = {
-  intl: {
-    formatMessage: PropTypes.func.isRequired,
-  },
+  intl: intlShape.isRequired,
   user: PropTypes.object,
   token: PropTypes.string,
   location: PropTypes.object,

@@ -3,9 +3,8 @@ import has from 'lodash/has'
 import qs from 'qs'
 import * as Sentry from '@sentry/browser'
 
-import { store } from '../app'
-import { ACTIONS_SUBSETS } from '../utils/constants'
-import { getTemporaryToken } from './../utils/temporaryToken'
+import { store } from 'app'
+import { getTemporaryToken } from 'utils/temporaryToken'
 
 const apiBaseUrl = window.location.hostname.includes('localhost')
   ? process.env.REACT_APP_API_BASE_URL
@@ -70,16 +69,15 @@ const findAction = ({ actionId, slug }) =>
     method: 'POST',
   })
 
-const getActions = (query = {}) => 
+const getActions = (query = {}) =>
   fetchHelper(`${apiBaseUrl}/actions?${qs.stringify(query)}`)
 
-const getSuggestedActions = (query = {}, token) => 
+const getSuggestedActions = (query = {}, token) =>
   fetchHelper(`${apiBaseUrl}/actions/suggested?${qs.stringify(query)}`, {
     headers: {
       authorization: `Bearer ${token}`,
-    }
-  }
-)
+    },
+  })
 
 const getTimeValues = (query = {}) =>
   fetchHelper(`${apiBaseUrl}/actions/time_values`)

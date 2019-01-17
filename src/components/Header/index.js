@@ -27,6 +27,7 @@ import { logOut } from './../../redux/accountStore'
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
 import CollapseLanguageSelector from '../CollapseLanguageSelector'
+
 const SubMenu = Menu.SubMenu
 
 const LeftAlignPublic = styled.div`
@@ -432,10 +433,19 @@ class Header extends Component {
     this.setState({ collapsed: !this.state.collapsed })
   }
 
+  get selectedMenuItem() {
+    const { location } = this.props
+
+    return location.pathname.includes('actions')
+      ? '/actions'
+      : location.pathname
+  }
+
   render() {
     const { type, user, withoutHeaderContent, location, overrides } = this.props
     const isTablet = this.state.width < 1200
     const isMobile = this.state.width < 768
+
     return (
       <StyledAffix>
         {type === 'minimal' && (
@@ -490,7 +500,7 @@ class Header extends Component {
                     <LeftMenu>
                       <Menu
                         mode="horizontal"
-                        selectedKeys={[location.pathname]}
+                        selectedKeys={[this.selectedMenuItem]}
                       >
                         <Menu.Item key="/actions">
                           <Link to="/actions">
@@ -637,7 +647,7 @@ class Header extends Component {
                       <Menu
                         mode="inline"
                         inlineIndent={0}
-                        selectedKeys={[location.pathname]}
+                        selectedKeys={[this.selectedMenuItem]}
                         onClick={this.onClick}
                       >
                         <Menu.Item key="/actions">
@@ -743,22 +753,28 @@ class Header extends Component {
                         : colors.green
                     }
                   >
-                    <Menu mode="horizontal" selectedKeys={[location.pathname]}>
+                    <Menu
+                      mode="horizontal"
+                      selectedKeys={[this.selectedMenuItem]}
+                    >
                       <Menu.Item key="/account/dashboard">
                         <Link to="/account/dashboard">
                           <FormattedMessage id="app.header.menu.dashboard" />
                         </Link>
                       </Menu.Item>
+
                       <Menu.Item key="/actions">
                         <Link to="/actions">
                           <FormattedMessage id="app.header.menu.actions" />
                         </Link>
                       </Menu.Item>
+
                       <Menu.Item key="/account/news">
                         <Link to="/account/news">
                           <FormattedMessage id="app.header.menu.news" />
                         </Link>
                       </Menu.Item>
+
                       {overrides && overrides.inLinkLogo && (
                         <Menu.Item key="/pages/home">
                           <Link
@@ -865,7 +881,7 @@ class Header extends Component {
                   <Menu
                     mode="inline"
                     inlineIndent={0}
-                    selectedKeys={[location.pathname]}
+                    selectedKeys={[this.selectedMenuItem]}
                     onClick={this.onClick}
                   >
                     <Menu.Item key="/account/dashboard">

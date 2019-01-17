@@ -1,18 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ModalVideo from 'react-modal-video'
-import WatchVideoIcon from '../../assets/icons/WatchVideoIcon'
 import { FormattedMessage } from 'react-intl'
-import { DefaultButton, SecondaryButton } from './../Styled'
-import '../../../node_modules/react-modal-video/css/modal-video.min.css'
+import ModalVideo from 'react-modal-video'
+
+import 'react-modal-video/css/modal-video.min.css'
+
+import WatchVideoIcon from 'assets/icons/WatchVideoIcon'
+
+import { DefaultButton, SecondaryButton } from 'components/Styled'
 
 class VideoPopup extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      isOpen: false,
-    }
+  state = {
+    isOpen: false,
   }
 
   openModal = () => {

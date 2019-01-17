@@ -6,9 +6,10 @@ import { updateIntl } from 'react-intl-redux'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import { Menu, Popover } from 'antd'
-import { HeaderPopover, PopoverTitle } from '../../components/Styled'
-import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
-import colors from '../../config/colors'
+
+import { HeaderPopover, PopoverTitle } from 'components/Styled'
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+import colors from 'config/colors'
 
 const Image = styled.img`
   margin-right: 12px;
@@ -45,7 +46,7 @@ const HeaderLanguageSelector = props => {
         <FormattedMessage id={`app.languages.${intl.locale}`}>
           {message => <span>{message.substr(0, 3)}</span>}
         </FormattedMessage>
-        <Icon {...props} />
+        <Icon />
       </PopoverTitle>
     </Popover>
   )

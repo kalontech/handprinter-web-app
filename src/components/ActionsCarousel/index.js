@@ -14,7 +14,6 @@ import hpSliderBg from './../../assets/homepage/actions-fingerprint.svg'
 
 const SliderContainer = styled.div`
   height: 476px;
-  margin-left: 50px;
   background: ${colors.lightGray} url("${hpSliderBg}")no-repeat left bottom;
   @media (max-width: 1366px) {
     margin-left: 0;
@@ -62,13 +61,16 @@ const SliderContainer = styled.div`
 `
 
 const SliderWrap = styled.div`
-  padding-left: calc((100% - 1180px) / 2 - 25px);
+  padding-left: calc((100% - 1180px - 50px) / 2 + 25px);
+
   @media (max-width: 1366px) {
     padding-left: calc((100% - 1180px) / 2);
   }
+
   ${media.largeDesktop`
     padding-left: 34px;
   `}
+
   ${media.phone`
     padding-left: 15px;
   `}
