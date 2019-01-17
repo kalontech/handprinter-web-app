@@ -6,6 +6,7 @@ import * as Sentry from '@sentry/browser'
 import { store } from '../app'
 import { ACTIONS_SUBSETS } from '../utils/constants'
 import { getTemporaryToken } from './../utils/temporaryToken'
+import colors from '../config/colors';
 
 const apiBaseUrl = window.location.hostname.includes('localhost')
   ? process.env.REACT_APP_API_BASE_URL
@@ -218,7 +219,7 @@ const engageAction = (action, emails, token) =>
   })
 
 const getUserInitialAvatar = fullName =>
-  `https://ui-avatars.com/api/?background=87bb24&color=ffffff&length=1&name=${fullName}&size=256`
+  `https://ui-avatars.com/api/?background=${colors.lightGray.slice(1)}&color=${colors.gray.slice(1)}&length=1&name=${fullName}&size=256`
 
 const getNews = (query = {}, token) =>
   fetchHelper(`${apiBaseUrl}/actions/news?${qs.stringify(query)}`, {

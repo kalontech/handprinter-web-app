@@ -5,6 +5,7 @@ import { Layout, Menu, Popover, Affix, Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import FingerPrintIcon from '../../assets/icons/FingerPrintIcon'
 import MenuIcon from '../../assets/icons/MenuIcon'
@@ -21,6 +22,7 @@ import colors from './../../config/colors'
 import media from './../../utils/mediaQueryTemplate'
 import hexToRgba from '../../utils/hexToRgba'
 import { logOut } from './../../redux/accountStore'
+import api from './../../api'
 
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
@@ -760,11 +762,13 @@ class Header extends Component {
                     >
                       <PopoverTitle>
                         <Avatar>
-                          {user.photo ? (
-                            <img src={user.photo} alt="Avatar" />
-                          ) : (
-                            user.fullName.slice(0, 1).toUpperCase()
-                          )}
+                          <img
+                            src={
+                              user.photo ||
+                              api.getUserInitialAvatar(user.fullName)
+                            }
+                            alt="Avatar"
+                          />
                         </Avatar>
                       </PopoverTitle>
                     </Popover>
@@ -807,11 +811,13 @@ class Header extends Component {
                           <ProfileMenu>
                             <PopoverTitle>
                               <Avatar>
-                                {user.photo ? (
-                                  <img src={user.photo} alt="Avatar" />
-                                ) : (
-                                  user.fullName.slice(0, 1).toUpperCase()
-                                )}
+                                <img
+                                  src={
+                                    user.photo ||
+                                    api.getUserInitialAvatar(user.fullName)
+                                  }
+                                  alt="Avatar"
+                                />
                               </Avatar>
                               <div>
                                 <Name>{user.fullName}</Name>

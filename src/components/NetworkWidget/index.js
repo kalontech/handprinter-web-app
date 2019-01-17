@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import api from './../../api'
 import media from './../../utils/mediaQueryTemplate'
+import colors from './../../config/colors'
 
 const Wrap = styled.div`
   overflow: hidden;
@@ -142,7 +143,7 @@ class NetworkWidget extends Component {
       .enter()
       .insert('line')
       .attr('class', 'link')
-      .style('stroke', '#d7dbdb')
+      .style('stroke', colors.gray)
 
     // Draw nodes
     node
