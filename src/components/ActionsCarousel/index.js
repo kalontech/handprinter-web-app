@@ -22,6 +22,10 @@ const SliderContainer = styled.div`
   .ant-carousel {
     position: relative;
     top: -50px;
+    ${media.phone`
+      top: -30px;
+      margin-bottom: 20px;
+   `}
     
     .slick-dots {
       visibility: hidden;
