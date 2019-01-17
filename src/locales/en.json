@@ -338,5 +338,13 @@
     "app.aboutInterfacePage.whatAreHandprints.text2": "We also have handprints: positive impacts of our actions. Handprints include helping others reduce their footprints. Green Guardian Handprint lets Interface employees grow their handprints and reduce their footprints too.",
     "app.aboutInterfacePage.climateFit.title": "Help Us Create A Climate Fit For Life",
     "app.aboutInterfacePage.climateFit.text": "What can you do to take action at work, in your community and how can you encourage others?",
-    "app.languages.pt": "Portuguese"
+    "app.languages.pt": "Portuguese",
+    "app.errors.15": "Wrong news range, must be 'network' or 'world'",
+    "app.errors.16": "Temporary token is not present",
+    "app.errors.17": "Emails were not sent, please try again later",
+    "app.errors.17.multiple": "Emails were not sent, please try again later",
+    "app.languages.fr": "French",
+    "app.languages.de": "German",
+    "app.languages.nl": "Dutch",
+    "app.languages.zh": "Simplified Chinese"
 }
