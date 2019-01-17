@@ -441,7 +441,7 @@ class ActionsPage extends Component {
   }
 
   handleOpenActionCard = ({ slug }) => {
-    history.push(`/actions/${this.state.subset}${slug}`)
+    history.push(`/actions/${this.state.subset}/${slug}`)
   }
 
   handleSearchedItemSelect = async () => {
