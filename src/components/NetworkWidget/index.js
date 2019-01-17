@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import api from './../../api'
 import colors from './../../config/colors'
+import { sizes } from '../../utils/mediaQueryTemplate'
 
 const Wrap = styled.div`
   overflow: hidden;
@@ -64,7 +65,7 @@ const getDimensions = () => {
   const targetNode = document.getElementById('network_widget')
   return {
     width: (targetNode && targetNode.clientWidth) || window.innerWidth,
-    height: window.innerWidth < 576 ? 300 : 500,
+    height: window.innerWidth < sizes.phone ? 300 : 500,
   }
 }
 
