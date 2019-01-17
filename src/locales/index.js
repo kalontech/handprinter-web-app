@@ -17,8 +17,8 @@ import pt from './pt.json'
 import zh from './zh_CN.json'
 
 addLocaleData([
-  ...deLocaleData,
   ...enLocaleData,
+  ...deLocaleData,
   ...esLocaleData,
   ...frLocaleData,
   ...nlLocaleData,
@@ -27,8 +27,8 @@ addLocaleData([
 ])
 
 export default {
-  de,
   en,
+  de,
   es,
   fr,
   nl,
