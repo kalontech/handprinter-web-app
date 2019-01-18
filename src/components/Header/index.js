@@ -233,7 +233,8 @@ const CollapseMenu = styled(CollapsedMenu)`
   left: 0;
   width: 100%;
   background: ${colors.white};
-  color: ${colors.dark} !important;
+  color: ${colors.dark};
+  overflow: auto;
   ${media.phone`
     top: 70px;
   `}
