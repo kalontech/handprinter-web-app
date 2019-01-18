@@ -37,7 +37,10 @@ const WidgetContainer = styled.div`
   ${props =>
     props.noPaddings &&
     css`
-      padding: 0 !important;
+      padding: 0;
+      ${media.phone`
+        padding: 0;
+      `}
     `};
 `
 

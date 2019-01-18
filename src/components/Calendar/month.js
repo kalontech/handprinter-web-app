@@ -109,10 +109,14 @@ const WeekDay = styled.div`
       css`
         font-size: 10px;
         line-height: 10px;
-        height: 12px !important;
-        width: 12px !important;
+        height: 12px;
+        width: 12px;
         font-weight: bold;
         color: ${colors.dark};
+        ${media.phone`
+          height: 12px;
+          width: 12px;
+        `}
         ${props =>
           props.current &&
           css`
