@@ -342,7 +342,7 @@
     "app.languages.pt": "Portuguese",
     "app.errors.15": "Wrong news range, must be 'network' or 'world'",
     "app.errors.16": "Temporary token is not present",
-    "app.errors.17": "Emails were not sent, please try again later",
+    "app.errors.17": "Email was not sent, please try again later",
     "app.errors.17.multiple": "Emails were not sent, please try again later",
     "app.languages.fr": "French",
     "app.languages.de": "German",
