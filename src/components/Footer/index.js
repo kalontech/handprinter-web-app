@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Layout, Row, Col } from 'antd'
 import styled from 'styled-components'
-import { animateScroll } from 'react-scroll'
+import { Link } from 'react-router-dom'
 
 import footerLogo from './assets/footer_image.png'
 import FooterLanguageSelector from './../FooterLanguageSelector'
@@ -127,15 +126,12 @@ const Footer = () => (
                   <Col xs={12} md={10} xl={12}>
                     <FooterMenu>
                       <li>
-                        <Link to="/actions" onClick={animateScroll.scrollToTop}>
+                        <Link to="/actions">
                           <FormattedMessage id="app.footer.menu.actions" />
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          to="/pages/our-vision"
-                          onClick={animateScroll.scrollToTop}
-                        >
+                        <Link to="/pages/our-vision">
                           <FormattedMessage id="app.footer.menu.howItWorks" />
                         </Link>
                       </li>
@@ -148,19 +144,13 @@ const Footer = () => (
                   >
                     <FooterMenu>
                       <li>
-                        <Link
-                          to="/pages/measurement-units"
-                          onClick={animateScroll.scrollToTop}
-                        >
+                        <Link to="/pages/measurement-units">
                           <FormattedMessage id="app.footer.menu.measurement" />
                         </Link>
                       </li>
                       <li>
                         <Link to="/pages/faq">
-                          <FormattedMessage
-                            id="app.footer.menu.faq"
-                            onClick={animateScroll.scrollToTop}
-                          />
+                          <FormattedMessage id="app.footer.menu.faq" />
                         </Link>
                       </li>
                     </FooterMenu>
