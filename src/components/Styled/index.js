@@ -125,6 +125,15 @@ export const PrimaryButton = styled(Ant.Button)`
   &:active {
     background: ${colors.btnPrimaryActive};
   }
+  &:disabled {
+    &:hover {
+      color: rgba(0, 0, 0, 0.25);
+      background-color: #f5f5f5;
+      border-color: #d9d9d9;
+      text-shadow: none;
+      box-shadow: none;
+    }
+  }
 `
 
 export const SecondaryButton = styled(Ant.Button)`
@@ -144,6 +153,16 @@ export const SecondaryButton = styled(Ant.Button)`
     color: ${colors.white};
     background: ${colors.btnSecondaryActive};
   }
+
+  &:disabled {
+    &:hover {
+      color: rgba(0, 0, 0, 0.25);
+      background-color: #f5f5f5;
+      border-color: #d9d9d9;
+      text-shadow: none;
+      box-shadow: none;
+    }
+  }
 `
 
 export const DefaultButton = styled(Ant.Button)`
@@ -151,7 +170,7 @@ export const DefaultButton = styled(Ant.Button)`
   color: ${colors.ocean};
   background-color: ${hexToRgba(colors.ocean, 0.1)};
   border: none;
-  
+
   &&:hover,
   &&:focus {
     background-color: ${hexToRgba(colors.ocean, 0.18)};
@@ -162,7 +181,16 @@ export const DefaultButton = styled(Ant.Button)`
     background-color: ${hexToRgba(colors.ocean, 0.26)};
     color: ${colors.ocean};
   }
-}
+
+  &:disabled {
+    &:hover {
+      color: rgba(0, 0, 0, 0.25);
+      background-color: #f5f5f5;
+      border-color: #d9d9d9;
+      text-shadow: none;
+      box-shadow: none;
+    }
+  }
 `
 
 export const ActionCardRegisterBlock = styled.div`

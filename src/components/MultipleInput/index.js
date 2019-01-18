@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { injectIntl, FormattedMessage } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
-import { Form, Icon, Tag, Tooltip } from 'antd'
+import { Form, Tag, Tooltip } from 'antd'
 import styled from 'styled-components'
 
 import {
@@ -13,13 +13,13 @@ import colors from './../../config/colors'
 import { FormItem, Input } from './../../components/Styled'
 import decodeError from './../../utils/decodeError'
 
-export const MultipleInputWrap = styled.div`
+const MultipleInputWrap = styled.div`
   padding: 5px;
   border-radius: 5px;
   border: 1px solid ${colors.gray};
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
   min-height: 47px;
   .ant-tag {
@@ -30,13 +30,13 @@ export const MultipleInputWrap = styled.div`
   }
 `
 
-export const InputWrap = styled.div`
-  width: 100%;
+const InputWrap = styled.span`
+  width: 50%
   display: flex;
+  align-items: flex-start;
   .ant-input {
     height: 30px;
     border: none;
-    border-bottom: 1px solid ${colors.gray};
     border-radius: 0;
     margin-right: 10px;
     width: 100%;
@@ -49,25 +49,16 @@ export const InputWrap = styled.div`
   }
 `
 
-export const AddEmailButton = styled(Tag)`
-  background: ${colors.white};
-  borderstyle: dashed;
-`
-
-export const StyledInput = styled(Input)`
+const StyledInput = styled(Input)`
   height: 30px;
   border: none;
 `
 
-export const Wrap = styled.div`
+const Wrap = styled.div`
   width: 100%;
 `
 
 class MultipleInput extends Component {
-  state = {
-    inputVisible: false,
-  }
-
   componentDidMount() {
     const {
       form: { setFields },
@@ -105,16 +96,28 @@ class MultipleInput extends Component {
   }
 
   handleAddEmailInputChange = e => {
-    this.props.form.setFieldsValue({ multipleInput: e.target.value })
+    const {
+      form: { setFieldsValue, getFieldValue },
+      onChange,
+      values,
+    } = this.props
+    setFieldsValue({ multipleInput: e.target.value })
+    onChange(values, Boolean(getFieldValue('multipleInput')))
   }
 
   handleAddValueConfirm = e => {
     e.preventDefault()
     const {
       onChange,
-      form: { setFields, validateFields, resetFields },
+      form: { setFields, validateFields, resetFields, getFieldValue },
       values,
     } = this.props
+
+    if (!getFieldValue('multipleInput')) {
+      setFields({ errorMultipleInput: [] })
+      onChange(values, false)
+      return
+    }
 
     validateFields((err, { multipleInput }) => {
       if (!err) {
@@ -127,10 +130,14 @@ class MultipleInput extends Component {
           inputVisible: false,
         })
         onChange(invitesModifed)
-        setFields({ errorNewInviteValue: [] })
+        setFields({ errorMultipleInput: [] })
         resetFields(['multipleInput'])
       } else {
-        setFields({ errorNewInviteValue: err.multipleInput })
+        setFields({
+          errorMultipleInput: {
+            errors: err.multipleInput.errors,
+          },
+        })
       }
     })
   }
@@ -171,38 +178,36 @@ class MultipleInput extends Component {
       intl: { formatMessage },
       form: { getFieldDecorator },
       values,
+      placeholder,
     } = this.props
-    const { inputVisible } = this.state
     return (
       <Wrap>
         <MultipleInputWrap>
-          {!inputVisible && values.map(this.renderInviteTag)}
-          {inputVisible && (
-            <InputWrap>
-              {getFieldDecorator('multipleInput', {
+          {values.map(this.renderInviteTag)}
+          <InputWrap>
+            {values.length !== MAX_SHARE_EMAILS_LENGTH &&
+              getFieldDecorator('multipleInput', {
                 rules: getValidationRules(formatMessage).email,
               })(
                 <StyledInput
                   ref={this.multipleInputRef}
                   type="text"
                   size="small"
+                  placeholder={
+                    values.length === 0
+                      ? placeholder ||
+                        formatMessage({
+                          id:
+                            'app.increaseHandprintPage.form.enterEmailAddress',
+                        })
+                      : ''
+                  }
                   onChange={this.handleAddEmailInputChange}
                   onBlur={this.handleAddValueConfirm}
                   onPressEnter={this.handleAddValueConfirm}
                 />,
               )}
-              <AddEmailButton onClick={this.handleAddValueConfirm}>
-                <Icon type="plus" />{' '}
-                <FormattedMessage id="app.increaseHandprintPage.form.add" />
-              </AddEmailButton>
-            </InputWrap>
-          )}
-          {!inputVisible && values.length !== MAX_SHARE_EMAILS_LENGTH && (
-            <AddEmailButton onClick={this.showMultipleInput}>
-              <Icon type="plus" />{' '}
-              <FormattedMessage id="app.increaseHandprintPage.form.addEmail" />
-            </AddEmailButton>
-          )}
+          </InputWrap>
         </MultipleInputWrap>
         <FormItem>
           {getFieldDecorator('errorMultipleInput')(<Input type="hidden" />)}
@@ -218,6 +223,7 @@ MultipleInput.propTypes = {
   form: PropTypes.object.isRequired,
   intl: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
 }
 
 export default Form.create()(injectIntl(MultipleInput))

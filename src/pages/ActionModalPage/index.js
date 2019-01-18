@@ -328,6 +328,7 @@ class ActionModalPage extends Component {
     sendingEngage: false,
     successEngageSent: false,
     engageEmails: [],
+    engageInputIsTyping: false,
   }
 
   componentDidMount = async () => {
@@ -513,8 +514,8 @@ class ActionModalPage extends Component {
     })
   }
 
-  handleEngageEmailsInputChange = emails => {
-    this.setState({ engageEmails: emails })
+  handleEngageEmailsInputChange = (emails, isTyping) => {
+    this.setState({ engageEmails: emails, engageInputIsTyping: isTyping })
   }
 
   renderEngageView = () => {
@@ -524,6 +525,7 @@ class ActionModalPage extends Component {
       engageError,
       sendingEngage,
       successEngageSent,
+      engageInputIsTyping,
     } = this.state
     return this.renderInContainer({
       children: (
@@ -554,7 +556,7 @@ class ActionModalPage extends Component {
                     htmlType="submit"
                     loading={sendingEngage}
                     onClick={this.handleSubmitEngage}
-                    disabled={engageEmails.length === 0}
+                    disabled={engageEmails.length === 0 || engageInputIsTyping}
                   >
                     <FormattedMessage id="app.actionsPage.engage.send" />
                   </EngageViewSendButton>

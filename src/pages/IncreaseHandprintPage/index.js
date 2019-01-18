@@ -2,23 +2,18 @@ import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Tag, Tooltip, Icon } from 'antd'
+import { Form, Tag, Icon } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import decodeError from './../../utils/decodeError'
 import colors from './../../config/colors'
-import {
-  MAX_SHARE_EMAILS_LENGTH,
-  MAX_VISIBLE_EMAIL_LENGTH,
-} from '../../config/common'
-import { FormItem, Input, DefaultButton } from './../../components/Styled'
-import getValidationRules from './../../config/validationRules'
+import { Input, DefaultButton } from './../../components/Styled'
 import hexToRgba from '../../utils/hexToRgba'
 import savePlanetImg from '../../assets/increase-handprint/save_planet.png'
 import { getInvitationLink } from '../../utils/helpers'
 import api from './../../api'
 import media from './../../utils/mediaQueryTemplate'
 import PageMetadata from '../../components/PageMetadata'
+import MultipleInput from '../../components/MultipleInput'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -183,7 +178,7 @@ export const CopyToClipboardInput = styled(Input)`
 `
 
 export const CopyToClipboardButton = styled(DefaultButton)`
-  min-width: 132px;
+  min-width: 142px;
   height: 46px;
   margin-left: 7px;
   font-weight: bold;
@@ -195,7 +190,7 @@ export const CopyToClipboardButton = styled(DefaultButton)`
 `
 
 export const SendInvitesButton = styled(DefaultButton)`
-  min-width: 132px;
+  min-width: 142px;
   background-color: ${hexToRgba(colors.green, 0.1)};
   color: ${colors.green};
   height: 47px;
@@ -247,7 +242,7 @@ export const InvitationEmailsWrap = styled.div`
 export const SendInvitationForm = styled(Form)`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   ${media.phone`
     flex-direction: column;
   `}
@@ -282,6 +277,12 @@ export const AddEmailWrap = styled.div`
   }
 `
 
+const InvitationInput = styled(Input)`
+  height: 47px;
+  margin-right: 5px;
+  color: ${colors.darkGray};
+`
+
 class IncreaseHandprintPage extends Component {
   constructor(props) {
     super(props)
@@ -292,28 +293,16 @@ class IncreaseHandprintPage extends Component {
       shareInvitationCodeError: null,
       inputVisible: false,
       addEmailInputValue: '',
+      isTyping: false,
+      showSuccessIndicator: false,
     }
 
     this.saveInviteRef = ref => (this.saveInviteRef = ref)
     this.shareInviteRef = React.createRef()
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-    const {
-      form: { setFields },
-      intl: { formatMessage },
-    } = this.props
+  componentDidUpdate = async (prevProps, prevState) => {
     const { shareInvitationCodeError, isSharingInvitationCode } = this.state
-
-    if (prevState.shareInvitationCodeError !== shareInvitationCodeError) {
-      setFields({
-        errorNewInviteValue: {
-          errors: shareInvitationCodeError
-            ? [new Error(formatMessage({ id: shareInvitationCodeError }))]
-            : [],
-        },
-      })
-    }
 
     // Reset emails array after successfull response
     if (
@@ -321,32 +310,16 @@ class IncreaseHandprintPage extends Component {
       !isSharingInvitationCode &&
       shareInvitationCodeError === null
     ) {
-      this.setState({ emails: [] })
+      this.setState({ emails: [], showSuccessIndicator: true })
+      await new Promise(resolve => setTimeout(resolve, 3000))
+      this.setState({ showSuccessIndicator: false })
     }
   }
 
   handleSendInvites = async e => {
     e.preventDefault()
     const { emails, invitationLink } = this.state
-    const {
-      form: { setFields },
-      intl: { formatMessage },
-    } = this.props
-
-    if (emails.length === 0) {
-      setFields({
-        errorNewInviteValue: {
-          errors: [
-            new Error(
-              formatMessage({ id: 'app.increaseHandprintPage.emptyError' }),
-            ),
-          ],
-        },
-      })
-    } else {
-      this.setState({ shareInvitationCodeError: null })
-      this.fetchShareInvitationCode(emails, invitationLink)
-    }
+    this.fetchShareInvitationCode(emails, invitationLink)
   }
 
   fetchShareInvitationCode = async (emails, invitationLink) => {
@@ -358,11 +331,14 @@ class IncreaseHandprintPage extends Component {
         { emails: emails, invitationCodeUrl: invitationLink },
         token,
       )
-      this.setState({ isSharingInvitationCode: false })
+      this.setState({
+        isSharingInvitationCode: false,
+        shareInvitationCodeError: null,
+      })
     } catch (error) {
       this.setState({
         isSharingInvitationCode: false,
-        shareInvitationCodeError: decodeError(error),
+        shareInvitationCodeError: error,
       })
     }
   }
@@ -372,44 +348,8 @@ class IncreaseHandprintPage extends Component {
     document.execCommand('copy')
   }
 
-  handleRemoveInvite = removedEmail => {
-    this.setState({
-      emails: this.state.emails.filter(email => email !== removedEmail),
-    })
-  }
-
-  showAddEmailInput = () => {
-    this.setState({ inputVisible: true }, () => this.input.focus())
-  }
-
-  handleAddEmailInputChange = e => {
-    this.props.form.setFieldsValue({ addEmailInputValue: e.target.value })
-  }
-
-  handleAddEmailInputConfirm = e => {
-    e.preventDefault()
-    const {
-      form: { setFields, validateFields, resetFields },
-    } = this.props
-    const { emails } = this.state
-
-    validateFields((err, { addEmailInputValue }) => {
-      if (!err) {
-        let invitesModifed = emails
-        // add new email if it's unique value of emails array
-        if (addEmailInputValue && emails.indexOf(addEmailInputValue) === -1) {
-          invitesModifed = [...emails, addEmailInputValue]
-        }
-        this.setState({
-          emails: invitesModifed,
-          inputVisible: false,
-        })
-        setFields({ errorNewInviteValue: [] })
-        resetFields(['addEmailInputValue'])
-      } else {
-        setFields({ errorNewInviteValue: err.addEmailInputValue })
-      }
-    })
+  handleMultipleInputChange = (emails, isTyping) => {
+    this.setState({ emails, isTyping })
   }
 
   addEmailInputRef = input => (this.input = input)
@@ -428,35 +368,16 @@ class IncreaseHandprintPage extends Component {
     </TitleSectionWrap>
   )
 
-  renderInviteTag = email => {
-    const isLongTag = email.length > MAX_VISIBLE_EMAIL_LENGTH
-    const tagElem = (
-      <Tag
-        key={email}
-        closable={true}
-        afterClose={() => this.handleRemoveInvite(email)}
-      >
-        {isLongTag ? `${email.slice(0, 20)}...` : email}
-      </Tag>
-    )
-    return isLongTag ? (
-      <Tooltip title={email} key={email}>
-        {tagElem}
-      </Tooltip>
-    ) : (
-      tagElem
-    )
-  }
-
   renderFormSection = (
     {
       emails,
       invitationLink,
       isSharingInvitationCode,
-      inputVisible,
-      addEmailInputValue,
+      shareInvitationCodeError,
+      isTyping,
+      showSuccessIndicator,
     },
-    { user, form: { getFieldDecorator }, intl: { formatMessage } },
+    { user },
   ) => (
     <FormSectionWrap>
       <FormWrap>
@@ -494,48 +415,21 @@ class IncreaseHandprintPage extends Component {
               <FormattedMessage id="app.increaseHandprintPage.form.sendInvitationByEmail" />
             </FormSectionHeading>
             <SendInvitationForm onSubmit={this.handleSendInvites}>
-              <InvitationEmailsWrap>
-                {!inputVisible && emails.map(this.renderInviteTag)}
-                {inputVisible && (
-                  <AddEmailWrap>
-                    {getFieldDecorator('addEmailInputValue', {
-                      rules: getValidationRules(formatMessage).email,
-                    })(
-                      <AddEmailInput
-                        ref={this.addEmailInputRef}
-                        type="text"
-                        size="small"
-                        onChange={this.handleAddEmailInputChange}
-                        onBlur={this.handleAddEmailInputConfirm}
-                        onPressEnter={this.handleAddEmailInputConfirm}
-                      />,
-                    )}
-                    <AddEmailButton onClick={this.handleAddEmailInputConfirm}>
-                      <Icon type="plus" />{' '}
-                      <FormattedMessage id="app.increaseHandprintPage.form.add" />
-                    </AddEmailButton>
-                  </AddEmailWrap>
-                )}
-                {!inputVisible && emails.length !== MAX_SHARE_EMAILS_LENGTH && (
-                  <AddEmailButton onClick={this.showAddEmailInput}>
-                    <Icon type="plus" />{' '}
-                    <FormattedMessage id="app.increaseHandprintPage.form.addEmail" />
-                  </AddEmailButton>
-                )}
-              </InvitationEmailsWrap>
+              <MultipleInput
+                values={emails}
+                onChange={this.handleMultipleInputChange}
+                error={shareInvitationCodeError}
+                inputComponent={InvitationInput}
+              />
               <SendInvitesButton
                 htmlType="submit"
                 loading={isSharingInvitationCode}
-                disabled={emails.length === 0}
+                disabled={emails.length === 0 || isTyping}
               >
+                {showSuccessIndicator && <Icon type="check" />}
                 <FormattedMessage id="app.increaseHandprintPage.form.sendInvites" />
               </SendInvitesButton>
             </SendInvitationForm>
-            <FormItem>
-              {getFieldDecorator('errorNewInviteValue')(
-                <Input type="hidden" />,
-              )}
-            </FormItem>
           </div>
         </FormSectionContent>
       </FormWrap>
