@@ -347,7 +347,7 @@
     "app.languages.de": "Allemand",
     "app.languages.nl": "Néerlandais",
     "app.languages.zh": "Chinois simplifié",
-    "app.measurementPage.Precision.Title": "No false precision",
-    "app.measurementPage.Precision.Text1": "The impacts of an action depend on many factors, and this helps make them uncertain and vary from person to person.  Handprinter lets you take some of these factors into account by specifying your home country and optionally parameterizing the actions you take, but uncertainty and variability remain.  This means reporting your impacts with a value like 4.35 days is false precision.",
-    "app.measurementPage.Precision.Text2": "Handprinter solves this by restricting all reporting of values to “round numbers” like 1, 2, 5, and 10. <strong>This also makes impacts easier to remember, and helps you focus on differences that truly matter.<\/strong>"
+    "app.measurementPage.Precision.Title": "Pas de fausse précision",
+    "app.measurementPage.Precision.Text1": "Les impacts d'une action dépendent de nombreux facteurs, ce qui contribue à les rendre incertains et varie d'une personne à l'autre. Handprinter vous permet de prendre en compte certains de ces facteurs en spécifiant votre pays d'origine et en paramétrant éventuellement les actions que vous entreprenez, mais l'incertitude et la variabilité demeurent. Cela signifie que signaler vos impacts avec une valeur telle que 4,35 jours est une fausse précision.",
+    "app.measurementPage.Precision.Text2": "Handprinter résout ce problème en limitant tous les rapports de valeurs aux «chiffres arrondis» tels que 1, 2, 5 et 10. <strong> Cela simplifie également la mémorisation des impacts et vous aide à vous concentrer sur les différences qui comptent vraiment. <\/strong>"
 }

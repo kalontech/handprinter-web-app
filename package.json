@@ -101,7 +101,7 @@
     "eslint:fix": "yarn eslint --fix",
     "stylelint": "stylelint src/**/*.css",
     "stylelint:fix": "yarn stylelint --fix",
-    "lokalise:push": "lokalise --token $LOKALISE_TOKEN import $LOKALISE_PROJECT_ID --file src/locales/en.json --lang_iso en",
+    "lokalise:push": "lokalise --token $LOKALISE_TOKEN import $LOKALISE_PROJECT_ID --cleanup_mode 1 --convert_placeholders 0 --file src/locales/en.json --lang_iso en --replace 1 --replace_breaks 1",
     "lokalise:pull": "lokalise --token $LOKALISE_TOKEN export $LOKALISE_PROJECT_ID --bundle_structure locales/%LANG_ISO%.%FORMAT% --export_empty base --type json --unzip_to src/",
     "lokalise:sync": "yarn lokalise:push && yarn lokalise:pull"
   },
