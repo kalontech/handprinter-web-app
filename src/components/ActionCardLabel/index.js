@@ -118,42 +118,47 @@ const ActionCardLabel = ({
   unit,
   hideTooltip,
   ...otherProp
-}) => (
-  <Tooltip
-    visible={hideTooltip}
-    overlayClassName="action-tooltip"
-    title={() => (
-      <TooltipContainer>
-        <FormattedHTMLMessage
-          id="app.actionCardLabel.tooltip.text"
-          values={{
-            value: value,
-            unit: unit,
-            category: category,
-          }}
-        />
-        <div>
-          <Link to="/pages/measurement-units">
-            <FormattedMessage id="app.actionCardLabel.tooltip.link" />
-          </Link>
-        </div>
-      </TooltipContainer>
-    )}
-    mouseEnterDelay={1}
-  >
-    <LabelContainer unit={unit} variant={variant}>
-      <Category unit={unit} variant={variant}>
-        <Icon component={() => icons[variant][category]} {...otherProp} />
-      </Category>
-      <Impact>
-        <Caption unit={unit} variant={variant}>
-          {unit}
-        </Caption>
-        <div>{value}</div>
-      </Impact>
-    </LabelContainer>
-  </Tooltip>
-)
+}) => {
+  const tooltipProps = {}
+  if (hideTooltip) tooltipProps.visible = false
+
+  return (
+    <Tooltip
+      {...tooltipProps}
+      overlayClassName="action-tooltip"
+      title={() => (
+        <TooltipContainer>
+          <FormattedHTMLMessage
+            id="app.actionCardLabel.tooltip.text"
+            values={{
+              value: value,
+              unit: unit,
+              category: category,
+            }}
+          />
+          <div>
+            <Link to="/pages/measurement-units">
+              <FormattedMessage id="app.actionCardLabel.tooltip.link" />
+            </Link>
+          </div>
+        </TooltipContainer>
+      )}
+      mouseEnterDelay={1}
+    >
+      <LabelContainer unit={unit} variant={variant}>
+        <Category unit={unit} variant={variant}>
+          <Icon component={() => icons[variant][category]} {...otherProp} />
+        </Category>
+        <Impact>
+          <Caption unit={unit} variant={variant}>
+            {unit}
+          </Caption>
+          <div>{value}</div>
+        </Impact>
+      </LabelContainer>
+    </Tooltip>
+  )
+}
 
 ActionCardLabel.propTypes = {
   category: PropTypes.oneOf(Object.values(IMPACT_CATEGORIES)).isRequired,

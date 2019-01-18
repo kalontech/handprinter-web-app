@@ -22,6 +22,6 @@ const expandMoreSvg = () => (
   </svg>
 )
 
-const ExpandMoreIcon = () => <Icon component={expandMoreSvg} />
+const ExpandMoreIcon = props => <Icon component={expandMoreSvg} {...props} />
 
 export default ExpandMoreIcon
