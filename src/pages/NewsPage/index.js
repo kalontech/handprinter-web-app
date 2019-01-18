@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
-import { Menu, Dropdown, Icon } from 'antd'
+import { Menu, Dropdown } from 'antd'
 import { connect } from 'react-redux'
 import moment from 'moment'
 
@@ -11,6 +11,8 @@ import ActionCardLabelSet from './../../components/ActionCardLabelSet'
 import Spinner from './../../components/Spinner'
 import { BlockContainer, DefaultButton } from './../../components/Styled'
 import colors from './../../config/colors'
+import media from './../../utils/mediaQueryTemplate'
+import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 
 const NEWS_RANGES = {
   NETWORK: 'network',
@@ -20,6 +22,9 @@ const NEWS_RANGES = {
 const PageContainer = styled.div`
   background-color: ${colors.lightGray};
   padding: 40px 0;
+  ${media.phone`
+    padding-bottom: 50px;
+  `}
 `
 
 const NewsHeader = styled.div`
@@ -27,11 +32,39 @@ const NewsHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 20px;
+`
+
+const NewsTitle = styled.h1`
+  font-size: 28px;
+  margin-bottom: 0;
+  line-height: 35px;
+  ${media.phone`
+    display: none;
+  `}
+`
+
+const NewsTitleMob = styled(NewsTitle)`
+   display: none;
+    ${media.phone`
+      display: block;
+  `}
+  }
 `
 
 const NewsContainer = styled.div`
   background-color: ${colors.white};
   padding: 17px 40px;
+  ${media.desktop`
+    padding-left: 34px;
+    padding-right: 34px;
+  `}
+  ${media.phone`
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 15px;
+    padding-right: 15px;
+  `}
 `
 
 const NewsItemContainer = styled.div`
@@ -59,18 +92,39 @@ const NewsItemContent = styled.div`
   flex-direction: row;
 `
 
+const DropdownLink = styled.a`
+  font-size: 16px;
+  line-height: 30px;
+  color: ${colors.darkGray};
+  display: flex;
+  align-items: center;
+  .anticon {
+    color: ${colors.green};
+  }
+`
+
 const NewsItemBody = styled.div``
 
 const NewsItemMessage = styled.div``
 
 const NewsItemDate = styled.div``
 
-const NewsItemSuffix = styled.div``
+const NewsItemSuffix = styled.div`
+  ${media.desktop`
+    display: none;
+  `}
+`
 
 const NewsFooter = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 40px;
+  ${media.phone`
+    margin-top: 30px;
+    .ant-btn {
+      width: 100%;
+    }
+  `}
 `
 
 const NewsItem = ({ picture, subject, date, suffix }) => (
@@ -139,9 +193,12 @@ class NewsPage extends Component {
       <PageContainer>
         <BlockContainer>
           <NewsHeader>
-            <h1>
+            <NewsTitle>
               <FormattedMessage id="app.newsPage.title" />
-            </h1>
+            </NewsTitle>
+            <NewsTitleMob>
+              <FormattedMessage id="app.newsPage.titleMobile" />
+            </NewsTitleMob>
             <Dropdown
               overlay={
                 <Menu onClick={this.handleRangeSelectorSelect}>
@@ -155,12 +212,12 @@ class NewsPage extends Component {
               }
               trigger={['click']}
             >
-              <a className="ant-dropdown-link" href="#">
+              <DropdownLink className="ant-dropdown-link" href="#">
                 <FormattedMessage
                   id={`app.newsPage.ranges.${this.state.range}`}
                 />{' '}
-                <Icon type="down" />
-              </a>
+                <ExpandMoreIcon />
+              </DropdownLink>
             </Dropdown>
           </NewsHeader>
           <NewsContainer>
