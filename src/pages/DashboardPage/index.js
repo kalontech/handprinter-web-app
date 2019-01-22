@@ -592,7 +592,7 @@ class DashboardPage extends Component {
                                 xs={24}
                               >
                                 <DashboardHeaderUserName>
-                                  {stats.personal.usersInvited}
+                                  {stats.network.networkUsers}
                                 </DashboardHeaderUserName>
                                 <DashboardHeaderUserSince>
                                   <FormattedMessage id="app.dashboardPage.usersInvited" />
@@ -605,7 +605,7 @@ class DashboardPage extends Component {
                                 xs={24}
                               >
                                 <DashboardHeaderUserName>
-                                  {stats.personal.actionsTaken}
+                                  {stats.network.actionsTaken}
                                 </DashboardHeaderUserName>
                                 <DashboardHeaderUserSince>
                                   <FormattedMessage id="app.dashboardPage.actionsTaken" />
@@ -619,7 +619,7 @@ class DashboardPage extends Component {
                               >
                                 <DashboardHeaderUserName>
                                   {Math.round(
-                                    stats.personal.netPositiveDays[
+                                    stats.network.netPositiveDays[
                                       currentImpactCategory
                                     ],
                                   )}

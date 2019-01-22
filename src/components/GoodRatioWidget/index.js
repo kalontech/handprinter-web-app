@@ -13,13 +13,16 @@ const Wrap = styled.div`
   height: 498px;
   position: relative;
   top: -40px;
+
   ${media.phone`
     height: auto;
     display: block;
     top: auto;
   `}
+
   svg {
     height: 447px;
+
     ${media.phone`
       height: 320px;
       width: 100%;
@@ -69,11 +72,12 @@ class GoodRatioWidget extends Component {
   }
 
   getCurrentRatio = () => {
-    let { footprintDays, handprintDays } = this.state
+    const { footprintDays, handprintDays } = this.state
     return (handprintDays - footprintDays) / (handprintDays + footprintDays)
   }
 
   update = () => {
+    const { footprintDays, handprintDays } = this.state
     const ratio = this.getCurrentRatio()
     this.setLeftCupRawTransformValue(linear(ratio, [-1, 0, 1], [39, 0, -39]))
     this.setRightCupRawTransformValue(linear(ratio, [-1, 0, 1], [-39, 0, 39]))
@@ -84,7 +88,11 @@ class GoodRatioWidget extends Component {
     this.setLeftLoadLabelsValue(linear(ratio, [-1, 1], [0, 79.49]))
     this.setRightLoadLabelsValue(linear(ratio, [-1, 1], [79.49, 0]))
     this.setMeterScaleRawTransformValue(
-      linear(ratio, [-1, 0, 0.005, 0.001, 0.1, 1], [0, 0, 65, 150, 235, 300]),
+      linear(
+        handprintDays === 0 ? 100 : Math.max(0, handprintDays / footprintDays),
+        [-1, 0, 0.5, 1, 10, 100],
+        [0, 0, 60, 150, 240, 300],
+      ),
     )
     this.setWeightsBarRawTransformValue(linear(ratio, [-1, 0, 1], [-15, 0, 15]))
   }
@@ -280,7 +288,7 @@ class GoodRatioWidget extends Component {
             clipRule="evenodd"
             d="M225 342a7 7 0 1 0 0-14 7 7 0 0 0 0 14z"
             fill={
-              this.getCurrentRatio() > 0 ? colors.lightGreen : colors.darkGray
+              this.getCurrentRatio() >= 0 ? colors.lightGreen : colors.darkGray
             }
             stroke={colors.white}
             strokeWidth={2}
