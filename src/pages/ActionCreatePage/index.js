@@ -83,6 +83,10 @@ const MainFields = styled.div`
     width: 100%;
     padding: 24px 0 0;
   `}
+
+  ${media.phone`
+    padding: 24px 20px 0;
+  `}
 `
 
 const Title = styled.header`
@@ -312,7 +316,9 @@ class ActionCreatePage extends React.PureComponent {
       if (errors) return
 
       const body = new FormData()
-      body.append('picture', values.photo.file)
+
+      if (values.photo) body.append('picture', values.photo.file)
+
       body.append('description', values.description)
       body.append('name', values.name)
 
@@ -361,7 +367,6 @@ class ActionCreatePage extends React.PureComponent {
               getValueFromEvent,
               validateFirst: true,
               rules: [
-                required(formatMessage({ id: 'app.errors.isRequired' })),
                 {
                   validator: fileSize({
                     message: formatMessage(
