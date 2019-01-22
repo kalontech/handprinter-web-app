@@ -316,7 +316,6 @@
     "app.aboutEatonPage.becomeGuardian.title": "Become an Eaton Green Guardian",
     "app.aboutEatonPage.becomeGuardian.description": "What can you do to make your community, your work, your planet more sustainable?",
     "app.newsPage.title": "My handprinting news",
-    "app.newsPage.titleMobile": "My news",
     "app.newsPage.news.userDidAction": "<strong>{user}<\/strong> did action <strong>{action}<\/strong>",
     "app.newsPage.ranges.network": "Network",
     "app.newsPage.ranges.world": "World",
@@ -350,5 +349,8 @@
     "app.languages.zh": "Simplified Chinese",
     "app.measurementPage.Precision.Title": "No false precision",
     "app.measurementPage.Precision.Text1": "The impacts of an action depend on many factors, and this helps make them uncertain and vary from person to person.  Handprinter lets you take some of these factors into account by specifying your home country and optionally parameterizing the actions you take, but uncertainty and variability remain.  This means reporting your impacts with a value like 4.35 days is false precision.",
-    "app.measurementPage.Precision.Text2": "Handprinter solves this by restricting all reporting of values to “round numbers” like 1, 2, 5, and 10. <strong>This also makes impacts easier to remember, and helps you focus on differences that truly matter.<\/strong>"
+    "app.measurementPage.Precision.Text2": "Handprinter solves this by restricting all reporting of values to “round numbers” like 1, 2, 5, and 10. <strong>This also makes impacts easier to remember, and helps you focus on differences that truly matter.<\/strong>",
+    "app.actionCreatePage.uploadImageDescription": "the image must be bigger than 600px on the smaller side",
+    "app.actionCreatePage.addPhoto": "Add photo",
+    "app.newsPage.titleMobile": "My news"
 }

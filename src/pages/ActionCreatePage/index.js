@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { keyframes } from 'styled-components'
-import { Upload, Form } from 'antd'
-import { injectIntl, intlShape } from 'react-intl'
+import { Upload, Form, Icon } from 'antd'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import CloseIcon from 'assets/icons/CloseIcon'
 import { FormItem, Input, PrimaryButton } from 'components/Styled'
@@ -201,10 +201,21 @@ const PreviewButton = styled.button`
   text-shadow: 0 0 10px ${hexToRgba(colors.lightGray, 0.8)};
 `
 
+const AddPhotoBlockWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${colors.darkGray};
+  ${media.tablet`
+    padding: 30px 0;
+  `}
+`
+
 const AddPhotoBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 `
 
 const ButtonAddPhoto = styled.button`
@@ -216,27 +227,6 @@ const ButtonAddPhoto = styled.button`
   width: 100px;
   height: 100px;
   cursor: pointer;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 26px;
-    height: 2px;
-    background-color: ${colors.gray};
-  }
-
-  &::after {
-    width: 2px;
-    height: 26px;
-  }
-
-  ${media.tablet`
-    margin: 30px 0;
-  `}
 `
 
 const FormError = styled.span`
@@ -293,6 +283,29 @@ const SubmitSucceeded = styled.article`
 const ButtonSuccess = styled(PrimaryButton)`
   width: 300px;
   margin: 0 auto;
+`
+
+const AddPhotoBlockText = styled.div`
+  max-width: 210px;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+`
+
+const ButtonAddPhotoContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  i {
+    font-size: 22px;
+  }
+  span {
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-top: 4px;
+    font-weight: bold;
+  }
 `
 
 const getValueFromEvent = ({ file }) => ({
@@ -398,13 +411,25 @@ class ActionCreatePage extends React.PureComponent {
                       </PreviewButton>
                     </Preview>
                   ) : (
-                    <AddPhotoBlock>
-                      <ButtonAddPhoto type="button">
-                        {photoError && (
-                          <PhotoError inButton>{photoError}</PhotoError>
-                        )}
-                      </ButtonAddPhoto>
-                    </AddPhotoBlock>
+                    <AddPhotoBlockWrap>
+                      <AddPhotoBlock>
+                        <ButtonAddPhoto type="button">
+                          {photoError ? (
+                            <PhotoError inButton>{photoError}</PhotoError>
+                          ) : (
+                            <ButtonAddPhotoContent>
+                              <Icon type="camera" />
+                              <span>
+                                <FormattedMessage id="app.actionCreatePage.addPhoto" />
+                              </span>
+                            </ButtonAddPhotoContent>
+                          )}
+                        </ButtonAddPhoto>
+                        <AddPhotoBlockText>
+                          <FormattedMessage id="app.actionCreatePage.uploadImageDescription" />
+                        </AddPhotoBlockText>
+                      </AddPhotoBlock>
+                    </AddPhotoBlockWrap>
                   )}
                 </UploadContent>
               </StyledUpload>,

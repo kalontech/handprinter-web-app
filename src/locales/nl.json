@@ -349,5 +349,8 @@
     "app.languages.zh": "Vereenvoudigd Chinees",
     "app.measurementPage.Precision.Title": "Geen valse precisie",
     "app.measurementPage.Precision.Text1": "De impact van een actie hangt van veel factoren af, en dit maakt ze onzeker en varieert van persoon tot persoon. Handprinter laat u een aantal van deze factoren meenemen door uw thuisland te specificeren en eventueel de acties die u neemt te parametriseren, maar onzekerheid en variabiliteit blijven bestaan. Dit betekent dat het rapporteren van uw impact met een waarde van 4,35 dagen een valse precisie is.",
-    "app.measurementPage.Precision.Text2": "Handprinter lost dit op door alle rapportage van waarden te beperken tot 'ronde getallen' zoals 1, 2, 5 en 10. <strong> Dit maakt effecten ook gemakkelijker te onthouden en helpt u zich te concentreren op verschillen die er echt toe doen. <\/strong>"
+    "app.measurementPage.Precision.Text2": "Handprinter lost dit op door alle rapportage van waarden te beperken tot 'ronde getallen' zoals 1, 2, 5 en 10. <strong> Dit maakt effecten ook gemakkelijker te onthouden en helpt u zich te concentreren op verschillen die er echt toe doen. <\/strong>",
+    "app.actionCreatePage.uploadImageDescription": "the image must be bigger than 600px on the smaller side",
+    "app.actionCreatePage.addPhoto": "Add photo",
+    "app.newsPage.titleMobile": "My news"
 }

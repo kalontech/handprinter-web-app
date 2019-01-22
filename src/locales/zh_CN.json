@@ -349,5 +349,8 @@
     "app.languages.zh": "简体中文",
     "app.measurementPage.Precision.Title": "没有错误的精确度",
     "app.measurementPage.Precision.Text1": "行动的影响取决于许多因素，这有助于使它们不确定并因人而异。 Handprinter允许您通过指定您所在的国家\/地区以及可选地参数化您所采取的操作来考虑其中一些因素，但仍存在不确定性和可变性。这意味着使用4.35天的值报告您的影响是错误的精确度。",
-    "app.measurementPage.Precision.Text2": "Handprinter通过将所有值的报告限制为“圆形数字”（如1,2,5和10）来解决此问题。 <strong>这也使得影响更易于记忆，并帮助您专注于真正重要的差异。 <\/strong>"
+    "app.measurementPage.Precision.Text2": "Handprinter通过将所有值的报告限制为“圆形数字”（如1,2,5和10）来解决此问题。 <strong>这也使得影响更易于记忆，并帮助您专注于真正重要的差异。 <\/strong>",
+    "app.actionCreatePage.uploadImageDescription": "the image must be bigger than 600px on the smaller side",
+    "app.actionCreatePage.addPhoto": "Add photo",
+    "app.newsPage.titleMobile": "My news"
 }
