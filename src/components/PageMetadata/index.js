@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
 import { injectIntl, intlShape } from 'react-intl'
 
-const getMetaTranstations = ({ pageName, type, formatMessage }) => {
+const getMetaTranslations = ({ pageName, type, formatMessage }) => {
   const id = `app.${pageName}.head.${type}`
   const msg = formatMessage({ id })
   return msg !== id
@@ -12,27 +12,27 @@ const getMetaTranstations = ({ pageName, type, formatMessage }) => {
 }
 
 const PageMetadata = ({ pageName, intl: { formatMessage } }) => (
-  <Helmet>
-    <title>
-      {getMetaTranstations({ pageName, type: 'title', formatMessage })}
-    </title>
-    <meta
-      name="description"
-      content={getMetaTranstations({
-        pageName,
-        type: 'description',
-        formatMessage,
-      })}
-    />
-    <meta
-      name="keywords"
-      content={getMetaTranstations({
-        pageName,
-        type: 'keywords',
-        formatMessage,
-      })}
-    />
-  </Helmet>
+  <Helmet
+    title={getMetaTranslations({ pageName, type: 'title', formatMessage })}
+    meta={[
+      {
+        name: 'description',
+        content: getMetaTranslations({
+          pageName,
+          type: 'description',
+          formatMessage,
+        }),
+      },
+      {
+        name: 'keywords',
+        content: getMetaTranslations({
+          pageName,
+          type: 'keywords',
+          formatMessage,
+        }),
+      },
+    ]}
+  />
 )
 
 PageMetadata.propTypes = {

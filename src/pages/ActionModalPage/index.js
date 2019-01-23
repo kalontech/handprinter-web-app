@@ -6,18 +6,17 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { handleBackdropClick } from './../../appRouter'
-import api from './../../api'
-import ActionCardLabelSet from './../../components/ActionCardLabelSet'
-import colors from './../../config/colors'
-import Spinner from './../../components/Spinner'
-import treeImage from './../../assets/actions/tree.png'
-import pigImage from './../../assets/actions/pig.png'
-import decodeError from './../../utils/decodeError'
-import { DefaultButton, FormItem } from './../../components/Styled'
-import media from './../../utils/mediaQueryTemplate'
-import hexToRgba from '../../utils/hexToRgba'
-import MultipleInput from '../../components/MultipleInput'
+import { handleBackdropClick } from 'appRouter'
+import api from 'api'
+import ActionCardLabelSet from 'components/ActionCardLabelSet'
+import colors from 'config/colors'
+import Spinner from 'components/Spinner'
+import treeImage from 'assets/actions/tree.png'
+import pigImage from 'assets/actions/pig.png'
+import decodeError from 'utils/decodeError'
+import { DefaultButton, FormItem } from 'components/Styled'
+import media, { sizes } from 'utils/mediaQueryTemplate'
+import MultipleInput from 'components/MultipleInput'
 
 const Container = styled(Row)`
   align-items: center;
@@ -58,6 +57,7 @@ const Container = styled(Row)`
       `}
       ${media.tablet`
         max-width: 100%;
+        height: initial;
         flex-direction: column;
         justify-content: flex-start;
       `}
@@ -84,13 +84,15 @@ const RightPanel = styled.div`
   height: 100%;
   padding: 60px;
   width: 50%;
+
   ${media.desktop`
     width: 460px;
   `}
+
   ${media.tablet`
     width: 100%;
     height: auto;
-    padding: 30px 15px 120px 15px;
+    padding: 30px 15px ${({ isIphone }) => (isIphone ? '0' : '12px')} 15px;
   `}
 `
 
@@ -133,14 +135,22 @@ const ActionDescription = styled.p`
 `
 
 const BottomPanel = styled.div`
+  background-color: ${colors.white};
+  position: ${({ isIphone }) => (isIphone ? 'static' : 'fixed')};
+  backface-visibility: hidden;
+  bottom: 0;
   width: 100%;
-  background: ${colors.white};
+  max-width: calc(339px + 30px);
+
   ${media.tablet`
-    padding: 18px 15px;
-    position: fixed;
-    bottom: 0;
-    box-shadow: 0 1px 70px 0 ${hexToRgba(`${colors.dark}`, 0.1)};
+    max-width: initial;
   `}
+  
+  @media screen and (max-width: ${
+    sizes.tablet
+  }px) and (orientation: landscape) {
+    position: static;
+  }
 `
 
 const TakenActionPanel = styled.div`
@@ -182,7 +192,7 @@ const EngageViewPanel = styled.div`
   width: 100%;
   position: relative;
   display: flex;
-  align-items: center
+  align-items: center;
   justify-content: space-between;
   flex-direction: column;
   overflow: hidden;
@@ -191,9 +201,17 @@ const EngageViewPanel = styled.div`
 const ModalContentWrap = styled.div`
   height: 100%;
   display: flex;
-  align-items: center
+  align-items: center;
   justify-content: space-between;
   flex-direction: column;
+
+  @media screen and (max-width: ${sizes.phone}px) {
+    padding-bottom: ${({ isIphone }) => (isIphone ? '0' : '96px')};
+  }
+
+  @media screen and (max-width: ${sizes.phone}px) and (orientation: landscape) {
+    padding-bottom: 0;
+  }
 `
 
 const ActionModalPageSteps = {
@@ -220,7 +238,7 @@ const EngageViewContentContainer = styled.div`
   height: 50%;
   width: 100%;
   display: flex;
-  align-items: center
+  align-items: center;
   justify-content: center;
   flex-direction: column;
   ${media.phone`
@@ -231,7 +249,6 @@ const EngageViewContentContainer = styled.div`
 const EngageViewContentInputWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: space-between;
   width: 100%;
 `
 
@@ -261,14 +278,16 @@ const EngageViewInput = styled(Input)`
 `
 
 const ActionViewButtonsWrapper = styled.div`
+  padding: 18px ${({ isIphone }) => (isIphone ? '0' : '15px')};
   display: flex;
   justify-content: space-between;
 
+  @media screen and (max-width: ${sizes.tablet}px) and (orientation: landscape) {
+    padding: 18px 0;
+  }
+
   button {
-    min-width: 164px;
-    ${media.tablet`
-      min-width: 142px;
-    `}
+    min-width: 47%;
   }
 `
 
@@ -317,6 +336,8 @@ const TakeActionButton = styled(Button)`
     margin-left: 15px
   `}
 `
+
+const isSafariMobile = window.navigator.userAgent.match(/iPhone/i)
 
 class ActionModalPage extends Component {
   state = {
@@ -408,15 +429,15 @@ class ActionModalPage extends Component {
           <LeftPanel>
             <img src={action.picture} />
           </LeftPanel>
-          <RightPanel span={12}>
-            <ModalContentWrap>
+          <RightPanel isIphone={isSafariMobile} span={12}>
+            <ModalContentWrap isIphone={isSafariMobile}>
               <div>
                 <ActionCardLabelSet impacts={action.impacts} mobileFixedWidth />
                 <ActionName>{action.name}</ActionName>
                 <ActionDescription>{action.description}</ActionDescription>
               </div>
-              <BottomPanel>
-                <ActionViewButtonsWrapper>
+              <BottomPanel isIphone={isSafariMobile}>
+                <ActionViewButtonsWrapper isIphone={isSafariMobile}>
                   {user && (
                     <DefaultButton
                       type="primary"

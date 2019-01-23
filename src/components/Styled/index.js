@@ -463,6 +463,12 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
   
+  .react-router-modal__modal {
+    ${media.tablet`
+      overflow-y: auto;
+    `}
+  }
+
   .ant-layout {
     background: #fff;
   }
