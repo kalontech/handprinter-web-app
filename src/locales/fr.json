@@ -153,7 +153,7 @@
     "app.actionCreatePage.title": "Ajouter une action",
     "app.actionCreatePage.submitSucceededTitle": "Votre idée a été soumise",
     "app.actionCreatePage.submitSucceededDescription": "Nos modérateurs vérifieront votre idée dès que possible et une fois approuvée, elle apparaîtra sur la page d'action. À partir de ce moment, tous les utilisateurs pourront agir et faire partie de votre empreinte! De plus, nos modélisateurs seront invités à modéliser les impacts de votre action afin que ces impacts puissent être pris en compte.",
-    "app.actionCreatePage.submitSucceededGoBack": "Retourner",
+    "app.actionCreatePage.submitSucceededGoBack": "Aller aux actions",
     "app.actionCreatePage.cancel": "Annuler",
     "app.brandedHeader.link": "Devenir Green Guardian",
     "app.footer.menu.actions": "actes",
@@ -350,8 +350,9 @@
     "app.measurementPage.Precision.Title": "Pas de fausse précision",
     "app.measurementPage.Precision.Text1": "Les impacts d'une action dépendent de nombreux facteurs, ce qui contribue à les rendre incertains et varie d'une personne à l'autre. Handprinter vous permet de prendre en compte certains de ces facteurs en spécifiant votre pays d'origine et en paramétrant éventuellement les actions que vous entreprenez, mais l'incertitude et la variabilité demeurent. Cela signifie que signaler vos impacts avec une valeur telle que 4,35 jours est une fausse précision.",
     "app.measurementPage.Precision.Text2": "Handprinter résout ce problème en limitant tous les rapports de valeurs aux «chiffres arrondis» tels que 1, 2, 5 et 10. <strong> Cela simplifie également la mémorisation des impacts et vous aide à vous concentrer sur les différences qui comptent vraiment. <\/strong>",
-    "app.actionCreatePage.uploadImageDescription": "l'image doit être supérieure à 600px sur le petit côté",
-    "app.actionCreatePage.addPhoto": "Ajouter une photo",
     "app.newsPage.titleMobile": "Mes nouvelles",
-    "app.aboutInterfacePage.climateFit.link": "view all actions"
+    "app.actionCreatePage.uploadImageDescription": "l'image doit être plus grande que 600px du côté le plus petit",
+    "app.actionCreatePage.addPhoto": "Ajouter une photo",
+    "app.aboutInterfacePage.climateFit.link": "view all actions",
+    "app.aboutEatonPage.actions.link": "view all actions"
 }

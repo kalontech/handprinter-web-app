@@ -31,4 +31,6 @@ export default {
   interfaceLinkBg: '#616678',
   interfaceColor: '#7D6F4B',
   interfaceSectionBg: '#F7F7F7',
+  eatonColor: '#353f47',
+  eatonCtaBg: '#00b2a9',
 }

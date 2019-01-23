@@ -55,15 +55,6 @@ const Text = styled.div`
   max-width: 300px;
 `
 
-const Container = styled.div`
-  margin-left: -20px;
-  margin-right: -20px;
-  ${media.largeDesktop`
-    margin-left: 0;
-    margin-right: 0;
-  `};
-`
-
 const RowWrapper = styled(Row)`
   margin-bottom: 20px;
   ${media.phone`
@@ -76,8 +67,10 @@ const Langs = styled(FooterLanguageSelector)`
   `};
 `
 const LangsWrap = styled(Col)`
+  display: flex;
+  justify-content: flex-end;
   ${media.largeDesktop`
-    display: flex;
+    justify-content: flex-start;
     align-items: center;
   `};
   ${media.phone`
@@ -119,53 +112,51 @@ const EatonFooter = () => (
   <FooterWrap>
     <FooterContent>
       <BlockContainer>
-        <Container>
-          <Row gutter={{ md: 20 }}>
-            <Col xs={24} md={12} xl={8}>
-              <Logo>
-                <img src={footerLogo} alt="" />
-              </Logo>
-              <Text>
-                <FormattedMessage id="app.eatonFooter.text" />
-              </Text>
-            </Col>
-            <Col xs={24} md={12} xl={12}>
-              <RowWrapper gutter={{ md: 20 }}>
-                <Col xs={12} md={12} xl={12}>
-                  <FooterMenu>
-                    <li>
-                      <Link to="/actions">
-                        <FormattedMessage id="app.footer.menu.actions" />
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/pages/our-vision">
-                        <FormattedMessage id="app.footer.menu.howItWorks" />
-                      </Link>
-                    </li>
-                  </FooterMenu>
-                </Col>
-                <Col xs={12} md={12} xl={12}>
-                  <FooterMenu>
-                    <li>
-                      <Link to="/pages/measurement-units">
-                        <FormattedMessage id="app.footer.menu.measurement" />
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/pages/faq">
-                        <FormattedMessage id="app.footer.menu.faq" />
-                      </Link>
-                    </li>
-                  </FooterMenu>
-                </Col>
-              </RowWrapper>
-            </Col>
-            <LangsWrap xs={24} md={12} xl={4}>
-              <Langs />
-            </LangsWrap>
-          </Row>
-        </Container>
+        <Row gutter={{ md: 20 }}>
+          <Col xs={24} md={12} xl={8}>
+            <Logo>
+              <img src={footerLogo} alt="" />
+            </Logo>
+            <Text>
+              <FormattedMessage id="app.eatonFooter.text" />
+            </Text>
+          </Col>
+          <Col xs={24} md={12} xl={12}>
+            <RowWrapper gutter={{ md: 20 }}>
+              <Col xs={12} md={12} xl={12}>
+                <FooterMenu>
+                  <li>
+                    <Link to="/actions">
+                      <FormattedMessage id="app.footer.menu.actions" />
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/pages/our-vision">
+                      <FormattedMessage id="app.footer.menu.howItWorks" />
+                    </Link>
+                  </li>
+                </FooterMenu>
+              </Col>
+              <Col xs={12} md={12} xl={12}>
+                <FooterMenu>
+                  <li>
+                    <Link to="/pages/measurement-units">
+                      <FormattedMessage id="app.footer.menu.measurement" />
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/pages/faq">
+                      <FormattedMessage id="app.footer.menu.faq" />
+                    </Link>
+                  </li>
+                </FooterMenu>
+              </Col>
+            </RowWrapper>
+          </Col>
+          <LangsWrap xs={24} md={12} xl={4}>
+            <Langs />
+          </LangsWrap>
+        </Row>
       </BlockContainer>
     </FooterContent>
     <Copyright>

@@ -153,7 +153,7 @@
     "app.actionCreatePage.title": "Aktion hinzufügen",
     "app.actionCreatePage.submitSucceededTitle": "Ihre Idee wurde eingereicht",
     "app.actionCreatePage.submitSucceededDescription": "Unsere Moderatoren prüfen Ihre Idee so schnell wie möglich und werden nach ihrer Genehmigung auf der Aktionsseite angezeigt. Von diesem Moment an können alle Benutzer Ihre Maßnahmen ergreifen und Teil Ihres Handabdrucks sein! Außerdem werden unsere Modellierer eingeladen, die Auswirkungen Ihrer Aktion zu modellieren, damit diese Auswirkungen berücksichtigt werden können.",
-    "app.actionCreatePage.submitSucceededGoBack": "Geh zurück",
+    "app.actionCreatePage.submitSucceededGoBack": "Gehe zu Aktionen",
     "app.actionCreatePage.cancel": "Stornieren",
     "app.brandedHeader.link": "Werden Sie Green Guardian",
     "app.footer.menu.actions": "Aktionen",
@@ -350,8 +350,9 @@
     "app.measurementPage.Precision.Title": "Keine falsche Präzision",
     "app.measurementPage.Precision.Text1": "Die Auswirkungen einer Aktion hängen von vielen Faktoren ab. Dies hilft, sie unsicher zu machen und von Person zu Person zu variieren. Mit dem Handdrucker können Sie einige dieser Faktoren berücksichtigen, indem Sie Ihr Heimatland angeben und die von Ihnen durchgeführten Maßnahmen optional parametrieren. Unsicherheit und Variabilität bleiben jedoch bestehen. Das bedeutet, dass das Melden Ihrer Auswirkungen mit einem Wert von etwa 4,35 Tagen eine falsche Genauigkeit darstellt.",
     "app.measurementPage.Precision.Text2": "Der Handprinter löst dies, indem er die Berichterstellung von Werten auf \"runde Zahlen\" wie 1, 2, 5 und 10 beschränkt. <strong> Dadurch werden auch die Auswirkungen leichter zu merken und Sie können sich auf die wirklich wichtigen Unterschiede konzentrieren. <\/strong>",
-    "app.newsPage.titleMobile": "My news",
-    "app.actionCreatePage.uploadImageDescription": "the image must be bigger than 600px on the smaller side",
-    "app.actionCreatePage.addPhoto": "Add photo",
-    "app.aboutInterfacePage.climateFit.link": "view all actions"
+    "app.newsPage.titleMobile": "Meine Neuigkeiten",
+    "app.actionCreatePage.uploadImageDescription": "Das Bild muss auf der kleineren Seite größer als 600px sein",
+    "app.actionCreatePage.addPhoto": "Foto hinzufügen",
+    "app.aboutInterfacePage.climateFit.link": "view all actions",
+    "app.aboutEatonPage.actions.link": "view all actions"
 }

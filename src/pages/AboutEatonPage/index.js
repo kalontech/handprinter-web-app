@@ -10,7 +10,9 @@ import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import { BlockContainer } from './../../components/Styled'
 import colors from './../../config/colors'
+import media from './../../utils/mediaQueryTemplate'
 import heroImg from './../../assets/about-eaton/BecomeGuardian.jpg'
+import heroTablet from './../../assets/about-eaton/heroTablet.jpg'
 import instagramImg from './../../assets/about-eaton/insta_photos.png'
 import BecomeGuardianImg from './../../assets/about-eaton/bc.jpg'
 import { Link } from 'react-router-dom'
@@ -24,7 +26,6 @@ configureAnchors({ scrollDuration: 1200 })
 removeHash()
 
 const Hero = styled.section`
-  font-family: Arial;
   position: relative;
   display: flex;
   align-items: center;
@@ -34,22 +35,38 @@ const Hero = styled.section`
   background-size: cover;
   font-family: Arial;
   color: ${colors.white};
+  button {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .anticon svg {
+    width: 36px;
+    height: 36px;
+  }
+  ${media.desktop`
+    background-image: url(${heroTablet});
+  `}
+  ${media.desktop`
+    height: 480px;
+  `}
 `
 const HeroTitle = styled.h1`
   line-height: 68px;
   font-size: 50px;
+  font-weight: 400;
   letter-spacing: -1px;
-  margin-bottom: 10px;
+  max-width: 600px;
+  margin: 0 auto 10px;
   color: inherit;
-  @media (max-width: 1024px) {
+  ${media.desktop`
     font-size: 41px;
     line-height: 47px;
     margin-bottom: 20px;
-  }
-  @media (max-width: 767px) {
+  `}
+  ${media.phone`
     font-size: 34px;
     line-height: 40px;
-  }
+  `}
 `
 const HeroDescription = styled.p`
   line-height: 29px;
@@ -61,7 +78,6 @@ const HeroDescription = styled.p`
 const WhiteBorderedButton = styled(Button)`
   line-height: 29px;
   max-width: 600px;
-  margin: 0 auto;
   min-width: 280px;
   height: 70px;
   border: 2px solid ${colors.white};
@@ -76,6 +92,10 @@ const WhiteBorderedButton = styled(Button)`
     background: ${colors.white};
     color: ${colors.darkBlue};
   }
+  ${media.phone`
+    height: 50px;
+    width: 100%;
+  `}
 `
 
 const BlueBorderedButton = styled(WhiteBorderedButton)`
@@ -97,16 +117,11 @@ const ScrollToSection = styled.a`
   display: block;
   text-align: center;
   margin-top: 95px;
-  @media (max-width: 767px) {
-    display: none;
-  }
-`
-const Container = styled.section`
-  margin-left: -20px;
-  margin-right: -20px;
-  @media (max-width: 767px) {
-    margin: 0;
-  }
+  ${media.phone`
+    // visibility: hidden;
+    height: 0;
+    opacity: 0;
+  `}
 `
 
 const GrowHandprint = styled.section`
@@ -115,17 +130,17 @@ const GrowHandprint = styled.section`
   padding: 80px 0;
   background: ${colors.darkBlue};
   color: ${colors.white};
-  @media (max-width: 767px) {
+  ${media.phone`
     padding: 40px 0;
-  }
+  `}
 `
 const Text = styled.div`
   line-height: 32px;
   font-size: 20px;
-  @media (max-width: 767px) {
+  ${media.phone`
     line-height: 24px;
     font-size: 16px;
-  }
+  `}
 `
 
 const SubHeading = styled.div`
@@ -133,23 +148,23 @@ const SubHeading = styled.div`
   line-height: 36px;
   font-size: 28px;
   margin-bottom: 30px;
-  @media (max-width: 1024px) {
+  ${media.desktop`
     line-height: 36px;
     font-size: 28px;
-  }
-  @media (max-width: 767px) {
+  `}
+  ${media.phone`
     line-height: 30px;
     font-size: 22px;
-  }
+  `}
 `
 
 const WhatAreHandprints = styled.section`
   font-family: Arial;
   padding: 80px 0;
-  color: #353f47;
-  @media (max-width: 767px) {
+  color: ${colors.eatonColor};
+   ${media.phone`
     padding: 40px 0;
-  }
+  `}
   div${Text} {
     font-size: 18px;
 
@@ -168,14 +183,13 @@ const WhatAreHandprints = styled.section`
       left: 10px;
       bottom: 30px;
       content: '';
-      @media (max-width: 767px) {
+      ${media.phone`
         bottom: -30px;
-      }
+      `}
     }
   }
   ${BlueBorderedButton} {
     margin-top: 30px;
-    margin-left: 0;
   }
 `
 
@@ -186,7 +200,8 @@ const Instagram = styled.section`
 `
 
 const BecomeGuardian = styled.section`
-  height: 480px;
+  min-height: 480px;
+  padding: 150px 0 200px;
   display: flex;
   align-items: center;
   text-align: center;
@@ -195,20 +210,30 @@ const BecomeGuardian = styled.section`
   color: ${colors.white};
   font-family: Arial;
   text-align: center;
+  ${media.desktop`
+    background-position: -150px center;
+  `}
+  ${media.phone`
+    min-height: 0;
+    display: block;
+    padding-top: 60px;
+    padding-bottom: 230px;
+    background-position: -200px center;
+  `}
 `
 const BecomeGuardianTitle = styled.div`
   line-height: 50px;
   font-size: 40px;
   letter-spacing: -1px;
   margin-bottom: 20px;
-  @media (max-width: 1024px) {
+  ${media.desktop`
     font-size: 36px;
-  }
-  @media (max-width: 767px) {
+  `}
+  ${media.phone`
     margin-bottom: 25px;
     line-height: 40px;
     font-size: 34px;
-  }
+  `}
 `
 const BecomeGuardianDescription = styled.div`
   line-height: 29px;
@@ -225,6 +250,9 @@ const SliderWrap = styled(Carousel)`
     bottom: -14px;
     padding-right: 15px;
     margin: 0;
+    ${media.phone`
+    bottom: -30px;
+  `}
 
     li {
       height: 8px;
@@ -258,6 +286,15 @@ const Actions = styled.section`
   ${BlockContainer} {
     top: -100px;
   }
+  ${media.phone`
+    height: 345px;
+    ${BlockContainer} {
+      top: -200px;
+    }
+    .ant-btn {
+      margin-top: 60px;
+    }
+  `}
 `
 
 const responsive = [
@@ -314,48 +351,44 @@ class AboutEatonPage extends Component {
         <ScrollableAnchor id={'grow_your_handprint'}>
           <GrowHandprint>
             <BlockContainer>
-              <Container>
-                <Row gutter={20}>
-                  <Col md={12} xl={10}>
-                    <SubHeading>
-                      <FormattedMessage id="app.aboutEatonPage.growYourHandprint.title" />
-                    </SubHeading>
-                  </Col>
-                  <Col md={12} xl={{ span: 12, offset: 2 }}>
-                    <Text>
-                      <FormattedHTMLMessage id="app.aboutEatonPage.growYourHandprint.description" />
-                    </Text>
-                  </Col>
-                </Row>
-              </Container>
+              <Row gutter={{ md: 20 }}>
+                <Col md={12} xl={9}>
+                  <SubHeading>
+                    <FormattedMessage id="app.aboutEatonPage.growYourHandprint.title" />
+                  </SubHeading>
+                </Col>
+                <Col md={12} xl={{ span: 12, offset: 3 }}>
+                  <Text>
+                    <FormattedHTMLMessage id="app.aboutEatonPage.growYourHandprint.description" />
+                  </Text>
+                </Col>
+              </Row>
             </BlockContainer>
           </GrowHandprint>
         </ScrollableAnchor>
         <Instagram className="instagrem" />
         <WhatAreHandprints>
           <BlockContainer>
-            <Container>
-              <Row gutter={20}>
-                <Col md={12} xl={10}>
-                  <SubHeading>
-                    <FormattedMessage id="app.aboutEatonPage.whatAreHandprints.title" />
-                  </SubHeading>
-                </Col>
-                <Col md={12} xl={{ span: 12, offset: 2 }}>
-                  <Text>
-                    <FormattedMessage id="app.aboutEatonPage.whatAreHandprints.description.1" />
-                  </Text>
-                  <Text>
-                    <FormattedHTMLMessage id="app.aboutEatonPage.whatAreHandprints.description.2" />
-                  </Text>
-                  <Link to="/actions">
-                    <BlueBorderedButton type="ghost" size="large">
-                      <FormattedMessage id="app.aboutEatonPage.whatAreHandprints.getStartedToday" />
-                    </BlueBorderedButton>
-                  </Link>
-                </Col>
-              </Row>
-            </Container>
+            <Row gutter={{ md: 20 }}>
+              <Col md={24} xl={10}>
+                <SubHeading>
+                  <FormattedMessage id="app.aboutEatonPage.whatAreHandprints.title" />
+                </SubHeading>
+              </Col>
+              <Col md={24} xl={{ span: 12, offset: 2 }}>
+                <Text>
+                  <FormattedMessage id="app.aboutEatonPage.whatAreHandprints.description.1" />
+                </Text>
+                <Text>
+                  <FormattedHTMLMessage id="app.aboutEatonPage.whatAreHandprints.description.2" />
+                </Text>
+                <Link to="/actions">
+                  <BlueBorderedButton type="ghost" size="large">
+                    <FormattedMessage id="app.aboutEatonPage.whatAreHandprints.getStartedToday" />
+                  </BlueBorderedButton>
+                </Link>
+              </Col>
+            </Row>
           </BlockContainer>
         </WhatAreHandprints>
         <BecomeGuardian>
@@ -393,7 +426,7 @@ class AboutEatonPage extends Component {
             </SliderWrap>
             <Link to="/actions">
               <BlueBorderedButton type="ghost" size="large">
-                <FormattedMessage id="app.aboutEatonPage.whatAreHandprints.getStartedToday" />
+                <FormattedMessage id="app.aboutEatonPage.actions.link" />
               </BlueBorderedButton>
             </Link>
           </BlockContainer>

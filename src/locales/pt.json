@@ -153,7 +153,7 @@
     "app.actionCreatePage.title": "Adicionar ação",
     "app.actionCreatePage.submitSucceededTitle": "Sua ideia foi enviada",
     "app.actionCreatePage.submitSucceededDescription": "Nossos moderadores verificarão sua ideia assim que possível e, quando aprovada, ela aparecerá na página de ação. A partir desse momento, todos os usuários poderão realizar sua ação e fazer parte do seu handprint! Além disso, nossos modeladores serão convidados a modelar os impactos de sua ação para que esses impactos possam ser levados em conta.",
-    "app.actionCreatePage.submitSucceededGoBack": "Volte",
+    "app.actionCreatePage.submitSucceededGoBack": "Vá para ações",
     "app.actionCreatePage.cancel": "Cancelar",
     "app.brandedHeader.link": "Torne-se Guardião Verde",
     "app.footer.menu.actions": "Ações",
@@ -350,8 +350,9 @@
     "app.measurementPage.Precision.Title": "Sem falsa precisão",
     "app.measurementPage.Precision.Text1": "Os impactos de uma ação dependem de muitos fatores, e isso os torna incertos e variam de pessoa para pessoa. O Handprinter permite levar em consideração alguns desses fatores, especificando seu país de origem e, opcionalmente, parametrizando as ações que você executa, mas a incerteza e a variabilidade permanecem. Isso significa informar seus impactos com um valor como 4,35 dias é uma precisão falsa.",
     "app.measurementPage.Precision.Text2": "O Handprinter resolve isso restringindo todos os relatórios de valores a \"números redondos\" como 1, 2, 5 e 10. <strong> Isso também torna os impactos mais fáceis de lembrar e ajuda você a se concentrar nas diferenças que realmente importam. <\/strong>",
-    "app.newsPage.titleMobile": "My news",
-    "app.actionCreatePage.uploadImageDescription": "the image must be bigger than 600px on the smaller side",
-    "app.actionCreatePage.addPhoto": "Add photo",
-    "app.aboutInterfacePage.climateFit.link": "view all actions"
+    "app.newsPage.titleMobile": "Minhas notícias",
+    "app.actionCreatePage.uploadImageDescription": "a imagem deve ser maior que 600px no lado menor",
+    "app.actionCreatePage.addPhoto": "Adicionar foto",
+    "app.aboutInterfacePage.climateFit.link": "view all actions",
+    "app.aboutEatonPage.actions.link": "view all actions"
 }
