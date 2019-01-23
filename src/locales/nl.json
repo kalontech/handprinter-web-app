@@ -352,5 +352,6 @@
     "app.measurementPage.Precision.Text2": "Handprinter lost dit op door alle rapportage van waarden te beperken tot 'ronde getallen' zoals 1, 2, 5 en 10. <strong> Dit maakt effecten ook gemakkelijker te onthouden en helpt u zich te concentreren op verschillen die er echt toe doen. <\/strong>",
     "app.actionCreatePage.uploadImageDescription": "de afbeelding moet groter zijn dan 600 px aan de kleine kant",
     "app.actionCreatePage.addPhoto": "Voeg foto toe",
-    "app.newsPage.titleMobile": "Mijn Nieuws"
+    "app.newsPage.titleMobile": "Mijn Nieuws",
+    "app.aboutInterfacePage.climateFit.link": "view all actions"
 }

@@ -46,7 +46,7 @@ const HeaderLanguageSelector = props => {
         <FormattedMessage id={`app.languages.${intl.locale}`}>
           {message => <span>{message.substr(0, 3)}</span>}
         </FormattedMessage>
-        <Icon />
+        <Icon {...props} />
       </PopoverTitle>
     </Popover>
   )

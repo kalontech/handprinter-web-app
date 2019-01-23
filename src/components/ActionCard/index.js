@@ -124,7 +124,7 @@ const ActionCard = props => {
             <img src={picture} alt={name} />
           </CardImage>
           <CardWrapper>
-            <CardHeading>{name}</CardHeading>
+            <CardHeading style={props.font}>{name}</CardHeading>
             <ActionCardLabelSetWrapper>
               <ActionCardLabelSet impacts={impacts} />
             </ActionCardLabelSetWrapper>

@@ -350,7 +350,8 @@
     "app.measurementPage.Precision.Title": "Sem falsa precisão",
     "app.measurementPage.Precision.Text1": "Os impactos de uma ação dependem de muitos fatores, e isso os torna incertos e variam de pessoa para pessoa. O Handprinter permite levar em consideração alguns desses fatores, especificando seu país de origem e, opcionalmente, parametrizando as ações que você executa, mas a incerteza e a variabilidade permanecem. Isso significa informar seus impactos com um valor como 4,35 dias é uma precisão falsa.",
     "app.measurementPage.Precision.Text2": "O Handprinter resolve isso restringindo todos os relatórios de valores a \"números redondos\" como 1, 2, 5 e 10. <strong> Isso também torna os impactos mais fáceis de lembrar e ajuda você a se concentrar nas diferenças que realmente importam. <\/strong>",
+    "app.newsPage.titleMobile": "My news",
     "app.actionCreatePage.uploadImageDescription": "the image must be bigger than 600px on the smaller side",
     "app.actionCreatePage.addPhoto": "Add photo",
-    "app.newsPage.titleMobile": "My news"
+    "app.aboutInterfacePage.climateFit.link": "view all actions"
 }

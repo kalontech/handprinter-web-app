@@ -243,7 +243,7 @@ const CollapseMenu = styled(CollapsedMenu)`
 const CollapseTop = styled.div`
   display: flex;
   justify-content: center;
-  padding: 28px 15px;
+  padding: 28px 80px;
   background: ${colors.lightGray};
   ${media.phone`
     flex-direction: column;
@@ -251,6 +251,7 @@ const CollapseTop = styled.div`
     padding: 20px 15px;
   `}
   a {
+    width: 100%;
     display: flex;
     justify-content: center;
     margin-right: 15px;
@@ -259,7 +260,7 @@ const CollapseTop = styled.div`
       margin-bottom: 0;
     }
     .ant-btn {
-      width: 300px;
+      width: 100%;
     }
     ${media.phone`
       margin-bottom: 10px;
@@ -396,7 +397,7 @@ const BlueBorderedButton = styled(Button)`
 const GrayBorderedButton = styled(Button)`
   border: 1px solid ${colors.interfaceFooterColor2};
   background: transparent;
-  border-radius: 0;
+  border-radius: 2px;
   color: ${colors.interfaceFooterColor2};
   &&:hover,
   &&:focus {
@@ -617,7 +618,11 @@ class Header extends Component {
                     <CollapseTop>
                       {((overrides && !overrides.logInOnly) || !overrides) && (
                         <Link to="/account/register">
-                          <PrimaryButton type="primary" size="large">
+                          <PrimaryButton
+                            type="primary"
+                            size="large"
+                            style={overrides && { borderRadius: '0' }}
+                          >
                             <FingerPrintIcon />
                             <FormattedMessage
                               id={
@@ -880,7 +885,9 @@ class Header extends Component {
 
             {!this.state.collapsed && isTablet && (
               <CollapseMenu>
-                <CollapseTop />
+                {((overrides && !overrides.logInOnly) || !overrides) && (
+                  <CollapseTop />
+                )}
                 <CollapseContent>
                   <Menu
                     mode="inline"

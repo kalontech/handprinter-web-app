@@ -51,7 +51,7 @@ const LabelContainer = styled.div`
   border-radius: 4px;
   overflow: hidden;
   cursor: pointer;
-
+  font-family: 'Noto Sans';
   :last-child {
     margin-right: 0;
   }
@@ -100,6 +100,10 @@ const Caption = styled.div`
   font-size: 10px;
   font-weight: bold;
   line-height: 1.4;
+`
+const Value = styled.div`
+  font-weight: 400;
+  color: ${colors.dark};
 `
 
 const Impact = styled.div`
@@ -153,7 +157,7 @@ const ActionCardLabel = ({
           <Caption unit={unit} variant={variant}>
             {unit}
           </Caption>
-          <div>{value}</div>
+          <Value>{value}</Value>
         </Impact>
       </LabelContainer>
     </Tooltip>

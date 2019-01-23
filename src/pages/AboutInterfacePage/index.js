@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { Row, Col, Button, Carousel } from 'antd'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import styled from 'styled-components'
 import colors from './../../config/colors'
 import media from './../../utils/mediaQueryTemplate'
@@ -9,6 +9,7 @@ import PageMetadata from '../../components/PageMetadata'
 import { Link } from 'react-router-dom'
 
 import heroImg from './../../assets/about-interface/hero.jpg'
+import heroBoy from './../../assets/about-interface/boy.svg'
 import sliderArrow from './../../assets/about-interface/arrow.svg'
 import slide1 from './../../assets/about-interface/actions-slide1.jpg'
 import slide2 from './../../assets/about-interface/actions-slide2.jpg'
@@ -16,6 +17,8 @@ import slide3 from './../../assets/about-interface/actions-slide3.jpg'
 import slide4 from './../../assets/about-interface/actions-slide4.jpg'
 import slide5 from './../../assets/about-interface/actions-slide5.jpg'
 import WhatAreHandprintsImg from './../../assets/about-interface/what-are-handprints.jpg'
+import bePartBg from './../../assets/about-interface/be-part-bg.jpg'
+import bePartImg from './../../assets/about-interface/be-part-img.png'
 import api from '../../api'
 import ActionCard from '../../components/ActionCard'
 
@@ -26,6 +29,7 @@ const Title = styled.h2`
   font-weight: 300;
   letter-spacing: -0.4px;
   margin-bottom: 0;
+  color: ${colors.interfaceFooterColor2};
   ${media.phone`
     line-height: 31px;
     font-size: 22px;
@@ -49,12 +53,30 @@ const Text = styled.p`
 
 const Hero = styled.section`
   height: 496px;
+  position: relative;
+  background: url(${heroImg}) no-repeat center;
+  background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url(${heroImg}) no-repeat left center;
-  background-size: cover;
+  img {
+    position: absolute;
+    bottom: 0;
+    left: calc((100% - 850px) / 2);
+    ${media.desktop` 
+        left: 46px;
+      `}
+    ${media.phone` 
+      position: static;
+        align-self: self-start;
+        margin-left: 46px;
+        margin-top: 24px;
+      `}
+  }
+
   ${media.phone`
+      flex-direction: column;
+    justify-content: flex-end;
       height: 450px;
       background-position: center;
   `}
@@ -67,8 +89,8 @@ const HeroTitle = styled.div`
   font-size: 46px;
   text-align: center;
   color: ${colors.white};
-  margin-bottom: 24px;
-  max-width: 700px;
+  margin-bottom: 50px;
+  max-width: 850px;
   ${media.desktop`
     max-width: 560px;
     margin-bottom: 30px;
@@ -87,13 +109,13 @@ const HeroTitle = styled.div`
 
 const GrayButton = styled(Button)`
   margin: 0 auto;
-  min-width: 134px;
   border: 1px solid ${colors.interfaceLinkBg};
   background: ${colors.interfaceLinkBg};
   border-radius: 2px;
   font-family: Helvetica Neue;
   font-weight: 400;
   font-size: 16px;
+  height: 40px;
   color: ${colors.white};
   &&:hover,
   &&:focus {
@@ -139,15 +161,14 @@ const Slider = styled.div`
     width: 51px;
     height: 51px;
     border-radius: 50px;
-    top: 60%;
+    top: 50%;
+    transform: translateY(-50%);
     background: ${colors.red} url(${sliderArrow}) no-repeat center / 50%;
     &:hover,
     &:focus {
       background: ${colors.red} url(${sliderArrow}) no-repeat center / 50%;
     }
     ${media.phone`
-      top: 50%;
-      transform: translateY(-50%);
       width: 30px;
       height: 30px;
      `}
@@ -183,19 +204,50 @@ const Slide = styled.div`
 `
 
 const BePart = styled.section`
-  padding: 80px 0;
+  margin: 70px 0 80px;
+  padding: 40px 0;
+  background: url(${bePartBg}) no-repeat center;
+  background-size: cover;
   ${media.phone`
     padding: 60px 0;
     text-align: center;
  `}
 `
 
+const BePartBlock = styled(Col)`
+  background: #fff;
+  padding: 60px 50px 60px 100px;
+  ${media.desktop`
+    padding-top: 60px;
+    padding-left: 80px;
+ `}
+  ${media.phone`
+    text-align: center;
+    padding: 40px 15px;
+ `}
+`
+
+const BePartImg = styled(Col)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    max-width: 100%;
+    margin-left: 25px;
+  }
+  ${media.phone`
+    display: none;
+ `}
+`
+
 const BePartTitle = styled.div`
   max-width: 270px;
+  margin-bottom: 30px;
   font-family: Helvetica Neue;
   line-height: 36px;
   font-size: 28px;
   font-weight: 300;
+  color: ${colors.interfaceColor};
   ${media.phone`
     max-width: 100%;
     line-height: 31px;
@@ -231,12 +283,17 @@ const WhatAreHandprintsContent = styled(Col)`
   min-height: 620px;
   padding: 60px 0;
   > div {
-    padding-right: 30px;
+    padding-right: 100px;
     padding-left: 50px;
+  }
+  strong {
+    font-weight: normal;
+    text-decoration: underline;
   }
   ${media.desktop`
     > div {
       padding-left: 0;
+      padding-right: 30px;
     }
   `}
   ${media.phone`
@@ -254,14 +311,21 @@ const ClimateFit = styled.section`
   padding: 80px 0;
   p${Text} {
     max-width: 480px;
-    margin: 10px auto 30px;
+    margin: 10px auto 20px;
     text-align: center;
+  }
+  ${GrayButtonReversed} {
+    margin: 30px auto 0;
   }
   ${Title} {
     text-align: center;
+    color: ${colors.interfaceColor};
   }
   ${media.phone`
     padding: 60px 0;
+     ${GrayButtonReversed} {
+      margin-top: 50px;
+  }
   `}
 `
 
@@ -364,6 +428,7 @@ class AboutInterfacePage extends Component {
               </GrayButton>
             </Link>
           </BlockContainer>
+          <img src={heroBoy} alt="" />
         </Hero>
         <section>
           <BlockContainer>
@@ -398,13 +463,11 @@ class AboutInterfacePage extends Component {
         </Slider>
         <BePart>
           <BlockContainer>
-            <Row gutter={{ md: 20 }}>
-              <Col xs={24} md={12} xl={{ span: 10, offset: 2 }}>
+            <Row type="flex">
+              <BePartBlock xs={24} md={18} xl={12}>
                 <BePartTitle>
                   <FormattedMessage id="app.aboutInterfacePage.bePart.title" />
                 </BePartTitle>
-              </Col>
-              <Col xs={24} md={12} xl={{ span: 10, offset: 2 }}>
                 <Text>
                   <FormattedMessage id="app.aboutInterfacePage.bePart.description" />
                 </Text>
@@ -413,7 +476,10 @@ class AboutInterfacePage extends Component {
                     <FormattedMessage id="app.aboutInterfacePage.bePart.link" />
                   </GrayButtonReversed>
                 </Link>
-              </Col>
+              </BePartBlock>
+              <BePartImg xs={24} md={6} xl={{ span: 10, offset: 2 }}>
+                <img src={bePartImg} alt="" />
+              </BePartImg>
             </Row>
           </BlockContainer>
         </BePart>
@@ -433,7 +499,7 @@ class AboutInterfacePage extends Component {
                       <FormattedMessage id="app.aboutInterfacePage.whatAreHandprints.text1" />
                     </Text>
                     <Text>
-                      <FormattedMessage id="app.aboutInterfacePage.whatAreHandprints.text2" />
+                      <FormattedHTMLMessage id="app.aboutInterfacePage.whatAreHandprints.text2" />
                     </Text>
                     <Link to="/pages/our-vision">
                       <GrayButtonReversed type="ghost" size="large">
@@ -459,6 +525,11 @@ class AboutInterfacePage extends Component {
                 <div key={action._id}>
                   <ActionCard
                     style={{ margin: '0 10px' }}
+                    font={{
+                      fontFamily: 'Helvetica Neue',
+                      fontWeight: '300',
+                      color: colors.interfaceFooterColor2,
+                    }}
                     linkPrefix="/pages/home/actions"
                     slug={action.slug}
                     picture={action.picture}
@@ -470,6 +541,11 @@ class AboutInterfacePage extends Component {
                 </div>
               ))}
             </SliderWrap>
+            <Link to="/actions">
+              <GrayButtonReversed type="ghost" size="large">
+                <FormattedMessage id="app.aboutInterfacePage.climateFit.link" />
+              </GrayButtonReversed>
+            </Link>
           </BlockContainer>
         </ClimateFit>
       </Fragment>

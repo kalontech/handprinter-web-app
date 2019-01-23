@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Button, Row, Col } from 'antd'
+import { Button, Row, Col, Carousel } from 'antd'
 import styled from 'styled-components'
 import ScrollableAnchor, {
   configureAnchors,
@@ -9,7 +9,6 @@ import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import { BlockContainer } from './../../components/Styled'
-import ActionsCarousel from './../../components/ActionsCarousel'
 import colors from './../../config/colors'
 import heroImg from './../../assets/about-eaton/BecomeGuardian.jpg'
 import instagramImg from './../../assets/about-eaton/insta_photos.png'
@@ -17,6 +16,7 @@ import BecomeGuardianImg from './../../assets/about-eaton/bc.jpg'
 import { Link } from 'react-router-dom'
 import api from './../../api'
 import PageMetadata from '../../components/PageMetadata'
+import ActionCard from '../../components/ActionCard'
 
 configureAnchors({ scrollDuration: 1200 })
 
@@ -62,7 +62,8 @@ const WhiteBorderedButton = styled(Button)`
   line-height: 29px;
   max-width: 600px;
   margin: 0 auto;
-  width: 280px;
+  min-width: 280px;
+  height: 70px;
   border: 2px solid ${colors.white};
   border-radius: 0;
   font-family: Arial;
@@ -78,16 +79,7 @@ const WhiteBorderedButton = styled(Button)`
 `
 
 const BlueBorderedButton = styled(WhiteBorderedButton)`
-  line-height: 29px;
-  font-size: 18px;
-  max-width: 600px;
-  margin: 0 auto;
-  width: 280px;
   border: 2px solid ${colors.darkBlue};
-  border-radius: 0;
-  font-family: Arial;
-  font-size: 20px;
-  letter-spacing: -0.2px;
   color: ${colors.darkBlue};
   &&:hover,
   &&:focus {
@@ -225,6 +217,65 @@ const BecomeGuardianDescription = styled.div`
   margin: 0 auto;
 `
 
+const SliderWrap = styled(Carousel)`
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: 30px;
+  .slick-dots {
+    bottom: -14px;
+    padding-right: 15px;
+    margin: 0;
+
+    li {
+      height: 8px;
+      width: 8px;
+      margin: 0 5px;
+      background: ${colors.darkGray};
+      border-radius: 50%;
+
+      button {
+        font-size: 0;
+        height: 100%;
+        width: 100%;
+        background: transparent;
+        border: none;
+        opacity: 1;
+      }
+      &.slick-active {
+        background: ${colors.darkBlue};
+        button {
+          background: transparent;
+          width: 100%;
+        }
+      }
+    }
+  }
+`
+
+const Actions = styled.section`
+  height: 455px;
+  background: ${colors.white};
+  ${BlockContainer} {
+    top: -100px;
+  }
+`
+
+const responsive = [
+  {
+    breakpoint: 1201,
+    settings: {
+      slidesToShow: 2,
+    },
+  },
+  {
+    breakpoint: 767,
+    settings: {
+      slidesToShow: 1,
+      dots: true,
+    },
+  },
+]
+
 class AboutEatonPage extends Component {
   state = {
     actions: [],
@@ -317,11 +368,36 @@ class AboutEatonPage extends Component {
             </BecomeGuardianDescription>
           </BlockContainer>
         </BecomeGuardian>
-        <ActionsCarousel
-          actions={actions.slice(0, 3)}
-          actionLinkPrefix="/pages/home/actions"
-          hideControls
-        />
+        <Actions>
+          <BlockContainer>
+            <SliderWrap dots={false} slidesToShow={3} responsive={responsive}>
+              {actions.slice(0, 3).map(action => (
+                <div key={action._id}>
+                  <ActionCard
+                    style={{ margin: '0 10px' }}
+                    font={{
+                      fontFamily: 'Arial',
+                      fontWeight: '700',
+                      color: colors.darkBlue,
+                    }}
+                    linkPrefix="/pages/home/actions"
+                    slug={action.slug}
+                    picture={action.picture}
+                    name={action.name}
+                    impacts={action.impacts}
+                    suggestedBy={action.suggestedBy}
+                    suggestedAt={action.suggestedAt}
+                  />
+                </div>
+              ))}
+            </SliderWrap>
+            <Link to="/actions">
+              <BlueBorderedButton type="ghost" size="large">
+                <FormattedMessage id="app.aboutEatonPage.whatAreHandprints.getStartedToday" />
+              </BlueBorderedButton>
+            </Link>
+          </BlockContainer>
+        </Actions>
       </Fragment>
     )
   }

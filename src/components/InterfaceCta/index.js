@@ -8,18 +8,22 @@ import { FormattedMessage } from 'react-intl'
 import { BlockContainer, BlockSubTitle } from './../Styled'
 
 import bg from './assets/cta.jpg'
+import ctaImg from './assets/ctaImg.png'
 
 const CtaButton = styled(Button)`
-  width: 134px;
   font-size: 16px;
   font-weight: normal;
   max-width: 600px;
   margin: 0 auto;
   border: 2px solid ${colors.red};
   border-radius: 2px;
+  height: 40px;
   color: ${colors.white};
   background: ${colors.red};
   font-family: 'Helvetica Neue', sans-serif;
+  ${media.phone`
+    height: 34px;
+  `}
   &&:hover,
   &&:focus {
     border-color: ${colors.red};
@@ -30,6 +34,7 @@ const CtaButton = styled(Button)`
 
 const CtaTitle = styled(BlockSubTitle)`
   margin-bottom: 20px;
+  margin-bottom: 50px;
   color: ${colors.white};
   line-height: 46px;
   font-size: 37px;
@@ -40,21 +45,31 @@ const CtaTitle = styled(BlockSubTitle)`
   ${media.phone`
     line-height: 36px;
     font-size: 28px;
+    margin-top: 30px;
   `}
 `
 
 const CtaWrap = styled.section`
   position: relative;
-  height: 334px;
+  padding: 80px 0;
   display: flex;
   justify-content: space-center;
   align-items: center;
   background: url(${bg}) no-repeat center;
   background-size: cover;
+  &:before {
+    position: absolute;
+    bottom: -5px;
+    right: 88px;
+    content: url(${ctaImg});
+    ${media.largeDesktop`
+      display: none;
+  `}
+  }
 `
 
 const Wrap = styled(BlockContainer)`
-  max-width: 550px;
+  max-width: 700px;
 `
 
 const EatonCta = () => (
