@@ -110,6 +110,9 @@ const CopyrightContent = styled.div`
 const SmallLogo = styled.div`
   display: flex;
   align-items: flex-end;
+  img {
+    margin-left: 10px;
+  }
 `
 
 const EatonFooter = () => (
