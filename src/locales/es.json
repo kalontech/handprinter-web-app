@@ -265,7 +265,7 @@
     "app.measurementPage.CommonBasis.Text2": "Lo interesante es que <strong> más pequeña sea su huella, más poderosa será cada acción <\/strong> cuando la impresora manual calcule el efecto de la acción en su huella.",
     "app.measurementPage.Animation.Title": "Haz tu huella de la mano más grande que tu huella. Conviértete en <strong> Red Positivo <\/strong>",
     "app.actions.card.by": "por <span class=\"name\"> {username} <\/span>",
-    "app.actions.engage": "Contratar",
+    "app.actions.engage": "Compartir",
     "app.actions.takeAction": "Tomar acción",
     "app.actions.congratulations": "Felicidades",
     "app.actions.congratulations.wantToSaveResults": "¿Quieres guardar tus resultados?",

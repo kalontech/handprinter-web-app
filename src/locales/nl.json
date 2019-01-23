@@ -265,7 +265,7 @@
     "app.measurementPage.CommonBasis.Text2": "Het leuke is dat <strong> hoe kleiner je footprint wordt, hoe krachtiger elke actie wordt <\/strong> wanneer handprinter het effect van de actie op je footprint berekent.",
     "app.measurementPage.Animation.Title": "Maak je handafdruk groter dan je voetafdruk. Word <strong> Net Positief <\/strong>",
     "app.actions.card.by": "door <span class=\"name\"> {username} <\/span>",
-    "app.actions.engage": "Bezighouden",
+    "app.actions.engage": "Delen",
     "app.actions.takeAction": "Actie ondernemen",
     "app.actions.congratulations": "Gefeliciteerd",
     "app.actions.congratulations.wantToSaveResults": "Wilt u uw resultaten opslaan?",
@@ -341,7 +341,7 @@
     "app.languages.pt": "Portugees",
     "app.errors.15": "Verkeerd nieuwsbereik, moet 'netwerk' of 'wereld' zijn",
     "app.errors.16": "Tijdelijk token is niet aanwezig",
-    "app.errors.17": "E-mails zijn niet verzonden. Probeer het later opnieuw",
+    "app.errors.17": "E-mail is niet verzonden. Probeer het later opnieuw",
     "app.errors.17.multiple": "E-mails zijn niet verzonden. Probeer het later opnieuw",
     "app.languages.fr": "Frans",
     "app.languages.de": "Duitse",
@@ -350,7 +350,7 @@
     "app.measurementPage.Precision.Title": "Geen valse precisie",
     "app.measurementPage.Precision.Text1": "De impact van een actie hangt van veel factoren af, en dit maakt ze onzeker en varieert van persoon tot persoon. Handprinter laat u een aantal van deze factoren meenemen door uw thuisland te specificeren en eventueel de acties die u neemt te parametriseren, maar onzekerheid en variabiliteit blijven bestaan. Dit betekent dat het rapporteren van uw impact met een waarde van 4,35 dagen een valse precisie is.",
     "app.measurementPage.Precision.Text2": "Handprinter lost dit op door alle rapportage van waarden te beperken tot 'ronde getallen' zoals 1, 2, 5 en 10. <strong> Dit maakt effecten ook gemakkelijker te onthouden en helpt u zich te concentreren op verschillen die er echt toe doen. <\/strong>",
-    "app.actionCreatePage.uploadImageDescription": "the image must be bigger than 600px on the smaller side",
-    "app.actionCreatePage.addPhoto": "Add photo",
-    "app.newsPage.titleMobile": "My news"
+    "app.actionCreatePage.uploadImageDescription": "de afbeelding moet groter zijn dan 600 px aan de kleine kant",
+    "app.actionCreatePage.addPhoto": "Voeg foto toe",
+    "app.newsPage.titleMobile": "Mijn Nieuws"
 }

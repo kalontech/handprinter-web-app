@@ -265,7 +265,7 @@
     "app.measurementPage.CommonBasis.Text2": "很酷的是， <strong>你的足迹变得越小，当handprinter计算动作对你的足迹的影响时，每个动作将变得越强大<\/strong> 。",
     "app.measurementPage.Animation.Title": "让您的手印大于您的足迹。变得<strong>净正面<\/strong>",
     "app.actions.card.by": "通过<span class=\"name\"> {username} <\/span>",
-    "app.actions.engage": "从事",
+    "app.actions.engage": "分享",
     "app.actions.takeAction": "采取行动",
     "app.actions.congratulations": "祝贺",
     "app.actions.congratulations.wantToSaveResults": "想保存结果？",
