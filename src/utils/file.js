@@ -1,3 +1,5 @@
+import EXIF from 'exif-js'
+
 import { ACCEPT_IMAGE_FORMATS, PROFILE_PHOTO_QUALITY } from '../config/files'
 
 /*
@@ -71,6 +73,15 @@ async function loadImage(file) {
   })
 }
 
+function getExifOrientation(file) {
+  return new Promise((resolve, reject) => {
+    EXIF.getData(file, function() {
+      const allMetaData = EXIF.getAllTags(this);
+      resolve(allMetaData.Orientation) 
+    });
+  })
+}
+
 export async function croppResizeProfilePhoto({ file, size, canvas }) {
   try {
     const resultReadFile = await readFileAsDataURL(file)
@@ -83,6 +94,34 @@ export async function croppResizeProfilePhoto({ file, size, canvas }) {
     const canvasContext = canvas.getContext('2d')
 
     canvas.height = canvas.width = size
+
+    // When a picture is taken from a mobile phone (iphone) and uploaded from to our website
+    // it is rotated with an angle of -90° by default. We handle orientation of picture.
+    // links:
+    // - https://medium.com/wassa/handle-image-rotation-on-mobile-266b7bd5a1e6
+    // - https://stackoverflow.com/questions/23346166/rotate-image-by-90-degrees-on-html5-canvas
+    const exifOrientation = await getExifOrientation(file)
+
+    if (exifOrientation) {
+      switch(exifOrientation){
+        case 8:
+          canvasContext.translate(canvas.width / 2, canvas.height / 2);
+          canvasContext.rotate(-90*Math.PI/180);
+          canvasContext.translate(-canvas.width / 2, -canvas.height / 2);
+          break;
+        case 3:
+          canvasContext.translate(canvas.width / 2, canvas.height / 2);
+          canvasContext.rotate(180*Math.PI/180);
+          canvasContext.translate(-canvas.width / 2, -canvas.height / 2);
+          break;
+        case 6:
+          canvasContext.translate(canvas.width / 2, canvas.height / 2);
+          canvasContext.rotate(90*Math.PI/180);
+          canvasContext.translate(-canvas.width / 2, -canvas.height / 2);
+          break;
+      }
+    }
+
     canvasContext.drawImage(image, ...getImageWidthHeight(image, size))
 
     return {
