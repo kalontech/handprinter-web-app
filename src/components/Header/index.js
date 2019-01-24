@@ -737,7 +737,7 @@ class Header extends Component {
               </Hamburger>
             )}
             <LogoSmall>
-              <Link to="/account/dashboard">
+              <Link to={overrides ? '/pages/home' : '/account/dashboard'}>
                 <img
                   src={(overrides && overrides.partialLogo) || partialLogoImg}
                   alt="Handprinter"
