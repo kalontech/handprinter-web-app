@@ -153,7 +153,7 @@
     "app.actionCreatePage.title": "Add action",
     "app.actionCreatePage.submitSucceededTitle": "Your idea was submitted",
     "app.actionCreatePage.submitSucceededDescription": "Our moderators will check your idea as soon as possible and when approved it will appear on the action page. From that moment onward all users will be able to take your action and be part of your handprint! Also, our modelers will be invited to model the impacts of your action so that those impacts can be taken into account.",
-    "app.actionCreatePage.submitSucceededGoBack": "Go back",
+    "app.actionCreatePage.submitSucceededGoBack": "Go to actions",
     "app.actionCreatePage.cancel": "Cancel",
     "app.brandedHeader.link": "Become Green Guardian",
     "app.footer.menu.actions": "Actions",

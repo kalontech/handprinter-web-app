@@ -5,6 +5,7 @@ import { Upload, Form, Icon } from 'antd'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import CloseIcon from 'assets/icons/CloseIcon'
+import LampImgPath from 'assets/actions-page/lamp.png'
 import { FormItem, Input, PrimaryButton } from 'components/Styled'
 import { ACCEPT_IMAGE_FORMATS, FILE_SIZE_LIMIT } from 'config/files'
 import { MAX_DESCRIPTION_LENGTH } from 'config/common'
@@ -51,6 +52,7 @@ const StyledForm = styled(Form)`
   max-height: 580px;
   display: flex;
   justify-content: space-between;
+  ${({ submitSucceeded }) => (submitSucceeded ? 'min-height: 450px;' : '')}
 
   ${media.tablet`
     padding-bottom: 24px;
@@ -261,6 +263,12 @@ const SubmitSucceeded = styled.article`
     padding: 14px 5%;
   `}
 
+  img {
+    max-width: 230px;
+    max-height: 230px;
+    margin: 0 auto;
+  }
+
   h3 {
     width: 100%;
     color: ${colors.dark};
@@ -281,7 +289,8 @@ const SubmitSucceeded = styled.article`
 `
 
 const ButtonSuccess = styled(PrimaryButton)`
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   margin: 0 auto;
 `
 
@@ -374,7 +383,10 @@ class ActionCreatePage extends React.PureComponent {
           <CloseIcon />
         </CloseButton>
 
-        <StyledForm onSubmit={this.handleSubmit}>
+        <StyledForm
+          onSubmit={this.handleSubmit}
+          submitSucceeded={submitSucceeded}
+        >
           <UploadWrap>
             {getFieldDecorator('photo', {
               getValueFromEvent,
@@ -498,6 +510,8 @@ class ActionCreatePage extends React.PureComponent {
 
         {submitSucceeded && (
           <SubmitSucceeded>
+            <img src={LampImgPath} alt="success" />
+
             <h3>
               {formatMessage({
                 id: 'app.actionCreatePage.submitSucceededTitle',
