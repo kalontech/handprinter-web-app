@@ -89,7 +89,7 @@ class GoodRatioWidget extends Component {
     this.setRightLoadLabelsValue(linear(ratio, [-1, 1], [79.49, 0]))
     this.setMeterScaleRawTransformValue(
       linear(
-        handprintDays === 0 ? 100 : Math.max(0, handprintDays / footprintDays),
+        handprintDays === 0 ? 0 : Math.max(0, handprintDays / footprintDays),
         [-1, 0, 0.5, 1, 10, 100],
         [0, 0, 60, 150, 240, 300],
       ),
