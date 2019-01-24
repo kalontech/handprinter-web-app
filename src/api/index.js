@@ -8,8 +8,10 @@ import { ACTIONS_SUBSETS } from 'utils/constants'
 import { getTemporaryToken } from 'utils/temporaryToken'
 import colors from 'config/colors'
 
-const apiBaseUrl = window.location.hostname.includes('localhost')
-  ? process.env.REACT_APP_API_BASE_URL
+const { REACT_APP_API_BASE_URL, REACT_APP_WEB_APP_COOKIES_DOMAIN } = process.env
+
+const apiBaseUrl = window.location.hostname.includes(REACT_APP_WEB_APP_COOKIES_DOMAIN || 'localhost')
+  ? REACT_APP_API_BASE_URL
   : `${window.location.protocol}//${window.location.host}/api`
 export const webAppBaseUrl = `${window.location.protocol}//${
   window.location.host

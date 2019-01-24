@@ -110,6 +110,7 @@ const ToggleFilterButton = styled.button`
   border: none;
   position: relative;
   z-index: 1061;
+  background: transparent;
 
   &:focus,
   &:hover {

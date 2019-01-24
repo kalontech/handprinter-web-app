@@ -6,28 +6,27 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
-import FingerPrintIcon from '../../assets/icons/FingerPrintIcon'
-import MenuIcon from '../../assets/icons/MenuIcon'
-import CloseIcon from '../../assets/icons/CloseIcon'
-import HeaderLanguageSelector from './../HeaderLanguageSelector'
-import CollapsedMenu from './../CollapsedMenu'
-import HeaderUserActions from './../HeaderUserActions'
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+import FingerPrintIcon from 'assets/icons/FingerPrintIcon'
+import MenuIcon from 'assets/icons/MenuIcon'
+import CloseIcon from 'assets/icons/CloseIcon'
+import HeaderLanguageSelector from 'components/HeaderLanguageSelector'
+import CollapseLanguageSelector from 'components/CollapseLanguageSelector'
+import CollapsedMenu from 'components/CollapsedMenu'
 import {
   PrimaryButton,
   DefaultButton,
   HeaderPopover,
   PopoverTitle,
-} from './../Styled'
-import colors from './../../config/colors'
-import media from './../../utils/mediaQueryTemplate'
-import hexToRgba from '../../utils/hexToRgba'
-import { logOut } from './../../redux/accountStore'
-import api from './../../api'
+} from 'components/Styled'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
+import hexToRgba from 'utils/hexToRgba'
+import { logOut } from 'redux/accountStore'
+import api from 'api'
 
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
-import CollapseLanguageSelector from '../CollapseLanguageSelector'
 
 const SubMenu = Menu.SubMenu
 
@@ -408,8 +407,6 @@ const GrayBorderedButton = styled(Button)`
   }
 `
 
-const USER_ACTIONS_ROUTES = ['/dashboard']
-
 class Header extends Component {
   constructor(props) {
     super(props)
@@ -740,7 +737,7 @@ class Header extends Component {
               </Hamburger>
             )}
             <LogoSmall>
-              <Link to="/account/dashboard">
+              <Link to={overrides ? '/pages/home' : '/account/dashboard'}>
                 <img
                   src={(overrides && overrides.partialLogo) || partialLogoImg}
                   alt="Handprinter"
@@ -989,11 +986,6 @@ class Header extends Component {
             )}
           </HeaderWrap>
         )}
-
-        {type === 'private' &&
-          USER_ACTIONS_ROUTES.find(route =>
-            location.pathname.includes(route),
-          ) && <HeaderUserActions />}
       </StyledAffix>
     )
   }
