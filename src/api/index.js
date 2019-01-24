@@ -6,7 +6,7 @@ import * as Sentry from '@sentry/browser'
 import { store } from 'app'
 import { ACTIONS_SUBSETS } from 'utils/constants'
 import { getTemporaryToken } from 'utils/temporaryToken'
-import colors from 'config/colors';
+import colors from 'config/colors'
 
 const apiBaseUrl = window.location.hostname.includes('localhost')
   ? process.env.REACT_APP_API_BASE_URL
@@ -62,8 +62,11 @@ const fetchHelper = async (url, options) => {
   }
 }
 
-const findAction = ({ actionId, slug }) =>
+const findAction = ({ actionId, slug }, token) =>
   fetchHelper(`${apiBaseUrl}/actions/find_one`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
     body: {
       actionId,
       slug,
@@ -71,8 +74,12 @@ const findAction = ({ actionId, slug }) =>
     method: 'POST',
   })
 
-const getActions = (query = {}) =>
-  fetchHelper(`${apiBaseUrl}/actions?${qs.stringify(query)}`)
+const getActions = (query = {}, token) =>
+  fetchHelper(`${apiBaseUrl}/actions?${qs.stringify(query)}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  })
 
 const getSuggestedActions = (query = {}, token) =>
   fetchHelper(`${apiBaseUrl}/actions/suggested?${qs.stringify(query)}`, {
@@ -227,7 +234,9 @@ const engageAction = (action, emails, token) =>
   })
 
 const getUserInitialAvatar = fullName =>
-  `https://ui-avatars.com/api/?background=${colors.lightGray.slice(1)}&color=${colors.gray.slice(1)}&length=1&name=${fullName}&size=256`
+  `https://ui-avatars.com/api/?background=${colors.lightGray.slice(
+    1,
+  )}&color=${colors.gray.slice(1)}&length=1&name=${fullName}&size=256`
 
 const addActionRequest = body =>
   fetchHelper(`${apiBaseUrl}/actions/add_idea`, {

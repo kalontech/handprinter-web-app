@@ -376,9 +376,12 @@ class ActionModalPage extends Component {
   }
 
   fetchAction = async () => {
-    const { action } = await api.findAction({
-      slug: this.props.match.params.actionSlug,
-    })
+    const { action } = await api.findAction(
+      {
+        slug: this.props.match.params.actionSlug,
+      },
+      this.props.token,
+    )
     this.setState({ action, step: ActionModalPageSteps.ACTION_VIEW })
   }
 
