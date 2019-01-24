@@ -457,6 +457,9 @@ export const GlobalStyle = createGlobalStyle`
   
   #root > .ant-layout {
     overflow-x: hidden;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
   
   p {
