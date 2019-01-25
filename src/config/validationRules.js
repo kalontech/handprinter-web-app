@@ -1,3 +1,5 @@
+import { MAX_INVITING_MESSAGE_LENGTH } from '../config/common'
+
 export default formatMessage => ({
   country: [
     {
@@ -46,6 +48,16 @@ export default formatMessage => ({
       max: 64,
       message: formatMessage({
         id: 'app.forms.password.tooLong',
+      }),
+    },
+  ],
+  invitingMessage: [
+    {
+      max: MAX_INVITING_MESSAGE_LENGTH,
+      message: formatMessage({
+        id: 'app.forms.invitingMessage.maxLength',
+      }, {
+          maxLength: MAX_INVITING_MESSAGE_LENGTH
       }),
     },
   ],

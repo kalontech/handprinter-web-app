@@ -353,6 +353,9 @@
     "app.newsPage.titleMobile": "我的消息",
     "app.actionCreatePage.uploadImageDescription": "在较小的一侧，图像必须大于600px",
     "app.actionCreatePage.addPhoto": "添加照片",
-    "app.aboutInterfacePage.climateFit.link": "view all actions",
-    "app.aboutEatonPage.actions.link": "view all actions"
+    "app.aboutInterfacePage.climateFit.link": "查看所有操作",
+    "app.aboutEatonPage.actions.link": "查看所有操作",
+    "app.increaseHandprintPage.form.addInvitingMessage": "+添加邀请消息",
+    "app.increaseHandprintPage.form.addInvitingMessagePlaceholder": "邀请消息",
+    "app.forms.invitingMessage.maxLength": "最大长度不应大于{maxLength}字符"
 }

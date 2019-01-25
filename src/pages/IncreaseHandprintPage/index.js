@@ -6,7 +6,8 @@ import { Form, Tag, Icon } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import colors from './../../config/colors'
-import { Input, DefaultButton } from './../../components/Styled'
+import { MAX_INVITING_MESSAGE_LENGTH } from './../../config/common'
+import { Input, DefaultButton, FormItem } from './../../components/Styled'
 import hexToRgba from '../../utils/hexToRgba'
 import savePlanetImg from '../../assets/increase-handprint/save_planet.png'
 import { getInvitationLink } from '../../utils/helpers'
@@ -14,6 +15,7 @@ import api from './../../api'
 import media from './../../utils/mediaQueryTemplate'
 import PageMetadata from '../../components/PageMetadata'
 import MultipleInput from '../../components/MultipleInput'
+import getValidationRules from './../../config/validationRules'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -190,18 +192,23 @@ export const CopyToClipboardButton = styled(DefaultButton)`
 `
 
 export const SendInvitesButton = styled(DefaultButton)`
-  min-width: 142px;
   background-color: ${hexToRgba(colors.green, 0.1)};
   color: ${colors.green};
   height: 47px;
   display: inline-block;
-  margin-left: 7px;
   font-weight: bold;
-  ${media.phone`
-    margin-top: 15px;
-    width: 100%;
-    margin-left: 0;
-  `}
+  width: 100%;
+`
+
+export const AddInvitingMessageButton = styled.button`
+  color: ${colors.ocean};
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 12px;
 `
 
 export const ShareSendBlockDivideLine = styled.hr`
@@ -243,9 +250,7 @@ export const SendInvitationForm = styled(Form)`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  ${media.phone`
-    flex-direction: column;
-  `}
+  flex-direction: column;
 `
 
 export const AddEmailButton = styled(Tag)`
@@ -283,6 +288,27 @@ const InvitationInput = styled(Input)`
   color: ${colors.darkGray};
 `
 
+const AddInvitingMessageTextAreaWrap = styled(FormItem)`
+  width: 100%;
+  position: relative;
+  .ant-input {
+    min-height: 85px;
+  }
+`
+
+const AddInvitingMessageTextArea = styled(Input.TextArea)`
+  resize: none;
+`
+
+const AddInvitingMessageTextAreaCount = styled.span`
+  font-size: 12px;
+  color: ${colors.darkGray};
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 5px;
+`
+
 class IncreaseHandprintPage extends Component {
   constructor(props) {
     super(props)
@@ -295,6 +321,7 @@ class IncreaseHandprintPage extends Component {
       addEmailInputValue: '',
       isTyping: false,
       showSuccessIndicator: false,
+      showInvitingMessageInput: false,
     }
 
     this.saveInviteRef = ref => (this.saveInviteRef = ref)
@@ -322,25 +349,39 @@ class IncreaseHandprintPage extends Component {
     this.fetchShareInvitationCode(emails, invitationLink)
   }
 
-  fetchShareInvitationCode = async (emails, invitationLink) => {
-    const { token } = this.props
+  fetchShareInvitationCode = (emails, invitationLink) => {
+    const {
+      token,
+      form: { validateFields },
+    } = this.props
+    validateFields(async (err, { invitationMessage }) => {
+      if (!err) {
+        this.setState({ isSharingInvitationCode: true })
 
-    this.setState({ isSharingInvitationCode: true })
-    try {
-      await api.shareInvitationCode(
-        { emails: emails, invitationCodeUrl: invitationLink },
-        token,
-      )
-      this.setState({
-        isSharingInvitationCode: false,
-        shareInvitationCodeError: null,
-      })
-    } catch (error) {
-      this.setState({
-        isSharingInvitationCode: false,
-        shareInvitationCodeError: error,
-      })
-    }
+        const data = {
+          emails: emails,
+          invitationCodeUrl: invitationLink,
+        }
+
+        if (invitationMessage.length > 0) {
+          data.message = invitationMessage
+        }
+
+        try {
+          await api.shareInvitationCode(data, token)
+          this.setState({
+            isSharingInvitationCode: false,
+            showInvitingMessageInput: false,
+            shareInvitationCodeError: null,
+          })
+        } catch (error) {
+          this.setState({
+            isSharingInvitationCode: false,
+            shareInvitationCodeError: error,
+          })
+        }
+      }
+    })
   }
 
   copyToClipboard = e => {
@@ -350,6 +391,12 @@ class IncreaseHandprintPage extends Component {
 
   handleMultipleInputChange = (emails, isTyping) => {
     this.setState({ emails, isTyping })
+  }
+
+  handleToggleInvitingMessage = () => {
+    this.setState({
+      showInvitingMessageInput: !this.state.showInvitingMessageInput,
+    })
   }
 
   addEmailInputRef = input => (this.input = input)
@@ -376,8 +423,13 @@ class IncreaseHandprintPage extends Component {
       shareInvitationCodeError,
       isTyping,
       showSuccessIndicator,
+      showInvitingMessageInput,
     },
-    { user },
+    {
+      user,
+      intl: { formatMessage },
+      form: { getFieldDecorator, getFieldValue },
+    },
   ) => (
     <FormSectionWrap>
       <FormWrap>
@@ -421,6 +473,33 @@ class IncreaseHandprintPage extends Component {
                 error={shareInvitationCodeError}
                 inputComponent={InvitationInput}
               />
+              {showInvitingMessageInput ? (
+                <AddInvitingMessageTextAreaWrap>
+                  {getFieldDecorator('invitationMessage', {
+                    rules: getValidationRules(formatMessage).invitingMessage,
+                  })(
+                    <AddInvitingMessageTextArea
+                      placeholder={formatMessage({
+                        id:
+                          'app.increaseHandprintPage.form.addInvitingMessagePlaceholder',
+                      })}
+                    />,
+                  )}
+                  <AddInvitingMessageTextAreaCount>
+                    (
+                    {getFieldValue('invitationMessage')
+                      ? getFieldValue('invitationMessage').length
+                      : 0}
+                    /{MAX_INVITING_MESSAGE_LENGTH})
+                  </AddInvitingMessageTextAreaCount>
+                </AddInvitingMessageTextAreaWrap>
+              ) : (
+                <AddInvitingMessageButton
+                  onClick={this.handleToggleInvitingMessage}
+                >
+                  <FormattedMessage id="app.increaseHandprintPage.form.addInvitingMessage" />
+                </AddInvitingMessageButton>
+              )}
               <SendInvitesButton
                 htmlType="submit"
                 loading={isSharingInvitationCode}

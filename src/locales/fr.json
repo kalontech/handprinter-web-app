@@ -354,5 +354,8 @@
     "app.actionCreatePage.addPhoto": "Ajouter une photo",
     "app.newsPage.titleMobile": "Mes nouvelles",
     "app.aboutInterfacePage.climateFit.link": "view all actions",
-    "app.aboutEatonPage.actions.link": "view all actions"
+    "app.aboutEatonPage.actions.link": "voir toutes les actions",
+    "app.increaseHandprintPage.form.addInvitingMessage": "+ Ajouter un message invitant",
+    "app.increaseHandprintPage.form.addInvitingMessagePlaceholder": "Message invitant",
+    "app.forms.invitingMessage.maxLength": "La longueur maximale ne doit pas être supérieure à {maxLength} caractères"
 }

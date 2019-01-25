@@ -353,6 +353,9 @@
     "app.newsPage.titleMobile": "Mis noticias",
     "app.actionCreatePage.uploadImageDescription": "La imagen debe ser más grande que 600px en el lado más pequeño.",
     "app.actionCreatePage.addPhoto": "Añadir foto",
-    "app.aboutInterfacePage.climateFit.link": "view all actions",
-    "app.aboutEatonPage.actions.link": "view all actions"
+    "app.aboutInterfacePage.climateFit.link": "ver todas las acciones",
+    "app.aboutEatonPage.actions.link": "ver todas las acciones",
+    "app.increaseHandprintPage.form.addInvitingMessage": "+ Añadir mensaje de invitación",
+    "app.increaseHandprintPage.form.addInvitingMessagePlaceholder": "Mensaje de invitación",
+    "app.forms.invitingMessage.maxLength": "La longitud máxima no debe ser mayor que los caracteres {maxLength}"
 }

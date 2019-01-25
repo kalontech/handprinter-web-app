@@ -354,5 +354,8 @@
     "app.actionCreatePage.uploadImageDescription": "the image must be bigger than 600px on the smaller side",
     "app.actionCreatePage.addPhoto": "Add photo",
     "app.aboutInterfacePage.climateFit.link": "view all actions",
-    "app.aboutEatonPage.actions.link": "view all actions"
+    "app.aboutEatonPage.actions.link": "view all actions",
+    "app.increaseHandprintPage.form.addInvitingMessage": "+ Add inviting message",
+    "app.increaseHandprintPage.form.addInvitingMessagePlaceholder": "Inviting message",
+    "app.forms.invitingMessage.maxLength": "Max length should be not greater then {maxLength} characters"
 }
