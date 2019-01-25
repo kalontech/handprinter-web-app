@@ -7,11 +7,11 @@ import styled from 'styled-components'
 import {
   MAX_SHARE_EMAILS_LENGTH,
   MAX_VISIBLE_EMAIL_LENGTH,
-} from '../../config/common'
-import getValidationRules from './../../config/validationRules'
-import colors from './../../config/colors'
-import { FormItem, Input } from './../../components/Styled'
-import decodeError from './../../utils/decodeError'
+} from 'config/common'
+import getValidationRules from 'config/validationRules'
+import colors from 'config/colors'
+import { FormItem, Input } from 'components/Styled'
+import decodeError from 'utils/decodeError'
 
 const MultipleInputWrap = styled.div`
   padding: 5px;
@@ -31,21 +31,24 @@ const MultipleInputWrap = styled.div`
 `
 
 const InputWrap = styled.span`
-  width: 50%
+  width: 100%;
   display: flex;
   align-items: flex-start;
+
   .ant-input {
     height: 30px;
     border: none;
     border-radius: 0;
     margin-right: 10px;
     width: 100%;
+
     &:focus {
       box-shadow: none;
     }
   }
+
   .ant-input:focus {
-    border-color: none;
+    border-color: transparent;
   }
 `
 
@@ -59,6 +62,12 @@ const Wrap = styled.div`
 `
 
 class MultipleInput extends Component {
+  state = {
+    inputVisible: false,
+  }
+
+  multipleInputRef = React.createRef()
+
   componentDidMount() {
     const {
       form: { setFields },
@@ -77,7 +86,7 @@ class MultipleInput extends Component {
     }
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
+  componentDidUpdate = prevProps => {
     const {
       form: { setFields },
       intl: { formatMessage },
@@ -121,15 +130,15 @@ class MultipleInput extends Component {
 
     validateFields((err, { multipleInput }) => {
       if (!err) {
-        let invitesModifed = values
+        let invitesModified = values
         // add new email if it's unique value of values array
         if (multipleInput && values.indexOf(multipleInput) === -1) {
-          invitesModifed = [...values, multipleInput]
+          invitesModified = [...values, multipleInput]
         }
         this.setState({
           inputVisible: false,
         })
-        onChange(invitesModifed)
+        onChange(invitesModified)
         setFields({ errorMultipleInput: [] })
         resetFields(['multipleInput'])
       } else {
@@ -151,28 +160,6 @@ class MultipleInput extends Component {
     onChange(values.filter(email => email !== removedValue))
   }
 
-  renderInviteTag = value => {
-    const isLongTag = value.length > MAX_VISIBLE_EMAIL_LENGTH
-    const tagElem = (
-      <Tag
-        key={value}
-        closable={true}
-        afterClose={() => this.handleRemoveValue(value)}
-      >
-        {isLongTag ? `${value.slice(0, 20)}...` : value}
-      </Tag>
-    )
-    return isLongTag ? (
-      <Tooltip title={value} key={value}>
-        {tagElem}
-      </Tooltip>
-    ) : (
-      tagElem
-    )
-  }
-
-  multipleInputRef = input => (this.input = input)
-
   render() {
     const {
       intl: { formatMessage },
@@ -180,10 +167,27 @@ class MultipleInput extends Component {
       values,
       placeholder,
     } = this.props
+
     return (
       <Wrap>
         <MultipleInputWrap>
-          {values.map(this.renderInviteTag)}
+          {values.map(value => {
+            const isLongTag = value.length > MAX_VISIBLE_EMAIL_LENGTH
+            const TooltipWrap = isLongTag ? Tooltip : React.Fragment
+            const title = isLongTag ? { title: value } : {}
+
+            return (
+              <TooltipWrap {...title} key={value}>
+                <Tag
+                  closable={true}
+                  afterClose={() => this.handleRemoveValue(value)}
+                >
+                  {isLongTag ? `${value.slice(0, 20)}...` : value}
+                </Tag>
+              </TooltipWrap>
+            )
+          })}
+
           <InputWrap>
             {values.length !== MAX_SHARE_EMAILS_LENGTH &&
               getFieldDecorator('multipleInput', {
@@ -194,13 +198,10 @@ class MultipleInput extends Component {
                   type="text"
                   size="small"
                   placeholder={
-                    values.length === 0
-                      ? placeholder ||
-                        formatMessage({
-                          id:
-                            'app.increaseHandprintPage.form.enterEmailAddress',
-                        })
-                      : ''
+                    placeholder ||
+                    formatMessage({
+                      id: 'app.increaseHandprintPage.form.enterEmailAddress',
+                    })
                   }
                   onChange={this.handleAddEmailInputChange}
                   onBlur={this.handleAddValueConfirm}
@@ -209,6 +210,7 @@ class MultipleInput extends Component {
               )}
           </InputWrap>
         </MultipleInputWrap>
+
         <FormItem>
           {getFieldDecorator('errorMultipleInput')(<Input type="hidden" />)}
         </FormItem>

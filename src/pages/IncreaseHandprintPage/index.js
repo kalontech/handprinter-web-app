@@ -5,17 +5,17 @@ import PropTypes from 'prop-types'
 import { Form, Tag, Icon } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import colors from './../../config/colors'
-import { MAX_INVITING_MESSAGE_LENGTH } from './../../config/common'
-import { Input, DefaultButton, FormItem } from './../../components/Styled'
-import hexToRgba from '../../utils/hexToRgba'
-import savePlanetImg from '../../assets/increase-handprint/save_planet.png'
-import { getInvitationLink } from '../../utils/helpers'
-import api from './../../api'
-import media from './../../utils/mediaQueryTemplate'
-import PageMetadata from '../../components/PageMetadata'
-import MultipleInput from '../../components/MultipleInput'
-import getValidationRules from './../../config/validationRules'
+import colors from 'config/colors'
+import { MAX_INVITING_MESSAGE_LENGTH } from 'config/common'
+import { Input, DefaultButton, FormItem } from 'components/Styled'
+import hexToRgba from 'utils/hexToRgba'
+import savePlanetImg from 'assets/increase-handprint/save_planet.png'
+import { getInvitationLink } from 'utils/helpers'
+import api from 'api'
+import media from 'utils/mediaQueryTemplate'
+import PageMetadata from 'components/PageMetadata'
+import MultipleInput from 'components/MultipleInput'
+import getValidationRules from 'config/validationRules'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -278,7 +278,7 @@ export const AddEmailWrap = styled.div`
     }
   }
   .ant-input:focus {
-    border-color: none;
+    border-color: transparent;
   }
 `
 
@@ -309,24 +309,31 @@ const AddInvitingMessageTextAreaCount = styled.span`
   right: 5px;
 `
 
-class IncreaseHandprintPage extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      emails: [],
-      invitationLink: getInvitationLink(this.props.user.invitationCode),
-      isSharingInvitationCode: false,
-      shareInvitationCodeError: null,
-      inputVisible: false,
-      addEmailInputValue: '',
-      isTyping: false,
-      showSuccessIndicator: false,
-      showInvitingMessageInput: false,
-    }
+const IgnoredInvitations = styled.p`
+  width: 100%;
+  padding-top: 16px;
+  white-space: pre-line;
 
-    this.saveInviteRef = ref => (this.saveInviteRef = ref)
-    this.shareInviteRef = React.createRef()
+  ${media.phone`
+    padding-top: 12px;
+  `}
+`
+
+class IncreaseHandprintPage extends Component {
+  state = {
+    emails: [],
+    invitationLink: getInvitationLink(this.props.user.invitationCode),
+    isSharingInvitationCode: false,
+    shareInvitationCodeError: null,
+    inputVisible: false,
+    addEmailInputValue: '',
+    isTyping: false,
+    showSuccessIndicator: false,
+    showInvitingMessageInput: false,
+    ignoredEmails: [],
   }
+
+  shareInviteRef = React.createRef()
 
   componentDidUpdate = async (prevProps, prevState) => {
     const { shareInvitationCodeError, isSharingInvitationCode } = this.state
@@ -363,28 +370,32 @@ class IncreaseHandprintPage extends Component {
           invitationCodeUrl: invitationLink,
         }
 
-        if (invitationMessage.length > 0) {
+        if (invitationMessage && invitationMessage.length > 0) {
           data.message = invitationMessage
         }
 
         try {
-          await api.shareInvitationCode(data, token)
+          const { ignored = [] } =
+            (await api.shareInvitationCode(data, token)) || {}
+
           this.setState({
             isSharingInvitationCode: false,
             showInvitingMessageInput: false,
             shareInvitationCodeError: null,
+            ignoredEmails: ignored.map(item => item.email),
           })
         } catch (error) {
           this.setState({
             isSharingInvitationCode: false,
             shareInvitationCodeError: error,
+            ignoredEmails: [],
           })
         }
       }
     })
   }
 
-  copyToClipboard = e => {
+  copyToClipboard = () => {
     this.shareInviteRef.current.select()
     document.execCommand('copy')
   }
@@ -399,24 +410,8 @@ class IncreaseHandprintPage extends Component {
     })
   }
 
-  addEmailInputRef = input => (this.input = input)
-
-  renderTitleSection = () => (
-    <TitleSectionWrap>
-      <TitleSectionContent>
-        <SavePlanetImg src={savePlanetImg} />
-        <TitleSectionHeading>
-          <FormattedMessage id="app.increaseHandprintPage.title" />
-        </TitleSectionHeading>
-        <TitleSectionDescription>
-          <FormattedMessage id="app.increaseHandprintPage.description" />
-        </TitleSectionDescription>
-      </TitleSectionContent>
-    </TitleSectionWrap>
-  )
-
-  renderFormSection = (
-    {
+  render() {
+    const {
       emails,
       invitationLink,
       isSharingInvitationCode,
@@ -424,104 +419,122 @@ class IncreaseHandprintPage extends Component {
       isTyping,
       showSuccessIndicator,
       showInvitingMessageInput,
-    },
-    {
+      ignoredEmails,
+    } = this.state
+    const {
       user,
       intl: { formatMessage },
       form: { getFieldDecorator, getFieldValue },
-    },
-  ) => (
-    <FormSectionWrap>
-      <FormWrap>
-        <InvitationCodeBlockWrap>
-          <FormSectionHeading>
-            <FormattedMessage id="app.increaseHandprintPage.form.yourPersonalPromocode" />
-          </FormSectionHeading>
-          <InvitationCodeBlock>{user.invitationCode}</InvitationCodeBlock>
-        </InvitationCodeBlockWrap>
-        <FormSectionContent>
-          <div>
-            <FormSectionHeading>
-              <FormattedMessage id="app.increaseHandprintPage.form.shareYourLinkWithCode" />
-            </FormSectionHeading>
-            <ShareBlock>
-              <CopyToClipboardInput
-                ref={this.shareInviteRef}
-                value={invitationLink}
-                readOnly
-              />
-              <CopyToClipboardButton onClick={this.copyToClipboard}>
-                <FormattedMessage id="app.increaseHandprintPage.form.copyButton" />
-              </CopyToClipboardButton>
-            </ShareBlock>
-          </div>
-          <ShareSendBlockDivideLineWrap>
-            <ShareSendBlockDivideLine />
-            <ShareSendBlockDivideLineText>
-              <FormattedMessage id="app.increaseHandprintPage.form.or" />
-            </ShareSendBlockDivideLineText>
-            <ShareSendBlockDivideLine />
-          </ShareSendBlockDivideLineWrap>
-          <div>
-            <FormSectionHeading>
-              <FormattedMessage id="app.increaseHandprintPage.form.sendInvitationByEmail" />
-            </FormSectionHeading>
-            <SendInvitationForm onSubmit={this.handleSendInvites}>
-              <MultipleInput
-                values={emails}
-                onChange={this.handleMultipleInputChange}
-                error={shareInvitationCodeError}
-                inputComponent={InvitationInput}
-              />
-              {showInvitingMessageInput ? (
-                <AddInvitingMessageTextAreaWrap>
-                  {getFieldDecorator('invitationMessage', {
-                    rules: getValidationRules(formatMessage).invitingMessage,
-                  })(
-                    <AddInvitingMessageTextArea
-                      placeholder={formatMessage({
-                        id:
-                          'app.increaseHandprintPage.form.addInvitingMessagePlaceholder',
-                      })}
-                    />,
-                  )}
-                  <AddInvitingMessageTextAreaCount>
-                    (
-                    {getFieldValue('invitationMessage')
-                      ? getFieldValue('invitationMessage').length
-                      : 0}
-                    /{MAX_INVITING_MESSAGE_LENGTH})
-                  </AddInvitingMessageTextAreaCount>
-                </AddInvitingMessageTextAreaWrap>
-              ) : (
-                <AddInvitingMessageButton
-                  onClick={this.handleToggleInvitingMessage}
-                >
-                  <FormattedMessage id="app.increaseHandprintPage.form.addInvitingMessage" />
-                </AddInvitingMessageButton>
-              )}
-              <SendInvitesButton
-                htmlType="submit"
-                loading={isSharingInvitationCode}
-                disabled={emails.length === 0 || isTyping}
-              >
-                {showSuccessIndicator && <Icon type="check" />}
-                <FormattedMessage id="app.increaseHandprintPage.form.sendInvites" />
-              </SendInvitesButton>
-            </SendInvitationForm>
-          </div>
-        </FormSectionContent>
-      </FormWrap>
-    </FormSectionWrap>
-  )
+    } = this.props
 
-  render() {
     return (
       <Fragment>
         <PageMetadata pageName="increaseHandprintPage" />
         <Wrapper>
-          {this.renderTitleSection()}
-          {this.renderFormSection(this.state, this.props)}
+          <TitleSectionWrap>
+            <TitleSectionContent>
+              <SavePlanetImg src={savePlanetImg} />
+              <TitleSectionHeading>
+                <FormattedMessage id="app.increaseHandprintPage.title" />
+              </TitleSectionHeading>
+              <TitleSectionDescription>
+                <FormattedMessage id="app.increaseHandprintPage.description" />
+              </TitleSectionDescription>
+            </TitleSectionContent>
+          </TitleSectionWrap>
+
+          <FormSectionWrap>
+            <FormWrap>
+              <InvitationCodeBlockWrap>
+                <FormSectionHeading>
+                  <FormattedMessage id="app.increaseHandprintPage.form.yourPersonalPromocode" />
+                </FormSectionHeading>
+                <InvitationCodeBlock>{user.invitationCode}</InvitationCodeBlock>
+              </InvitationCodeBlockWrap>
+              <FormSectionContent>
+                <div>
+                  <FormSectionHeading>
+                    <FormattedMessage id="app.increaseHandprintPage.form.shareYourLinkWithCode" />
+                  </FormSectionHeading>
+                  <ShareBlock>
+                    <CopyToClipboardInput
+                      ref={this.shareInviteRef}
+                      value={invitationLink}
+                      readOnly
+                    />
+                    <CopyToClipboardButton onClick={this.copyToClipboard}>
+                      <FormattedMessage id="app.increaseHandprintPage.form.copyButton" />
+                    </CopyToClipboardButton>
+                  </ShareBlock>
+                </div>
+                <ShareSendBlockDivideLineWrap>
+                  <ShareSendBlockDivideLine />
+                  <ShareSendBlockDivideLineText>
+                    <FormattedMessage id="app.increaseHandprintPage.form.or" />
+                  </ShareSendBlockDivideLineText>
+                  <ShareSendBlockDivideLine />
+                </ShareSendBlockDivideLineWrap>
+                <div>
+                  <FormSectionHeading>
+                    <FormattedMessage id="app.increaseHandprintPage.form.sendInvitationByEmail" />
+                  </FormSectionHeading>
+                  <SendInvitationForm onSubmit={this.handleSendInvites}>
+                    <MultipleInput
+                      values={emails}
+                      onChange={this.handleMultipleInputChange}
+                      error={shareInvitationCodeError}
+                      inputComponent={InvitationInput}
+                    />
+                    {showInvitingMessageInput ? (
+                      <AddInvitingMessageTextAreaWrap>
+                        {getFieldDecorator('invitationMessage', {
+                          rules: getValidationRules(formatMessage)
+                            .invitingMessage,
+                        })(
+                          <AddInvitingMessageTextArea
+                            placeholder={formatMessage({
+                              id:
+                                'app.increaseHandprintPage.form.addInvitingMessagePlaceholder',
+                            })}
+                          />,
+                        )}
+                        <AddInvitingMessageTextAreaCount>
+                          (
+                          {getFieldValue('invitationMessage')
+                            ? getFieldValue('invitationMessage').length
+                            : 0}
+                          /{MAX_INVITING_MESSAGE_LENGTH})
+                        </AddInvitingMessageTextAreaCount>
+                      </AddInvitingMessageTextAreaWrap>
+                    ) : (
+                      <AddInvitingMessageButton
+                        onClick={this.handleToggleInvitingMessage}
+                      >
+                        <FormattedMessage id="app.increaseHandprintPage.form.addInvitingMessage" />
+                      </AddInvitingMessageButton>
+                    )}
+                    <SendInvitesButton
+                      htmlType="submit"
+                      loading={isSharingInvitationCode}
+                      disabled={emails.length === 0 || isTyping}
+                    >
+                      {showSuccessIndicator && <Icon type="check" />}
+                      <FormattedMessage id="app.increaseHandprintPage.form.sendInvites" />
+                    </SendInvitesButton>
+
+                    {ignoredEmails.length > 0 && (
+                      <IgnoredInvitations>
+                        <FormattedMessage
+                          id="app.increaseHandprintPage.ignoredEmails"
+                          values={{ list: ignoredEmails.join(', ') }}
+                        />
+                      </IgnoredInvitations>
+                    )}
+                  </SendInvitationForm>
+                </div>
+              </FormSectionContent>
+            </FormWrap>
+          </FormSectionWrap>
         </Wrapper>
       </Fragment>
     )

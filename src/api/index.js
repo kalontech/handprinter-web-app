@@ -4,7 +4,6 @@ import qs from 'qs'
 import * as Sentry from '@sentry/browser'
 
 import { store } from 'app'
-import { ACTIONS_SUBSETS } from 'utils/constants'
 import { getTemporaryToken } from 'utils/temporaryToken'
 import colors from 'config/colors'
 

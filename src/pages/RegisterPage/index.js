@@ -374,7 +374,7 @@ class RegisterPage extends Component {
                         suffix={
                           <Tooltip
                             onVisibleChange={this.toggleInvitationCodeTooltip}
-                            placement="top"
+                            placement="bottomLeft"
                             title={formatMessage({
                               id: 'app.forms.invitationCode.hint',
                             })}

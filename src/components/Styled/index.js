@@ -476,20 +476,13 @@ export const GlobalStyle = createGlobalStyle`
     left: 30px;
   }
   
-  .ant-tooltip {
-    height: 0px;
-    width: 0px
-
-    .ant-tooltip-inner {
+  .ant-tooltip .ant-tooltip-inner {
       position: relative;
       padding: 15px;
       text-align: center;
-      width: 70px;
-      left: -30px;
-      top: 10px;
-      height: 30px;
-    }
-    
+      min-width: 200px;
+      width: fit-content;
+      height: auto;
   }
   
   .ant-btn {
@@ -641,7 +634,6 @@ export const GlobalStyle = createGlobalStyle`
   .ant-tooltip, .ant-tooltip-inner  {
     box-shadow: none;
     border-radius: 30px;
-    background: transparent;
   }
   
   .ant-tooltip-arrow {
