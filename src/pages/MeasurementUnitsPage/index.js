@@ -2,10 +2,7 @@ import React, { Fragment } from 'react'
 import { Row, Col } from 'antd'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import styled from 'styled-components'
-import ScrollableAnchor, {
-  configureAnchors,
-  removeHash,
-} from 'react-scrollable-anchor'
+import { Link as AnchorLink } from 'react-scroll'
 
 import colors from './../../config/colors'
 import media from './../../utils/mediaQueryTemplate'
@@ -41,11 +38,6 @@ import animation from './../../assets/measurement/scales.mp4'
 import finger from './../../assets/measurement/finger.svg'
 import printImg from './../../assets/measurement/print.png'
 import precisionImg from './../../assets/measurement/precision.png'
-
-configureAnchors({ scrollDuration: 1200 })
-
-// clear URL hash
-removeHash()
 
 const HeadingMiddle = styled.h4`
   font-size: 22px;
@@ -580,42 +572,40 @@ const MeasurementUnitsPage = () => {
             <p>
               <FormattedMessage id="app.measurementPage.ScrollText" />
             </p>
-            <a href="#meaning">
+            <AnchorLink to="anchor" spy={true} smooth={true} duration={500}>
               <ScrollButton>
                 <ExpandMoreIcon />
               </ScrollButton>
-            </a>
+            </AnchorLink>
           </Row>
         </BlockContainer>
       </ScrollToSection>
 
-      <ScrollableAnchor id={'meaning'}>
-        <MeaningSection>
-          <BlockContainer>
-            <Row gutter={{ md: 20 }}>
-              <Col xl={10}>
-                <MeaningContent>
-                  <BlockSubTitle>
-                    <FormattedHTMLMessage id="app.measurementPage.Meaning.Title" />
-                  </BlockSubTitle>
-                  <TextMediumGroup>
-                    <FormattedHTMLMessage id="app.measurementPage.Meaning.Text1" />
-                  </TextMediumGroup>
-                  <TextMediumGroup>
-                    <FormattedHTMLMessage id="app.measurementPage.Meaning.Text2" />
-                  </TextMediumGroup>
-                </MeaningContent>
-              </Col>
-              <Col xl={14}>
-                <ImgWrapRight>
-                  <MeaningBlockImage src={meaningImg} alt="" />
-                  <MobileImg src={meaningMobImg} alt="" />
-                </ImgWrapRight>
-              </Col>
-            </Row>
-          </BlockContainer>
-        </MeaningSection>
-      </ScrollableAnchor>
+      <MeaningSection id="anchor">
+        <BlockContainer>
+          <Row gutter={{ md: 20 }}>
+            <Col xl={10}>
+              <MeaningContent>
+                <BlockSubTitle>
+                  <FormattedHTMLMessage id="app.measurementPage.Meaning.Title" />
+                </BlockSubTitle>
+                <TextMediumGroup>
+                  <FormattedHTMLMessage id="app.measurementPage.Meaning.Text1" />
+                </TextMediumGroup>
+                <TextMediumGroup>
+                  <FormattedHTMLMessage id="app.measurementPage.Meaning.Text2" />
+                </TextMediumGroup>
+              </MeaningContent>
+            </Col>
+            <Col xl={14}>
+              <ImgWrapRight>
+                <MeaningBlockImage src={meaningImg} alt="" />
+                <MobileImg src={meaningMobImg} alt="" />
+              </ImgWrapRight>
+            </Col>
+          </Row>
+        </BlockContainer>
+      </MeaningSection>
 
       <ProblemSection>
         <BlockContainer>

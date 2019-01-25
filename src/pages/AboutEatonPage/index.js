@@ -1,12 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { Button, Row, Col, Carousel } from 'antd'
 import styled from 'styled-components'
-import ScrollableAnchor, {
-  configureAnchors,
-  removeHash,
-} from 'react-scrollable-anchor'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
-
+import { Link as AnchorLink } from 'react-scroll'
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import { BlockContainer } from './../../components/Styled'
 import colors from './../../config/colors'
@@ -19,11 +15,6 @@ import { Link } from 'react-router-dom'
 import api from './../../api'
 import PageMetadata from '../../components/PageMetadata'
 import ActionCard from '../../components/ActionCard'
-
-configureAnchors({ scrollDuration: 1200 })
-
-// clear URL hash
-removeHash()
 
 const Hero = styled.section`
   position: relative;
@@ -109,7 +100,7 @@ const BlueBorderedButton = styled(WhiteBorderedButton)`
     }
   }
 `
-const ScrollToSection = styled.a`
+const ScrollToSection = styled.span`
   position: absolute;
   left: 0;
   width: 100%;
@@ -118,7 +109,6 @@ const ScrollToSection = styled.a`
   text-align: center;
   margin-top: 95px;
   ${media.phone`
-    // visibility: hidden;
     height: 0;
     opacity: 0;
   `}
@@ -283,6 +273,10 @@ const SliderWrap = styled(Carousel)`
 const Actions = styled.section`
   height: 455px;
   background: ${colors.white};
+  .ant-btn {
+    margin-left: auto;
+    margin-right: auto;
+  }
   ${BlockContainer} {
     top: -100px;
   }
@@ -344,29 +338,29 @@ class AboutEatonPage extends Component {
               </WhiteBorderedButton>
             </Link>
           </BlockContainer>
-          <ScrollToSection href="#grow_your_handprint">
-            <ExpandMoreIcon style={{ color: `${colors.white}` }} />
+          <ScrollToSection>
+            <AnchorLink to="anchor" spy={true} smooth={true} duration={500}>
+              <ExpandMoreIcon style={{ color: `${colors.white}` }} />
+            </AnchorLink>
           </ScrollToSection>
         </Hero>
-        <ScrollableAnchor id={'grow_your_handprint'}>
-          <GrowHandprint>
-            <BlockContainer>
-              <Row gutter={{ md: 20 }}>
-                <Col md={12} xl={9}>
-                  <SubHeading>
-                    <FormattedMessage id="app.aboutEatonPage.growYourHandprint.title" />
-                  </SubHeading>
-                </Col>
-                <Col md={12} xl={{ span: 12, offset: 3 }}>
-                  <Text>
-                    <FormattedHTMLMessage id="app.aboutEatonPage.growYourHandprint.description" />
-                  </Text>
-                </Col>
-              </Row>
-            </BlockContainer>
-          </GrowHandprint>
-        </ScrollableAnchor>
-        <Instagram className="instagrem" />
+        <GrowHandprint id="anchor">
+          <BlockContainer>
+            <Row gutter={{ md: 20 }}>
+              <Col md={12} xl={9}>
+                <SubHeading>
+                  <FormattedMessage id="app.aboutEatonPage.growYourHandprint.title" />
+                </SubHeading>
+              </Col>
+              <Col md={12} xl={{ span: 12, offset: 3 }}>
+                <Text>
+                  <FormattedHTMLMessage id="app.aboutEatonPage.growYourHandprint.description" />
+                </Text>
+              </Col>
+            </Row>
+          </BlockContainer>
+        </GrowHandprint>
+        <Instagram />
         <WhatAreHandprints>
           <BlockContainer>
             <Row gutter={{ md: 20 }}>

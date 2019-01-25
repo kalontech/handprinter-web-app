@@ -23,7 +23,7 @@ const Container = styled(Row)`
   border-radius: 4px;
   display: flex;
   justify-content: center;
-  overflow: scroll;
+  overflow: auto;
 
   ${props =>
     props.height

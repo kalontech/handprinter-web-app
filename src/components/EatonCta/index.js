@@ -21,7 +21,7 @@ const CtaButton = styled(Button)`
   &&:focus {
     border-color: ${colors.white};
     background: ${colors.white};
-    color: ${colors.eatonColor};
+    color: ${colors.eatonCtaBg};
   }
   ${media.phone`
     width: 100%;

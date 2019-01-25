@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom'
 import { Row, Col } from 'antd'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import styled from 'styled-components'
-import ScrollableAnchor, {
-  configureAnchors,
-  removeHash,
-} from 'react-scrollable-anchor'
-
+import { Link as AnchorLink } from 'react-scroll'
 import {
   PrimaryButton,
   SecondaryButton,
@@ -33,11 +29,6 @@ import colors from './../../config/colors'
 import media from '../../utils/mediaQueryTemplate'
 import api from './../../api'
 import PageMetadata from '../../components/PageMetadata'
-
-configureAnchors({ scrollDuration: 1200 })
-
-// clear URL hash
-removeHash()
 
 const HeroTitle = styled(BlockTitleGreen)`
   margin-bottom: 24px;
@@ -318,47 +309,45 @@ class HomePage extends Component {
                 <FormattedMessage id="app.homePage.scrollText" />
               </p>
               <div>
-                <a href="#actions">
+                <AnchorLink to="anchor" spy={true} smooth={true} duration={500}>
                   <ScrollButton>
                     <ExpandMoreIcon style={{ color: `${colors.dark}` }} />
                   </ScrollButton>
-                </a>
+                </AnchorLink>
               </div>
             </Row>
           </BlockContainer>
         </ScrollToSection>
-        <ScrollableAnchor id={'actions'}>
-          <Actions>
-            <ActionsTop>
-              <BlockContainer>
-                <Row type="flex">
-                  <Col md={24} xl={14}>
-                    <BlockSubTitle>
-                      <FormattedHTMLMessage id="app.homePage.actionsTitle" />
-                    </BlockSubTitle>
-                    <TextMedium>
-                      <FormattedMessage id="app.homePage.actionsDescription" />
-                      <ActionsLink>
-                        <Link to="/pages/our-vision">
-                          <FormattedMessage id="app.homePage.actionsLink" />
-                        </Link>
-                      </ActionsLink>
-                    </TextMedium>
-                  </Col>
-                  <Col md={24} xl={10}>
-                    <ActionsImage>
-                      <img src={hpActionImg} alt="" />
-                    </ActionsImage>
-                  </Col>
-                </Row>
-              </BlockContainer>
-            </ActionsTop>
-            <ActionsCarousel
-              actions={actions}
-              actionLinkPrefix="/pages/home/actions"
-            />
-          </Actions>
-        </ScrollableAnchor>
+        <Actions id="anchor">
+          <ActionsTop>
+            <BlockContainer>
+              <Row type="flex">
+                <Col md={24} xl={14}>
+                  <BlockSubTitle>
+                    <FormattedHTMLMessage id="app.homePage.actionsTitle" />
+                  </BlockSubTitle>
+                  <TextMedium>
+                    <FormattedMessage id="app.homePage.actionsDescription" />
+                    <ActionsLink>
+                      <Link to="/pages/our-vision">
+                        <FormattedMessage id="app.homePage.actionsLink" />
+                      </Link>
+                    </ActionsLink>
+                  </TextMedium>
+                </Col>
+                <Col md={24} xl={10}>
+                  <ActionsImage>
+                    <img src={hpActionImg} alt="" />
+                  </ActionsImage>
+                </Col>
+              </Row>
+            </BlockContainer>
+          </ActionsTop>
+          <ActionsCarousel
+            actions={actions}
+            actionLinkPrefix="/pages/home/actions"
+          />
+        </Actions>
         <About>
           <BlockContainer>
             <AboutTitle>

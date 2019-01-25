@@ -11,6 +11,7 @@ import colors from './../../config/colors'
 import hexToRgba from './../../utils/hexToRgba'
 import { CardHeading } from './../Styled'
 import media from './../../utils/mediaQueryTemplate'
+import { animateScroll } from 'react-scroll'
 
 const CardWrap = styled.div`
   padding-top: 10px;
@@ -117,7 +118,7 @@ const ActionCard = props => {
     suggestedAt,
   } = props
   return (
-    <Link to={`${linkPrefix}/${slug}`}>
+    <Link to={`${linkPrefix}/${slug}`} onClick={animateScroll.scrollMore(1)}>
       <CardWrap>
         <CardContainer {...props}>
           <CardImage>
