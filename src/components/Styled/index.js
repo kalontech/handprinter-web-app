@@ -412,8 +412,8 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
     padding-right: 35px;
     ${media.phone`
       font-size: 16px;
-      height: 84px;
-      padding: 0 35px 0 0;
+      min-height: 84px;
+      padding: 15px 35px 15px 0;
       display: flex;
       align-items: center;
     `};
@@ -434,12 +434,8 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
   }
   .ant-collapse-content {
     color: inherit;
-    p {
-      line-height: 23px;
-    }
   }
   && > .ant-collapse-content {
-    margin-top: -12px;
     & .ant-collapse-content-box {
       padding: 0 10px 28px;
       ${media.phone`

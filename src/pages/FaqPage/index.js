@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Row, Col } from 'antd'
-import { injectIntl, FormattedMessage } from 'react-intl'
+import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 
 import colors from './../../config/colors'
 import media from '../../utils/mediaQueryTemplate'
@@ -43,13 +43,26 @@ const Content = styled.div`
 
 const Heading = styled.h1`
   font-size: 28px;
-  line-height: 35px;
+  line-height: 45px;
   margin-top: 40px;
   margin-bottom: 27px;
   color: ${colors.white};
   ${media.phone`
     visibility: hidden;
   `};
+`
+const Text = styled.div`
+  line-height: 23px;
+  br {
+    display: block;
+    margin-bottom: 10px;
+    content: '';
+  }
+  ul {
+    padding-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 `
 
 const FaqPage = props => {
@@ -71,41 +84,171 @@ const FaqPage = props => {
                     })}
                     key="1"
                   >
-                    <p>
-                      <FormattedMessage id="app.faqPage.0.answer" />
-                    </p>
+                    <Text>
+                      <FormattedMessage
+                        id="app.faqPage.0.answer"
+                        tagName="div"
+                      />
+                    </Text>
                   </CollapsePanel>
                   <CollapsePanel
                     header={<FormattedMessage id="app.faqPage.1.question" />}
                     key="2"
                   >
-                    <p>
-                      <FormattedMessage id="app.faqPage.1.answer" />
-                    </p>
+                    <Text>
+                      <FormattedMessage
+                        id="app.faqPage.1.answer"
+                        tagName="div"
+                      />
+                    </Text>
                   </CollapsePanel>
                   <CollapsePanel
                     header={<FormattedMessage id="app.faqPage.2.question" />}
                     key="3"
                   >
-                    <p>
-                      <FormattedMessage id="app.faqPage.2.answer" />
-                    </p>
+                    <Text>
+                      <FormattedMessage
+                        id="app.faqPage.2.answer"
+                        tagName="div"
+                      />
+                    </Text>
                   </CollapsePanel>
                   <CollapsePanel
-                    header={<FormattedMessage id="app.faqPage.3.question" />}
+                    header={
+                      <FormattedMessage
+                        id="app.faqPage.3.question"
+                        tagName="div"
+                      />
+                    }
                     key="4"
                   >
-                    <p>
-                      <FormattedMessage id="app.faqPage.3.answer" />
-                    </p>
+                    <Text>
+                      <FormattedHTMLMessage
+                        id="app.faqPage.3.answer"
+                        tagName="div"
+                      />
+                    </Text>
                   </CollapsePanel>
                   <CollapsePanel
                     header={<FormattedMessage id="app.faqPage.4.question" />}
                     key="5"
                   >
-                    <p>
-                      <FormattedMessage id="app.faqPage.4.answer" />
-                    </p>
+                    <Text>
+                      <FormattedHTMLMessage
+                        id="app.faqPage.4.answer"
+                        tagName="div"
+                      />
+                    </Text>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.5.question" />}
+                    key="6"
+                  >
+                    <Text>
+                      <FormattedHTMLMessage
+                        id="app.faqPage.5.answer"
+                        tagName="div"
+                      />
+                    </Text>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.6.question" />}
+                    key="7"
+                  >
+                    <Text>
+                      <FormattedHTMLMessage
+                        id="app.faqPage.6.answer"
+                        tagName="div"
+                      />
+                    </Text>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.7.question" />}
+                    key="8"
+                  >
+                    <Text>
+                      <FormattedMessage
+                        id="app.faqPage.7.answer"
+                        tagName="div"
+                      />
+                    </Text>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.8.question" />}
+                    key="9"
+                  >
+                    <Text>
+                      <FormattedMessage
+                        id="app.faqPage.8.answer"
+                        tagName="div"
+                      />
+                    </Text>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.9.question" />}
+                    key="10"
+                  >
+                    <Text>
+                      <FormattedMessage
+                        id="app.faqPage.9.answer"
+                        tagName="div"
+                      />
+                    </Text>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.10.question" />}
+                    key="11"
+                  >
+                    <Text>
+                      <FormattedMessage
+                        id="app.faqPage.10.answer"
+                        tagName="div"
+                      />
+                    </Text>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.11.question" />}
+                    key="12"
+                  >
+                    <Text>
+                      <FormattedMessage
+                        id="app.faqPage.11.answer"
+                        tagName="div"
+                      />
+                    </Text>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.12.question" />}
+                    key="13"
+                  >
+                    <Text>
+                      <FormattedMessage
+                        id="app.faqPage.12.answer"
+                        tagName="div"
+                      />
+                    </Text>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.13.question" />}
+                    key="14"
+                  >
+                    <Text>
+                      <FormattedHTMLMessage
+                        id="app.faqPage.13.answer"
+                        tagName="div"
+                      />
+                    </Text>
+                  </CollapsePanel>
+                  <CollapsePanel
+                    header={<FormattedMessage id="app.faqPage.14.question" />}
+                    key="15"
+                  >
+                    <Text>
+                      <FormattedMessage
+                        id="app.faqPage.14.answer"
+                        tagName="div"
+                      />
+                    </Text>
                   </CollapsePanel>
                 </Collapse>
               </Content>
