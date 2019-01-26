@@ -789,11 +789,14 @@ export const Pagination = styled(Ant.Pagination)`
       border-right: 1px solid ${colors.gray};
     }
 
-    a {
+    button {
       color: ${colors.darkGray};
       display: block;
       padding: 7px;
       margin: 0;
+      border: 0;
+      background-color: transparent;
+      outline: 0;
     }
   }
   .ant-pagination-item-active {

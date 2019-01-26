@@ -5,15 +5,17 @@ import styled from 'styled-components'
 import { FormattedHTMLMessage } from 'react-intl'
 import { Icon } from 'antd'
 import moment from 'moment'
-
-import ActionCardLabelSet from '../ActionCardLabelSet'
-import colors from './../../config/colors'
-import hexToRgba from './../../utils/hexToRgba'
-import { CardHeading } from './../Styled'
-import media from './../../utils/mediaQueryTemplate'
 import { animateScroll } from 'react-scroll'
 
+import colors from 'config/colors'
+import hexToRgba from 'utils/hexToRgba'
+import media from 'utils/mediaQueryTemplate'
+import { CardHeading } from 'components/Styled'
+
+import ActionCardLabelSet from '../ActionCardLabelSet'
+
 const CardWrap = styled.div`
+  width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
   margin: 0 auto;
@@ -132,16 +134,24 @@ const ActionCard = props => {
           </CardWrapper>
         </CardContainer>
       </CardWrap>
+
       {suggestedBy && suggestedAt && (
         <SuggestedInfo>
           <SuggestedInfoInitiator>
-            <SuggestedInfoInitiatorPhoto src={suggestedBy.photo} />
-            <FormattedHTMLMessage
-              id="app.actions.card.by"
-              values={{
-                username: suggestedBy.fullName,
-              }}
-            />{' '}
+            {suggestedBy.photo && (
+              <SuggestedInfoInitiatorPhoto src={suggestedBy.photo} />
+            )}
+            {suggestedBy.fullName && (
+              <FormattedHTMLMessage
+                id="app.actions.card.by"
+                values={{
+                  username: suggestedBy.fullName,
+                }}
+              />
+            )}
+            {suggestedBy.selfTaken && (
+              <FormattedHTMLMessage id="app.actions.card.iTookAction" />
+            )}{' '}
           </SuggestedInfoInitiator>
           <SuggestedInfoDate>
             <Icon type="clock-circle" />

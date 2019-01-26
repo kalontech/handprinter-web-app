@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, Router, Switch, withRouter } from 'react-router-dom'
+import { Redirect, Router, Switch } from 'react-router-dom'
 import { ModalRoute } from 'react-router-modal'
 import createBrowserHistory from 'history/createBrowserHistory'
 

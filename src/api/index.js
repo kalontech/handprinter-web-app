@@ -89,6 +89,13 @@ const getSuggestedActions = (query = {}, token) =>
     },
   })
 
+const getActionsHistory = (query = {}, token) =>
+  fetchHelper(`${apiBaseUrl}/actions/taken?${qs.stringify(query)}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  })
+
 const getTimeValues = (query = {}) =>
   fetchHelper(`${apiBaseUrl}/actions/time_values`)
 
@@ -256,6 +263,7 @@ export default {
   findAction,
   getActions,
   getSuggestedActions,
+  getActionsHistory,
   getCountries,
   getTimeValues,
   getMe,

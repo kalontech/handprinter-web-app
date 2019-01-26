@@ -17,19 +17,20 @@ import {
   Pagination,
   HeaderPopover,
   DefaultButton,
-} from './../../components/Styled'
-import ActionCard from './../../components/ActionCard'
+} from 'components/Styled'
+import ActionCard from 'components/ActionCard'
+import api from 'api'
+import Spinner from 'components/Spinner'
+import colors from 'config/colors'
+import { history } from 'appRouter'
+import filterToggleImg from 'assets/actions-page/ic_filter_list.png'
+import filterToggleActiveImg from 'assets/actions-page/ic_filter_list_active.png'
+import media from 'utils/mediaQueryTemplate'
+import { IMPACT_CATEGORIES, ACTIONS_SUBSETS } from 'utils/constants'
+import PageMetadata from 'components/PageMetadata'
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+
 import ActionsFilters from './ActionFilter'
-import api from './../../api'
-import Spinner from './../../components/Spinner'
-import colors from './../../config/colors'
-import { history } from './../../appRouter'
-import filterToggleImg from './../../assets/actions-page/ic_filter_list.png'
-import filterToggleActiveImg from './../../assets/actions-page/ic_filter_list_active.png'
-import media from './../../utils/mediaQueryTemplate'
-import { IMPACT_CATEGORIES, ACTIONS_SUBSETS } from '../../utils/constants'
-import PageMetadata from '../../components/PageMetadata'
-import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 
 const Wrapper = styled.div`
   background-color: ${colors.lightGray};
@@ -165,8 +166,9 @@ const ActionTabItem = styled.li`
   margin-right: 45px;
   list-style-type: none;
   cursor: pointer;
+
   &:last-child {
-    margin-right: 0px;
+    margin-right: 0;
   }
   i {
     margin-right: 8px;
@@ -224,9 +226,11 @@ const AcionTabDropdown = styled.span`
   align-items: center;
   justify-content: center;
   display: none;
+
   ${media.phone`
     display: flex;
   `}
+
   i {
     margin-right: 8px;
   }
@@ -273,31 +277,40 @@ class ActionsPage extends Component {
     subsetDropdownVisible: false,
   }
 
+  searchSelect = React.createRef()
+
   static getDerivedStateFromProps(nextProps, prevState) {
+    const subset =
+      {
+        discover: ACTIONS_SUBSETS.DISCOVER,
+        suggested: ACTIONS_SUBSETS.SUGGESTED,
+        taken: ACTIONS_SUBSETS.HISTORY,
+      }[nextProps.match.params.subset] || ACTIONS_SUBSETS.DISCOVER
+
     return {
       ...prevState,
-      subset: (() => {
-        switch (nextProps.match.params.subset) {
-          case 'discover':
-            return ACTIONS_SUBSETS.DISCOVER
-          case 'suggested':
-            return ACTIONS_SUBSETS.SUGGESTED
-          default:
-            return ACTIONS_SUBSETS.DISCOVER
-        }
-      })(),
+      subset,
     }
   }
 
   componentDidMount = async () => {
-    const subset = get(this.props, 'match.params.subset', {})
-    const search = get(this.props, 'location.search', {})
+    const { subset } = this.state
+    const { search = {} } = this.props.location
     const queryParams = qs.parse(search, { ignoreQueryPrefix: true })
 
     this.handleParamsForFilter(queryParams)
 
     await this.fetchActions(queryParams, subset)
     await this.fetchTimeValues()
+  }
+
+  componentDidUpdate = async prevProps => {
+    const prevSearch = get(prevProps, 'location.search')
+    const currSearch = get(this.props, 'location.search')
+    if (!isEmpty(currSearch) && prevSearch !== currSearch) {
+      const query = qs.parse(currSearch, { ignoreQueryPrefix: true })
+      await this.fetchActions(query, this.state.subset)
+    }
   }
 
   handleParamsForFilter = queryParams => {
@@ -334,6 +347,9 @@ class ActionsPage extends Component {
       case ACTIONS_SUBSETS.SUGGESTED:
         request = api.getSuggestedActions
         break
+      case ACTIONS_SUBSETS.HISTORY:
+        request = api.getActionsHistory
+        break
       default:
         request = api.getActions
     }
@@ -341,9 +357,11 @@ class ActionsPage extends Component {
     this.setState({ loading: true }, () => {
       window.scrollTo(0, 0)
     })
+
     const {
       actions: { docs: actions, limit, totalDocs: total, page },
     } = await request(query, this.props.token)
+
     if (Object.keys(query).length > 0) {
       history.push(
         `/actions/${subset}?${qs.stringify(query, {
@@ -351,8 +369,17 @@ class ActionsPage extends Component {
         })}`,
       )
     }
+
     this.setState({
-      actions,
+      actions:
+        subset === ACTIONS_SUBSETS.HISTORY
+          ? actions.map(item => ({
+              ...item.action,
+              picture: `/api/files/${item.action.picture}`,
+              suggestedAt: item.updatedAt,
+              suggestedBy: { selfTaken: true },
+            }))
+          : actions,
       limit,
       loading: false,
       page,
@@ -389,21 +416,16 @@ class ActionsPage extends Component {
     })
   }, 600)
 
-  componentDidUpdate = async prevProps => {
-    const prevSearch = get(prevProps, 'location.search')
-    const currSearch = get(this.props, 'location.search')
-    if (!isEmpty(currSearch) && prevSearch !== currSearch) {
-      const query = qs.parse(currSearch, { ignoreQueryPrefix: true })
-      await this.fetchActions(query, this.state.subset)
-    }
-  }
-
   paginationItemRender = (current, type, originalElement) => {
     if (type === 'page') {
       return (
-        <Link to={`/actions/${this.state.subset}?page=${current}`}>
+        <button
+          onClick={() => {
+            history.push(`/actions/${this.state.subset}?page=${current}`)
+          }}
+        >
           {originalElement}
-        </Link>
+        </button>
       )
     }
     if (type === 'prev' || type === 'next') {
@@ -431,6 +453,7 @@ class ActionsPage extends Component {
     if (this.state.subset === subset) {
       return
     }
+
     switch (subset) {
       case ACTIONS_SUBSETS.DISCOVER:
         await this.fetchActions({}, subset)
@@ -438,6 +461,9 @@ class ActionsPage extends Component {
       case ACTIONS_SUBSETS.SUGGESTED:
         await this.fetchActions({}, subset)
         return history.push('/actions/suggested')
+      case ACTIONS_SUBSETS.HISTORY:
+        await this.fetchActions({}, subset)
+        return history.push('/actions/taken')
     }
   }
 
@@ -510,8 +536,12 @@ class ActionsPage extends Component {
         data.id = 'app.actionsPage.tabs.discover'
         break
       case ACTIONS_SUBSETS.SUGGESTED:
-        data.type = 'compass'
+        data.type = 'team'
         data.id = 'app.actionsPage.tabs.suggested'
+        break
+      case ACTIONS_SUBSETS.HISTORY:
+        data.type = 'clock-circle'
+        data.id = 'app.actionsPage.tabs.history'
         break
       default:
         return
@@ -523,8 +553,6 @@ class ActionsPage extends Component {
       </Fragment>
     )
   }
-
-  searchSelect = React.createRef()
 
   render() {
     const {
@@ -566,6 +594,7 @@ class ActionsPage extends Component {
                       >
                         {this.getTabItemContent(ACTIONS_SUBSETS.DISCOVER)}
                       </ActionTabItem>
+
                       <ActionTabItem
                         onClick={() =>
                           this.handleTabItemSelect(ACTIONS_SUBSETS.SUGGESTED)
@@ -573,6 +602,15 @@ class ActionsPage extends Component {
                         active={subset === ACTIONS_SUBSETS.SUGGESTED}
                       >
                         {this.getTabItemContent(ACTIONS_SUBSETS.SUGGESTED)}
+                      </ActionTabItem>
+
+                      <ActionTabItem
+                        onClick={() =>
+                          this.handleTabItemSelect(ACTIONS_SUBSETS.HISTORY)
+                        }
+                        active={subset === ACTIONS_SUBSETS.HISTORY}
+                      >
+                        {this.getTabItemContent(ACTIONS_SUBSETS.HISTORY)}
                       </ActionTabItem>
                     </ActionTabItemList>
 
@@ -594,6 +632,7 @@ class ActionsPage extends Component {
                           >
                             {this.getTabItemContent(ACTIONS_SUBSETS.DISCOVER)}
                           </Menu.Item>
+
                           <Menu.Item
                             key={ACTIONS_SUBSETS.SUGGESTED}
                             onClick={() =>
@@ -603,6 +642,15 @@ class ActionsPage extends Component {
                             }
                           >
                             {this.getTabItemContent(ACTIONS_SUBSETS.SUGGESTED)}
+                          </Menu.Item>
+
+                          <Menu.Item
+                            key={ACTIONS_SUBSETS.HISTORY}
+                            onClick={() =>
+                              this.handleTabItemSelect(ACTIONS_SUBSETS.HISTORY)
+                            }
+                          >
+                            {this.getTabItemContent(ACTIONS_SUBSETS.HISTORY)}
                           </Menu.Item>
                         </ActionTabItemListMobile>
                       }
@@ -761,6 +809,7 @@ class ActionsPage extends Component {
                   )}
                 </Row>
               )}
+
               {total > 1 && (
                 <Pagination
                   current={page}

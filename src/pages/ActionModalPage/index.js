@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { handleBackdropClick } from 'appRouter'
+import { ACTIONS_SUBSETS } from 'utils/constants'
 import api from 'api'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import colors from 'config/colors'
@@ -422,6 +423,7 @@ class ActionModalPage extends Component {
 
   renderActionView = () => {
     const {
+      location,
       intl: { formatMessage },
       user,
     } = this.props
@@ -450,14 +452,16 @@ class ActionModalPage extends Component {
                       <FormattedMessage id="app.actions.engage" />
                     </DefaultButton>
                   )}
-                  <TakeActionButton
-                    type="primary"
-                    loading={takingAction}
-                    onClick={this.takeAction}
-                    isLoggedIn={user}
-                  >
-                    <FormattedMessage id="app.actions.takeAction" />
-                  </TakeActionButton>
+                  {!location.pathname.includes(ACTIONS_SUBSETS.HISTORY) && (
+                    <TakeActionButton
+                      type="primary"
+                      loading={takingAction}
+                      onClick={this.takeAction}
+                      isLoggedIn={user}
+                    >
+                      <FormattedMessage id="app.actions.takeAction" />
+                    </TakeActionButton>
+                  )}
                 </ActionViewButtonsWrapper>
                 {takeActionError && (
                   <FormItem
@@ -637,6 +641,7 @@ ActionModalPage.propTypes = {
   closeModal: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   form: PropTypes.object.isRequired,
+  location: PropTypes.object,
   match: {
     params: {
       actionSlug: PropTypes.string.isRequired,
