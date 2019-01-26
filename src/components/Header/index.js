@@ -27,6 +27,7 @@ import api from 'api'
 
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
+import loginIcon from './assets/login.svg'
 
 const SubMenu = Menu.SubMenu
 
@@ -34,12 +35,21 @@ const LeftAlignPublic = styled.div`
   margin-right: 34px;
 `
 
-const LeftAlignPrivate = styled.div`
-  margin-right: 40px;
-`
-
 const RightAlign = styled.div`
   margin-left: 40px;
+`
+const CenterAlign = styled.div`
+  display: flex;
+  align-items: center;
+`
+const LogoImg = styled.img`
+  margin-right: 10px;
+`
+const ImgRightIndent = styled.img`
+  margin-right: 5px;
+`
+const ImgLeftIndent = styled.img`
+  margin-left: 5px;
 `
 
 const HeaderWrap = styled(Layout.Header)`
@@ -555,26 +565,6 @@ class Header extends Component {
                             : colors.green
                         }
                       />
-                      {overrides && overrides.inLinkLogo && (
-                        <Menu
-                          mode="horizontal"
-                          selectedKeys={[location.pathname]}
-                          style={{ marginLeft: '40px' }}
-                        >
-                          <Menu.Item key="/pages/home">
-                            <Link
-                              to="/"
-                              style={{ display: 'flex', alignItems: 'center' }}
-                            >
-                              <FormattedMessage id="app.header.menu.about" />{' '}
-                              <img
-                                src={overrides.inLinkLogo}
-                                style={{ marginLeft: '5px' }}
-                              />
-                            </Link>
-                          </Menu.Item>
-                        </Menu>
-                      )}
                     </LeftMenu>
                     <RightMenu>
                       <Menu
@@ -584,7 +574,13 @@ class Header extends Component {
                       >
                         <Menu.Item key="/account/login">
                           <Link to="/account/login">
-                            <FormattedMessage id="app.header.menu.login" />
+                            <CenterAlign>
+                              {overrides &&
+                                overrides.brandName === 'Interface' && (
+                                  <LogoImg src={loginIcon} alt="icon" />
+                                )}
+                              <FormattedMessage id="app.header.menu.login" />
+                            </CenterAlign>
                           </Link>
                         </Menu.Item>
                       </Menu>
@@ -660,7 +656,7 @@ class Header extends Component {
                           </Link>
                         </Menu.Item>
                         <SubMenu
-                          key="lang"
+                          key="about"
                           title={
                             <CollapseSubmenuTitle>
                               <FormattedMessage id="app.header.menu.about" />
@@ -697,20 +693,6 @@ class Header extends Component {
                             </Link>
                           </Menu.Item>
                         </SubMenu>
-                        {overrides && overrides.inLinkLogo && (
-                          <Menu.Item key="/pages/home">
-                            <Link
-                              to="/"
-                              style={{ display: 'flex', alignItems: 'center' }}
-                            >
-                              <FormattedMessage id="app.header.menu.about" />{' '}
-                              <img
-                                src={overrides.inLinkLogo}
-                                style={{ marginLeft: '5px' }}
-                              />
-                            </Link>
-                          </Menu.Item>
-                        )}
                       </Menu>
                       <CollapseLanguageSelector
                         color={
@@ -779,68 +761,30 @@ class Header extends Component {
                         </Link>
                       </Menu.Item>
 
-                      {overrides && overrides.inLinkLogo && (
+                      {overrides &&
+                      overrides.inLinkLogo &&
+                      overrides.brandName === 'Eaton' ? (
                         <Menu.Item key="/pages/home">
-                          <Link
-                            to="/"
-                            style={{ display: 'flex', alignItems: 'center' }}
-                          >
-                            <FormattedMessage id="app.header.menu.about" />{' '}
-                            <img
-                              src={overrides.inLinkLogo}
-                              style={{ marginLeft: '5px' }}
-                            />
+                          <Link to="/">
+                            <CenterAlign>
+                              <FormattedMessage id="app.header.menu.about" />{' '}
+                              <ImgLeftIndent src={overrides.inLinkLogo} />
+                            </CenterAlign>
                           </Link>
                         </Menu.Item>
-                      )}
+                      ) : overrides &&
+                        overrides.inLinkLogo &&
+                        overrides.brandName === 'Interface' ? (
+                        <Menu.Item key="/pages/home">
+                          <Link to="/">
+                            <CenterAlign>
+                              <ImgRightIndent src={overrides.inLinkLogo} />
+                              <FormattedMessage id="app.header.menu.aboutInterface" />
+                            </CenterAlign>
+                          </Link>
+                        </Menu.Item>
+                      ) : null}
                     </Menu>
-                    <Popover
-                      placement="bottomLeft"
-                      content={
-                        <HeaderPopover mode="vertical" theme="light">
-                          <Menu.Item key="/pages/our-vision">
-                            <Link to="/pages/our-vision">
-                              <FormattedMessage id="app.header.menu.howItWorks" />
-                            </Link>
-                          </Menu.Item>
-                          <Menu.Item key="/pages/measurement-units">
-                            <Link to="/pages/measurement-units">
-                              <FormattedMessage id="app.header.menu.measurement" />
-                            </Link>
-                          </Menu.Item>
-                          <Menu.Item key="/pages/faq">
-                            <Link to="/pages/faq">
-                              <FormattedMessage id="app.header.menu.faq" />
-                            </Link>
-                          </Menu.Item>
-                        </HeaderPopover>
-                      }
-                    >
-                      <LeftAlignPrivate>
-                        <PopoverTitle hoverColor={colors.dark}>
-                          <FormattedMessage id="app.header.menu.about" />
-                          <ExpandMoreIcon
-                            style={
-                              overrides && overrides.brandName === 'Eaton'
-                                ? { color: `${colors.darkBlue}` }
-                                : overrides &&
-                                  overrides.brandName === 'Interface'
-                                ? { color: `${colors.interfaceFooterColor2}` }
-                                : { color: `${colors.green}` }
-                            }
-                          />
-                        </PopoverTitle>
-                      </LeftAlignPrivate>
-                    </Popover>
-                    <HeaderLanguageSelector
-                      color={
-                        overrides && overrides.brandName === 'Eaton'
-                          ? colors.darkBlue
-                          : overrides && overrides.brandName === 'Interface'
-                          ? colors.interfaceFooterColor2
-                          : colors.green
-                      }
-                    />
                   </CenterMenu>
                   <RightAlign>
                     <Popover
@@ -907,20 +851,31 @@ class Header extends Component {
                         <FormattedMessage id="app.header.menu.news" />
                       </Link>
                     </Menu.Item>
-                    {overrides && overrides.inLinkLogo && (
+
+                    {overrides &&
+                    overrides.inLinkLogo &&
+                    overrides.brandName === 'Eaton' ? (
                       <Menu.Item key="/pages/home">
-                        <Link
-                          to="/"
-                          style={{ display: 'flex', alignItems: 'center' }}
-                        >
-                          <FormattedMessage id="app.header.menu.about" />{' '}
-                          <img
-                            src={overrides.inLinkLogo}
-                            style={{ marginLeft: '5px' }}
-                          />
+                        <Link to="/">
+                          <CenterAlign>
+                            <FormattedMessage id="app.header.menu.about" />
+                            <ImgLeftIndent src={overrides.inLinkLogo} />
+                          </CenterAlign>
                         </Link>
                       </Menu.Item>
-                    )}
+                    ) : overrides &&
+                      overrides.inLinkLogo &&
+                      overrides.brandName === 'Interface' ? (
+                      <Menu.Item key="/pages/home">
+                        <Link to="/">
+                          <CenterAlign>
+                            <ImgRightIndent src={overrides.inLinkLogo} />
+                            <FormattedMessage id="app.header.menu.aboutInterface" />
+                          </CenterAlign>
+                        </Link>
+                      </Menu.Item>
+                    ) : null}
+
                     <SubMenu
                       key="lang"
                       title={
