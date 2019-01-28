@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Button, Form, Select, Tooltip } from 'antd'
+import { Button, Form, Select } from 'antd'
 import { Link } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
@@ -35,6 +35,7 @@ import infoOutlineIcon from './../../assets/icons/infoOutline.svg'
 import colors from '../../config/colors'
 import PageMetadata from '../../components/PageMetadata'
 import media from '../../utils/mediaQueryTemplate'
+import Tooltip from 'components/Tooltip'
 
 export const BrandedBlockWrap = styled.div`
   position: relative;

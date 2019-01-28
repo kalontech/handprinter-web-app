@@ -477,15 +477,6 @@ export const GlobalStyle = createGlobalStyle`
     left: 30px;
   }
   
-  .ant-tooltip .ant-tooltip-inner {
-      position: relative;
-      padding: 15px;
-      text-align: center;
-      min-width: 200px;
-      width: fit-content;
-      height: auto;
-  }
-  
   .ant-btn {
     display: flex;
     align-items: center;
@@ -632,9 +623,53 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  // - global styles for .ant-tooltip & .ant-tooltip-inner classes
+  //   uses for filters in "actions page".
+  // - Use "/src/components/Tooltip/"  component in you need tooltip.
+  // - To rewrite global styles, pass "overlayClassName" to Tooltip component
+  //   with override class name
+  // Ant.Tooltip component docs: https://ant.design/components/tooltip/
+
+  .ant-tooltip {
+    height: 0px;
+    width: 0px
+
+    .ant-tooltip-inner {
+      position: relative;
+      padding: 15px;
+      text-align: center;
+      width: 70px;
+      left: -30px;
+      top: 10px;
+      height: 30px;
+    }
+  }
+
   .ant-tooltip, .ant-tooltip-inner  {
     box-shadow: none;
     border-radius: 30px;
+    background: transparent;
+  }
+
+  .ant-tooltip__global-overlay {
+    position: relative;
+    padding: 15px;
+    text-align: center;
+    min-width: 200px;
+    width: fit-content;
+    height: auto;
+    background-color: ${colors.dark};
+    
+    .ant-tooltip-inner {
+      position: relative;
+      padding: 15px;
+      text-align: center;
+      min-width: 200px;
+      width: fit-content;
+      height: auto;
+      background-color: ${colors.dark};
+      left: auto;
+    }
   }
   
   .ant-tooltip-arrow {
@@ -664,6 +699,7 @@ export const GlobalStyle = createGlobalStyle`
       white-space: nowrap;
     }
   }
+
   .ant-tooltip {
     &.action-tooltip {
     height: auto;

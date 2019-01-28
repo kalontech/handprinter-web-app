@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
-import { Form, Tag, Tooltip } from 'antd'
+import { Form, Tag } from 'antd'
 import styled from 'styled-components'
 
 import {
@@ -12,6 +12,7 @@ import getValidationRules from 'config/validationRules'
 import colors from 'config/colors'
 import { FormItem, Input } from 'components/Styled'
 import decodeError from 'utils/decodeError'
+import Tooltip from 'components/Tooltip'
 
 const MultipleInputWrap = styled.div`
   padding: 5px;

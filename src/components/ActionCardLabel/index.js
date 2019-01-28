@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { Icon, Tooltip } from 'antd'
+import { Icon } from 'antd'
 import PropTypes from 'prop-types'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 
@@ -9,6 +9,7 @@ import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
 import media from 'utils/mediaQueryTemplate'
 import { IMPACT_CATEGORIES } from 'utils/constants'
+import Tooltip from 'components/Tooltip'
 
 import icons from './icons'
 
