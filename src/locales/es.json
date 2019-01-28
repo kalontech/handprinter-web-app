@@ -378,8 +378,13 @@
     "app.faqPage.13.answer": "First, our administrators are notified, and we check to make sure it isn’t spam, or a duplicate of an action already in the database, etc.  If we need to, we’ll contact you to help you modify and strengthen your action idea. Then we’ll approve it. <br \/>Once your action idea has been approved, it will be in the database, visible to all handprinter users, and they can choose to take your action. You’ll see your influence grow as more and more people are inspired by your action idea. <br \/>But we won’t know the impacts of your action until the action is modeled. We have a staff of volunteer modelers standing by to estimate the impacts of new action ideas. Once your action has been modeled, the footprint reductions and handprint creations that you have caused will become known to you and others, and this will work retroactively as well. ",
     "app.faqPage.14.question": "Can other people take an action that I propose?",
     "app.faqPage.14.answer": "Absolutely, that’s the whole point!  As soon as it has been approved, your action idea becomes a public resource to help all of us reduce the human footprint and protect our planet for today and the future. ",
-    "app.increaseHandprintPage.ignoredEmails": "Algunas direcciones de la invitación no llegaron porque hay usuarios registrados con dichas direcciones, a saber: \n {list}",
-    "app.header.menu.aboutInterface": "Handprint",
     "app.actions.card.iTookAction": "Tomé acción",
-    "app.actionsPage.tabs.history": "Historia"
+    "app.actionsPage.tabs.history": "Historia",
+    "app.header.menu.aboutInterface": "Handprint",
+    "app.increaseHandprintPage.ignoredEmails": "Some addresses of the invitation did not come because there are registered users with such addresses, namely: \n{list}",
+    "app.measurementPage.animation.slide1": "On the day you register, your footprint is a full 365 days, and your handprint is zero. Time to change that!",
+    "app.measurementPage.animation.slide2": "First, take actions yourself, and you will reduce your footprint.",
+    "app.measurementPage.animation.slide3": "The challenge is: You can’t shrink your way to positive. So start handprinting! Share actions, contribute action ideas, and recruit friends.",
+    "app.measurementPage.animation.slide4": "Keep going, shrinking your footprint and growing your handprint. When your handprint gets larger than your footprint, you’re net positive!",
+    "app.measurementPage.animation.slide5": "There’s no limit to how much good you can do!"
 }

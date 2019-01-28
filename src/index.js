@@ -2,7 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/browser'
 
+import 'intersection-observer'
+
 import 'react-router-modal/css/react-router-modal.css'
+
 import './index.less'
 import App from './app'
 import * as serviceWorker from './serviceWorker'

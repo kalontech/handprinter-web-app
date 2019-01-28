@@ -34,10 +34,10 @@ import cowImgMob from './../../assets/measurement/cow-mob.png'
 import cowImgMob2 from './../../assets/measurement/cow-mob2.png'
 import cardImg from './../../assets/measurement/card.png'
 import footImg from './../../assets/measurement/foot.png'
-import animation from './../../assets/measurement/scales.mp4'
 import finger from './../../assets/measurement/finger.svg'
 import printImg from './../../assets/measurement/print.png'
 import precisionImg from './../../assets/measurement/precision.png'
+import MeasuringAnimation from '../../components/MeasuringAnimation'
 
 const HeadingMiddle = styled.h4`
   font-size: 22px;
@@ -477,6 +477,7 @@ const AnimationSection = styled.section`
   position: relative;
   margin: 0 40px 40px;
   padding-top: 110px;
+  padding-bottom: 110px;
   text-align: center;
   background-color: ${colors.lightGray};
   &:before {
@@ -488,6 +489,7 @@ const AnimationSection = styled.section`
   }
   ${media.desktop`
     padding-top: 50px;
+    padding-bottom: 50px;
     margin: 0;
     text-align: center;
     ${BlockContainer} {
@@ -499,22 +501,6 @@ const AnimationSection = styled.section`
   `};
   ${media.phone`
     padding-top: 30px;
-  `};
-`
-
-const Animation = styled.video`
-  video {
-    display: block;
-    max-width: 100%;
-    margin: 60px auto 0;
-  }
-`
-
-const Scales = styled(Animation)`
-  max-width: 760px;
-  ${media.desktop`
-    margin-top: 30px;
-    max-width: 100%;
   `};
 `
 
@@ -822,7 +808,7 @@ const MeasurementUnitsPage = () => {
       </CommonBasisSection>
 
       <AnimationSection>
-        <BlockContainer>
+        <BlockContainer className="block">
           <Row type="flex" justify="center">
             <Col xl={16}>
               <BlockSubTitleGreen>
@@ -830,9 +816,7 @@ const MeasurementUnitsPage = () => {
               </BlockSubTitleGreen>
             </Col>
           </Row>
-          <Scales autoPlay={true} loop={true} muted={true}>
-            <source src={animation} type="video/mp4" />
-          </Scales>
+          <MeasuringAnimation />
         </BlockContainer>
       </AnimationSection>
     </Fragment>
