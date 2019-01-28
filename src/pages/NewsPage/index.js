@@ -231,9 +231,11 @@ class NewsPage extends Component {
                     <NewsItem
                       key={index}
                       picture={
-                        news.arguments.user.photo ||
+                        (news.arguments.user && news.arguments.user.photo) ||
                         api.getUserInitialAvatar(
-                          news.arguments.user.fullName || '?',
+                          (news.arguments.user &&
+                            news.arguments.user.fullName) ||
+                            '?',
                         )
                       }
                       subject={
@@ -241,7 +243,8 @@ class NewsPage extends Component {
                           id="app.newsPage.news.userDidAction"
                           values={{
                             user:
-                              news.arguments.user.fullName ||
+                              (news.arguments.user &&
+                                news.arguments.user.fullName) ||
                               this.props.intl.formatMessage({
                                 id: 'app.newsPage.userWithoutName',
                               }),

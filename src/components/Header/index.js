@@ -786,6 +786,15 @@ class Header extends Component {
                         </Menu.Item>
                       ) : null}
                     </Menu>
+                    <HeaderLanguageSelector
+                      color={
+                        overrides && overrides.brandName === 'Eaton'
+                          ? colors.darkBlue
+                          : overrides && overrides.brandName === 'Interface'
+                          ? colors.interfaceFooterColor2
+                          : colors.green
+                      }
+                    />
                   </CenterMenu>
                   <RightAlign>
                     <Popover
