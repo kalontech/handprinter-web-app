@@ -556,7 +556,7 @@ class ActionsPage extends Component {
 
   render() {
     const {
-      intl: { formatMessage },
+      intl: { formatMessage, locale },
       user,
       location,
     } = this.props
@@ -794,7 +794,7 @@ class ActionsPage extends Component {
                         linkPrefix={`/actions/${subset}`}
                         slug={action.slug}
                         picture={action.picture}
-                        name={action.name}
+                        name={action.translatedName[locale] || action.name}
                         impacts={action.impacts}
                         suggestedBy={action.suggestedBy}
                         suggestedAt={action.suggestedAt}

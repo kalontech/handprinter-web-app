@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Carousel } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 import ActionCard from './../../components/ActionCard'
 import colors from './../../config/colors'
@@ -137,7 +137,10 @@ class ActionsCarousel extends React.Component {
   }
 
   render() {
-    const { hideControls } = this.props
+    const {
+      intl: { locale },
+      hideControls,
+    } = this.props
     const responsive = [
       {
         breakpoint: sizes.phone,
@@ -167,7 +170,7 @@ class ActionsCarousel extends React.Component {
                 linkPrefix={this.props.actionLinkPrefix}
                 slug={action.slug}
                 picture={action.picture}
-                name={action.name}
+                name={action.translatedName[locale] || action.name}
                 impacts={action.impacts}
                 isSlide
               />
@@ -209,4 +212,4 @@ SliderButton.propTypes = {
   hideControls: PropTypes.bool,
 }
 
-export default ActionsCarousel
+export default injectIntl(ActionsCarousel)

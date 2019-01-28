@@ -189,6 +189,9 @@ class NewsPage extends Component {
   }
 
   render() {
+    const {
+      intl: { locale },
+    } = this.props
     return (
       <PageContainer>
         <BlockContainer>
@@ -242,7 +245,9 @@ class NewsPage extends Component {
                               this.props.intl.formatMessage({
                                 id: 'app.newsPage.userWithoutName',
                               }),
-                            action: news.arguments.action.name,
+                            action:
+                              news.arguments.action.translatedName[locale] ||
+                              news.arguments.action.name,
                           }}
                         />
                       }

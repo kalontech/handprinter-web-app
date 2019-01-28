@@ -368,8 +368,8 @@
     "app.faqPage.8.answer": "The possibilities are truly endless, but Handprinter is here to help you get started, get a feel for handprint creation, and launch a lifetime of handprinting over-achievement!  Check out this page (link to our “how it works”) page for a summary of 6 ways to create handprints. But if you want an idea right here, right now, how about helping your friend install a clothesline to dry their towels in the sun.",
     "app.faqPage.9.question": "In the dashboard, what is the calendar showing me?",
     "app.faqPage.9.answer": "Remember that footprints and handprints can be expressed in units of time? This means, with both footprint reductions and with handprints, you can make part of your year “net positive.”  Let’s say you reduce your footprint by three days. It’s like you’re living here on earth at no environmental cost for three days! The calendar will show you living “in the green” for today and two more days.  This gives you time to ask: what else might I do?  Create a 2-day handprint, and your net-positive period will grow. How long can you extend your streak?  Can you help a friend extend theirs?",
-    "app.faqPage.10.question": "In the dashboard, what is the scale showing me?",
-    "app.faqPage.10.answer": "The scale shows you three things at once, for the impact category that you have selected: your footprint on the left, your handprint on the right, and the ratio of your handprint to your footprint on the scale’s dial.  If your handprint is zero, the scale will continue to read zero as you take actions to reduce your footprint.  But once your handprint is bigger than zero, you can increase your “good ratio” (handprint \/ footprint) by reducing your footprint and by increasing your handprint. ",
+    "app.faqPage.10.question": "Dans le tableau de bord, quelle est l'échelle me montrant?",
+    "app.faqPage.10.answer": "La balance affiche trois éléments à la fois pour la catégorie d’impact que vous avez sélectionnée: votre empreinte à gauche, votre empreinte à droite et le rapport entre votre empreinte et votre empreinte sur le cadran de la balance. Si votre empreinte de main est égale à zéro, la balance continuera à lire zéro à mesure que vous prenez des mesures pour réduire votre empreinte. Mais une fois que votre empreinte est supérieure à zéro, vous pouvez augmenter votre «bon rapport» (empreinte \/ empreinte) en réduisant votre empreinte et en augmentant votre empreinte.",
     "app.faqPage.11.question": "In the dashboard, what is the network view showing me?",
     "app.faqPage.11.answer": "Your network shows many of the people involved in your handprint “ripple effect.”  First, connected to you will see the handprinter users that you invited into handprinting. Then, you’ll also see the folks that each of them invited, and so-on.  ",
     "app.faqPage.12.question": "Where do the action ideas in Handprinter come from?",
@@ -382,11 +382,12 @@
     "app.actionsPage.tabs.history": "L'histoire",
     "app.header.menu.aboutInterface": "Handprint",
     "app.increaseHandprintPage.ignoredEmails": "Certaines adresses de l'invitation ne sont pas venues car il y a des utilisateurs enregistrés avec de telles adresses, à savoir: \n {list}",
-    "app.aboutInterfacePage.measuringImpacts.title": "Pourquoi mesurons-nous les impacts des actions en utilisant le temps (jours et heures)?",
-    "app.aboutInterfacePage.measuringImpacts.button": "Mesurer les impacts",
     "app.measurementPage.animation.slide1": "On the day you register, your footprint is a full 365 days, and your handprint is zero. Time to change that!",
     "app.measurementPage.animation.slide2": "First, take actions yourself, and you will reduce your footprint.",
     "app.measurementPage.animation.slide3": "The challenge is: You can’t shrink your way to positive. So start handprinting! Share actions, contribute action ideas, and recruit friends.",
     "app.measurementPage.animation.slide4": "Keep going, shrinking your footprint and growing your handprint. When your handprint gets larger than your footprint, you’re net positive!",
-    "app.measurementPage.animation.slide5": "There’s no limit to how much good you can do!"
+    "app.measurementPage.animation.slide5": "There’s no limit to how much good you can do!",
+    "app.actions.assumptions": "Le calcul de l'impact suppose:",
+    "app.aboutInterfacePage.measuringImpacts.title": "Pourquoi mesurons-nous les impacts des actions en utilisant le temps (jours et heures)?",
+    "app.aboutInterfacePage.measuringImpacts.button": "Mesurer les impacts"
 }

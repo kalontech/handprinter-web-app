@@ -135,6 +135,10 @@ const ActionDescription = styled.p`
   margin-top: 12px;
 `
 
+const ActionAssumptions = styled(ActionDescription)`
+  font-style: italic;
+`
+
 const BottomPanel = styled.div`
   background-color: ${colors.white};
   position: ${({ isIphone }) => (isIphone ? 'static' : 'fixed')};
@@ -424,7 +428,7 @@ class ActionModalPage extends Component {
   renderActionView = () => {
     const {
       location,
-      intl: { formatMessage },
+      intl: { formatMessage, locale },
       user,
     } = this.props
     const { action, takeActionError, takingAction } = this.state
@@ -438,8 +442,17 @@ class ActionModalPage extends Component {
             <ModalContentWrap isIphone={isSafariMobile}>
               <div>
                 <ActionCardLabelSet impacts={action.impacts} mobileFixedWidth />
-                <ActionName>{action.name}</ActionName>
-                <ActionDescription>{action.description}</ActionDescription>
+                <ActionName>
+                  {action.translatedName[locale] || action.name}
+                </ActionName>
+                <ActionDescription>
+                  {action.translatedDescription[locale] || action.description}
+                </ActionDescription>
+                <ActionAssumptions>
+                  <FormattedMessage id="app.actions.assumptions" />
+                  <br />
+                  {action.translatedAssumptions[locale] || action.assumptions}
+                </ActionAssumptions>
               </div>
               <BottomPanel isIphone={isSafariMobile}>
                 <ActionViewButtonsWrapper isIphone={isSafariMobile}>

@@ -382,11 +382,12 @@
     "app.actionsPage.tabs.history": "History",
     "app.header.menu.aboutInterface": "Handprint",
     "app.increaseHandprintPage.ignoredEmails": "Some addresses of the invitation did not come because there are registered users with such addresses, namely: \n{list}",
-    "app.aboutInterfacePage.measuringImpacts.title": "Why do we measure action impacts using time (days and hours)?",
-    "app.aboutInterfacePage.measuringImpacts.button": "Measuring impacts",
     "app.measurementPage.animation.slide1": "On the day you register, your footprint is a full 365 days, and your handprint is zero. Time to change that!",
     "app.measurementPage.animation.slide2": "First, take actions yourself, and you will reduce your footprint.",
     "app.measurementPage.animation.slide3": "The challenge is: You can’t shrink your way to positive. So start handprinting! Share actions, contribute action ideas, and recruit friends.",
     "app.measurementPage.animation.slide4": "Keep going, shrinking your footprint and growing your handprint. When your handprint gets larger than your footprint, you’re net positive!",
-    "app.measurementPage.animation.slide5": "There’s no limit to how much good you can do!"
+    "app.measurementPage.animation.slide5": "There’s no limit to how much good you can do!",
+    "app.actions.assumptions": "The impact calculation assumes:",
+    "app.aboutInterfacePage.measuringImpacts.title": "Why do we measure action impacts using time (days and hours)?",
+    "app.aboutInterfacePage.measuringImpacts.button": "Measuring impacts"
 }

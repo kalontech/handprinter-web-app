@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import { Row, Col, Button, Carousel } from 'antd'
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
+
 import colors from './../../config/colors'
 import media from './../../utils/mediaQueryTemplate'
 import { BlockContainer } from './../../components/Styled'
@@ -466,6 +468,9 @@ class AboutInterfacePage extends Component {
   }
 
   render() {
+    const {
+      intl: { locale },
+    } = this.props
     const { actions } = this.state
     return (
       <Fragment>
@@ -597,7 +602,7 @@ class AboutInterfacePage extends Component {
                     linkPrefix="/pages/home/actions"
                     slug={action.slug}
                     picture={action.picture}
-                    name={action.name}
+                    name={action.translatedName[locale] || action.name}
                     impacts={action.impacts}
                     suggestedBy={action.suggestedBy}
                     suggestedAt={action.suggestedAt}
@@ -605,11 +610,6 @@ class AboutInterfacePage extends Component {
                 </div>
               ))}
             </SliderWrap>
-            <Link to="/actions">
-              <GrayButtonReversed type="ghost" size="large">
-                <FormattedMessage id="app.aboutInterfacePage.climateFit.link" />
-              </GrayButtonReversed>
-            </Link>
           </BlockContainer>
         </ClimateFit>
       </Fragment>
@@ -617,4 +617,10 @@ class AboutInterfacePage extends Component {
   }
 }
 
-export default AboutInterfacePage
+AboutInterfacePage.propTypes = {
+  intl: {
+    locale: PropTypes.string.isRequired,
+  },
+}
+
+export default injectIntl(AboutInterfacePage)
