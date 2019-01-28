@@ -3,6 +3,7 @@ import { Row, Col } from 'antd'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import styled from 'styled-components'
 import { Link as AnchorLink } from 'react-scroll'
+import ScrollableAnchor from 'react-scrollable-anchor'
 
 import colors from './../../config/colors'
 import media from './../../utils/mediaQueryTemplate'
@@ -807,18 +808,20 @@ const MeasurementUnitsPage = () => {
         </BlockContainer>
       </CommonBasisSection>
 
-      <AnimationSection>
-        <BlockContainer className="block">
-          <Row type="flex" justify="center">
-            <Col xl={16}>
-              <BlockSubTitleGreen>
-                <FormattedHTMLMessage id="app.measurementPage.Animation.Title" />
-              </BlockSubTitleGreen>
-            </Col>
-          </Row>
-          <MeasuringAnimation />
-        </BlockContainer>
-      </AnimationSection>
+      <ScrollableAnchor id={'scales'}>
+        <AnimationSection>
+          <BlockContainer className="block">
+            <Row type="flex" justify="center">
+              <Col xl={16}>
+                <BlockSubTitleGreen>
+                  <FormattedHTMLMessage id="app.measurementPage.Animation.Title" />
+                </BlockSubTitleGreen>
+              </Col>
+            </Row>
+            <MeasuringAnimation />
+          </BlockContainer>
+        </AnimationSection>
+      </ScrollableAnchor>
     </Fragment>
   )
 }

@@ -53,7 +53,7 @@ class CalendarWidget extends Component {
     const { calendarDate } = this.state
     return (
       <Fragment>
-        <Tabs animated={false} defaultActiveKey="month">
+        <Tabs animated={false} defaultActiveKey="year">
           <Tabs.TabPane tab="Month" key="month">
             <DateSelector
               method="months"

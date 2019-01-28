@@ -663,13 +663,14 @@ export const GlobalStyle = createGlobalStyle`
     
     .ant-tooltip-inner {
       position: relative;
-      padding: 15px;
+      padding: 0;
       text-align: center;
       min-width: 200px;
       width: fit-content;
       height: auto;
       background-color: ${colors.dark};
       left: auto;
+      top: auto;
     }
   }
   

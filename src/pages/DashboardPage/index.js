@@ -3,8 +3,9 @@ import { Col, Row, Tabs, Icon } from 'antd'
 import styled, { css } from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 import CalendarWidget from './../../components/CalendarWidget'
 import GoodRatioWidget from './../../components/GoodRatioWidget'
@@ -18,6 +19,7 @@ import fingerprintImage from './../../assets/dashboard/fingerprint.png'
 import treeImage from './../../assets/dashboard/tree.png'
 import icons from './../../components/ActionCardLabel/icons'
 import media from './../../utils/mediaQueryTemplate'
+import InfoElement, { INFO_ELEMENT_TYPES } from '../../components/InfoElement'
 
 const PageContainer = styled.div`
   background-color: ${colors.lightGray};
@@ -316,6 +318,20 @@ const MyNetworkCol = styled(Col)`
   `}
 `
 
+const InfoElementWrap = styled.div`
+  margin-left: 10px;
+  display: inline-block;
+`
+
+const InfoElementLink = styled(Link)`
+  color: ${colors.white};
+  text-decoration: underline;
+  &:hover {
+    color: ${colors.white};
+    text-decoration: underline;
+  }
+`
+
 class DashboardPage extends Component {
   state = {
     calendar: null,
@@ -541,6 +557,26 @@ class DashboardPage extends Component {
                       <WidgetHeader>
                         <WidgetTitle>
                           <FormattedMessage id="app.dashboardPage.myNetPositiveDays" />
+                          <InfoElementWrap>
+                            <InfoElement
+                              type={INFO_ELEMENT_TYPES.QUESTION}
+                              tooltipProps={{
+                                placement: 'bottomLeft',
+                                title: (
+                                  <Fragment>
+                                    <p>
+                                      <FormattedMessage id="app.dashboardPage.myNetPositiveDays.infoTooltip" />
+                                    </p>
+                                    <div>
+                                      <InfoElementLink to="/pages/faq">
+                                        <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
+                                      </InfoElementLink>
+                                    </div>
+                                  </Fragment>
+                                ),
+                              }}
+                            />
+                          </InfoElementWrap>
                         </WidgetTitle>
                       </WidgetHeader>
                       <WidgetContent useWidgetMinHeight>
@@ -555,6 +591,26 @@ class DashboardPage extends Component {
                       <WidgetHeader>
                         <WidgetTitle>
                           <FormattedMessage id="app.dashboardPage.goodRatio" />
+                          <InfoElementWrap>
+                            <InfoElement
+                              type={INFO_ELEMENT_TYPES.QUESTION}
+                              tooltipProps={{
+                                placement: 'bottomLeft',
+                                title: (
+                                  <Fragment>
+                                    <p>
+                                      <FormattedMessage id="app.dashboardPage.goodRatio.infoTooltip" />
+                                    </p>
+                                    <div>
+                                      <InfoElementLink to="/pages/measurement-units#scales">
+                                        <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
+                                      </InfoElementLink>
+                                    </div>
+                                  </Fragment>
+                                ),
+                              }}
+                            />
+                          </InfoElementWrap>
                         </WidgetTitle>
                       </WidgetHeader>
                       <WidgetContent useWidgetMinHeight>
@@ -578,6 +634,26 @@ class DashboardPage extends Component {
                           <Col span={16} sm={11} lg={15} xs={24}>
                             <WidgetTitle>
                               <FormattedMessage id="app.dashboardPage.myNetwork" />
+                              <InfoElementWrap>
+                                <InfoElement
+                                  type={INFO_ELEMENT_TYPES.QUESTION}
+                                  tooltipProps={{
+                                    placement: 'bottomLeft',
+                                    title: (
+                                      <Fragment>
+                                        <p>
+                                          <FormattedMessage id="app.dashboardPage.myNetwork.infoTooltip" />
+                                        </p>
+                                        <div>
+                                          <InfoElementLink to="/pages/faq">
+                                            <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
+                                          </InfoElementLink>
+                                        </div>
+                                      </Fragment>
+                                    ),
+                                  }}
+                                />
+                              </InfoElementWrap>
                             </WidgetTitle>
                             <WidgetDescription>
                               <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
@@ -657,4 +733,4 @@ DashboardPage.propTypes = {
   token: PropTypes.string.isRequired,
 }
 
-export default connect(mapStateToProps)(DashboardPage)
+export default connect(mapStateToProps)(injectIntl(DashboardPage))

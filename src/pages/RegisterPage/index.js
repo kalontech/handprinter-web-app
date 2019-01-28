@@ -30,12 +30,10 @@ import registerActionCardImage from './../../assets/images/registerActionCard.jp
 import registerActionCardImageTablet from './../../assets/images/registerActionCardImageTablet.png'
 import registerBrandedPhotoLeaves from './../../assets/images/registerBrandedPhotoLeaves.png'
 import arrowDownIcon from './../../assets/icons/arrowDown.svg'
-import infoFillIcon from './../../assets/icons/infoFill.svg'
-import infoOutlineIcon from './../../assets/icons/infoOutline.svg'
 import colors from '../../config/colors'
 import PageMetadata from '../../components/PageMetadata'
 import media from '../../utils/mediaQueryTemplate'
-import Tooltip from 'components/Tooltip'
+import InfoElement, { INFO_ELEMENT_TYPES } from '../../components/InfoElement'
 
 export const BrandedBlockWrap = styled.div`
   position: relative;
@@ -190,7 +188,6 @@ const BrandedBlockPhotoWrap = styled.div`
 
 class RegisterPage extends Component {
   state = {
-    showInvitationCodeTooltip: false,
     referrer: null,
     getReferrerError: null,
   }
@@ -250,10 +247,6 @@ class RegisterPage extends Component {
     })
   }
 
-  toggleInvitationCodeTooltip = showInvitationCodeTooltip => {
-    this.setState({ showInvitationCodeTooltip })
-  }
-
   render() {
     const {
       countries,
@@ -261,7 +254,7 @@ class RegisterPage extends Component {
       intl: { formatMessage },
       isRegistering,
     } = this.props
-    const { showInvitationCodeTooltip, referrer } = this.state
+    const { referrer } = this.state
 
     return (
       <Fragment>
@@ -373,22 +366,14 @@ class RegisterPage extends Component {
                           id: 'app.forms.invitationCode',
                         })}
                         suffix={
-                          <Tooltip
-                            onVisibleChange={this.toggleInvitationCodeTooltip}
-                            placement="bottomLeft"
-                            title={formatMessage({
-                              id: 'app.forms.invitationCode.hint',
-                            })}
-                          >
-                            <img
-                              src={
-                                showInvitationCodeTooltip
-                                  ? infoFillIcon
-                                  : infoOutlineIcon
-                              }
-                              style={{ cursor: 'pointer' }}
-                            />
-                          </Tooltip>
+                          <InfoElement
+                            type={INFO_ELEMENT_TYPES.INFO}
+                            tooltipProps={{
+                              title: formatMessage({
+                                id: 'app.forms.invitationCode.hint',
+                              }),
+                            }}
+                          />
                         }
                       />,
                     )}

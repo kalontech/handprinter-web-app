@@ -382,12 +382,16 @@
     "app.actionsPage.tabs.history": "L'histoire",
     "app.header.menu.aboutInterface": "Handprint",
     "app.increaseHandprintPage.ignoredEmails": "Certaines adresses de l'invitation ne sont pas venues car il y a des utilisateurs enregistrés avec de telles adresses, à savoir: \n {list}",
+    "app.dashboardPage.myNetPositiveDays.infoTooltip": "Que signifie le calendrier?",
+    "app.dashboardPage.infoTooltipLinkToFAQ": "lien vers la FAQ",
+    "app.dashboardPage.goodRatio.infoTooltip": "Comment cela marche-t-il?",
+    "app.dashboardPage.myNetwork.infoTooltip": "Quel est mon réseau?",
+    "app.aboutInterfacePage.measuringImpacts.title": "Pourquoi mesurons-nous les impacts des actions en utilisant le temps (jours et heures)?",
+    "app.aboutInterfacePage.measuringImpacts.button": "Mesurer les impacts",
     "app.measurementPage.animation.slide1": "On the day you register, your footprint is a full 365 days, and your handprint is zero. Time to change that!",
     "app.measurementPage.animation.slide2": "First, take actions yourself, and you will reduce your footprint.",
     "app.measurementPage.animation.slide3": "The challenge is: You can’t shrink your way to positive. So start handprinting! Share actions, contribute action ideas, and recruit friends.",
     "app.measurementPage.animation.slide4": "Keep going, shrinking your footprint and growing your handprint. When your handprint gets larger than your footprint, you’re net positive!",
     "app.measurementPage.animation.slide5": "There’s no limit to how much good you can do!",
-    "app.actions.assumptions": "Le calcul de l'impact suppose:",
-    "app.aboutInterfacePage.measuringImpacts.title": "Pourquoi mesurons-nous les impacts des actions en utilisant le temps (jours et heures)?",
-    "app.aboutInterfacePage.measuringImpacts.button": "Mesurer les impacts"
+    "app.actions.assumptions": "Le calcul de l'impact suppose:"
 }
