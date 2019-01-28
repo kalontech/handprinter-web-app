@@ -16,7 +16,7 @@ const List = styled.ul`
 `
 
 const Item = styled.li`
-  height: 426px;
+  min-height: 426px;
   flex-basis: 280px;
   min-width: 280px;
   padding: 0 30px 30px;

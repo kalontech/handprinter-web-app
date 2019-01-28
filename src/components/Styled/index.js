@@ -475,6 +475,7 @@ export const GlobalStyle = createGlobalStyle`
   
   .ant-popover-placement-bottomLeft > .ant-popover-content > .ant-popover-arrow {
     left: 30px;
+    top: 9px;
   }
   
   .ant-btn {
