@@ -5,13 +5,19 @@ import api from './../api'
 import decodeError from './../utils/decodeError'
 import { Types as AccountStoreTypes } from '../redux/accountStore'
 import { prepareUserProfile } from './helpers'
+import { getBrandedConfig } from '../config/branded'
 
 function* logIn({ email, password }) {
   try {
     const { token } = yield call(api.logIn, email, password)
     yield put({ type: AccountStoreTypes.LOG_IN_SUCCESS, token })
     yield call(prepareUserProfile)
-    yield call(history.push, '/account/dashboard')
+    const brandedConfig = getBrandedConfig()
+    yield call(
+      history.push, 
+      brandedConfig ? 
+      '/pages/home' : '/account/dashboard'
+    )
   } catch (error) {
     yield put({
       type: AccountStoreTypes.LOG_IN_FAILURE,
