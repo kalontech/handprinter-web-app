@@ -363,6 +363,59 @@ const SliderWrap = styled(Carousel)`
   }
 `
 
+const MeasuringImpactsBlock = styled.div`
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  font-size: 26px;
+  margin: 30px 0 20px;
+  color: ${colors.interfaceFooterColor};
+  font-weight: 300;
+  font-family: Helvetica Neue;
+  ${media.phone`
+    flex-direction: column;
+  `}
+`
+
+const MeasuringImpactsBlockTitle = styled.div`
+  span {
+    letter-spacing: 1px;
+  }
+  ${media.largeDesktop`
+    max-width: 60%;
+  `}
+  ${media.phone`
+    max-width: 100%;
+    margin-bottom: 30px;
+    text-align: center;
+  `}
+`
+
+const MeasuringImpactsButton = styled(Button)`
+  background-color: transparent;
+  padding: 5px 10px;
+  text-transform: lowercase;
+  border: 1px solid ${colors.interfaceFooterColor2};
+  border-radius: 2px;
+  font-family: Helvetica Neue;
+  font-weight: 400;
+  font-size: 16px;
+  color: ${colors.interfaceLinkBg};
+  background: transparent;
+  height: 40px;
+  &&:hover,
+  &&:focus {
+    background: ${colors.interfaceLinkBg};
+    border-color: ${colors.white};
+    color: ${colors.white};
+  }
+  span {
+    letter-spacing: 0px;
+  }
+`
+
 const responsive = [
   {
     breakpoint: 769,
@@ -520,6 +573,17 @@ class AboutInterfacePage extends Component {
             <Text>
               <FormattedMessage id="app.aboutInterfacePage.climateFit.text" />
             </Text>
+            <MeasuringImpactsBlock>
+              <MeasuringImpactsBlockTitle>
+                <FormattedMessage id="app.aboutInterfacePage.measuringImpacts.title" />
+              </MeasuringImpactsBlockTitle>
+
+              <MeasuringImpactsButton>
+                <Link to="/pages/measurement-units">
+                  <FormattedMessage id="app.aboutInterfacePage.measuringImpacts.button" />
+                </Link>
+              </MeasuringImpactsButton>
+            </MeasuringImpactsBlock>
             <SliderWrap dots={false} slidesToShow={3} responsive={responsive2}>
               {actions.slice(0, 3).map(action => (
                 <div key={action._id}>
