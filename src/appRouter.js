@@ -2,6 +2,7 @@ import React from 'react'
 import { Redirect, Router, Switch } from 'react-router-dom'
 import { ModalRoute } from 'react-router-modal'
 import createBrowserHistory from 'history/createBrowserHistory'
+import GoogleAnalytics from 'react-ga'
 
 import ErrorCatcher from './utils/errorCatcher'
 import { getBrandedConfig } from './config/branded'
@@ -27,7 +28,20 @@ import SetNewPasswordPage from './pages/SetNewPasswordPage'
 import ProfilePage from './pages/ProfilePage'
 import IncreaseHandprintPage from './pages/IncreaseHandprintPage'
 
+const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = process.env
+
 export const history = createBrowserHistory()
+
+if (REACT_APP_ENVIRONMENT === 'production') {
+  GoogleAnalytics.initialize(REACT_APP_GA_TRACKING_CODE)
+
+  history.listen(location => {
+    // Track GA page view
+    const page = location.pathname + location.search
+    GoogleAnalytics.set({ page })
+    GoogleAnalytics.pageview(page)
+  })
+}
 
 export const handleBackdropClick = ({ parentPath }) =>
   history.length > 1 ? history.goBack() : history.push(parentPath)
