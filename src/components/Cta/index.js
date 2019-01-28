@@ -56,11 +56,11 @@ const Wrap = styled(BlockContainer)`
   ${media.phone`
     padding-top: 40px;
     padding-bottom: 40px;
+    ${CtaTitle} {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
   `};
-  ${CtaTitle} {
-    font-size: 22px;
-    margin-bottom: 20px;
-  }
 `
 
 const Cta = () => (

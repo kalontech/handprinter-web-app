@@ -387,6 +387,7 @@ const ProfileMenu = styled.div`
 const StyledAffix = styled(Affix)`
   .ant-affix {
     z-index: 1070;
+    width: 100% !important;
   }
 `
 

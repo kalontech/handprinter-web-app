@@ -281,6 +281,7 @@ export const BlockSubTitle = styled.h2`
   line-height: 1.24;
   font-weight: 700;
   letter-spacing: 1px;
+  font-family: 'Noto Serif', serif;
 
   ${media.phone`
     font-size: 22px;
