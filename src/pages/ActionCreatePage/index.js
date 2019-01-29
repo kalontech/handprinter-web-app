@@ -28,6 +28,7 @@ const Container = styled.section`
   ${media.tablet`
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
   `}
 `
 
@@ -87,7 +88,7 @@ const MainFields = styled.div`
   `}
 
   ${media.phone`
-    padding: 24px 20px 0;
+    padding: 24px 20px;
   `}
 `
 
@@ -183,6 +184,7 @@ const PreviewStyled = styled.img`
 
   ${media.tablet`
     max-height: 40vh;
+    width: auto;
   `}
 `
 
