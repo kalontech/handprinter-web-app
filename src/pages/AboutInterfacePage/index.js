@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 
 import colors from './../../config/colors'
 import media from './../../utils/mediaQueryTemplate'
+import hexToRgba from '../../utils/hexToRgba'
 import { BlockContainer } from './../../components/Styled'
 import PageMetadata from '../../components/PageMetadata'
 import { Link } from 'react-router-dom'
@@ -129,7 +130,7 @@ const GrayButton = styled(Button)`
 
 const GrayButtonReversed = styled(GrayButton)`
   margin: 30px 0 0;
-  border: 1px solid ${colors.interfaceFooterColor2};
+  border: 1px solid ${hexToRgba(colors.interfaceLinkBg, 0.4)};
   background: transparent;
   color: ${colors.interfaceLinkBg};
   &&:hover,
@@ -290,7 +291,6 @@ const WhatAreHandprintsContent = styled(Col)`
   }
   strong {
     font-weight: normal;
-    text-decoration: underline;
   }
   ${media.desktop`
     > div {
@@ -323,11 +323,14 @@ const ClimateFit = styled.section`
     text-align: center;
     color: ${colors.interfaceColor};
   }
+  ${media.desktop`
+    padding: 80px 0 60px;
+  `}
   ${media.phone`
-    padding: 60px 0;
+    padding: 60px 0 30px;
      ${GrayButtonReversed} {
       margin-top: 50px;
-  }
+      }
   `}
 `
 
@@ -337,6 +340,7 @@ const SliderWrap = styled(Carousel)`
   .slick-dots {
     bottom: -14px;
     padding-right: 15px;
+    padding-left: 15px;
     margin: 0;
 
     li {
@@ -366,56 +370,42 @@ const SliderWrap = styled(Carousel)`
 `
 
 const MeasuringImpactsBlock = styled.div`
-  background-color: #f7f7f7;
+  background-color: ${colors.interfaceSectionBg};
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 25px;
-  font-size: 26px;
-  margin: 30px 0 20px;
+  padding: 20px;
+  margin-top: 10px;
   color: ${colors.interfaceFooterColor};
   font-weight: 300;
   font-family: Helvetica Neue;
   ${media.phone`
+    margin-top: 30px;
+    padding: 30px 15px;
     flex-direction: column;
   `}
+  ${GrayButtonReversed} {
+    margin: 0;
+  }
 `
 
 const MeasuringImpactsBlockTitle = styled.div`
-  span {
-    letter-spacing: 1px;
-  }
+  font-size: 28px;
+  line-height: 36px;
+  letter-spacing: 1px;
   ${media.largeDesktop`
     max-width: 60%;
+  `}
+  ${media.desktop`
+    line-height: 26px;
+    font-size: 16px;
+    color: ${colors.interfaceFooterColor2};
   `}
   ${media.phone`
     max-width: 100%;
     margin-bottom: 30px;
     text-align: center;
   `}
-`
-
-const MeasuringImpactsButton = styled(Button)`
-  background-color: transparent;
-  padding: 5px 10px;
-  text-transform: lowercase;
-  border: 1px solid ${colors.interfaceFooterColor2};
-  border-radius: 2px;
-  font-family: Helvetica Neue;
-  font-weight: 400;
-  font-size: 16px;
-  color: ${colors.interfaceLinkBg};
-  background: transparent;
-  height: 40px;
-  &&:hover,
-  &&:focus {
-    background: ${colors.interfaceLinkBg};
-    border-color: ${colors.white};
-    color: ${colors.white};
-  }
-  span {
-    letter-spacing: 0px;
-  }
 `
 
 const responsive = [
@@ -578,17 +568,6 @@ class AboutInterfacePage extends Component {
             <Text>
               <FormattedMessage id="app.aboutInterfacePage.climateFit.text" />
             </Text>
-            <MeasuringImpactsBlock>
-              <MeasuringImpactsBlockTitle>
-                <FormattedMessage id="app.aboutInterfacePage.measuringImpacts.title" />
-              </MeasuringImpactsBlockTitle>
-
-              <MeasuringImpactsButton>
-                <Link to="/pages/measurement-units">
-                  <FormattedMessage id="app.aboutInterfacePage.measuringImpacts.button" />
-                </Link>
-              </MeasuringImpactsButton>
-            </MeasuringImpactsBlock>
             <SliderWrap dots={false} slidesToShow={3} responsive={responsive2}>
               {actions.slice(0, 3).map(action => (
                 <div key={action._id}>
@@ -610,6 +589,17 @@ class AboutInterfacePage extends Component {
                 </div>
               ))}
             </SliderWrap>
+            <MeasuringImpactsBlock>
+              <MeasuringImpactsBlockTitle>
+                <FormattedMessage id="app.aboutInterfacePage.measuringImpacts.title" />
+              </MeasuringImpactsBlockTitle>
+
+              <GrayButtonReversed>
+                <Link to="/pages/measurement-units">
+                  <FormattedMessage id="app.aboutInterfacePage.measuringImpacts.button" />
+                </Link>
+              </GrayButtonReversed>
+            </MeasuringImpactsBlock>
           </BlockContainer>
         </ClimateFit>
       </Fragment>

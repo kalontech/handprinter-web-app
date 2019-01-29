@@ -46,6 +46,7 @@ const CtaTitle = styled(BlockSubTitle)`
     line-height: 36px;
     font-size: 28px;
     margin-top: 30px;
+    margin-bottom: 30px;
   `}
 `
 
@@ -78,7 +79,7 @@ const EatonCta = () => (
       <CtaTitle>
         <FormattedMessage id="app.interfaceCta.text" />
       </CtaTitle>
-      <Link to="/pages/our-vision">
+      <Link to="/pages/faq">
         <CtaButton type="ghost" size="large">
           <FormattedMessage id="app.interfaceCta.link" />
         </CtaButton>

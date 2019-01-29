@@ -353,7 +353,6 @@
     "app.newsPage.titleMobile": "My news",
     "app.actionCreatePage.uploadImageDescription": "the image must be bigger than 600px on the smaller side",
     "app.actionCreatePage.addPhoto": "Add photo",
-    "app.header.menu.aboutInterface": "Handprint",
     "app.aboutInterfacePage.climateFit.link": "view all actions",
     "app.aboutEatonPage.actions.link": "view all actions",
     "app.increaseHandprintPage.form.addInvitingMessage": "+ Add inviting message",
@@ -384,7 +383,7 @@
     "app.increaseHandprintPage.ignoredEmails": "Some addresses of the invitation did not come because there are registered users with such addresses, namely: \n{list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "What does the calendar mean?",
     "app.dashboardPage.infoTooltipLinkToFAQ": "link to FAQ",
-    "app.dashboardPage.goodRatio.infoTooltip": "How does this work?",
+    "app.dashboardPage.goodRatio.infoTooltip": "Good ratio is the ratio of your handprint to your footprint. Increase it by growing your handprint and by shrinking your footprint. ",
     "app.dashboardPage.myNetwork.infoTooltip": "What is my network?",
     "app.measurementPage.animation.slide1": "On the day you register, your footprint is a full 365 days, and your handprint is zero. Time to change that!",
     "app.measurementPage.animation.slide2": "First, take actions yourself, and you will reduce your footprint.",
@@ -393,5 +392,6 @@
     "app.measurementPage.animation.slide5": "There’s no limit to how much good you can do!",
     "app.actions.assumptions": "The impact calculation assumes:",
     "app.aboutInterfacePage.measuringImpacts.title": "Why do we measure action impacts using time (days and hours)?",
-    "app.aboutInterfacePage.measuringImpacts.button": "Measuring impacts"
+    "app.aboutInterfacePage.measuringImpacts.button": "Measuring impacts",
+    "app.ourVision.ActionsCarousel.extraLink": "Measuring impacts"
 }
