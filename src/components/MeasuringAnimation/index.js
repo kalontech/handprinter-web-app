@@ -1,8 +1,21 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 
 import measurementImpactVideoSrc from 'assets/measurement/measurment-impact.mp4'
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+import { ArrowButton } from 'components/Styled'
+import colors from 'config/colors'
+
+const fadeOut = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`
 
 const SliderContainer = styled.div`
   position: relative;
@@ -20,29 +33,44 @@ const SliderContainer = styled.div`
     max-width: 500px;
     min-height: 70px;
     margin: 0 auto;
+    animation: ${fadeOut} 2s ease-out;
   }
+`
+
+const Controls = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`
+
+const SliderButton = styled(ArrowButton)`
+  transform: ${props =>
+    props.direction === 'right' ? 'rotate(-90deg)' : 'rotate(90deg)'};
+  background-color: ${colors.white};
 `
 
 class MeasuringAnimation extends React.PureComponent {
   state = {
-    slideIndex: 1, // [1,2,3,4,5]
+    index: 0,
     playing: false,
   }
 
   $video = React.createRef()
 
-  intervalRef = undefined
+  breakpoints = [0, 8, 16, 24, 32]
+  epsylon = 0.5
 
-  textTimers = []
+  get slide() {
+    return this.state.index + 1
+  }
 
-  componentWillUnmount() {
-    if (this.intervalRef) clearInterval(this.intervalRef)
-
-    if (this.textTimers.length > 0) {
-      this.textTimers.forEach(timerRef => {
-        clearTimeout(timerRef)
-      })
-    }
+  componentDidMount() {
+    this.$video.current.pause()
+    this.$video.current.currentTime = 0
   }
 
   onLoad = () => {
@@ -50,7 +78,9 @@ class MeasuringAnimation extends React.PureComponent {
       ([entry]) => {
         if (!entry.isIntersecting || this.state.playing) return
 
-        this.setState({ playing: true, slideIndex: 1 }, this.playVideo)
+        this.setState({ playing: true }, () => {
+          this.$video.current.play()
+        })
       },
       { threshold: 1 },
     )
@@ -58,54 +88,59 @@ class MeasuringAnimation extends React.PureComponent {
     observer.observe(this.$video.current)
   }
 
-  playVideo = () => {
-    this.$video.current.play()
-
-    this.launchTimers()
-
-    this.intervalRef = setInterval(
-      this.launchTimers,
-      this.$video.current.duration * 1000,
-    )
-  }
-
-  launchTimers = () => {
-    const latencies = [
-      2688.567,
-      2688.567 + 1022.233,
-      2688.567 + 1022.233 + 1297.76,
-      2688.567 + 1022.233 + 1297.76 + 1295,
-    ]
-
-    this.textTimers = []
-
-    this.setState({ slideIndex: 1 })
-
-    latencies.forEach(latency => {
-      this.textTimers.push(
-        setTimeout(() => {
-          this.setState(({ slideIndex }) => ({ slideIndex: slideIndex + 1 }))
-        }, latency),
-      )
+  onPlaying = () => {
+    this.breakpoints.forEach((timestamp, index) => {
+      if (Math.abs(timestamp - this.$video.current.currentTime) < this.epsylon)
+        this.setState({ index })
     })
   }
 
+  onClick = index => {
+    this.$video.current.currentTime = this.breakpoints[index]
+  }
+
   render() {
+    const { index } = this.state
+
     return (
-      <SliderContainer className="SliderContainer">
+      <SliderContainer className="slider-container">
         <video
-          onLoadedData={this.onLoad}
+          autoPlay
+          playsInline
+          onCanPlayThrough={this.onLoad}
           ref={this.$video}
           src={measurementImpactVideoSrc}
+          onTimeUpdate={this.onPlaying}
           loop
           muted
         />
 
-        <p>
+        <p key={this.state.index}>
           <FormattedMessage
-            id={`app.measurementPage.animation.slide${this.state.slideIndex}`}
+            id={`app.measurementPage.animation.slide${this.slide}`}
           />
         </p>
+
+        <Controls>
+          <SliderButton
+            onClick={() => {
+              this.onClick(index - 1)
+            }}
+            disabled={index === 0}
+          >
+            <ExpandMoreIcon />
+          </SliderButton>
+
+          <SliderButton
+            onClick={() => {
+              this.onClick(index + 1)
+            }}
+            disabled={index === 4}
+            direction="right"
+          >
+            <ExpandMoreIcon />
+          </SliderButton>
+        </Controls>
       </SliderContainer>
     )
   }
