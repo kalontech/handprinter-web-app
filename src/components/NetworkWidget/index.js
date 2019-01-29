@@ -3,9 +3,9 @@ import d3 from 'd3'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import api from './../../api'
-import colors from './../../config/colors'
-import { sizes } from '../../utils/mediaQueryTemplate'
+import colors from 'config/colors'
+import { sizes } from 'utils/mediaQueryTemplate'
+import api from 'api'
 
 const Wrap = styled.div`
   overflow: hidden;

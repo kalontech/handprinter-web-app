@@ -20,6 +20,8 @@ const CurrentYear = styled.div`
   color: ${colors.dark};
   font-size: 16px;
   line-height: 21px;
+  padding-bottom: 1px;
+  margin: 0 3px;
 `
 
 const DateSelector = ({ method, date, onChange }) => {

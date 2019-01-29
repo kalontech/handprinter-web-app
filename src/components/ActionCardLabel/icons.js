@@ -38,7 +38,6 @@ export default {
           <mask id="b55" fill="#fff">
             <use xlinkHref="#a55" />
           </mask>
-          <use fill="#87BD24" xlinkHref="#a55" />
           <g mask="url(#b55)">
             <use
               fill="currentColor"

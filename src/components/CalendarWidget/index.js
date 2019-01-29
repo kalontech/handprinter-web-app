@@ -1,13 +1,14 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import * as Ant from 'antd'
 import moment from 'moment'
 import get from 'lodash/get'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import DateSelector from './../../components/DateSelector'
-import Calendar from './../Calendar'
-import media from './../../utils/mediaQueryTemplate'
+import DateSelector from 'components/DateSelector'
+import media from 'utils/mediaQueryTemplate'
+
+import Calendar from 'components/Calendar'
 
 const Tabs = styled(Ant.Tabs)`
   .ant-tabs-bar {
@@ -51,40 +52,39 @@ class CalendarWidget extends Component {
   render() {
     const { activeDays } = this.props
     const { calendarDate } = this.state
+
     return (
-      <Fragment>
-        <Tabs animated={false} defaultActiveKey="year">
-          <Tabs.TabPane tab="Month" key="month">
-            <DateSelector
-              method="months"
-              date={calendarDate}
-              onChange={this.handleCalendarDateChange}
-            />
-            <CalendarMonthWrap>
-              <Calendar.Month
-                activeDays={get(
-                  activeDays,
-                  `${calendarDate.year()}.${calendarDate.month()}`,
-                  [],
-                )}
-                month={calendarDate.month()}
-                year={calendarDate.year()}
-              />
-            </CalendarMonthWrap>
-          </Tabs.TabPane>
-          <Tabs.TabPane tab="Year" key="year">
-            <DateSelector
-              method="years"
-              date={calendarDate}
-              onChange={this.handleCalendarDateChange}
-            />
-            <Calendar.Year
-              activeDays={get(activeDays, calendarDate.year(), {})}
+      <Tabs animated={false} defaultActiveKey="year">
+        <Tabs.TabPane tab="Month" key="month">
+          <DateSelector
+            method="months"
+            date={calendarDate}
+            onChange={this.handleCalendarDateChange}
+          />
+          <CalendarMonthWrap>
+            <Calendar.Month
+              activeDays={get(
+                activeDays,
+                `${calendarDate.year()}.${calendarDate.month()}`,
+                [],
+              )}
+              month={calendarDate.month()}
               year={calendarDate.year()}
             />
-          </Tabs.TabPane>
-        </Tabs>
-      </Fragment>
+          </CalendarMonthWrap>
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Year" key="year">
+          <DateSelector
+            method="years"
+            date={calendarDate}
+            onChange={this.handleCalendarDateChange}
+          />
+          <Calendar.Year
+            activeDays={get(activeDays, calendarDate.year(), {})}
+            year={calendarDate.year()}
+          />
+        </Tabs.TabPane>
+      </Tabs>
     )
   }
 }

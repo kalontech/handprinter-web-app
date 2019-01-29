@@ -376,9 +376,21 @@ const CollapseContent = styled.div`
 
 const ProfileMenu = styled.div`
   color: inherit;
+
+  .menu-item__user-data {
+    flex-grow: 1;
+  }
+
+  .menu-item__user-data > p:last-child {
+    max-width: 100%;
+    white-space: normal;
+    word-break: break-all;
+  }
+
   div${Avatar} {
     margin-right: 15px;
   }
+
   p${Name} {
     color: ${colors.dark};
   }
@@ -901,7 +913,7 @@ class Header extends Component {
                                   alt="Avatar"
                                 />
                               </Avatar>
-                              <div>
+                              <div className="menu-item__user-data">
                                 <Name>{user.fullName}</Name>
                                 <Email>{user.email}</Email>
                               </div>

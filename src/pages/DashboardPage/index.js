@@ -7,19 +7,19 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 
-import CalendarWidget from './../../components/CalendarWidget'
-import GoodRatioWidget from './../../components/GoodRatioWidget'
-import NetworkWidget from './../../components/NetworkWidget'
-import colors from './../../config/colors'
-import api from './../../api'
-import Spinner from './../../components/Spinner'
-import PageMetadata from '../../components/PageMetadata'
-import { BlockContainer } from './../../components/Styled'
-import fingerprintImage from './../../assets/dashboard/fingerprint.png'
-import treeImage from './../../assets/dashboard/tree.png'
-import icons from './../../components/ActionCardLabel/icons'
-import media from './../../utils/mediaQueryTemplate'
-import InfoElement, { INFO_ELEMENT_TYPES } from '../../components/InfoElement'
+import CalendarWidget from 'components/CalendarWidget'
+import GoodRatioWidget from 'components/GoodRatioWidget'
+import NetworkWidget from 'components/NetworkWidget'
+import colors from 'config/colors'
+import api from 'api'
+import Spinner from 'components/Spinner'
+import PageMetadata from 'components/PageMetadata'
+import { BlockContainer } from 'components/Styled'
+import fingerprintImage from 'assets/dashboard/fingerprint.png'
+import treeImage from 'assets/dashboard/tree.png'
+import icons from 'components/ActionCardLabel/icons'
+import media from 'utils/mediaQueryTemplate'
+import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 
 const PageContainer = styled.div`
   background-color: ${colors.lightGray};
@@ -47,6 +47,7 @@ const WidgetContainer = styled.div`
 `
 
 const WidgetTitle = styled.p`
+  margin-top: 12px;
   color: ${colors.dark};
   font-size: 22px;
   line-height: 30px;
@@ -56,7 +57,7 @@ const WidgetDescription = styled.p`
   color: ${colors.darkGray};
   font-size: 14px;
   line-height: 20px;
-  margin-top: 3px;
+  margin-top: 6px;
 `
 
 const WidgetHeader = styled.div`
@@ -202,11 +203,16 @@ const DashboardHeaderUserName = styled.div`
 `
 
 const DashboardHeaderUserInfoValue = styled.div`
+  padding-top: 11px;
+  margin-bottom: 3px;
   color: ${colors.dark};
   font-size: 22px;
   font-weight: bold;
+
   ${media.desktop`
     line-height: 35px;
+    padding-top: 0;
+    margin-bottom: 0;
   `}
   ${media.phone`
     font-size: 16px;
@@ -297,6 +303,10 @@ const DashboardHeaderUserInfoRow = styled(Row)`
 `
 
 const HeaderUserInfoRowCol = styled(Col)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   ${media.phone`
     display: flex;
     justify-content: space-between;
@@ -433,6 +443,7 @@ class DashboardPage extends Component {
                                 <FormattedMessage id="app.dashboardPage.usersInvited" />
                               </DashboardHeaderUserSince>
                             </HeaderUserInfoRowCol>
+
                             <HeaderUserInfoRowCol
                               span={8}
                               lg={8}
@@ -446,6 +457,7 @@ class DashboardPage extends Component {
                                 <FormattedMessage id="app.dashboardPage.actionsTaken" />
                               </DashboardHeaderUserSince>
                             </HeaderUserInfoRowCol>
+
                             <HeaderUserInfoRowCol
                               span={8}
                               lg={8}
@@ -630,7 +642,7 @@ class DashboardPage extends Component {
                   <Col span={24}>
                     <WidgetContainer>
                       <WidgetHeader withBorder>
-                        <Row>
+                        <Row type="flex">
                           <Col span={16} sm={11} lg={15} xs={24}>
                             <WidgetTitle>
                               <FormattedMessage id="app.dashboardPage.myNetwork" />
