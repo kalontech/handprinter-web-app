@@ -706,6 +706,7 @@ export const GlobalStyle = createGlobalStyle`
     &.action-tooltip {
     height: auto;
     width: auto;
+    z-index: 1070;
     .ant-tooltip-inner  {
       position: static;
       width: auto;

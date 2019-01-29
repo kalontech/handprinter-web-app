@@ -143,14 +143,15 @@ const BottomPanel = styled.div`
   background-color: ${colors.white};
   position: ${({ isIphone }) => (isIphone ? 'static' : 'fixed')};
   backface-visibility: hidden;
-  bottom: 0;
+  bottom: 32px;
   width: 100%;
   max-width: calc(339px + 30px);
 
   ${media.tablet`
     max-width: initial;
+    bottom: 0px;
   `}
-  
+
   @media screen and (max-width: ${
     sizes.tablet
   }px) and (orientation: landscape) {

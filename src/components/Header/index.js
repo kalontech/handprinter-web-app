@@ -174,7 +174,7 @@ const MenuWrap = styled.div`
 const Avatar = styled.div`
   height: 42px;
   width: 42px;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
   border-radius: 50px;
   background: ${colors.white};
   overflow: hidden;
