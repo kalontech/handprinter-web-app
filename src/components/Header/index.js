@@ -833,8 +833,10 @@ class Header extends Component {
                         <Avatar>
                           <img
                             src={
-                              user.photo ||
-                              api.getUserInitialAvatar(user && user.fullName)
+                              user
+                                ? user.photo ||
+                                  api.getUserInitialAvatar(user.fullName)
+                                : ''
                             }
                             alt="Avatar"
                           />
@@ -907,10 +909,10 @@ class Header extends Component {
                               <Avatar>
                                 <img
                                   src={
-                                    user.photo ||
-                                    api.getUserInitialAvatar(
-                                      user && user.fullName,
-                                    )
+                                    user
+                                      ? user.photo ||
+                                        api.getUserInitialAvatar(user.fullName)
+                                      : ''
                                   }
                                   alt="Avatar"
                                 />
