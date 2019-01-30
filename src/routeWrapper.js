@@ -40,13 +40,16 @@ const RouteWrapper = ({
     <Route
       {...rest}
       render={props => {
-        animateScroll.scrollToTop()
+        // animateScroll.scrollToTop()
         if (ready) {
           if (requireAuthentication && !token) {
             return <Redirect to="/account/login" />
           } else if (unauthorizedOnly && token) {
-            return <Redirect 
-              to={brandedConfig ? "/pages/home" : "/account/dashboard"} />
+            return (
+              <Redirect
+                to={brandedConfig ? '/pages/home' : '/account/dashboard'}
+              />
+            )
           } else {
             if (requireAuthentication && !user) {
               return renderLoader(props)
@@ -62,8 +65,9 @@ const RouteWrapper = ({
                         ? token
                           ? 'private'
                           : 'public'
-                        : false ||
-                          (requireAuthentication ? 'private' : 'public')
+                        : requireAuthentication
+                        ? 'private'
+                        : 'public'
                     }
                     overrides={brandedConfig && brandedConfig.headerOverrides}
                   />

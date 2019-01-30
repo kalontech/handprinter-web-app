@@ -813,8 +813,8 @@ class Header extends Component {
                       placement="bottomRight"
                       content={
                         <UserInfo>
-                          <Name>{user.fullName}</Name>
-                          <Email>{user.email}</Email>
+                          <Name>{(user && user.fullName) || ''}</Name>
+                          <Email>{(user && user.email) || ''}</Email>
                           <Links>
                             <Link to="/account/profile">
                               <FormattedMessage id="app.header.menu.profileSettings" />
@@ -834,7 +834,7 @@ class Header extends Component {
                           <img
                             src={
                               user.photo ||
-                              api.getUserInitialAvatar(user.fullName)
+                              api.getUserInitialAvatar(user && user.fullName)
                             }
                             alt="Avatar"
                           />
@@ -908,14 +908,16 @@ class Header extends Component {
                                 <img
                                   src={
                                     user.photo ||
-                                    api.getUserInitialAvatar(user.fullName)
+                                    api.getUserInitialAvatar(
+                                      user && user.fullName,
+                                    )
                                   }
                                   alt="Avatar"
                                 />
                               </Avatar>
                               <div className="menu-item__user-data">
-                                <Name>{user.fullName}</Name>
-                                <Email>{user.email}</Email>
+                                <Name>{(user && user.fullName) || ''}</Name>
+                                <Email>{(user && user.email) || ''}</Email>
                               </div>
                             </PopoverTitle>
                           </ProfileMenu>
@@ -973,7 +975,7 @@ const mapStateToProps = state => ({
 })
 
 Header.defaultProps = {
-  user: null,
+  user: {},
 }
 
 Header.propTypes = {
