@@ -185,7 +185,7 @@ const DashboardHeaderUserPictureBackground = styled.div`
 
 const DashboardHeaderUserPicture = styled.img`
   border: 4px solid ${colors.white};
-  border-radius: 88px;
+  border-radius: 50%;
   box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
   height: 190px;
   margin-top: -88px;
