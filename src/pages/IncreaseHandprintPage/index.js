@@ -20,6 +20,7 @@ import getValidationRules from 'config/validationRules'
 export const Wrapper = styled.div`
   display: flex;
   min-height: 660px;
+  flex-grow: 1;
   ${media.desktop`
     flex-direction: column;
   `}

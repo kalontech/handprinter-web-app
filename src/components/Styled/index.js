@@ -13,16 +13,13 @@ export const ActionCard = styled(Ant.Row)`
   overflow: hidden;
   width: 920px;
   position: relative;
-  top: -50px;
   height: 579px;
   display: flex;
   justify-content: center;
   ${media.tablet`
-    margin-top: 60px;
     height: auto;
   `}
   ${media.phone`
-    margin-top: 76px;
     height: auto;
   `}
 `
@@ -219,14 +216,15 @@ export const ActionCardWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding: 30px;
-  height: 100vh;
+  height: 100%;
+  flex-grow: 1;
+  overflow-y: auto;
   ${media.desktop`
     background: ${colors.ocean};
   `}
   ${media.tablet`
     background: ${colors.white};
     padding: 15px;
-    height: auto;
   `}
 `
 
@@ -458,6 +456,13 @@ export const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     min-height: 100vh;
     overflow-x: hidden;
+  }
+  
+  .ant-layout-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    
   }
   
   p {
@@ -751,16 +756,16 @@ export const Input = styled(Ant.Input)`
 
 export const OceanContainer = styled.div`
   align-items: center;
+  flex-grow: 1;
   background-color: ${colors.ocean};
   background-image: url(${backgroundOceanContainerImage});
   background-position: right bottom;
   background-repeat: no-repeat;
   display: flex;
-  height: 100vh;
+  height: 100%;
   justify-content: center;
   ${media.tablet`
     background: ${colors.white};
-    height: auto;
   `}
 `
 
@@ -788,7 +793,7 @@ export const OceanTitle = styled.h1`
   text-align: center;
 `
 
-export const OceanDescription = styled.h1`
+export const OceanDescription = styled.p`
   color: ${colors.darkGray};
   font-size: 14px;
   line-height: 20px;

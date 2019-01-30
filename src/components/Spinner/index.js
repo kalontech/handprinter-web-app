@@ -5,10 +5,10 @@ import styled from 'styled-components'
 import colors from './../../config/colors'
 
 const Wrapper = styled.div`
-  align-items: center;
+  flex-grow: 1;
   display: flex;
-  height: 200px;
   justify-content: center;
+  align-items: center;
 `
 
 const Spinner = () => (

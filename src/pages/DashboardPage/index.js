@@ -24,6 +24,9 @@ import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 const PageContainer = styled.div`
   background-color: ${colors.lightGray};
   padding-bottom: 80px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 `
 
 const WidgetContainer = styled.div`

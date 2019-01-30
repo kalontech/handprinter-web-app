@@ -39,6 +39,7 @@ const Wrapper = styled.div`
   background-color: ${colors.lightGray};
   position: relative;
   height: 100%;
+  flex-grow: 1;
 `
 
 const InnerContainer = styled.div`

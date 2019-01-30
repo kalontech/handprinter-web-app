@@ -24,6 +24,7 @@ import NotFoundPage from './pages/NotFoundPage'
 import OurVisionPage from './pages/OurVisionPage'
 import RegisterPage from './pages/RegisterPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
+import SubmitSucceededPage from './pages/SubmitSucceededPage'
 import SetNewPasswordPage from './pages/SetNewPasswordPage'
 import ProfilePage from './pages/ProfilePage'
 import IncreaseHandprintPage from './pages/IncreaseHandprintPage'
@@ -138,6 +139,15 @@ const AppRouter = () => {
             component={ResetPasswordPage}
             headerType="minimal"
             unauthorizedOnly
+            withoutHeaderContent
+            withoutCTA
+            withoutFooter
+          />
+          <Route
+            path="/account/submit-succeeded"
+            component={SubmitSucceededPage}
+            headerType="minimal"
+            requireAuthentication
             withoutHeaderContent
             withoutCTA
             withoutFooter

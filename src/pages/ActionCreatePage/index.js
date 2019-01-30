@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { Upload, Form, Icon } from 'antd'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import CloseIcon from 'assets/icons/CloseIcon'
-import LampImgPath from 'assets/actions-page/lamp.png'
 import { FormItem, Input, PrimaryButton } from 'components/Styled'
 import { ACCEPT_IMAGE_FORMATS, FILE_SIZE_LIMIT } from 'config/files'
 import { MAX_DESCRIPTION_LENGTH } from 'config/common'
@@ -14,6 +13,7 @@ import { required, fileSize } from 'config/validationRules'
 import media from 'utils/mediaQueryTemplate'
 import api from 'api'
 import hexToRgba from 'utils/hexToRgba'
+import { Redirect } from 'react-router-dom'
 
 const Container = styled.section`
   align-items: center;
@@ -243,59 +243,6 @@ const FormError = styled.span`
   color: ${colors.orange};
 `
 
-const SubmitSucceeded = styled.article`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  padding: 14px 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: ${colors.white};
-  animation: ${keyframes`
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  `};
-
-  ${media.tablet`
-    padding: 14px 5%;
-  `}
-
-  img {
-    max-width: 230px;
-    max-height: 230px;
-    margin: 0 auto;
-  }
-
-  h3 {
-    width: 100%;
-    color: ${colors.dark};
-    font-size: 28px;
-    line-height: 35px;
-    text-align: center;
-    margin-bottom: 14px;
-  }
-
-  p {
-    margin: 0 auto 30px;
-    max-width: 410px;
-    color: ${colors.darkGray};
-    font-size: 14px;
-    line-height: 20px;
-    text-align: center;
-  }
-`
-
-const ButtonSuccess = styled(PrimaryButton)`
-  width: 100%;
-  max-width: 300px;
-  margin: 0 auto;
-`
-
 const AddPhotoBlockText = styled.div`
   max-width: 210px;
   text-align: center;
@@ -510,28 +457,7 @@ class ActionCreatePage extends React.PureComponent {
           </MainFields>
         </StyledForm>
 
-        {submitSucceeded && (
-          <SubmitSucceeded>
-            <img src={LampImgPath} alt="success" />
-
-            <h3>
-              {formatMessage({
-                id: 'app.actionCreatePage.submitSucceededTitle',
-              })}
-            </h3>
-            <p>
-              {formatMessage({
-                id: 'app.actionCreatePage.submitSucceededDescription',
-              })}
-            </p>
-
-            <ButtonSuccess type="primary" onClick={closeModal}>
-              {formatMessage({
-                id: 'app.actionCreatePage.submitSucceededGoBack',
-              })}
-            </ButtonSuccess>
-          </SubmitSucceeded>
-        )}
+        {submitSucceeded && <Redirect to="/account/submit-succeeded" />}
       </Container>
     )
   }

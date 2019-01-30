@@ -149,10 +149,14 @@ export const BrandedBlockFingerprintBotImg = styled.img`
 const StyledActionCard = styled(ActionCard)`
   ${media.tablet`
     flex-direction: column;
+    flex-grow: 1;
   `}
 `
 
 const StyledActionCardWrapper = styled(ActionCardWrapper)`
+  height: 100%;
+  flex-grow: 1;
+  overflow-y: auto;
   ${media.tablet`
     padding: 0px;
   `}
