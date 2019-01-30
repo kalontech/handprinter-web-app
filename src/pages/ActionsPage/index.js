@@ -29,6 +29,9 @@ import media from 'utils/mediaQueryTemplate'
 import { IMPACT_CATEGORIES, ACTIONS_SUBSETS } from 'utils/constants'
 import PageMetadata from 'components/PageMetadata'
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+import DiscoverIcon from 'assets/icons/ic_discover.svg'
+import SuggestedIcon from 'assets/icons/ic_suggested.svg'
+import HistoryIcon from 'assets/icons/ic_history.svg'
 
 import ActionsFilters from './ActionFilter'
 
@@ -250,6 +253,19 @@ const Button = styled(DefaultButton)`
   &&:active {
     color: ${hexToRgba(colors.white, 0.7)};
   }
+`
+
+const ActionTabIcon = styled.img`
+  height: 18px;
+  width: 18px;
+  object-fit: contain;
+  margin-right: 6px;
+  align-self: 'center';
+`
+
+const ActionTabWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `
 
 class ActionsPage extends Component {
@@ -532,15 +548,15 @@ class ActionsPage extends Component {
     let data = {}
     switch (subset) {
       case ACTIONS_SUBSETS.DISCOVER:
-        data.type = 'compass'
+        data.type = DiscoverIcon
         data.id = 'app.actionsPage.tabs.discover'
         break
       case ACTIONS_SUBSETS.SUGGESTED:
-        data.type = 'team'
+        data.type = SuggestedIcon
         data.id = 'app.actionsPage.tabs.suggested'
         break
       case ACTIONS_SUBSETS.HISTORY:
-        data.type = 'clock-circle'
+        data.type = HistoryIcon
         data.id = 'app.actionsPage.tabs.history'
         break
       default:
@@ -548,8 +564,10 @@ class ActionsPage extends Component {
     }
     return (
       <Fragment>
-        <Icon type={data.type} />
-        <FormattedMessage id={data.id} />
+        <ActionTabWrapper>
+          <ActionTabIcon alt="" src={data.type} />
+          <FormattedMessage id={data.id} />
+        </ActionTabWrapper>
       </Fragment>
     )
   }

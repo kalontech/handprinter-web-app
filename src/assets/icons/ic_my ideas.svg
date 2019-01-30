@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="13px" viewBox="0 0 12 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_My ideas</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="10.8 4.5 10.5 3 3.75 3 3.75 15.75 5.25 15.75 5.25 10.5 9.45 10.5 9.75 12 15 12 15 4.5"></polygon>
+        <rect id="path-3" x="0" y="0" width="38" height="38"></rect>
+    </defs>
+    <g id="Registered" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Handprinter---Actions-Page---History" transform="translate(-414.000000, -109.000000)">
+            <g id="Group-15" transform="translate(0.000000, 90.000000)">
+                <g id="Group-14" transform="translate(131.000000, 15.000000)">
+                    <g id="Group-12" transform="translate(280.000000, 0.000000)">
+                        <g id="ic_assistant_photo" transform="translate(0.000000, 1.000000)">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <g id="Mask"></g>
+                            <g id="Colors/Black-Copy-4" mask="url(#mask-2)">
+                                <g transform="translate(-9.750000, -9.750000)">
+                                    <mask id="mask-4" fill="white">
+                                        <use xlink:href="#path-3"></use>
+                                    </mask>
+                                    <use id="Black" stroke="none" fill="#858F8E" fill-rule="evenodd" xlink:href="#path-3"></use>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
