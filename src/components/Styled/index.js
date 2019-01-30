@@ -399,7 +399,7 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
   `};
   &.ant-collapse-item-active {
     && > .ant-collapse-header {
-      .arrow {
+      .ant-collapse-arrow {
         top: 0;
         transform: rotate(180deg);
       }
@@ -419,7 +419,7 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
       align-items: center;
     `};
 
-    .arrow {
+    .ant-collapse-arrow {
       width: 15px;
       height: 10px;
       left: auto;
@@ -428,6 +428,7 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
       bottom: 0;
       margin: auto;
       background: #fff url(${arrowDownIcon}) no-repeat center;
+      transition: all 0.3s;
       svg {
         display: none;
       }
