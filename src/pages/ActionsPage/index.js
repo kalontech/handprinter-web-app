@@ -51,7 +51,6 @@ const InnerContainer = styled.div`
 `
 
 const ActionSearchDropdownPicture = styled.img`
-  height: 90px;
   width: 90px;
   border-radius: 5px;
   margin-right: 10px;
@@ -241,18 +240,16 @@ const AcionTabDropdown = styled.span`
 `
 
 const Button = styled(DefaultButton)`
-  color: ${hexToRgba(colors.white, 0.5)};
+  background-color: ${hexToRgba(colors.white, 0.1)};
+  color: ${colors.white};
   height: 44px;
   min-width: 134px;
 
   &&:hover,
+  &&:active,
   &&:focus {
-    color: ${hexToRgba(colors.white, 0.7)};
-  }
-
-  &&.active,
-  &&:active {
-    color: ${hexToRgba(colors.white, 0.7)};
+    background-color: ${hexToRgba(colors.white, 0.15)};
+    color: ${colors.white};
   }
 `
 

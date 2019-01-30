@@ -40,7 +40,8 @@ const RouteWrapper = ({
     <Route
       {...rest}
       render={props => {
-        // animateScroll.scrollToTop()
+        animateScroll.scrollToTop()
+
         if (ready) {
           if (requireAuthentication && !token) {
             return <Redirect to="/account/login" />

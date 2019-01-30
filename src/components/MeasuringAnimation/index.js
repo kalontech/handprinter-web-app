@@ -38,10 +38,12 @@ const SliderContainer = styled.div`
 `
 
 const Controls = styled.div`
+  max-width: 600px;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  left: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
   width: 100%;
   display: flex;
   justify-content: space-between;

@@ -3,11 +3,9 @@ import { Row, Col } from 'antd'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import styled from 'styled-components'
 import { Link as AnchorLink } from 'react-scroll'
-import ScrollableAnchor from 'react-scrollable-anchor'
 
-import colors from './../../config/colors'
-import media from './../../utils/mediaQueryTemplate'
-import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
 import {
   BlockContainer,
   BlockTitleGreen,
@@ -18,27 +16,29 @@ import {
   ScrollButton,
   TextMedium,
   TextMediumGroup,
-} from './../../components/Styled'
-import PageMetadata from '../../components/PageMetadata'
-import heroImg from './../../assets/measurement/measurement-hero-img.png'
-import meaningImg from './../../assets/measurement/sheep.png'
-import meaningMobImg from './../../assets/measurement/sheep-mob.png'
-import problemImg from './../../assets/measurement/rabbit.png'
-import iconClock from './../../assets/measurement/clock_icon.png'
-import iconLeg from './../../assets/measurement/leg_icon.png'
-import blueLabel from './../../assets/measurement/blue_label.png'
-import darkGreenLabel from './../../assets/measurement/darkgreen_label.png'
-import lightGreenLabel from './../../assets/measurement/lightgreen_label.png'
-import grayLabel from './../../assets/measurement/gray_label.png'
-import cowImg from './../../assets/measurement/cow.png'
-import cowImgMob from './../../assets/measurement/cow-mob.png'
-import cowImgMob2 from './../../assets/measurement/cow-mob2.png'
-import cardImg from './../../assets/measurement/card.png'
-import footImg from './../../assets/measurement/foot.png'
-import finger from './../../assets/measurement/finger.svg'
-import printImg from './../../assets/measurement/print.png'
-import precisionImg from './../../assets/measurement/precision.png'
-import MeasuringAnimation from '../../components/MeasuringAnimation'
+} from 'components/Styled'
+import PageMetadata from 'components/PageMetadata'
+import MeasuringAnimation from 'components/MeasuringAnimation'
+
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+import heroImg from 'assets/measurement/measurement-hero-img.png'
+import meaningImg from 'assets/measurement/sheep.png'
+import meaningMobImg from 'assets/measurement/sheep-mob.png'
+import problemImg from 'assets/measurement/rabbit.png'
+import iconClock from 'assets/measurement/clock_icon.png'
+import iconLeg from 'assets/measurement/leg_icon.png'
+import blueLabel from 'assets/measurement/blue_label.png'
+import darkGreenLabel from 'assets/measurement/darkgreen_label.png'
+import lightGreenLabel from 'assets/measurement/lightgreen_label.png'
+import grayLabel from 'assets/measurement/gray_label.png'
+import cowImg from 'assets/measurement/cow.png'
+import cowImgMob from 'assets/measurement/cow-mob.png'
+import cowImgMob2 from 'assets/measurement/cow-mob2.png'
+import cardImg from 'assets/measurement/card.png'
+import footImg from 'assets/measurement/foot.png'
+import finger from 'assets/measurement/finger.svg'
+import printImg from 'assets/measurement/print.png'
+import precisionImg from 'assets/measurement/precision.png'
 
 const HeadingMiddle = styled.h4`
   font-size: 22px;
@@ -808,20 +808,18 @@ const MeasurementUnitsPage = () => {
         </BlockContainer>
       </CommonBasisSection>
 
-      <ScrollableAnchor id={'scales'}>
-        <AnimationSection>
-          <BlockContainer className="block">
-            <Row type="flex" justify="center">
-              <Col xl={16}>
-                <BlockSubTitleGreen>
-                  <FormattedHTMLMessage id="app.measurementPage.Animation.Title" />
-                </BlockSubTitleGreen>
-              </Col>
-            </Row>
-            <MeasuringAnimation />
-          </BlockContainer>
-        </AnimationSection>
-      </ScrollableAnchor>
+      <AnimationSection>
+        <BlockContainer className="block">
+          <Row type="flex" justify="center">
+            <Col xl={16}>
+              <BlockSubTitleGreen>
+                <FormattedHTMLMessage id="app.measurementPage.Animation.Title" />
+              </BlockSubTitleGreen>
+            </Col>
+          </Row>
+          <MeasuringAnimation />
+        </BlockContainer>
+      </AnimationSection>
     </Fragment>
   )
 }

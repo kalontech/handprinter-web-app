@@ -9,7 +9,9 @@ import colors from 'config/colors'
 
 const { REACT_APP_API_BASE_URL, REACT_APP_WEB_APP_COOKIES_DOMAIN } = process.env
 
-const apiBaseUrl = window.location.hostname.includes(REACT_APP_WEB_APP_COOKIES_DOMAIN || 'localhost')
+const apiBaseUrl = window.location.hostname.includes(
+  REACT_APP_WEB_APP_COOKIES_DOMAIN || 'localhost',
+)
   ? REACT_APP_API_BASE_URL
   : `${window.location.protocol}//${window.location.host}/api`
 export const webAppBaseUrl = `${window.location.protocol}//${
@@ -27,7 +29,7 @@ const fetchHelper = async (url, options) => {
   }
 
   const headers = isFormData
-    ? {}
+    ? get(options, 'headers', {})
     : {
         'Content-Type': 'application/json',
         ...get(options, 'headers', {}),

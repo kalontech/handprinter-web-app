@@ -470,6 +470,8 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   .react-router-modal__modal {
+    border: 0;
+
     ${media.tablet`
       overflow-y: auto;
     `}
@@ -691,7 +693,7 @@ export const GlobalStyle = createGlobalStyle`
       width: 100%;
       border: none;
       border-radius: 0px;
-      height: 100vh;
+      height: 100%;
     `}
   }
   .d3-tooltip-container {
