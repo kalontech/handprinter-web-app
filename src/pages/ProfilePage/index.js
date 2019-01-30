@@ -263,7 +263,6 @@ const PROFILE_MODAL_TYPES = {
 class ProfilePage extends Component {
   state = {
     showChangePasswordSection: false,
-    photoToUpload: null,
     uploadImageError: null,
     formInfoChanged: false,
     countryChanged: false,
@@ -304,7 +303,7 @@ class ProfilePage extends Component {
       !isUpdatingMeInfo &&
       updateMeInfoError === null
     )
-      this.setState({ formInfoChanged: false, photoToUpload: null })
+      this.setState({ formInfoChanged: false })
   }
 
   fetchDeleteAccount = async () => {
@@ -351,18 +350,11 @@ class ProfilePage extends Component {
     const {
       form: { validateFields },
       updateMeInfoRequest,
-      updateMePhotoRequest,
     } = this.props
-    const { photoToUpload } = this.state
 
     validateFields(['email', 'fullName', 'country'], async (err, values) => {
       if (!err) {
         const { email, fullName, country } = values
-
-        if (photoToUpload) {
-          const file = await convertBase64ToFile(photoToUpload)
-          updateMePhotoRequest({ file })
-        }
 
         updateMeInfoRequest({ email, fullName, country })
       }
@@ -448,7 +440,11 @@ class ProfilePage extends Component {
     if (error) {
       this.setState({ uploadImageError: error })
     } else {
-      this.setState({ photoToUpload: photo, uploadImageError: null })
+      this.setState({ uploadImageError: null })
+      if (photo) {
+        const file = await convertBase64ToFile(photo)
+        this.props.updateMePhotoRequest({ file })
+      }
     }
   }
 
@@ -518,30 +514,24 @@ class ProfilePage extends Component {
 
   uploadProfilePictureRef = React.createRef()
 
-  renderProfilePictureBlock = ({ photoToUpload, user }) => (
+  renderProfilePictureBlock = ({ user }) => (
     <Fragment>
       <ProfileImgWrap
         onClick={() => this.uploadProfilePictureRef.current.click()}
       >
         <LeavesTopBackgroundImage src={profileLeavesBackgroundImage} />
 
-        {!photoToUpload && user.photo && (
+        {user.photo && (
           <OuterPlusButton>
             <Icon type="plus" />
           </OuterPlusButton>
         )}
 
         <ProfileImgBackground>
-          {((photoToUpload && photoToUpload) ||
-            (user.photo ? user.photo : null)) && (
-            <ProfileImg
-              src={
-                (photoToUpload && photoToUpload) ||
-                (user.photo ? user.photo : null)
-              }
-            />
+          {(user.photo ? user.photo : null) && (
+            <ProfileImg src={user.photo ? user.photo : null} />
           )}
-          {!photoToUpload && !user.photo && (
+          {!user.photo && (
             <AddPhotoHint>
               <InnerPlusButton>
                 <Icon type="plus" />
@@ -575,7 +565,6 @@ class ProfilePage extends Component {
     } = this.props
     const {
       showChangePasswordSection,
-      photoToUpload,
       formInfoChanged,
       isDeletingAccount,
       deletingAccountSuccess,
@@ -598,7 +587,7 @@ class ProfilePage extends Component {
           ) : (
             <Fragment>
               <AppleBackgroundSection />
-              {this.renderProfilePictureBlock({ photoToUpload, user })}
+              {this.renderProfilePictureBlock({ user })}
               <Fragment>
                 <FormWrapper>
                   <Form onChange={this.handleFormChange}>
@@ -667,7 +656,7 @@ class ProfilePage extends Component {
                       </FormItem>
                     </ErrorItemWrap>
 
-                    {(photoToUpload || formInfoChanged) && (
+                    {formInfoChanged && (
                       <StyledSaveChangesButton
                         type="primary"
                         onClick={this.handleInfoSubmit}
