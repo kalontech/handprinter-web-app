@@ -29,13 +29,12 @@ const CtaImage = styled.img`
 
 const CtaWrap = styled.section`
   position: relative;
-  background: ${colors.ocean} url("${ctaBg}") no-repeat left center;
+  background: url("${ctaBg}") no-repeat left center, ${
+  colors.ocean
+} url("${ctaBgRight}") no-repeat right center;
  ${media.desktop`
    text-align: center;
-   background: url("${ctaBg}") no-repeat left center, ${
-   colors.ocean
- } url("${ctaBgRight}") no-repeat right center;
-  `};
+   `};
   ${media.phone`
     a,
     ${PrimaryButton}{

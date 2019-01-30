@@ -312,9 +312,6 @@ const StepFourScreenshotWrap = styled(StepImg)`
 const StepFourContentWrap = styled.div`
   position: relative;
   top: 2px;
-  span {
-    letter-spacing: 1px;
-  }
   img {
     padding-bottom: 38px;
   }
