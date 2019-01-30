@@ -393,5 +393,10 @@
     "app.actions.assumptions": "De impactberekening gaat uit van:",
     "app.aboutInterfacePage.measuringImpacts.title": "Waarom meten we actie-effecten met tijd (dagen en uren)?",
     "app.aboutInterfacePage.measuringImpacts.button": "Impact meten",
-    "app.ourVision.ActionsCarousel.extraLink": "Impact meten"
+    "app.ourVision.ActionsCarousel.extraLink": "Impact meten",
+    "app.NotFoundPage.Title": "Oops.. something went wrong",
+    "app.NotFoundPage.Description": "404 Error. Sorry, the page you’re looking for cannot be found.",
+    "app.NotFoundPage.Link1": "Visit homepage",
+    "app.NotFoundPage.Text": "or",
+    "app.NotFoundPage.Link2": "Contact us"
 }

@@ -151,7 +151,7 @@ const AppRouter = () => {
             withoutCTA
             withoutFooter
           />
-          <Route component={NotFoundPage} />
+          <Route component={NotFoundPage} withoutCTA />
         </Switch>
 
         <Switch>

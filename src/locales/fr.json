@@ -393,5 +393,10 @@
     "app.actions.assumptions": "Le calcul de l'impact suppose:",
     "app.aboutInterfacePage.measuringImpacts.title": "Pourquoi mesurons-nous les impacts des actions en utilisant le temps (jours et heures)?",
     "app.aboutInterfacePage.measuringImpacts.button": "Mesurer les impacts",
-    "app.ourVision.ActionsCarousel.extraLink": "Mesurer les impacts"
+    "app.ourVision.ActionsCarousel.extraLink": "Mesurer les impacts",
+    "app.NotFoundPage.Title": "Oops.. something went wrong",
+    "app.NotFoundPage.Description": "404 Error. Sorry, the page you’re looking for cannot be found.",
+    "app.NotFoundPage.Link1": "Visit homepage",
+    "app.NotFoundPage.Text": "or",
+    "app.NotFoundPage.Link2": "Contact us"
 }

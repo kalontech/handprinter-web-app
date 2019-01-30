@@ -393,5 +393,10 @@
     "app.actions.assumptions": "影响计算假定：",
     "app.aboutInterfacePage.measuringImpacts.title": "为什么我们使用时间（天和小时）来衡量行动影响？",
     "app.aboutInterfacePage.measuringImpacts.button": "衡量影响",
-    "app.ourVision.ActionsCarousel.extraLink": "衡量影响"
+    "app.ourVision.ActionsCarousel.extraLink": "衡量影响",
+    "app.NotFoundPage.Title": "Oops.. something went wrong",
+    "app.NotFoundPage.Description": "404 Error. Sorry, the page you’re looking for cannot be found.",
+    "app.NotFoundPage.Link1": "Visit homepage",
+    "app.NotFoundPage.Text": "or",
+    "app.NotFoundPage.Link2": "Contact us"
 }
