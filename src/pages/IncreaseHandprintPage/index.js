@@ -67,15 +67,13 @@ export const FormSectionWrap = styled.div`
 export const FormWrap = styled.div`
   background-color: ${colors.white};
   border-radius: 5px;
-  width: 580px;
+  max-width: 580px;
+  width: 100%;
   ${media.largeDesktop`
     width: 420px;
   `}
   ${media.desktop`
-    width: 580px;
-  `}
-  ${media.phone`
-    width: 290px;
+    width: 100%;
   `}
 `
 
