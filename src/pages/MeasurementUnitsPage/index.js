@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
-import { Row, Col } from 'antd'
+import { Row, Col, Icon } from 'antd'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import styled from 'styled-components'
 import { Link as AnchorLink } from 'react-scroll'
 
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
+import hexToRgba from '../../utils/hexToRgba'
 import {
   BlockContainer,
   BlockTitleGreen,
@@ -19,7 +20,6 @@ import {
 } from 'components/Styled'
 import PageMetadata from 'components/PageMetadata'
 import MeasuringAnimation from 'components/MeasuringAnimation'
-
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 import heroImg from 'assets/measurement/measurement-hero-img.png'
 import meaningImg from 'assets/measurement/sheep.png'
@@ -32,13 +32,12 @@ import darkGreenLabel from 'assets/measurement/darkgreen_label.png'
 import lightGreenLabel from 'assets/measurement/lightgreen_label.png'
 import grayLabel from 'assets/measurement/gray_label.png'
 import cowImg from 'assets/measurement/cow.png'
-import cowImgMob from 'assets/measurement/cow-mob.png'
-import cowImgMob2 from 'assets/measurement/cow-mob2.png'
 import cardImg from 'assets/measurement/card.png'
 import footImg from 'assets/measurement/foot.png'
 import finger from 'assets/measurement/finger.svg'
 import printImg from 'assets/measurement/print.png'
 import precisionImg from 'assets/measurement/precision.png'
+import icons from 'components/ActionCardLabel/icons'
 
 const HeadingMiddle = styled.h4`
   font-size: 22px;
@@ -51,6 +50,7 @@ const ImgWrapRight = styled.div`
   ${media.largeDesktop`
     max-width: 100%;
     justify-content: center;
+    align-items: center;
   `};
 `
 
@@ -159,17 +159,6 @@ const MobileImg = styled.img`
   max-width: 100%;
   ${media.phone`
     display: block;
-  `};
-`
-
-const TabletImg = styled.img`
-  display: none;
-  max-width: 100%;
-  ${media.desktop`
-    display: block;
-  `};
-  ${media.phone`
-    display: none;
   `};
 `
 
@@ -293,15 +282,13 @@ const ImpactItem = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 16px;
+  text-align: left;
 `
 
 const ImpactImg = styled(ImgWrapRight)`
   img {
     max-width: 100%;
   }
-  ${media.desktop`
-    display: none;
-  `};
 `
 
 const ImpactLabelText = styled.p`
@@ -508,7 +495,55 @@ const AnimationSection = styled.section`
 const ImpactBlockWrap = styled.div`
   position: relative;
   top: 16px;
-  left: -1px;
+  margin-bottom: 80px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  ${HeadingMiddle} {
+    margin-bottom: 10px;
+  }
+  ${media.largeDesktop`
+    top: 0;
+  `};
+  ${media.phone`
+    text-align: center;
+    margin-bottom: 50px;
+  `};
+`
+const CategoriesContainer = styled.div`
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 485px;
+  background: ${colors.white};
+  box-shadow: 0 1px 10px 0 ${hexToRgba(colors.dark, 0.08)};
+  border-radius: 4px;
+  ${media.desktop`
+    justify-content: center;
+  `};
+  ${media.phone`
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+  `};
+`
+
+const CategoriesItem = styled.div`
+  display: flex;
+  align-items center;
+  font-size: 14px;
+  margin-right: 10px;
+  &:last-child {
+    margin-right: 0;
+  }
+  svg {
+    width: 20px;
+    margin-right: 4px;
+  }
 `
 
 const CardListWrap = styled.div`
@@ -660,11 +695,14 @@ const MeasurementUnitsPage = () => {
           </BlockHeader>
 
           <Row type="flex" align="middle">
-            <Col xl={{ span: 8, offset: 2 }}>
+            <Col md={12} xl={{ span: 10, offset: 2 }}>
               <ImpactBlockWrap>
                 <HeadingMiddle as="h3">
                   <FormattedMessage id="app.measurementPage.Impact.ListTitle" />
                 </HeadingMiddle>
+                <ImpactLabelTextOcean>
+                  <FormattedMessage id="app.measurementPage.Impact.ListDescription" />
+                </ImpactLabelTextOcean>
                 <ImpactContainer>
                   <ImpactItem>
                     <ImpactLabelImg src={blueLabel} alt="" />
@@ -692,19 +730,43 @@ const MeasurementUnitsPage = () => {
                   </ImpactItem>
                 </ImpactContainer>
               </ImpactBlockWrap>
+              <ImpactBlockWrap>
+                <HeadingMiddle as="h3">
+                  <FormattedMessage id="app.measurementPage.Impact.CategoryTitle" />
+                </HeadingMiddle>
+                <ImpactLabelTextOcean>
+                  <FormattedMessage id="app.measurementPage.Impact.CategoryDescription" />
+                </ImpactLabelTextOcean>
+                <CategoriesContainer>
+                  <CategoriesItem>
+                    <Icon component={() => icons.positive.climate} />
+                    <FormattedMessage id="app.impactCategories.climate" />
+                  </CategoriesItem>
+                  <CategoriesItem>
+                    <Icon component={() => icons.positive.water} />
+                    <FormattedMessage id="app.impactCategories.water" />
+                  </CategoriesItem>
+                  <CategoriesItem>
+                    <Icon component={() => icons.positive.waste} />
+                    <FormattedMessage id="app.impactCategories.waste" />
+                  </CategoriesItem>
+                  <CategoriesItem>
+                    <Icon component={() => icons.positive.health} />
+                    <FormattedMessage id="app.impactCategories.health" />
+                  </CategoriesItem>
+                  <CategoriesItem>
+                    <Icon component={() => icons.positive.ecosystem} />
+                    <FormattedMessage id="app.impactCategories.ecosystem" />
+                  </CategoriesItem>
+                </CategoriesContainer>
+              </ImpactBlockWrap>
             </Col>
-            <Col xl={14}>
+            <Col md={12}>
               <ImpactImg>
                 <img src={cowImg} alt="" />
               </ImpactImg>
-              <ImgWrapCentered>
-                <MobileImg src={cowImgMob2} alt="" />
-              </ImgWrapCentered>
             </Col>
           </Row>
-          <ImgWrapCentered>
-            <TabletImg src={cowImgMob} alt="" />
-          </ImgWrapCentered>
         </BlockContainer>
       </ImpactSection>
 

@@ -439,6 +439,7 @@ class OurVisionPage extends Component {
               </Row>
             </BlockContainer>
             <ActionsCarousel
+              extraLink
               actions={actions}
               actionLinkPrefix="/pages/our-vision/actions"
             />

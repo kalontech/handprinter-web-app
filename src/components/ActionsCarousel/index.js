@@ -9,7 +9,11 @@ import ActionCard from './../../components/ActionCard'
 import colors from './../../config/colors'
 import media, { sizes } from '../../utils/mediaQueryTemplate'
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
-import { PrimaryButton, ArrowButton } from './../../components/Styled'
+import {
+  PrimaryButton,
+  DefaultButton,
+  ArrowButton,
+} from './../../components/Styled'
 
 import hpSliderBg from './../../assets/homepage/actions-fingerprint.svg'
 
@@ -19,6 +23,10 @@ const SliderContainer = styled.div`
   @media (max-width: 1366px) {
     margin-left: 0;
   }
+  ${media.phone`
+    height: auto;
+    padding-bottom: 30px;
+  `}
  
   .ant-carousel {
     position: relative;
@@ -114,6 +122,24 @@ const SliderButton = styled(ArrowButton)`
   background-color: ${colors.white};
 `
 
+const Links = styled.div`
+  display: flex;
+  > * {
+    margin-right: 20px;
+  }
+  .ant-btn {
+    min-width: 180px;
+  }
+  ${media.phone`
+    flex-direction: column;
+    width: 100%;
+    > * {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  `}
+`
+
 class ActionsCarousel extends React.Component {
   constructor(props) {
     super(props)
@@ -140,6 +166,7 @@ class ActionsCarousel extends React.Component {
     const {
       intl: { locale },
       hideControls,
+      extraLink,
     } = this.props
     const responsive = [
       {
@@ -178,11 +205,21 @@ class ActionsCarousel extends React.Component {
           </Carousel>
           {!hideControls && (
             <SliderControls>
-              <Link to="/actions">
-                <PrimaryButton type="primary">
-                  <FormattedMessage id="app.actionsSlider.link" />
-                </PrimaryButton>
-              </Link>
+              <Links>
+                <Link to="/actions">
+                  <PrimaryButton type="primary">
+                    <FormattedMessage id="app.actionsSlider.link" />
+                  </PrimaryButton>
+                </Link>
+                {extraLink && (
+                  <Link to="/pages/measurement-units">
+                    <DefaultButton type="primary">
+                      <FormattedMessage id="app.ourVision.ActionsCarousel.extraLink" />
+                    </DefaultButton>
+                  </Link>
+                )}
+              </Links>
+
               <SliderArrows>
                 <SliderButton
                   direction="left"
@@ -210,6 +247,7 @@ class ActionsCarousel extends React.Component {
 SliderButton.propTypes = {
   direction: PropTypes.oneOf(['left', 'right']).isRequired,
   hideControls: PropTypes.bool,
+  extraLink: PropTypes.bool,
 }
 
 export default injectIntl(ActionsCarousel)

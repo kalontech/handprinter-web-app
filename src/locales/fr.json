@@ -394,9 +394,12 @@
     "app.aboutInterfacePage.measuringImpacts.title": "Pourquoi mesurons-nous les impacts des actions en utilisant le temps (jours et heures)?",
     "app.aboutInterfacePage.measuringImpacts.button": "Mesurer les impacts",
     "app.ourVision.ActionsCarousel.extraLink": "Mesurer les impacts",
-    "app.NotFoundPage.Title": "Oops.. something went wrong",
-    "app.NotFoundPage.Description": "404 Error. Sorry, the page you’re looking for cannot be found.",
-    "app.NotFoundPage.Link1": "Visit homepage",
-    "app.NotFoundPage.Text": "or",
-    "app.NotFoundPage.Link2": "Contact us"
+    "app.measurementPage.Impact.ListDescription": "Votre impact est calculé dans le temps.",
+    "app.measurementPage.Impact.CategoryTitle": "Vous pouvez avoir un impact sur ces catégories",
+    "app.measurementPage.Impact.CategoryDescription": "Chaque catégorie a sa propre icône",
+    "app.NotFoundPage.Title": "Oups .. quelque chose s'est mal passé",
+    "app.NotFoundPage.Description": "404 Erreur. Désolé, la page que vous recherchez est introuvable.",
+    "app.NotFoundPage.Link1": "Visitez la page d'accueil",
+    "app.NotFoundPage.Text": "ou",
+    "app.NotFoundPage.Link2": "Contactez nous"
 }

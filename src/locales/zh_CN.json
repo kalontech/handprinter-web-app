@@ -394,9 +394,12 @@
     "app.aboutInterfacePage.measuringImpacts.title": "为什么我们使用时间（天和小时）来衡量行动影响？",
     "app.aboutInterfacePage.measuringImpacts.button": "衡量影响",
     "app.ourVision.ActionsCarousel.extraLink": "衡量影响",
-    "app.NotFoundPage.Title": "Oops.. something went wrong",
-    "app.NotFoundPage.Description": "404 Error. Sorry, the page you’re looking for cannot be found.",
-    "app.NotFoundPage.Link1": "Visit homepage",
-    "app.NotFoundPage.Text": "or",
-    "app.NotFoundPage.Link2": "Contact us"
+    "app.measurementPage.Impact.ListDescription": "您的影响会及时计算。",
+    "app.measurementPage.Impact.CategoryTitle": "您可以对这些类别产生影响",
+    "app.measurementPage.Impact.CategoryDescription": "每个类别都有自己的图标",
+    "app.NotFoundPage.Title": "哎呀！出事了",
+    "app.NotFoundPage.Description": "404错误。抱歉，找不到您要查找的页面。",
+    "app.NotFoundPage.Link1": "访问主页",
+    "app.NotFoundPage.Text": "要么",
+    "app.NotFoundPage.Link2": "联系我们"
 }
