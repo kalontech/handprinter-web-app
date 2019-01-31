@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import d3 from 'd3'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import hexToRgba from 'utils/hexToRgba'
 
 import colors from 'config/colors'
 import { sizes } from 'utils/mediaQueryTemplate'
@@ -102,6 +103,10 @@ class NetworkWidget extends Component {
       .append('svg')
       .attr('width', width)
       .attr('height', height)
+      .attr(
+        'filter',
+        `drop-shadow(0 1px 10px ${hexToRgba(`${colors.dark}`, 0.08)})`,
+      )
 
     // Create definitions container
     const defs = widget.append('defs')
