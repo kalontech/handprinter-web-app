@@ -382,7 +382,7 @@
     "app.header.menu.aboutInterface": "Handprint",
     "app.increaseHandprintPage.ignoredEmails": "Certaines adresses de l'invitation ne sont pas venues car il y a des utilisateurs enregistrés avec de telles adresses, à savoir: \n {list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "Le calendrier indique les jours où vous êtes \"Net positif\" - ce qui provoque un progrès environnemental plus important que votre empreinte pour ce jour!",
-    "app.dashboardPage.infoTooltipLinkToFAQ": "lien vers la FAQ",
+    "app.dashboardPage.infoTooltipLinkToFAQ": "apprendre encore plus",
     "app.dashboardPage.goodRatio.infoTooltip": "Le bon ratio est le ratio de votre empreinte de main sur votre empreinte. Augmentez-le en augmentant votre empreinte de main et en réduisant votre empreinte.",
     "app.dashboardPage.myNetwork.infoTooltip": "Votre réseau est rempli des personnes que vous avez invitées à imprimer à la main, ainsi que des personnes qu'ils ont invitées, etc.",
     "app.measurementPage.animation.slide1": "Le jour de votre inscription, votre empreinte est de 365 jours complets et votre empreinte de main est de zéro. Il est temps de changer ça!",

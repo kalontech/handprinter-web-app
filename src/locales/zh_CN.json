@@ -382,7 +382,7 @@
     "app.header.menu.aboutInterface": "手印",
     "app.increaseHandprintPage.ignoredEmails": "邀请的某些地址没有来，因为有注册用户有这样的地址，即： \n {list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "日历显示您“净正面”的日子 - 导致环境进展大于当天的足迹！",
-    "app.dashboardPage.infoTooltipLinkToFAQ": "链接到FAQ",
+    "app.dashboardPage.infoTooltipLinkToFAQ": "学到更多",
     "app.dashboardPage.goodRatio.infoTooltip": "良好的比例是您的手印与您的足迹的比率。通过增加手印和缩小占地面积来增加它。",
     "app.dashboardPage.myNetwork.infoTooltip": "您的网络充满了您邀请参加手工打印的人员，以及他们邀请的人员等等。",
     "app.measurementPage.animation.slide1": "On the day you register, your footprint is a full 365 days, and your handprint is zero. Time to change that!",

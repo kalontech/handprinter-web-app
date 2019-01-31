@@ -382,7 +382,7 @@
     "app.header.menu.aboutInterface": "Handprint",
     "app.increaseHandprintPage.ignoredEmails": "Algunas direcciones de la invitación no llegaron porque hay usuarios registrados con dichas direcciones, a saber: \n {list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "El calendario muestra los días en los que está \"Neto Positivo\", lo que provoca un progreso ambiental mayor que su huella para ese día.",
-    "app.dashboardPage.infoTooltipLinkToFAQ": "enlace a preguntas frecuentes",
+    "app.dashboardPage.infoTooltipLinkToFAQ": "aprende más",
     "app.dashboardPage.goodRatio.infoTooltip": "Buena relación es la relación entre su huella y su huella. Auméntelo haciendo crecer su huella de la mano y reduciendo su huella.",
     "app.dashboardPage.myNetwork.infoTooltip": "Su red está llena de las personas que ha invitado a handprinter, las personas a las que ha invitado, etc.",
     "app.measurementPage.animation.slide1": "El día que se registra, su huella es de 365 días completos y su huella de mano es cero. Es hora de cambiar eso!",

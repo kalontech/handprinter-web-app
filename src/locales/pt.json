@@ -382,7 +382,7 @@
     "app.header.menu.aboutInterface": "Handprint",
     "app.increaseHandprintPage.ignoredEmails": "Alguns endereços do convite não vieram porque há usuários registrados com tais endereços, a saber: \n {list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "O calendário mostra os dias em que você é \"Positivo Líquido\" - causando um progresso ambiental maior do que a sua pegada naquele dia!",
-    "app.dashboardPage.infoTooltipLinkToFAQ": "link para FAQ",
+    "app.dashboardPage.infoTooltipLinkToFAQ": "Saber mais",
     "app.dashboardPage.goodRatio.infoTooltip": "Boa proporção é a proporção de seu handprint para sua pegada. Aumente-a aumentando sua pegada e diminuindo sua pegada.",
     "app.dashboardPage.myNetwork.infoTooltip": "Sua rede é preenchida com as pessoas que você convidou para a impressora manual, além das pessoas convidadas e por telefone.",
     "app.measurementPage.animation.slide1": "No dia em que você se registra, sua pegada é de 365 dias completos e seu handprint é zero. Hora de mudar isso!",
