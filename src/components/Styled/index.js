@@ -711,7 +711,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .ant-tooltip {
-    &.action-tooltip {
+    &.action-tooltip, &.info-tooltip {
     height: auto;
     width: auto;
     z-index: 1070;
