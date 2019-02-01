@@ -63,8 +63,7 @@ const CloseButton = styled.div`
 
 const StyledForm = styled(Form)`
   width: 100%;
-  height: 100%;
-  max-height: 580px;
+  height: 580px;
   display: flex;
   justify-content: space-between;
   ${({ submitSucceeded }) => (submitSucceeded ? 'min-height: 450px;' : '')}
@@ -95,6 +94,9 @@ const UploadWrap = styled.div`
 const MainFields = styled.div`
   width: 50%;
   padding: 44px 60px;
+  display: flex
+  flex-direction: column
+  justify-content: space-between
 
   ${media.tablet`
     width: 100%;
@@ -412,42 +414,46 @@ class ActionCreatePage extends React.PureComponent {
           </UploadWrap>
 
           <MainFields>
-            <Title>{formatMessage({ id: 'app.actionCreatePage.title' })}</Title>
+            <div>
+              <Title>
+                {formatMessage({ id: 'app.actionCreatePage.title' })}
+              </Title>
 
-            <FormItem>
-              {getFieldDecorator('name', {
-                rules: [
-                  required(formatMessage({ id: 'app.errors.isRequired' })),
-                ],
-              })(
-                <Input
-                  type="text"
-                  placeholder={formatMessage({ id: 'app.forms.actionName' })}
-                />,
-              )}
-            </FormItem>
+              <FormItem>
+                {getFieldDecorator('name', {
+                  rules: [
+                    required(formatMessage({ id: 'app.errors.isRequired' })),
+                  ],
+                })(
+                  <Input
+                    type="text"
+                    placeholder={formatMessage({ id: 'app.forms.actionName' })}
+                  />,
+                )}
+              </FormItem>
 
-            <FormItem>
-              {getFieldDecorator('description', {
-                rules: [
-                  required(formatMessage({ id: 'app.errors.isRequired' })),
-                  {
-                    max: MAX_DESCRIPTION_LENGTH,
-                    message: formatMessage(
-                      { id: 'app.errors.maxLength' },
-                      { count: MAX_DESCRIPTION_LENGTH },
-                    ),
-                  },
-                ],
-              })(
-                <TextArea
-                  rows={4}
-                  placeholder={formatMessage({
-                    id: 'app.forms.actionDescription',
-                  })}
-                />,
-              )}
-            </FormItem>
+              <FormItem>
+                {getFieldDecorator('description', {
+                  rules: [
+                    required(formatMessage({ id: 'app.errors.isRequired' })),
+                    {
+                      max: MAX_DESCRIPTION_LENGTH,
+                      message: formatMessage(
+                        { id: 'app.errors.maxLength' },
+                        { count: MAX_DESCRIPTION_LENGTH },
+                      ),
+                    },
+                  ],
+                })(
+                  <TextArea
+                    rows={4}
+                    placeholder={formatMessage({
+                      id: 'app.forms.actionDescription',
+                    })}
+                  />,
+                )}
+              </FormItem>
+            </div>
 
             <ButtonsWrapper>
               <ButtonCancel onClick={closeModal}>
