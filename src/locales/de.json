@@ -292,7 +292,7 @@
     "app.dashboardPage.head.keywords": "Handdrucker, Natur, Fußabdruck, Handabdruck",
     "app.dashboardPage.head.description": "Beschreibung der Seite",
     "app.dashboardPage.usersInvited": "Benutzer eingeladen",
-    "app.dashboardPage.actionsTaken": "Ergriffene Maßnahmen",
+    "app.dashboardPage.actionsTaken": "Aktionen",
     "app.dashboardPage.netPositiveDays": "Netto positive Tage",
     "app.dashboardPage.networkUsers": "Netzwerkbenutzer",
     "app.dashboardPage.myNetPositiveDays": "Meine positiven Tage",
@@ -401,5 +401,6 @@
     "app.NotFoundPage.Description": "404 Fehler. Die von Ihnen gesuchte Seite kann leider nicht gefunden werden.",
     "app.NotFoundPage.Link1": "Besuchen Sie die Homepage",
     "app.NotFoundPage.Text": "oder",
-    "app.NotFoundPage.Link2": "Kontaktiere uns"
+    "app.NotFoundPage.Link2": "Kontaktiere uns",
+    "app.actions.congratulations.nice": "Nett!"
 }

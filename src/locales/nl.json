@@ -401,5 +401,6 @@
     "app.NotFoundPage.Description": "404 Fout. Sorry, de pagina die u zoekt kan niet gevonden worden.",
     "app.NotFoundPage.Link1": "Bezoek homepage",
     "app.NotFoundPage.Text": "of",
-    "app.NotFoundPage.Link2": "Neem contact met ons op"
+    "app.NotFoundPage.Link2": "Neem contact met ons op",
+    "app.actions.congratulations.nice": "Leuk!"
 }

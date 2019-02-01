@@ -166,14 +166,7 @@ const TakenActionPanel = styled.div`
   height: 100%;
   justify-content: center;
   width: 100%;
-  ${props =>
-    props.showAuthBlock
-      ? `
-    padding-top: 60px;
-  `
-      : `
-    padding: 60px;
-  `}
+  padding-top: 60px;
 
   img {
     margin-bottom: 30px;
@@ -498,13 +491,14 @@ class ActionModalPage extends Component {
     return this.renderInContainer({
       children: (
         <Fragment>
-          <TakenActionPanel showAuthBlock={!user}>
+          <TakenActionPanel>
             <img
               src={
                 type === ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW
                   ? pigImage
                   : treeImage
               }
+              alt=""
             />
             <TakenActionTitle>
               <FormattedMessage id="app.actions.congratulations" />
@@ -526,7 +520,20 @@ class ActionModalPage extends Component {
               mobileFixedWidth={true}
               hideTooltip={true}
             />
-            {!user && (
+            {user ? (
+              <TakenActionAuthWrap>
+                <TakenActionAuthContent>
+                  <Button
+                    type="primary"
+                    onClick={() =>
+                      handleBackdropClick({ parentPath: '/actions' })
+                    }
+                  >
+                    <FormattedMessage id="app.actions.congratulations.nice" />
+                  </Button>
+                </TakenActionAuthContent>
+              </TakenActionAuthWrap>
+            ) : (
               <TakenActionAuthWrap>
                 <TakenActionAuthTitle>
                   <FormattedMessage id="app.actions.congratulations.wantToSaveResults" />

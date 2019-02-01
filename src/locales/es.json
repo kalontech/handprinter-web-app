@@ -401,5 +401,6 @@
     "app.NotFoundPage.Description": "error 404. Lo sentimos, la página que estás buscando no se puede encontrar.",
     "app.NotFoundPage.Link1": "Visita la página de inicio",
     "app.NotFoundPage.Text": "o",
-    "app.NotFoundPage.Link2": "Contáctenos"
+    "app.NotFoundPage.Link2": "Contáctenos",
+    "app.actions.congratulations.nice": "¡Bonito!"
 }

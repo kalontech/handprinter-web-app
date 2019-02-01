@@ -401,5 +401,6 @@
     "app.NotFoundPage.Description": "404错误。抱歉，找不到您要查找的页面。",
     "app.NotFoundPage.Link1": "访问主页",
     "app.NotFoundPage.Text": "要么",
-    "app.NotFoundPage.Link2": "联系我们"
+    "app.NotFoundPage.Link2": "联系我们",
+    "app.actions.congratulations.nice": "太好了！"
 }
