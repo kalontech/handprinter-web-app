@@ -20,6 +20,7 @@ import treeImage from 'assets/dashboard/tree.png'
 import icons from 'components/ActionCardLabel/icons'
 import media from 'utils/mediaQueryTemplate'
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
+import { QUESTIONS_ANCHOR } from 'utils/constants'
 
 const PageContainer = styled.div`
   background-color: ${colors.lightGray};
@@ -583,7 +584,11 @@ class DashboardPage extends Component {
                                       <FormattedMessage id="app.dashboardPage.myNetPositiveDays.infoTooltip" />
                                     </p>
                                     <div>
-                                      <InfoElementLink to="/pages/faq">
+                                      <InfoElementLink
+                                        to={`/pages/faq#${
+                                          QUESTIONS_ANCHOR.WHAT_CALENDAR_SHOWING
+                                        }`}
+                                      >
                                         <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
                                       </InfoElementLink>
                                     </div>
@@ -617,7 +622,11 @@ class DashboardPage extends Component {
                                       <FormattedMessage id="app.dashboardPage.goodRatio.infoTooltip" />
                                     </p>
                                     <div>
-                                      <InfoElementLink to="/pages/measurement-units#scales">
+                                      <InfoElementLink
+                                        to={`/pages/faq#${
+                                          QUESTIONS_ANCHOR.WHAT_SCALE_SHOWING
+                                        }`}
+                                      >
                                         <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
                                       </InfoElementLink>
                                     </div>
@@ -660,7 +669,11 @@ class DashboardPage extends Component {
                                           <FormattedMessage id="app.dashboardPage.myNetwork.infoTooltip" />
                                         </p>
                                         <div>
-                                          <InfoElementLink to="/pages/faq">
+                                          <InfoElementLink
+                                            to={`/pages/faq#${
+                                              QUESTIONS_ANCHOR.WHAT_NETWORK_SHOWING
+                                            }`}
+                                          >
                                             <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
                                           </InfoElementLink>
                                         </div>
