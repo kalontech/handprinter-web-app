@@ -2,7 +2,7 @@ import React from 'react'
 import { Icon } from 'antd'
 
 const CloseSvg = () => (
-  <svg width={24} height={24} fill="none" opacity={0.4}>
+  <svg width={24} height={24} fill="none">
     <mask
       id="prefix__aa"
       maskUnits="userSpaceOnUse"

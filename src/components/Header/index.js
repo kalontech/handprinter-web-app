@@ -227,10 +227,11 @@ const UserInfo = styled.div`
 const Hamburger = styled.div`
   display: flex;
   align-items: center;
-  color: ${colors.dark};
+  color: ${colors.darkGray};
   cursor: pointer;
+  transition: all 0.3s;
   &:hover {
-    color: #000;
+    color: ${colors.dark};
   }
 `
 

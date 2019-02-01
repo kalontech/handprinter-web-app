@@ -32,8 +32,7 @@ const Container = styled.section`
   `}
 `
 
-const CloseButton = styled.button`
-  background-color: transparent;
+const CloseButton = styled.div`
   border: 0;
   align-items: center;
   cursor: pointer;
@@ -41,10 +40,25 @@ const CloseButton = styled.button`
   height: 50px;
   justify-content: center;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 17px;
+  top: 10px;
   width: 50px;
   z-index: 2;
+  transition: color 0.3s;
+  cursor: pointer;
+  color: ${colors.darkGray};
+  &:hover {
+    color: ${colors.dark};
+  }
+  ${media.phone`
+    color: ${colors.white};
+    top: 2px;
+    right: 2px;
+    &:hover {
+     color: ${colors.white};
+     opacity: 0.2;
+    }
+ `}
 `
 
 const StyledForm = styled(Form)`

@@ -802,7 +802,7 @@ class ActionsPage extends Component {
                   <Spinner />
                 </NotFoundWrap>
               ) : (
-                <Row gutter={10}>
+                <Row gutter={{ md: 20 }}>
                   {actions.map(action => (
                     <Col key={action._id} xl={8} lg={12} md={12} xs={24}>
                       <ActionCard

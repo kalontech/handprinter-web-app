@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Row, Button, Icon, Form, Input } from 'antd'
+import { Row, Button, Form, Input } from 'antd'
 import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -18,6 +18,7 @@ import decodeError from 'utils/decodeError'
 import { DefaultButton, FormItem } from 'components/Styled'
 import media, { sizes } from 'utils/mediaQueryTemplate'
 import MultipleInput from 'components/MultipleInput'
+import CloseIcon from 'assets/icons/CloseIcon'
 
 const Container = styled(Row)`
   align-items: center;
@@ -97,17 +98,21 @@ const RightPanel = styled.div`
   `}
 `
 
-const CloseButton = styled(Icon)`
-  align-items: center;
-  cursor: pointer;
-  display: flex;
-  height: 63px;
-  justify-content: center;
+const CloseButton = styled.div`
+  width: 50px;
+  height: 50px;
   position: absolute;
   right: 17px;
   top: 10px;
-  width: 55px;
+  display: flex;
+  justify-content: center;
   font-size: 20px;
+  align-items: center;
+  transition: all 0.3s;
+  cursor: pointer;
+  &:hover {
+    color: ${colors.dark};
+  }
   ${props =>
     props.color
       ? `
@@ -118,6 +123,12 @@ const CloseButton = styled(Icon)`
       `}
   ${media.tablet`
     color: ${colors.white};
+    top: 2px;
+    right: 2px;
+    &:hover {
+     color: ${colors.white};
+     opacity: 0.2;
+  }
   `}
 `
 
@@ -624,10 +635,10 @@ class ActionModalPage extends Component {
     <Container width={width} height={height}>
       {children}
       <CloseButton
-        color={closeBtnColor}
-        type="close"
         onClick={() => handleBackdropClick({ parentPath: '/actions' })}
-      />
+      >
+        <CloseIcon />
+      </CloseButton>
     </Container>
   )
 

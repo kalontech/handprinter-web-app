@@ -3,7 +3,7 @@ import { Icon } from 'antd'
 
 const MenuSvg = () => (
   <svg width={24} height={25} fill="none">
-    <g opacity={0.4}>
+    <g>
       <mask
         id="prefix__a"
         maskUnits="userSpaceOnUse"
