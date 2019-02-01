@@ -32,7 +32,6 @@ const MultipleInputWrap = styled.div`
 `
 
 const InputWrap = styled.span`
-  width: 100%;
   display: flex;
   align-items: flex-start;
 
