@@ -92,7 +92,7 @@ const HeroImage = styled.div`
 `
 
 const Hero = styled.section`
-  padding: 150px 0 200px;
+  padding: 150px 0 90px;
   ${media.largeDesktop`
     padding-bottom: 100px;
   `};
@@ -151,7 +151,7 @@ const ActionsImage = styled.div`
 
 const Actions = styled.section`
   position: relative;
-  padding-top: 150px;
+  padding-top: 140px;
   ${media.largeDesktop`
     padding-top: 137px;
   `};
@@ -221,7 +221,8 @@ const About = styled.section`
 `
 
 const Clients = styled.section`
-  padding: 60px 0 30px;
+  padding: 67px 0 37px;
+  background: ${colors.lightGray};
   ${media.desktop`
     padding: 40px 0 10px;
   `};

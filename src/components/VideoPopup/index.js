@@ -37,17 +37,15 @@ class VideoPopup extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Wrapper>
-          <ModalVideo
-            channel="youtube"
-            ratio="16:9"
-            isOpen={this.state.isOpen}
-            videoId={this.props.id}
-            onClose={() => this.setState({ isOpen: false })}
-            onClick={this.openModal}
-          />
-        </Wrapper>
+      <Wrapper>
+        <ModalVideo
+          channel="youtube"
+          ratio="16:9"
+          isOpen={this.state.isOpen}
+          videoId={this.props.id}
+          onClose={() => this.setState({ isOpen: false })}
+          onClick={this.openModal}
+        />
         {this.props.reverse ? (
           <SecondaryButton onClick={this.openModal}>
             <WatchVideoIcon />
@@ -59,7 +57,7 @@ class VideoPopup extends React.Component {
             <FormattedMessage id="app.button.video" />
           </DefaultButton>
         )}
-      </React.Fragment>
+      </Wrapper>
     )
   }
 }

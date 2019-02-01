@@ -258,7 +258,7 @@ export const BlockTitle = styled.h1`
   font-size: 48px;
   line-height: 1.27;
   font-family: 'Noto Serif', serif;
-
+  font-weight: 400;
   ${media.tablet`
     font-size: 35px;
   `}
@@ -270,6 +270,7 @@ export const BlockTitle = styled.h1`
 
 export const BlockTitleGreen = styled(BlockTitle)`
   strong {
+    font-weight: 700;
     color: ${colors.green};
   }
 `
@@ -297,6 +298,7 @@ export const BlockSubTitle = styled.h2`
 
 export const BlockSubTitleGreen = styled(BlockSubTitle)`
   strong {
+    font-weight: 700;
     color: ${colors.green};
   }
 `
@@ -333,9 +335,6 @@ export const ArrowButton = styled(Ant.Button)`
   height: 45px;
   border-radius: 2px;
   border: none;
-  &:after {
-    display: none;
-  }
   &&:hover,
   &&:focus,
   &&.active,
@@ -491,6 +490,9 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
     justify-content: center;
     box-shadow: none;
+    &:after {
+      display: none;
+    }
   
     a {
       color: inherit;
@@ -505,7 +507,12 @@ export const GlobalStyle = createGlobalStyle`
   .ant-menu-submenu-popup {
     z-index: 1062;
   }
-
+  
+  .ant-input-affix-wrapper .ant-input,
+  .ant-select-open .ant-select-selection {
+    box-shadow: none;
+  }
+ 
   .ant-select__override-for__register-page {
     .ant-select-selection {
       height: 46px;
@@ -550,7 +557,7 @@ export const GlobalStyle = createGlobalStyle`
       background-color: ${colors.lightGray};
     }
     .ant-select-selected-icon {
-      display: none !important;
+      display: none;
     }
     .ant-select-dropdown-menu {
       max-height: 500px;    
@@ -745,7 +752,7 @@ export const Input = styled(Ant.Input)`
   font-size: 14px;
   height: 46px;
   line-height: 20px;
-
+  box-shadow: none !important;
   .ant-input {
     padding: 0 15px;
   }
