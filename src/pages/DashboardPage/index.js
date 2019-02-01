@@ -121,7 +121,7 @@ const DashboardHeaderWhiteLine = styled(Row)`
   `}
 `
 
-const DashboardHeaderUserNameCol = styled(Col)`
+const DashboardHeaderUserNameCol = styled.div`
   ${media.desktop`
     display: flex;
     justify-content: center;
@@ -130,13 +130,16 @@ const DashboardHeaderUserNameCol = styled(Col)`
   `}
 `
 
-const DashboardHeaderUserRow = styled(Row)`
+const DashboardHeaderUserRow = styled.div`
   width: 100%;
   padding: 0 0 0 199px;
+  display: flex;
+  justify-content: space-between;
   ${media.largeDesktop`
     padding: 0 39px 0 199px;
   `}
   ${media.desktop`
+    display: block;
     padding: 0;
     margin-top: 18px;
   `}
@@ -296,22 +299,32 @@ const GoodRatioCol = styled(Col)`
   `}
 `
 
-const DashboardHeaderUserInfoRow = styled(Row)`
+const DashboardHeaderUserInfoRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
   ${media.desktop`
+    justify-content: center;
     margin: 40px 0 30px 0;
   `}
   ${media.phone`
+  display: block;
     margin: 15px 0 18px 0;
 
   `}
 `
 
-const HeaderUserInfoRowCol = styled(Col)`
+const HeaderUserInfoRowCol = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-left: 20px;
+
+  ${media.desktop`
+    padding: 0 10px;
+  `}
 
   ${media.phone`
+    padding: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -418,7 +431,7 @@ class DashboardPage extends Component {
                       }}
                     >
                       <DashboardHeaderUserRow>
-                        <DashboardHeaderUserNameCol span={16} xs={24} lg={12}>
+                        <DashboardHeaderUserNameCol>
                           <DashboardHeaderUserName>
                             {user.fullName}
                           </DashboardHeaderUserName>
@@ -427,19 +440,9 @@ class DashboardPage extends Component {
                             {moment(user.createdAt).format('MMMM DD, YYYY')}
                           </DashboardHeaderUserSince>
                         </DashboardHeaderUserNameCol>
-                        <DashboardHeaderUserInfoCol
-                          span={8}
-                          sm={24}
-                          lg={12}
-                          xs={24}
-                        >
+                        <DashboardHeaderUserInfoCol>
                           <DashboardHeaderUserInfoRow>
-                            <HeaderUserInfoRowCol
-                              span={8}
-                              lg={8}
-                              xs={24}
-                              sm={8}
-                            >
+                            <HeaderUserInfoRowCol>
                               <DashboardHeaderUserInfoValue>
                                 {stats.personal.usersInvited}
                               </DashboardHeaderUserInfoValue>
@@ -448,12 +451,7 @@ class DashboardPage extends Component {
                               </DashboardHeaderUserSince>
                             </HeaderUserInfoRowCol>
 
-                            <HeaderUserInfoRowCol
-                              span={8}
-                              lg={8}
-                              xs={24}
-                              sm={8}
-                            >
+                            <HeaderUserInfoRowCol>
                               <DashboardHeaderUserInfoValue>
                                 {stats.personal.actionsTaken}
                               </DashboardHeaderUserInfoValue>
@@ -462,12 +460,7 @@ class DashboardPage extends Component {
                               </DashboardHeaderUserSince>
                             </HeaderUserInfoRowCol>
 
-                            <HeaderUserInfoRowCol
-                              span={8}
-                              lg={8}
-                              xs={24}
-                              sm={8}
-                            >
+                            <HeaderUserInfoRowCol>
                               <DashboardHeaderUserInfoValue>
                                 {Math.round(
                                   stats.personal.netPositiveDays[
