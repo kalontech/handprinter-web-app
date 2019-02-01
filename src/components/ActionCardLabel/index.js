@@ -3,23 +3,20 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Icon } from 'antd'
 import PropTypes from 'prop-types'
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import {
+  injectIntl,
+  FormattedPlural,
+  FormattedMessage,
+  FormattedHTMLMessage,
+} from 'react-intl'
 
 import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
 import media from 'utils/mediaQueryTemplate'
-import { IMPACT_CATEGORIES } from 'utils/constants'
+import { IMPACT_CATEGORIES, TimeValueAbbreviations } from 'utils/constants'
 import Tooltip from 'components/Tooltip'
 
 import icons from './icons'
-
-export const TimeValueAbbreviations = {
-  MINUTES: 'MINS',
-  HOURS: 'HRS',
-  DAYS: 'DAYS',
-  MONTHS: 'MTHS',
-  YEARS: 'YRS',
-}
 
 const TooltipContainer = styled.div`
   line-height: 20px;
@@ -122,6 +119,7 @@ const ActionCardLabel = ({
   variant,
   unit,
   hideTooltip,
+  intl: { formatMessage },
   ...otherProp
 }) => {
   const tooltipProps = {}
@@ -156,7 +154,15 @@ const ActionCardLabel = ({
         </Category>
         <Impact>
           <Caption unit={unit} variant={variant}>
-            {unit}
+            <FormattedPlural
+              value={value}
+              one={formatMessage({
+                id: `app.actions.timeValues.one.${unit}`,
+              })}
+              other={formatMessage({
+                id: `app.actions.timeValues.other.${unit}`,
+              })}
+            />
           </Caption>
           <Value>{value}</Value>
         </Impact>
@@ -172,4 +178,4 @@ ActionCardLabel.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 }
 
-export default ActionCardLabel
+export default injectIntl(ActionCardLabel)
