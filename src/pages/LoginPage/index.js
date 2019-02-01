@@ -86,6 +86,7 @@ class LoginPage extends Component {
                   <FormItem>
                     {getFieldDecorator('email', {
                       rules: getValidationRules(formatMessage).email,
+                      validateTrigger: 'onBlur',
                     })(
                       <Input
                         type="email"
@@ -96,6 +97,7 @@ class LoginPage extends Component {
                   <FormItem>
                     {getFieldDecorator('password', {
                       rules: getValidationRules(formatMessage).password,
+                      validateTrigger: 'onBlur',
                     })(<InputForPassword />)}
                   </FormItem>
                   <ActionCardForgotPasswordBlock>

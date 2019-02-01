@@ -61,6 +61,7 @@ class ResetPasswordPage extends Component {
                 <FormItem>
                   {getFieldDecorator('email', {
                     rules: getValidationRules(formatMessage).email,
+                    validateTrigger: 'onBlur',
                   })(
                     <Input
                       type="email"

@@ -326,6 +326,7 @@ class RegisterPage extends Component {
                   <FormItem>
                     {getFieldDecorator('email', {
                       rules: getValidationRules(formatMessage).email,
+                      validateTrigger: 'onBlur',
                     })(
                       <Input
                         type="email"
@@ -338,6 +339,7 @@ class RegisterPage extends Component {
                   <FormItem>
                     {getFieldDecorator('password', {
                       rules: getValidationRules(formatMessage).password,
+                      validateTrigger: 'onBlur',
                     })(<InputForPassword />)}
                   </FormItem>
                   <FormItem style={{ marginTop: '-3px' }}>

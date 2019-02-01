@@ -65,6 +65,7 @@ class SetNewPasswordPage extends Component {
                 <FormItem>
                   {getFieldDecorator('password', {
                     rules: getValidationRules(formatMessage).password,
+                    validateTrigger: 'onBlur',
                   })(<InputForPassword />)}
                 </FormItem>
                 <Button

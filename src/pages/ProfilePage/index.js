@@ -380,6 +380,7 @@ class ProfilePage extends Component {
       <FormItem>
         {getFieldDecorator('currentPassword', {
           rules: getValidationRules(formatMessage).password,
+          validateTrigger: 'onBlur',
         })(
           <Input
             type={'password'}
@@ -392,6 +393,7 @@ class ProfilePage extends Component {
       <FormItem>
         {getFieldDecorator('newPassword', {
           rules: getValidationRules(formatMessage).password,
+          validateTrigger: 'onBlur',
         })(
           <Input
             type={'password'}
