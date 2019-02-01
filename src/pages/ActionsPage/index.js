@@ -515,6 +515,9 @@ class ActionsPage extends Component {
   handleOnAfterFiltersChange = debounce(({ data, activeFilterCount }) => {
     this.setState({ activeFiltersCount: activeFilterCount })
     this.fetchActions(data, this.state.subset)
+    this.handleParamsForFilter(data, {
+      ignoreQueryPrefix: true,
+    })
   }, 600)
 
   handlePaginationChange = page => {

@@ -8,7 +8,7 @@ import { isEqual } from 'lodash'
 import colors from '../../../config/colors'
 import icons from '../../../components/ActionCardLabel/icons'
 import ImpactSlider from './slider'
-import { IMPACT_CATEGORIES, } from '../../../utils/constants'
+import { IMPACT_CATEGORIES } from '../../../utils/constants'
 import { history } from './../../../appRouter'
 
 const ClearAllIcon = styled(Icon)`
@@ -34,7 +34,7 @@ const ButtonsWrap = styled.div`
 
 class ActionsFilters extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     const timeValuesCount = Object.keys(props.timeValues).length - 1
     let values = {
       climate: [0, timeValuesCount],
@@ -48,8 +48,12 @@ class ActionsFilters extends Component {
       // convert values from query ([15, 52000])
       // to values for filter (from 0 to time values count)
       Object.keys(props.values).forEach(impactName => {
-        values[impactName][0] = props.timeValues.findIndex(elem => elem.minutes === props.values[impactName][0])
-        values[impactName][1] = props.timeValues.findIndex(elem => elem.minutes === props.values[impactName][1])
+        values[impactName][0] = props.timeValues.findIndex(
+          elem => elem.minutes === props.values[impactName][0],
+        )
+        values[impactName][1] = props.timeValues.findIndex(
+          elem => elem.minutes === props.values[impactName][1],
+        )
       })
     }
 
@@ -127,14 +131,18 @@ class ActionsFilters extends Component {
       <Fragment>
         <ImpactSlider
           onAfterChange={() => this.props.onAfterChange(this.createQuery())}
-          onChange={values => this.handleChange(values, IMPACT_CATEGORIES.CLIMATE)}
+          onChange={values =>
+            this.handleChange(values, IMPACT_CATEGORIES.CLIMATE)
+          }
           value={values.climate}
           timeValues={timeValues}
           icon={icons.positive.climate}
         />
         <ImpactSlider
           onAfterChange={() => this.props.onAfterChange(this.createQuery())}
-          onChange={values => this.handleChange(values, IMPACT_CATEGORIES.HEALTH)}
+          onChange={values =>
+            this.handleChange(values, IMPACT_CATEGORIES.HEALTH)
+          }
           value={values.health}
           timeValues={timeValues}
           icon={icons.positive.health}
@@ -150,14 +158,18 @@ class ActionsFilters extends Component {
         />
         <ImpactSlider
           onAfterChange={() => this.props.onAfterChange(this.createQuery())}
-          onChange={values => this.handleChange(values, IMPACT_CATEGORIES.WATER)}
+          onChange={values =>
+            this.handleChange(values, IMPACT_CATEGORIES.WATER)
+          }
           value={values.water}
           timeValues={timeValues}
           icon={icons.positive.water}
         />
         <ImpactSlider
           onAfterChange={() => this.props.onAfterChange(this.createQuery())}
-          onChange={values => this.handleChange(values, IMPACT_CATEGORIES.WASTE)}
+          onChange={values =>
+            this.handleChange(values, IMPACT_CATEGORIES.WASTE)
+          }
           value={values.waste}
           timeValues={timeValues}
           icon={icons.positive.waste}
@@ -166,10 +178,12 @@ class ActionsFilters extends Component {
         <ButtonsWrap>
           {filterIsChanged && (
             <Fragment>
-              <ClearAllButton onClick={() => {
-                this.resetFilter()
-                this.props.onReset()
-              }}>
+              <ClearAllButton
+                onClick={() => {
+                  this.resetFilter()
+                  this.props.onReset()
+                }}
+              >
                 <ClearAllIcon type="plus" />
               </ClearAllButton>
               <FormattedMessage id="app.actionsPage.clearAllFilters" />
