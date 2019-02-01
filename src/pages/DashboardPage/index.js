@@ -202,10 +202,9 @@ const DashboardHeaderUserPicture = styled.img`
 
 const DashboardHeaderUserName = styled.div`
   color: ${colors.dark};
-  font-size: 32px;
+  font-size: 22px;
   ${media.desktop`
     line-height: 35px;
-    font-size: 22px;
   `}
 `
 
@@ -213,7 +212,7 @@ const DashboardHeaderUserInfoValue = styled.div`
   padding-top: 11px;
   margin-bottom: 3px;
   color: ${colors.dark};
-  font-size: 22px;
+  font-size: 28px;
   font-weight: bold;
 
   ${media.desktop`
