@@ -388,8 +388,7 @@ class ActionsPage extends Component {
       actions:
         subset === ACTIONS_SUBSETS.HISTORY
           ? actions.map(item => ({
-              ...item.action,
-              picture: `/api/files/${item.action.picture}`,
+              ...item,
               suggestedAt: item.updatedAt,
               suggestedBy: { selfTaken: true },
             }))
