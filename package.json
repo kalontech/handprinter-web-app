@@ -27,6 +27,7 @@
     "eslint-config-react-app": "^3.0.5",
     "eslint-config-standard": "^12.0.0",
     "eslint-loader": "2.1.1",
+    "eslint-plugin-flowtype": "^3.2.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jest": "^22.1.0",
     "eslint-plugin-jsx-a11y": "6.1.2",
@@ -88,6 +89,7 @@
     "styled-components": "^4.0.3",
     "stylelint": "^9.7.1",
     "stylelint-config-standard": "^18.2.0",
+    "terser": "3.14.1",
     "terser-webpack-plugin": "1.1.0",
     "url-loader": "1.1.1",
     "webpack": "4.19.1",
@@ -98,15 +100,15 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "yarn eslint && yarn stylelint && node scripts/test.js",
-    "serve": "yarn build && serve -s build",
+    "test": "npm run eslint && mpm run stylelint && node scripts/test.js",
+    "serve": "npm run build && serve -s build",
     "eslint": "eslint src/**/**/*.js",
-    "eslint:fix": "yarn eslint --fix",
+    "eslint:fix": "npm run eslint --fix",
     "stylelint": "stylelint src/**/*.css",
-    "stylelint:fix": "yarn stylelint --fix",
+    "stylelint:fix": "npm run stylelint --fix",
     "lokalise:push": "lokalise --token $LOKALISE_TOKEN import $LOKALISE_PROJECT_ID --cleanup_mode 1 --convert_placeholders 0 --file src/locales/en.json --lang_iso en --replace 1 --replace_breaks 1",
     "lokalise:pull": "lokalise --token $LOKALISE_TOKEN export $LOKALISE_PROJECT_ID --bundle_structure locales/%LANG_ISO%.%FORMAT% --export_empty base --type json --unzip_to src/",
-    "lokalise:sync": "yarn lokalise:push && yarn lokalise:pull"
+    "lokalise:sync": "npm run lokalise:push && npm run lokalise:pull"
   },
   "browserslist": [
     ">0.2%",
@@ -159,9 +161,5 @@
     "presets": [
       "react-app"
     ]
-  },
-  "devDependencies": {
-    "eslint-plugin-flowtype": "^3.2.0",
-    "terser": "3.14.1"
   }
 }
