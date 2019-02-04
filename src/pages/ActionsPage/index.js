@@ -831,7 +831,7 @@ class ActionsPage extends Component {
                 </Row>
               )}
 
-              {total > 1 && (
+              {total > limit && (
                 <Pagination
                   current={page}
                   itemRender={this.paginationItemRender}
