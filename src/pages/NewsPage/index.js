@@ -1,18 +1,24 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import {
+  injectIntl,
+  FormattedMessage,
+  FormattedHTMLMessage,
+  intlShape,
+} from 'react-intl'
 import { Menu, Dropdown } from 'antd'
 import { connect } from 'react-redux'
 import moment from 'moment'
 
-import api from './../../api'
-import ActionCardLabelSet from './../../components/ActionCardLabelSet'
-import Spinner from './../../components/Spinner'
-import { BlockContainer, DefaultButton } from './../../components/Styled'
-import colors from './../../config/colors'
-import media from './../../utils/mediaQueryTemplate'
-import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
+import api from 'api'
+import ActionCardLabelSet from 'components/ActionCardLabelSet'
+import Spinner from 'components/Spinner'
+import { BlockContainer, DefaultButton } from 'components/Styled'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+import hexToRgba from 'utils/hexToRgba'
 
 const NEWS_RANGES = {
   NETWORK: 'network',
@@ -55,6 +61,8 @@ const NewsTitleMob = styled(NewsTitle)`
 const NewsContainer = styled.div`
   background-color: ${colors.white};
   padding: 17px 40px;
+  box-shadow: 0 0 10px ${hexToRgba(colors.dark, 0.08)};
+  border-radius: 4px;
   ${media.desktop`
     padding-left: 34px;
     padding-right: 34px;
@@ -286,7 +294,7 @@ const mapStateToProps = state => ({
 })
 
 NewsPage.propTypes = {
-  intl: PropTypes.object.isRequired,
+  intl: intlShape.isRequired,
   token: PropTypes.string.isRequired,
 }
 
