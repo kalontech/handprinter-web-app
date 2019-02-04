@@ -9,6 +9,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import debounce from 'lodash/debounce'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 
 import hexToRgba from 'utils/hexToRgba'
 
@@ -258,7 +259,7 @@ const ActionTabIcon = styled.img`
   width: 18px;
   object-fit: contain;
   margin-right: 6px;
-  align-self: 'center';
+  align-self: center;
 `
 
 const ActionTabWrapper = styled.div`
@@ -307,7 +308,7 @@ class ActionsPage extends Component {
     }
   }
 
-  componentDidMount = async () => {
+  async componentDidMount() {
     const { subset } = this.state
     const { search = {} } = this.props.location
     const queryParams = qs.parse(search, { ignoreQueryPrefix: true })
@@ -318,9 +319,10 @@ class ActionsPage extends Component {
     await this.fetchTimeValues()
   }
 
-  componentDidUpdate = async prevProps => {
+  async componentDidUpdate(prevProps) {
     const prevSearch = get(prevProps, 'location.search')
     const currSearch = get(this.props, 'location.search')
+
     if (!isEmpty(currSearch) && prevSearch !== currSearch) {
       const query = qs.parse(currSearch, { ignoreQueryPrefix: true })
       await this.fetchActions(query, this.state.subset)
@@ -857,4 +859,7 @@ const mapStateToProps = state => ({
   token: state.account.token,
 })
 
-export default connect(mapStateToProps)(injectIntl(ActionsPage))
+export default compose(
+  connect(mapStateToProps),
+  injectIntl,
+)(ActionsPage)

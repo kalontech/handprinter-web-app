@@ -576,10 +576,7 @@ export const GlobalStyle = createGlobalStyle`
     pointer-events: all;
   }
 
-  .ant-modal-confirm__override-for__profile-page {
-    .anticon {
-      display: none;
-    }
+  .ant-modal-confirm_profile-page {
     .ant-modal-confirm-title {
       font-size: 28px;
       text-align: center;
@@ -647,18 +644,18 @@ export const GlobalStyle = createGlobalStyle`
   // Ant.Tooltip component docs: https://ant.design/components/tooltip/
 
   .ant-tooltip {
-    height: 0px;
-    width: 0px
-
-    .ant-tooltip-inner {
-      position: relative;
-      padding: 15px;
-      text-align: center;
-      width: 70px;
-      left: -30px;
-      top: 10px;
-      height: 30px;
-    }
+    height: 0;
+    width: 0;
+  }
+  
+  .ant-tooltip .ant-tooltip-inner {
+    position: relative;
+    padding: 15px;
+    text-align: center;
+    width: 70px;
+    height: 30px;
+    left: -30px;
+    top: 10px;
   }
 
   .ant-tooltip, .ant-tooltip-inner  {

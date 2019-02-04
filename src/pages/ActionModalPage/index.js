@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 import { Link } from 'react-router-dom'
 
 import { handleBackdropClick } from 'appRouter'
@@ -259,6 +260,7 @@ const EngageViewContentContainer = styled.div`
 const EngageViewContentInputWrap = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   width: 100%;
 `
 
@@ -276,9 +278,8 @@ const EngageViewContentTitle = styled.p`
 `
 
 const EngageViewSendButton = styled(Button)`
-  width: 100px;
+  width: 100%;
   height: 47px;
-  margin-left: 5px;
 `
 
 const EngageViewInput = styled(Input)`
@@ -362,8 +363,14 @@ class ActionModalPage extends Component {
     engageInputIsTyping: false,
   }
 
-  componentDidMount = async () => {
-    await this.fetchAction()
+  componentDidMount() {
+    const { match, token } = this.props
+
+    api
+      .findAction({ slug: match.params.actionSlug }, token)
+      .then(({ action }) => {
+        this.setState({ action, step: ActionModalPageSteps.ACTION_VIEW })
+      })
   }
 
   handleSubmitEngage = async () => {
@@ -383,16 +390,6 @@ class ActionModalPage extends Component {
         sendingEngage: false,
       })
     }
-  }
-
-  fetchAction = async () => {
-    const { action } = await api.findAction(
-      {
-        slug: this.props.match.params.actionSlug,
-      },
-      this.props.token,
-    )
-    this.setState({ action, step: ActionModalPageSteps.ACTION_VIEW })
   }
 
   takeAction = async () => {
@@ -441,7 +438,7 @@ class ActionModalPage extends Component {
       children: (
         <Fragment>
           <LeftPanel>
-            <img src={action.picture} />
+            <img src={action.picture} alt="" />
           </LeftPanel>
           <RightPanel isIphone={isSafariMobile} span={12}>
             <ModalContentWrap isIphone={isSafariMobile}>
@@ -597,7 +594,7 @@ class ActionModalPage extends Component {
                 <FormattedMessage id="app.actionsPage.engage.subtitle" />
               </EngageViewContentSubtitle>
               <EngageViewContentTitle>
-                <FormattedMessage id="app.actionsPage.engage.title" />
+                {this.state.action.name}
               </EngageViewContentTitle>
               {successEngageSent ? (
                 <EngageViewContenSentMessage>
@@ -688,6 +685,8 @@ const mapStateToProps = state => ({
   token: state.account.token,
 })
 
-export default connect(mapStateToProps)(
-  Form.create()(injectIntl(ActionModalPage)),
-)
+export default compose(
+  connect(mapStateToProps),
+  Form.create(),
+  injectIntl,
+)(ActionModalPage)

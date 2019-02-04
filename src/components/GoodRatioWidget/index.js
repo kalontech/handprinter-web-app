@@ -43,7 +43,7 @@ class GoodRatioWidget extends Component {
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.configureElement('#left_cup', 'leftCup')
     this.configureElement('#right_cup', 'rightCup')
     this.configureElement('#left_load', 'leftLoad', {
@@ -71,6 +71,15 @@ class GoodRatioWidget extends Component {
     }, 1000)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.footprintDays !== this.props.footprintDays ||
+      prevProps.handprintDays !== this.props.handprintDays
+    ) {
+      this.update()
+    }
+  }
+
   getCurrentRatio = () => {
     const { footprintDays, handprintDays } = this.state
     return (handprintDays - footprintDays) / (handprintDays + footprintDays)
@@ -95,15 +104,6 @@ class GoodRatioWidget extends Component {
       ),
     )
     this.setWeightsBarRawTransformValue(linear(ratio, [-1, 0, 1], [-15, 0, 15]))
-  }
-
-  componentDidUpdate = (prevProps, prevState) => {
-    if (
-      prevProps.footprintDays !== this.props.footprintDays ||
-      prevProps.handprintDays !== this.props.handprintDays
-    ) {
-      this.update()
-    }
   }
 
   configureElement = (selector, accessorName, customTransformOrigin) => {
@@ -159,6 +159,34 @@ class GoodRatioWidget extends Component {
           viewBox="0 0 447 453"
           xmlns="http://www.w3.org/2000/svg"
         >
+          <defs>
+            <linearGradient
+              id="scales-range-bg"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              <stop offset="0%" stopColor={colors.lightGray} />
+              <stop offset="50%" stopColor={colors.lightGray} />
+              <stop offset="50%" stopColor={colors.white} />
+              <stop offset="100%" stopColor={colors.white} />
+            </linearGradient>
+
+            <linearGradient
+              id="scales-range-border"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              <stop offset="0%" stopColor={colors.darkGray} />
+              <stop offset="50%" stopColor={colors.darkGray} />
+              <stop offset="50%" stopColor={colors.lightGreen} />
+              <stop offset="100%" stopColor={colors.lightGreen} />
+            </linearGradient>
+          </defs>
+
           <rect
             y={383}
             width={447}
@@ -324,18 +352,15 @@ class GoodRatioWidget extends Component {
             fill={colors.black}
           >
             <path fill={colors.white} d="M157 173h133v133H157z" />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M223.5 302c34.518 0 62.5-27.982 62.5-62.5S258.018 177 223.5 177 161 204.982 161 239.5s27.982 62.5 62.5 62.5z"
-            />
           </mask>
+
           <path
             fillRule="evenodd"
             clipRule="evenodd"
             d="M223.5 302c34.518 0 62.5-27.982 62.5-62.5S258.018 177 223.5 177 161 204.982 161 239.5s27.982 62.5 62.5 62.5z"
-            fill={colors.white}
+            fill="url(#scales-range-bg)"
           />
+
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -344,14 +369,16 @@ class GoodRatioWidget extends Component {
             strokeWidth={8}
             mask="url(#prefix__a)"
           />
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M223.5 302c34.518 0 62.5-27.982 62.5-62.5S258.018 177 223.5 177 161 204.982 161 239.5s27.982 62.5 62.5 62.5z"
-            stroke={colors.darkGray}
-            strokeWidth={8}
-            mask="url(#prefix__a)"
+
+          <circle
+            r="60.5"
+            cx="223.5"
+            cy="239.5"
+            fill="transparent"
+            stroke="url(#scales-range-border)"
+            strokeWidth="4"
           />
+
           <text
             fill={colors.darkGray}
             style={{
@@ -461,7 +488,7 @@ class GoodRatioWidget extends Component {
               }}
             >
               <tspan x={171} y={240.688}>
-                0.5
+                0,5
               </tspan>
             </text>
             <text
@@ -531,12 +558,6 @@ class GoodRatioWidget extends Component {
             </text>
           </g>
           <g id="meter_scale">
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M254.75 185.373c-29.893-17.258-68.118-7.016-85.377 22.877-17.258 29.893-7.016 68.118 22.877 85.377 29.893 17.258 68.118 7.016 85.377-22.877 17.258-29.893 7.016-68.118-22.877-85.377z"
-              stroke={colors.darkGray}
-            />
             <path
               fillRule="evenodd"
               clipRule="evenodd"

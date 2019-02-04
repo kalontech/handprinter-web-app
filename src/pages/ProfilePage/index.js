@@ -270,7 +270,10 @@ class ProfilePage extends Component {
     deletingAccountSuccess: false,
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
+  canvasRef = React.createRef()
+  uploadProfilePictureRef = React.createRef()
+
+  componentDidUpdate(prevProps, prevState) {
     const {
       form: { setFields },
       intl: { formatMessage },
@@ -306,28 +309,29 @@ class ProfilePage extends Component {
       this.setState({ formInfoChanged: false })
   }
 
-  fetchDeleteAccount = async () => {
-    const { token } = this.props
+  fetchDeleteAccount = () => {
     this.setState({ isDeletingAccount: true })
-    // Delay after user accept "delete account" to show loader in button
-    await new Promise(resolve => setTimeout(resolve, 3000))
-    try {
-      await api.deleteMe(token)
-      this.setState({ isDeletingAccount: false, deletingAccountSuccess: true })
-      // Delay between show user screen with "account delete info" and redirect
-      await new Promise(resolve => setTimeout(resolve, 4000))
-      logOut({ redirectUrl: '/' })
-    } catch (error) {
-      this.showModal({
-        type: PROFILE_MODAL_TYPES.DELETE_ACCOUNT_FAILURE,
-        payload: {
-          errorMessage: decodeError(error),
-        },
+
+    return api
+      .deleteMe(this.props.token)
+      .then(() => {
+        this.setState({
+          isDeletingAccount: false,
+          deletingAccountSuccess: true,
+        })
+        logOut({ redirectUrl: '/' })
       })
-      this.setState({
-        isDeletingAccount: false,
+      .catch(error => {
+        this.showModal({
+          type: PROFILE_MODAL_TYPES.DELETE_ACCOUNT_FAILURE,
+          payload: {
+            errorMessage: decodeError(error),
+          },
+        })
+        this.setState({
+          isDeletingAccount: false,
+        })
       })
-    }
   }
 
   handleChangePasswordSubmit = e => {
@@ -488,10 +492,10 @@ class ProfilePage extends Component {
             id: 'app.profilePage.deleteAccountModal.cancelButton',
           }),
           okType: 'danger',
-          className: 'ant-modal-confirm__override-for__profile-page',
-          onOk: () => {
-            this.fetchDeleteAccount()
-          },
+          className: 'ant-modal-confirm_profile-page',
+          centered: true,
+          confirmLoading: this.state.isDeletingAccount,
+          onOk: this.fetchDeleteAccount,
         })
         break
       case PROFILE_MODAL_TYPES.DELETE_ACCOUNT_FAILURE:
@@ -506,15 +510,12 @@ class ProfilePage extends Component {
             id: 'app.profilePage.deleteAccountModal.closeButton',
           }),
           okType: 'danger',
-          className: 'ant-modal-confirm__override-for__profile-page',
+          className: 'ant-modal-confirm_profile-page',
+          centered: true,
         })
         break
     }
   }
-
-  canvasRef = React.createRef()
-
-  uploadProfilePictureRef = React.createRef()
 
   renderProfilePictureBlock = ({ user }) => (
     <Fragment>
