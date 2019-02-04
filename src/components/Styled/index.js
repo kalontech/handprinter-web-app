@@ -60,10 +60,11 @@ export const ActionCardRightHalf = styled(Ant.Col)`
 `
 
 export const PopoverTitle = styled.div`
+  border-bottom: 3px solid transparent;
   display: flex;
   align-items: center;
   line-height: 1;
-  color: ${({ color }) => color || colors.darkGray};
+  color: ${({ fontColor }) => fontColor || colors.darkGray};
   cursor: pointer;
   transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
     border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
@@ -71,11 +72,11 @@ export const PopoverTitle = styled.div`
     padding 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
 
   &:hover {
-    color: ${({ hoverColor }) => hoverColor || colors.darkGray};
+    color: ${hexToRgba(colors.dark, 0.8)};
   }
 
   &.ant-popover-open {
-    color: ${colors.dark};
+    color: ${hexToRgba(colors.dark, 0.8)};
   }
 `
 
@@ -86,12 +87,12 @@ export const HeaderPopover = styled(Ant.Menu)`
     padding: 0 6px;
     margin: 0;
     font-size: 16px;
-    color: ${({ color }) => color || colors.darkGray};
+    color: ${({ fontColor }) => fontColor || colors.darkGray};
     :not(:last-child) {
       margin: 0;
     }
     a {
-      color: ${({ color }) => color || colors.darkGray};
+      color: inherit;
     }
     .ant-menu-item-selected,
     :hover {
@@ -328,6 +329,7 @@ export const TextMediumGroup = styled(TextMedium)`
 
 export const ArrowButton = styled(Ant.Button)`
   display: flex;
+  padding: 0;
   justify-content: center;
   align-items: center;
   margin-left: 10px;
@@ -844,11 +846,22 @@ export const Pagination = styled(Ant.Pagination)`
     button {
       color: ${colors.darkGray};
       display: block;
-      padding: 7px;
+      width: 100%;
+      height: 100%;
+      padding: 0;
       margin: 0;
       border: 0;
       background-color: transparent;
       outline: 0;
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        margin: auto;
+        transition: color 0.3s;
+      }
     }
   }
   .ant-pagination-item-active {

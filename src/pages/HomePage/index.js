@@ -312,7 +312,10 @@ class HomePage extends Component {
               <div>
                 <AnchorLink to="anchor" spy={true} smooth={true} duration={500}>
                   <ScrollButton>
-                    <ExpandMoreIcon style={{ color: `${colors.dark}` }} />
+                    <ExpandMoreIcon
+                      id="anchorIcon"
+                      style={{ color: `${colors.dark}` }}
+                    />
                   </ScrollButton>
                 </AnchorLink>
               </div>

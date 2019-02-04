@@ -10,6 +10,7 @@ import { FormattedMessage } from 'react-intl'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import { Link } from 'react-router-dom'
+import { CONTACT_DATA } from 'utils/constants'
 
 import notFoundImg from './assets/404.png'
 
@@ -75,7 +76,7 @@ const NotFoundPage = () => {
           <Text>
             <FormattedMessage id="app.NotFoundPage.Text" />
           </Text>
-          <a href="mailto:greg@newearthb.com">
+          <a href={CONTACT_DATA.EMAIL}>
             <DefaultButton type="primary" size="large">
               <FormattedMessage id="app.NotFoundPage.Link2" />
             </DefaultButton>
