@@ -16,8 +16,8 @@ definitions:
         image: node:alpine
         name: Test
         script:
-          - yarn
-          - yarn test
+          - npm install
+          - npm run test
     - deploy-docker-image: &deploy-docker-image
         image: google/cloud-sdk:latest
         max-time: 5
