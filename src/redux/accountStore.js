@@ -118,7 +118,7 @@ export const resetToken = (state = INITIAL_STATE) => ({
   token: null,
 })
 
-export function logOut({ hard = false, redirectUrl = '/account/login' }) {
+export function logOut({ hard = false, redirectUrl = '/pages/home' }) {
   store.dispatch({
     type: Types.RESET_TOKEN,
   })
