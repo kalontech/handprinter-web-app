@@ -16,7 +16,7 @@ const Image = styled.img`
 `
 
 const Icon = styled(ExpandMoreIcon)`
-  color: ${({ color }) => color || colors.green};
+  color: ${({ iconColor }) => iconColor || colors.green};
 `
 
 const HeaderLanguageSelector = props => {
@@ -26,6 +26,7 @@ const HeaderLanguageSelector = props => {
       placement="bottomLeft"
       content={
         <HeaderPopover
+          {...props}
           mode="vertical"
           theme="light"
           onClick={item => setLocale(item.key, intl.locales[item.key])}
@@ -42,7 +43,7 @@ const HeaderLanguageSelector = props => {
         </HeaderPopover>
       }
     >
-      <PopoverTitle>
+      <PopoverTitle {...props}>
         <FormattedMessage id={`app.languages.${intl.locale}`}>
           {message => <span>{message.substr(0, 3)}</span>}
         </FormattedMessage>

@@ -2,6 +2,7 @@ import React from 'react'
 import { Layout, Row, Col } from 'antd'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { CONTACT_DATA } from 'utils/constants'
 
 import footerLogo from './assets/footer_image.png'
 import FooterLanguageSelector from './../FooterLanguageSelector'
@@ -126,13 +127,18 @@ const Footer = () => (
                   <Col xs={12} md={10} xl={12}>
                     <FooterMenu>
                       <li>
-                        <Link to="/actions">
-                          <FormattedMessage id="app.footer.menu.actions" />
+                        <Link to="/pages/our-vision">
+                          <FormattedMessage id="app.footer.menu.howItWorks" />
                         </Link>
                       </li>
                       <li>
-                        <Link to="/pages/our-vision">
-                          <FormattedMessage id="app.footer.menu.howItWorks" />
+                        <Link to="/pages/measurement-units">
+                          <FormattedMessage id="app.footer.menu.measurement" />
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/pages/faq">
+                          <FormattedMessage id="app.footer.menu.faq" />
                         </Link>
                       </li>
                     </FooterMenu>
@@ -144,14 +150,19 @@ const Footer = () => (
                   >
                     <FooterMenu>
                       <li>
-                        <Link to="/pages/measurement-units">
-                          <FormattedMessage id="app.footer.menu.measurement" />
+                        <Link to="/">
+                          <FormattedMessage id="app.footer.menu.homepage" />
                         </Link>
                       </li>
                       <li>
-                        <Link to="/pages/faq">
-                          <FormattedMessage id="app.footer.menu.faq" />
+                        <Link to="/actions">
+                          <FormattedMessage id="app.footer.menu.actions" />
                         </Link>
+                      </li>
+                      <li>
+                        <a href={CONTACT_DATA.EMAIL}>
+                          <FormattedMessage id="app.footer.menu.contact" />
+                        </a>
                       </li>
                     </FooterMenu>
                   </Col>

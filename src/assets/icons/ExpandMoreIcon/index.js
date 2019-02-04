@@ -1,27 +1,56 @@
 import React from 'react'
-import { Icon } from 'antd'
+import PropTypes from 'prop-types'
 
-const expandMoreSvg = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24">
-    <defs>
-      <path id="a" d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
-      <path id="c" d="M0 0h50v50H0z" />
-    </defs>
-    <g fill="none" fillRule="evenodd">
-      <mask id="b" fill="#fff">
-        <use xlinkHref="#a" />
-      </mask>
-      <g mask="url(#b)">
-        <use
-          fill="currentColor"
-          transform="translate(-13 -13)"
-          xlinkHref="#c"
-        />
-      </g>
-    </g>
-  </svg>
-)
+const ExpandMoreIcon = props => {
+  const { id, iconColor } = props
+  return (
+    <i style={{ color: iconColor }}>
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <mask
+          id={id}
+          maskType="alpha"
+          maskUnits="userSpaceOnUse"
+          x="6"
+          y="8"
+          width="12"
+          height="9"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M18 10.0001L16.59 8.59009L12 13.1701L7.41 8.59009L6 10.0001L12 16.0001L18 10.0001Z"
+            fill="white"
+          />
+        </mask>
+        <g mask={`url(#${id})`}>
+          <rect
+            x="37"
+            y="-13"
+            width="50"
+            height="50"
+            transform="rotate(90 37 -13)"
+            fill="currentColor"
+          />
+        </g>
+      </svg>
+    </i>
+  )
+}
 
-const ExpandMoreIcon = props => <Icon component={expandMoreSvg} {...props} />
+ExpandMoreIcon.defaultProps = {
+  id: 'expandMoreIcon',
+  iconColor: 'inherit',
+}
+
+ExpandMoreIcon.propTypes = {
+  id: PropTypes.string,
+  iconColor: PropTypes.string,
+}
 
 export default ExpandMoreIcon

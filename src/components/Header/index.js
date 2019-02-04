@@ -61,6 +61,7 @@ const HeaderWrap = styled(Layout.Header)`
   align-items: center;
   justify-content: space-between;
   font-size: 16px;
+  font-family: ${({ font }) => font || '"Noto Sans", sans-serif'};
   ${media.largeDesktop`
     padding: 0 34px;
   `}
@@ -69,8 +70,11 @@ const HeaderWrap = styled(Layout.Header)`
     padding: 0 15px;
   `}
   .ant-menu-item {
+    padding: 0;
+    border-bottom: 3px solid transparent;
+    font-size: 16px;
     a {
-      color: ${({ color }) => color || colors.darkGray};
+      color: ${({ fontColor }) => fontColor || colors.darkGray};
     }
 
     &:hover,
@@ -99,16 +103,6 @@ const HeaderWrap = styled(Layout.Header)`
 
   .ant-menu {
     border: none;
-  }
-
-  .ant-menu-item {
-    padding: 0;
-    border-bottom: 3px solid transparent;
-    font-size: 16px;
-  }
-
-  .ant-menu-item-active {
-    border-color: ${colors.green};
   }
 `
 
@@ -164,13 +158,7 @@ const MenuWrap = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  color: ${({ color }) => color || colors.dark};
 
-  .ant-menu-item {
-    &:hover {
-      color: ${({ hoverColor }) => hoverColor || colors.dark};
-    }
-  }
   .ant-menu-horizontal {
     border-color: ${({ borderColor }) => borderColor || colors.green};
   }
@@ -196,7 +184,6 @@ const Avatar = styled.div`
 `
 
 const Name = styled.p`
-  font-family: 'Noto Serif', serif;
   font-size: 19px;
   line-height: 27px;
   color: inherit;
@@ -227,6 +214,7 @@ const Links = styled.div`
 `
 const UserInfo = styled.div`
   padding: 8px 4px;
+  color: ${({ fontColor }) => fontColor || colors.darkGray};
 `
 
 const Hamburger = styled.div`
@@ -497,7 +485,23 @@ class Header extends Component {
           </HeaderWrap>
         )}
         {type === 'public' && (
-          <HeaderWrap isLoggedIn={user}>
+          <HeaderWrap
+            isLoggedIn={user}
+            font={
+              overrides && overrides.brandName === 'Eaton'
+                ? 'Arial, sans-serif'
+                : overrides && overrides.brandName === 'Interface'
+                ? '"Helvetica Neue", sans-serif'
+                : '"Noto Sans", sans-serif'
+            }
+            fontColor={
+              overrides && overrides.brandName === 'Eaton'
+                ? hexToRgba(colors.eatonColor, 0.6)
+                : overrides && overrides.brandName === 'Interface'
+                ? colors.interfaceColor
+                : colors.darkGray
+            }
+          >
             <Logo>
               <Link to="/">
                 {(!isMobile && (
@@ -517,15 +521,7 @@ class Header extends Component {
             {!withoutHeaderContent && (
               <Fragment>
                 {(!isTablet && (
-                  <MenuWrap
-                    borderColor={
-                      overrides && overrides.brandName === 'Eaton'
-                        ? colors.darkBlue
-                        : overrides && overrides.brandName === 'Interface'
-                        ? colors.interfaceFooterColor2
-                        : colors.green
-                    }
-                  >
+                  <MenuWrap borderColor="transparent">
                     <LeftMenu>
                       <Menu
                         mode="horizontal"
@@ -540,7 +536,18 @@ class Header extends Component {
                       <Popover
                         placement="bottomLeft"
                         content={
-                          <HeaderPopover mode="vertical" theme="light">
+                          <HeaderPopover
+                            mode="vertical"
+                            theme="light"
+                            fontColor={
+                              overrides && overrides.brandName === 'Eaton'
+                                ? hexToRgba(colors.eatonColor, 0.6)
+                                : overrides &&
+                                  overrides.brandName === 'Interface'
+                                ? colors.interfaceColor
+                                : colors.darkGray
+                            }
+                          >
                             <Menu.Item key="/pages/our-vision">
                               <Link to="/pages/our-vision">
                                 <FormattedMessage id="app.header.menu.howItWorks" />
@@ -560,23 +567,39 @@ class Header extends Component {
                         }
                       >
                         <LeftAlignPublic>
-                          <PopoverTitle hoverColor={colors.dark}>
+                          <PopoverTitle
+                            fontColor={
+                              overrides && overrides.brandName === 'Eaton'
+                                ? hexToRgba(colors.eatonColor, 0.6)
+                                : overrides &&
+                                  overrides.brandName === 'Interface'
+                                ? colors.interfaceColor
+                                : colors.darkGray
+                            }
+                          >
                             <FormattedMessage id="app.header.menu.about" />
                             <ExpandMoreIcon
-                              style={
+                              iconColor={
                                 overrides && overrides.brandName === 'Eaton'
-                                  ? { color: `${colors.darkBlue}` }
+                                  ? colors.darkBlue
                                   : overrides &&
                                     overrides.brandName === 'Interface'
-                                  ? { color: `${colors.interfaceFooterColor2}` }
-                                  : { color: `${colors.green}` }
+                                  ? colors.interfaceFooterColor2
+                                  : colors.green
                               }
                             />
                           </PopoverTitle>
                         </LeftAlignPublic>
                       </Popover>
                       <HeaderLanguageSelector
-                        color={
+                        fontColor={
+                          overrides && overrides.brandName === 'Eaton'
+                            ? hexToRgba(colors.eatonColor, 0.6)
+                            : overrides && overrides.brandName === 'Interface'
+                            ? colors.interfaceColor
+                            : colors.darkGray
+                        }
+                        iconColor={
                           overrides && overrides.brandName === 'Eaton'
                             ? colors.darkBlue
                             : overrides && overrides.brandName === 'Interface'
@@ -606,7 +629,7 @@ class Header extends Component {
                       {((overrides && !overrides.logInOnly) || !overrides) && (
                         <Link to="/account/register">
                           <PrimaryButton type="primary" size="large">
-                            <FingerPrintIcon />
+                            <FingerPrintIcon id="primaryBtnIcon" />
                             <FormattedMessage
                               id={
                                 overrides
@@ -635,7 +658,7 @@ class Header extends Component {
                             size="large"
                             style={overrides && { borderRadius: '0' }}
                           >
-                            <FingerPrintIcon />
+                            <FingerPrintIcon id="primaryBtnIcon" />
                             <FormattedMessage
                               id={
                                 overrides
@@ -680,17 +703,13 @@ class Header extends Component {
                             <CollapseSubmenuTitle>
                               <FormattedMessage id="app.header.menu.about" />
                               <ExpandMoreIcon
-                                style={
+                                iconColor={
                                   overrides && overrides.brandName === 'Eaton'
-                                    ? { color: `${colors.darkBlue}` }
+                                    ? colors.darkBlue
                                     : overrides &&
                                       overrides.brandName === 'Interface'
-                                    ? {
-                                        color: `${
-                                          colors.interfaceFooterColor2
-                                        }`,
-                                      }
-                                    : { color: `${colors.green}` }
+                                    ? colors.interfaceFooterColor2
+                                    : colors.green
                                 }
                               />
                             </CollapseSubmenuTitle>
@@ -714,7 +733,7 @@ class Header extends Component {
                         </SubMenu>
                       </Menu>
                       <CollapseLanguageSelector
-                        color={
+                        iconColor={
                           overrides && overrides.brandName === 'Eaton'
                             ? colors.darkBlue
                             : overrides && overrides.brandName === 'Interface'
@@ -730,7 +749,23 @@ class Header extends Component {
           </HeaderWrap>
         )}
         {type === 'private' && (
-          <HeaderWrap isLoggedIn={user}>
+          <HeaderWrap
+            isLoggedIn={user}
+            font={
+              overrides && overrides.brandName === 'Eaton'
+                ? '"Arial", sans-serif'
+                : overrides && overrides.brandName === 'Interface'
+                ? '"Helvetica Neue", sans-serif'
+                : '"Noto Sans", sans-serif'
+            }
+            fontColor={
+              overrides && overrides.brandName === 'Eaton'
+                ? hexToRgba(colors.eatonColor, 0.6)
+                : overrides && overrides.brandName === 'Interface'
+                ? colors.interfaceColor
+                : colors.darkGray
+            }
+          >
             {isTablet && (
               <Hamburger onClick={this.onClick}>
                 {this.state.collapsed && <MenuIcon />}
@@ -804,21 +839,66 @@ class Header extends Component {
                         </Menu.Item>
                       ) : null}
                     </Menu>
-                    <HeaderLanguageSelector
-                      color={
-                        overrides && overrides.brandName === 'Eaton'
-                          ? colors.darkBlue
-                          : overrides && overrides.brandName === 'Interface'
-                          ? colors.interfaceFooterColor2
-                          : colors.green
+                    <Popover
+                      placement="bottomLeft"
+                      content={
+                        <HeaderPopover
+                          mode="vertical"
+                          theme="light"
+                          fontColor={
+                            overrides && overrides.brandName === 'Eaton'
+                              ? hexToRgba(colors.eatonColor, 0.6)
+                              : overrides && overrides.brandName === 'Interface'
+                              ? colors.interfaceColor
+                              : colors.darkGray
+                          }
+                        >
+                          <Menu.Item key="/pages/our-vision">
+                            <Link to="/pages/our-vision">
+                              <FormattedMessage id="app.header.menu.howItWorks" />
+                            </Link>
+                          </Menu.Item>
+                          <Menu.Item key="/pages/measurement-units">
+                            <Link to="/pages/measurement-units">
+                              <FormattedMessage id="app.header.menu.measurement" />
+                            </Link>
+                          </Menu.Item>
+                          <Menu.Item key="/pages/faq">
+                            <Link to="/pages/faq">
+                              <FormattedMessage id="app.header.menu.faq" />
+                            </Link>
+                          </Menu.Item>
+                        </HeaderPopover>
                       }
-                    />
+                    >
+                      <LeftAlignPublic>
+                        <PopoverTitle
+                          fontColor={
+                            overrides && overrides.brandName === 'Eaton'
+                              ? hexToRgba(colors.eatonColor, 0.6)
+                              : overrides && overrides.brandName === 'Interface'
+                              ? colors.interfaceColor
+                              : colors.darkGray
+                          }
+                        >
+                          <FormattedMessage id="app.header.menu.about" />
+                        </PopoverTitle>
+                      </LeftAlignPublic>
+                    </Popover>
                   </CenterMenu>
                   <RightAlign>
                     <Popover
                       placement="bottomRight"
                       content={
-                        <UserInfo>
+                        <UserInfo
+                          fontColor={
+                            overrides && overrides.brandName === 'Eaton'
+                              ? hexToRgba(colors.eatonColor, 0.6)
+                              : overrides && overrides.brandName === 'Interface'
+                              ? colors.interfaceColor
+                              : colors.darkGray
+                          }
+                        >
                           <Name>{(user && user.fullName) || ''}</Name>
                           <Email>{(user && user.email) || ''}</Email>
                           <Links>
@@ -835,7 +915,15 @@ class Header extends Component {
                         </UserInfo>
                       }
                     >
-                      <PopoverTitle>
+                      <PopoverTitle
+                        fontColor={
+                          overrides && overrides.brandName === 'Eaton'
+                            ? hexToRgba(colors.eatonColor, 0.6)
+                            : overrides && overrides.brandName === 'Interface'
+                            ? colors.interfaceColor
+                            : colors.darkGray
+                        }
+                      >
                         <Avatar>
                           <img
                             src={
@@ -881,7 +969,40 @@ class Header extends Component {
                         <FormattedMessage id="app.header.menu.news" />
                       </Link>
                     </Menu.Item>
-
+                    <SubMenu
+                      key="about"
+                      title={
+                        <CollapseSubmenuTitle>
+                          <FormattedMessage id="app.header.menu.about" />
+                          <ExpandMoreIcon
+                            iconColor={
+                              overrides && overrides.brandName === 'Eaton'
+                                ? colors.darkBlue
+                                : overrides &&
+                                  overrides.brandName === 'Interface'
+                                ? colors.interfaceFooterColor2
+                                : colors.green
+                            }
+                          />
+                        </CollapseSubmenuTitle>
+                      }
+                    >
+                      <Menu.Item key="/pages/our-vision">
+                        <Link to="/pages/our-vision">
+                          <FormattedMessage id="app.header.menu.howItWorks" />
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="/pages/measurement-units">
+                        <Link to="/pages/measurement-units">
+                          <FormattedMessage id="app.header.menu.measurement" />
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="/pages/faq">
+                        <Link to="/pages/faq">
+                          <FormattedMessage id="app.header.menu.faq" />
+                        </Link>
+                      </Menu.Item>
+                    </SubMenu>
                     {overrides &&
                     overrides.inLinkLogo &&
                     overrides.brandName === 'Eaton' ? (
@@ -930,13 +1051,13 @@ class Header extends Component {
                             </PopoverTitle>
                           </ProfileMenu>
                           <ExpandMoreIcon
-                            style={
+                            iconColor={
                               overrides && overrides.brandName === 'Eaton'
-                                ? { color: `${colors.darkBlue}` }
+                                ? colors.darkBlue
                                 : overrides &&
                                   overrides.brandName === 'Interface'
-                                ? { color: `${colors.interfaceFooterColor2}` }
-                                : { color: `${colors.green}` }
+                                ? colors.interfaceFooterColor2
+                                : colors.green
                             }
                           />
                         </CollapseSubmenuTitle>

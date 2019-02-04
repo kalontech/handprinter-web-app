@@ -9,6 +9,7 @@ import colors from './../../config/colors'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import { BlockContainer } from './../Styled'
 import media from '../../utils/mediaQueryTemplate'
+import { CONTACT_DATA } from 'utils/constants'
 
 const FooterWrap = styled(Layout.Footer)`
   padding: 0;
@@ -153,19 +154,10 @@ const EatonFooter = () => (
                 <Col xs={12} md={12} xl={12}>
                   <FooterMenu>
                     <li>
-                      <Link to="/actions">
-                        <FormattedMessage id="app.footer.menu.actions" />
-                      </Link>
-                    </li>
-                    <li>
                       <Link to="/pages/our-vision">
                         <FormattedMessage id="app.footer.menu.howItWorks" />
                       </Link>
                     </li>
-                  </FooterMenu>
-                </Col>
-                <Col xs={12} md={12} xl={12}>
-                  <FooterMenu>
                     <li>
                       <Link to="/pages/measurement-units">
                         <FormattedMessage id="app.footer.menu.measurement" />
@@ -175,6 +167,25 @@ const EatonFooter = () => (
                       <Link to="/pages/faq">
                         <FormattedMessage id="app.footer.menu.faq" />
                       </Link>
+                    </li>
+                  </FooterMenu>
+                </Col>
+                <Col xs={12} md={12} xl={12}>
+                  <FooterMenu>
+                    <li>
+                      <Link to="/">
+                        <FormattedMessage id="app.footer.menu.homepage" />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/actions">
+                        <FormattedMessage id="app.footer.menu.actions" />
+                      </Link>
+                    </li>
+                    <li>
+                      <a href={CONTACT_DATA.EMAIL}>
+                        <FormattedMessage id="app.footer.menu.contact" />
+                      </a>
                     </li>
                   </FooterMenu>
                 </Col>

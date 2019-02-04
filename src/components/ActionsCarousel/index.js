@@ -226,14 +226,14 @@ class ActionsCarousel extends React.Component {
                   onClick={this.previous}
                   disabled={!this.state.disableLeftArrow}
                 >
-                  <ExpandMoreIcon />
+                  <ExpandMoreIcon id="CarouselIconLeft" />
                 </SliderButton>
                 <SliderButton
                   direction="right"
                   onClick={this.next}
                   disabled={!this.state.disableRightArrow}
                 >
-                  <ExpandMoreIcon />
+                  <ExpandMoreIcon id="CarouselIconRight" />
                 </SliderButton>
               </SliderArrows>
             </SliderControls>

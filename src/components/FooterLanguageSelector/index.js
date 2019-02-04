@@ -93,7 +93,7 @@ const FooterLanguageSelector = props => {
           />
           <FormattedMessage id={`app.languages.${intl.locale}`} />
         </div>
-        <ExpandMoreIcon />
+        <ExpandMoreIcon id="langSelectorIcon" />
       </LangTitle>
     </FooterDropdown>
   )

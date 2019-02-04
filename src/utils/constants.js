@@ -25,3 +25,7 @@ export const QUESTIONS_ANCHOR = {
   WHAT_SCALE_SHOWING: 'question_scales_11',
   WHAT_NETWORK_SHOWING: 'question_network_12',
 }
+
+export const CONTACT_DATA = {
+  EMAIL: 'mailto:greg@newearthb.com',
+}

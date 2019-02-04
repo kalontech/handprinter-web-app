@@ -5,7 +5,7 @@ const MenuSvg = () => (
   <svg width={24} height={25} fill="none">
     <g>
       <mask
-        id="prefix__a"
+        id="menuIcon"
         maskUnits="userSpaceOnUse"
         x={3}
         y={6}
@@ -19,10 +19,10 @@ const MenuSvg = () => (
           fill="#fff"
         />
       </mask>
-      <g mask="url(#prefix__a)">
+      <g mask="url(#menuIcon)">
         <path fill="currentColor" d="M-13-11.927h50v48.788h-50z" />
         <mask
-          id="prefix__b"
+          id="prefix__b1"
           maskUnits="userSpaceOnUse"
           x={-13}
           y={-12}

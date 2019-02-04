@@ -86,7 +86,7 @@
     "app.forms.email.required": "Email is required",
     "app.forms.email.invalid": "This is not email",
     "app.forms.password": "Password",
-    "app.forms.createPassword": "Create password",
+    "app.forms.createPassword": "Password",
     "app.forms.password.required": "Password is required",
     "app.forms.password.tooShort": "Password must be at least 8 characters long",
     "app.forms.password.tooLong": "Password is too long",
@@ -155,7 +155,7 @@
     "app.actionCreatePage.submitSucceededDescription": "Our moderators will check your idea as soon as possible and when approved it will appear on the action page. From that moment onward all users will be able to take your action and be part of your handprint! Also, our modelers will be invited to model the impacts of your action so that those impacts can be taken into account.",
     "app.actionCreatePage.submitSucceededGoBack": "Actions page",
     "app.actionCreatePage.cancel": "Cancel",
-    "app.brandedHeader.link": "Become Green Guardian",
+    "app.brandedHeader.link": "Become a Green Guardian",
     "app.footer.menu.actions": "Actions",
     "app.footer.menu.about": "About",
     "app.footer.menu.howItWorks": "How it works",
@@ -402,5 +402,7 @@
     "app.NotFoundPage.Link1": "Visit homepage",
     "app.NotFoundPage.Text": "or",
     "app.NotFoundPage.Link2": "Contact us",
+    "app.footer.menu.homepage": "Homepage",
+    "app.footer.menu.contact": "Contact Us",
     "app.actions.congratulations.nice": "Nice!"
 }
