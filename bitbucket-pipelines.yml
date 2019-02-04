@@ -17,7 +17,7 @@ definitions:
         name: Test
         script:
           - npm install
-          - npm run test
+          - npm test
     - deploy-docker-image: &deploy-docker-image
         image: google/cloud-sdk:latest
         max-time: 5
