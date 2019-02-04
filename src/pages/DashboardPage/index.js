@@ -358,6 +358,12 @@ const InfoElementLink = styled(Link)`
   }
 `
 
+const StyledIcon = styled(Icon)`
+  ${media.phone`
+    margin: 0 5px !important;
+  `}
+`
+
 class DashboardPage extends Component {
   state = {
     calendar: null,
@@ -490,7 +496,7 @@ class DashboardPage extends Component {
                           <Tabs.TabPane
                             tab={
                               <span>
-                                <Icon
+                                <StyledIcon
                                   component={() => icons['positive']['climate']}
                                 />
                                 <ImpactCategorySelectorName>
@@ -503,7 +509,7 @@ class DashboardPage extends Component {
                           <Tabs.TabPane
                             tab={
                               <span>
-                                <Icon
+                                <StyledIcon
                                   component={() => icons['positive']['waste']}
                                 />
                                 <ImpactCategorySelectorName>
@@ -516,7 +522,7 @@ class DashboardPage extends Component {
                           <Tabs.TabPane
                             tab={
                               <span>
-                                <Icon
+                                <StyledIcon
                                   component={() => icons['positive']['water']}
                                 />
                                 <ImpactCategorySelectorName>
@@ -529,7 +535,7 @@ class DashboardPage extends Component {
                           <Tabs.TabPane
                             tab={
                               <span>
-                                <Icon
+                                <StyledIcon
                                   component={() =>
                                     icons['positive']['ecosystem']
                                   }
@@ -544,7 +550,7 @@ class DashboardPage extends Component {
                           <Tabs.TabPane
                             tab={
                               <span>
-                                <Icon
+                                <StyledIcon
                                   component={() => icons['positive']['health']}
                                 />
                                 <ImpactCategorySelectorName>

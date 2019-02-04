@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Popover, Affix, Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { connect } from 'react-redux'
 
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
@@ -84,6 +84,11 @@ const HeaderWrap = styled(Layout.Header)`
 
     &.ant-menu-item-selected {
       border-color: inherit;
+      ${props =>
+        !props.isLoggedIn &&
+        css`
+          border-bottom: 3px solid transparent;
+        `}
 
       color: ${colors.dark};
       a {
@@ -473,7 +478,7 @@ class Header extends Component {
     return (
       <StyledAffix>
         {type === 'minimal' && (
-          <HeaderWrap>
+          <HeaderWrap isLoggedIn={user}>
             <Logo>
               <Link to="/">
                 {(!isMobile && (
@@ -492,7 +497,7 @@ class Header extends Component {
           </HeaderWrap>
         )}
         {type === 'public' && (
-          <HeaderWrap>
+          <HeaderWrap isLoggedIn={user}>
             <Logo>
               <Link to="/">
                 {(!isMobile && (
@@ -725,7 +730,7 @@ class Header extends Component {
           </HeaderWrap>
         )}
         {type === 'private' && (
-          <HeaderWrap>
+          <HeaderWrap isLoggedIn={user}>
             {isTablet && (
               <Hamburger onClick={this.onClick}>
                 {this.state.collapsed && <MenuIcon />}

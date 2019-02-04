@@ -26,7 +26,7 @@ import colors from 'config/colors'
 import { history } from 'appRouter'
 import filterToggleImg from 'assets/actions-page/ic_filter_list.png'
 import filterToggleActiveImg from 'assets/actions-page/ic_filter_list_active.png'
-import media from 'utils/mediaQueryTemplate'
+import media, { sizes } from 'utils/mediaQueryTemplate'
 import { IMPACT_CATEGORIES, ACTIONS_SUBSETS } from 'utils/constants'
 import PageMetadata from 'components/PageMetadata'
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
@@ -226,7 +226,7 @@ const ActionTabsInnerContainer = styled.div`
   `}
 `
 
-const AcionTabDropdown = styled.span`
+const ActionTabDropdown = styled.span`
   align-items: center;
   justify-content: center;
   display: none;
@@ -350,9 +350,11 @@ class ActionsPage extends Component {
   }
 
   fetchActions = async (query, subset) => {
-    if (query.page && query.page === this.state.page.toString()) {
+    if (query.page && Number(query.page) === Number(this.state.page)) {
       return
     }
+
+    if (window.innerWidth < sizes.largeDesktop) query.limit = 10
 
     let request
 
@@ -377,14 +379,6 @@ class ActionsPage extends Component {
     const {
       actions: { docs: actions, limit, totalDocs: total, page },
     } = await request(query, this.props.token)
-
-    if (Object.keys(query).length > 0) {
-      history.push(
-        `/actions/${subset}?${qs.stringify(query, {
-          encode: false,
-        })}`,
-      )
-    }
 
     this.setState({
       actions:
@@ -436,7 +430,7 @@ class ActionsPage extends Component {
       return (
         <button
           onClick={() => {
-            history.push(`/actions/${this.state.subset}?page=${current}`)
+            this.pushQueryToUrl({ page: current })
           }}
         >
           {originalElement}
@@ -516,6 +510,7 @@ class ActionsPage extends Component {
 
   handleOnAfterFiltersChange = debounce(({ data, activeFilterCount }) => {
     this.setState({ activeFiltersCount: activeFilterCount })
+    this.pushQueryToUrl(data)
     this.fetchActions(data, this.state.subset)
     this.handleParamsForFilter(data, {
       ignoreQueryPrefix: true,
@@ -526,10 +521,8 @@ class ActionsPage extends Component {
     const queryParams = qs.parse(get(this.props, 'location.search', {}), {
       ignoreQueryPrefix: true,
     })
-    delete queryParams.page
-    history.push(
-      `/actions/${this.state.subset}?page=${page}&${qs.stringify(queryParams)}`,
-    )
+    queryParams.page = page
+    this.pushQueryToUrl(queryParams)
   }
 
   handleSubsetDropdownVisibleChange = visible => {
@@ -544,6 +537,14 @@ class ActionsPage extends Component {
 
   toggleFilter = () => {
     this.setState({ showFilter: !this.state.showFilter })
+  }
+
+  pushQueryToUrl = query => {
+    history.push(
+      `/actions/${this.state.subset}?${qs.stringify(query, {
+        encode: false,
+      })}`,
+    )
   }
 
   getTabItemContent = subset => {
@@ -675,7 +676,7 @@ class ActionsPage extends Component {
                         </ActionTabItemListMobile>
                       }
                     >
-                      <AcionTabDropdown
+                      <ActionTabDropdown
                         onClick={this.handleSubsetDropdownClick}
                       >
                         {this.getTabItemContent(subset)}
@@ -684,7 +685,7 @@ class ActionsPage extends Component {
                             color: `${colors.green}`,
                           }}
                         />
-                      </AcionTabDropdown>
+                      </ActionTabDropdown>
                     </Popover>
 
                     <div>

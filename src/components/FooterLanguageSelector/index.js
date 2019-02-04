@@ -4,11 +4,12 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { updateIntl } from 'react-intl-redux'
 import { FormattedMessage } from 'react-intl'
-import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import styled from 'styled-components'
-import colors from './../../config/colors'
 import * as Ant from 'antd'
-import hexToRgba from '../../utils/hexToRgba'
+
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+import colors from 'config/colors'
+import hexToRgba from 'utils/hexToRgba'
 
 const FooterDropdown = styled(Ant.Dropdown)`
   margin-top: -2px;

@@ -83,6 +83,7 @@ const getActions = (query = {}, token) =>
       authorization: `Bearer ${token}`,
     },
   })
+  
 
 const getSuggestedActions = (query = {}, token) =>
   fetchHelper(`${apiBaseUrl}/actions/suggested?${qs.stringify(query)}`, {

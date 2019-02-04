@@ -814,7 +814,7 @@ export const OceanForm = styled.div`
 export const Pagination = styled(Ant.Pagination)`
   display: flex;
   justify-content: center;
-  margin-top: 25px;
+  margin: 60px 0 25px 0;
 
   .ant-pagination-item {
     margin: 0 !important;
