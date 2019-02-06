@@ -193,6 +193,15 @@ const AppRouter = () => {
           />
 
           <ModalRoute
+            path="/actions/taken/suggest-idea"
+            parentPath="/actions/taken"
+            onBackdropClick={() =>
+              handleBackdropClick({ parentPath: '/actions/taken' })
+            }
+            component={ActionCreate}
+          />
+
+          <ModalRoute
             path="/actions/:subset/:actionSlug"
             parentPath="/actions"
             onBackdropClick={() =>
