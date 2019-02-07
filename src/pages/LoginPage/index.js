@@ -121,16 +121,14 @@ class LoginPage extends Component {
                   <FormItem>
                     {getFieldDecorator('formError')(<Input type="hidden" />)}
                   </FormItem>
-                  {((overrides && !overrides.logInOnly) || !overrides) && (
-                    <ActionCardRegisterBlock>
-                      <span>
-                        <FormattedMessage id="app.loginPage.doNotHaveAnAccount" />{' '}
-                        <Link to="/account/register">
-                          <FormattedMessage id="app.loginPage.register" />
-                        </Link>
-                      </span>
-                    </ActionCardRegisterBlock>
-                  )}
+                  <ActionCardRegisterBlock>
+                    <span>
+                      <FormattedMessage id="app.loginPage.doNotHaveAnAccount" />{' '}
+                      <Link to="/account/register">
+                        <FormattedMessage id="app.loginPage.register" />
+                      </Link>
+                    </span>
+                  </ActionCardRegisterBlock>
                 </Form>
               </ActionCardFormWrapper>
             </ActionCardRightHalf>

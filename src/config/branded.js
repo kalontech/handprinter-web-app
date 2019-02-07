@@ -25,7 +25,7 @@ export const brandedConfig = {
       fullLogo: require('./../assets/branded/logos/interfaceLogo.png'),
       partialLogo: require('./../assets/branded/logos/interfaceLogo.png'),
       inLinkLogo: require('./../assets/branded/logos/interfaceInLinkLogo.png'),
-      logInOnly: false,
+      logInOnly: true,
       brandColor: colors.interfaceFooterColor2,
       fontNames: '"Helvetica Neue", sans-serif',
       fontColor: colors.interfaceColor,
