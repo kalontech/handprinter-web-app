@@ -151,6 +151,12 @@ class MultipleInput extends Component {
     })
   }
 
+  handleKeyPress = e => {
+    if (e.charCode === 32) {
+      this.handleAddValueConfirm(e)
+    }
+  }
+
   showMultipleInput = () => {
     this.setState({ inputVisible: true }, () => this.input.focus())
   }
@@ -203,9 +209,9 @@ class MultipleInput extends Component {
                       id: 'app.increaseHandprintPage.form.enterEmailAddress',
                     })
                   }
-                  onChange={this.handleAddEmailInputChange}
                   onBlur={this.handleAddValueConfirm}
                   onPressEnter={this.handleAddValueConfirm}
+                  onKeyPress={this.handleKeyPress}
                 />,
               )}
           </InputWrap>
