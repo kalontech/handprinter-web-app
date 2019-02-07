@@ -13,6 +13,7 @@ import CloseIcon from 'assets/icons/CloseIcon'
 import HeaderLanguageSelector from 'components/HeaderLanguageSelector'
 import CollapseLanguageSelector from 'components/CollapseLanguageSelector'
 import CollapsedMenu from 'components/CollapsedMenu'
+import NotificationsContainer from 'components/NotificationsContainer'
 import {
   PrimaryButton,
   DefaultButton,
@@ -20,6 +21,7 @@ import {
   PopoverTitle,
 } from 'components/Styled'
 import colors from 'config/colors'
+import { getBrandedConfig } from 'config/branded'
 import media from 'utils/mediaQueryTemplate'
 import hexToRgba from 'utils/hexToRgba'
 import { logOut } from 'redux/accountStore'
@@ -28,6 +30,7 @@ import api from 'api'
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
 import loginIcon from './assets/login.svg'
+import newsBellIcon from './assets/newsBellIcon.svg'
 
 const SubMenu = Menu.SubMenu
 
@@ -36,6 +39,8 @@ const LeftAlignPublic = styled.div`
 `
 
 const RightAlign = styled.div`
+  display: flex;
+  flex-direction: row;
   margin-left: 40px;
 `
 const CenterAlign = styled.div`
@@ -424,6 +429,38 @@ const GrayBorderedButton = styled(Button)`
   }
 `
 
+const NotificationPopoverTitle = styled.div`
+  display: flex;
+  position: relative;
+  justify-content: center;
+  margin-right: 17px;
+  width: 50px;
+  img {
+    cursor: pointer;
+  }
+`
+
+const NotificationCount = styled.div`
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 5px;
+  ${media.largeDesktop`
+    top: -5px;
+  `}
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #e67424;
+  font-family: ${({ fontNames }) => fontNames || '"Noto Sans", sans-serif'};
+  font-weight: bold;
+  line-height: 10px;
+  font-size: 10px;
+  color: ${colors.white};
+`
+
 class Header extends Component {
   constructor(props) {
     super(props)
@@ -431,19 +468,41 @@ class Header extends Component {
     this.state = {
       collapsed: true,
       width: window.innerWidth,
+      notification: [],
+      unreadCount: 0,
     }
+    this.fetchNewsIntervalId = null
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowSizeChange)
+    this.fetchNews()
+    this.fetchNewsIntervalId = setInterval(() => this.fetchNews(true), 10000)
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange)
+    clearInterval(this.fetchNewsIntervalId)
   }
 
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth })
+  }
+
+  fetchNews = async (counterOnly = false) => {
+    const { news, unreadCount } = await api.getNews(
+      { page: 1, range: 'world' },
+      this.props.token,
+    )
+    if (counterOnly) {
+      this.setState({ unreadCount })
+    } else {
+      this.setState({
+        loadingNews: false,
+        notification: news,
+        unreadCount,
+      })
+    }
   }
 
   onClick = () => {
@@ -458,10 +517,30 @@ class Header extends Component {
       : location.pathname
   }
 
+  sendLastTimeReadNotif = async shouldReset => {
+    if (!shouldReset) return
+    await api.sendLastTimeReadNewsAt(Date.now(), this.props.token)
+    this.fetchNews()
+  }
+
   render() {
-    const { type, user, withoutHeaderContent, location, overrides } = this.props
+    const {
+      type,
+      user,
+      withoutHeaderContent,
+      location,
+      overrides,
+      token,
+    } = this.props
+    const { notification, unreadCount } = this.state
     const isTablet = this.state.width < 1200
     const isMobile = this.state.width < 768
+
+    const { fontNames, fontColor } = (overrides &&
+      getBrandedConfig().headerOverrides) || {
+      fontNames: '"Noto Sans", sans-serif',
+      fontColor: colors.darkGray,
+    }
 
     return (
       <StyledAffix>
@@ -780,8 +859,32 @@ class Header extends Component {
                 />
               </Link>
             </LogoSmall>
+            {isTablet && !isMobile && (
+              <Popover
+                overlayClassName="notification-popover"
+                placement="bottomRight"
+                content={
+                  <NotificationsContainer
+                    notification={notification}
+                    fontColor={fontColor}
+                    fontNames={fontNames}
+                    token={token}
+                  />
+                }
+                onVisibleChange={this.sendLastTimeReadNotif}
+              >
+                <NotificationPopoverTitle>
+                  <img src={newsBellIcon} alt="" />
+                  {unreadCount > 1 && (
+                    <NotificationCount fontNames={fontNames}>
+                      {unreadCount}
+                    </NotificationCount>
+                  )}
+                </NotificationPopoverTitle>
+              </Popover>
+            )}
             <Fragment>
-              {(!isTablet && (
+              {!isTablet && (
                 <Fragment>
                   <CenterMenu
                     defaultSelectedKeys="actions"
@@ -888,6 +991,28 @@ class Header extends Component {
                   </CenterMenu>
                   <RightAlign>
                     <Popover
+                      overlayClassName="notification-popover"
+                      placement="bottomRight"
+                      content={
+                        <NotificationsContainer
+                          notification={notification}
+                          fontColor={fontColor}
+                          fontNames={fontNames}
+                          token={token}
+                        />
+                      }
+                      onVisibleChange={this.sendLastTimeReadNotif}
+                    >
+                      <NotificationPopoverTitle>
+                        <img src={newsBellIcon} alt="" />
+                        {unreadCount >= 1 && (
+                          <NotificationCount fontNames={fontNames}>
+                            {unreadCount}
+                          </NotificationCount>
+                        )}
+                      </NotificationPopoverTitle>
+                    </Popover>
+                    <Popover
                       placement="bottomRight"
                       content={
                         <UserInfo
@@ -939,7 +1064,7 @@ class Header extends Component {
                     </Popover>
                   </RightAlign>
                 </Fragment>
-              )) || <div />}
+              )}
             </Fragment>
 
             {!this.state.collapsed && isTablet && (
@@ -1101,6 +1226,7 @@ class Header extends Component {
 
 const mapStateToProps = state => ({
   user: state.user.data,
+  token: state.account.token,
 })
 
 Header.defaultProps = {
@@ -1115,6 +1241,7 @@ Header.propTypes = {
   type: PropTypes.oneOf(['minimal', 'public', 'private']).isRequired,
   user: PropTypes.object,
   overrides: PropTypes.object,
+  token: PropTypes.string.isRequired,
 }
 
 export default connect(mapStateToProps)(Header)

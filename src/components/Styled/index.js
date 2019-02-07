@@ -487,6 +487,17 @@ export const GlobalStyle = createGlobalStyle`
     top: 9px;
   }
   
+  .ant-popover.notification-popover {
+    .ant-popover-inner-content {
+      padding: 0;
+    }
+    .ant-popover-content .ant-popover-arrow {
+      top: 9px;
+      background-color: ${colors.green};
+      border-color: ${colors.green};
+    }
+  }
+  
   .ant-btn {
     display: flex;
     align-items: center;

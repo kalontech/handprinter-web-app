@@ -83,7 +83,6 @@ const getActions = (query = {}, token) =>
       authorization: `Bearer ${token}`,
     },
   })
-  
 
 const getSuggestedActions = (query = {}, token) =>
   fetchHelper(`${apiBaseUrl}/actions/suggested?${qs.stringify(query)}`, {
@@ -262,6 +261,15 @@ const getNews = (query = {}, token) =>
     },
   })
 
+const sendLastTimeReadNewsAt = (at, token) =>
+  fetchHelper(`${apiBaseUrl}/actions/news/read_all`, {
+    body: { at },
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    method: 'POST',
+  })
+
 export default {
   findAction,
   getActions,
@@ -285,4 +293,5 @@ export default {
   engageAction,
   getNews,
   addActionRequest,
+  sendLastTimeReadNewsAt,
 }

@@ -166,6 +166,7 @@ class NewsPage extends Component {
   }
 
   componentDidMount = () => {
+    api.sendLastTimeReadNewsAt(Date.now(), this.props.token)
     this.fetchNews()
   }
 

@@ -409,5 +409,8 @@
     "app.errors.19": "代码必须是3-10个符号，并且只包含字母数字字符",
     "app.increaseHandprintPage.customize": "定制",
     "app.increaseHandprintPage.form.save": "保存",
-    "app.increaseHandprintPage.form.cancel": "取消"
+    "app.increaseHandprintPage.form.cancel": "取消",
+    "app.header.menu.notificationTitle": "你的通知",
+    "app.header.menu.viewAllNews": "查看所有新闻",
+    "app.newsPage.notification.userDidAction": "{user}了操作{action}"
 }

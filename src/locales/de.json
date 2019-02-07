@@ -409,5 +409,8 @@
     "app.errors.19": "Der Code muss aus 3 bis 10 Symbolen bestehen und darf nur alphanumerische Zeichen enthalten",
     "app.increaseHandprintPage.customize": "Anpassen",
     "app.increaseHandprintPage.form.save": "Speichern",
-    "app.increaseHandprintPage.form.cancel": "Stornieren"
+    "app.increaseHandprintPage.form.cancel": "Stornieren",
+    "app.header.menu.notificationTitle": "Deine Benachrichtigungen",
+    "app.header.menu.viewAllNews": "Alle Neuigkeiten anzeigen",
+    "app.newsPage.notification.userDidAction": "{user} hat Aktion ausgeführt {action}"
 }

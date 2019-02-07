@@ -409,5 +409,8 @@
     "app.errors.19": "De code moet bestaan uit 3-10 symbolen en mag alleen alfanumerieke tekens bevatten",
     "app.increaseHandprintPage.customize": "Aanpassen",
     "app.increaseHandprintPage.form.save": "Opslaan",
-    "app.increaseHandprintPage.form.cancel": "annuleren"
+    "app.increaseHandprintPage.form.cancel": "annuleren",
+    "app.header.menu.notificationTitle": "Jouw notificaties",
+    "app.header.menu.viewAllNews": "Bekijk al het nieuws",
+    "app.newsPage.notification.userDidAction": "{user} heeft actie uitgevoerd {action}"
 }

@@ -1,4 +1,6 @@
-const brandedConfig = {
+import colors from 'config/colors'
+
+export const brandedConfig = {
   eaton: {
     ctaComponent: require('./../components/EatonCta').default,
     footerComponent: require('./../components/EatonFooter').default,
@@ -20,6 +22,7 @@ const brandedConfig = {
       partialLogo: require('./../assets/branded/logos/interfaceLogo.png'),
       inLinkLogo: require('./../assets/branded/logos/interfaceInLinkLogo.png'),
       logInOnly: false,
+      fontColor: colors.interfaceColor,
     },
     homePageComponent: require('./../pages/AboutInterfacePage').default,
   },
