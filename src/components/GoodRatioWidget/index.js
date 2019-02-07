@@ -16,7 +16,7 @@ const Wrap = styled.div`
 
   ${media.phone`
     height: auto;
-    display: block;
+    display: flex;
     top: auto;
   `}
 
@@ -25,7 +25,6 @@ const Wrap = styled.div`
 
     ${media.phone`
       height: 320px;
-      width: 100%;
     `};
   }
 `
