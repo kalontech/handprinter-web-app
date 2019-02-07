@@ -3,12 +3,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Icon } from 'antd'
 import PropTypes from 'prop-types'
-import {
-  injectIntl,
-  FormattedPlural,
-  FormattedMessage,
-  FormattedHTMLMessage,
-} from 'react-intl'
+import { injectIntl, FormattedPlural, FormattedMessage } from 'react-intl'
 
 import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
@@ -131,11 +126,21 @@ const ActionCardLabel = ({
       overlayClassName="action-tooltip"
       title={() => (
         <TooltipContainer>
-          <FormattedHTMLMessage
+          <FormattedMessage
             id="app.actionCardLabel.tooltip.text"
             values={{
               value: value,
-              unit: unit,
+              unit: (
+                <FormattedPlural
+                  value={value}
+                  one={formatMessage({
+                    id: `app.actions.timeValues.one.${unit}`,
+                  })}
+                  other={formatMessage({
+                    id: `app.actions.timeValues.other.${unit}`,
+                  })}
+                />
+              ),
               category: category,
             }}
           />

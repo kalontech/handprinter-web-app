@@ -717,14 +717,14 @@ export const GlobalStyle = createGlobalStyle`
   .d3-tooltip-container {
     background-color: black;
     border-radius: 4px;
+    display: table;
+    white-space: nowrap;
+    min-width: 100px;
 
     p {
       color: white;
-      overflow: hidden;
       padding: 4px;
       text-align: center;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
   }
 
