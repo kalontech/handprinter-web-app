@@ -72,7 +72,6 @@ class LoginPage extends Component {
       intl: { formatMessage },
       isLoggingIn,
     } = this.props
-    const overrides = this.props.overrides
     return (
       <Fragment>
         <PageMetadata pageName="loginPage" />
