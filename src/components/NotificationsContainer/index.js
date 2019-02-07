@@ -111,7 +111,7 @@ const NotificationsContainer = ({
             <NotificationBody>
               <div>
                 <FormattedMessage
-                  id="app.newsPage.noifications.userDidAction"
+                  id="app.newsPage.notification.userDidAction"
                   values={{
                     user: (
                       <BoldNameTag>
