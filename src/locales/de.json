@@ -404,5 +404,10 @@
     "app.NotFoundPage.Link2": "Kontaktiere uns",
     "app.footer.menu.homepage": "Startseite",
     "app.footer.menu.contact": "Kontaktiere uns",
-    "app.actions.congratulations.nice": "Nett!"
+    "app.actions.congratulations.nice": "Nett!",
+    "app.errors.18": "Der Einladungscode wird bereits verwendet",
+    "app.errors.19": "Der Code muss aus 3 bis 10 Symbolen bestehen und darf nur alphanumerische Zeichen enthalten",
+    "app.increaseHandprintPage.customize": "Anpassen",
+    "app.increaseHandprintPage.form.save": "Speichern",
+    "app.increaseHandprintPage.form.cancel": "Stornieren"
 }

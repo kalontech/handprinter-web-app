@@ -123,8 +123,8 @@
     "app.homePage.head.title": "Bienvenue chez Handprinter!",
     "app.homePage.head.keywords": "empreinte de la main, nature, empreinte, empreinte de la main",
     "app.homePage.head.description": "Description de la page",
-    "app.homePage.hero.title": "Vous souhaitez que <strong> bien faire <\/strong> à l’échelle mondiale? Tu n'es pas seul",
-    "app.homePage.hero.text": "Grâce à Handprinter, des actions individuelles créatives et des actions de proximité génèrent des effets d'entraînement qui toucheront et guériront votre communauté et le monde entier.",
+    "app.homePage.hero.title": "Vous souhaitez <strong> bien faire <\/strong> à l’échelle mondiale? Vous n’êtes pas seul.",
+    "app.homePage.hero.text": "À travers Handprinter, les actions individuelles créatives et de sensibilisation génèrent des effets d'entraînement qui toucheront et soigneront votre communauté et le monde entier.",
     "app.homePage.hero.link": "Rejoindre des empreintes",
     "app.button.join": "Rejoindre des empreintes",
     "app.button.video": "Regarder la vidéo",
@@ -404,5 +404,10 @@
     "app.NotFoundPage.Link2": "Contactez nous",
     "app.footer.menu.homepage": "Page d'accueil",
     "app.footer.menu.contact": "Contactez nous",
-    "app.actions.congratulations.nice": "Agréable!"
+    "app.actions.congratulations.nice": "Agréable!",
+    "app.errors.18": "Le code d'invitation est déjà utilisé",
+    "app.errors.19": "Le code doit être composé de 3 à 10 symboles et contenir uniquement des caractères alphanumériques.",
+    "app.increaseHandprintPage.customize": "Personnaliser",
+    "app.increaseHandprintPage.form.save": "Sauvegarder",
+    "app.increaseHandprintPage.form.cancel": "Annuler"
 }

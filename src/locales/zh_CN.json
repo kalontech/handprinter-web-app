@@ -404,5 +404,10 @@
     "app.NotFoundPage.Link2": "联系我们",
     "app.footer.menu.homepage": "主页",
     "app.footer.menu.contact": "联系我们",
-    "app.actions.congratulations.nice": "太好了！"
+    "app.actions.congratulations.nice": "太好了！",
+    "app.errors.18": "无效邀请码",
+    "app.errors.19": "代码必须是3-10个符号，并且只包含字母数字字符",
+    "app.increaseHandprintPage.customize": "定制",
+    "app.increaseHandprintPage.form.save": "保存",
+    "app.increaseHandprintPage.form.cancel": "取消"
 }

@@ -404,5 +404,10 @@
     "app.NotFoundPage.Link2": "Contate-Nos",
     "app.footer.menu.homepage": "Pagina inicial",
     "app.footer.menu.contact": "Contate-Nos",
-    "app.actions.congratulations.nice": "Agradável!"
+    "app.actions.congratulations.nice": "Agradável!",
+    "app.errors.18": "O código de convite já está em uso",
+    "app.errors.19": "O código deve conter de 3 a 10 símbolos e conter apenas caracteres alfanuméricos",
+    "app.increaseHandprintPage.customize": "Customizar",
+    "app.increaseHandprintPage.form.save": "Salvar",
+    "app.increaseHandprintPage.form.cancel": "Cancelar"
 }

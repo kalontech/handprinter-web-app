@@ -4,9 +4,11 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Form, Tag, Icon } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
+import { bindActionCreators } from 'redux'
 
 import colors from 'config/colors'
 import { MAX_INVITING_MESSAGE_LENGTH } from 'config/common'
+import { Creators as UserCreators } from './../../redux/userStore'
 import { Input, DefaultButton, FormItem } from 'components/Styled'
 import hexToRgba from 'utils/hexToRgba'
 import savePlanetImg from 'assets/increase-handprint/save_planet.png'
@@ -143,11 +145,24 @@ export const ShareBlock = styled.div`
 export const InvitationCodeBlockWrap = styled.div`
   background-color: ${colors.lightGray};
   padding: 25px;
-  height: 180px;
   text-align: center;
   ${media.phone`
     padding: 25px 10px;
   `}
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+`
+
+export const CustomizeButton = styled.span`
+  font-style: normal;
+  font-weight: bold;
+  line-height: 20px;
+  font-size: 14px;
+  text-align: center;
+  color: ${colors.ocean};
+  margin-top: 8px;
+  cursor: pointer;
 `
 
 export const InvitationCodeBlock = styled.div`
@@ -197,6 +212,43 @@ export const SendInvitesButton = styled(DefaultButton)`
   display: inline-block;
   font-weight: bold;
   width: 100%;
+`
+
+const SaveButton = styled(SendInvitesButton)`
+  background-color: ${colors.green};
+  color: ${colors.white};
+  margin: 10px 0px 0px 4.5px;
+`
+
+const CancelButton = styled(CopyToClipboardButton)`
+  width: 100%;
+  height: 47px;
+  margin: 10px 4.5px 0px 0px;
+`
+
+const CustomizeButtonWrapper = styled.div`
+  flex-direction: 'column';
+  display: flex;
+  margin-left: 50px;
+`
+
+const CodePrefix = styled.span`
+  font-style: normal;
+  font-weight: normal;
+  line-height: 35px;
+  font-size: 28px;
+  margin-right: 20px;
+  text-align: center;
+`
+
+const CustomizeForm = styled.div`
+  width: 100%;
+`
+
+const Row = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 `
 
 export const AddInvitingMessageButton = styled.button`
@@ -317,7 +369,11 @@ const IgnoredInvitations = styled.p`
     padding-top: 12px;
   `}
 `
+const InputCode = styled(FormItem)`
+  width: 100%;
+`
 
+const CODE_PREFIX = 'hp'
 class IncreaseHandprintPage extends Component {
   state = {
     emails: [],
@@ -330,6 +386,8 @@ class IncreaseHandprintPage extends Component {
     showSuccessIndicator: false,
     showInvitingMessageInput: false,
     ignoredEmails: [],
+    isCodeCustomizing: false,
+    invitationCode: '',
   }
 
   shareInviteRef = React.createRef()
@@ -347,6 +405,16 @@ class IncreaseHandprintPage extends Component {
       await new Promise(resolve => setTimeout(resolve, 3000))
       this.setState({ showSuccessIndicator: false })
     }
+
+    if (
+      prevProps.isUpdatingMeInfo &&
+      !this.props.isUpdatingMeInfo &&
+      !this.props.updateMeInfoError
+    )
+      this.setState({
+        isCodeCustomizing: false,
+        invitationLink: getInvitationLink(this.props.user.invitationCode),
+      })
   }
 
   handleSendInvites = async e => {
@@ -409,6 +477,27 @@ class IncreaseHandprintPage extends Component {
     })
   }
 
+  handleCustomize = () => {
+    this.setState({ isCodeCustomizing: true })
+  }
+
+  handleCustomizeCancel = () => {
+    this.setState({ isCodeCustomizing: false, invitationCode: '' })
+    this.props.updateMeInfoFailure(null)
+  }
+
+  handleCustomizeSave = () => {
+    const { invitationCode } = this.state
+    const newCode = `${CODE_PREFIX}${invitationCode}`
+    this.props.updateMeInfoRequest({
+      invitationCode: newCode,
+    })
+  }
+
+  handleCodeChange = event => {
+    this.setState({ invitationCode: event.target.value })
+  }
+
   render() {
     const {
       emails,
@@ -419,13 +508,15 @@ class IncreaseHandprintPage extends Component {
       showSuccessIndicator,
       showInvitingMessageInput,
       ignoredEmails,
+      isCodeCustomizing,
+      invitationCode,
     } = this.state
     const {
       user,
       intl: { formatMessage },
       form: { getFieldDecorator, getFieldValue },
+      updateMeInfoError,
     } = this.props
-
     return (
       <Fragment>
         <PageMetadata pageName="increaseHandprintPage" />
@@ -444,12 +535,55 @@ class IncreaseHandprintPage extends Component {
 
           <FormSectionWrap>
             <FormWrap>
-              <InvitationCodeBlockWrap>
-                <FormSectionHeading>
-                  <FormattedMessage id="app.increaseHandprintPage.form.yourPersonalPromocode" />
-                </FormSectionHeading>
-                <InvitationCodeBlock>{user.invitationCode}</InvitationCodeBlock>
-              </InvitationCodeBlockWrap>
+              {isCodeCustomizing ? (
+                <InvitationCodeBlockWrap>
+                  <CustomizeForm>
+                    <FormSectionHeading>
+                      <FormattedMessage id="app.increaseHandprintPage.form.yourPersonalPromocode" />
+                    </FormSectionHeading>
+                    <Row>
+                      <CodePrefix>{CODE_PREFIX}</CodePrefix>
+                      <InputCode
+                        validateStatus={updateMeInfoError && 'error'}
+                        help={
+                          updateMeInfoError &&
+                          formatMessage({
+                            id: updateMeInfoError,
+                          })
+                        }
+                      >
+                        <CopyToClipboardInput
+                          onChange={this.handleCodeChange}
+                          value={invitationCode}
+                        />
+                      </InputCode>
+                    </Row>
+                    <CustomizeButtonWrapper>
+                      <CancelButton onClick={this.handleCustomizeCancel}>
+                        <FormattedMessage id="app.increaseHandprintPage.form.cancel" />
+                      </CancelButton>
+                      <SaveButton
+                        disabled={invitationCode.length < 3}
+                        onClick={this.handleCustomizeSave}
+                      >
+                        <FormattedMessage id="app.increaseHandprintPage.form.save" />
+                      </SaveButton>
+                    </CustomizeButtonWrapper>
+                  </CustomizeForm>
+                </InvitationCodeBlockWrap>
+              ) : (
+                <InvitationCodeBlockWrap>
+                  <FormSectionHeading>
+                    <FormattedMessage id="app.increaseHandprintPage.form.yourPersonalPromocode" />
+                  </FormSectionHeading>
+                  <InvitationCodeBlock>
+                    {user.invitationCode}
+                  </InvitationCodeBlock>
+                  <CustomizeButton onClick={this.handleCustomize}>
+                    <FormattedMessage id="app.increaseHandprintPage.customize" />
+                  </CustomizeButton>
+                </InvitationCodeBlockWrap>
+              )}
               <FormSectionContent>
                 <div>
                   <FormSectionHeading>
@@ -543,6 +677,8 @@ class IncreaseHandprintPage extends Component {
 const mapStateToProps = state => ({
   user: state.user.data,
   token: state.account.token,
+  updateMeInfoError: state.user.updateMeInfoError,
+  isUpdatingMeInfo: state.user.isUpdatingMeInfo,
 })
 
 IncreaseHandprintPage.propTypes = {
@@ -550,8 +686,21 @@ IncreaseHandprintPage.propTypes = {
   intl: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
+  updateMeInfoRequest: PropTypes.func,
+  updateMeInfoError: PropTypes.string,
+  updateMeInfoFailure: PropTypes.func,
+  isUpdatingMeInfo: PropTypes.bool,
 }
 
-export default connect(mapStateToProps)(
-  Form.create()(injectIntl(IncreaseHandprintPage)),
-)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      updateMeInfoRequest: data => UserCreators.updateMeInfoRequest(data),
+      updateMeInfoFailure: data => UserCreators.updateMeInfoFailure(data),
+    },
+    dispatch,
+  )
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Form.create()(injectIntl(IncreaseHandprintPage)))

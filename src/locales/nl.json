@@ -404,5 +404,10 @@
     "app.NotFoundPage.Link2": "Neem contact met ons op",
     "app.footer.menu.homepage": "Startpagina",
     "app.footer.menu.contact": "Neem contact met ons op",
-    "app.actions.congratulations.nice": "Leuk!"
+    "app.actions.congratulations.nice": "Leuk!",
+    "app.errors.18": "De uitnodigingscode is al in gebruik",
+    "app.errors.19": "De code moet bestaan uit 3-10 symbolen en mag alleen alfanumerieke tekens bevatten",
+    "app.increaseHandprintPage.customize": "Aanpassen",
+    "app.increaseHandprintPage.form.save": "Opslaan",
+    "app.increaseHandprintPage.form.cancel": "annuleren"
 }
