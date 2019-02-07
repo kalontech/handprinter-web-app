@@ -1,4 +1,5 @@
 import colors from 'config/colors'
+import hexToRgba from 'utils/hexToRgba'
 
 export const brandedConfig = {
   eaton: {
@@ -10,6 +11,9 @@ export const brandedConfig = {
       partialLogo: require('./../assets/branded/logos/eatonFullLogo.svg'),
       inLinkLogo: require('./../assets/branded/logos/eatonInLinkLogo.svg'),
       logInOnly: false,
+      brandColor: colors.darkBlue,
+      fontNames: 'Arial, sans-serif',
+      fontColor: hexToRgba(colors.eatonColor, 0.6),
     },
     homePageComponent: require('./../pages/AboutEatonPage').default,
   },
@@ -22,6 +26,8 @@ export const brandedConfig = {
       partialLogo: require('./../assets/branded/logos/interfaceLogo.png'),
       inLinkLogo: require('./../assets/branded/logos/interfaceInLinkLogo.png'),
       logInOnly: false,
+      brandColor: colors.interfaceFooterColor2,
+      fontNames: '"Helvetica Neue", sans-serif',
       fontColor: colors.interfaceColor,
     },
     homePageComponent: require('./../pages/AboutInterfacePage').default,

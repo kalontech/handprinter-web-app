@@ -536,8 +536,9 @@ class Header extends Component {
     const isTablet = this.state.width < 1200
     const isMobile = this.state.width < 768
 
-    const { fontNames, fontColor } = (overrides &&
+    const { brandColor, fontNames, fontColor } = (overrides &&
       getBrandedConfig().headerOverrides) || {
+      brandColor: colors.green,
       fontNames: '"Noto Sans", sans-serif',
       fontColor: colors.darkGray,
     }
@@ -564,23 +565,7 @@ class Header extends Component {
           </HeaderWrap>
         )}
         {type === 'public' && (
-          <HeaderWrap
-            isLoggedIn={user}
-            font={
-              overrides && overrides.brandName === 'Eaton'
-                ? 'Arial, sans-serif'
-                : overrides && overrides.brandName === 'Interface'
-                ? '"Helvetica Neue", sans-serif'
-                : '"Noto Sans", sans-serif'
-            }
-            fontColor={
-              overrides && overrides.brandName === 'Eaton'
-                ? hexToRgba(colors.eatonColor, 0.6)
-                : overrides && overrides.brandName === 'Interface'
-                ? colors.interfaceColor
-                : colors.darkGray
-            }
-          >
+          <HeaderWrap isLoggedIn={user} font={fontNames} fontColor={fontColor}>
             <Logo>
               <Link to="/">
                 {(!isMobile && (
@@ -618,14 +603,7 @@ class Header extends Component {
                           <HeaderPopover
                             mode="vertical"
                             theme="light"
-                            fontColor={
-                              overrides && overrides.brandName === 'Eaton'
-                                ? hexToRgba(colors.eatonColor, 0.6)
-                                : overrides &&
-                                  overrides.brandName === 'Interface'
-                                ? colors.interfaceColor
-                                : colors.darkGray
-                            }
+                            fontColor={fontColor}
                           >
                             <Menu.Item key="/pages/our-vision">
                               <Link to="/pages/our-vision">
@@ -646,45 +624,15 @@ class Header extends Component {
                         }
                       >
                         <LeftAlignPublic>
-                          <PopoverTitle
-                            fontColor={
-                              overrides && overrides.brandName === 'Eaton'
-                                ? hexToRgba(colors.eatonColor, 0.6)
-                                : overrides &&
-                                  overrides.brandName === 'Interface'
-                                ? colors.interfaceColor
-                                : colors.darkGray
-                            }
-                          >
+                          <PopoverTitle fontColor={fontColor}>
                             <FormattedMessage id="app.header.menu.about" />
-                            <ExpandMoreIcon
-                              iconColor={
-                                overrides && overrides.brandName === 'Eaton'
-                                  ? colors.darkBlue
-                                  : overrides &&
-                                    overrides.brandName === 'Interface'
-                                  ? colors.interfaceFooterColor2
-                                  : colors.green
-                              }
-                            />
+                            <ExpandMoreIcon iconColor={brandColor} />
                           </PopoverTitle>
                         </LeftAlignPublic>
                       </Popover>
                       <HeaderLanguageSelector
-                        fontColor={
-                          overrides && overrides.brandName === 'Eaton'
-                            ? hexToRgba(colors.eatonColor, 0.6)
-                            : overrides && overrides.brandName === 'Interface'
-                            ? colors.interfaceColor
-                            : colors.darkGray
-                        }
-                        iconColor={
-                          overrides && overrides.brandName === 'Eaton'
-                            ? colors.darkBlue
-                            : overrides && overrides.brandName === 'Interface'
-                            ? colors.interfaceFooterColor2
-                            : colors.green
-                        }
+                        fontColor={fontColor}
+                        iconColor={brandColor}
                       />
                     </LeftMenu>
                     <RightMenu>
@@ -781,16 +729,7 @@ class Header extends Component {
                           title={
                             <CollapseSubmenuTitle>
                               <FormattedMessage id="app.header.menu.about" />
-                              <ExpandMoreIcon
-                                iconColor={
-                                  overrides && overrides.brandName === 'Eaton'
-                                    ? colors.darkBlue
-                                    : overrides &&
-                                      overrides.brandName === 'Interface'
-                                    ? colors.interfaceFooterColor2
-                                    : colors.green
-                                }
-                              />
+                              <ExpandMoreIcon iconColor={brandColor} />
                             </CollapseSubmenuTitle>
                           }
                         >
@@ -811,15 +750,7 @@ class Header extends Component {
                           </Menu.Item>
                         </SubMenu>
                       </Menu>
-                      <CollapseLanguageSelector
-                        iconColor={
-                          overrides && overrides.brandName === 'Eaton'
-                            ? colors.darkBlue
-                            : overrides && overrides.brandName === 'Interface'
-                            ? colors.interfaceFooterColor2
-                            : colors.green
-                        }
-                      />
+                      <CollapseLanguageSelector iconColor={brandColor} />
                     </CollapseContent>
                   </CollapseMenu>
                 )}
@@ -828,23 +759,7 @@ class Header extends Component {
           </HeaderWrap>
         )}
         {type === 'private' && (
-          <HeaderWrap
-            isLoggedIn={user}
-            font={
-              overrides && overrides.brandName === 'Eaton'
-                ? '"Arial", sans-serif'
-                : overrides && overrides.brandName === 'Interface'
-                ? '"Helvetica Neue", sans-serif'
-                : '"Noto Sans", sans-serif'
-            }
-            fontColor={
-              overrides && overrides.brandName === 'Eaton'
-                ? hexToRgba(colors.eatonColor, 0.6)
-                : overrides && overrides.brandName === 'Interface'
-                ? colors.interfaceColor
-                : colors.darkGray
-            }
-          >
+          <HeaderWrap isLoggedIn={user} font={fontNames} fontColor={fontColor}>
             {isTablet && (
               <Hamburger onClick={this.onClick}>
                 {this.state.collapsed && <MenuIcon />}
@@ -888,13 +803,7 @@ class Header extends Component {
                 <Fragment>
                   <CenterMenu
                     defaultSelectedKeys="actions"
-                    borderColor={
-                      overrides && overrides.brandName === 'Eaton'
-                        ? colors.darkBlue
-                        : overrides && overrides.brandName === 'Interface'
-                        ? colors.interfaceFooterColor2
-                        : colors.green
-                    }
+                    borderColor={brandColor}
                   >
                     <Menu
                       mode="horizontal"
@@ -948,13 +857,7 @@ class Header extends Component {
                         <HeaderPopover
                           mode="vertical"
                           theme="light"
-                          fontColor={
-                            overrides && overrides.brandName === 'Eaton'
-                              ? hexToRgba(colors.eatonColor, 0.6)
-                              : overrides && overrides.brandName === 'Interface'
-                              ? colors.interfaceColor
-                              : colors.darkGray
-                          }
+                          fontColor={fontColor}
                         >
                           <Menu.Item key="/pages/our-vision">
                             <Link to="/pages/our-vision">
@@ -975,15 +878,7 @@ class Header extends Component {
                       }
                     >
                       <LeftAlignPublic>
-                        <PopoverTitle
-                          fontColor={
-                            overrides && overrides.brandName === 'Eaton'
-                              ? hexToRgba(colors.eatonColor, 0.6)
-                              : overrides && overrides.brandName === 'Interface'
-                              ? colors.interfaceColor
-                              : colors.darkGray
-                          }
-                        >
+                        <PopoverTitle fontColor={fontColor}>
                           <FormattedMessage id="app.header.menu.about" />
                         </PopoverTitle>
                       </LeftAlignPublic>
@@ -1015,15 +910,7 @@ class Header extends Component {
                     <Popover
                       placement="bottomRight"
                       content={
-                        <UserInfo
-                          fontColor={
-                            overrides && overrides.brandName === 'Eaton'
-                              ? hexToRgba(colors.eatonColor, 0.6)
-                              : overrides && overrides.brandName === 'Interface'
-                              ? colors.interfaceColor
-                              : colors.darkGray
-                          }
-                        >
+                        <UserInfo fontColor={fontColor}>
                           <Name>{(user && user.fullName) || ''}</Name>
                           <Email>{(user && user.email) || ''}</Email>
                           <Links>
@@ -1040,15 +927,7 @@ class Header extends Component {
                         </UserInfo>
                       }
                     >
-                      <PopoverTitle
-                        fontColor={
-                          overrides && overrides.brandName === 'Eaton'
-                            ? hexToRgba(colors.eatonColor, 0.6)
-                            : overrides && overrides.brandName === 'Interface'
-                            ? colors.interfaceColor
-                            : colors.darkGray
-                        }
-                      >
+                      <PopoverTitle fontColor={fontColor}>
                         <Avatar>
                           <img
                             src={
@@ -1099,16 +978,7 @@ class Header extends Component {
                       title={
                         <CollapseSubmenuTitle>
                           <FormattedMessage id="app.header.menu.about" />
-                          <ExpandMoreIcon
-                            iconColor={
-                              overrides && overrides.brandName === 'Eaton'
-                                ? colors.darkBlue
-                                : overrides &&
-                                  overrides.brandName === 'Interface'
-                                ? colors.interfaceFooterColor2
-                                : colors.green
-                            }
-                          />
+                          <ExpandMoreIcon iconColor={brandColor} />
                         </CollapseSubmenuTitle>
                       }
                     >
@@ -1175,16 +1045,7 @@ class Header extends Component {
                               </div>
                             </PopoverTitle>
                           </ProfileMenu>
-                          <ExpandMoreIcon
-                            iconColor={
-                              overrides && overrides.brandName === 'Eaton'
-                                ? colors.darkBlue
-                                : overrides &&
-                                  overrides.brandName === 'Interface'
-                                ? colors.interfaceFooterColor2
-                                : colors.green
-                            }
-                          />
+                          <ExpandMoreIcon iconColor={brandColor} />
                         </CollapseSubmenuTitle>
                       }
                     >
@@ -1205,15 +1066,7 @@ class Header extends Component {
                       </Menu.Item>
                     </SubMenu>
                   </Menu>
-                  <CollapseLanguageSelector
-                    color={
-                      overrides && overrides.brandName === 'Eaton'
-                        ? colors.darkBlue
-                        : overrides && overrides.brandName === 'Interface'
-                        ? colors.interfaceFooterColor2
-                        : colors.green
-                    }
-                  />
+                  <CollapseLanguageSelector color={brandColor} />
                 </CollapseContent>
               </CollapseMenu>
             )}
