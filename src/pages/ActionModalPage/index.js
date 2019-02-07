@@ -85,11 +85,11 @@ const LeftPanel = styled.div`
 
 const RightPanel = styled.div`
   height: 100%;
-  padding: 60px;
+  padding: 60px 0;
   width: 50%;
 
   ${media.desktop`
-    width: 460px;
+    width: 700px;
   `}
 
   ${media.tablet`
@@ -215,6 +215,8 @@ const ModalContentWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
+  overflow: scroll;
+  height: 400px;
 
   @media screen and (max-width: ${sizes.phone}px) {
     padding-bottom: ${({ isIphone }) => (isIphone ? '0' : '96px')};
@@ -348,6 +350,12 @@ const TakeActionButton = styled(Button)`
   `}
 `
 
+const ActionContent = styled.div`
+  height: 400px;
+  overflow: scroll;
+  padding: 0 60px;
+`
+
 const isSafariMobile = window.navigator.userAgent.match(/iPhone/i)
 
 class ActionModalPage extends Component {
@@ -442,8 +450,8 @@ class ActionModalPage extends Component {
           </LeftPanel>
           <RightPanel isIphone={isSafariMobile} span={12}>
             <ModalContentWrap isIphone={isSafariMobile}>
-              <div>
-                <ActionCardLabelSet impacts={action.impacts} mobileFixedWidth />
+              <ActionCardLabelSet impacts={action.impacts} mobileFixedWidth />
+              <ActionContent>
                 <ActionName>
                   {action.translatedName[locale] || action.name}
                 </ActionName>
@@ -455,7 +463,7 @@ class ActionModalPage extends Component {
                   <br />
                   {action.translatedAssumptions[locale] || action.assumptions}
                 </ActionAssumptions>
-              </div>
+              </ActionContent>
               <BottomPanel isIphone={isSafariMobile}>
                 <ActionViewButtonsWrapper isIphone={isSafariMobile}>
                   {user && (
