@@ -412,5 +412,18 @@
     "app.increaseHandprintPage.form.cancel": "Cancel",
     "app.header.menu.notificationTitle": "Your notifications",
     "app.header.menu.viewAllNews": "View all news",
-    "app.newsPage.notification.userDidAction": "{user} did action {action}"
+    "app.newsPage.notification.userDidAction": "{user} did action {action}",
+    "app.actionCreatePage.editSubmitSucceededTitle": "Your idea was edited",
+    "app.actionsPage.tabs.my-ideas": "My ideas",
+    "app.actions.card.edit": "edit",
+    "app.actions.card.delete": "delete",
+    "app.actions.card.waitAdmin": "Waiting for admin approval",
+    "app.actions.card.waitModeling": "Modelling by modeller",
+    "app.actions.card.waitAdminHint": "Your action idea is being reviewed by Handprinter administrator to ensure that everything is correct. The administrator may contact you for improving some action details.",
+    "app.actions.card.waitModelingHint": "Your action idea was approved by admin and are available to the other users. we are calculating impact now. When it is done you will see impact signs there.",
+    "app.actions.page.delete.title": "Delete action",
+    "app.actions.page.delete.text": "Are you sure that you want to delete this action?",
+    "app.errors.20": "Action with this name is already exist",
+    "app.errors.21": "Cannot delete this action",
+    "app.errors.22": "Cannot update this action"
 }

@@ -14,7 +14,6 @@ const FingerPrintIcon = props => {
       >
         <mask
           id={id}
-          maskType="alpha"
           maskUnits="userSpaceOnUse"
           x="2"
           y="2"

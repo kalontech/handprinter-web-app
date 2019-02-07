@@ -194,8 +194,7 @@ class ActionsCarousel extends React.Component {
             {this.props.actions.map((action, index) => (
               <ActionCard
                 key={index}
-                linkPrefix={this.props.actionLinkPrefix}
-                slug={action.slug}
+                to={`${this.props.actionLinkPrefix}/${action.slug}`}
                 picture={action.picture}
                 name={action.translatedName[locale] || action.name}
                 impacts={action.impacts}

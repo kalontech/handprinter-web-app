@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Modal, Button, Form, Select, Icon } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
+import { animateScroll } from 'react-scroll'
 
 import { Creators as UserCreators } from './../../redux/userStore'
 import {
@@ -28,7 +29,6 @@ import {
 import handleFormError from './../../utils/handleFormError'
 import api from './../../api'
 import decodeError from './../../utils/decodeError'
-import Spinner from './../../components/Spinner'
 import profileLeavesBackgroundImage from '../../assets/images/profileLeavesBackgroundImage.png'
 import arrowDownIcon from './../../assets/icons/arrowDown.svg'
 import { logOut } from './../../redux/accountStore'
@@ -267,11 +267,14 @@ class ProfilePage extends Component {
     formInfoChanged: false,
     countryChanged: false,
     isDeletingAccount: false,
-    deletingAccountSuccess: false,
   }
 
   canvasRef = React.createRef()
   uploadProfilePictureRef = React.createRef()
+
+  componentDidMount() {
+    animateScroll.scrollToTop()
+  }
 
   componentDidUpdate(prevProps, prevState) {
     const {
@@ -317,11 +320,11 @@ class ProfilePage extends Component {
       .then(() => {
         this.setState({
           isDeletingAccount: false,
-          deletingAccountSuccess: true,
         })
         logOut({ redirectUrl: '/' })
       })
       .catch(error => {
+        console.error(error)
         this.showModal({
           type: PROFILE_MODAL_TYPES.DELETE_ACCOUNT_FAILURE,
           payload: {
@@ -356,7 +359,7 @@ class ProfilePage extends Component {
       updateMeInfoRequest,
     } = this.props
 
-    validateFields(['email', 'fullName', 'country'], async (err, values) => {
+    validateFields(['email', 'fullName', 'country'], (err, values) => {
       if (!err) {
         const { email, fullName, country } = values
 
@@ -570,138 +573,118 @@ class ProfilePage extends Component {
       showChangePasswordSection,
       formInfoChanged,
       isDeletingAccount,
-      deletingAccountSuccess,
     } = this.state
 
     return (
       <Fragment>
         <PageMetadata pageName="profilePage" />
         <Wrapper>
-          {deletingAccountSuccess ? (
-            <LoadingPageWrap>
-              <h1>
-                <FormattedMessage id="app.profilePage.deleteAccount.successTitle" />
-              </h1>
-              <p>
-                <FormattedMessage id="app.profilePage.deleteAccount.successRedirectMessage" />
-              </p>
-              <Spinner />
-            </LoadingPageWrap>
-          ) : (
+          <Fragment>
+            <AppleBackgroundSection />
+            {this.renderProfilePictureBlock({ user })}
             <Fragment>
-              <AppleBackgroundSection />
-              {this.renderProfilePictureBlock({ user })}
-              <Fragment>
-                <FormWrapper>
-                  <Form onChange={this.handleFormChange}>
-                    <FormSectionHeading>
-                      <FormattedMessage id="app.profilePage.generalInformation" />
-                    </FormSectionHeading>
-                    <FormItem>
-                      {getFieldDecorator('fullName', {
-                        rules: getValidationRules(formatMessage).fullName,
-                      })(
-                        <Input
-                          type="text"
-                          placeholder={formatMessage({
-                            id: 'app.forms.fullName',
-                          })}
-                        />,
-                      )}
-                    </FormItem>
-                    <FormItem>
-                      {getFieldDecorator('email', {
-                        rules: getValidationRules(formatMessage).email,
-                      })(
-                        <Input
-                          type="email"
-                          placeholder={formatMessage({ id: 'app.forms.email' })}
-                        />,
-                      )}
-                    </FormItem>
-                    <FormItem>
-                      {getFieldDecorator('country', {
-                        rules: getValidationRules(formatMessage).country,
-                      })(
-                        <Select
-                          onChange={this.handleCountryChange}
-                          showSearch
-                          placeholder={formatMessage({
-                            id: 'app.forms.country',
-                          })}
-                          optionFilterProp="children"
-                          className="ant-select__override-for__register-page"
-                          dropdownClassName="ant-select__override-for__register-page"
-                          suffixIcon={<img src={arrowDownIcon} />}
-                        >
-                          {countries.map(country => (
-                            <Select.Option
-                              key={country._id}
-                              value={country._id}
-                            >
-                              {country.name}
-                            </Select.Option>
-                          ))}
-                        </Select>,
-                      )}
-                    </FormItem>
-                    <ErrorItemWrap>
-                      <FormItem>
-                        {getFieldDecorator('errorInfo')(
-                          <Input type="hidden" />,
-                        )}
-                        {/* {uploadImageError && uploadImageError} */}
-                      </FormItem>
-                      <FormItem>
-                        {getFieldDecorator('errorPhoto')(
-                          <Input type="hidden" />,
-                        )}
-                      </FormItem>
-                    </ErrorItemWrap>
-
-                    {formInfoChanged && (
-                      <StyledSaveChangesButton
-                        type="primary"
-                        onClick={this.handleInfoSubmit}
-                        style={{ width: '100%' }}
-                        loading={isUpdatingMeInfo}
-                      >
-                        <FormattedMessage id="app.profilePage.saveChanges" />
-                      </StyledSaveChangesButton>
+              <FormWrapper>
+                <Form onChange={this.handleFormChange}>
+                  <FormSectionHeading>
+                    <FormattedMessage id="app.profilePage.generalInformation" />
+                  </FormSectionHeading>
+                  <FormItem>
+                    {getFieldDecorator('fullName', {
+                      rules: getValidationRules(formatMessage).fullName,
+                    })(
+                      <Input
+                        type="text"
+                        placeholder={formatMessage({
+                          id: 'app.forms.fullName',
+                        })}
+                      />,
                     )}
-
-                    {showChangePasswordSection ? (
-                      this.renderChangePasswordSection({
-                        getFieldDecorator,
-                        formatMessage,
-                        isUpdatingMePassword,
-                      })
-                    ) : (
-                      <ChangePasswordButton
-                        type="primary"
-                        onClick={this.toggleShowChangePasswordSection}
-                      >
-                        <FormattedMessage id="app.profilePage.changePassword" />
-                      </ChangePasswordButton>
+                  </FormItem>
+                  <FormItem>
+                    {getFieldDecorator('email', {
+                      rules: getValidationRules(formatMessage).email,
+                    })(
+                      <Input
+                        type="email"
+                        placeholder={formatMessage({ id: 'app.forms.email' })}
+                      />,
                     )}
-                  </Form>
-                </FormWrapper>
-                <DeleteButtonWrap>
-                  <DeleteAccountButton
-                    type="primary"
-                    loading={isDeletingAccount}
-                    onClick={() =>
-                      this.showModal({
-                        type: PROFILE_MODAL_TYPES.DELETE_ACCOUNT_CONFIRMATION,
-                      })
-                    }
-                  >
-                    <FormattedMessage id="app.profilePage.deleteAccount" />
-                  </DeleteAccountButton>
-                </DeleteButtonWrap>
-              </Fragment>
+                  </FormItem>
+                  <FormItem>
+                    {getFieldDecorator('country', {
+                      rules: getValidationRules(formatMessage).country,
+                    })(
+                      <Select
+                        onChange={this.handleCountryChange}
+                        showSearch
+                        placeholder={formatMessage({
+                          id: 'app.forms.country',
+                        })}
+                        optionFilterProp="children"
+                        className="ant-select__override-for__register-page"
+                        dropdownClassName="ant-select__override-for__register-page"
+                        suffixIcon={<img src={arrowDownIcon} />}
+                      >
+                        {countries.map(country => (
+                          <Select.Option key={country._id} value={country._id}>
+                            {country.name}
+                          </Select.Option>
+                        ))}
+                      </Select>,
+                    )}
+                  </FormItem>
+                  <ErrorItemWrap>
+                    <FormItem>
+                      {getFieldDecorator('errorInfo')(<Input type="hidden" />)}
+                      {/* {uploadImageError && uploadImageError} */}
+                    </FormItem>
+                    <FormItem>
+                      {getFieldDecorator('errorPhoto')(<Input type="hidden" />)}
+                    </FormItem>
+                  </ErrorItemWrap>
+
+                  {formInfoChanged && (
+                    <StyledSaveChangesButton
+                      type="primary"
+                      onClick={this.handleInfoSubmit}
+                      style={{ width: '100%' }}
+                      loading={isUpdatingMeInfo}
+                    >
+                      <FormattedMessage id="app.profilePage.saveChanges" />
+                    </StyledSaveChangesButton>
+                  )}
+
+                  {showChangePasswordSection ? (
+                    this.renderChangePasswordSection({
+                      getFieldDecorator,
+                      formatMessage,
+                      isUpdatingMePassword,
+                    })
+                  ) : (
+                    <ChangePasswordButton
+                      type="primary"
+                      onClick={this.toggleShowChangePasswordSection}
+                    >
+                      <FormattedMessage id="app.profilePage.changePassword" />
+                    </ChangePasswordButton>
+                  )}
+                </Form>
+              </FormWrapper>
+              <DeleteButtonWrap>
+                <DeleteAccountButton
+                  type="primary"
+                  loading={isDeletingAccount}
+                  onClick={() =>
+                    this.showModal({
+                      type: PROFILE_MODAL_TYPES.DELETE_ACCOUNT_CONFIRMATION,
+                    })
+                  }
+                >
+                  <FormattedMessage id="app.profilePage.deleteAccount" />
+                </DeleteAccountButton>
+              </DeleteButtonWrap>
             </Fragment>
-          )}
+          </Fragment>
         </Wrapper>
       </Fragment>
     )

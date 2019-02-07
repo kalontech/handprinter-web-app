@@ -6,6 +6,7 @@ import { Button, Form, Select } from 'antd'
 import { Link } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
+import { animateScroll } from 'react-scroll/modules'
 
 import { Creators as AccountCreators } from './../../redux/accountStore'
 import {
@@ -202,6 +203,8 @@ class RegisterPage extends Component {
         params: { invitationCode },
       },
     } = this.props
+
+    animateScroll.scrollToTop()
 
     if (invitationCode) this.fetchReferrer(invitationCode)
   }

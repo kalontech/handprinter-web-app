@@ -412,5 +412,18 @@
     "app.increaseHandprintPage.form.cancel": "Stornieren",
     "app.header.menu.notificationTitle": "Deine Benachrichtigungen",
     "app.header.menu.viewAllNews": "Alle Neuigkeiten anzeigen",
-    "app.newsPage.notification.userDidAction": "{user} hat Aktion ausgeführt {action}"
+    "app.newsPage.notification.userDidAction": "{user} hat Aktion ausgeführt {action}",
+    "app.actionCreatePage.editSubmitSucceededTitle": "Ihre Idee wurde bearbeitet",
+    "app.actionsPage.tabs.my-ideas": "Meine Ideen",
+    "app.actions.card.edit": "bearbeiten",
+    "app.actions.card.delete": "löschen",
+    "app.actions.card.waitAdmin": "Warten auf die Genehmigung des Administrators",
+    "app.actions.card.waitModeling": "Modellierung durch Modellbauer",
+    "app.actions.card.waitAdminHint": "Ihre Handlungsidee wird vom Handprinter-Administrator überprüft, um sicherzustellen, dass alles korrekt ist. Der Administrator kann Sie zur Verbesserung einiger Aktionsdetails kontaktieren.",
+    "app.actions.card.waitModelingHint": "Ihre Aktionsidee wurde von admin genehmigt und steht den anderen Benutzern zur Verfügung. Wir berechnen jetzt die Auswirkungen. Wenn es fertig ist, werden Sie dort Aufprallzeichen sehen.",
+    "app.actions.page.delete.title": "Aktion löschen",
+    "app.actions.page.delete.text": "Möchten Sie diese Aktion wirklich löschen?",
+    "app.errors.20": "Aktion mit diesem Namen ist bereits vorhanden",
+    "app.errors.21": "Diese Aktion kann nicht gelöscht werden",
+    "app.errors.22": "Diese Aktion kann nicht aktualisiert werden"
 }

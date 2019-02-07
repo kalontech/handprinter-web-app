@@ -44,8 +44,7 @@ if (REACT_APP_ENVIRONMENT === 'production') {
   })
 }
 
-export const handleBackdropClick = ({ parentPath }) =>
-  history.length > 1 ? history.goBack() : history.push(parentPath)
+const getParentPath = getter => match => getter(match, history)
 
 const AppRouter = () => {
   const brandedConfig = getBrandedConfig()
@@ -61,7 +60,7 @@ const AppRouter = () => {
             }
             useAuthentication
           />
-          <Redirect exact from="/actions" to="/actions/discover" />
+          <Redirect exact from="/actions" to="/actions/discover?page=1" />
           <Route
             path="/actions/:subset"
             component={ActionsPage}
@@ -144,7 +143,7 @@ const AppRouter = () => {
             withoutFooter
           />
           <Route
-            path="/account/submit-succeeded"
+            path="/account/submit-succeeded/:id?"
             component={SubmitSucceededPage}
             headerType="minimal"
             requireAuthentication
@@ -166,66 +165,26 @@ const AppRouter = () => {
 
         <Switch>
           <ModalRoute
-            path="/account/dashboard/suggest-idea"
-            parentPath="/account/dashboard"
-            onBackdropClick={() =>
-              handleBackdropClick({ parentPath: '/account/dashboard' })
-            }
+            path="/actions/:subset/suggest-idea/:slug?"
+            parentPath={getParentPath(
+              ({ params }, { location }) =>
+                `/actions/${params.subset}${location.search}`,
+            )}
             component={ActionCreate}
           />
 
           <ModalRoute
-            path="/actions/discover/suggest-idea"
-            parentPath="/actions/discover"
-            onBackdropClick={() =>
-              handleBackdropClick({ parentPath: '/actions/discover' })
-            }
-            component={ActionCreate}
-          />
-
-          <ModalRoute
-            path="/actions/suggested/suggest-idea"
-            parentPath="/actions/suggested"
-            onBackdropClick={() =>
-              handleBackdropClick({ parentPath: '/actions/suggested' })
-            }
-            component={ActionCreate}
-          />
-
-          <ModalRoute
-            path="/actions/taken/suggest-idea"
-            parentPath="/actions/taken"
-            onBackdropClick={() =>
-              handleBackdropClick({ parentPath: '/actions/taken' })
-            }
-            component={ActionCreate}
-          />
-
-          <ModalRoute
-            path="/actions/:subset/:actionSlug"
-            parentPath="/actions"
-            onBackdropClick={() =>
-              handleBackdropClick({ parentPath: '/actions' })
-            }
-            component={ActionModalPage}
-            withoutCTA
-          />
-
-          <ModalRoute
-            path="/pages/home/actions/:actionSlug"
-            parentPath="/pages/home"
-            onBackdropClick={() =>
-              handleBackdropClick({ parentPath: '/pages/home' })
-            }
+            path="/actions/:subset/:slug"
+            parentPath={getParentPath(
+              ({ params }, { location }) =>
+                `/actions/${params.subset}${location.search}`,
+            )}
             component={ActionModalPage}
           />
 
           <ModalRoute
-            path="/pages/our-vision/actions/:actionSlug"
-            parentPath="/pages/our-vision"
-            onBackdropClick={() =>
-              handleBackdropClick({ parentPath: '/pages/our-vision' })
-            }
+            path="/pages/:page/actions/:slug"
+            parentPath={({ params }) => `/pages/${params.page}`}
             component={ActionModalPage}
           />
         </Switch>

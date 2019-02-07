@@ -412,5 +412,18 @@
     "app.increaseHandprintPage.form.cancel": "Cancelar",
     "app.header.menu.notificationTitle": "Tus notificaciones",
     "app.header.menu.viewAllNews": "Ver todas las noticias",
-    "app.newsPage.notification.userDidAction": "{user} hizo action {action}"
+    "app.newsPage.notification.userDidAction": "{user} hizo action {action}",
+    "app.actionCreatePage.editSubmitSucceededTitle": "Tu idea fue editada",
+    "app.actionsPage.tabs.my-ideas": "Mis ideas",
+    "app.actions.card.edit": "editar",
+    "app.actions.card.delete": "borrar",
+    "app.actions.card.waitAdmin": "Esperando la aprobación del administrador",
+    "app.actions.card.waitModeling": "Modelado por modelador",
+    "app.actions.card.waitAdminHint": "El administrador de Handprinter está revisando su idea de acción para garantizar que todo sea correcto. El administrador puede contactarlo para mejorar algunos detalles de acción.",
+    "app.actions.card.waitModelingHint": "Su idea de acción fue aprobada por el administrador y está disponible para los demás usuarios. Estamos calculando el impacto ahora. Cuando esté hecho verás signos de impacto allí.",
+    "app.actions.page.delete.title": "Eliminar acción",
+    "app.actions.page.delete.text": "¿Estás seguro de que quieres eliminar esta acción?",
+    "app.errors.20": "La acción con este nombre ya existe.",
+    "app.errors.21": "No se puede eliminar esta acción.",
+    "app.errors.22": "No se puede actualizar esta acción."
 }

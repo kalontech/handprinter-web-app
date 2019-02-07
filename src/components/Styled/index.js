@@ -305,12 +305,6 @@ export const BlockSubTitleGreen = styled(BlockSubTitle)`
   }
 `
 
-export const CardHeading = styled.h3`
-  font-size: 19px;
-  line-height: 1.37;
-  font-family: 'Noto Serif', serif;
-`
-
 export const TextLarge = styled.p`
   font-size: 19px;
   line-height: 28px;
@@ -564,8 +558,9 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  .ant-select__override-for__actions-page {
+  .ant-select_override-for_actions-page {
     z-index: 1061;
+
     .ant-select-dropdown-menu-item:hover,
     .ant-select-dropdown-menu-item-active {
       background-color: ${colors.lightGray};
@@ -835,7 +830,7 @@ export const Pagination = styled(Ant.Pagination)`
     width: 45px;
     height: 45px;
     padding: 0;
-    border-radius: 0px;
+    border-radius: 0;
     background-color: transparent;
     font-weight: bold;
     border: 1px solid ${colors.gray};
@@ -865,17 +860,19 @@ export const Pagination = styled(Ant.Pagination)`
       border: 0;
       background-color: transparent;
       outline: 0;
-      a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        margin: auto;
-        transition: color 0.3s;
-      }
+    }
+
+    button > a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      margin: auto;
+      transition: color 0.3s;
     }
   }
+
   .ant-pagination-item-active {
     border-color: ${colors.gray};
     a {

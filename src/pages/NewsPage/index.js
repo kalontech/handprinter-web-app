@@ -10,6 +10,7 @@ import {
 import { Menu, Dropdown } from 'antd'
 import { connect } from 'react-redux'
 import moment from 'moment'
+import { animateScroll } from 'react-scroll/modules'
 
 import api from 'api'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
@@ -165,7 +166,9 @@ class NewsPage extends Component {
     range: NEWS_RANGES.WORLD,
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
+    animateScroll.scrollToTop()
+
     api.sendLastTimeReadNewsAt(Date.now(), this.props.token)
     this.fetchNews()
   }

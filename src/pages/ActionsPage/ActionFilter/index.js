@@ -5,11 +5,12 @@ import { Icon } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { isEqual } from 'lodash'
 
-import colors from '../../../config/colors'
-import icons from '../../../components/ActionCardLabel/icons'
+import colors from 'config/colors'
+import icons from 'components/ActionCardLabel/icons'
+import { IMPACT_CATEGORIES } from 'utils/constants'
+import { history } from 'appRouter'
+
 import ImpactSlider from './slider'
-import { IMPACT_CATEGORIES } from '../../../utils/constants'
-import { history } from './../../../appRouter'
 
 const ClearAllIcon = styled(Icon)`
   transform: rotate(45deg);
@@ -126,7 +127,8 @@ class ActionsFilters extends Component {
 
   render() {
     const { values, filterIsChanged } = this.state
-    const { timeValues, actionsPageSubset } = this.props
+    const { timeValues } = this.props
+
     return (
       <Fragment>
         <ImpactSlider
@@ -197,6 +199,10 @@ class ActionsFilters extends Component {
 
 ActionsFilters.propTypes = {
   onAfterChange: PropTypes.func.isRequired,
+  timeValues: PropTypes.array,
+  onReset: PropTypes.func,
+  values: PropTypes.object,
+  actionsPageSubset: PropTypes.string,
 }
 
 export default ActionsFilters

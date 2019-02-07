@@ -65,16 +65,13 @@ const fetchHelper = async (url, options) => {
   }
 }
 
-const findAction = ({ actionId, slug }, token) =>
-  fetchHelper(`${apiBaseUrl}/actions/find_one`, {
+const fetchAction = ({ id, slug, token, ...params }) =>
+  fetchHelper(`${apiBaseUrl}/actions/find_one/${slug || id}`, {
     headers: {
       authorization: `Bearer ${token}`,
     },
-    body: {
-      actionId,
-      slug,
-    },
-    method: 'POST',
+    method: 'GET',
+    ...params,
   })
 
 const getActions = (query = {}, token) =>
@@ -98,8 +95,14 @@ const getActionsHistory = (query = {}, token) =>
     },
   })
 
-const getTimeValues = (query = {}) =>
-  fetchHelper(`${apiBaseUrl}/actions/time_values`)
+const getActionsMyIdeas = (query = {}, token) =>
+  fetchHelper(`${apiBaseUrl}/actions/get_ideas?${qs.stringify(query)}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  })
+
+const getTimeValues = () => fetchHelper(`${apiBaseUrl}/actions/time_values`)
 
 const getCountries = () => fetchHelper(`${apiBaseUrl}/countries`)
 
@@ -248,10 +251,14 @@ const getUserInitialAvatar = fullName =>
     1,
   )}&color=${colors.gray.slice(1)}&length=1&name=${fullName}&size=256`
 
-const addActionRequest = body =>
+const fetchProposedAction = ({ body, token, ...params }) =>
   fetchHelper(`${apiBaseUrl}/actions/add_idea`, {
     body,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
     method: 'POST',
+    ...params,
   })
 
 const getNews = (query = {}, token) =>
@@ -271,10 +278,11 @@ const sendLastTimeReadNewsAt = (at, token) =>
   })
 
 export default {
-  findAction,
+  fetchAction,
   getActions,
   getSuggestedActions,
   getActionsHistory,
+  getActionsMyIdeas,
   getCountries,
   getTimeValues,
   getMe,
@@ -292,6 +300,6 @@ export default {
   getUserInitialAvatar,
   engageAction,
   getNews,
-  addActionRequest,
+  fetchProposedAction,
   sendLastTimeReadNewsAt,
 }

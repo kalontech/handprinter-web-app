@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Form } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { animateScroll } from 'react-scroll'
 
 import {
   FormItem,
@@ -19,9 +20,17 @@ import InputForPassword from './../../components/InputForPassword'
 import handleFormError from './../../utils/handleFormError'
 import PageMetadata from '../../components/PageMetadata'
 
-class SetNewPasswordPage extends Component {
+class SetNewPasswordPage extends React.PureComponent {
   state = {
     showPassword: false,
+  }
+
+  componentDidMount() {
+    animateScroll.scrollToTop()
+  }
+
+  componentDidUpdate = prevProps => {
+    handleFormError('setNewPasswordError', 'formError', prevProps, this.props)
   }
 
   handleSubmit = e => {
@@ -40,10 +49,6 @@ class SetNewPasswordPage extends Component {
         setNewPasswordRequest(code, password)
       }
     })
-  }
-
-  componentDidUpdate = prevProps => {
-    handleFormError('setNewPasswordError', 'formError', prevProps, this.props)
   }
 
   render() {

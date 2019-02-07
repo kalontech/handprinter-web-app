@@ -412,5 +412,18 @@
     "app.increaseHandprintPage.form.cancel": "取消",
     "app.header.menu.notificationTitle": "你的通知",
     "app.header.menu.viewAllNews": "查看所有新闻",
-    "app.newsPage.notification.userDidAction": "{user}了操作{action}"
+    "app.newsPage.notification.userDidAction": "{user}了操作{action}",
+    "app.actionCreatePage.editSubmitSucceededTitle": "你的想法被编辑了",
+    "app.actionsPage.tabs.my-ideas": "我的想法",
+    "app.actions.card.edit": "编辑",
+    "app.actions.card.delete": "删除",
+    "app.actions.card.waitAdmin": "等待管理员批准",
+    "app.actions.card.waitModeling": "由建模者建模",
+    "app.actions.card.waitAdminHint": "Handprinter管理员正在审核您的行动构想，以确保一切正确。管理员可能会与您联系以改进某些操作详细信息。",
+    "app.actions.card.waitModelingHint": "您的操作提示已获得管理员批准，可供其他用户使用。我们现在正在计算影响。完成后，你会看到那里的冲击迹象。",
+    "app.actions.page.delete.title": "删除操作",
+    "app.actions.page.delete.text": "您确定要删除此操作吗？",
+    "app.errors.20": "具有此名称的操作已存在",
+    "app.errors.21": "无法删除此操作",
+    "app.errors.22": "无法更新此操作"
 }

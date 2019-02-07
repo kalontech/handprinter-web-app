@@ -1,7 +1,10 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { animateScroll } from 'react-scroll'
+
 import {
   OceanContainer,
   OceanModal,
@@ -43,29 +46,45 @@ const Content = styled(OceanModal)`
   }
 `
 
-const SubmitSucceededPage = () => {
-  return (
-    <Fragment>
-      <PageMetadata pageName="submitSucceededPage" />
-      <OceanContainer>
-        <Content>
-          <img src={LampImgPath} alt="success" />
-          <OceanTitle>
-            <FormattedMessage id="app.actionCreatePage.submitSucceededTitle" />
-          </OceanTitle>
-          <OceanDescription>
-            <FormattedMessage id="app.actionCreatePage.submitSucceededDescription" />
-          </OceanDescription>
+export default class SubmitSucceededPage extends React.PureComponent {
+  static propTypes = {
+    match: PropTypes.object,
+  }
 
-          <Link to="/actions">
-            <ButtonSuccess type="primary">
-              <FormattedMessage id="app.actionCreatePage.submitSucceededGoBack" />
-            </ButtonSuccess>
-          </Link>
-        </Content>
-      </OceanContainer>
-    </Fragment>
-  )
+  componentDidMount() {
+    animateScroll.scrollToTop()
+  }
+
+  render() {
+    const { match } = this.props
+
+    return (
+      <Fragment>
+        <PageMetadata pageName="submitSucceededPage" />
+        <OceanContainer>
+          <Content>
+            <img src={LampImgPath} alt="success" />
+            <OceanTitle>
+              <FormattedMessage
+                id={
+                  match.params.id
+                    ? 'app.actionCreatePage.editSubmitSucceededTitle'
+                    : 'app.actionCreatePage.submitSucceededTitle'
+                }
+              />
+            </OceanTitle>
+            <OceanDescription>
+              <FormattedMessage id="app.actionCreatePage.submitSucceededDescription" />
+            </OceanDescription>
+
+            <Link to="/actions">
+              <ButtonSuccess type="primary">
+                <FormattedMessage id="app.actionCreatePage.submitSucceededGoBack" />
+              </ButtonSuccess>
+            </Link>
+          </Content>
+        </OceanContainer>
+      </Fragment>
+    )
+  }
 }
-
-export default SubmitSucceededPage

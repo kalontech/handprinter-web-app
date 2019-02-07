@@ -1,15 +1,14 @@
-import React, { Component, Fragment } from 'react'
-import { Row, Col, Select, Spin, Icon, Menu, Popover } from 'antd'
+import React from 'react'
+import { Row, Col, Select, Spin, Icon, Menu, Popover, Modal } from 'antd'
 import { Link } from 'react-router-dom'
 import qs from 'qs'
-import get from 'lodash/get'
-import isEmpty from 'lodash/isEmpty'
 import styled from 'styled-components'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import debounce from 'lodash/debounce'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { animateScroll } from 'react-scroll/modules'
 
 import hexToRgba from 'utils/hexToRgba'
 
@@ -23,16 +22,24 @@ import ActionCard from 'components/ActionCard'
 import api from 'api'
 import Spinner from 'components/Spinner'
 import colors from 'config/colors'
-import { history } from 'appRouter'
+import PageMetadata from 'components/PageMetadata'
+import media, { sizes } from 'utils/mediaQueryTemplate'
+import {
+  IMPACT_CATEGORIES,
+  ACTIONS_SUBSETS,
+  ACTION_STATES,
+} from 'utils/constants'
+import fetch, { configDefault as fetchConfigDefault } from 'utils/fetch'
+import ActionCardLabelSet from 'components/ActionCardLabelSet'
+import Tooltip from 'components/Tooltip'
+
 import filterToggleImg from 'assets/actions-page/ic_filter_list.png'
 import filterToggleActiveImg from 'assets/actions-page/ic_filter_list_active.png'
-import media, { sizes } from 'utils/mediaQueryTemplate'
-import { IMPACT_CATEGORIES, ACTIONS_SUBSETS } from 'utils/constants'
-import PageMetadata from 'components/PageMetadata'
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 import DiscoverIcon from 'assets/icons/ic_discover.svg'
 import SuggestedIcon from 'assets/icons/ic_suggested.svg'
 import HistoryIcon from 'assets/icons/ic_history.svg'
+import FlagIcon from 'assets/icons/ic_flag.svg'
 
 import ActionsFilters from './ActionFilter'
 
@@ -267,14 +274,90 @@ const ActionTabWrapper = styled.div`
   align-items: center;
 `
 
-class ActionsPage extends Component {
+const ImpactButton = styled(DefaultButton)`
+  min-width: 100%;
+  background-color: transparent;
+  color: ${props => (props.isModelling ? colors.blue : colors.darkGray)};
+  border: 1px solid
+    ${props =>
+      props.isModelling
+        ? hexToRgba(colors.blue, 0.4)
+        : hexToRgba(colors.darkGray, 0.4)};
+  border-radius: 4px;
+  font-weight: 400;
+
+  &&:hover,
+  &&:active {
+    background-color: transparent;
+    color: ${props => (props.isModelling ? colors.blue : colors.dark)};
+    border-color: ${props =>
+      props.isModelling
+        ? hexToRgba(colors.blue, 0.6)
+        : hexToRgba(colors.dark, 0.6)};
+  }
+`
+
+function configParamsForFilter({ location: { search } }) {
+  const queries = qs.parse(search, { ignoreQueryPrefix: true })
+  const params = {}
+
+  Object.keys(queries).map(paramName => {
+    if (Object.values(IMPACT_CATEGORIES).includes(paramName)) {
+      params[paramName] = [
+        Number(queries[paramName].from),
+        Number(queries[paramName].to),
+      ]
+    }
+  })
+
+  if (Object.values(params).length > 0) {
+    return params
+  }
+}
+
+async function getActionsList(props) {
+  const { location, match, token, timeValues } = props
+  const query = qs.parse(location.search, { ignoreQueryPrefix: true })
+
+  if (window.innerWidth < sizes.largeDesktop) query.limit = 10
+
+  const getActions =
+    [
+      api.getActions,
+      api.getSuggestedActions,
+      api.getActionsMyIdeas,
+      api.getActionsHistory,
+    ][Object.values(ACTIONS_SUBSETS).indexOf(match.params.subset)] ||
+    api.getActions
+
+  const getTimeValues = timeValues
+    ? () => Promise.resolve({})
+    : api.getTimeValues
+
+  const [
+    {
+      actions: { docs: actions, limit, totalDocs: total, page },
+    },
+    { timeValues: timeValuesResponse },
+  ] = await Promise.all([getActions(query, token), getTimeValues()])
+
+  const result = {
+    actions,
+    limit,
+    page,
+    total,
+  }
+
+  if (!timeValues && timeValuesResponse)
+    result.timeValues = timeValuesResponse.sort((a, b) => a.minutes - b.minutes)
+
+  window.scrollTo(0, 0)
+
+  return result
+}
+
+class ActionsPage extends React.PureComponent {
   state = {
-    actions: [],
-    timeValues: [],
-    limit: 0,
-    loading: true,
-    page: 0,
-    total: 0,
     searchData: {
       searchedActions: [],
       total: null,
@@ -285,131 +368,37 @@ class ActionsPage extends Component {
       // if value will be defined
       searchFieldValue: undefined,
     },
-    showFilter: false,
-    filterValuesFromQuery: null,
-    activeFiltersCount: 0,
+    showFilter: Boolean(configParamsForFilter(this.props)),
+    filterValuesFromQuery: configParamsForFilter(this.props) || null,
+    activeFiltersCount: (configParamsForFilter(this.props) || '').length,
     subset: null,
     subsetDropdownVisible: false,
   }
 
   searchSelect = React.createRef()
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const subset =
-      {
-        discover: ACTIONS_SUBSETS.DISCOVER,
-        suggested: ACTIONS_SUBSETS.SUGGESTED,
-        taken: ACTIONS_SUBSETS.HISTORY,
-      }[nextProps.match.params.subset] || ACTIONS_SUBSETS.DISCOVER
-
-    return {
-      ...prevState,
-      subset,
-    }
+  componentDidMount() {
+    animateScroll.scrollToTop()
   }
 
-  async componentDidMount() {
-    const { subset } = this.state
-    const { search = {} } = this.props.location
-    const queryParams = qs.parse(search, { ignoreQueryPrefix: true })
+  componentDidUpdate(prevProps) {
+    const { location: oldLocation, match: oldMatch } = prevProps
+    const { location, match } = this.props
 
-    this.handleParamsForFilter(queryParams)
-
-    await this.fetchActions(queryParams, subset)
-    await this.fetchTimeValues()
-  }
-
-  async componentDidUpdate(prevProps) {
-    const prevSearch = get(prevProps, 'location.search')
-    const currSearch = get(this.props, 'location.search')
-
-    if (!isEmpty(currSearch) && prevSearch !== currSearch) {
-      const query = qs.parse(currSearch, { ignoreQueryPrefix: true })
-      await this.fetchActions(query, this.state.subset)
-    }
-  }
-
-  handleParamsForFilter = queryParams => {
-    let params = {}
-    Object.keys(queryParams).map(paramName => {
-      if (Object.values(IMPACT_CATEGORIES).includes(paramName)) {
-        params[paramName] = [
-          Number(queryParams[paramName].from),
-          Number(queryParams[paramName].to),
-        ]
-      }
-    })
-
-    if (Object.values(params).length > 0) {
-      this.setState({
-        showFilter: true,
-        filterValuesFromQuery: params,
-        activeFiltersCount: Object.values(params).length,
-      })
-    }
-  }
-
-  fetchActions = async (query, subset) => {
-    if (query.page && Number(query.page) === Number(this.state.page)) {
-      return
-    }
-
-    if (window.innerWidth < sizes.largeDesktop) query.limit = 10
-
-    let request
-
-    switch (subset) {
-      case ACTIONS_SUBSETS.DISCOVER:
-        request = api.getActions
-        break
-      case ACTIONS_SUBSETS.SUGGESTED:
-        request = api.getSuggestedActions
-        break
-      case ACTIONS_SUBSETS.HISTORY:
-        request = api.getActionsHistory
-        break
-      default:
-        request = api.getActions
-    }
-
-    this.setState({ loading: true }, () => {
-      window.scrollTo(0, 0)
-    })
-
-    const {
-      actions: { docs: actions, limit, totalDocs: total, page },
-    } = await request(query, this.props.token)
-
-    this.setState({
-      actions:
-        subset === ACTIONS_SUBSETS.HISTORY
-          ? actions.map(item => ({
-              ...item,
-              suggestedAt: item.updatedAt,
-              suggestedBy: { selfTaken: true },
-            }))
-          : actions,
-      limit,
-      loading: false,
-      page,
-      total,
-    })
-  }
-
-  fetchTimeValues = async () => {
-    const { timeValues } = await api.getTimeValues()
-    this.setState({
-      timeValues: timeValues.sort((a, b) => a.minutes - b.minutes),
-    })
+    if (
+      oldMatch.params.subset !== match.params.subset ||
+      oldLocation.search !== location.search
+    )
+      this.props.fetch()
   }
 
   searchActions = debounce(async query => {
-    this.setState({
+    this.setState(state => ({
       searchData: {
-        ...this.state.searchData,
+        ...state.searchData,
         searching: true,
       },
-    })
+    }))
 
     const {
       actions: { docs: actions, totalDocs: total },
@@ -430,7 +419,7 @@ class ActionsPage extends Component {
       return (
         <button
           onClick={() => {
-            this.pushQueryToUrl({ page: current })
+            this.updateQueries({ page: current })
           }}
         >
           {originalElement}
@@ -443,7 +432,12 @@ class ActionsPage extends Component {
     return originalElement
   }
 
-  handleSearchFieldChange = searchFieldValue => {
+  handleSearchFieldChange = (searchFieldValue, option) => {
+    if (option) {
+      this.resetSearchData()
+      return
+    }
+
     this.setState({
       searchData: {
         ...this.state.searchData,
@@ -454,42 +448,22 @@ class ActionsPage extends Component {
     })
   }
 
-  handleTabItemSelect = async subset => {
+  handleTabItemSelect = subset => {
     if (this.state.subsetDropdownVisible) {
       this.setState({ subsetDropdownVisible: false })
     }
 
-    if (this.state.subset === subset) {
-      return
-    }
-
-    switch (subset) {
-      case ACTIONS_SUBSETS.DISCOVER:
-        await this.fetchActions({}, subset)
-        return history.push('/actions/discover')
-      case ACTIONS_SUBSETS.SUGGESTED:
-        await this.fetchActions({}, subset)
-        return history.push('/actions/suggested')
-      case ACTIONS_SUBSETS.HISTORY:
-        await this.fetchActions({}, subset)
-        return history.push('/actions/taken')
-    }
+    this.props.history.push(`/actions/${subset}?page=1`)
   }
 
   handleOpenActionCard = ({ slug }) => {
-    history.push(`/actions/${this.state.subset}/${slug}`)
+    const { match, location, history } = this.props
+
+    history.push(`/actions/${match.params.subset}/${slug}${location.search}`)
   }
 
-  handleSearchedItemSelect = async () => {
-    // Reset search data after select action
-    // Double reset data cause after first
-    // reset Select component put value to search field
-    await this.resetSearchData(this.resetSearchData)
-    await this.resetSearchData(this.resetSearchData)
-  }
-
-  resetSearchData = async () => {
-    await this.setState({
+  resetSearchData = () => {
+    this.setState({
       searchData: {
         ...this.state.searchData,
         searchedActions: [],
@@ -510,24 +484,8 @@ class ActionsPage extends Component {
 
   handleOnAfterFiltersChange = debounce(({ data, activeFilterCount }) => {
     this.setState({ activeFiltersCount: activeFilterCount })
-    this.pushQueryToUrl(data)
-    this.fetchActions(data, this.state.subset)
-    this.handleParamsForFilter(data, {
-      ignoreQueryPrefix: true,
-    })
+    this.updateQueries({ ...data, page: 1 })
   }, 600)
-
-  handlePaginationChange = page => {
-    const queryParams = qs.parse(get(this.props, 'location.search', {}), {
-      ignoreQueryPrefix: true,
-    })
-    queryParams.page = page
-    this.pushQueryToUrl(queryParams)
-  }
-
-  handleSubsetDropdownVisibleChange = visible => {
-    this.setState({ visible })
-  }
 
   handleSubsetDropdownClick = () => {
     if (!this.state.subsetDropdownVisible) {
@@ -539,66 +497,115 @@ class ActionsPage extends Component {
     this.setState({ showFilter: !this.state.showFilter })
   }
 
-  pushQueryToUrl = query => {
+  updateQueries = query => {
+    const { location, match, history } = this.props
+
     history.push(
-      `/actions/${this.state.subset}?${qs.stringify(query, {
-        encode: false,
-      })}`,
+      `/actions/${match.params.subset}?${qs.stringify(
+        {
+          ...qs.parse(location.search, { ignoreQueryPrefix: true }),
+          ...query,
+        },
+        {
+          encode: false,
+        },
+      )}`,
     )
   }
 
   getTabItemContent = subset => {
-    let data = {}
-    switch (subset) {
-      case ACTIONS_SUBSETS.DISCOVER:
-        data.type = DiscoverIcon
-        data.id = 'app.actionsPage.tabs.discover'
-        break
-      case ACTIONS_SUBSETS.SUGGESTED:
-        data.type = SuggestedIcon
-        data.id = 'app.actionsPage.tabs.suggested'
-        break
-      case ACTIONS_SUBSETS.HISTORY:
-        data.type = HistoryIcon
-        data.id = 'app.actionsPage.tabs.history'
-        break
-      default:
-        return
-    }
+    const data = [
+      {
+        type: DiscoverIcon,
+        id: 'app.actionsPage.tabs.discover',
+      },
+      {
+        type: SuggestedIcon,
+        id: 'app.actionsPage.tabs.suggested',
+      },
+      {
+        type: FlagIcon,
+        id: 'app.actionsPage.tabs.my-ideas',
+      },
+      {
+        type: HistoryIcon,
+        id: 'app.actionsPage.tabs.history',
+      },
+    ][Object.values(ACTIONS_SUBSETS).indexOf(subset)]
+
     return (
-      <Fragment>
-        <ActionTabWrapper>
-          <ActionTabIcon alt="" src={data.type} />
-          <FormattedMessage id={data.id} />
-        </ActionTabWrapper>
-      </Fragment>
+      <ActionTabWrapper>
+        <ActionTabIcon alt="" src={data.type} />
+        <FormattedMessage id={data.id} />
+      </ActionTabWrapper>
     )
+  }
+
+  onActionEdit = slug => e => {
+    const { history, match, location } = this.props
+
+    e.preventDefault()
+    history.push(
+      `/actions/${match.params.subset}/suggest-idea/${slug}${location.search}`,
+    )
+  }
+
+  onActionDelete = id => e => {
+    const {
+      intl: { formatMessage },
+      token,
+    } = this.props
+
+    e.preventDefault()
+
+    Modal.confirm({
+      title: formatMessage({
+        id: 'app.actions.page.delete.title',
+      }),
+      content: formatMessage({
+        id: 'app.actions.page.delete.text',
+      }),
+      okText: formatMessage({
+        id: 'app.profilePage.deleteAccountModal.confirmButton',
+      }),
+      cancelText: formatMessage({
+        id: 'app.profilePage.deleteAccountModal.cancelButton',
+      }),
+      okType: 'danger',
+      className: 'ant-modal-confirm_profile-page',
+      centered: true,
+      onOk: () => {
+        return api
+          .fetchAction({ id, token, method: 'DELETE' })
+          .then(this.props.fetch)
+      },
+    })
   }
 
   render() {
     const {
-      intl: { formatMessage, locale },
+      intl: { formatMessage },
       user,
       location,
+      loading,
+      actions,
+      limit,
+      page,
+      total,
+      timeValues = [],
+      match,
     } = this.props
 
     const {
-      actions,
-      limit,
-      loading,
-      page,
-      total,
       searchData,
       showFilter,
       activeFiltersCount,
       filterValuesFromQuery,
-      timeValues,
-      subset,
       subsetDropdownVisible,
     } = this.state
 
     return (
-      <Fragment>
+      <React.Fragment>
         <PageMetadata pageName="actionsPage" />
         <Wrapper>
           {user && (
@@ -607,79 +614,41 @@ class ActionsPage extends Component {
                 <ActionTabsInnerContainer>
                   <ActionTabsRow>
                     <ActionTabItemList>
-                      <ActionTabItem
-                        onClick={() =>
-                          this.handleTabItemSelect(ACTIONS_SUBSETS.DISCOVER)
-                        }
-                        active={subset === ACTIONS_SUBSETS.DISCOVER}
-                      >
-                        {this.getTabItemContent(ACTIONS_SUBSETS.DISCOVER)}
-                      </ActionTabItem>
-
-                      <ActionTabItem
-                        onClick={() =>
-                          this.handleTabItemSelect(ACTIONS_SUBSETS.SUGGESTED)
-                        }
-                        active={subset === ACTIONS_SUBSETS.SUGGESTED}
-                      >
-                        {this.getTabItemContent(ACTIONS_SUBSETS.SUGGESTED)}
-                      </ActionTabItem>
-
-                      <ActionTabItem
-                        onClick={() =>
-                          this.handleTabItemSelect(ACTIONS_SUBSETS.HISTORY)
-                        }
-                        active={subset === ACTIONS_SUBSETS.HISTORY}
-                      >
-                        {this.getTabItemContent(ACTIONS_SUBSETS.HISTORY)}
-                      </ActionTabItem>
+                      {Object.values(ACTIONS_SUBSETS).map(subset => (
+                        <ActionTabItem
+                          key={subset}
+                          onClick={() => this.handleTabItemSelect(subset)}
+                          active={match.params.subset === subset}
+                        >
+                          {this.getTabItemContent(subset)}
+                        </ActionTabItem>
+                      ))}
                     </ActionTabItemList>
 
                     <Popover
                       placement="bottomLeft"
                       visible={subsetDropdownVisible}
-                      onVisibleChange={this.handleSubsetDropdownVisibleChange}
                       content={
                         <ActionTabItemListMobile
                           mode="vertical"
                           theme="light"
-                          selectedKeys={[subset]}
+                          selectedKeys={[match.params.subset]}
                         >
-                          <Menu.Item
-                            key={ACTIONS_SUBSETS.DISCOVER}
-                            onClick={() =>
-                              this.handleTabItemSelect(ACTIONS_SUBSETS.DISCOVER)
-                            }
-                          >
-                            {this.getTabItemContent(ACTIONS_SUBSETS.DISCOVER)}
-                          </Menu.Item>
-
-                          <Menu.Item
-                            key={ACTIONS_SUBSETS.SUGGESTED}
-                            onClick={() =>
-                              this.handleTabItemSelect(
-                                ACTIONS_SUBSETS.SUGGESTED,
-                              )
-                            }
-                          >
-                            {this.getTabItemContent(ACTIONS_SUBSETS.SUGGESTED)}
-                          </Menu.Item>
-
-                          <Menu.Item
-                            key={ACTIONS_SUBSETS.HISTORY}
-                            onClick={() =>
-                              this.handleTabItemSelect(ACTIONS_SUBSETS.HISTORY)
-                            }
-                          >
-                            {this.getTabItemContent(ACTIONS_SUBSETS.HISTORY)}
-                          </Menu.Item>
+                          {Object.values(ACTIONS_SUBSETS).map(subset => (
+                            <Menu.Item
+                              key={subset}
+                              onClick={() => this.handleTabItemSelect(subset)}
+                            >
+                              {this.getTabItemContent(subset)}
+                            </Menu.Item>
+                          ))}
                         </ActionTabItemListMobile>
                       }
                     >
                       <ActionTabDropdown
                         onClick={this.handleSubsetDropdownClick}
                       >
-                        {this.getTabItemContent(subset)}
+                        {this.getTabItemContent(match.params.subset)}
                         <ExpandMoreIcon
                           style={{
                             color: `${colors.green}`,
@@ -689,7 +658,11 @@ class ActionsPage extends Component {
                     </Popover>
 
                     <div>
-                      <Link to={`${location.pathname}/suggest-idea`}>
+                      <Link
+                        to={`${location.pathname}/suggest-idea${
+                          location.search
+                        }`}
+                      >
                         <Button>
                           <FormattedMessage id="app.headerActions.addAction" />
                         </Button>
@@ -704,7 +677,7 @@ class ActionsPage extends Component {
             <InnerContainer>
               <Row span={8} xl={8} lg={12} md={12} xs={24}>
                 <Col>
-                  {subset === ACTIONS_SUBSETS.DISCOVER && (
+                  {match.params.subset === ACTIONS_SUBSETS.DISCOVER && (
                     <SearchWrapper>
                       <SearchFieldWrap>
                         <ToggleFilterButton onClick={this.toggleFilter}>
@@ -714,6 +687,7 @@ class ActionsPage extends Component {
                                 ? filterToggleActiveImg
                                 : filterToggleImg
                             }
+                            alt=""
                           />
                           {activeFiltersCount > 0 && (
                             <ToggleFilterActiveIcon>
@@ -726,7 +700,7 @@ class ActionsPage extends Component {
                             id: 'app.actionsPage.searchPlaceholder',
                           })}
                           value={searchData.searchFieldValue}
-                          dropdownClassName="ant-select__override-for__actions-page"
+                          dropdownClassName="ant-select_override-for_actions-page"
                           notFoundContent={
                             searchData.searching ? (
                               <Spin size="small" />
@@ -767,7 +741,6 @@ class ActionsPage extends Component {
                             this.searchActions({ name: value })
                           }
                           onChange={this.handleSearchFieldChange}
-                          onSelect={this.handleSearchedItemSelect}
                           onDropdownVisibleChange={
                             this.handleDropdownVisibleChange
                           }
@@ -795,7 +768,7 @@ class ActionsPage extends Component {
                             values={filterValuesFromQuery}
                             onReset={this.handleFilterReset}
                             onAfterChange={this.handleOnAfterFiltersChange}
-                            actionsPageSubset={subset}
+                            actionsPageSubset={match.params.subset}
                           />
                         </FilterWrap>
                       )}
@@ -810,13 +783,44 @@ class ActionsPage extends Component {
               ) : (
                 <Row gutter={{ md: 20 }}>
                   {actions.map(action => (
-                    <Col key={action._id} xl={8} lg={12} md={12} xs={24}>
+                    <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
                       <ActionCard
-                        linkPrefix={`/actions/${subset}`}
-                        slug={action.slug}
+                        to={`/actions/${match.params.subset}/${action.slug}${
+                          location.search
+                        }`}
                         picture={action.picture}
-                        name={action.translatedName[locale] || action.name}
-                        impacts={action.impacts}
+                        canChange={action.status === ACTION_STATES.PROPOSED}
+                        onEdit={this.onActionEdit(action.slug)}
+                        onDelete={this.onActionDelete(action._id)}
+                        name={action.name}
+                        impacts={() =>
+                          action.status !== ACTION_STATES.PUBLISHED ? (
+                            <Tooltip
+                              placement="top"
+                              title={formatMessage({
+                                id:
+                                  action.status === ACTION_STATES.MODELING
+                                    ? 'app.actions.card.waitModelingHint'
+                                    : 'app.actions.card.waitAdminHint',
+                              })}
+                            >
+                              <ImpactButton
+                                isModelling={
+                                  action.status === ACTION_STATES.MODELING
+                                }
+                              >
+                                {formatMessage({
+                                  id:
+                                    action.status === ACTION_STATES.MODELING
+                                      ? 'app.actions.card.waitModeling'
+                                      : 'app.actions.card.waitAdmin',
+                                })}
+                              </ImpactButton>
+                            </Tooltip>
+                          ) : (
+                            <ActionCardLabelSet impacts={action.impacts} />
+                          )
+                        }
                         suggestedBy={action.suggestedBy}
                         suggestedAt={action.suggestedAt}
                       />
@@ -837,13 +841,12 @@ class ActionsPage extends Component {
                   itemRender={this.paginationItemRender}
                   pageSize={limit}
                   total={total}
-                  onChange={this.handlePaginationChange}
                 />
               )}
             </InnerContainer>
           </BlockContainer>
         </Wrapper>
-      </Fragment>
+      </React.Fragment>
     )
   }
 }
@@ -853,6 +856,15 @@ ActionsPage.propTypes = {
   user: PropTypes.object,
   token: PropTypes.string,
   location: PropTypes.object,
+  match: PropTypes.object,
+  history: PropTypes.object,
+  fetch: PropTypes.func,
+  loading: PropTypes.bool,
+  actions: PropTypes.array,
+  limit: PropTypes.number,
+  page: PropTypes.number,
+  total: PropTypes.number,
+  timeValues: PropTypes.array,
 }
 
 const mapStateToProps = state => ({
@@ -862,5 +874,6 @@ const mapStateToProps = state => ({
 
 export default compose(
   connect(mapStateToProps),
+  fetch(getActionsList, { ...fetchConfigDefault, loader: false }),
   injectIntl,
 )(ActionsPage)

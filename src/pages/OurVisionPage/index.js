@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col } from 'antd'
 import styled from 'styled-components'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+import { animateScroll } from 'react-scroll'
 
 import heroBg from 'assets/our-vision/hero-bg.jpg'
 import planet from 'assets/our-vision/planet.png'
@@ -331,15 +332,18 @@ const StepSixContentWrap = styled(StepFourContentWrap)`
   left: -1px;
 `
 
-class OurVisionPage extends Component {
+class OurVisionPage extends React.PureComponent {
   state = {
     actions: [],
   }
 
-  componentDidMount = async () => {
+  async componentDidMount() {
+    animateScroll.scrollToTop()
+
     const {
       actions: { docs: actions },
     } = await api.getActions()
+
     this.setState({ actions })
   }
 

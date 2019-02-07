@@ -7,8 +7,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { Link } from 'react-router-dom'
 
-import { handleBackdropClick } from 'appRouter'
-import { ACTIONS_SUBSETS } from 'utils/constants'
+import { ACTIONS_SUBSETS, ACTION_STATES } from 'utils/constants'
 import api from 'api'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import colors from 'config/colors'
@@ -70,6 +69,7 @@ const Container = styled(Row)`
 const LeftPanel = styled.div`
   height: 100%;
   width: 50%;
+  background-color: ${colors.darkGray};
 
   ${media.tablet`
     width: 100%;
@@ -99,10 +99,13 @@ const RightPanel = styled.div`
   `}
 `
 
-const CloseButton = styled.div`
+const CloseButton = styled.button`
   width: 50px;
   height: 50px;
   position: absolute;
+  background-color: transparent;
+  outline: 0;
+  border: 0;
   right: 17px;
   top: 10px;
   display: flex;
@@ -354,6 +357,7 @@ const ActionContent = styled.div`
   height: 400px;
   overflow: scroll;
   padding: 0 60px;
+  width: 100%;
 `
 
 const isSafariMobile = window.navigator.userAgent.match(/iPhone/i)
@@ -374,11 +378,9 @@ class ActionModalPage extends Component {
   componentDidMount() {
     const { match, token } = this.props
 
-    api
-      .findAction({ slug: match.params.actionSlug }, token)
-      .then(({ action }) => {
-        this.setState({ action, step: ActionModalPageSteps.ACTION_VIEW })
-      })
+    api.fetchAction({ slug: match.params.slug, token }).then(({ action }) => {
+      this.setState({ action, step: ActionModalPageSteps.ACTION_VIEW })
+    })
   }
 
   handleSubmitEngage = async () => {
@@ -442,50 +444,64 @@ class ActionModalPage extends Component {
       user,
     } = this.props
     const { action, takeActionError, takingAction } = this.state
+
     return this.renderInContainer({
       children: (
         <Fragment>
           <LeftPanel>
-            <img src={action.picture} alt="" />
+            {action.picture && <img src={action.picture} alt="" />}
           </LeftPanel>
           <RightPanel isIphone={isSafariMobile} span={12}>
             <ModalContentWrap isIphone={isSafariMobile}>
-              <ActionCardLabelSet impacts={action.impacts} mobileFixedWidth />
+              {action.status === ACTION_STATES.PUBLISHED && (
+                <ActionCardLabelSet impacts={action.impacts} mobileFixedWidth />
+              )}
+
               <ActionContent>
                 <ActionName>
-                  {action.translatedName[locale] || action.name}
+                  {(action.translatedName && action.translatedName[locale]) ||
+                    action.name}
                 </ActionName>
                 <ActionDescription>
-                  {action.translatedDescription[locale] || action.description}
+                  {(action.translatedDescription &&
+                    action.translatedDescription[locale]) ||
+                    action.description}
                 </ActionDescription>
-                <ActionAssumptions>
-                  <FormattedMessage id="app.actions.assumptions" />
-                  <br />
-                  {action.translatedAssumptions[locale] || action.assumptions}
-                </ActionAssumptions>
+
+                {action.status === ACTION_STATES.PUBLISHED && (
+                  <ActionAssumptions>
+                    <FormattedMessage id="app.actions.assumptions" />
+                    <br />
+                    {(action.translatedAssumptions &&
+                      action.translatedAssumptions[locale]) ||
+                      action.assumptions}
+                  </ActionAssumptions>
+                )}
               </ActionContent>
               <BottomPanel isIphone={isSafariMobile}>
-                <ActionViewButtonsWrapper isIphone={isSafariMobile}>
-                  {user && (
-                    <DefaultButton
-                      type="primary"
-                      htmlType="submit"
-                      onClick={this.switchToEngageView}
-                    >
-                      <FormattedMessage id="app.actions.engage" />
-                    </DefaultButton>
-                  )}
-                  {!location.pathname.includes(ACTIONS_SUBSETS.HISTORY) && (
-                    <TakeActionButton
-                      type="primary"
-                      loading={takingAction}
-                      onClick={this.takeAction}
-                      isLoggedIn={user}
-                    >
-                      <FormattedMessage id="app.actions.takeAction" />
-                    </TakeActionButton>
-                  )}
-                </ActionViewButtonsWrapper>
+                {action.status !== ACTION_STATES.PROPOSED && (
+                  <ActionViewButtonsWrapper isIphone={isSafariMobile}>
+                    {user && (
+                      <DefaultButton
+                        type="primary"
+                        htmlType="submit"
+                        onClick={this.switchToEngageView}
+                      >
+                        <FormattedMessage id="app.actions.engage" />
+                      </DefaultButton>
+                    )}
+                    {!location.pathname.includes(ACTIONS_SUBSETS.TAKEN) && (
+                      <TakeActionButton
+                        type="primary"
+                        loading={takingAction}
+                        onClick={this.takeAction}
+                        isLoggedIn={user}
+                      >
+                        <FormattedMessage id="app.actions.takeAction" />
+                      </TakeActionButton>
+                    )}
+                  </ActionViewButtonsWrapper>
+                )}
                 {takeActionError && (
                   <FormItem
                     validateStatus="error"
@@ -502,8 +518,9 @@ class ActionModalPage extends Component {
   }
 
   renderActionTakenView = ({ type }) => {
-    const { user } = this.props
+    const { user, closeModal } = this.props
     const { action } = this.state
+
     return this.renderInContainer({
       children: (
         <Fragment>
@@ -539,12 +556,7 @@ class ActionModalPage extends Component {
             {user ? (
               <TakenActionAuthWrap>
                 <TakenActionAuthContent>
-                  <Button
-                    type="primary"
-                    onClick={() =>
-                      handleBackdropClick({ parentPath: '/actions' })
-                    }
-                  >
+                  <Button type="primary" onClick={closeModal}>
                     <FormattedMessage id="app.actions.congratulations.nice" />
                   </Button>
                 </TakenActionAuthContent>
@@ -636,12 +648,10 @@ class ActionModalPage extends Component {
     })
   }
 
-  renderInContainer = ({ children, width, height, closeBtnColor }) => (
+  renderInContainer = ({ children, width, height }) => (
     <Container width={width} height={height}>
       {children}
-      <CloseButton
-        onClick={() => handleBackdropClick({ parentPath: '/actions' })}
-      >
+      <CloseButton onClick={this.props.closeModal}>
         <CloseIcon />
       </CloseButton>
     </Container>
@@ -679,12 +689,8 @@ ActionModalPage.propTypes = {
   intl: PropTypes.object.isRequired,
   form: PropTypes.object.isRequired,
   location: PropTypes.object,
-  match: {
-    params: {
-      actionSlug: PropTypes.string.isRequired,
-    },
-  },
-  user: PropTypes.oneOf([null, PropTypes.object]),
+  match: PropTypes.object,
+  user: PropTypes.object,
   token: PropTypes.string,
 }
 

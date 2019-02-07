@@ -2,11 +2,11 @@ import React, { Fragment } from 'react'
 import { Row, Col, Icon } from 'antd'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import styled from 'styled-components'
-import { Link as AnchorLink } from 'react-scroll'
+import { animateScroll, Link as AnchorLink } from 'react-scroll'
 
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
-import hexToRgba from '../../utils/hexToRgba'
+import hexToRgba from 'utils/hexToRgba'
 import {
   BlockContainer,
   BlockTitleGreen,
@@ -534,7 +534,7 @@ const CategoriesContainer = styled.div`
 
 const CategoriesItem = styled.div`
   display: flex;
-  align-items center;
+  align-items: center;
   font-size: 14px;
   margin-right: 10px;
   &:last-child {
@@ -564,326 +564,330 @@ const CardListWrap = styled.div`
   }
 `
 
-const MeasurementUnitsPage = () => {
-  return (
-    <Fragment>
-      <PageMetadata pageName="measurementPage" />
-      <HeroSection>
-        <BlockContainer>
-          <Row gutter={{ md: 20 }} type="flex" align="middle">
-            <Col xs={{ order: 2 }} md={{ order: 1 }} xl={12}>
-              <BlockTitleGreen>
-                <FormattedHTMLMessage id="app.measurementPage.Hero.Title" />
-              </BlockTitleGreen>
-              <HeroText>
-                <FormattedMessage id="app.measurementPage.Hero.Text" />
-              </HeroText>
-            </Col>
-            <Col xs={{ order: 1 }} md={{ order: 2 }} xl={12}>
-              <HeroBlockImage>
-                <img src={heroImg} alt="Car" />
-              </HeroBlockImage>
-            </Col>
-          </Row>
-        </BlockContainer>
-      </HeroSection>
+export default class MeasurementUnitsPage extends React.PureComponent {
+  componentDidMount() {
+    animateScroll.scrollToTop()
+  }
 
-      <ScrollToSection>
-        <BlockContainer>
-          <Row>
-            <p>
-              <FormattedMessage id="app.measurementPage.ScrollText" />
-            </p>
-            <AnchorLink to="anchor" spy={true} smooth={true} duration={500}>
-              <ScrollButton>
-                <ExpandMoreIcon />
-              </ScrollButton>
-            </AnchorLink>
-          </Row>
-        </BlockContainer>
-      </ScrollToSection>
-
-      <MeaningSection id="anchor">
-        <BlockContainer>
-          <Row gutter={{ md: 20 }}>
-            <Col xl={10}>
-              <MeaningContent>
-                <BlockSubTitle>
-                  <FormattedHTMLMessage id="app.measurementPage.Meaning.Title" />
-                </BlockSubTitle>
-                <TextMediumGroup>
-                  <FormattedHTMLMessage id="app.measurementPage.Meaning.Text1" />
-                </TextMediumGroup>
-                <TextMediumGroup>
-                  <FormattedHTMLMessage id="app.measurementPage.Meaning.Text2" />
-                </TextMediumGroup>
-              </MeaningContent>
-            </Col>
-            <Col xl={14}>
-              <ImgWrapRight>
-                <MeaningBlockImage src={meaningImg} alt="" />
-                <MobileImg src={meaningMobImg} alt="" />
-              </ImgWrapRight>
-            </Col>
-          </Row>
-        </BlockContainer>
-      </MeaningSection>
-
-      <ProblemSection>
-        <BlockContainer>
-          <Row gutter={{ md: 20 }} type="flex" align="middle">
-            <Col xs={{ order: 2 }} xl={{ span: 12, order: 1 }}>
-              <div>
-                <ProblemBlockImage src={problemImg} alt="" />
-              </div>
-            </Col>
-            <Col xs={{ order: 1 }} xl={{ span: 10, order: 2 }}>
-              <ProblemContent>
-                <BlockSubTitle>
-                  <FormattedHTMLMessage id="app.measurementPage.Problem.Title" />
-                </BlockSubTitle>
-                <TextMediumGroup>
-                  <FormattedMessage id="app.measurementPage.Problem.Text1" />
-                </TextMediumGroup>
-                <TextMediumGroup>
-                  <FormattedHTMLMessage id="app.measurementPage.Problem.Text2" />
-                </TextMediumGroup>
-              </ProblemContent>
-            </Col>
-          </Row>
-        </BlockContainer>
-      </ProblemSection>
-
-      <section>
-        <BlockContainer>
-          <InfoWrap>
-            <Row gutter={{ md: 20 }}>
-              <Col xl={{ span: 8, offset: 2 }}>
-                <InfoItem>
-                  <img src={iconClock} alt="" />
-                  <TextMedium>
-                    <FormattedMessage id="app.measurementPage.Info.Text1" />
-                  </TextMedium>
-                </InfoItem>
+  render() {
+    return (
+      <Fragment>
+        <PageMetadata pageName="measurementPage" />
+        <HeroSection>
+          <BlockContainer>
+            <Row gutter={{ md: 20 }} type="flex" align="middle">
+              <Col xs={{ order: 2 }} md={{ order: 1 }} xl={12}>
+                <BlockTitleGreen>
+                  <FormattedHTMLMessage id="app.measurementPage.Hero.Title" />
+                </BlockTitleGreen>
+                <HeroText>
+                  <FormattedMessage id="app.measurementPage.Hero.Text" />
+                </HeroText>
               </Col>
-              <Col xl={{ span: 10, offset: 2 }}>
-                <InfoItem>
-                  <img src={iconLeg} alt="" />
-                  <TextMedium>
-                    <FormattedMessage id="app.measurementPage.Info.Text2" />
-                  </TextMedium>
-                </InfoItem>
+              <Col xs={{ order: 1 }} md={{ order: 2 }} xl={12}>
+                <HeroBlockImage>
+                  <img src={heroImg} alt="Car" />
+                </HeroBlockImage>
               </Col>
             </Row>
-          </InfoWrap>
-        </BlockContainer>
-      </section>
+          </BlockContainer>
+        </HeroSection>
 
-      <ImpactSection>
-        <BlockContainer>
-          <BlockHeader>
+        <ScrollToSection>
+          <BlockContainer>
+            <Row>
+              <p>
+                <FormattedMessage id="app.measurementPage.ScrollText" />
+              </p>
+              <AnchorLink to="anchor" spy={true} smooth={true} duration={500}>
+                <ScrollButton>
+                  <ExpandMoreIcon />
+                </ScrollButton>
+              </AnchorLink>
+            </Row>
+          </BlockContainer>
+        </ScrollToSection>
+
+        <MeaningSection id="anchor">
+          <BlockContainer>
+            <Row gutter={{ md: 20 }}>
+              <Col xl={10}>
+                <MeaningContent>
+                  <BlockSubTitle>
+                    <FormattedHTMLMessage id="app.measurementPage.Meaning.Title" />
+                  </BlockSubTitle>
+                  <TextMediumGroup>
+                    <FormattedHTMLMessage id="app.measurementPage.Meaning.Text1" />
+                  </TextMediumGroup>
+                  <TextMediumGroup>
+                    <FormattedHTMLMessage id="app.measurementPage.Meaning.Text2" />
+                  </TextMediumGroup>
+                </MeaningContent>
+              </Col>
+              <Col xl={14}>
+                <ImgWrapRight>
+                  <MeaningBlockImage src={meaningImg} alt="" />
+                  <MobileImg src={meaningMobImg} alt="" />
+                </ImgWrapRight>
+              </Col>
+            </Row>
+          </BlockContainer>
+        </MeaningSection>
+
+        <ProblemSection>
+          <BlockContainer>
+            <Row gutter={{ md: 20 }} type="flex" align="middle">
+              <Col xs={{ order: 2 }} xl={{ span: 12, order: 1 }}>
+                <div>
+                  <ProblemBlockImage src={problemImg} alt="" />
+                </div>
+              </Col>
+              <Col xs={{ order: 1 }} xl={{ span: 10, order: 2 }}>
+                <ProblemContent>
+                  <BlockSubTitle>
+                    <FormattedHTMLMessage id="app.measurementPage.Problem.Title" />
+                  </BlockSubTitle>
+                  <TextMediumGroup>
+                    <FormattedMessage id="app.measurementPage.Problem.Text1" />
+                  </TextMediumGroup>
+                  <TextMediumGroup>
+                    <FormattedHTMLMessage id="app.measurementPage.Problem.Text2" />
+                  </TextMediumGroup>
+                </ProblemContent>
+              </Col>
+            </Row>
+          </BlockContainer>
+        </ProblemSection>
+
+        <section>
+          <BlockContainer>
+            <InfoWrap>
+              <Row gutter={{ md: 20 }}>
+                <Col xl={{ span: 8, offset: 2 }}>
+                  <InfoItem>
+                    <img src={iconClock} alt="" />
+                    <TextMedium>
+                      <FormattedMessage id="app.measurementPage.Info.Text1" />
+                    </TextMedium>
+                  </InfoItem>
+                </Col>
+                <Col xl={{ span: 10, offset: 2 }}>
+                  <InfoItem>
+                    <img src={iconLeg} alt="" />
+                    <TextMedium>
+                      <FormattedMessage id="app.measurementPage.Info.Text2" />
+                    </TextMedium>
+                  </InfoItem>
+                </Col>
+              </Row>
+            </InfoWrap>
+          </BlockContainer>
+        </section>
+
+        <ImpactSection>
+          <BlockContainer>
+            <BlockHeader>
+              <Row type="flex" justify="center">
+                <Col xl={16}>
+                  <BlockSubTitle>
+                    <FormattedMessage id="app.measurementPage.Impact.Title" />
+                  </BlockSubTitle>
+                  <TextMedium>
+                    <FormattedMessage id="app.measurementPage.Impact.Text" />
+                  </TextMedium>
+                </Col>
+              </Row>
+            </BlockHeader>
+
+            <Row type="flex" align="middle">
+              <Col md={12} xl={{ span: 10, offset: 2 }}>
+                <ImpactBlockWrap>
+                  <HeadingMiddle as="h3">
+                    <FormattedMessage id="app.measurementPage.Impact.ListTitle" />
+                  </HeadingMiddle>
+                  <ImpactLabelTextOcean>
+                    <FormattedMessage id="app.measurementPage.Impact.ListDescription" />
+                  </ImpactLabelTextOcean>
+                  <ImpactContainer>
+                    <ImpactItem>
+                      <ImpactLabelImg src={blueLabel} alt="" />
+                      <ImpactLabelTextBlue>
+                        <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemBlue" />
+                      </ImpactLabelTextBlue>
+                    </ImpactItem>
+                    <ImpactItem>
+                      <ImpactLabelImg src={darkGreenLabel} alt="" />
+                      <ImpactLabelTextOcean>
+                        <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemDarkGreen" />
+                      </ImpactLabelTextOcean>
+                    </ImpactItem>
+                    <ImpactItem>
+                      <ImpactLabelImg src={lightGreenLabel} alt="" />
+                      <ImpactLabelTextGreen>
+                        <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemLightGreen" />
+                      </ImpactLabelTextGreen>
+                    </ImpactItem>
+                    <ImpactItem>
+                      <ImpactLabelImg src={grayLabel} alt="" />
+                      <ImpactLabelTextGray>
+                        <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemGray" />
+                      </ImpactLabelTextGray>
+                    </ImpactItem>
+                  </ImpactContainer>
+                </ImpactBlockWrap>
+                <ImpactBlockWrap>
+                  <HeadingMiddle as="h3">
+                    <FormattedMessage id="app.measurementPage.Impact.CategoryTitle" />
+                  </HeadingMiddle>
+                  <ImpactLabelTextOcean>
+                    <FormattedMessage id="app.measurementPage.Impact.CategoryDescription" />
+                  </ImpactLabelTextOcean>
+                  <CategoriesContainer>
+                    <CategoriesItem>
+                      <Icon component={() => icons.positive.climate} />
+                      <FormattedMessage id="app.impactCategories.climate" />
+                    </CategoriesItem>
+                    <CategoriesItem>
+                      <Icon component={() => icons.positive.water} />
+                      <FormattedMessage id="app.impactCategories.water" />
+                    </CategoriesItem>
+                    <CategoriesItem>
+                      <Icon component={() => icons.positive.waste} />
+                      <FormattedMessage id="app.impactCategories.waste" />
+                    </CategoriesItem>
+                    <CategoriesItem>
+                      <Icon component={() => icons.positive.health} />
+                      <FormattedMessage id="app.impactCategories.health" />
+                    </CategoriesItem>
+                    <CategoriesItem>
+                      <Icon component={() => icons.positive.ecosystem} />
+                      <FormattedMessage id="app.impactCategories.ecosystem" />
+                    </CategoriesItem>
+                  </CategoriesContainer>
+                </ImpactBlockWrap>
+              </Col>
+              <Col md={12}>
+                <ImpactImg>
+                  <img src={cowImg} alt="" />
+                </ImpactImg>
+              </Col>
+            </Row>
+          </BlockContainer>
+        </ImpactSection>
+
+        <CardSection>
+          <BlockContainer>
+            <Row>
+              <Col md={12}>
+                <ImgWrapRight>
+                  <CardImage src={cardImg} alt="" />
+                </ImgWrapRight>
+              </Col>
+              <Col md={{ span: 10, offset: 2 }}>
+                <CardListContainer>
+                  <CardListWrap>
+                    <TextMedium>
+                      <strong>
+                        <FormattedMessage id="app.measurementPage.Card.Title" />
+                      </strong>
+                    </TextMedium>
+                    <CardList>
+                      <CardListBlue>
+                        <TextMedium>
+                          <FormattedHTMLMessage id="app.measurementPage.Card.Item1" />
+                        </TextMedium>
+                      </CardListBlue>
+                      <CardListBlue>
+                        <TextMedium>
+                          <FormattedHTMLMessage id="app.measurementPage.Card.Item2" />
+                        </TextMedium>
+                      </CardListBlue>
+                      <CardListOcean>
+                        <TextMedium>
+                          <FormattedHTMLMessage id="app.measurementPage.Card.Item3" />
+                        </TextMedium>
+                      </CardListOcean>
+                      <CardListOcean>
+                        <TextMedium>
+                          <FormattedHTMLMessage id="app.measurementPage.Card.Item4" />
+                        </TextMedium>
+                      </CardListOcean>
+                      <CardListGreen>
+                        <TextMedium>
+                          <FormattedHTMLMessage id="app.measurementPage.Card.Item5" />
+                        </TextMedium>
+                      </CardListGreen>
+                    </CardList>
+                  </CardListWrap>
+                </CardListContainer>
+              </Col>
+            </Row>
+          </BlockContainer>
+        </CardSection>
+
+        <PrecisionSection>
+          <BlockContainer>
+            <Row gutter={{ md: 20 }} type="flex" align="middle">
+              <Col xs={{ order: 2 }} xl={{ span: 12, order: 1 }}>
+                <ImgWrapCentered>
+                  <CommonBasisImg src={precisionImg} alt="" />
+                </ImgWrapCentered>
+              </Col>
+              <Col xs={{ order: 1 }} xl={{ span: 12, order: 2 }}>
+                <CommonBasisContent>
+                  <BlockSubTitle>
+                    <FormattedMessage id="app.measurementPage.Precision.Title" />
+                  </BlockSubTitle>
+                  <TextMediumGroup>
+                    <FormattedMessage id="app.measurementPage.Precision.Text1" />
+                  </TextMediumGroup>
+                  <TextMediumGroup>
+                    <FormattedHTMLMessage id="app.measurementPage.Precision.Text2" />
+                  </TextMediumGroup>
+                </CommonBasisContent>
+              </Col>
+            </Row>
+          </BlockContainer>
+        </PrecisionSection>
+
+        <CommonBasisSection>
+          <BlockContainer>
+            <Row gutter={{ md: 20 }}>
+              <Col xl={10}>
+                <CommonBasisContent>
+                  <BlockSubTitle>
+                    <FormattedHTMLMessage id="app.measurementPage.CommonBasis.Title" />
+                  </BlockSubTitle>
+                  <TextMediumGroup>
+                    <FormattedHTMLMessage id="app.measurementPage.CommonBasis.Text1" />
+                  </TextMediumGroup>
+                  <TextMediumGroup>
+                    <FormattedHTMLMessage id="app.measurementPage.CommonBasis.Text2" />
+                  </TextMediumGroup>
+                </CommonBasisContent>
+              </Col>
+              <Col xl={{ span: 12, offset: 2 }}>
+                <ImgWrapCentered>
+                  <CommonBasisImg src={footImg} alt="" />
+                </ImgWrapCentered>
+              </Col>
+            </Row>
+          </BlockContainer>
+        </CommonBasisSection>
+
+        <AnimationSection>
+          <BlockContainer className="block">
             <Row type="flex" justify="center">
               <Col xl={16}>
-                <BlockSubTitle>
-                  <FormattedMessage id="app.measurementPage.Impact.Title" />
-                </BlockSubTitle>
-                <TextMedium>
-                  <FormattedMessage id="app.measurementPage.Impact.Text" />
-                </TextMedium>
+                <BlockSubTitleGreen>
+                  <FormattedHTMLMessage id="app.measurementPage.Animation.Title" />
+                </BlockSubTitleGreen>
               </Col>
             </Row>
-          </BlockHeader>
-
-          <Row type="flex" align="middle">
-            <Col md={12} xl={{ span: 10, offset: 2 }}>
-              <ImpactBlockWrap>
-                <HeadingMiddle as="h3">
-                  <FormattedMessage id="app.measurementPage.Impact.ListTitle" />
-                </HeadingMiddle>
-                <ImpactLabelTextOcean>
-                  <FormattedMessage id="app.measurementPage.Impact.ListDescription" />
-                </ImpactLabelTextOcean>
-                <ImpactContainer>
-                  <ImpactItem>
-                    <ImpactLabelImg src={blueLabel} alt="" />
-                    <ImpactLabelTextBlue>
-                      <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemBlue" />
-                    </ImpactLabelTextBlue>
-                  </ImpactItem>
-                  <ImpactItem>
-                    <ImpactLabelImg src={darkGreenLabel} alt="" />
-                    <ImpactLabelTextOcean>
-                      <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemDarkGreen" />
-                    </ImpactLabelTextOcean>
-                  </ImpactItem>
-                  <ImpactItem>
-                    <ImpactLabelImg src={lightGreenLabel} alt="" />
-                    <ImpactLabelTextGreen>
-                      <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemLightGreen" />
-                    </ImpactLabelTextGreen>
-                  </ImpactItem>
-                  <ImpactItem>
-                    <ImpactLabelImg src={grayLabel} alt="" />
-                    <ImpactLabelTextGray>
-                      <FormattedHTMLMessage id="app.measurementPage.Impact.ListItemGray" />
-                    </ImpactLabelTextGray>
-                  </ImpactItem>
-                </ImpactContainer>
-              </ImpactBlockWrap>
-              <ImpactBlockWrap>
-                <HeadingMiddle as="h3">
-                  <FormattedMessage id="app.measurementPage.Impact.CategoryTitle" />
-                </HeadingMiddle>
-                <ImpactLabelTextOcean>
-                  <FormattedMessage id="app.measurementPage.Impact.CategoryDescription" />
-                </ImpactLabelTextOcean>
-                <CategoriesContainer>
-                  <CategoriesItem>
-                    <Icon component={() => icons.positive.climate} />
-                    <FormattedMessage id="app.impactCategories.climate" />
-                  </CategoriesItem>
-                  <CategoriesItem>
-                    <Icon component={() => icons.positive.water} />
-                    <FormattedMessage id="app.impactCategories.water" />
-                  </CategoriesItem>
-                  <CategoriesItem>
-                    <Icon component={() => icons.positive.waste} />
-                    <FormattedMessage id="app.impactCategories.waste" />
-                  </CategoriesItem>
-                  <CategoriesItem>
-                    <Icon component={() => icons.positive.health} />
-                    <FormattedMessage id="app.impactCategories.health" />
-                  </CategoriesItem>
-                  <CategoriesItem>
-                    <Icon component={() => icons.positive.ecosystem} />
-                    <FormattedMessage id="app.impactCategories.ecosystem" />
-                  </CategoriesItem>
-                </CategoriesContainer>
-              </ImpactBlockWrap>
-            </Col>
-            <Col md={12}>
-              <ImpactImg>
-                <img src={cowImg} alt="" />
-              </ImpactImg>
-            </Col>
-          </Row>
-        </BlockContainer>
-      </ImpactSection>
-
-      <CardSection>
-        <BlockContainer>
-          <Row>
-            <Col md={12}>
-              <ImgWrapRight>
-                <CardImage src={cardImg} alt="" />
-              </ImgWrapRight>
-            </Col>
-            <Col md={{ span: 10, offset: 2 }}>
-              <CardListContainer>
-                <CardListWrap>
-                  <TextMedium>
-                    <strong>
-                      <FormattedMessage id="app.measurementPage.Card.Title" />
-                    </strong>
-                  </TextMedium>
-                  <CardList>
-                    <CardListBlue>
-                      <TextMedium>
-                        <FormattedHTMLMessage id="app.measurementPage.Card.Item1" />
-                      </TextMedium>
-                    </CardListBlue>
-                    <CardListBlue>
-                      <TextMedium>
-                        <FormattedHTMLMessage id="app.measurementPage.Card.Item2" />
-                      </TextMedium>
-                    </CardListBlue>
-                    <CardListOcean>
-                      <TextMedium>
-                        <FormattedHTMLMessage id="app.measurementPage.Card.Item3" />
-                      </TextMedium>
-                    </CardListOcean>
-                    <CardListOcean>
-                      <TextMedium>
-                        <FormattedHTMLMessage id="app.measurementPage.Card.Item4" />
-                      </TextMedium>
-                    </CardListOcean>
-                    <CardListGreen>
-                      <TextMedium>
-                        <FormattedHTMLMessage id="app.measurementPage.Card.Item5" />
-                      </TextMedium>
-                    </CardListGreen>
-                  </CardList>
-                </CardListWrap>
-              </CardListContainer>
-            </Col>
-          </Row>
-        </BlockContainer>
-      </CardSection>
-
-      <PrecisionSection>
-        <BlockContainer>
-          <Row gutter={{ md: 20 }} type="flex" align="middle">
-            <Col xs={{ order: 2 }} xl={{ span: 12, order: 1 }}>
-              <ImgWrapCentered>
-                <CommonBasisImg src={precisionImg} alt="" />
-              </ImgWrapCentered>
-            </Col>
-            <Col xs={{ order: 1 }} xl={{ span: 12, order: 2 }}>
-              <CommonBasisContent>
-                <BlockSubTitle>
-                  <FormattedMessage id="app.measurementPage.Precision.Title" />
-                </BlockSubTitle>
-                <TextMediumGroup>
-                  <FormattedMessage id="app.measurementPage.Precision.Text1" />
-                </TextMediumGroup>
-                <TextMediumGroup>
-                  <FormattedHTMLMessage id="app.measurementPage.Precision.Text2" />
-                </TextMediumGroup>
-              </CommonBasisContent>
-            </Col>
-          </Row>
-        </BlockContainer>
-      </PrecisionSection>
-
-      <CommonBasisSection>
-        <BlockContainer>
-          <Row gutter={{ md: 20 }}>
-            <Col xl={10}>
-              <CommonBasisContent>
-                <BlockSubTitle>
-                  <FormattedHTMLMessage id="app.measurementPage.CommonBasis.Title" />
-                </BlockSubTitle>
-                <TextMediumGroup>
-                  <FormattedHTMLMessage id="app.measurementPage.CommonBasis.Text1" />
-                </TextMediumGroup>
-                <TextMediumGroup>
-                  <FormattedHTMLMessage id="app.measurementPage.CommonBasis.Text2" />
-                </TextMediumGroup>
-              </CommonBasisContent>
-            </Col>
-            <Col xl={{ span: 12, offset: 2 }}>
-              <ImgWrapCentered>
-                <CommonBasisImg src={footImg} alt="" />
-              </ImgWrapCentered>
-            </Col>
-          </Row>
-        </BlockContainer>
-      </CommonBasisSection>
-
-      <AnimationSection>
-        <BlockContainer className="block">
-          <Row type="flex" justify="center">
-            <Col xl={16}>
-              <BlockSubTitleGreen>
-                <FormattedHTMLMessage id="app.measurementPage.Animation.Title" />
-              </BlockSubTitleGreen>
-            </Col>
-          </Row>
-          <MeasuringAnimation />
-        </BlockContainer>
-      </AnimationSection>
-    </Fragment>
-  )
+            <MeasuringAnimation />
+          </BlockContainer>
+        </AnimationSection>
+      </Fragment>
+    )
+  }
 }
-
-export default MeasurementUnitsPage

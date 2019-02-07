@@ -3,6 +3,7 @@ import { Row, Col, Button, Carousel } from 'antd'
 import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { animateScroll } from 'react-scroll/modules'
 
 import colors from './../../config/colors'
 import media from './../../utils/mediaQueryTemplate'
@@ -451,6 +452,8 @@ class AboutInterfacePage extends Component {
   }
 
   componentDidMount = async () => {
+    animateScroll.scrollToTop()
+
     const {
       actions: { docs: actions },
     } = await api.getActions()
@@ -578,8 +581,7 @@ class AboutInterfacePage extends Component {
                       fontWeight: '300',
                       color: colors.interfaceFooterColor2,
                     }}
-                    linkPrefix="/pages/home/actions"
-                    slug={action.slug}
+                    to={`/pages/home/actions/${action.slug}`}
                     picture={action.picture}
                     name={action.translatedName[locale] || action.name}
                     impacts={action.impacts}

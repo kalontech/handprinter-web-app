@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Upload, Form, Icon } from 'antd'
@@ -6,14 +8,15 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import CloseIcon from 'assets/icons/CloseIcon'
 import { FormItem, Input, PrimaryButton } from 'components/Styled'
+import Spinner from 'components/Spinner'
 import { ACCEPT_IMAGE_FORMATS, FILE_SIZE_LIMIT } from 'config/files'
 import { MAX_DESCRIPTION_LENGTH } from 'config/common'
 import colors from 'config/colors'
 import { required, fileSize } from 'config/validationRules'
 import media from 'utils/mediaQueryTemplate'
+import fetch, { configDefault as fetchConfigDefault } from 'utils/fetch'
 import api from 'api'
 import hexToRgba from 'utils/hexToRgba'
-import { Redirect } from 'react-router-dom'
 
 const Container = styled.section`
   align-items: center;
@@ -32,8 +35,10 @@ const Container = styled.section`
   `}
 `
 
-const CloseButton = styled.div`
+const CloseButton = styled.button`
   border: 0;
+  outline: 0;
+  background-color: transparent;
   align-items: center;
   cursor: pointer;
   display: flex;
@@ -43,9 +48,8 @@ const CloseButton = styled.div`
   right: 17px;
   top: 10px;
   width: 50px;
-  z-index: 2;
+  z-index: 12;
   transition: color 0.3s;
-  cursor: pointer;
   color: ${colors.darkGray};
   &:hover {
     color: ${colors.dark};
@@ -94,18 +98,14 @@ const UploadWrap = styled.div`
 const MainFields = styled.div`
   width: 50%;
   padding: 44px 60px;
-  display: flex
-  flex-direction: column
-  justify-content: space-between
-
-  ${media.tablet`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between ${media.tablet`
     width: 100%;
     padding: 24px 0 0;
-  `}
-
-  ${media.phone`
+  `} ${media.phone`
     padding: 24px 20px;
-  `}
+  `};
 `
 
 const Title = styled.header`
@@ -113,6 +113,7 @@ const Title = styled.header`
   line-height: 35px;
   text-align: center;
   margin-bottom: 12px;
+  text-transform: capitalize;
 `
 
 const ButtonsWrapper = styled.div`
@@ -122,6 +123,7 @@ const ButtonsWrapper = styled.div`
 
 const SaveButton = styled(PrimaryButton)`
   min-width: 50%;
+  text-transform: capitalize;
 `
 
 const ButtonCancel = styled(PrimaryButton)`
@@ -282,10 +284,29 @@ const ButtonAddPhotoContent = styled.div`
   }
 `
 
+const Loader = styled.section`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: ${colors.white};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const getValueFromEvent = ({ file }) => ({
   file,
   fileUrl: URL.createObjectURL(file),
 })
+
+async function fetchIdeas({ match, token }) {
+  const data = await api.fetchAction({ slug: match.params.slug, token })
+
+  return data.action
+}
 
 class ActionCreatePage extends React.PureComponent {
   state = {
@@ -297,33 +318,49 @@ class ActionCreatePage extends React.PureComponent {
   handleSubmit = e => {
     e.preventDefault()
 
-    const { form } = this.props
+    const { form, history, match, token, _id } = this.props
 
     form.validateFields((errors, values) => {
       if (errors) return
 
       const body = new FormData()
 
-      if (values.photo) body.append('picture', values.photo.file)
+      if (values.photo && values.photo.file)
+        body.append('picture', values.photo.file)
 
       body.append('description', values.description)
       body.append('name', values.name)
 
+      let request = api.fetchProposedAction
+
+      if (match.params.slug) request = api.fetchAction
+
       this.setState({ isSubmitting: true }, async () => {
-        return api
-          .addActionRequest(body)
+        return request({
+          body,
+          token,
+          id: _id,
+          method: match.params.slug ? 'PUT' : 'POST',
+        })
           .then(() => {
-            this.setState({
-              isSubmitting: false,
-              submitFailed: false,
-              submitSucceeded: true,
-            })
+            this.setState(
+              {
+                isSubmitting: false,
+                submitFailed: false,
+                submitSucceeded: true,
+              },
+              () => {
+                history.push(
+                  `/account/submit-succeeded/${match.params.slug || ''}`,
+                )
+              },
+            )
           })
           .catch(error => {
             console.error(error)
             this.setState({
               isSubmitting: false,
-              submitFailed: true,
+              submitFailed: error,
               submitSucceeded: false,
             })
           })
@@ -336,22 +373,27 @@ class ActionCreatePage extends React.PureComponent {
       form: { getFieldDecorator, getFieldError, getFieldValue },
       intl: { formatMessage },
       closeModal,
+      match,
+      loading,
     } = this.props
-    const { submitFailed, submitSucceeded, isSubmitting } = this.state
+    const { submitFailed, isSubmitting } = this.state
 
     const { fileUrl: photoPreviewUrl } = getFieldValue('photo') || {}
     const photoError = getFieldError('photo')
 
     return (
       <Container>
+        {loading && (
+          <Loader>
+            <Spinner />
+          </Loader>
+        )}
+
         <CloseButton onClick={closeModal}>
           <CloseIcon />
         </CloseButton>
 
-        <StyledForm
-          onSubmit={this.handleSubmit}
-          submitSucceeded={submitSucceeded}
-        >
+        <StyledForm onSubmit={this.handleSubmit}>
           <UploadWrap>
             {getFieldDecorator('photo', {
               getValueFromEvent,
@@ -416,7 +458,11 @@ class ActionCreatePage extends React.PureComponent {
           <MainFields>
             <div>
               <Title>
-                {formatMessage({ id: 'app.actionCreatePage.title' })}
+                {formatMessage({
+                  id: match.params.slug
+                    ? 'app.actions.card.edit'
+                    : 'app.actionCreatePage.title',
+                })}
               </Title>
 
               <FormItem>
@@ -465,19 +511,27 @@ class ActionCreatePage extends React.PureComponent {
                 htmlType="submit"
                 loading={isSubmitting}
               >
-                {formatMessage({ id: 'app.actionCreatePage.title' })}
+                {formatMessage({
+                  id: match.params.slug
+                    ? 'app.actions.card.edit'
+                    : 'app.actionCreatePage.title',
+                })}
               </SaveButton>
             </ButtonsWrapper>
 
             {submitFailed && (
               <FormError>
-                {formatMessage({ id: 'app.errors.unknown' })}
+                {formatMessage({
+                  id: `app.errors.${
+                    [19, 20].includes(Number(submitFailed.code))
+                      ? submitFailed.code
+                      : 'unknown'
+                  }`,
+                })}
               </FormError>
             )}
           </MainFields>
         </StyledForm>
-
-        {submitSucceeded && <Redirect to="/account/submit-succeeded" />}
       </Container>
     )
   }
@@ -487,6 +541,32 @@ ActionCreatePage.propTypes = {
   closeModal: PropTypes.func,
   form: PropTypes.object,
   intl: intlShape.isRequired,
+  history: PropTypes.object,
+  match: PropTypes.object,
+  loading: PropTypes.bool,
+  token: PropTypes.string,
+  _id: PropTypes.string,
 }
 
-export default Form.create()(injectIntl(ActionCreatePage))
+const mapStateToProps = state => ({
+  token: state.account.token,
+})
+
+export default compose(
+  connect(mapStateToProps),
+  fetch(fetchIdeas, {
+    ...fetchConfigDefault,
+    filter: ({ match }) => Boolean(match.params.slug),
+    loader: false,
+  }),
+  Form.create({
+    mapPropsToFields({ name, description, picture: fileUrl }) {
+      return {
+        name: Form.createFormField({ value: name }),
+        description: Form.createFormField({ value: description }),
+        photo: Form.createFormField({ value: { fileUrl } }),
+      }
+    },
+  }),
+  injectIntl,
+)(ActionCreatePage)

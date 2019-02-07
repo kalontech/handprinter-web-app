@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { Button, Row, Col, Carousel } from 'antd'
 import styled from 'styled-components'
 import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl'
-import { Link as AnchorLink } from 'react-scroll'
+import { animateScroll, Link as AnchorLink } from 'react-scroll'
 import PropTypes from 'prop-types'
 
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
@@ -315,6 +315,8 @@ class AboutEatonPage extends Component {
   }
 
   componentDidMount = async () => {
+    animateScroll.scrollToTop()
+
     const {
       actions: { docs: actions },
     } = await api.getActions()
@@ -410,8 +412,7 @@ class AboutEatonPage extends Component {
                       fontWeight: '700',
                       color: colors.darkBlue,
                     }}
-                    linkPrefix="/pages/home/actions"
-                    slug={action.slug}
+                    to={`/pages/home/actions/${action.slug}`}
                     picture={action.picture}
                     name={action.translatedName[locale] || action.name}
                     impacts={action.impacts}

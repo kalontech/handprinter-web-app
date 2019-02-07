@@ -4,7 +4,6 @@ import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { ModalContainer } from 'react-router-modal'
-import { animateScroll } from 'react-scroll'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -40,8 +39,6 @@ const RouteWrapper = ({
     <Route
       {...rest}
       render={props => {
-        animateScroll.scrollToTop()
-
         if (ready) {
           if (requireAuthentication && !token) {
             return <Redirect to="/account/login" />

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { compose } from 'redux'
 import { Col, Row, Tabs, Icon } from 'antd'
 import styled, { css } from 'styled-components'
 import { connect } from 'react-redux'
@@ -6,6 +7,7 @@ import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
+import { animateScroll } from 'react-scroll/modules'
 
 import CalendarWidget from 'components/CalendarWidget'
 import GoodRatioWidget from 'components/GoodRatioWidget'
@@ -374,6 +376,8 @@ class DashboardPage extends Component {
   }
 
   componentDidMount() {
+    animateScroll.scrollToTop()
+
     this.fetchDashboardData()
   }
 
@@ -759,4 +763,7 @@ DashboardPage.propTypes = {
   token: PropTypes.string.isRequired,
 }
 
-export default connect(mapStateToProps)(injectIntl(DashboardPage))
+export default compose(
+  connect(mapStateToProps),
+  injectIntl,
+)(DashboardPage)

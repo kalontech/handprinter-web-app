@@ -14,7 +14,6 @@ const ExpandMoreIcon = props => {
       >
         <mask
           id={id}
-          maskType="alpha"
           maskUnits="userSpaceOnUse"
           x="6"
           y="8"

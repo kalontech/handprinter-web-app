@@ -6,8 +6,9 @@ import { Button, Form } from 'antd'
 import { Link } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
+import { animateScroll } from 'react-scroll/modules'
 
-import { Creators as AccountCreators } from './../../redux/accountStore'
+import { Creators as AccountCreators } from 'redux/accountStore'
 import {
   ActionCard,
   ActionCardLeftHalf,
@@ -19,14 +20,14 @@ import {
   ActionCardFormWrapper,
   FormItem,
   Input,
-} from './../../components/Styled'
-import getValidationRules from './../../config/validationRules'
-import InputForPassword from './../../components/InputForPassword'
-import handleFormError from './../../utils/handleFormError'
-import PageMetadata from '../../components/PageMetadata'
-import loginActionCardImage from './../../assets/images/loginActionCard.jpg'
-import loginActionCardImageTablet from './../../assets/images/loginActionCardTablet.jpg'
-import media from '../../utils/mediaQueryTemplate'
+} from 'components/Styled'
+import getValidationRules from 'config/validationRules'
+import InputForPassword from 'components/InputForPassword'
+import handleFormError from 'utils/handleFormError'
+import PageMetadata from 'components/PageMetadata'
+import loginActionCardImage from 'assets/images/loginActionCard.jpg'
+import loginActionCardImageTablet from 'assets/images/loginActionCardTablet.jpg'
+import media from 'utils/mediaQueryTemplate'
 
 const CatImgDesktop = styled.img`
   display: block;
@@ -43,6 +44,14 @@ const CatImgTablet = styled.img`
 `
 
 class LoginPage extends Component {
+  componentDidMount() {
+    animateScroll.scrollToTop()
+  }
+
+  componentDidUpdate = prevProps => {
+    handleFormError('logInError', 'formError', prevProps, this.props)
+  }
+
   handleSubmit = e => {
     e.preventDefault()
     const {
@@ -55,10 +64,6 @@ class LoginPage extends Component {
         logInRequest(email, password)
       }
     })
-  }
-
-  componentDidUpdate = prevProps => {
-    handleFormError('logInError', 'formError', prevProps, this.props)
   }
 
   render() {

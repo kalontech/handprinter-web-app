@@ -5,12 +5,12 @@ import styled from 'styled-components'
 import { FormattedHTMLMessage } from 'react-intl'
 import { Icon } from 'antd'
 import moment from 'moment'
-import { animateScroll } from 'react-scroll'
 
 import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
 import media from 'utils/mediaQueryTemplate'
-import { CardHeading } from 'components/Styled'
+import EditIcon from 'assets/icons/EditIcon'
+import DeleteIcon from 'assets/icons/DeleteIcon'
 
 import ActionCardLabelSet from '../ActionCardLabelSet'
 
@@ -45,6 +45,7 @@ const CardContainer = styled.div`
 `
 
 const CardImage = styled.div`
+  position: relative;
   height: 220px;
   background-color: ${colors.darkGray};
 
@@ -58,21 +59,14 @@ const CardImage = styled.div`
 
 const CardWrapper = styled.div`
   padding: 20px;
+
   ${media.phone`
     padding: 20px 10px;
   `}
 `
 
 const ActionCardLabelSetWrapper = styled.div`
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
-  ${media.desktop`
-    max-width: 90%;
-  `}
-  ${media.phone`
-    left: 15px;
-  `}
+  width: 100%;
 `
 
 const SuggestedInfo = styled.div`
@@ -81,6 +75,13 @@ const SuggestedInfo = styled.div`
   align-items: center;
   color: ${colors.darkGray};
   padding: 0 12px;
+`
+
+const CardHeading = styled.h3`
+  font-size: 19px;
+  line-height: 1.37;
+  font-family: 'Noto Serif', serif;
+  margin-bottom: 20px;
 `
 
 const SuggestedInfoInitiator = styled.div`
@@ -109,27 +110,82 @@ const SuggestedInfoInitiatorPhoto = styled.div`
   margin-right: 5px;
 `
 
+const IconsWrap = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+`
+
+const ButtonIcon = styled.button`
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  outline: 0;
+  border: 0;
+  color: ${hexToRgba(colors.white, 0.8)};
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: ${hexToRgba(colors.white, 1)};
+  }
+
+  span {
+    font-size: 10px;
+  }
+`
+
 const ActionCard = props => {
   const {
-    linkPrefix,
-    slug,
+    to,
     picture,
     name,
     impacts,
     suggestedBy,
     suggestedAt,
+    canChange,
+    onEdit,
+    onDelete,
   } = props
+
   return (
-    <Link to={`${linkPrefix}/${slug}`} onClick={animateScroll.scrollMore(1)}>
+    <Link to={to}>
       <CardWrap>
         <CardContainer {...props}>
           <CardImage>
-            <img src={picture} alt={name} />
+            {picture && <img src={picture} alt={name} />}
+
+            {canChange && (
+              <IconsWrap>
+                <ButtonIcon onClick={onEdit}>
+                  <span>
+                    <FormattedHTMLMessage id="app.actions.card.edit" />
+                  </span>
+                  <EditIcon />
+                </ButtonIcon>
+
+                <ButtonIcon onClick={onDelete}>
+                  <span>
+                    <FormattedHTMLMessage id="app.actions.card.delete" />
+                  </span>
+                  <DeleteIcon />
+                </ButtonIcon>
+              </IconsWrap>
+            )}
           </CardImage>
           <CardWrapper>
             <CardHeading style={props.font}>{name}</CardHeading>
             <ActionCardLabelSetWrapper>
-              <ActionCardLabelSet impacts={impacts} />
+              {typeof impacts === 'function' && impacts()}
+
+              {impacts && typeof impacts !== 'function' && (
+                <ActionCardLabelSet impacts={impacts} />
+              )}
             </ActionCardLabelSetWrapper>
           </CardWrapper>
         </CardContainer>
@@ -164,12 +220,14 @@ const ActionCard = props => {
 }
 
 ActionCard.propTypes = {
-  linkPrefix: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
-  impacts: PropTypes.object.isRequired,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  impacts: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   name: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
   placeholder: PropTypes.bool,
+  canChange: PropTypes.bool,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
   suggestedBy: PropTypes.object,
   suggestedAt: PropTypes.string,
 }

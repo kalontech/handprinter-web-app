@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Row, Col } from 'antd'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import styled from 'styled-components'
-import { Link as AnchorLink } from 'react-scroll'
+import { animateScroll, Link as AnchorLink } from 'react-scroll'
 import {
   PrimaryButton,
   SecondaryButton,
@@ -264,6 +264,8 @@ class HomePage extends Component {
   }
 
   componentDidMount = async () => {
+    animateScroll.scrollToTop()
+
     const {
       actions: { docs: actions },
     } = await api.getActions()

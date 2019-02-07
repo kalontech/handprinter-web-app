@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { Form, Tag, Icon } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { bindActionCreators } from 'redux'
+import { animateScroll } from 'react-scroll'
 
 import colors from 'config/colors'
 import { MAX_INVITING_MESSAGE_LENGTH } from 'config/common'
@@ -391,6 +392,10 @@ class IncreaseHandprintPage extends Component {
   }
 
   shareInviteRef = React.createRef()
+
+  componentDidMount() {
+    animateScroll.scrollToTop()
+  }
 
   componentDidUpdate = async (prevProps, prevState) => {
     const { shareInvitationCodeError, isSharingInvitationCode } = this.state
