@@ -44,17 +44,36 @@ const nodeTransform = d => {
   return `translate(${d.x}, ${d.y})`
 }
 
+function addChildrenLength(data) {
+  const recurse = node => {
+    node.children.forEach(el => {
+      el.brothers = node.children.length
+      if (el.children) recurse(el)
+    })
+  }
+  recurse(data)
+}
+
 // Transforms input data by adding depth indexes
 const flatten = root => {
+  addChildrenLength(root)
+  let children = Array.isArray(root.children) && root.children.slice(0, 5)
+  root = { ...root, children }
   const nodes = []
   let i = 0
-  const recurse = (node, depth) => {
+  const recurse = (node, depth, childIndex) => {
     node.depth = depth
-    if (node.children)
-      node.children.forEach(n => {
-        recurse(n, node.depth + 1)
+    if (node.children) {
+      node.children.forEach((n, childIndex) => {
+        n.children = n.children && n.children.slice(0, 5)
+        recurse(n, node.depth + 1, childIndex)
       })
+    }
+
     if (!node.id) node.id = ++i
+    if (childIndex >= 4 && node.brothers > 5) {
+      node.badge = `+${node.brothers - 4}`
+    }
     nodes.push(node)
   }
   recurse(root, 0)
@@ -141,37 +160,79 @@ class NetworkWidget extends Component {
       .style('stroke', colors.gray)
 
     // Draw nodes
-    node
+    const nodeWithFiveChildren = node
       .enter()
       .append('g')
       .attr('class', 'node')
       .attr('transform', d => `translate(${d.x}, ${d.y})`)
       .on('mouseover', function(d) {
-        widget
-          .append('foreignObject')
-          .attr({
-            x: d.x - 50,
-            width: 100,
-            class: 'd3-tooltip',
-            ...(d.y > 100
-              ? {
-                  y: d.y - getNodeSize(d.depth) / 2 - 40,
-                  height: 29,
-                }
-              : { y: d.y + getNodeSize(d.depth) / 2 + 12, height: 0 }),
-          })
-          .append('xhtml:div')
-          .append('div')
-          .attr({
-            class: 'd3-tooltip-container',
-          })
-          .append('p')
-          .html(d.fullName || 'Deleted user')
+        if (!d.badge) {
+          widget
+            .append('foreignObject')
+            .attr({
+              x: d.x - 50,
+              width: 100,
+              class: 'd3-tooltip',
+              ...(d.y > 100
+                ? {
+                    y: d.y - getNodeSize(d.depth) / 2 - 40,
+                    height: 29,
+                  }
+                : { y: d.y + getNodeSize(d.depth) / 2 + 12, height: 0 }),
+            })
+            .append('xhtml:div')
+            .append('div')
+            .attr({
+              class: 'd3-tooltip-container',
+            })
+            .append('p')
+            .html(d.fullName || 'Deleted user')
+        }
       })
       .on('mouseout', function() {
         widget.selectAll('.d3-tooltip').remove()
       })
       .call(force.drag)
+
+    nodeWithFiveChildren
+      .filter(i => i.badge)
+      .append('circle')
+      .attr('r', d => getNodeSize(d.depth) / 2)
+      .attr('stroke', colors.ocean)
+      .attr('fill', colors.ocean)
+
+    nodeWithFiveChildren
+      .filter(i => i.badge)
+      .append('text')
+      .attr('font-size', d => getNodeSize(d.depth) * 0.4)
+      .attr('font-family', 'Noto Sans')
+      .attr('fill', 'white')
+      .text(d => d.badge)
+      .attr('x', d => -getNodeSize(d.depth) * (d.brothers > 13 ? 0.3 : 0.2))
+      .attr('y', d => getNodeSize(d.depth) * 0.1)
+
+    nodeWithFiveChildren
+      .filter(i => i.badge)
+      .append('text')
+      .attr('x', d => -(getNodeSize(d.depth) / 2))
+      .attr('y', d => -(getNodeSize(d.depth) / 10))
+      .attr('height', d => getNodeSize(d.depth))
+      .attr('width', d => getNodeSize(d.depth))
+
+      .attr('clip-path', d => {
+        // Create clip-path definition
+        defs
+          .append('clipPath')
+          .attr('id', `clipPath${d.id}`)
+          .append('circle')
+          .attr('r', getNodeSize(d.depth) / 2)
+        // Set clip-path definition
+        return `url(#clipPath${d.id})`
+      })
+      .attr('preserveAspectRatio', 'none')
+
+    nodeWithFiveChildren
+      .filter(i => !i.badge)
       .append('image')
       .attr(
         'xlink:href',
