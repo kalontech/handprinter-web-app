@@ -60,27 +60,18 @@ const Logo = styled.div`
   `};
 `
 
-const Copyright = styled.p`
-  font-size: 12px;
-  font-weight: 500;
-  margin-bottom: 20px;
-  color: ${hexToRgba(colors.white, 0.43)};
-  ${media.desktop`
-    display: none;
-    margin-bottom: 0;
-  `};
+const CopyrightBlock = styled.div`
+  color: ${colors.white};
+  background-color: ${colors.footerDropdownBg};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
 `
 
-const CopyrightTablet = styled(Copyright)`
-  display: none;
-  line-height: 34px;
-  ${media.desktop`
-    display: block;
-    margin-bottom: 20px;
-  `};
-  ${media.phone`
-    margin-bottom: 0;
-  `};
+const Copyright = styled.p`
+  font-size: 14px;
+  color: ${hexToRgba(colors.white, 0.43)};
 `
 
 const RowWrapper = styled(Row)`
@@ -117,10 +108,6 @@ const Footer = () => (
                 <Logo>
                   <img src={footerLogo} alt="" />
                 </Logo>
-                <Copyright>
-                  &copy;
-                  <FormattedMessage id="app.footer.copyright" />
-                </Copyright>
               </Col>
               <Col md={24} xl={12}>
                 <RowWrapper gutter={{ md: 20 }}>
@@ -171,22 +158,7 @@ const Footer = () => (
               <LangsWrap md={24} xl={4}>
                 <div style={{ width: '100%' }}>
                   <Row gutter={{ md: 20 }} type="flex">
-                    <Col
-                      xs={{ span: 24, order: 2 }}
-                      sm={{ span: 10, order: 1 }}
-                      xl={24}
-                    >
-                      <CopyrightTablet>
-                        &copy;
-                        <FormattedMessage id="app.footer.copyright" />
-                      </CopyrightTablet>
-                    </Col>
-                    <Col
-                      xs={{ span: 24, order: 1 }}
-                      sm={{ span: 10, order: 2, offset: 2 }}
-                      md={{ offset: 4 }}
-                      xl={24}
-                    >
+                    <Col xs={{ span: 24 }}>
                       <Langs />
                     </Col>
                   </Row>
@@ -197,6 +169,11 @@ const Footer = () => (
         </Row>
       </Wrap>
     </FooterContent>
+    <CopyrightBlock>
+      <Copyright>
+        <FormattedMessage id="app.footer.copyright" />
+      </Copyright>
+    </CopyrightBlock>
   </FooterWrap>
 )
 
