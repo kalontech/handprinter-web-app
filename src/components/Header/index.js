@@ -501,7 +501,7 @@ class Header extends Component {
 
   fetchNews = async (counterOnly = false) => {
     const { news, unreadCount } = await api.getNews(
-      { page: 1, range: 'world' },
+      { page: 1, range: 'network' },
       this.props.token,
     )
     if (counterOnly) {
