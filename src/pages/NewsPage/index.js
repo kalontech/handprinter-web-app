@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {
@@ -9,7 +9,6 @@ import {
 } from 'react-intl'
 import { Menu, Dropdown } from 'antd'
 import { connect } from 'react-redux'
-import moment from 'moment'
 import { animateScroll } from 'react-scroll/modules'
 
 import api from 'api'
@@ -202,7 +201,7 @@ class NewsPage extends Component {
 
   render() {
     const {
-      intl: { locale },
+      intl: { locale, formatRelative },
     } = this.props
     return (
       <PageContainer>
@@ -266,7 +265,7 @@ class NewsPage extends Component {
                           }}
                         />
                       }
-                      date={<Fragment>{moment(news.date).fromNow()}</Fragment>}
+                      date={formatRelative(news.date)}
                       suffix={
                         <ActionCardLabelSet impacts={news.arguments.impacts} />
                       }

@@ -93,13 +93,14 @@ const HeaderWrap = styled(Layout.Header)`
 
     &.ant-menu-item-selected {
       border-color: inherit;
+      color: ${colors.dark};
+
       ${props =>
         !props.isLoggedIn &&
         css`
           border-bottom: 3px solid transparent;
         `}
 
-      color: ${colors.dark};
       a {
         color: inherit;
       }
@@ -445,9 +446,6 @@ const NotificationCount = styled.div`
   height: 15px;
   position: absolute;
   top: 5px;
-  ${media.largeDesktop`
-    top: -5px;
-  `}
   right: 10px;
   display: flex;
   align-items: center;
@@ -459,30 +457,42 @@ const NotificationCount = styled.div`
   line-height: 10px;
   font-size: 10px;
   color: ${colors.white};
+
+  ${media.largeDesktop`
+    top: -5px;
+  `}
 `
 
 class Header extends Component {
-  constructor(props) {
-    super(props)
+  state = {
+    collapsed: true,
+    width: window.innerWidth,
+    notification: [],
+    unreadCount: 0,
+  }
+  fetchNewsIntervalId = null
 
-    this.state = {
-      collapsed: true,
-      width: window.innerWidth,
-      notification: [],
-      unreadCount: 0,
-    }
-    this.fetchNewsIntervalId = null
+  get selectedMenuItem() {
+    const { location } = this.props
+
+    return location.pathname.includes('actions')
+      ? '/actions'
+      : location.pathname
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowSizeChange)
-    this.fetchNews()
-    this.fetchNewsIntervalId = setInterval(() => this.fetchNews(true), 10000)
+
+    if (this.props.type === 'private') {
+      this.fetchNews()
+      this.fetchNewsIntervalId = setInterval(() => this.fetchNews(true), 10000)
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange)
-    clearInterval(this.fetchNewsIntervalId)
+
+    if (this.fetchNewsIntervalId) clearInterval(this.fetchNewsIntervalId)
   }
 
   handleWindowSizeChange = () => {
@@ -509,16 +519,9 @@ class Header extends Component {
     this.setState({ collapsed: !this.state.collapsed })
   }
 
-  get selectedMenuItem() {
-    const { location } = this.props
-
-    return location.pathname.includes('actions')
-      ? '/actions'
-      : location.pathname
-  }
-
   sendLastTimeReadNotif = async shouldReset => {
     if (!shouldReset) return
+
     await api.sendLastTimeReadNewsAt(Date.now(), this.props.token)
     this.fetchNews()
   }
@@ -549,17 +552,14 @@ class Header extends Component {
           <HeaderWrap isLoggedIn={user}>
             <Logo>
               <Link to="/">
-                {(!isMobile && (
-                  <img
-                    src={(overrides && overrides.fullLogo) || fullLogoImg}
-                    alt="Handprinter"
-                  />
-                )) || (
-                  <img
-                    src={(overrides && overrides.partialLogo) || partialLogoImg}
-                    alt="Handprinter"
-                  />
-                )}
+                <img
+                  src={
+                    isMobile
+                      ? (overrides && overrides.partialLogo) || partialLogoImg
+                      : (overrides && overrides.fullLogo) || fullLogoImg
+                  }
+                  alt="Handprinter"
+                />
               </Link>
             </Logo>
           </HeaderWrap>

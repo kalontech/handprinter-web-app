@@ -1,10 +1,9 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import { Link } from 'react-router-dom'
 
 import api from 'api'
-import moment from 'moment'
 import styled from 'styled-components'
 import colors from 'config/colors'
 import viewAllIcon from './assets/viewAllIcon.svg'
@@ -88,7 +87,7 @@ const NotificationsContainer = ({
   fontColor,
   fontNames,
   notification,
-  intl: { locale },
+  intl: { locale, formatMessage, formatRelative },
 }) => (
   <NotificationBox fontColor={fontColor}>
     <NotificationTitle fontNames={fontNames}>
@@ -116,7 +115,7 @@ const NotificationsContainer = ({
                     user: (
                       <BoldNameTag>
                         {(user && user.fullName) ||
-                          this.props.intl.formatMessage({
+                          formatMessage({
                             id: 'app.newsPage.userWithoutName',
                           })}
                       </BoldNameTag>
@@ -131,9 +130,8 @@ const NotificationsContainer = ({
                   }}
                 />
               </div>
-              <div>
-                {<Fragment>{moment(notifItem.date).fromNow()}</Fragment>}
-              </div>
+
+              <div>{formatRelative(notifItem.date)}</div>
             </NotificationBody>
           </NotificationItem>
         )
