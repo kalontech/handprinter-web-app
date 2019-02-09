@@ -861,7 +861,6 @@ export const Pagination = styled(Ant.Pagination)`
       background-color: transparent;
       outline: 0;
     }
-
     button > a {
       display: flex;
       align-items: center;
@@ -870,13 +869,22 @@ export const Pagination = styled(Ant.Pagination)`
       height: 100%;
       margin: auto;
       transition: color 0.3s;
+      color: ${colors.darkGray};
+      font-weight: bold;
+      font-family: '"Noto Sans", sans-serif';
     }
   }
 
-  .ant-pagination-item-active {
+  &:hover {
+    a {
+      color: ${colors.dark};
+    }
+  }
+
+  &.ant-pagination-item-active {
     border-color: ${colors.gray};
     a {
-      color: black;
+      color: ${colors.dark};
     }
   }
   .ant-pagination-jump-next,
