@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { FormattedHTMLMessage } from 'react-intl'
 import { Icon } from 'antd'
-import moment from 'moment'
 
 import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
@@ -151,12 +150,13 @@ const ActionCard = props => {
     canChange,
     onEdit,
     onDelete,
+    isSlide,
   } = props
 
   return (
     <Link to={to}>
       <CardWrap>
-        <CardContainer {...props}>
+        <CardContainer isSlide={isSlide}>
           <CardImage>
             {picture && <img src={picture} alt={name} />}
 
@@ -211,7 +211,7 @@ const ActionCard = props => {
           </SuggestedInfoInitiator>
           <SuggestedInfoDate>
             <Icon type="clock-circle" />
-            {moment(suggestedAt).fromNow()}
+            {suggestedAt}
           </SuggestedInfoDate>
         </SuggestedInfo>
       )}
@@ -223,9 +223,11 @@ ActionCard.propTypes = {
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   impacts: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   name: PropTypes.string.isRequired,
-  picture: PropTypes.string.isRequired,
+  picture: PropTypes.string,
+  font: PropTypes.string,
   placeholder: PropTypes.bool,
   canChange: PropTypes.bool,
+  isSlide: PropTypes.bool,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
   suggestedBy: PropTypes.object,

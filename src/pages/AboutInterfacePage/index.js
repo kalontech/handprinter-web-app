@@ -1,8 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import { Row, Col, Button, Carousel } from 'antd'
-import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl'
+import {
+  FormattedMessage,
+  FormattedHTMLMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import { animateScroll } from 'react-scroll/modules'
 
 import colors from './../../config/colors'
@@ -462,7 +466,7 @@ class AboutInterfacePage extends Component {
 
   render() {
     const {
-      intl: { locale },
+      intl: { locale, formatRelative },
     } = this.props
     const { actions } = this.state
     return (
@@ -586,7 +590,7 @@ class AboutInterfacePage extends Component {
                     name={action.translatedName[locale] || action.name}
                     impacts={action.impacts}
                     suggestedBy={action.suggestedBy}
-                    suggestedAt={action.suggestedAt}
+                    suggestedAt={formatRelative(action.suggestedAt)}
                   />
                 </div>
               ))}
@@ -610,9 +614,7 @@ class AboutInterfacePage extends Component {
 }
 
 AboutInterfacePage.propTypes = {
-  intl: {
-    locale: PropTypes.string.isRequired,
-  },
+  intl: intlShape.isRequired,
 }
 
 export default injectIntl(AboutInterfacePage)

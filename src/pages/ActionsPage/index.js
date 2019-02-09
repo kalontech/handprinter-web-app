@@ -584,7 +584,7 @@ class ActionsPage extends React.PureComponent {
 
   render() {
     const {
-      intl: { formatMessage },
+      intl: { formatMessage, formatRelative },
       user,
       location,
       loading,
@@ -822,7 +822,7 @@ class ActionsPage extends React.PureComponent {
                           )
                         }
                         suggestedBy={action.suggestedBy}
-                        suggestedAt={action.suggestedAt}
+                        suggestedAt={formatRelative(action.suggestedAt)}
                       />
                     </Col>
                   ))}

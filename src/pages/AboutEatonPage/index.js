@@ -1,9 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import { Button, Row, Col, Carousel } from 'antd'
 import styled from 'styled-components'
-import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl'
+import {
+  FormattedMessage,
+  FormattedHTMLMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl'
 import { animateScroll, Link as AnchorLink } from 'react-scroll'
-import PropTypes from 'prop-types'
 
 import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import { BlockContainer } from './../../components/Styled'
@@ -324,7 +328,9 @@ class AboutEatonPage extends Component {
   }
 
   render() {
-    const { intl: locale } = this.props
+    const {
+      intl: { locale, formatRelative },
+    } = this.props
     const { actions } = this.state
     return (
       <Fragment>
@@ -417,7 +423,7 @@ class AboutEatonPage extends Component {
                     name={action.translatedName[locale] || action.name}
                     impacts={action.impacts}
                     suggestedBy={action.suggestedBy}
-                    suggestedAt={action.suggestedAt}
+                    suggestedAt={formatRelative(action.suggestedAt)}
                   />
                 </div>
               ))}
@@ -435,9 +441,7 @@ class AboutEatonPage extends Component {
 }
 
 AboutEatonPage.propTypes = {
-  intl: {
-    locale: PropTypes.string.isRequired,
-  },
+  intl: intlShape.isRequired,
 }
 
 export default injectIntl(AboutEatonPage)
