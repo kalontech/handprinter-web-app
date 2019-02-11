@@ -12,10 +12,11 @@ import { animateScroll } from 'react-scroll'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import PageMetadata from 'components/PageMetadata'
+import { BlockContainer, Collapse, CollapsePanel } from 'components/Styled'
+
 import faqImg from 'assets/faq/cat.png'
 import fingerPrintleft from 'assets/faq/fingerprint-left.png'
 import fingerPrintRight from 'assets/faq/fingerprint-right.svg'
-import { BlockContainer, Collapse, CollapsePanel } from 'components/Styled'
 
 const Wrapper = styled.section`
   background-color: ${colors.lightGray};

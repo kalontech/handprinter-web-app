@@ -1,14 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { FormattedMessage } from 'react-intl'
+
+import { PrimaryButton, BlockContainer, BlockSubTitle } from 'components/Styled'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
+import FingerPrintIcon from 'assets/icons/FingerPrintIcon'
+
 import ctaImg from './assets/cta-image.png'
 import ctaBg from './assets/cta-left-fingerprint.png'
 import ctaBgRight from './assets/cta-right-fingerprint.png'
-import colors from './../../config/colors'
-import { FormattedMessage } from 'react-intl'
-import { PrimaryButton, BlockContainer, BlockSubTitle } from './../Styled'
-import FingerPrintIcon from '../../assets/icons/FingerPrintIcon'
-import media from '../../utils/mediaQueryTemplate'
 
 const CtaTitle = styled(BlockSubTitle)`
   color: ${colors.white};

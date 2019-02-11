@@ -4,8 +4,8 @@ import styled, { css } from 'styled-components'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 
-import colors from './../../config/colors'
-import media from './../../utils/mediaQueryTemplate'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
 
 const WeekRow = styled.div`
   display: flex;

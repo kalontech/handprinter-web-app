@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import ActionCardLabel from '../ActionCardLabel'
-import media from '../../utils/mediaQueryTemplate'
+import ActionCardLabel from 'components/ActionCardLabel'
+import media from 'utils/mediaQueryTemplate'
 
 const CardLabelWrap = styled.div`
   display: flex;

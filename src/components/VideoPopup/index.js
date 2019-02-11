@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import ModalVideo from 'react-modal-video'
 import styled from 'styled-components'
-import media from 'utils/mediaQueryTemplate'
 
 import 'react-modal-video/css/modal-video.min.css'
 
-import WatchVideoIcon from 'assets/icons/WatchVideoIcon'
-
 import { DefaultButton, SecondaryButton } from 'components/Styled'
+import media from 'utils/mediaQueryTemplate'
+
+import WatchVideoIcon from 'assets/icons/WatchVideoIcon'
 
 const Wrapper = styled.div`
   .modal-video-movie-wrap {

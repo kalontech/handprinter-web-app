@@ -1,8 +1,8 @@
 import { call, put, select } from 'redux-saga/effects'
 
-import api from './../api'
-import decodeError from './../utils/decodeError'
-import { Types as UserStoreTypes } from '../redux/userStore'
+import decodeError from 'utils/decodeError'
+import { Types as UserStoreTypes } from 'redux/userStore'
+import api from 'api'
 
 function* getMe({ token }) {
   try {

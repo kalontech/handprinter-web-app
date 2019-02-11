@@ -2,8 +2,9 @@ import { delay } from 'redux-saga'
 import { put, select, call } from 'redux-saga/effects'
 import { updateIntl } from 'react-intl-redux'
 
-import api from './../api'
-import { Creators as AppStoreCreators } from './../redux/appStore'
+import api from 'api'
+import { Creators as AppStoreCreators } from 'redux/appStore'
+
 import { prepareUserProfile } from './helpers'
 
 function* startup(action) {

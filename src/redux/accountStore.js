@@ -1,7 +1,8 @@
 import { createActions, createReducer } from 'reduxsauce'
 
-import { store } from './../app'
-import { history } from './../appRouter'
+import { store } from 'app'
+import { history } from 'appRouter'
+
 import { Types as UserStoreTypes } from './userStore'
 
 export const INITIAL_STATE = {

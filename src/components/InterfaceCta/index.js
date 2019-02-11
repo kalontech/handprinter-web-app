@@ -1,11 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { Button } from 'antd'
-import colors from './../../config/colors'
-import media from './../../utils/mediaQueryTemplate'
 import { FormattedMessage } from 'react-intl'
-import { BlockContainer, BlockSubTitle } from './../Styled'
+import { Button } from 'antd'
+
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
+import { BlockContainer, BlockSubTitle } from 'components/Styled'
 
 import bg from './assets/cta.jpg'
 import ctaImg from './assets/ctaImg.png'
@@ -33,7 +34,6 @@ const CtaButton = styled(Button)`
 `
 
 const CtaTitle = styled(BlockSubTitle)`
-  margin-bottom: 20px;
   margin-bottom: 50px;
   color: ${colors.white};
   line-height: 46px;
@@ -54,7 +54,7 @@ const CtaWrap = styled.section`
   position: relative;
   padding: 80px 0;
   display: flex;
-  justify-content: space-center;
+  justify-content: center;
   align-items: center;
   background: url(${bg}) no-repeat center;
   background-size: cover;

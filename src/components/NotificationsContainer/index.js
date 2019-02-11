@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import api from 'api'
 import styled from 'styled-components'
 import colors from 'config/colors'
+
 import viewAllIcon from './assets/viewAllIcon.svg'
 
 const NotificationBox = styled.div`

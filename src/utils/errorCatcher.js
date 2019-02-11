@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import * as Sentry from '@sentry/browser'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import { DefaultButton } from '../components/Styled'
+import { DefaultButton } from 'components/Styled'
 
 const Wrapper = styled.div`
   height: 100vh;

@@ -15,20 +15,21 @@ import {
   TextMediumGroup,
   ScrollButton,
   ScrollToSection,
-} from './../../components/Styled'
-import ActionsCarousel from './../../components/ActionsCarousel'
-import VideoPopup from './../../components/VideoPopup'
-import client1 from './../../assets/homepage/client-2.png'
-import client2 from './../../assets/homepage/interfaceLogo.png'
-import heroImg from './../../assets/homepage/hero-image.png'
-import hpAboutImg from './../../assets/homepage/what-image.png'
-import hpActionImg from './../../assets/homepage/actions-image.png'
-import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
-import FingerPrintIcon from '../../assets/icons/FingerPrintIcon'
-import colors from './../../config/colors'
-import media from '../../utils/mediaQueryTemplate'
-import api from './../../api'
-import PageMetadata from '../../components/PageMetadata'
+} from 'components/Styled'
+import ActionsCarousel from 'components/ActionsCarousel'
+import VideoPopup from 'components/VideoPopup'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
+import PageMetadata from 'components/PageMetadata'
+import api from 'api'
+
+import client1 from 'assets/homepage/client-2.png'
+import client2 from 'assets/homepage/interfaceLogo.png'
+import heroImg from 'assets/homepage/hero-image.png'
+import hpAboutImg from 'assets/homepage/what-image.png'
+import hpActionImg from 'assets/homepage/actions-image.png'
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+import FingerPrintIcon from 'assets/icons/FingerPrintIcon'
 
 const HeroTitle = styled(BlockTitleGreen)`
   margin-bottom: 24px;

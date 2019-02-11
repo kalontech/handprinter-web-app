@@ -29,7 +29,6 @@ import stepsImg4 from 'assets/our-vision/section4.png'
 import stepsImg5 from 'assets/our-vision/section5.png'
 import stepsImg6 from 'assets/our-vision/section6.png'
 import arrow from 'assets/our-vision/arrow.png'
-
 import FingerPrintIcon from 'assets/icons/FingerPrintIcon'
 
 import media from 'utils/mediaQueryTemplate'

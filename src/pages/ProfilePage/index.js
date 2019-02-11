@@ -7,34 +7,35 @@ import { Modal, Button, Form, Select, Icon } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { animateScroll } from 'react-scroll'
 
-import { Creators as UserCreators } from './../../redux/userStore'
+import profileLeavesBackgroundImage from 'assets/images/profileLeavesBackgroundImage.png'
+import arrowDownIcon from 'assets/icons/arrowDown.svg'
+
+import { Creators as UserCreators } from 'redux/userStore'
 import {
   FormItem,
   Input,
   PrimaryButton,
   DefaultButton,
-} from './../../components/Styled'
-import colors from './../../config/colors'
+} from 'components/Styled'
+import colors from 'config/colors'
 import {
   convertBase64ToFile,
   croppResizeProfilePhoto,
   convertBytesToMegabytes,
-} from '../../utils/file'
-import getValidationRules from './../../config/validationRules'
+} from 'utils/file'
+import getValidationRules from 'config/validationRules'
 import {
   PROFILE_PHOTO_SIZE_LIMIT,
   PROFILE_PHOTO_WEIGHT_LIMIT,
   ACCEPT_IMAGE_FORMATS,
-} from '../../config/files'
-import handleFormError from './../../utils/handleFormError'
-import api from './../../api'
-import decodeError from './../../utils/decodeError'
-import profileLeavesBackgroundImage from '../../assets/images/profileLeavesBackgroundImage.png'
-import arrowDownIcon from './../../assets/icons/arrowDown.svg'
-import { logOut } from './../../redux/accountStore'
-import hexToRgba from './../../utils/hexToRgba'
-import PageMetadata from '../../components/PageMetadata'
-import media from './../../utils/mediaQueryTemplate'
+} from 'config/files'
+import handleFormError from 'utils/handleFormError'
+import api from 'api'
+import decodeError from 'utils/decodeError'
+import { logOut } from 'redux/accountStore'
+import hexToRgba from 'utils/hexToRgba'
+import PageMetadata from 'components/PageMetadata'
+import media from 'utils/mediaQueryTemplate'
 
 export const Wrapper = styled.div`
   background-color: ${colors.lightGray};
@@ -240,19 +241,6 @@ export const DeleteAccountButton = styled(DefaultButton)`
     background-color: ${hexToRgba(colors.orange, 0.26)};
     color: ${colors.orange};
   }
-`
-
-export const LoadingPageWrap = styled.div`
-  z-index: 1;
-  height: 100vh;
-  position: absolute;
-  width: 100%;
-  background-color: ${colors.white};
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 `
 
 const PROFILE_MODAL_TYPES = {
@@ -623,7 +611,9 @@ class ProfilePage extends Component {
                         optionFilterProp="children"
                         className="ant-select__override-for__register-page"
                         dropdownClassName="ant-select__override-for__register-page"
-                        suffixIcon={<img src={arrowDownIcon} />}
+                        suffixIcon={
+                          <img src={arrowDownIcon} alt="arrowDownIcon" />
+                        }
                       >
                         {countries.map(country => (
                           <Select.Option key={country._id} value={country._id}>

@@ -2,7 +2,7 @@ import React from 'react'
 import { Spin, Icon } from 'antd'
 import styled from 'styled-components'
 
-import colors from './../../config/colors'
+import colors from 'config/colors'
 
 const Wrapper = styled.div`
   flex-grow: 1;

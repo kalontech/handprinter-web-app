@@ -20,6 +20,8 @@ import {
 } from 'components/Styled'
 import PageMetadata from 'components/PageMetadata'
 import MeasuringAnimation from 'components/MeasuringAnimation'
+import icons from 'components/ActionCardLabel/icons'
+
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 import heroImg from 'assets/measurement/measurement-hero-img.png'
 import meaningImg from 'assets/measurement/sheep.png'
@@ -37,7 +39,6 @@ import footImg from 'assets/measurement/foot.png'
 import finger from 'assets/measurement/finger.svg'
 import printImg from 'assets/measurement/print.png'
 import precisionImg from 'assets/measurement/precision.png'
-import icons from 'components/ActionCardLabel/icons'
 
 const HeadingMiddle = styled.h4`
   font-size: 22px;

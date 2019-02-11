@@ -8,7 +8,14 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { animateScroll } from 'react-scroll/modules'
 
-import { Creators as AccountCreators } from './../../redux/accountStore'
+import registerFingerprintTop from 'assets/images/registerFingerprintTop.png'
+import registerFingerprintBot from 'assets/images/registerFingerprintBot.png'
+import registerActionCardImage from 'assets/images/registerActionCard.jpg'
+import registerActionCardImageTablet from 'assets/images/registerActionCardImageTablet.png'
+import registerBrandedPhotoLeaves from 'assets/images/registerBrandedPhotoLeaves.png'
+import arrowDownIcon from 'assets/icons/arrowDown.svg'
+
+import { Creators as AccountCreators } from 'redux/accountStore'
 import {
   ActionCard,
   ActionCardLeftHalf,
@@ -18,23 +25,17 @@ import {
   ActionCardRegisterBlock,
   Input,
   FormItem,
-} from './../../components/Styled'
-import getValidationRules from './../../config/validationRules'
-import InputForPassword from './../../components/InputForPassword'
-import handleFormError from './../../utils/handleFormError'
-import decodeError from './../../utils/decodeError'
-import { getBrandedHostnamePrefix } from './../../config/branded'
-import api from './../../api'
-import registerFingerprintTop from './../../assets/images/registerFingerprintTop.png'
-import registerFingerprintBot from './../../assets/images/registerFingerprintBot.png'
-import registerActionCardImage from './../../assets/images/registerActionCard.jpg'
-import registerActionCardImageTablet from './../../assets/images/registerActionCardImageTablet.png'
-import registerBrandedPhotoLeaves from './../../assets/images/registerBrandedPhotoLeaves.png'
-import arrowDownIcon from './../../assets/icons/arrowDown.svg'
-import colors from '../../config/colors'
-import PageMetadata from '../../components/PageMetadata'
-import media from '../../utils/mediaQueryTemplate'
-import InfoElement, { INFO_ELEMENT_TYPES } from '../../components/InfoElement'
+} from 'components/Styled'
+import getValidationRules from 'config/validationRules'
+import InputForPassword from 'components/InputForPassword'
+import handleFormError from 'utils/handleFormError'
+import decodeError from 'utils/decodeError'
+import { getBrandedHostnamePrefix } from 'config/branded'
+import api from 'api'
+import colors from 'config/colors'
+import PageMetadata from 'components/PageMetadata'
+import media from 'utils/mediaQueryTemplate'
+import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 
 export const BrandedBlockWrap = styled.div`
   position: relative;
@@ -142,7 +143,7 @@ export const BrandedBlockFingerprintTopImg = styled.img`
 export const BrandedBlockFingerprintBotImg = styled.img`
   position: absolute;
   bottom: 0;
-  right: 0px;
+  right: 0;
   height: 80px;
   width: auto;
 `
@@ -209,7 +210,7 @@ class RegisterPage extends Component {
     if (invitationCode) this.fetchReferrer(invitationCode)
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
+  componentDidUpdate(prevProps) {
     handleFormError('registerError', 'formError', prevProps, this.props)
   }
 

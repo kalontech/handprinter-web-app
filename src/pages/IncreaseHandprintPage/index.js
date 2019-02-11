@@ -2,14 +2,14 @@ import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Tag, Icon } from 'antd'
+import { Form, Icon } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { bindActionCreators } from 'redux'
 import { animateScroll } from 'react-scroll'
 
 import colors from 'config/colors'
 import { MAX_INVITING_MESSAGE_LENGTH } from 'config/common'
-import { Creators as UserCreators } from './../../redux/userStore'
+import { Creators as UserCreators } from 'redux/userStore'
 import { Input, DefaultButton, FormItem } from 'components/Styled'
 import hexToRgba from 'utils/hexToRgba'
 import savePlanetImg from 'assets/increase-handprint/save_planet.png'
@@ -49,7 +49,7 @@ export const TitleSectionWrap = styled.div`
 
 const TitleSectionContent = styled.div`
   position: relative;
-  top: 0px;
+  top: 0;
 `
 
 export const FormSectionWrap = styled.div`
@@ -147,12 +147,13 @@ export const InvitationCodeBlockWrap = styled.div`
   background-color: ${colors.lightGray};
   padding: 25px;
   text-align: center;
-  ${media.phone`
-    padding: 25px 10px;
-  `}
   flex-direction: column;
   display: flex;
   align-items: center;
+
+  ${media.phone`
+    padding: 25px 10px;
+  `}
 `
 
 export const CustomizeButton = styled.span`
@@ -218,17 +219,17 @@ export const SendInvitesButton = styled(DefaultButton)`
 const SaveButton = styled(SendInvitesButton)`
   background-color: ${colors.green};
   color: ${colors.white};
-  margin: 10px 0px 0px 4.5px;
+  margin: 10px 0 0 4.5px;
 `
 
 const CancelButton = styled(CopyToClipboardButton)`
   width: 100%;
   height: 47px;
-  margin: 10px 4.5px 0px 0px;
+  margin: 10px 4.5px 0 0;
 `
 
 const CustomizeButtonWrapper = styled.div`
-  flex-direction: 'column';
+  flex-direction: column;
   display: flex;
   margin-left: 50px;
 `
@@ -282,56 +283,11 @@ export const ShareSendBlockDivideLineText = styled.span`
   color: ${colors.darkGray};
 `
 
-export const InvitationEmailsWrap = styled.div`
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid ${colors.gray};
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  .ant-tag {
-    margin: 5px;
-  }
-  .ant-input {
-    height: 34px;
-  }
-`
-
 export const SendInvitationForm = styled(Form)`
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-`
-
-export const AddEmailButton = styled(Tag)`
-  background: ${colors.white};
-  borderstyle: dashed;
-`
-
-export const AddEmailInput = styled(Input)`
-  height: 30px;
-  border: none;
-`
-
-export const AddEmailWrap = styled.div`
-  width: 100%;
-  display: flex;
-  .ant-input {
-    height: 30px;
-    border: none;
-    border-bottom: 1px solid ${colors.gray};
-    border-radius: 0;
-    margin-right: 10px;
-    width: 100%;
-    &:focus {
-      box-shadow: none;
-    }
-  }
-  .ant-input:focus {
-    border-color: transparent;
-  }
 `
 
 const InvitationInput = styled(Input)`

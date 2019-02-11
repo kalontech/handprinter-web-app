@@ -11,7 +11,6 @@ import { Menu, Dropdown } from 'antd'
 import { connect } from 'react-redux'
 import { animateScroll } from 'react-scroll/modules'
 
-import api from 'api'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Spinner from 'components/Spinner'
 import { BlockContainer, DefaultButton } from 'components/Styled'
@@ -19,6 +18,7 @@ import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 import hexToRgba from 'utils/hexToRgba'
+import api from 'api'
 
 const NEWS_RANGES = {
   NETWORK: 'network',

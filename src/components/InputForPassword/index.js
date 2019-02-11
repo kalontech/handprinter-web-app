@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { injectIntl } from 'react-intl'
-import PropTypes from 'prop-types'
+import { injectIntl, intlShape } from 'react-intl'
 
-import { Input } from './../../components/Styled'
+import { Input } from 'components/Styled'
 
-import eyeFillIcon from './../../assets/icons/eyeFill.svg'
-import eyeSlashFillIcon from './../../assets/icons/eyeSlashFill.svg'
+import eyeFillIcon from 'assets/icons/eyeFill.svg'
+import eyeSlashFillIcon from 'assets/icons/eyeSlashFill.svg'
 
 class InputForPassword extends Component {
   state = {
@@ -41,7 +40,7 @@ class InputForPassword extends Component {
 }
 
 InputForPassword.propTypes = {
-  intl: PropTypes.object.isRequired,
+  intl: intlShape.isRequired,
 }
 
 export default injectIntl(InputForPassword)

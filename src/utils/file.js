@@ -1,6 +1,6 @@
 import EXIF from 'exif-js'
 
-import { ACCEPT_IMAGE_FORMATS, PROFILE_PHOTO_QUALITY } from '../config/files'
+import { ACCEPT_IMAGE_FORMATS, PROFILE_PHOTO_QUALITY } from 'config/files'
 
 /*
  * Helper for draw image in canvas.
@@ -76,9 +76,9 @@ async function loadImage(file) {
 function getExifOrientation(file) {
   return new Promise((resolve, reject) => {
     EXIF.getData(file, function() {
-      const allMetaData = EXIF.getAllTags(this);
-      resolve(allMetaData.Orientation) 
-    });
+      const allMetaData = EXIF.getAllTags(this)
+      resolve(allMetaData.Orientation)
+    })
   })
 }
 
@@ -103,22 +103,22 @@ export async function croppResizeProfilePhoto({ file, size, canvas }) {
     const exifOrientation = await getExifOrientation(file)
 
     if (exifOrientation) {
-      switch(exifOrientation){
+      switch (exifOrientation) {
         case 8:
-          canvasContext.translate(canvas.width / 2, canvas.height / 2);
-          canvasContext.rotate(-90*Math.PI/180);
-          canvasContext.translate(-canvas.width / 2, -canvas.height / 2);
-          break;
+          canvasContext.translate(canvas.width / 2, canvas.height / 2)
+          canvasContext.rotate((-90 * Math.PI) / 180)
+          canvasContext.translate(-canvas.width / 2, -canvas.height / 2)
+          break
         case 3:
-          canvasContext.translate(canvas.width / 2, canvas.height / 2);
-          canvasContext.rotate(180*Math.PI/180);
-          canvasContext.translate(-canvas.width / 2, -canvas.height / 2);
-          break;
+          canvasContext.translate(canvas.width / 2, canvas.height / 2)
+          canvasContext.rotate((180 * Math.PI) / 180)
+          canvasContext.translate(-canvas.width / 2, -canvas.height / 2)
+          break
         case 6:
-          canvasContext.translate(canvas.width / 2, canvas.height / 2);
-          canvasContext.rotate(90*Math.PI/180);
-          canvasContext.translate(-canvas.width / 2, -canvas.height / 2);
-          break;
+          canvasContext.translate(canvas.width / 2, canvas.height / 2)
+          canvasContext.rotate((90 * Math.PI) / 180)
+          canvasContext.translate(-canvas.width / 2, -canvas.height / 2)
+          break
       }
     }
 

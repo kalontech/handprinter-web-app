@@ -5,7 +5,8 @@ import times from 'lodash/times'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import media from './../../utils/mediaQueryTemplate'
+import media from 'utils/mediaQueryTemplate'
+
 import Month from './month'
 
 const Wrap = styled.div`

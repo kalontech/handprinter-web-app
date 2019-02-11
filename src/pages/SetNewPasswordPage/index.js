@@ -13,12 +13,12 @@ import {
   OceanModal,
   OceanTitle,
   OceanForm,
-} from './../../components/Styled'
-import { Creators as AccountCreators } from './../../redux/accountStore'
-import getValidationRules from './../../config/validationRules'
-import InputForPassword from './../../components/InputForPassword'
-import handleFormError from './../../utils/handleFormError'
-import PageMetadata from '../../components/PageMetadata'
+} from 'components/Styled'
+import { Creators as AccountCreators } from 'redux/accountStore'
+import getValidationRules from 'config/validationRules'
+import InputForPassword from 'components/InputForPassword'
+import handleFormError from 'utils/handleFormError'
+import PageMetadata from 'components/PageMetadata'
 
 class SetNewPasswordPage extends React.PureComponent {
   state = {

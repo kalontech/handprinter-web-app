@@ -2,15 +2,17 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Layout, Row, Col } from 'antd'
 import styled from 'styled-components'
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+
+import FooterLanguageSelector from 'components/FooterLanguageSelector'
+import colors from 'config/colors'
+import hexToRgba from 'utils/hexToRgba'
+import { BlockContainer } from 'components/Styled'
+import media from 'utils/mediaQueryTemplate'
+import { CONTACT_DATA } from 'utils/constants'
+
 import footerLogo from './assets/footerLogo.svg'
 import footerLogoSmall from './assets/footerLogoSmall.svg'
-import FooterLanguageSelector from './../FooterLanguageSelector'
-import colors from './../../config/colors'
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
-import hexToRgba from '../../utils/hexToRgba'
-import { BlockContainer } from './../Styled'
-import media from '../../utils/mediaQueryTemplate'
-import { CONTACT_DATA } from 'utils/constants'
 
 const FooterWrap = styled(Layout.Footer)`
   padding: 0;

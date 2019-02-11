@@ -4,11 +4,13 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { updateIntl } from 'react-intl-redux'
 import { FormattedMessage } from 'react-intl'
-import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
 import styled from 'styled-components'
-import media from './../../utils/mediaQueryTemplate'
 import { Menu } from 'antd'
-import colors from '../../config/colors'
+
+import media from 'utils/mediaQueryTemplate'
+import colors from 'config/colors'
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+
 const SubMenu = Menu.SubMenu
 
 const LangTitle = styled.div`

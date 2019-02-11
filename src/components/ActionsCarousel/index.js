@@ -5,17 +5,13 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
-import ActionCard from './../../components/ActionCard'
-import colors from './../../config/colors'
-import media, { sizes } from '../../utils/mediaQueryTemplate'
-import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
-import {
-  PrimaryButton,
-  DefaultButton,
-  ArrowButton,
-} from './../../components/Styled'
+import { PrimaryButton, DefaultButton, ArrowButton } from 'components/Styled'
+import ActionCard from 'components/ActionCard'
+import colors from 'config/colors'
+import media, { sizes } from 'utils/mediaQueryTemplate'
 
-import hpSliderBg from './../../assets/homepage/actions-fingerprint.svg'
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+import hpSliderBg from 'assets/homepage/actions-fingerprint.svg'
 
 const SliderContainer = styled.div`
   height: 476px;

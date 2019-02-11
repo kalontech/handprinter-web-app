@@ -1,10 +1,10 @@
 import { put, select, call } from 'redux-saga/effects'
 import has from 'lodash/has'
 
-import api from './../api'
-import { Creators as UserStoreCreators } from './../redux/userStore'
-import { logOut } from './../redux/accountStore'
-import { getBrandedHostnamePrefix } from './../config/branded'
+import api from 'api'
+import { Creators as UserStoreCreators } from 'redux/userStore'
+import { logOut } from 'redux/accountStore'
+import { getBrandedHostnamePrefix } from 'config/branded'
 
 export function* prepareUserProfile() {
   const {

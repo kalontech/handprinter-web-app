@@ -83,7 +83,7 @@ export const PopoverTitle = styled.div`
 export const HeaderPopover = styled(Ant.Menu)`
   .ant-menu-item {
     display: flex;
-    algn-items: center;
+    align-items: center;
     padding: 0 6px;
     margin: 0;
     font-size: 16px;
@@ -451,7 +451,6 @@ export const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     flex-direction: column;
     min-height: 100vh;
-    overflow-x: hidden;
   }
   
   .ant-layout-content {
@@ -871,7 +870,7 @@ export const Pagination = styled(Ant.Pagination)`
       transition: color 0.3s;
       color: ${colors.darkGray};
       font-weight: bold;
-      font-family: '"Noto Sans", sans-serif';
+      font-family: Noto Sans, sans-serif;
     }
   }
 

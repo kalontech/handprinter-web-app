@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Button, Row, Col, Carousel } from 'antd'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import {
   FormattedMessage,
   FormattedHTMLMessage,
@@ -9,18 +10,18 @@ import {
 } from 'react-intl'
 import { animateScroll, Link as AnchorLink } from 'react-scroll'
 
-import ExpandMoreIcon from '../../assets/icons/ExpandMoreIcon'
-import { BlockContainer } from './../../components/Styled'
-import colors from './../../config/colors'
-import media from './../../utils/mediaQueryTemplate'
-import heroImg from './../../assets/about-eaton/BecomeGuardian.jpg'
-import heroTablet from './../../assets/about-eaton/heroTablet.jpg'
-import instagramImg from './../../assets/about-eaton/insta_photos.png'
-import BecomeGuardianImg from './../../assets/about-eaton/bc.jpg'
-import { Link } from 'react-router-dom'
-import api from './../../api'
-import PageMetadata from '../../components/PageMetadata'
-import ActionCard from '../../components/ActionCard'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
+import { BlockContainer } from 'components/Styled'
+import PageMetadata from 'components/PageMetadata'
+import ActionCard from 'components/ActionCard'
+import api from 'api'
+
+import heroImg from 'assets/about-eaton/BecomeGuardian.jpg'
+import heroTablet from 'assets/about-eaton/heroTablet.jpg'
+import instagramImg from 'assets/about-eaton/insta_photos.png'
+import BecomeGuardianImg from 'assets/about-eaton/bc.jpg'
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 
 const Hero = styled.section`
   position: relative;
@@ -30,7 +31,7 @@ const Hero = styled.section`
   height: 520px;
   background: url(${heroImg}) no-repeat center;
   background-size: cover;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   color: ${colors.white};
   button {
     margin-left: auto;
@@ -79,7 +80,7 @@ const WhiteBorderedButton = styled(Button)`
   height: 70px;
   border: 2px solid ${colors.white};
   border-radius: 0;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   font-size: 20px;
   letter-spacing: -0.2px;
   color: ${colors.white};

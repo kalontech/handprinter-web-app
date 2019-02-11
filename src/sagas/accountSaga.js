@@ -1,11 +1,12 @@
 import { call, put } from 'redux-saga/effects'
 
-import { history } from './../appRouter'
-import api from './../api'
-import decodeError from './../utils/decodeError'
-import { Types as AccountStoreTypes } from '../redux/accountStore'
+import { history } from 'appRouter'
+import api from 'api'
+import decodeError from 'utils/decodeError'
+import { Types as AccountStoreTypes } from 'redux/accountStore'
+import { getBrandedConfig } from 'config/branded'
+
 import { prepareUserProfile } from './helpers'
-import { getBrandedConfig } from '../config/branded'
 
 function* logIn({ email, password }) {
   try {
@@ -14,9 +15,8 @@ function* logIn({ email, password }) {
     yield call(prepareUserProfile)
     const brandedConfig = getBrandedConfig()
     yield call(
-      history.push, 
-      brandedConfig ? 
-      '/pages/home' : '/account/dashboard'
+      history.push,
+      brandedConfig ? '/pages/home' : '/account/dashboard',
     )
   } catch (error) {
     yield put({

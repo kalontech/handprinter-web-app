@@ -2,14 +2,16 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Layout, Row, Col } from 'antd'
 import styled from 'styled-components'
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
+
+import FooterLanguageSelector from 'components/FooterLanguageSelector'
+import colors from 'config/colors'
+import { BlockContainer } from 'components/Styled'
+import media from 'utils/mediaQueryTemplate'
+import { CONTACT_DATA } from 'utils/constants'
+
 import footerLogo from './assets/footer-logo.png'
 import footerLogoSmall from './assets/hp-logo.png'
-import FooterLanguageSelector from './../FooterLanguageSelector'
-import colors from './../../config/colors'
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
-import { BlockContainer } from './../Styled'
-import media from '../../utils/mediaQueryTemplate'
-import { CONTACT_DATA } from 'utils/constants'
 
 const FooterWrap = styled(Layout.Footer)`
   padding: 0;
@@ -110,7 +112,7 @@ const Copyright = styled.div`
   font-size: 12px;
   background-color: ${colors.interfaceCopyright};
   line-height: 20px;
-  font-family: 'Helvetica Neue', sans-serif;x
+  font-family: 'Helvetica Neue', sans-serif;
 `
 
 const CopyrightContent = styled.div`

@@ -3,8 +3,8 @@ import { linear } from 'everpolate'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import colors from './../../config/colors'
-import media from './../../utils/mediaQueryTemplate'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
 
 const Wrap = styled.div`
   align-items: center;

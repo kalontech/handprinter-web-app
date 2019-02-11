@@ -2,10 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Button, Row, Col } from 'antd'
-import colors from './../../config/colors'
-import media from './../../utils/mediaQueryTemplate'
 import { FormattedMessage } from 'react-intl'
-import { BlockContainer, BlockSubTitle } from './../Styled'
+
+import { BlockContainer, BlockSubTitle } from 'components/Styled'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
 
 const CtaButton = styled(Button)`
   height: 70px;

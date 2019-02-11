@@ -1,15 +1,16 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
+import { FormattedMessage } from 'react-intl'
+import { Link } from 'react-router-dom'
+
 import {
   BlockContainer,
   PrimaryButton,
   DefaultButton,
   BlockTitle,
 } from 'components/Styled'
-import { FormattedMessage } from 'react-intl'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
-import { Link } from 'react-router-dom'
 import { CONTACT_DATA } from 'utils/constants'
 
 import notFoundImg from './assets/404.png'

@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Slider, Icon } from 'antd'
-import { FormattedPlural, injectIntl } from 'react-intl'
+import { FormattedPlural, injectIntl, intlShape } from 'react-intl'
 
-import colors from '../../../config/colors'
-import hexToRgba from '../../../utils/hexToRgba'
-import media from '../../../utils/mediaQueryTemplate'
-import { TimeValueAbbreviations, } from '../../../utils/constants'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
+import { TimeValueAbbreviations } from 'utils/constants'
 
 const SliderWrap = styled.div`
   max-width: 95%;
@@ -37,7 +36,8 @@ const SliderWrap = styled.div`
     background-color: ${colors.ocean};
   }
   .ant-slider {
-    margin: 5px 0 32px 15px
+    margin: 5px 0 32px 15px;
+
     ${media.desktop`
       margin: 5px 0 32px 25px
     `}
@@ -93,7 +93,7 @@ const TooltipValue = styled.div`
   span {
     font-size: 10px;
     text-transform: uppercase;
-    font-weight: bold
+    font-weight: bold;
     color: ${({ colors }) => colors.unit};
     margin-left: 1px;
   }
@@ -116,7 +116,10 @@ const StyledIcon = styled(Icon)`
 
 class ImpactSlider extends Component {
   renderTooltip = dotValue => {
-    const { intl: { formatMessage }, timeValues } = this.props
+    const {
+      intl: { formatMessage },
+      timeValues,
+    } = this.props
     const TooltipValueColor = {}
 
     const timeValue = timeValues[dotValue]
@@ -146,11 +149,15 @@ class ImpactSlider extends Component {
           <span>
             <FormattedPlural
               value={timeValues[dotValue].humanReadable.value}
-              one={formatMessage({ 
-                id: `app.actions.timeValues.one.${timeValue.humanReadable.unit}` 
+              one={formatMessage({
+                id: `app.actions.timeValues.one.${
+                  timeValue.humanReadable.unit
+                }`,
               })}
-              other={formatMessage({ 
-                id: `app.actions.timeValues.other.${timeValue.humanReadable.unit}`
+              other={formatMessage({
+                id: `app.actions.timeValues.other.${
+                  timeValue.humanReadable.unit
+                }`,
               })}
             />
           </span>
@@ -162,13 +169,7 @@ class ImpactSlider extends Component {
   slider = React.createRef()
 
   render() {
-    const {
-      icon,
-      onAfterChange,
-      onChange,
-      value,
-      timeValues,
-    } = this.props
+    const { icon, onAfterChange, onChange, value, timeValues } = this.props
 
     return (
       <Wrap>
@@ -194,13 +195,14 @@ class ImpactSlider extends Component {
   }
 }
 
-
 ImpactSlider.propTypes = {
   defaultValue: PropTypes.array,
   icon: PropTypes.element.isRequired,
   onAfterChange: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.array.isRequired,
+  intl: intlShape.isRequired,
+  timeValues: PropTypes.any,
 }
 
 export default injectIntl(ImpactSlider)

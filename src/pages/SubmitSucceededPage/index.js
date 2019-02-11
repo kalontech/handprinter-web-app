@@ -11,8 +11,8 @@ import {
   OceanTitle,
   PrimaryButton,
   OceanDescription,
-} from './../../components/Styled'
-import PageMetadata from '../../components/PageMetadata'
+} from 'components/Styled'
+import PageMetadata from 'components/PageMetadata'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import LampImgPath from 'assets/actions-page/lamp.png'

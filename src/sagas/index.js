@@ -1,11 +1,11 @@
 import { takeLatest, fork } from 'redux-saga/effects'
 
+import { Types as AccountStoreTypes } from 'redux/accountStore'
+import { Types as UserStoreTypes } from 'redux/userStore'
+
 import accountSaga from './accountSaga'
 import userSaga from './userSaga'
 import startupSaga from './startupSaga'
-
-import { Types as AccountStoreTypes } from '../redux/accountStore'
-import { Types as UserStoreTypes } from '../redux/userStore'
 
 function* rootSaga() {
   yield fork(startupSaga.startup)
