@@ -410,9 +410,6 @@
     "app.increaseHandprintPage.customize": "Aanpassen",
     "app.increaseHandprintPage.form.save": "Opslaan",
     "app.increaseHandprintPage.form.cancel": "annuleren",
-    "app.header.menu.notificationTitle": "Jouw notificaties",
-    "app.header.menu.viewAllNews": "Bekijk al het nieuws",
-    "app.newsPage.notification.userDidAction": "{user} heeft actie uitgevoerd {action}",
     "app.actionCreatePage.editSubmitSucceededTitle": "Je idee is bewerkt",
     "app.actionsPage.tabs.my-ideas": "Mijn ideeën",
     "app.actions.card.edit": "Bewerk",
@@ -425,5 +422,6 @@
     "app.actions.page.delete.text": "Weet je zeker dat je deze actie wilt verwijderen?",
     "app.errors.20": "Actie met deze naam bestaat al",
     "app.errors.21": "Kan deze actie niet verwijderen",
-    "app.errors.22": "Kan deze actie niet bijwerken"
+    "app.errors.22": "Kan deze actie niet bijwerken",
+    "app.errors.image.required": "Foto is verplicht"
 }

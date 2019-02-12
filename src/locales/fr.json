@@ -410,9 +410,6 @@
     "app.increaseHandprintPage.customize": "Personnaliser",
     "app.increaseHandprintPage.form.save": "Sauvegarder",
     "app.increaseHandprintPage.form.cancel": "Annuler",
-    "app.header.menu.notificationTitle": "Vos notifications",
-    "app.header.menu.viewAllNews": "Voir toutes les nouvelles",
-    "app.newsPage.notification.userDidAction": "{user} fait l'action {action}",
     "app.actionCreatePage.editSubmitSucceededTitle": "Votre idée a été modifiée",
     "app.actionsPage.tabs.my-ideas": "Mes idées",
     "app.actions.card.edit": "modifier",
@@ -425,5 +422,6 @@
     "app.actions.page.delete.text": "Êtes-vous sûr de vouloir supprimer cette action?",
     "app.errors.20": "Une action portant ce nom existe déjà",
     "app.errors.21": "Impossible de supprimer cette action",
-    "app.errors.22": "Impossible de mettre à jour cette action"
+    "app.errors.22": "Impossible de mettre à jour cette action",
+    "app.errors.image.required": "La photo est obligatoire"
 }

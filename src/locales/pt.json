@@ -410,9 +410,6 @@
     "app.increaseHandprintPage.customize": "Customizar",
     "app.increaseHandprintPage.form.save": "Salvar",
     "app.increaseHandprintPage.form.cancel": "Cancelar",
-    "app.header.menu.notificationTitle": "Suas notificações",
-    "app.header.menu.viewAllNews": "Ver todas as notícias",
-    "app.newsPage.notification.userDidAction": "{user} fez a ação {action}",
     "app.actionCreatePage.editSubmitSucceededTitle": "Sua ideia foi editada",
     "app.actionsPage.tabs.my-ideas": "Minhas ideias",
     "app.actions.card.edit": "editar",
@@ -425,5 +422,6 @@
     "app.actions.page.delete.text": "Tem certeza de que deseja excluir esta ação?",
     "app.errors.20": "Ação com este nome já existe",
     "app.errors.21": "Não é possível excluir esta ação",
-    "app.errors.22": "Não é possível atualizar esta ação"
+    "app.errors.22": "Não é possível atualizar esta ação",
+    "app.errors.image.required": "Foto é necessária"
 }

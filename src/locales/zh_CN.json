@@ -410,9 +410,6 @@
     "app.increaseHandprintPage.customize": "定制",
     "app.increaseHandprintPage.form.save": "保存",
     "app.increaseHandprintPage.form.cancel": "取消",
-    "app.header.menu.notificationTitle": "你的通知",
-    "app.header.menu.viewAllNews": "查看所有新闻",
-    "app.newsPage.notification.userDidAction": "{user}了操作{action}",
     "app.actionCreatePage.editSubmitSucceededTitle": "你的想法被编辑了",
     "app.actionsPage.tabs.my-ideas": "我的想法",
     "app.actions.card.edit": "编辑",
@@ -425,5 +422,6 @@
     "app.actions.page.delete.text": "您确定要删除此操作吗？",
     "app.errors.20": "具有此名称的操作已存在",
     "app.errors.21": "无法删除此操作",
-    "app.errors.22": "无法更新此操作"
+    "app.errors.22": "无法更新此操作",
+    "app.errors.image.required": "照片是必需的"
 }

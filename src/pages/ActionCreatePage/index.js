@@ -297,6 +297,11 @@ const Loader = styled.section`
   align-items: center;
 `
 
+const BottomPanelWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 const getValueFromEvent = ({ file }) => ({
   file,
   fileUrl: URL.createObjectURL(file),
@@ -313,6 +318,7 @@ class ActionCreatePage extends React.PureComponent {
     isSubmitting: false,
     submitFailed: false,
     submitSucceeded: false,
+    validationErrorId: null,
   }
 
   handleSubmit = e => {
@@ -325,9 +331,14 @@ class ActionCreatePage extends React.PureComponent {
 
       const body = new FormData()
 
-      if (values.photo && values.photo.file)
-        body.append('picture', values.photo.file)
+      if (!values.photo || !values.photo.file) {
+        this.setState({
+          validationErrorId: `app.errors.image.required`,
+        })
+        return
+      }
 
+      body.append('picture', values.photo.file)
       body.append('description', values.description)
       body.append('name', values.name)
 
@@ -335,36 +346,42 @@ class ActionCreatePage extends React.PureComponent {
 
       if (match.params.slug) request = api.fetchAction
 
-      this.setState({ isSubmitting: true }, async () => {
-        return request({
-          body,
-          token,
-          id: _id,
-          method: match.params.slug ? 'PUT' : 'POST',
-        })
-          .then(() => {
-            this.setState(
-              {
-                isSubmitting: false,
-                submitFailed: false,
-                submitSucceeded: true,
-              },
-              () => {
-                history.push(
-                  `/account/submit-succeeded/${match.params.slug || ''}`,
-                )
-              },
-            )
+      this.setState(
+        {
+          isSubmitting: true,
+          validationErrorId: null,
+        },
+        async () => {
+          return request({
+            body,
+            token,
+            id: _id,
+            method: match.params.slug ? 'PUT' : 'POST',
           })
-          .catch(error => {
-            console.error(error)
-            this.setState({
-              isSubmitting: false,
-              submitFailed: error,
-              submitSucceeded: false,
+            .then(() => {
+              this.setState(
+                {
+                  isSubmitting: false,
+                  submitFailed: false,
+                  submitSucceeded: true,
+                },
+                () => {
+                  history.push(
+                    `/account/submit-succeeded/${match.params.slug || ''}`,
+                  )
+                },
+              )
             })
-          })
-      })
+            .catch(error => {
+              console.error(error)
+              this.setState({
+                isSubmitting: false,
+                submitFailed: error,
+                submitSucceeded: false,
+              })
+            })
+        },
+      )
     })
   }
 
@@ -376,7 +393,7 @@ class ActionCreatePage extends React.PureComponent {
       match,
       loading,
     } = this.props
-    const { submitFailed, isSubmitting } = this.state
+    const { submitFailed, isSubmitting, validationErrorId } = this.state
 
     const { fileUrl: photoPreviewUrl } = getFieldValue('photo') || {}
     const photoError = getFieldError('photo')
@@ -501,35 +518,44 @@ class ActionCreatePage extends React.PureComponent {
               </FormItem>
             </div>
 
-            <ButtonsWrapper>
-              <ButtonCancel onClick={closeModal}>
-                {formatMessage({ id: 'app.actionCreatePage.cancel' })}
-              </ButtonCancel>
+            <BottomPanelWrap>
+              <ButtonsWrapper>
+                <ButtonCancel onClick={closeModal}>
+                  {formatMessage({ id: 'app.actionCreatePage.cancel' })}
+                </ButtonCancel>
 
-              <SaveButton
-                type="primary"
-                htmlType="submit"
-                loading={isSubmitting}
-              >
-                {formatMessage({
-                  id: match.params.slug
-                    ? 'app.actions.card.edit'
-                    : 'app.actionCreatePage.title',
-                })}
-              </SaveButton>
-            </ButtonsWrapper>
-
-            {submitFailed && (
-              <FormError>
-                {formatMessage({
-                  id: `app.errors.${
-                    [19, 20].includes(Number(submitFailed.code))
-                      ? submitFailed.code
-                      : 'unknown'
-                  }`,
-                })}
-              </FormError>
-            )}
+                <SaveButton
+                  type="primary"
+                  htmlType="submit"
+                  loading={isSubmitting}
+                >
+                  {formatMessage({
+                    id: match.params.slug
+                      ? 'app.actions.card.edit'
+                      : 'app.actionCreatePage.title',
+                  })}
+                </SaveButton>
+              </ButtonsWrapper>
+              {submitFailed ? (
+                <FormError>
+                  {formatMessage({
+                    id: `app.errors.${
+                      [19, 20].includes(Number(submitFailed.code))
+                        ? submitFailed.code
+                        : 'unknown'
+                    }`,
+                  })}
+                </FormError>
+              ) : validationErrorId ? (
+                <FormError>
+                  {formatMessage({
+                    id: validationErrorId,
+                  })}
+                </FormError>
+              ) : (
+                ''
+              )}
+            </BottomPanelWrap>
           </MainFields>
         </StyledForm>
       </Container>
