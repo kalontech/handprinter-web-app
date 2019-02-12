@@ -109,8 +109,8 @@ class GoodRatioWidget extends Component {
     this[accessorName] = document.querySelector(selector)
     const elementBBox = this[accessorName].getBBox()
     const elementTransformOrigin = customTransformOrigin || {
-      x: elementBBox.x + elementBBox.width / 2,
-      y: elementBBox.y + elementBBox.height / 2,
+      x: elementBBox.x + elementBBox.width / 2 + 5.5,
+      y: elementBBox.y + elementBBox.height / 2 - 11,
     }
     this[accessorName].style.transition = 'all 500ms'
     this[accessorName].style.transformOrigin = `${elementTransformOrigin.x}px ${
