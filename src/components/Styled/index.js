@@ -242,10 +242,9 @@ export const FormItem = styled(Ant.Form.Item)`
 export const BlockContainer = styled.div`
   position: relative;
   margin: 0 auto;
-  width: 90%;
+  max-width: 1180px;
 
   ${media.largeDesktop`
-    width: unset;
     padding-left: 34px;
     padding-right: 34px;
   `};

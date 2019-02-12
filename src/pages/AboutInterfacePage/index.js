@@ -97,7 +97,7 @@ const HeroTitle = styled.div`
   font-size: 46px;
   text-align: center;
   color: ${colors.white};
-  margin-bottom: 50px;
+  margin: 0 auto 50px;
   max-width: 850px;
   ${media.desktop`
     max-width: 560px;

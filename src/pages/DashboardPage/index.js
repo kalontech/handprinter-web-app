@@ -215,7 +215,6 @@ const DashboardHeaderUserInfoValue = styled.div`
   margin-bottom: 3px;
   color: ${colors.dark};
   font-size: 28px;
-  font-weight: bold;
 
   ${media.desktop`
     line-height: 35px;
@@ -264,6 +263,7 @@ const ImpactCategorySelector = styled(Tabs)`
       align-items: center;
       display: flex;
       font-size: 16px;
+      font-weight: 400;
     }
   }
 

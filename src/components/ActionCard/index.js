@@ -151,12 +151,13 @@ const ActionCard = props => {
     onEdit,
     onDelete,
     isSlide,
+    style,
   } = props
 
   return (
     <Link to={to}>
       <CardWrap>
-        <CardContainer isSlide={isSlide}>
+        <CardContainer isSlide={isSlide} style={style}>
           <CardImage>
             {picture && <img src={picture} alt={name} />}
 
@@ -228,6 +229,7 @@ ActionCard.propTypes = {
   placeholder: PropTypes.bool,
   canChange: PropTypes.bool,
   isSlide: PropTypes.bool,
+  style: PropTypes.object,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
   suggestedBy: PropTypes.object,

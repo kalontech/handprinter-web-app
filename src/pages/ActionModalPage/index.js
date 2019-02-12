@@ -218,7 +218,7 @@ const ModalContentWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
-  overflow: scroll;
+  overflow: auto;
   height: 400px;
 
   @media screen and (max-width: ${sizes.phone}px) {
@@ -355,7 +355,7 @@ const TakeActionButton = styled(Button)`
 
 const ActionContent = styled.div`
   height: 400px;
-  overflow: scroll;
+  overflow: auto;
   padding: 0 60px;
   width: 100%;
 `
