@@ -648,14 +648,22 @@ class ActionModalPage extends Component {
     })
   }
 
-  renderInContainer = ({ children, width, height }) => (
-    <Container width={width} height={height}>
-      {children}
-      <CloseButton onClick={this.props.closeModal}>
-        <CloseIcon />
-      </CloseButton>
-    </Container>
-  )
+  renderInContainer = ({ children, width, height }) => {
+    const { closeModal, history } = this.props
+
+    return (
+      <Container width={width} height={height}>
+        {children}
+        <CloseButton
+          onClick={() => {
+            history.length > 1 ? history.goBack() : closeModal()
+          }}
+        >
+          <CloseIcon />
+        </CloseButton>
+      </Container>
+    )
+  }
 
   renderLoading = () => {
     return this.renderInContainer({
@@ -690,6 +698,7 @@ ActionModalPage.propTypes = {
   form: PropTypes.object.isRequired,
   location: PropTypes.object,
   match: PropTypes.object,
+  history: PropTypes.object,
   user: PropTypes.object,
   token: PropTypes.string,
 }

@@ -319,6 +319,7 @@ async function getActionsList(props) {
   const { location, match, token, timeValues } = props
   const query = qs.parse(location.search, { ignoreQueryPrefix: true })
 
+  if (!query.page) query.page = 1
   if (window.innerWidth < sizes.largeDesktop) query.limit = 10
 
   const getActions =
@@ -386,8 +387,9 @@ class ActionsPage extends React.PureComponent {
     const { location, match } = this.props
 
     if (
-      oldMatch.params.subset !== match.params.subset ||
-      oldLocation.search !== location.search
+      (oldMatch.params.subset !== match.params.subset ||
+        oldLocation.search !== location.search) &&
+      (!match.params.slug && !oldMatch.params.slug)
     )
       this.props.fetch()
   }
@@ -607,6 +609,7 @@ class ActionsPage extends React.PureComponent {
     return (
       <React.Fragment>
         <PageMetadata pageName="actionsPage" />
+
         <Wrapper>
           {user && (
             <ActionTabsWrap>
@@ -673,6 +676,7 @@ class ActionsPage extends React.PureComponent {
               </BlockContainer>
             </ActionTabsWrap>
           )}
+
           <BlockContainer>
             <InnerContainer>
               <Row span={8} xl={8} lg={12} md={12} xs={24}>
@@ -785,9 +789,7 @@ class ActionsPage extends React.PureComponent {
                   {actions.map(action => (
                     <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
                       <ActionCard
-                        to={`/actions/${match.params.subset}/${action.slug}${
-                          location.search
-                        }`}
+                        to={`/actions/${match.params.subset}/${action.slug}`}
                         picture={action.picture}
                         canChange={action.status === ACTION_STATES.PROPOSED}
                         onEdit={this.onActionEdit(action.slug)}

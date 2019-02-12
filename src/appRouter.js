@@ -62,7 +62,7 @@ const AppRouter = () => {
           />
           <Redirect exact from="/actions" to="/actions/discover?page=1" />
           <Route
-            path="/actions/:subset"
+            path="/actions/:subset/:slug?"
             component={ActionsPage}
             useAuthentication
             withoutCTA
@@ -175,10 +175,17 @@ const AppRouter = () => {
 
           <ModalRoute
             path="/actions/:subset/:slug"
-            parentPath={getParentPath(
-              ({ params }, { location }) =>
-                `/actions/${params.subset}${location.search}`,
-            )}
+            parentPath={({ params }) => `/actions/${params.subset}`}
+            onBackdropClick={() => {
+              history.length > 1
+                ? history.goBack()
+                : history.push(
+                    history.location.pathname
+                      .split('/')
+                      .slice(0, 3)
+                      .join('/'),
+                  )
+            }}
             component={ActionModalPage}
           />
 
