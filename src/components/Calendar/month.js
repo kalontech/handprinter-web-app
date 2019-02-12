@@ -73,6 +73,32 @@ const WeekDay = styled.div`
       css`
         height: 15px;
       `};
+
+    ${props =>
+      props.active &&
+      props.current &&
+      props.activeStarts &&
+      !props.tiny &&
+      css`
+        background: linear-gradient(
+          to right,
+          white 50%,
+          ${colors.lightGreen} 50%
+        );
+      `};
+
+    ${props =>
+      props.active &&
+      props.current &&
+      props.activeEnds &&
+      !props.tiny &&
+      css`
+        background: linear-gradient(
+          to left,
+          white 50%,
+          ${colors.lightGreen} 50%
+        );
+      `};
   }
 
   > div > div {
