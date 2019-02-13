@@ -38,7 +38,7 @@ const LangMenu = styled(Menu)`
 `
 
 const Icon = styled(ExpandMoreIcon)`
-  color: ${({ color }) => color || colors.green};
+  color: ${({ iconColor }) => iconColor || colors.green};
 `
 
 const CollapseLanguageSelector = props => {

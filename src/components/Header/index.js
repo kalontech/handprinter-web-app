@@ -27,6 +27,8 @@ import hexToRgba from 'utils/hexToRgba'
 import { logOut } from 'redux/accountStore'
 import api from 'api'
 
+import { Animate } from 'react-animate-mount'
+
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
 import loginIcon from './assets/login.svg'
@@ -77,6 +79,7 @@ const HeaderWrap = styled(Layout.Header)`
   .ant-menu-item {
     padding: 0;
     border-bottom: 3px solid transparent;
+    transition: border 0.3s;
     font-size: 16px;
     a {
       color: ${({ fontColor }) => fontColor || colors.darkGray};
@@ -292,6 +295,7 @@ const CollapseSubmenuTitle = styled.div`
 const CollapseContent = styled.div`
   padding: 0 35px;
   .ant-menu-inline {
+    border: none;
     .ant-menu-item {
       padding-left: 0;
       margin: 0;
@@ -565,388 +569,211 @@ class Header extends Component {
           </HeaderWrap>
         )}
         {type === 'public' && (
-          <HeaderWrap isLoggedIn={user} font={fontNames} fontColor={fontColor}>
-            <Logo>
-              <Link to="/">
-                {(!isMobile && (
-                  <img
-                    src={(overrides && overrides.fullLogo) || fullLogoImg}
-                    alt="Handprinter"
-                    style={(!overrides && { marginTop: '-20px' }) || null}
-                  />
-                )) || (
-                  <img
-                    src={(overrides && overrides.partialLogo) || partialLogoImg}
-                    alt="Handprinter"
-                  />
-                )}
-              </Link>
-            </Logo>
-            {!withoutHeaderContent && (
-              <Fragment>
-                {(!isTablet && (
-                  <MenuWrap borderColor="transparent">
-                    <LeftMenu>
-                      <Menu
-                        mode="horizontal"
-                        selectedKeys={[this.selectedMenuItem]}
+          <Fragment>
+            <Animate type="fade" show={!this.state.collapsed && isTablet}>
+              <CollapseMenu>
+                <CollapseTop>
+                  {((overrides && !overrides.logInOnly) || !overrides) && (
+                    <Link to="/account/register">
+                      <PrimaryButton
+                        type="primary"
+                        size="large"
+                        style={overrides && { borderRadius: '0' }}
                       >
-                        <Menu.Item key="/actions">
-                          <Link to="/actions">
-                            <FormattedMessage id="app.header.menu.actions" />
-                          </Link>
-                        </Menu.Item>
-                      </Menu>
-                      <Popover
-                        placement="bottomLeft"
-                        content={
-                          <HeaderPopover
-                            mode="vertical"
-                            theme="light"
-                            fontColor={fontColor}
-                          >
-                            <Menu.Item key="/pages/our-vision">
-                              <Link to="/pages/our-vision">
-                                <FormattedMessage id="app.header.menu.howItWorks" />
-                              </Link>
-                            </Menu.Item>
-                            <Menu.Item key="/pages/measurement-units">
-                              <Link to="/pages/measurement-units">
-                                <FormattedMessage id="app.header.menu.measurement" />
-                              </Link>
-                            </Menu.Item>
-                            <Menu.Item key="/pages/faq">
-                              <Link to="/pages/faq">
-                                <FormattedMessage id="app.header.menu.faq" />
-                              </Link>
-                            </Menu.Item>
-                          </HeaderPopover>
-                        }
-                      >
-                        <LeftAlignPublic>
-                          <PopoverTitle fontColor={fontColor}>
-                            <FormattedMessage id="app.header.menu.about" />
-                            <ExpandMoreIcon iconColor={brandColor} />
-                          </PopoverTitle>
-                        </LeftAlignPublic>
-                      </Popover>
-                      <HeaderLanguageSelector
-                        fontColor={fontColor}
-                        iconColor={brandColor}
-                      />
-                    </LeftMenu>
-                    <RightMenu>
-                      <Menu
-                        theme="light"
-                        mode="horizontal"
-                        selectedKeys={[location.pathname]}
-                      >
-                        <Menu.Item key="/account/login">
-                          <Link to="/account/login">
-                            <CenterAlign>
-                              {overrides &&
-                                overrides.brandName === 'Interface' && (
-                                  <LogoImg src={loginIcon} alt="icon" />
-                                )}
-                              <FormattedMessage id="app.header.menu.login" />
-                            </CenterAlign>
-                          </Link>
-                        </Menu.Item>
-                      </Menu>
-                      {((overrides && !overrides.logInOnly) || !overrides) && (
-                        <Link to="/account/register">
-                          <PrimaryButton type="primary" size="large">
-                            <FingerPrintIcon id="primaryBtnIcon" />
-                            <FormattedMessage
-                              id={
-                                overrides
-                                  ? 'app.brandedHeader.link'
-                                  : 'app.header.link'
-                              }
-                            />
-                          </PrimaryButton>
-                        </Link>
-                      )}
-                    </RightMenu>
-                  </MenuWrap>
-                )) || (
-                  <Hamburger onClick={this.onClick}>
-                    {this.state.collapsed && <MenuIcon />}
-                    {!this.state.collapsed && <CloseIcon />}
-                  </Hamburger>
-                )}
-                {!this.state.collapsed && isTablet && (
-                  <CollapseMenu>
-                    <CollapseTop>
-                      {((overrides && !overrides.logInOnly) || !overrides) && (
-                        <Link to="/account/register">
-                          <PrimaryButton
-                            type="primary"
-                            size="large"
-                            style={overrides && { borderRadius: '0' }}
-                          >
-                            <FingerPrintIcon id="primaryBtnIcon" />
-                            <FormattedMessage
-                              id={
-                                overrides
-                                  ? 'app.brandedHeader.link'
-                                  : 'app.header.link'
-                              }
-                            />
-                          </PrimaryButton>
-                        </Link>
-                      )}
-                      <Link to="/account/login">
-                        {overrides && overrides.brandName === 'Eaton' ? (
-                          <BlueBorderedButton>
-                            <FormattedMessage id="app.header.menu.login" />
-                          </BlueBorderedButton>
-                        ) : overrides && overrides.brandName === 'Interface' ? (
-                          <GrayBorderedButton>
-                            <FormattedMessage id="app.header.menu.login" />
-                          </GrayBorderedButton>
-                        ) : (
-                          <DefaultButton type="primary" size="large">
-                            <FormattedMessage id="app.header.menu.login" />
-                          </DefaultButton>
-                        )}
+                        <FingerPrintIcon id="primaryBtnIcon" />
+                        <FormattedMessage
+                          id={
+                            overrides
+                              ? 'app.brandedHeader.link'
+                              : 'app.header.link'
+                          }
+                        />
+                      </PrimaryButton>
+                    </Link>
+                  )}
+                  <Link to="/account/login">
+                    {overrides && overrides.brandName === 'Eaton' ? (
+                      <BlueBorderedButton>
+                        <FormattedMessage id="app.header.menu.login" />
+                      </BlueBorderedButton>
+                    ) : overrides && overrides.brandName === 'Interface' ? (
+                      <GrayBorderedButton>
+                        <FormattedMessage id="app.header.menu.login" />
+                      </GrayBorderedButton>
+                    ) : (
+                      <DefaultButton type="primary" size="large">
+                        <FormattedMessage id="app.header.menu.login" />
+                      </DefaultButton>
+                    )}
+                  </Link>
+                </CollapseTop>
+                <CollapseContent>
+                  <Menu
+                    mode="inline"
+                    inlineIndent={0}
+                    selectedKeys={[this.selectedMenuItem]}
+                    onClick={this.onClick}
+                  >
+                    <Menu.Item key="/actions">
+                      <Link to="/actions">
+                        <FormattedMessage id="app.header.menu.actions" />
                       </Link>
-                    </CollapseTop>
-                    <CollapseContent>
-                      <Menu
-                        mode="inline"
-                        inlineIndent={0}
-                        selectedKeys={[this.selectedMenuItem]}
-                        onClick={this.onClick}
-                      >
-                        <Menu.Item key="/actions">
-                          <Link to="/actions">
-                            <FormattedMessage id="app.header.menu.actions" />
-                          </Link>
-                        </Menu.Item>
-                        <SubMenu
-                          key="about"
-                          title={
-                            <CollapseSubmenuTitle>
-                              <FormattedMessage id="app.header.menu.about" />
-                              <ExpandMoreIcon iconColor={brandColor} />
-                            </CollapseSubmenuTitle>
+                    </Menu.Item>
+                    <SubMenu
+                      key="about"
+                      title={
+                        <CollapseSubmenuTitle>
+                          <FormattedMessage id="app.header.menu.about" />
+                          <ExpandMoreIcon iconColor={brandColor} />
+                        </CollapseSubmenuTitle>
+                      }
+                    >
+                      <Menu.Item key="/pages/our-vision">
+                        <Link to="/pages/our-vision">
+                          <FormattedMessage id="app.header.menu.howItWorks" />
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="/pages/measurement-units">
+                        <Link to="/pages/measurement-units">
+                          <FormattedMessage id="app.header.menu.measurement" />
+                        </Link>
+                      </Menu.Item>
+                      <Menu.Item key="/pages/faq">
+                        <Link to="/pages/faq">
+                          <FormattedMessage id="app.header.menu.faq" />
+                        </Link>
+                      </Menu.Item>
+                    </SubMenu>
+                  </Menu>
+                  <CollapseLanguageSelector iconColor={brandColor} />
+                </CollapseContent>
+              </CollapseMenu>
+            </Animate>
+            <HeaderWrap
+              isLoggedIn={user}
+              font={fontNames}
+              fontColor={fontColor}
+            >
+              <Logo>
+                <Link to="/">
+                  {(!isMobile && (
+                    <img
+                      src={(overrides && overrides.fullLogo) || fullLogoImg}
+                      alt="Handprinter"
+                      style={(!overrides && { marginTop: '-20px' }) || null}
+                    />
+                  )) || (
+                    <img
+                      src={
+                        (overrides && overrides.partialLogo) || partialLogoImg
+                      }
+                      alt="Handprinter"
+                    />
+                  )}
+                </Link>
+              </Logo>
+              {!withoutHeaderContent && (
+                <Fragment>
+                  {(!isTablet && (
+                    <MenuWrap borderColor="transparent">
+                      <LeftMenu>
+                        <Menu
+                          mode="horizontal"
+                          selectedKeys={[this.selectedMenuItem]}
+                        >
+                          <Menu.Item key="/actions">
+                            <Link to="/actions">
+                              <FormattedMessage id="app.header.menu.actions" />
+                            </Link>
+                          </Menu.Item>
+                        </Menu>
+                        <Popover
+                          placement="bottomLeft"
+                          content={
+                            <HeaderPopover
+                              mode="vertical"
+                              theme="light"
+                              fontColor={fontColor}
+                            >
+                              <Menu.Item key="/pages/our-vision">
+                                <Link to="/pages/our-vision">
+                                  <FormattedMessage id="app.header.menu.howItWorks" />
+                                </Link>
+                              </Menu.Item>
+                              <Menu.Item key="/pages/measurement-units">
+                                <Link to="/pages/measurement-units">
+                                  <FormattedMessage id="app.header.menu.measurement" />
+                                </Link>
+                              </Menu.Item>
+                              <Menu.Item key="/pages/faq">
+                                <Link to="/pages/faq">
+                                  <FormattedMessage id="app.header.menu.faq" />
+                                </Link>
+                              </Menu.Item>
+                            </HeaderPopover>
                           }
                         >
-                          <Menu.Item key="/pages/our-vision">
-                            <Link to="/pages/our-vision">
-                              <FormattedMessage id="app.header.menu.howItWorks" />
-                            </Link>
-                          </Menu.Item>
-                          <Menu.Item key="/pages/measurement-units">
-                            <Link to="/pages/measurement-units">
-                              <FormattedMessage id="app.header.menu.measurement" />
-                            </Link>
-                          </Menu.Item>
-                          <Menu.Item key="/pages/faq">
-                            <Link to="/pages/faq">
-                              <FormattedMessage id="app.header.menu.faq" />
-                            </Link>
-                          </Menu.Item>
-                        </SubMenu>
-                      </Menu>
-                      <CollapseLanguageSelector iconColor={brandColor} />
-                    </CollapseContent>
-                  </CollapseMenu>
-                )}
-              </Fragment>
-            )}
-          </HeaderWrap>
-        )}
-        {type === 'private' && (
-          <HeaderWrap isLoggedIn={user} font={fontNames} fontColor={fontColor}>
-            {isTablet && (
-              <Hamburger onClick={this.onClick}>
-                {this.state.collapsed && <MenuIcon />}
-                {!this.state.collapsed && <CloseIcon />}
-              </Hamburger>
-            )}
-            <LogoSmall>
-              <Link to={overrides ? '/pages/home' : '/account/dashboard'}>
-                <img
-                  src={(overrides && overrides.partialLogo) || partialLogoImg}
-                  alt="Handprinter"
-                />
-              </Link>
-            </LogoSmall>
-            {isTablet && !isMobile && (
-              <Popover
-                overlayClassName="notification-popover"
-                placement="bottomRight"
-                content={
-                  <NotificationsContainer
-                    notification={notification}
-                    fontColor={fontColor}
-                    fontNames={fontNames}
-                    token={token}
-                  />
-                }
-                onVisibleChange={this.sendLastTimeReadNotif}
-              >
-                <NotificationPopoverTitle>
-                  <img src={newsBellIcon} alt="" />
-                  {unreadCount > 1 && (
-                    <NotificationCount fontNames={fontNames}>
-                      {unreadCount}
-                    </NotificationCount>
-                  )}
-                </NotificationPopoverTitle>
-              </Popover>
-            )}
-            <Fragment>
-              {!isTablet && (
-                <Fragment>
-                  <CenterMenu
-                    defaultSelectedKeys="actions"
-                    borderColor={brandColor}
-                  >
-                    <Menu
-                      mode="horizontal"
-                      selectedKeys={[this.selectedMenuItem]}
-                    >
-                      <Menu.Item key="/account/dashboard">
-                        <Link to="/account/dashboard">
-                          <FormattedMessage id="app.header.menu.dashboard" />
-                        </Link>
-                      </Menu.Item>
-
-                      <Menu.Item key="/actions">
-                        <Link to="/actions">
-                          <FormattedMessage id="app.header.menu.actions" />
-                        </Link>
-                      </Menu.Item>
-
-                      <Menu.Item key="/account/news">
-                        <Link to="/account/news">
-                          <FormattedMessage id="app.header.menu.news" />
-                        </Link>
-                      </Menu.Item>
-
-                      {overrides &&
-                      overrides.inLinkLogo &&
-                      overrides.brandName === 'Eaton' ? (
-                        <Menu.Item key="/pages/home">
-                          <Link to="/">
-                            <CenterAlign>
-                              <FormattedMessage id="app.header.menu.about" />{' '}
-                              <ImgLeftIndent src={overrides.inLinkLogo} />
-                            </CenterAlign>
-                          </Link>
-                        </Menu.Item>
-                      ) : overrides &&
-                        overrides.inLinkLogo &&
-                        overrides.brandName === 'Interface' ? (
-                        <Menu.Item key="/pages/home">
-                          <Link to="/">
-                            <CenterAlign>
-                              <ImgRightIndent src={overrides.inLinkLogo} />
-                              <FormattedMessage id="app.header.menu.aboutInterface" />
-                            </CenterAlign>
-                          </Link>
-                        </Menu.Item>
-                      ) : null}
-                    </Menu>
-                    <Popover
-                      placement="bottomLeft"
-                      content={
-                        <HeaderPopover
-                          mode="vertical"
-                          theme="light"
+                          <LeftAlignPublic>
+                            <PopoverTitle fontColor={fontColor}>
+                              <FormattedMessage id="app.header.menu.about" />
+                              <ExpandMoreIcon iconColor={brandColor} />
+                            </PopoverTitle>
+                          </LeftAlignPublic>
+                        </Popover>
+                        <HeaderLanguageSelector
                           fontColor={fontColor}
-                        >
-                          <Menu.Item key="/pages/our-vision">
-                            <Link to="/pages/our-vision">
-                              <FormattedMessage id="app.header.menu.howItWorks" />
-                            </Link>
-                          </Menu.Item>
-                          <Menu.Item key="/pages/measurement-units">
-                            <Link to="/pages/measurement-units">
-                              <FormattedMessage id="app.header.menu.measurement" />
-                            </Link>
-                          </Menu.Item>
-                          <Menu.Item key="/pages/faq">
-                            <Link to="/pages/faq">
-                              <FormattedMessage id="app.header.menu.faq" />
-                            </Link>
-                          </Menu.Item>
-                        </HeaderPopover>
-                      }
-                    >
-                      <LeftAlignPublic>
-                        <PopoverTitle fontColor={fontColor}>
-                          <FormattedMessage id="app.header.menu.about" />
-                        </PopoverTitle>
-                      </LeftAlignPublic>
-                    </Popover>
-                  </CenterMenu>
-                  <RightAlign>
-                    <Popover
-                      overlayClassName="notification-popover"
-                      placement="bottomRight"
-                      content={
-                        <NotificationsContainer
-                          notification={notification}
-                          fontColor={fontColor}
-                          fontNames={fontNames}
-                          token={token}
+                          iconColor={brandColor}
                         />
-                      }
-                      onVisibleChange={this.sendLastTimeReadNotif}
-                    >
-                      <NotificationPopoverTitle>
-                        <img src={newsBellIcon} alt="" />
-                        {unreadCount >= 1 && (
-                          <NotificationCount fontNames={fontNames}>
-                            {unreadCount}
-                          </NotificationCount>
+                      </LeftMenu>
+                      <RightMenu>
+                        <Menu
+                          theme="light"
+                          mode="horizontal"
+                          selectedKeys={[location.pathname]}
+                        >
+                          <Menu.Item key="/account/login">
+                            <Link to="/account/login">
+                              <CenterAlign>
+                                {overrides &&
+                                  overrides.brandName === 'Interface' && (
+                                    <LogoImg src={loginIcon} alt="icon" />
+                                  )}
+                                <FormattedMessage id="app.header.menu.login" />
+                              </CenterAlign>
+                            </Link>
+                          </Menu.Item>
+                        </Menu>
+                        {((overrides && !overrides.logInOnly) ||
+                          !overrides) && (
+                          <Link to="/account/register">
+                            <PrimaryButton type="primary" size="large">
+                              <FingerPrintIcon id="primaryBtnIcon" />
+                              <FormattedMessage
+                                id={
+                                  overrides
+                                    ? 'app.brandedHeader.link'
+                                    : 'app.header.link'
+                                }
+                              />
+                            </PrimaryButton>
+                          </Link>
                         )}
-                      </NotificationPopoverTitle>
-                    </Popover>
-                    <Popover
-                      placement="bottomRight"
-                      content={
-                        <UserInfo fontColor={fontColor}>
-                          <Name>{(user && user.fullName) || ''}</Name>
-                          <Email>{(user && user.email) || ''}</Email>
-                          <Links>
-                            <Link to="/account/profile">
-                              <FormattedMessage id="app.header.menu.profileSettings" />
-                            </Link>
-                            <Link to="/account/code">
-                              <FormattedMessage id="app.header.menu.increaseHandprint" />
-                            </Link>
-                            <a onClick={logOut}>
-                              <FormattedMessage id="app.header.menu.signOut" />
-                            </a>
-                          </Links>
-                        </UserInfo>
-                      }
-                    >
-                      <PopoverTitle fontColor={fontColor}>
-                        <Avatar>
-                          <img
-                            src={
-                              user
-                                ? user.photo ||
-                                  api.getUserInitialAvatar(user.fullName)
-                                : ''
-                            }
-                            alt="Avatar"
-                          />
-                        </Avatar>
-                      </PopoverTitle>
-                    </Popover>
-                  </RightAlign>
+                      </RightMenu>
+                    </MenuWrap>
+                  )) || (
+                    <Hamburger onClick={this.onClick}>
+                      {this.state.collapsed && <MenuIcon />}
+                      {!this.state.collapsed && <CloseIcon />}
+                    </Hamburger>
+                  )}
                 </Fragment>
               )}
-            </Fragment>
-
-            {!this.state.collapsed && isTablet && (
+            </HeaderWrap>
+          </Fragment>
+        )}
+        {type === 'private' && (
+          <Fragment>
+            <Animate type="fade" show={!this.state.collapsed && isTablet}>
               <CollapseMenu>
                 {((overrides && !overrides.logInOnly) || !overrides) && (
                   <CollapseTop />
@@ -1069,8 +896,199 @@ class Header extends Component {
                   <CollapseLanguageSelector color={brandColor} />
                 </CollapseContent>
               </CollapseMenu>
-            )}
-          </HeaderWrap>
+            </Animate>
+            <HeaderWrap
+              isLoggedIn={user}
+              font={fontNames}
+              fontColor={fontColor}
+            >
+              {isTablet && (
+                <Hamburger onClick={this.onClick}>
+                  {this.state.collapsed && <MenuIcon />}
+                  {!this.state.collapsed && <CloseIcon />}
+                </Hamburger>
+              )}
+              <LogoSmall>
+                <Link to={overrides ? '/pages/home' : '/account/dashboard'}>
+                  <img
+                    src={(overrides && overrides.partialLogo) || partialLogoImg}
+                    alt="Handprinter"
+                  />
+                </Link>
+              </LogoSmall>
+              {isTablet && !isMobile && (
+                <Popover
+                  overlayClassName="notification-popover"
+                  placement="bottomRight"
+                  content={
+                    <NotificationsContainer
+                      notification={notification}
+                      fontColor={fontColor}
+                      fontNames={fontNames}
+                      token={token}
+                    />
+                  }
+                  onVisibleChange={this.sendLastTimeReadNotif}
+                >
+                  <NotificationPopoverTitle>
+                    <img src={newsBellIcon} alt="" />
+                    {unreadCount > 1 && (
+                      <NotificationCount fontNames={fontNames}>
+                        {unreadCount}
+                      </NotificationCount>
+                    )}
+                  </NotificationPopoverTitle>
+                </Popover>
+              )}
+              <Fragment>
+                {!isTablet && (
+                  <Fragment>
+                    <CenterMenu
+                      defaultSelectedKeys="actions"
+                      borderColor={brandColor}
+                    >
+                      <Menu
+                        mode="horizontal"
+                        selectedKeys={[this.selectedMenuItem]}
+                      >
+                        <Menu.Item key="/account/dashboard">
+                          <Link to="/account/dashboard">
+                            <FormattedMessage id="app.header.menu.dashboard" />
+                          </Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="/actions">
+                          <Link to="/actions">
+                            <FormattedMessage id="app.header.menu.actions" />
+                          </Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="/account/news">
+                          <Link to="/account/news">
+                            <FormattedMessage id="app.header.menu.news" />
+                          </Link>
+                        </Menu.Item>
+
+                        {overrides &&
+                        overrides.inLinkLogo &&
+                        overrides.brandName === 'Eaton' ? (
+                          <Menu.Item key="/pages/home">
+                            <Link to="/">
+                              <CenterAlign>
+                                <FormattedMessage id="app.header.menu.about" />{' '}
+                                <ImgLeftIndent src={overrides.inLinkLogo} />
+                              </CenterAlign>
+                            </Link>
+                          </Menu.Item>
+                        ) : overrides &&
+                          overrides.inLinkLogo &&
+                          overrides.brandName === 'Interface' ? (
+                          <Menu.Item key="/pages/home">
+                            <Link to="/">
+                              <CenterAlign>
+                                <ImgRightIndent src={overrides.inLinkLogo} />
+                                <FormattedMessage id="app.header.menu.aboutInterface" />
+                              </CenterAlign>
+                            </Link>
+                          </Menu.Item>
+                        ) : null}
+                      </Menu>
+                      <Popover
+                        placement="bottomLeft"
+                        content={
+                          <HeaderPopover
+                            mode="vertical"
+                            theme="light"
+                            fontColor={fontColor}
+                          >
+                            <Menu.Item key="/pages/our-vision">
+                              <Link to="/pages/our-vision">
+                                <FormattedMessage id="app.header.menu.howItWorks" />
+                              </Link>
+                            </Menu.Item>
+                            <Menu.Item key="/pages/measurement-units">
+                              <Link to="/pages/measurement-units">
+                                <FormattedMessage id="app.header.menu.measurement" />
+                              </Link>
+                            </Menu.Item>
+                            <Menu.Item key="/pages/faq">
+                              <Link to="/pages/faq">
+                                <FormattedMessage id="app.header.menu.faq" />
+                              </Link>
+                            </Menu.Item>
+                          </HeaderPopover>
+                        }
+                      >
+                        <LeftAlignPublic>
+                          <PopoverTitle fontColor={fontColor}>
+                            <FormattedMessage id="app.header.menu.about" />
+                          </PopoverTitle>
+                        </LeftAlignPublic>
+                      </Popover>
+                    </CenterMenu>
+                    <RightAlign>
+                      <Popover
+                        overlayClassName="notification-popover"
+                        placement="bottomRight"
+                        content={
+                          <NotificationsContainer
+                            notification={notification}
+                            fontColor={fontColor}
+                            fontNames={fontNames}
+                            token={token}
+                          />
+                        }
+                        onVisibleChange={this.sendLastTimeReadNotif}
+                      >
+                        <NotificationPopoverTitle>
+                          <img src={newsBellIcon} alt="" />
+                          {unreadCount >= 1 && (
+                            <NotificationCount fontNames={fontNames}>
+                              {unreadCount}
+                            </NotificationCount>
+                          )}
+                        </NotificationPopoverTitle>
+                      </Popover>
+                      <Popover
+                        placement="bottomRight"
+                        content={
+                          <UserInfo fontColor={fontColor}>
+                            <Name>{(user && user.fullName) || ''}</Name>
+                            <Email>{(user && user.email) || ''}</Email>
+                            <Links>
+                              <Link to="/account/profile">
+                                <FormattedMessage id="app.header.menu.profileSettings" />
+                              </Link>
+                              <Link to="/account/code">
+                                <FormattedMessage id="app.header.menu.increaseHandprint" />
+                              </Link>
+                              <a onClick={logOut}>
+                                <FormattedMessage id="app.header.menu.signOut" />
+                              </a>
+                            </Links>
+                          </UserInfo>
+                        }
+                      >
+                        <PopoverTitle fontColor={fontColor}>
+                          <Avatar>
+                            <img
+                              src={
+                                user
+                                  ? user.photo ||
+                                    api.getUserInitialAvatar(user.fullName)
+                                  : ''
+                              }
+                              alt="Avatar"
+                            />
+                          </Avatar>
+                        </PopoverTitle>
+                      </Popover>
+                    </RightAlign>
+                  </Fragment>
+                )}
+              </Fragment>
+            </HeaderWrap>
+          </Fragment>
         )}
       </StyledAffix>
     )

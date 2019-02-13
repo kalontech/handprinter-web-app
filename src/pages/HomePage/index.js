@@ -15,9 +15,11 @@ import {
   TextMediumGroup,
   ScrollButton,
   ScrollToSection,
+  DefaultButton,
+  VideoModalWrap,
+  SlideDown,
 } from 'components/Styled'
 import ActionsCarousel from 'components/ActionsCarousel'
-import VideoPopup from 'components/VideoPopup'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import PageMetadata from 'components/PageMetadata'
@@ -30,6 +32,10 @@ import hpAboutImg from 'assets/homepage/what-image.png'
 import hpActionImg from 'assets/homepage/actions-image.png'
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 import FingerPrintIcon from 'assets/icons/FingerPrintIcon'
+import ScrollAnimation from 'components/ScrollAnimation'
+import 'react-modal-video/css/modal-video.min.css'
+import ModalVideo from 'react-modal-video'
+import WatchVideoIcon from 'assets/icons/WatchVideoIcon'
 
 const HeroTitle = styled(BlockTitleGreen)`
   margin-bottom: 24px;
@@ -232,7 +238,7 @@ const Clients = styled.section`
       padding: 0;
     }
   `};
-  > div {
+  ${BlockContainer} {
     display: flex;
     justify-content: center;
   }
@@ -262,6 +268,12 @@ const ClientsWrap = styled(Row)`
 class HomePage extends Component {
   state = {
     actions: [],
+    isOpen: false,
+    show: false,
+  }
+
+  openModal = () => {
+    this.setState({ isOpen: true })
   }
 
   componentDidMount = async () => {
@@ -282,26 +294,37 @@ class HomePage extends Component {
           <BlockContainer>
             <Row type="flex" justify="space-between" align="middle">
               <Col xs={{ span: 24, order: 2 }} md={{ order: 1 }} xl={11}>
-                <HeroTitle>
-                  <FormattedHTMLMessage id="app.homePage.hero.title" />
-                </HeroTitle>
-                <HeroText>
-                  <FormattedMessage id="app.homePage.hero.text" />
-                </HeroText>
-                <HeroButtons>
-                  <Link to="/account/register">
-                    <PrimaryButton type="primary" size="large">
-                      <FingerPrintIcon />
-                      <FormattedMessage id="app.homePage.hero.link" />
-                    </PrimaryButton>
-                  </Link>
-                  <VideoPopup id="CtH6M5CXruU" />
-                </HeroButtons>
+                <ScrollAnimation bottom>
+                  <HeroTitle>
+                    <FormattedHTMLMessage id="app.homePage.hero.title" />
+                  </HeroTitle>
+                </ScrollAnimation>
+                <ScrollAnimation bottom delay={100}>
+                  <HeroText>
+                    <FormattedMessage id="app.homePage.hero.text" />
+                  </HeroText>
+                </ScrollAnimation>
+                <ScrollAnimation bottom delay={200}>
+                  <HeroButtons>
+                    <Link to="/account/register">
+                      <PrimaryButton type="primary" size="large">
+                        <FingerPrintIcon />
+                        <FormattedMessage id="app.homePage.hero.link" />
+                      </PrimaryButton>
+                    </Link>
+                    <DefaultButton onClick={this.openModal}>
+                      <WatchVideoIcon />
+                      <FormattedMessage id="app.button.video" />
+                    </DefaultButton>
+                  </HeroButtons>
+                </ScrollAnimation>
               </Col>
               <Col xs={{ span: 24, order: 1 }} md={{ order: 2 }} xl={10}>
-                <HeroImage>
-                  <img src={heroImg} alt="hero" />
-                </HeroImage>
+                <ScrollAnimation bottom>
+                  <HeroImage>
+                    <img src={heroImg} alt="hero" />
+                  </HeroImage>
+                </ScrollAnimation>
               </Col>
             </Row>
           </BlockContainer>
@@ -312,7 +335,7 @@ class HomePage extends Component {
               <p>
                 <FormattedMessage id="app.homePage.scrollText" />
               </p>
-              <div>
+              <SlideDown>
                 <AnchorLink to="anchor" spy={true} smooth={true} duration={500}>
                   <ScrollButton>
                     <ExpandMoreIcon
@@ -321,7 +344,7 @@ class HomePage extends Component {
                     />
                   </ScrollButton>
                 </AnchorLink>
-              </div>
+              </SlideDown>
             </Row>
           </BlockContainer>
         </ScrollToSection>
@@ -330,82 +353,104 @@ class HomePage extends Component {
             <BlockContainer>
               <Row type="flex">
                 <Col md={24} xl={14}>
-                  <BlockSubTitle>
-                    <FormattedHTMLMessage id="app.homePage.actionsTitle" />
-                  </BlockSubTitle>
-                  <TextMedium>
-                    <FormattedMessage id="app.homePage.actionsDescription" />
-                    <ActionsLink>
-                      <Link to="/pages/our-vision">
-                        <FormattedMessage id="app.homePage.actionsLink" />
-                      </Link>
-                    </ActionsLink>
-                  </TextMedium>
+                  <ScrollAnimation bottom>
+                    <BlockSubTitle>
+                      <FormattedHTMLMessage id="app.homePage.actionsTitle" />
+                    </BlockSubTitle>
+                    <TextMedium>
+                      <FormattedMessage id="app.homePage.actionsDescription" />
+                      <ActionsLink>
+                        <Link to="/pages/our-vision">
+                          <FormattedMessage id="app.homePage.actionsLink" />
+                        </Link>
+                      </ActionsLink>
+                    </TextMedium>
+                  </ScrollAnimation>
                 </Col>
                 <Col md={24} xl={10}>
-                  <ActionsImage>
-                    <img src={hpActionImg} alt="" />
-                  </ActionsImage>
+                  <ScrollAnimation bottom>
+                    <ActionsImage>
+                      <img src={hpActionImg} alt="" />
+                    </ActionsImage>
+                  </ScrollAnimation>
                 </Col>
               </Row>
             </BlockContainer>
           </ActionsTop>
-          <ActionsCarousel
-            actions={actions}
-            actionLinkPrefix="/pages/home/actions"
-          />
+          <ScrollAnimation>
+            <ActionsCarousel
+              actions={actions}
+              actionLinkPrefix="/pages/home/actions"
+            />
+          </ScrollAnimation>
         </Actions>
         <About>
           <BlockContainer>
-            <AboutTitle>
-              <FormattedMessage id="app.homePage.aboutTitle" />
-            </AboutTitle>
+            <ScrollAnimation bottom>
+              <AboutTitle>
+                <FormattedMessage id="app.homePage.aboutTitle" />
+              </AboutTitle>
+            </ScrollAnimation>
             <Row type="flex" align="middle">
               <Col md={24} xl={12}>
-                <AboutImage>
-                  <img src={hpAboutImg} alt="hero" />
-                </AboutImage>
+                <ScrollAnimation bottom>
+                  <AboutImage>
+                    <img src={hpAboutImg} alt="hero" />
+                  </AboutImage>
+                </ScrollAnimation>
               </Col>
               <Col md={24} xl={12}>
-                <AboutText>
-                  <FormattedHTMLMessage id="app.homePage.aboutText" />
-                </AboutText>
-                <AboutText>
-                  <FormattedHTMLMessage id="app.homePage.aboutText2" />
-                </AboutText>
-                <AboutText>
-                  <strong>
-                    <FormattedMessage id="app.homePage.aboutText3" />
-                  </strong>
-                </AboutText>
-                <AboutButtons>
-                  <Link to="/pages/our-vision">
-                    <SecondaryButton>
-                      <FormattedMessage id="app.homePage.aboutLink" />
-                    </SecondaryButton>
-                  </Link>
-                </AboutButtons>
+                <ScrollAnimation bottom>
+                  <AboutText>
+                    <FormattedHTMLMessage id="app.homePage.aboutText" />
+                  </AboutText>
+                  <AboutText>
+                    <FormattedHTMLMessage id="app.homePage.aboutText2" />
+                  </AboutText>
+                  <AboutText>
+                    <strong>
+                      <FormattedMessage id="app.homePage.aboutText3" />
+                    </strong>
+                  </AboutText>
+                  <AboutButtons>
+                    <Link to="/pages/our-vision">
+                      <SecondaryButton>
+                        <FormattedMessage id="app.homePage.aboutLink" />
+                      </SecondaryButton>
+                    </Link>
+                  </AboutButtons>
+                </ScrollAnimation>
               </Col>
             </Row>
           </BlockContainer>
         </About>
         <Clients>
-          <BlockContainer>
-            <ClientsWrap
-              type="flex"
-              justify="center"
-              align="middle"
-              gutter={{ xs: 25, sm: 25, md: 30, xl: 80 }}
-            >
-              <Col xs={{ order: 1 }} xl={{ order: 1 }}>
-                <img src={client1} alt="logo" />
-              </Col>
-              <Col xs={{ order: 2 }} xl={{ order: 2 }}>
-                <img src={client2} alt="logo" />
-              </Col>
-            </ClientsWrap>
-          </BlockContainer>
+          <ScrollAnimation bottom>
+            <BlockContainer>
+              <ClientsWrap
+                type="flex"
+                justify="center"
+                align="middle"
+                gutter={{ xs: 25, sm: 25, md: 30, xl: 80 }}
+              >
+                <Col xs={{ order: 1 }} xl={{ order: 1 }}>
+                  <img src={client1} alt="logo" />
+                </Col>
+                <Col xs={{ order: 2 }} xl={{ order: 2 }}>
+                  <img src={client2} alt="logo" />
+                </Col>
+              </ClientsWrap>
+            </BlockContainer>
+          </ScrollAnimation>
         </Clients>
+        <VideoModalWrap>
+          <ModalVideo
+            channel="youtube"
+            isOpen={this.state.isOpen}
+            videoId="CtH6M5CXruU"
+            onClose={() => this.setState({ isOpen: false })}
+          />
+        </VideoModalWrap>
       </Fragment>
     )
   }

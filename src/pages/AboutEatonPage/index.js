@@ -12,7 +12,7 @@ import { animateScroll, Link as AnchorLink } from 'react-scroll'
 
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
-import { BlockContainer } from 'components/Styled'
+import { BlockContainer, SlideDown } from 'components/Styled'
 import PageMetadata from 'components/PageMetadata'
 import ActionCard from 'components/ActionCard'
 import api from 'api'
@@ -36,10 +36,6 @@ const Hero = styled.section`
   button {
     margin-left: auto;
     margin-right: auto;
-  }
-  .anticon svg {
-    width: 36px;
-    height: 36px;
   }
   ${media.desktop`
     background-image: url(${heroTablet});
@@ -119,6 +115,10 @@ const ScrollToSection = styled.span`
     height: 0;
     opacity: 0;
   `}
+  svg {
+    width: 36px;
+    height: 36px;
+  }
 `
 
 const GrowHandprint = styled.section`
@@ -350,10 +350,19 @@ class AboutEatonPage extends Component {
               </WhiteBorderedButton>
             </Link>
           </BlockContainer>
+
           <ScrollToSection>
-            <AnchorLink to="anchor" spy={true} smooth={true} duration={500}>
-              <ExpandMoreIcon style={{ color: `${colors.white}` }} />
-            </AnchorLink>
+            <SlideDown>
+              <AnchorLink
+                to="anchor"
+                spy={true}
+                smooth={true}
+                duration={500}
+                style={{ color: `${colors.white}` }}
+              >
+                <ExpandMoreIcon />
+              </AnchorLink>
+            </SlideDown>
           </ScrollToSection>
         </Hero>
         <GrowHandprint id="anchor">

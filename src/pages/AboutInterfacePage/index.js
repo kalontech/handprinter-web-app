@@ -67,6 +67,7 @@ const Hero = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   img {
     position: absolute;
     bottom: 0;

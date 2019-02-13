@@ -39,13 +39,18 @@ import {
   BlockSubTitle,
   TextLarge,
   TextMedium,
+  SecondaryButton,
+  VideoModalWrap,
 } from 'components/Styled'
 import PageMetadata from 'components/PageMetadata'
 import ImpactCarousel from 'components/ImpactCarousel'
-import VideoPopup from 'components/VideoPopup'
 import ActionsCarousel from 'components/ActionsCarousel'
 import colors from 'config/colors'
 import api from 'api'
+import ScrollAnimation from 'components/ScrollAnimation'
+import 'react-modal-video/css/modal-video.min.css'
+import ModalVideo from 'react-modal-video'
+import WatchVideoIcon from 'assets/icons/WatchVideoIcon'
 
 const OurVisionWrap = styled.div`
   background: ${colors.white};
@@ -164,7 +169,9 @@ const Steps = styled.article`
 
 const Step = styled.section`
   padding-bottom: 200px;
-
+  ${SubtitleGreen} {
+    margin-bottom: 25px;
+  }
   ${media.desktop`
 
     padding-bottom: 90px;
@@ -334,6 +341,11 @@ const StepSixContentWrap = styled(StepFourContentWrap)`
 class OurVisionPage extends React.PureComponent {
   state = {
     actions: [],
+    isOpen: false,
+  }
+
+  openModal = () => {
+    this.setState({ isOpen: true })
   }
 
   async componentDidMount() {
@@ -356,16 +368,27 @@ class OurVisionPage extends React.PureComponent {
             <BlockContainer>
               <Row type="flex" justify="center">
                 <Col span={18}>
-                  <img src={planet} alt="healthy Earth" />
-                  <HeroTitle>
-                    <FormattedHTMLMessage id="app.ourVision.hero.title" />
-                  </HeroTitle>
-                  <TextLarge>
-                    <FormattedMessage id="app.ourVision.hero.text" />
-                  </TextLarge>
-                  <HeroButton>
-                    <VideoPopup id="CtH6M5CXruU" reverse />
-                  </HeroButton>
+                  <ScrollAnimation bottom>
+                    <img src={planet} alt="healthy Earth" />
+                  </ScrollAnimation>
+                  <ScrollAnimation bottom delay={100}>
+                    <HeroTitle>
+                      <FormattedHTMLMessage id="app.ourVision.hero.title" />
+                    </HeroTitle>
+                  </ScrollAnimation>
+                  <ScrollAnimation bottom delay={200}>
+                    <TextLarge>
+                      <FormattedMessage id="app.ourVision.hero.text" />
+                    </TextLarge>
+                  </ScrollAnimation>
+                  <ScrollAnimation bottom delay={300}>
+                    <HeroButton>
+                      <SecondaryButton onClick={this.openModal}>
+                        <WatchVideoIcon />
+                        <FormattedMessage id="app.button.video" />
+                      </SecondaryButton>
+                    </HeroButton>
+                  </ScrollAnimation>
                 </Col>
               </Row>
             </BlockContainer>
@@ -376,87 +399,97 @@ class OurVisionPage extends React.PureComponent {
             <BlockContainer>
               <Row type="flex" justify="center">
                 <Col span={18}>
-                  <SubtitleCenteredSm>
-                    <SubtitleGray>
-                      <FormattedHTMLMessage id="app.ourVision.about.title" />
-                    </SubtitleGray>
-                  </SubtitleCenteredSm>
+                  <ScrollAnimation>
+                    <SubtitleCenteredSm>
+                      <SubtitleGray>
+                        <FormattedHTMLMessage id="app.ourVision.about.title" />
+                      </SubtitleGray>
+                    </SubtitleCenteredSm>
+                  </ScrollAnimation>
                 </Col>
               </Row>
             </BlockContainer>
-
             <AboutContainer>
               <BlockContainer>
                 <Row type="flex" align="middle">
                   <Col span={16}>
-                    <HeadingH3>
-                      <FormattedMessage id="app.ourVision.negativeImpacts.title" />
-                    </HeadingH3>
-                    <TextMedium className="about__text">
-                      <FormattedMessage id="app.ourVision.negativeImpacts.text" />
-                    </TextMedium>
+                    <ScrollAnimation bottom>
+                      <HeadingH3>
+                        <FormattedMessage id="app.ourVision.negativeImpacts.title" />
+                      </HeadingH3>
+                      <TextMedium className="about__text">
+                        <FormattedMessage id="app.ourVision.negativeImpacts.text" />
+                      </TextMedium>
+                    </ScrollAnimation>
                   </Col>
                 </Row>
-
-                <ImpactCarousel
-                  list={[
-                    {
-                      src: aboutImg1,
-                      title: 'app.ourVision.negativeImpactsItem1.title',
-                      text: 'app.ourVision.negativeImpactsItem1.text',
-                    },
-                    {
-                      src: aboutImg2,
-                      title: 'app.ourVision.negativeImpactsItem2.title',
-                      text: 'app.ourVision.negativeImpactsItem2.text',
-                    },
-                    {
-                      src: aboutImg3,
-                      title: 'app.ourVision.negativeImpactsItem3.title',
-                      text: 'app.ourVision.negativeImpactsItem3.text',
-                    },
-                    {
-                      src: aboutImg4,
-                      title: 'app.ourVision.negativeImpactsItem4.title',
-                      text: 'app.ourVision.negativeImpactsItem4.text',
-                    },
-                  ]}
-                />
+                <ScrollAnimation delay={200}>
+                  <ImpactCarousel
+                    list={[
+                      {
+                        src: aboutImg1,
+                        title: 'app.ourVision.negativeImpactsItem1.title',
+                        text: 'app.ourVision.negativeImpactsItem1.text',
+                      },
+                      {
+                        src: aboutImg2,
+                        title: 'app.ourVision.negativeImpactsItem2.title',
+                        text: 'app.ourVision.negativeImpactsItem2.text',
+                      },
+                      {
+                        src: aboutImg3,
+                        title: 'app.ourVision.negativeImpactsItem3.title',
+                        text: 'app.ourVision.negativeImpactsItem3.text',
+                      },
+                      {
+                        src: aboutImg4,
+                        title: 'app.ourVision.negativeImpactsItem4.title',
+                        text: 'app.ourVision.negativeImpactsItem4.text',
+                      },
+                    ]}
+                  />
+                </ScrollAnimation>
               </BlockContainer>
             </AboutContainer>
           </section>
+          <section>
+            <BlockContainer>
+              <Row type="flex" justify="center">
+                <Col span={21}>
+                  <ScrollAnimation bottom>
+                    <SliderHeading>
+                      <BlockSubTitle>
+                        <FormattedHTMLMessage id="app.ourVision.slider.title" />
+                      </BlockSubTitle>
+                      <TextMedium>
+                        <FormattedMessage id="app.ourVision.slider.text" />
+                      </TextMedium>
+                    </SliderHeading>
+                  </ScrollAnimation>
+                </Col>
+              </Row>
+            </BlockContainer>
+            <ScrollAnimation delay={200}>
+              <ActionsCarousel
+                extraLink
+                actions={actions}
+                actionLinkPrefix="/pages/our-vision/actions"
+              />
+            </ScrollAnimation>
+          </section>
 
           <section>
             <BlockContainer>
               <Row type="flex" justify="center">
                 <Col span={21}>
-                  <SliderHeading>
-                    <BlockSubTitle>
-                      <FormattedHTMLMessage id="app.ourVision.slider.title" />
-                    </BlockSubTitle>
-                    <TextMedium>
-                      <FormattedMessage id="app.ourVision.slider.text" />
-                    </TextMedium>
-                  </SliderHeading>
-                </Col>
-              </Row>
-            </BlockContainer>
-            <ActionsCarousel
-              extraLink
-              actions={actions}
-              actionLinkPrefix="/pages/our-vision/actions"
-            />
-          </section>
-          <section>
-            <BlockContainer>
-              <Row type="flex" justify="center">
-                <Col span={21}>
-                  <SubtitleCentered>
-                    <Quote src={quote} alt="" />
-                    <SubtitleGreen>
-                      <FormattedHTMLMessage id="app.ourVision.what.title" />
-                    </SubtitleGreen>
-                  </SubtitleCentered>
+                  <ScrollAnimation bottom>
+                    <SubtitleCentered>
+                      <Quote src={quote} alt="" />
+                      <SubtitleGreen>
+                        <FormattedHTMLMessage id="app.ourVision.what.title" />
+                      </SubtitleGreen>
+                    </SubtitleCentered>
+                  </ScrollAnimation>
                 </Col>
               </Row>
             </BlockContainer>
@@ -468,18 +501,20 @@ class OurVisionPage extends React.PureComponent {
                     sm={{ span: 9, offset: 12 }}
                     xs={{ span: 24, offset: 0 }}
                   >
-                    <HeadingH3>
-                      <FormattedMessage id="app.ourVision.what.subtitle" />
-                    </HeadingH3>
-                    <TextMedium>
-                      <FormattedMessage id="app.ourVision.what.text" />
-                    </TextMedium>
-                    <Link to="/account/register">
-                      <PrimaryButton type="primary">
-                        <FingerPrintIcon />
-                        <FormattedMessage id="app.ourVision.what.link" />
-                      </PrimaryButton>
-                    </Link>
+                    <ScrollAnimation bottom>
+                      <HeadingH3>
+                        <FormattedMessage id="app.ourVision.what.subtitle" />
+                      </HeadingH3>
+                      <TextMedium>
+                        <FormattedMessage id="app.ourVision.what.text" />
+                      </TextMedium>
+                      <Link to="/account/register">
+                        <PrimaryButton type="primary">
+                          <FingerPrintIcon />
+                          <FormattedMessage id="app.ourVision.what.link" />
+                        </PrimaryButton>
+                      </Link>
+                    </ScrollAnimation>
                   </Col>
                 </Row>
               </BlockContainer>
@@ -497,18 +532,22 @@ class OurVisionPage extends React.PureComponent {
               <Step>
                 <Row gutter={20} type="flex" align="middle" justify="center">
                   <Col lg={{ span: 10 }} md={{ span: 22 }}>
-                    <Number src={num1} alt="1" />
-                    <SubtitleGreen as="h3">
-                      <FormattedHTMLMessage id="app.ourVision.step1.title" />
-                    </SubtitleGreen>
-                    <TextMedium>
-                      <FormattedMessage id="app.ourVision.step1.text" />
-                    </TextMedium>
+                    <ScrollAnimation bottom>
+                      <Number src={num1} alt="1" />
+                      <SubtitleGreen as="h3">
+                        <FormattedHTMLMessage id="app.ourVision.step1.title" />
+                      </SubtitleGreen>
+                      <TextMedium>
+                        <FormattedMessage id="app.ourVision.step1.text" />
+                      </TextMedium>
+                    </ScrollAnimation>
                   </Col>
                   <Col lg={{ span: 14 }} md={{ span: 22 }}>
-                    <ImgWrap>
-                      <StepImg src={stepsImg1} alt="" />
-                    </ImgWrap>
+                    <ScrollAnimation bottom>
+                      <ImgWrap>
+                        <StepImg src={stepsImg1} alt="" />
+                      </ImgWrap>
+                    </ScrollAnimation>
                   </Col>
                 </Row>
               </Step>
@@ -520,21 +559,23 @@ class OurVisionPage extends React.PureComponent {
                     md={{ span: 22, order: 2 }}
                     xs={{ order: 2 }}
                   >
-                    <div>
+                    <ScrollAnimation bottom>
                       <Step2Img src={stepsImg2} alt="" />
-                    </div>
+                    </ScrollAnimation>
                   </Col>
                   <Col
                     lg={{ span: 10, offset: 2 }}
                     md={{ span: 22, offset: 0 }}
                   >
-                    <Number src={num2} alt="2" />
-                    <SubtitleGreen as="h3">
-                      <FormattedHTMLMessage id="app.ourVision.step2.title" />
-                    </SubtitleGreen>
-                    <TextMedium>
-                      <FormattedMessage id="app.ourVision.step2.text" />
-                    </TextMedium>
+                    <ScrollAnimation bottom>
+                      <Number src={num2} alt="2" />
+                      <SubtitleGreen as="h3">
+                        <FormattedHTMLMessage id="app.ourVision.step2.title" />
+                      </SubtitleGreen>
+                      <TextMedium>
+                        <FormattedMessage id="app.ourVision.step2.text" />
+                      </TextMedium>
+                    </ScrollAnimation>
                   </Col>
                 </Row>
               </Step>
@@ -542,50 +583,53 @@ class OurVisionPage extends React.PureComponent {
               <Step3>
                 <Row type="flex" justify="center" gutter={20}>
                   <Col span={16}>
-                    <Number src={num3} alt="3" />
-                    <SubtitleGreen as="h3">
-                      <FormattedHTMLMessage id="app.ourVision.step3.title" />
-                    </SubtitleGreen>
-                    <TextMedium>
-                      <FormattedMessage id="app.ourVision.step3.text" />
-                    </TextMedium>
+                    <ScrollAnimation bottom>
+                      <Number src={num3} alt="3" />
+                      <SubtitleGreen as="h3">
+                        <FormattedHTMLMessage id="app.ourVision.step3.title" />
+                      </SubtitleGreen>
+                      <TextMedium>
+                        <FormattedMessage id="app.ourVision.step3.text" />
+                      </TextMedium>
+                    </ScrollAnimation>
                   </Col>
                 </Row>
-
-                <StepsScheme>
-                  <Row gutter={20} type="flex" justify="center">
-                    <Col md={{ span: 8 }} sm={{ span: 20 }}>
-                      <KittensWrap>
-                        <StepsSchemeImg>
-                          <img src={stepsImg3a} alt="" />
-                        </StepsSchemeImg>
-                        <TextMedium>
-                          <FormattedMessage id="app.ourVision.stepScheme.text1" />
-                        </TextMedium>
-                      </KittensWrap>
-                    </Col>
-                    <Col md={{ span: 8 }} sm={{ span: 20 }}>
-                      <KittensWrap>
-                        <StepsSchemeImg>
-                          <img src={stepsImg3b} alt="" />
-                        </StepsSchemeImg>
-                        <p>
-                          <FormattedMessage id="app.ourVision.stepScheme.text2" />
-                        </p>
-                      </KittensWrap>
-                    </Col>
-                    <Col md={{ span: 8 }} sm={{ span: 20 }}>
-                      <KittensWrap>
-                        <StepsSchemeImg isLast>
-                          <img src={stepsImg3c} alt="" />
-                        </StepsSchemeImg>
-                        <p>
-                          <FormattedMessage id="app.ourVision.stepScheme.text3" />
-                        </p>
-                      </KittensWrap>
-                    </Col>
-                  </Row>
-                </StepsScheme>
+                <ScrollAnimation>
+                  <StepsScheme>
+                    <Row gutter={20} type="flex" justify="center">
+                      <Col md={{ span: 8 }} sm={{ span: 20 }}>
+                        <KittensWrap>
+                          <StepsSchemeImg>
+                            <img src={stepsImg3a} alt="" />
+                          </StepsSchemeImg>
+                          <TextMedium>
+                            <FormattedMessage id="app.ourVision.stepScheme.text1" />
+                          </TextMedium>
+                        </KittensWrap>
+                      </Col>
+                      <Col md={{ span: 8 }} sm={{ span: 20 }}>
+                        <KittensWrap>
+                          <StepsSchemeImg>
+                            <img src={stepsImg3b} alt="" />
+                          </StepsSchemeImg>
+                          <p>
+                            <FormattedMessage id="app.ourVision.stepScheme.text2" />
+                          </p>
+                        </KittensWrap>
+                      </Col>
+                      <Col md={{ span: 8 }} sm={{ span: 20 }}>
+                        <KittensWrap>
+                          <StepsSchemeImg isLast>
+                            <img src={stepsImg3c} alt="" />
+                          </StepsSchemeImg>
+                          <p>
+                            <FormattedMessage id="app.ourVision.stepScheme.text3" />
+                          </p>
+                        </KittensWrap>
+                      </Col>
+                    </Row>
+                  </StepsScheme>
+                </ScrollAnimation>
               </Step3>
 
               <Step>
@@ -595,20 +639,27 @@ class OurVisionPage extends React.PureComponent {
                     md={{ span: 22, order: 2 }}
                     xs={{ order: 2 }}
                   >
-                    <StepFourScreenshotWrap src={stepsImg4} alt="Add action" />
+                    <ScrollAnimation bottom>
+                      <StepFourScreenshotWrap
+                        src={stepsImg4}
+                        alt="Add action"
+                      />
+                    </ScrollAnimation>
                   </Col>
                   <Col
                     lg={{ span: 10, offset: 2 }}
                     md={{ span: 22, offset: 0 }}
                   >
                     <StepFourContentWrap>
-                      <Number src={num4} alt="4" />
-                      <SubtitleGreen as="h3">
-                        <FormattedHTMLMessage id="app.ourVision.step4.title" />
-                      </SubtitleGreen>
-                      <TextMedium>
-                        <FormattedMessage id="app.ourVision.step4.text" />
-                      </TextMedium>
+                      <ScrollAnimation bottom>
+                        <Number src={num4} alt="4" />
+                        <SubtitleGreen as="h3">
+                          <FormattedHTMLMessage id="app.ourVision.step4.title" />
+                        </SubtitleGreen>
+                        <TextMedium>
+                          <FormattedMessage id="app.ourVision.step4.text" />
+                        </TextMedium>
+                      </ScrollAnimation>
                     </StepFourContentWrap>
                   </Col>
                 </Row>
@@ -617,18 +668,22 @@ class OurVisionPage extends React.PureComponent {
               <Step>
                 <Row gutter={20} type="flex" align="middle" justify="center">
                   <Col lg={{ span: 10 }} md={{ span: 22 }}>
-                    <Number src={num5} alt="5" />
-                    <SubtitleGreen as="h3">
-                      <FormattedHTMLMessage id="app.ourVision.step5.title" />
-                    </SubtitleGreen>
-                    <TextMedium>
-                      <FormattedMessage id="app.ourVision.step5.text" />
-                    </TextMedium>
+                    <ScrollAnimation bottom>
+                      <Number src={num5} alt="5" />
+                      <SubtitleGreen as="h3">
+                        <FormattedHTMLMessage id="app.ourVision.step5.title" />
+                      </SubtitleGreen>
+                      <TextMedium>
+                        <FormattedMessage id="app.ourVision.step5.text" />
+                      </TextMedium>
+                    </ScrollAnimation>
                   </Col>
                   <Col lg={{ span: 14 }} md={{ span: 22 }}>
-                    <ImgWrap>
-                      <StepImg src={stepsImg5} alt="" />
-                    </ImgWrap>
+                    <ScrollAnimation bottom>
+                      <ImgWrap>
+                        <StepImg src={stepsImg5} alt="" />
+                      </ImgWrap>
+                    </ScrollAnimation>
                   </Col>
                 </Row>
               </Step>
@@ -640,28 +695,41 @@ class OurVisionPage extends React.PureComponent {
                     md={{ span: 22, order: 2 }}
                     xs={{ order: 2 }}
                   >
-                    <ImgWrap>
-                      <StepSixImage src={stepsImg6} alt="Network" />
-                    </ImgWrap>
+                    <ScrollAnimation bottom>
+                      <ImgWrap>
+                        <StepSixImage src={stepsImg6} alt="Network" />
+                      </ImgWrap>
+                    </ScrollAnimation>
                   </Col>
                   <Col
                     lg={{ span: 10, offset: 2 }}
                     md={{ span: 22, offset: 0 }}
                   >
-                    <StepSixContentWrap>
-                      <Number src={num6} alt="6" />
-                      <SubtitleGreen as="h3">
-                        <FormattedHTMLMessage id="app.ourVision.step6.title" />
-                      </SubtitleGreen>
-                      <TextMedium>
-                        <FormattedMessage id="app.ourVision.step6.text" />
-                      </TextMedium>
-                    </StepSixContentWrap>
+                    <ScrollAnimation bottom>
+                      <StepSixContentWrap>
+                        <Number src={num6} alt="6" />
+                        <SubtitleGreen as="h3">
+                          <FormattedHTMLMessage id="app.ourVision.step6.title" />
+                        </SubtitleGreen>
+                        <TextMedium>
+                          <FormattedMessage id="app.ourVision.step6.text" />
+                        </TextMedium>
+                      </StepSixContentWrap>
+                    </ScrollAnimation>
                   </Col>
                 </Row>
               </Step>
             </BlockContainer>
           </Steps>
+
+          <VideoModalWrap>
+            <ModalVideo
+              channel="youtube"
+              isOpen={this.state.isOpen}
+              videoId="CtH6M5CXruU"
+              onClose={() => this.setState({ isOpen: false })}
+            />
+          </VideoModalWrap>
         </OurVisionWrap>
       </Fragment>
     )

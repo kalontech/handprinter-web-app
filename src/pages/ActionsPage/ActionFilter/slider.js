@@ -7,6 +7,7 @@ import { FormattedPlural, injectIntl, intlShape } from 'react-intl'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import { TimeValueAbbreviations } from 'utils/constants'
+import { Animate } from 'react-animate-mount'
 
 const SliderWrap = styled.div`
   max-width: 95%;
@@ -141,10 +142,9 @@ class ImpactSlider extends Component {
 
         break
     }
-
     return (
-      <TooltipValue colors={TooltipValueColor}>
-        <div>
+      <Animate show={this.props.showFilter} type="fade" duration={0}>
+        <TooltipValue colors={TooltipValueColor}>
           {timeValue.humanReadable.value}
           <span>
             <FormattedPlural
@@ -161,16 +161,22 @@ class ImpactSlider extends Component {
               })}
             />
           </span>
-        </div>
-      </TooltipValue>
+        </TooltipValue>
+      </Animate>
     )
   }
 
   slider = React.createRef()
 
   render() {
-    const { icon, onAfterChange, onChange, value, timeValues } = this.props
-
+    const {
+      icon,
+      onAfterChange,
+      onChange,
+      value,
+      timeValues,
+      showFilter,
+    } = this.props
     return (
       <Wrap>
         <StyledIcon component={() => icon} />
@@ -186,7 +192,7 @@ class ImpactSlider extends Component {
               onAfterChange()
             }}
             onChange={onChange}
-            tooltipVisible
+            tooltipVisible={showFilter}
             ref={this.slider}
           />
         </SliderWrap>
@@ -203,6 +209,7 @@ ImpactSlider.propTypes = {
   value: PropTypes.array.isRequired,
   intl: intlShape.isRequired,
   timeValues: PropTypes.any,
+  showFilter: PropTypes.bool.isRequired,
 }
 
 export default injectIntl(ImpactSlider)

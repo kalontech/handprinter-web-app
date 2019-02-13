@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { animateScroll } from 'react-scroll/modules'
+import { Animate } from 'react-animate-mount'
 
 import hexToRgba from 'utils/hexToRgba'
 
@@ -32,6 +33,7 @@ import {
 import fetch, { configDefault as fetchConfigDefault } from 'utils/fetch'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Tooltip from 'components/Tooltip'
+import ScrollAnimation from 'components/ScrollAnimation'
 
 import filterToggleImg from 'assets/actions-page/ic_filter_list.png'
 import filterToggleActiveImg from 'assets/actions-page/ic_filter_list_active.png'
@@ -756,6 +758,7 @@ class ActionsPage extends React.PureComponent {
                             >
                               <ActionSearchDropdownPicture
                                 src={action.picture}
+                                alt=""
                               />
                               {action.name}
                             </Select.Option>
@@ -765,9 +768,10 @@ class ActionsPage extends React.PureComponent {
                           <StyledSearchIcon type="search" />
                         )}
                       </SearchFieldWrap>
-                      {timeValues.length > 0 && showFilter && (
+                      <Animate show={timeValues.length > 0 && showFilter}>
                         <FilterWrap>
                           <ActionsFilters
+                            showFilter={showFilter}
                             timeValues={timeValues}
                             values={filterValuesFromQuery}
                             onReset={this.handleFilterReset}
@@ -775,7 +779,7 @@ class ActionsPage extends React.PureComponent {
                             actionsPageSubset={match.params.subset}
                           />
                         </FilterWrap>
-                      )}
+                      </Animate>
                     </SearchWrapper>
                   )}
                 </Col>
@@ -788,47 +792,48 @@ class ActionsPage extends React.PureComponent {
                 <Row gutter={{ md: 20 }}>
                   {actions.map(action => (
                     <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
-                      <ActionCard
-                        to={`/actions/${match.params.subset}/${action.slug}`}
-                        picture={action.picture}
-                        canChange={action.status === ACTION_STATES.PROPOSED}
-                        onEdit={this.onActionEdit(action.slug)}
-                        onDelete={this.onActionDelete(action._id)}
-                        name={action.name}
-                        impacts={() =>
-                          action.status !== ACTION_STATES.PUBLISHED ? (
-                            <Tooltip
-                              placement="top"
-                              title={formatMessage({
-                                id:
-                                  action.status === ACTION_STATES.MODELING
-                                    ? 'app.actions.card.waitModelingHint'
-                                    : 'app.actions.card.waitAdminHint',
-                              })}
-                            >
-                              <ImpactButton
-                                isModelling={
-                                  action.status === ACTION_STATES.MODELING
-                                }
-                              >
-                                {formatMessage({
+                      <ScrollAnimation>
+                        <ActionCard
+                          to={`/actions/${match.params.subset}/${action.slug}`}
+                          picture={action.picture}
+                          canChange={action.status === ACTION_STATES.PROPOSED}
+                          onEdit={this.onActionEdit(action.slug)}
+                          onDelete={this.onActionDelete(action._id)}
+                          name={action.name}
+                          impacts={() =>
+                            action.status !== ACTION_STATES.PUBLISHED ? (
+                              <Tooltip
+                                placement="top"
+                                title={formatMessage({
                                   id:
                                     action.status === ACTION_STATES.MODELING
-                                      ? 'app.actions.card.waitModeling'
-                                      : 'app.actions.card.waitAdmin',
+                                      ? 'app.actions.card.waitModelingHint'
+                                      : 'app.actions.card.waitAdminHint',
                                 })}
-                              </ImpactButton>
-                            </Tooltip>
-                          ) : (
-                            <ActionCardLabelSet impacts={action.impacts} />
-                          )
-                        }
-                        suggestedBy={action.suggestedBy}
-                        suggestedAt={formatRelative(action.suggestedAt)}
-                      />
+                              >
+                                <ImpactButton
+                                  isModelling={
+                                    action.status === ACTION_STATES.MODELING
+                                  }
+                                >
+                                  {formatMessage({
+                                    id:
+                                      action.status === ACTION_STATES.MODELING
+                                        ? 'app.actions.card.waitModeling'
+                                        : 'app.actions.card.waitAdmin',
+                                  })}
+                                </ImpactButton>
+                              </Tooltip>
+                            ) : (
+                              <ActionCardLabelSet impacts={action.impacts} />
+                            )
+                          }
+                          suggestedBy={action.suggestedBy}
+                          suggestedAt={formatRelative(action.suggestedAt)}
+                        />
+                      </ScrollAnimation>
                     </Col>
                   ))}
-
                   {actions.length === 0 && (
                     <NotFoundWrap>
                       <FormattedMessage id="app.actionsPage.actionsNotFound" />

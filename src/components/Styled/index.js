@@ -1,5 +1,5 @@
 import * as Ant from 'antd'
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle, keyframes } from 'styled-components'
 
 import hexToRgba from 'utils/hexToRgba'
 import arrowDownIcon from 'assets/icons/arrowDown.svg'
@@ -7,6 +7,23 @@ import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 
 import backgroundOceanContainerImage from 'assets/images/backgroundOceanContainer.png'
+
+const slideDown = keyframes`
+  from {
+    transform:translate3d(0,0,0);
+  }
+  50% {
+    transform:translate3d(0,15px,0);
+  }
+  to {
+    transform:translate3d(0,0,0);
+  }
+`
+
+export const SlideDown = styled.div`
+  animation: ${slideDown} 2s infinite;
+  transition: all 0.2s ease-in-out;
+`
 
 export const ActionCard = styled(Ant.Row)`
   border-radius: 5px;
@@ -282,6 +299,7 @@ export const BlockSubTitle = styled.h2`
   font-weight: 700;
   letter-spacing: 1px;
   font-family: 'Noto Serif', serif;
+  margin-bottom: 0;
 
   ${media.phone`
     font-size: 22px;
@@ -441,7 +459,27 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
   }
 `
 
+export const VideoModalWrap = styled.div`
+  .modal-video-movie-wrap {
+    width: calc(100% - 30px);
+    margin: 0 auto;
+  }
+  .modal-video-close-btn {
+    &:focus {
+      outline: none;
+    }
+    ${media.largeDesktop`
+    right: 0;
+  `}
+    ${media.phone`
+    width: 24px;
+  `}
+  }
+`
+
 export const GlobalStyle = createGlobalStyle`
+
+
   body {
     -webkit-font-smoothing: antialiased;
   }
@@ -456,6 +494,7 @@ export const GlobalStyle = createGlobalStyle`
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    position: relative;
     
   }
   
@@ -492,7 +531,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   .ant-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     box-shadow: none;
@@ -579,10 +618,16 @@ export const GlobalStyle = createGlobalStyle`
     box-shadow: 0 1px 10px 0 ${hexToRgba(colors.dark, 0.08)};
   }
 
-  .ant-carousel .slick-list .slick-slide {
-    pointer-events: all;
+  .ant-carousel {
+    .slick-list {
+      overflow-x: visible !important;
+      overflow: unset;
+    }
+    .slick-slide {
+      pointer-events: all;
+    }
   }
-
+  
   .ant-modal-confirm_profile-page {
     .ant-modal-confirm-title {
       font-size: 28px;
