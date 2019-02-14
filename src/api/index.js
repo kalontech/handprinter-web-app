@@ -1,5 +1,3 @@
-import get from 'lodash/get'
-import has from 'lodash/has'
 import qs from 'qs'
 import * as Sentry from '@sentry/browser'
 
@@ -18,8 +16,8 @@ export const webAppBaseUrl = `${window.location.protocol}//${
   window.location.host
 }`
 
-const fetchHelper = async (url, options) => {
-  const hasBody = has(options, 'body')
+const fetchAPI = async (url, options) => {
+  const hasBody = options && Boolean(options.body)
   const isFormData = hasBody && options.body instanceof FormData
 
   let body
@@ -28,12 +26,13 @@ const fetchHelper = async (url, options) => {
     body = isFormData ? options.body : JSON.stringify(options.body)
   }
 
-  const headers = isFormData
-    ? get(options, 'headers', {})
-    : {
-        'Content-Type': 'application/json',
-        ...get(options, 'headers', {}),
-      }
+  const { account, user } = store.getState()
+
+  const headers = {
+    authorization: `Bearer ${account.token}`,
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+    ...((options && options.headers) || {}),
+  }
 
   const transformedOptions = {
     ...options,
@@ -41,17 +40,17 @@ const fetchHelper = async (url, options) => {
     headers,
   }
 
-  const { data, error, success } = await fetch(url, transformedOptions).then(
-    response => response.json(),
-  )
+  const { data, error, success } = await fetch(
+    `${apiBaseUrl}${url}`,
+    transformedOptions,
+  ).then(response => response.json())
 
-  const user = store.getState().user.data
   Sentry.addBreadcrumb({
     category: 'fetch',
     type: 'http',
     level: 'info',
     data: {
-      user: user && user,
+      user: user.data,
       url,
       payload: transformedOptions,
       error,
@@ -65,57 +64,28 @@ const fetchHelper = async (url, options) => {
   }
 }
 
-const fetchAction = ({ id, slug, token, ...params }) =>
-  fetchHelper(`${apiBaseUrl}/actions/find_one/${slug || id}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-    method: 'GET',
-    ...params,
-  })
+const fetchAction = ({ id, slug, ...params }) =>
+  fetchAPI(`/actions/find_one/${slug || id}`, params)
 
-const getActions = (query = {}, token) =>
-  fetchHelper(`${apiBaseUrl}/actions?${qs.stringify(query)}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
+const getActions = (query = {}) => fetchAPI(`/actions?${qs.stringify(query)}`)
 
-const getSuggestedActions = (query = {}, token) =>
-  fetchHelper(`${apiBaseUrl}/actions/suggested?${qs.stringify(query)}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
+const getSuggestedActions = (query = {}) =>
+  fetchAPI(`/actions/suggested?${qs.stringify(query)}`)
 
-const getActionsHistory = (query = {}, token) =>
-  fetchHelper(`${apiBaseUrl}/actions/taken?${qs.stringify(query)}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
+const getActionsHistory = (query = {}) =>
+  fetchAPI(`/actions/taken?${qs.stringify(query)}`)
 
-const getActionsMyIdeas = (query = {}, token) =>
-  fetchHelper(`${apiBaseUrl}/actions/get_ideas?${qs.stringify(query)}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
+const getActionsMyIdeas = (query = {}) =>
+  fetchAPI(`/actions/get_ideas?${qs.stringify(query)}`)
 
-const getTimeValues = () => fetchHelper(`${apiBaseUrl}/actions/time_values`)
+const getTimeValues = () => fetchAPI(`/actions/time_values`)
 
-const getCountries = () => fetchHelper(`${apiBaseUrl}/countries`)
+const getCountries = () => fetchAPI(`/countries`)
 
-const getMe = token =>
-  fetchHelper(`${apiBaseUrl}/users/me`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-    method: 'GET',
-  })
+const getMe = () => fetchAPI(`/users/me`)
 
 const logIn = (email, password) =>
-  fetchHelper(`${apiBaseUrl}/auth/login`, {
+  fetchAPI(`/auth/login`, {
     body: {
       email,
       password,
@@ -132,7 +102,7 @@ const register = (
   invitationCode,
   belongsToBrand,
 ) =>
-  fetchHelper(`${apiBaseUrl}/auth/register`, {
+  fetchAPI(`/auth/register`, {
     body: {
       email,
       password,
@@ -146,7 +116,7 @@ const register = (
   })
 
 const resetPasswordConfirm = (code, password) =>
-  fetchHelper(`${apiBaseUrl}/auth/password-reset/confirm`, {
+  fetchAPI(`/auth/password-reset/confirm`, {
     body: {
       code,
       password,
@@ -155,7 +125,7 @@ const resetPasswordConfirm = (code, password) =>
   })
 
 const resetPasswordRequest = email =>
-  fetchHelper(`${apiBaseUrl}/auth/password-reset/request`, {
+  fetchAPI(`/auth/password-reset/request`, {
     body: {
       email,
       redirectUrl: `${webAppBaseUrl}/account/set-new-password`,
@@ -163,85 +133,51 @@ const resetPasswordRequest = email =>
     method: 'POST',
   })
 
-const takeAction = (actionId, token) =>
-  fetchHelper(`${apiBaseUrl}/actions/take`, {
+const takeAction = actionId =>
+  fetchAPI(`/actions/take`, {
     body: {
       actionId,
       temporaryToken: getTemporaryToken(),
     },
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
     method: 'POST',
   })
 
-const updateMe = (data, token) =>
-  fetchHelper(`${apiBaseUrl}/users/me`, {
-    body: data,
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
+const updateMe = body =>
+  fetchAPI(`/users/me`, {
+    body,
     method: 'PUT',
   })
 
-const updateMePhoto = async (payload, token) => {
-  const options = {
+const updateMePhoto = body =>
+  fetchAPI(`/users/me`, {
+    body,
     method: 'PUT',
-    body: new FormData(),
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  }
-  options.body.append('file', payload.file)
-  const { data, error, success } = await (await fetch(
-    `${apiBaseUrl}/users/me`,
-    options,
-  )).json()
-  if (success) {
-    return data
-  } else {
-    throw error
-  }
-}
+  })
 
-const deleteMe = token =>
-  fetchHelper(`${apiBaseUrl}/users/me`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
+const deleteMe = () =>
+  fetchAPI(`/users/me`, {
     method: 'DELETE',
   })
 
-const shareInvitationCode = (data, token) =>
-  fetchHelper(`${apiBaseUrl}/users/me/code/share`, {
-    body: data,
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
+const shareInvitationCode = body =>
+  fetchAPI(`/users/me/code/share`, {
+    body,
     method: 'POST',
   })
 
-const getUser = (data, token) =>
-  fetchHelper(`${apiBaseUrl}/users/find_one`, {
-    body: data,
+const getUser = body =>
+  fetchAPI(`/users/find_one`, {
+    body,
     method: 'POST',
   })
 
-const getDashboardData = token =>
-  fetchHelper(`${apiBaseUrl}/users/me/dashboard_data`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
+const getDashboardData = () => fetchAPI(`/users/me/dashboard_data`)
 
-const engageAction = (action, emails, token) =>
-  fetchHelper(`${apiBaseUrl}/actions/engage`, {
+const engageAction = (action, emails) =>
+  fetchAPI(`/actions/engage`, {
     body: {
       action,
       emails,
-    },
-    headers: {
-      authorization: `Bearer ${token}`,
     },
     method: 'POST',
   })
@@ -251,29 +187,18 @@ const getUserInitialAvatar = fullName =>
     1,
   )}&color=${colors.gray.slice(1)}&length=1&name=${fullName}&size=256`
 
-const fetchProposedAction = ({ body, token, ...params }) =>
-  fetchHelper(`${apiBaseUrl}/actions/add_idea`, {
+const fetchProposedAction = ({ body, ...params }) =>
+  fetchAPI(`/actions/add_idea`, {
     body,
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
     method: 'POST',
     ...params,
   })
 
-const getNews = (query = {}, token) =>
-  fetchHelper(`${apiBaseUrl}/actions/news?${qs.stringify(query)}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
+const getNews = (query = {}) => fetchAPI(`/actions/news?${qs.stringify(query)}`)
 
-const sendLastTimeReadNewsAt = (at, token) =>
-  fetchHelper(`${apiBaseUrl}/actions/news/read_all`, {
+const sendLastTimeReadNewsAt = at =>
+  fetchAPI(`/actions/news/read_all`, {
     body: { at },
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
     method: 'POST',
   })
 

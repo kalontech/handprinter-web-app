@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Modal, Button, Form, Select, Icon } from 'antd'
@@ -304,7 +304,7 @@ class ProfilePage extends Component {
     this.setState({ isDeletingAccount: true })
 
     return api
-      .deleteMe(this.props.token)
+      .deleteMe()
       .then(() => {
         this.setState({
           isDeletingAccount: false,
@@ -440,7 +440,9 @@ class ProfilePage extends Component {
       this.setState({ uploadImageError: null })
       if (photo) {
         const file = await convertBase64ToFile(photo)
-        this.props.updateMePhotoRequest({ file })
+        const body = new FormData()
+        body.append('file', file)
+        this.props.updateMePhotoRequest(body)
       }
     }
   }
@@ -684,7 +686,6 @@ class ProfilePage extends Component {
 const mapStateToProps = state => ({
   countries: state.app.countries,
   user: state.user.data,
-  token: state.account.token,
   isUpdatingMeInfo: state.user.isUpdatingMeInfo,
   isUpdatingMePassword: state.user.isUpdatingMePassword,
   isUpdatingMePhoto: state.user.isUpdatingMePhoto,
@@ -709,7 +710,6 @@ ProfilePage.propTypes = {
   form: PropTypes.object.isRequired,
   intl: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  token: PropTypes.string.isRequired,
   isUpdatingMeInfo: PropTypes.bool.isRequired,
   isUpdatingMePassword: PropTypes.bool.isRequired,
   isUpdatingMePhoto: PropTypes.bool.isRequired,
@@ -724,15 +724,17 @@ ProfilePage.propTypes = {
   updateMePhotoRequest: PropTypes.func.isRequired,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   Form.create({
     mapPropsToFields: props => ({
       country: Form.createFormField({ value: props.user.country }),
       email: Form.createFormField({ value: props.user.email }),
       fullName: Form.createFormField({ value: props.user.fullName }),
     }),
-  })(injectIntl(ProfilePage)),
-)
+  }),
+  injectIntl,
+)(ProfilePage)

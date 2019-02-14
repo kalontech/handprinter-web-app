@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Button, Form } from 'antd'
@@ -161,7 +161,11 @@ LoginPage.propTypes = {
   overrides: PropTypes.object,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Form.create()(injectIntl(LoginPage)))
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+  Form.create(),
+  injectIntl,
+)(LoginPage)

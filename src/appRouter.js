@@ -11,7 +11,6 @@ import Route from './routeWrapper'
 
 import ActionModalPage from './pages/ActionModalPage'
 import ActionsPage from './pages/ActionsPage'
-import ActionCreate from './pages/ActionCreatePage'
 
 import CheckYourEmailPage from './pages/CheckYourEmailPage'
 import DashboardPage from './pages/DashboardPage'
@@ -164,15 +163,6 @@ const AppRouter = () => {
         </Switch>
 
         <Switch>
-          <ModalRoute
-            path="/actions/:subset/suggest-idea/:slug?"
-            parentPath={getParentPath(
-              ({ params }, { location }) =>
-                `/actions/${params.subset}${location.search}`,
-            )}
-            component={ActionCreate}
-          />
-
           <ModalRoute
             path="/actions/:subset/:slug"
             parentPath={({ params }) => `/actions/${params.subset}`}

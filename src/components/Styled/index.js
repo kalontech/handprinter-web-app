@@ -753,6 +753,40 @@ export const GlobalStyle = createGlobalStyle`
       height: 100%;
     `}
   }
+  
+  .ant-modal_theme_page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    z-index: 1070;
+  }
+  
+  .ant-modal_theme_page > .ant-modal {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    
+    ${media.phone`
+      height: 100%;
+    `}
+  }
+  
+  .ant-modal_theme_page .ant-modal-content {
+    ${media.phone`
+      height: 100%;
+    `}
+  }
+  
+  .ant-modal_theme_page .ant-modal-body {
+    padding: 0;
+    
+    ${media.phone`
+      height: 100%;
+    `}
+  }
+
   .d3-tooltip-container {
     background-color: black;
     border-radius: 4px;

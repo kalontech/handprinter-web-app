@@ -384,10 +384,7 @@ class DashboardPage extends Component {
   }
 
   fetchDashboardData = async () => {
-    const { token } = this.props
-    const { calendar, network, ratio, stats } = await api.getDashboardData(
-      token,
-    )
+    const { calendar, network, ratio, stats } = await api.getDashboardData()
     this.setState({ calendar, network, ratio, stats })
   }
 
@@ -757,12 +754,10 @@ class DashboardPage extends Component {
 
 const mapStateToProps = state => ({
   user: state.user.data,
-  token: state.account.token,
 })
 
 DashboardPage.propTypes = {
   user: PropTypes.object.isRequired,
-  token: PropTypes.string.isRequired,
 }
 
 export default compose(

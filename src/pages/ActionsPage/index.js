@@ -1,6 +1,5 @@
 import React from 'react'
 import { Row, Col, Select, Spin, Icon, Menu, Popover, Modal } from 'antd'
-import { Link } from 'react-router-dom'
 import qs from 'qs'
 import styled from 'styled-components'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
@@ -34,6 +33,7 @@ import fetch, { configDefault as fetchConfigDefault } from 'utils/fetch'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Tooltip from 'components/Tooltip'
 import ScrollAnimation from 'components/ScrollAnimation'
+import ActionCreate from 'pages/ActionCreatePage'
 
 import filterToggleImg from 'assets/actions-page/ic_filter_list.png'
 import filterToggleActiveImg from 'assets/actions-page/ic_filter_list_active.png'
@@ -318,7 +318,7 @@ function configParamsForFilter({ location: { search } }) {
 }
 
 async function getActionsList(props) {
-  const { location, match, token, timeValues } = props
+  const { location, match, timeValues } = props
   const query = qs.parse(location.search, { ignoreQueryPrefix: true })
 
   if (!query.page) query.page = 1
@@ -342,7 +342,7 @@ async function getActionsList(props) {
       actions: { docs: actions, limit, totalDocs: total, page },
     },
     { timeValues: timeValuesResponse },
-  ] = await Promise.all([getActions(query, token), getTimeValues()])
+  ] = await Promise.all([getActions(query), getTimeValues()])
 
   const result = {
     actions,
@@ -376,6 +376,8 @@ class ActionsPage extends React.PureComponent {
     activeFiltersCount: (configParamsForFilter(this.props) || '').length,
     subset: null,
     subsetDropdownVisible: false,
+    currentAction: undefined,
+    modalOpen: false,
   }
 
   searchSelect = React.createRef()
@@ -545,19 +547,14 @@ class ActionsPage extends React.PureComponent {
     )
   }
 
-  onActionEdit = slug => e => {
-    const { history, match, location } = this.props
-
+  onActionEdit = action => e => {
     e.preventDefault()
-    history.push(
-      `/actions/${match.params.subset}/suggest-idea/${slug}${location.search}`,
-    )
+    this.setState({ currentAction: action, modalOpen: true })
   }
 
   onActionDelete = id => e => {
     const {
       intl: { formatMessage },
-      token,
     } = this.props
 
     e.preventDefault()
@@ -579,18 +576,19 @@ class ActionsPage extends React.PureComponent {
       className: 'ant-modal-confirm_profile-page',
       centered: true,
       onOk: () => {
-        return api
-          .fetchAction({ id, token, method: 'DELETE' })
-          .then(this.props.fetch)
+        return api.fetchAction({ id, method: 'DELETE' }).then(this.props.fetch)
       },
     })
+  }
+
+  closeModal = () => {
+    this.setState({ currentAction: undefined, modalOpen: false })
   }
 
   render() {
     const {
       intl: { formatMessage, formatRelative },
       user,
-      location,
       loading,
       actions,
       limit,
@@ -598,6 +596,7 @@ class ActionsPage extends React.PureComponent {
       total,
       timeValues = [],
       match,
+      history,
     } = this.props
 
     const {
@@ -606,6 +605,8 @@ class ActionsPage extends React.PureComponent {
       activeFiltersCount,
       filterValuesFromQuery,
       subsetDropdownVisible,
+      currentAction,
+      modalOpen,
     } = this.state
 
     return (
@@ -663,15 +664,13 @@ class ActionsPage extends React.PureComponent {
                     </Popover>
 
                     <div>
-                      <Link
-                        to={`${location.pathname}/suggest-idea${
-                          location.search
-                        }`}
+                      <Button
+                        onClick={() => {
+                          this.setState({ modalOpen: true })
+                        }}
                       >
-                        <Button>
-                          <FormattedMessage id="app.headerActions.addAction" />
-                        </Button>
-                      </Link>
+                        <FormattedMessage id="app.headerActions.addAction" />
+                      </Button>
                     </div>
                   </ActionTabsRow>
                 </ActionTabsInnerContainer>
@@ -797,7 +796,7 @@ class ActionsPage extends React.PureComponent {
                           to={`/actions/${match.params.subset}/${action.slug}`}
                           picture={action.picture}
                           canChange={action.status === ACTION_STATES.PROPOSED}
-                          onEdit={this.onActionEdit(action.slug)}
+                          onEdit={this.onActionEdit(action)}
                           onDelete={this.onActionDelete(action._id)}
                           name={action.name}
                           impacts={() =>
@@ -856,6 +855,29 @@ class ActionsPage extends React.PureComponent {
             </InnerContainer>
           </BlockContainer>
         </Wrapper>
+
+        <Modal
+          visible={modalOpen}
+          closable={false}
+          onCancel={this.closeModal}
+          centered
+          footer={null}
+          wrapClassName="ant-modal_theme_page"
+          width="auto"
+          destroyOnClose
+        >
+          <ActionCreate
+            onSuccess={() => {
+              history.push(
+                `/account/submit-succeeded/${
+                  currentAction ? currentAction.slug : ''
+                }`,
+              )
+            }}
+            action={currentAction}
+            closeModal={this.closeModal}
+          />
+        </Modal>
       </React.Fragment>
     )
   }
@@ -864,7 +886,6 @@ class ActionsPage extends React.PureComponent {
 ActionsPage.propTypes = {
   intl: intlShape.isRequired,
   user: PropTypes.object,
-  token: PropTypes.string,
   location: PropTypes.object,
   match: PropTypes.object,
   history: PropTypes.object,
@@ -879,7 +900,6 @@ ActionsPage.propTypes = {
 
 const mapStateToProps = state => ({
   user: state.user.data,
-  token: state.account.token,
 })
 
 export default compose(

@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { compose } from 'redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -8,13 +7,11 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import CloseIcon from 'assets/icons/CloseIcon'
 import { FormItem, Input, PrimaryButton } from 'components/Styled'
-import Spinner from 'components/Spinner'
 import { ACCEPT_IMAGE_FORMATS, FILE_SIZE_LIMIT } from 'config/files'
 import { MAX_DESCRIPTION_LENGTH } from 'config/common'
 import colors from 'config/colors'
 import { required, fileSize } from 'config/validationRules'
 import media from 'utils/mediaQueryTemplate'
-import fetch, { configDefault as fetchConfigDefault } from 'utils/fetch'
 import api from 'api'
 import hexToRgba from 'utils/hexToRgba'
 
@@ -27,11 +24,17 @@ const Container = styled.section`
   width: 93vw;
   max-width: 930px;
   position: relative;
+  margin: 0 auto;
 
   ${media.tablet`
-    width: 100%;
+    max-width: 100%;
     height: 100%;
+    width: 100%;
     overflow-y: scroll;
+  `}
+
+  ${media.phone`
+    width: 100%;
   `}
 `
 
@@ -74,16 +77,16 @@ const StyledForm = styled(Form)`
 
   ${media.tablet`
     padding-bottom: 24px;
-    width: 425px;
+    width: 100%;
     flex-direction: column;
     align-items: center;
     max-height: 100%;
-    justify-content: center;
-   `}
-
-  ${media.phone`
-    width: 100%;
     justify-content: flex-start;
+   `}
+  
+  ${media.phone`
+    height: 100%;
+    padding-bottom: 0;
   `}
 `
 
@@ -100,12 +103,12 @@ const MainFields = styled.div`
   padding: 44px 60px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between ${media.tablet`
+  justify-content: space-between;
+
+  ${media.tablet`
     width: 100%;
-    padding: 24px 0 0;
-  `} ${media.phone`
     padding: 24px 20px;
-  `};
+  `}
 `
 
 const Title = styled.header`
@@ -149,8 +152,9 @@ const StyledUpload = styled(Upload)`
   justify-content: center;
   align-items: stretch;
 
-  .ant-upload-select {
+  .ant-upload {
     flex-grow: 1;
+    max-width: 100%;
   }
 `
 
@@ -169,6 +173,18 @@ const Preview = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  max-width: 100%;
+
+  ${media.tablet`
+    max-height: 40vh;
+    width: auto;
+  `}
+
+  ${media.phone`
+    max-height: 210px;
+    height: 210px;
+  `}
 `
 
 const PhotoError = styled.article`
@@ -198,12 +214,8 @@ const PhotoError = styled.article`
 `
 
 const PreviewStyled = styled.img`
-  width: 100%;
-
-  ${media.tablet`
-    max-height: 40vh;
-    width: auto;
-  `}
+  min-width: 100%;
+  min-height: 100%;
 `
 
 const PreviewButton = styled.button`
@@ -284,19 +296,6 @@ const ButtonAddPhotoContent = styled.div`
   }
 `
 
-const Loader = styled.section`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  background-color: ${colors.white};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
 const BottomPanelWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -306,12 +305,6 @@ const getValueFromEvent = ({ file }) => ({
   file,
   fileUrl: URL.createObjectURL(file),
 })
-
-async function fetchIdeas({ match, token }) {
-  const data = await api.fetchAction({ slug: match.params.slug, token })
-
-  return data.action
-}
 
 class ActionCreatePage extends React.PureComponent {
   state = {
@@ -324,7 +317,7 @@ class ActionCreatePage extends React.PureComponent {
   handleSubmit = e => {
     e.preventDefault()
 
-    const { form, history, match, token, _id } = this.props
+    const { form, action = {}, onSuccess } = this.props
 
     form.validateFields((errors, values) => {
       if (errors) return
@@ -344,7 +337,7 @@ class ActionCreatePage extends React.PureComponent {
 
       let request = api.fetchProposedAction
 
-      if (match.params.slug) request = api.fetchAction
+      if (action.slug) request = api.fetchAction
 
       this.setState(
         {
@@ -354,9 +347,8 @@ class ActionCreatePage extends React.PureComponent {
         async () => {
           return request({
             body,
-            token,
-            id: _id,
-            method: match.params.slug ? 'PUT' : 'POST',
+            id: action._id,
+            method: action.slug ? 'PUT' : 'POST',
           })
             .then(() => {
               this.setState(
@@ -365,11 +357,7 @@ class ActionCreatePage extends React.PureComponent {
                   submitFailed: false,
                   submitSucceeded: true,
                 },
-                () => {
-                  history.push(
-                    `/account/submit-succeeded/${match.params.slug || ''}`,
-                  )
-                },
+                onSuccess,
               )
             })
             .catch(error => {
@@ -389,9 +377,8 @@ class ActionCreatePage extends React.PureComponent {
     const {
       form: { getFieldDecorator, getFieldError, getFieldValue },
       intl: { formatMessage },
+      action = {},
       closeModal,
-      match,
-      loading,
     } = this.props
     const { submitFailed, isSubmitting, validationErrorId } = this.state
 
@@ -400,12 +387,6 @@ class ActionCreatePage extends React.PureComponent {
 
     return (
       <Container>
-        {loading && (
-          <Loader>
-            <Spinner />
-          </Loader>
-        )}
-
         <CloseButton onClick={closeModal}>
           <CloseIcon />
         </CloseButton>
@@ -476,7 +457,7 @@ class ActionCreatePage extends React.PureComponent {
             <div>
               <Title>
                 {formatMessage({
-                  id: match.params.slug
+                  id: action.slug
                     ? 'app.actions.card.edit'
                     : 'app.actionCreatePage.title',
                 })}
@@ -530,7 +511,7 @@ class ActionCreatePage extends React.PureComponent {
                   loading={isSubmitting}
                 >
                   {formatMessage({
-                    id: match.params.slug
+                    id: action.slug
                       ? 'app.actions.card.edit'
                       : 'app.actionCreatePage.title',
                   })}
@@ -564,29 +545,18 @@ class ActionCreatePage extends React.PureComponent {
 }
 
 ActionCreatePage.propTypes = {
-  closeModal: PropTypes.func,
   form: PropTypes.object,
   intl: intlShape.isRequired,
-  history: PropTypes.object,
-  match: PropTypes.object,
-  loading: PropTypes.bool,
-  token: PropTypes.string,
-  _id: PropTypes.string,
+  action: PropTypes.object,
+  closeModal: PropTypes.func,
+  onSuccess: PropTypes.func,
 }
 
-const mapStateToProps = state => ({
-  token: state.account.token,
-})
-
 export default compose(
-  connect(mapStateToProps),
-  fetch(fetchIdeas, {
-    ...fetchConfigDefault,
-    filter: ({ match }) => Boolean(match.params.slug),
-    loader: false,
-  }),
   Form.create({
-    mapPropsToFields({ name, description, picture: fileUrl }) {
+    mapPropsToFields({ action }) {
+      const { name, description, picture: fileUrl } = action || {}
+
       return {
         name: Form.createFormField({ value: name }),
         description: Form.createFormField({ value: description }),

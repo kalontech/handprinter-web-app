@@ -7,12 +7,11 @@ import { logOut } from 'redux/accountStore'
 import { getBrandedHostnamePrefix } from 'config/branded'
 
 export function* prepareUserProfile() {
-  const {
-    account: { token },
-  } = yield select()
-  if (token) {
+  const { account } = yield select()
+
+  if (account.token) {
     try {
-      const { user } = yield call(api.getMe, token)
+      const { user } = yield call(api.getMe)
       if (user) {
         const { REACT_APP_WEB_APP_BASE_HOST: host } = process.env
         const { pathname, protocol } = window.location

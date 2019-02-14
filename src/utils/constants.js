@@ -17,8 +17,8 @@ export const TimeValueAbbreviations = {
 export const ACTIONS_SUBSETS = {
   DISCOVER: 'discover',
   SUGGESTED: 'suggested',
-  MY_IDEAS: 'get_ideas',
-  TAKEN: 'taken',
+  MY_IDEAS: 'my_ideas',
+  TAKEN: 'history',
 }
 
 export const ACTION_STATES = {

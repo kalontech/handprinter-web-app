@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Button, Form, Select } from 'antd'
@@ -445,7 +445,11 @@ RegisterPage.propTypes = {
   registerRequest: PropTypes.func.isRequired,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Form.create()(injectIntl(RegisterPage)))
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+  Form.create(),
+  injectIntl,
+)(RegisterPage)

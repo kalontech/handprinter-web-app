@@ -79,7 +79,6 @@ const HeaderWrap = styled(Layout.Header)`
   .ant-menu-item {
     padding: 0;
     border-bottom: 3px solid transparent;
-    transition: border 0.3s;
     font-size: 16px;
     a {
       color: ${({ fontColor }) => fontColor || colors.darkGray};
@@ -504,10 +503,11 @@ class Header extends Component {
   }
 
   fetchNews = async (counterOnly = false) => {
-    const { news, unreadCount } = await api.getNews(
-      { page: 1, range: 'network' },
-      this.props.token,
-    )
+    const { news, unreadCount } = await api.getNews({
+      page: 1,
+      range: 'network',
+    })
+
     if (counterOnly) {
       this.setState({ unreadCount })
     } else {
@@ -526,19 +526,12 @@ class Header extends Component {
   sendLastTimeReadNotif = async shouldReset => {
     if (!shouldReset) return
 
-    await api.sendLastTimeReadNewsAt(Date.now(), this.props.token)
+    await api.sendLastTimeReadNewsAt(Date.now())
     this.fetchNews()
   }
 
   render() {
-    const {
-      type,
-      user,
-      withoutHeaderContent,
-      location,
-      overrides,
-      token,
-    } = this.props
+    const { type, user, withoutHeaderContent, location, overrides } = this.props
     const { notification, unreadCount } = this.state
     const isTablet = this.state.width < 1200
     const isMobile = this.state.width < 768
@@ -574,7 +567,7 @@ class Header extends Component {
               <CollapseMenu>
                 <CollapseTop>
                   {((overrides && !overrides.logInOnly) || !overrides) && (
-                    <Link to="/account/register">
+                    <Link to="/account/register" onClick={this.onClick}>
                       <PrimaryButton
                         type="primary"
                         size="large"
@@ -591,7 +584,7 @@ class Header extends Component {
                       </PrimaryButton>
                     </Link>
                   )}
-                  <Link to="/account/login">
+                  <Link to="/account/login" onClick={this.onClick}>
                     {overrides && overrides.brandName === 'Eaton' ? (
                       <BlueBorderedButton>
                         <FormattedMessage id="app.header.menu.login" />
@@ -925,7 +918,6 @@ class Header extends Component {
                       notification={notification}
                       fontColor={fontColor}
                       fontNames={fontNames}
-                      token={token}
                     />
                   }
                   onVisibleChange={this.sendLastTimeReadNotif}
@@ -1035,7 +1027,6 @@ class Header extends Component {
                             notification={notification}
                             fontColor={fontColor}
                             fontNames={fontNames}
-                            token={token}
                           />
                         }
                         onVisibleChange={this.sendLastTimeReadNotif}
@@ -1097,7 +1088,6 @@ class Header extends Component {
 
 const mapStateToProps = state => ({
   user: state.user.data,
-  token: state.account.token,
 })
 
 Header.defaultProps = {
@@ -1112,7 +1102,6 @@ Header.propTypes = {
   type: PropTypes.oneOf(['minimal', 'public', 'private']).isRequired,
   user: PropTypes.object,
   overrides: PropTypes.object,
-  token: PropTypes.string.isRequired,
 }
 
 export default connect(mapStateToProps)(Header)

@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Form, Icon } from 'antd'
-import { injectIntl, FormattedMessage } from 'react-intl'
-import { bindActionCreators } from 'redux'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+import { bindActionCreators, compose } from 'redux'
 import { animateScroll } from 'react-scroll'
 
 import colors from 'config/colors'
@@ -386,7 +386,6 @@ class IncreaseHandprintPage extends Component {
 
   fetchShareInvitationCode = (emails, invitationLink) => {
     const {
-      token,
       form: { validateFields },
     } = this.props
     validateFields(async (err, { invitationMessage }) => {
@@ -403,8 +402,7 @@ class IncreaseHandprintPage extends Component {
         }
 
         try {
-          const { ignored = [] } =
-            (await api.shareInvitationCode(data, token)) || {}
+          const { ignored = [] } = (await api.shareInvitationCode(data)) || {}
 
           this.setState({
             isSharingInvitationCode: false,
@@ -637,16 +635,14 @@ class IncreaseHandprintPage extends Component {
 
 const mapStateToProps = state => ({
   user: state.user.data,
-  token: state.account.token,
   updateMeInfoError: state.user.updateMeInfoError,
   isUpdatingMeInfo: state.user.isUpdatingMeInfo,
 })
 
 IncreaseHandprintPage.propTypes = {
   form: PropTypes.object.isRequired,
-  intl: PropTypes.object.isRequired,
+  intl: intlShape.isRequired,
   user: PropTypes.object.isRequired,
-  token: PropTypes.string.isRequired,
   updateMeInfoRequest: PropTypes.func,
   updateMeInfoError: PropTypes.string,
   updateMeInfoFailure: PropTypes.func,
@@ -661,7 +657,11 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch,
   )
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Form.create()(injectIntl(IncreaseHandprintPage)))
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+  Form.create(),
+  injectIntl,
+)(IncreaseHandprintPage)

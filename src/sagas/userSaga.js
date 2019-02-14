@@ -4,9 +4,9 @@ import decodeError from 'utils/decodeError'
 import { Types as UserStoreTypes } from 'redux/userStore'
 import api from 'api'
 
-function* getMe({ token }) {
+function* getMe() {
   try {
-    const { user } = yield call(api.getMe, token)
+    const { user } = yield call(api.getMe)
     yield put.resolve({ type: UserStoreTypes.GET_ME_SUCCESS, user })
   } catch (error) {
     yield put.resolve({
@@ -18,10 +18,7 @@ function* getMe({ token }) {
 
 function* updateMeInfo({ data }) {
   try {
-    const {
-      account: { token },
-    } = yield select()
-    const { user } = yield call(api.updateMe, data, token)
+    const { user } = yield call(api.updateMe, data)
     yield put.resolve({ type: UserStoreTypes.UPDATE_ME_INFO_SUCCESS, user })
   } catch (error) {
     yield put.resolve({
@@ -33,10 +30,7 @@ function* updateMeInfo({ data }) {
 
 function* updateMePhoto({ data }) {
   try {
-    const {
-      account: { token },
-    } = yield select()
-    const { user } = yield call(api.updateMePhoto, data, token)
+    const { user } = yield call(api.updateMePhoto, data)
     yield put.resolve({ type: UserStoreTypes.UPDATE_ME_PHOTO_SUCCESS, user })
   } catch (error) {
     yield put.resolve({
@@ -48,10 +42,7 @@ function* updateMePhoto({ data }) {
 
 function* updateMePassword({ data }) {
   try {
-    const {
-      account: { token },
-    } = yield select()
-    const { user } = yield call(api.updateMe, data, token)
+    const { user } = yield call(api.updateMe, data)
     yield put.resolve({ type: UserStoreTypes.UPDATE_ME_PASSWORD_SUCCESS, user })
   } catch (error) {
     yield put.resolve({

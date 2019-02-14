@@ -376,21 +376,20 @@ class ActionModalPage extends Component {
   }
 
   componentDidMount() {
-    const { match, token } = this.props
+    const { match } = this.props
 
-    api.fetchAction({ slug: match.params.slug, token }).then(({ action }) => {
+    api.fetchAction({ slug: match.params.slug }).then(({ action }) => {
       this.setState({ action, step: ActionModalPageSteps.ACTION_VIEW })
     })
   }
 
   handleSubmitEngage = async () => {
-    const { token } = this.props
     const { engageEmails, action } = this.state
 
     this.setState({ sendingEngage: true })
 
     try {
-      await api.engageAction(action._id, engageEmails, token)
+      await api.engageAction(action._id, engageEmails)
       this.setState({
         successEngageSent: true,
       })
@@ -403,7 +402,6 @@ class ActionModalPage extends Component {
   }
 
   takeAction = async () => {
-    const { token } = this.props
     const { action } = this.state
 
     let modalType = ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW
@@ -416,7 +414,7 @@ class ActionModalPage extends Component {
 
     this.setState({ takeActionError: null, takingAction: true })
     try {
-      const { takenAction } = await api.takeAction(action._id, token)
+      const { takenAction } = await api.takeAction(action._id)
       this.setState({
         step: modalType,
         takeActionError: null,
@@ -700,12 +698,10 @@ ActionModalPage.propTypes = {
   match: PropTypes.object,
   history: PropTypes.object,
   user: PropTypes.object,
-  token: PropTypes.string,
 }
 
 const mapStateToProps = state => ({
   user: state.user.data,
-  token: state.account.token,
 })
 
 export default compose(

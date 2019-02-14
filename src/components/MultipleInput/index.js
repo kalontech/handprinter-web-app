@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { compose } from 'redux'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 import { Form, Tag } from 'antd'
@@ -237,4 +238,7 @@ MultipleInput.propTypes = {
   placeholder: PropTypes.string,
 }
 
-export default Form.create()(injectIntl(MultipleInput))
+export default compose(
+  Form.create(),
+  injectIntl,
+)(MultipleInput)

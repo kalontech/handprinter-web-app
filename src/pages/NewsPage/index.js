@@ -8,7 +8,6 @@ import {
   intlShape,
 } from 'react-intl'
 import { Menu, Dropdown } from 'antd'
-import { connect } from 'react-redux'
 import { animateScroll } from 'react-scroll/modules'
 
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
@@ -168,19 +167,16 @@ class NewsPage extends Component {
   componentDidMount() {
     animateScroll.scrollToTop()
 
-    api.sendLastTimeReadNewsAt(Date.now(), this.props.token)
+    api.sendLastTimeReadNewsAt(Date.now())
     this.fetchNews()
   }
 
   fetchNews = async () => {
     this.setState({ loadingNews: true })
-    const { news } = await api.getNews(
-      {
-        page: this.state.page,
-        range: this.state.range,
-      },
-      this.props.token,
-    )
+    const { news } = await api.getNews({
+      page: this.state.page,
+      range: this.state.range,
+    })
     this.setState({
       loadingNews: false,
       news: [...this.state.news, ...news],
@@ -292,13 +288,8 @@ class NewsPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  token: state.account.token,
-})
-
 NewsPage.propTypes = {
   intl: intlShape.isRequired,
-  token: PropTypes.string.isRequired,
 }
 
-export default connect(mapStateToProps)(injectIntl(NewsPage))
+export default injectIntl(NewsPage)

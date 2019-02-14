@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Form } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import { animateScroll } from 'react-scroll/modules'
 
@@ -116,7 +116,11 @@ ResetPasswordPage.propTypes = {
   resettingPassword: PropTypes.bool.isRequired,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Form.create()(injectIntl(ResetPasswordPage)))
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+  Form.create(),
+  injectIntl,
+)(ResetPasswordPage)
