@@ -2,6 +2,8 @@ import React from 'react'
 
 import Spinner from 'components/Spinner'
 
+const { NODE_ENV } = process.env
+
 const actionDefault = () => Promise.resolve()
 
 export const configDefault = {
@@ -35,18 +37,24 @@ export default (action = actionDefault, config = configDefault) => Component =>
       injectedProps: {},
     }
 
+    fetchId = undefined
+
     componentDidMount() {
-      this.state.loading && this.fetch()
+      this.startFetch()
     }
 
-    componentDidUpdate(prevProps, prevState) {
-      if (this.state.loading && prevState.loading !== this.state.loading)
-        this.fetch()
+    startFetch = () => {
+      if (!this.state.loading) return
+
+      this.fetchId = Math.random()
+      this.fetch(this.fetchId)
     }
 
-    fetch = () => {
+    fetch = fetchId => {
       action({ ...this.props, ...this.state.injectedProps })
         .then((fetched = {}) => {
+          if (fetchId !== this.fetchId) return
+
           this.setState(state => ({
             loading: false,
             injectedProps: {
@@ -56,7 +64,10 @@ export default (action = actionDefault, config = configDefault) => Component =>
           }))
         })
         .catch(error => {
-          console.error(error)
+          if (fetchId !== this.fetchId) return
+
+          if (NODE_ENV !== 'production') console.error(error)
+
           this.setState({ loading: false })
         })
     }
@@ -74,7 +85,10 @@ export default (action = actionDefault, config = configDefault) => Component =>
           {...injectedProps}
           loading={loading}
           fetch={() => {
-            this.setState({ loading: config.filter(this.props) })
+            this.setState(
+              { loading: config.filter(this.props) },
+              this.startFetch,
+            )
           }}
         />
       )

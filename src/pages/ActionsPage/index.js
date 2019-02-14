@@ -829,7 +829,10 @@ class ActionsPage extends React.PureComponent {
                             )
                           }
                           suggestedBy={action.suggestedBy}
-                          suggestedAt={formatRelative(action.suggestedAt)}
+                          suggestedAt={
+                            action.suggestedAt &&
+                            formatRelative(action.suggestedAt)
+                          }
                         />
                       </ScrollAnimation>
                     </Col>
