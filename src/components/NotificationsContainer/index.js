@@ -48,6 +48,7 @@ const NotificationItem = styled.div`
   flex-direction: row;
   height: 65px;
   border-bottom: 1px solid ${colors.gray};
+  background-color: ${colors.white};
 `
 
 const NotificationPicture = styled.div`
