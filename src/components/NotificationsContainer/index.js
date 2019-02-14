@@ -7,16 +7,20 @@ import api from 'api'
 import styled from 'styled-components'
 import colors from 'config/colors'
 
+import emptyNotifBackground from 'assets/notifications-popover/notifications-empty-background.png'
+
 import viewAllIcon from './assets/viewAllIcon.svg'
 
 const NotificationBox = styled.div`
-  width: 500px;
+  width: 436px;
+  height: 307px;
   color: ${({ fontColor }) => fontColor || colors.darkGray};
 `
 
 const NotificationTitle = styled.div`
   display: flex;
   background-color: ${colors.green};
+  border-radius: 4px 4px 0px 0;
   align-items: center;
   color: ${colors.white};
   font-size: 16px;
@@ -84,6 +88,24 @@ const BoldNameTag = styled.span`
   color: ${colors.dark};
 `
 
+const NotificationEmptySection = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`
+
+const NotificationEmptySectionBackground = styled.img`
+  width: 188px;
+  height: 170px;
+`
+
+const NotificationsEmptyText = styled.div`
+  margin-top: 3px;
+  color: ${colors.darkGray};
+  font-family: ${({ fontNames }) => fontNames || '"Noto Sans", sans-serif'};
+`
+
 const NotificationsContainer = ({
   fontColor,
   fontNames,
@@ -95,48 +117,58 @@ const NotificationsContainer = ({
       <FormattedMessage id="app.header.menu.notificationTitle" />
     </NotificationTitle>
     <NotificationContent>
-      {notification.map((notifItem, index) => {
-        if (index > 4) return
+      {notification.length > 0 ? (
+        notification.map((notifItem, index) => {
+          const { user, action } = notifItem.arguments
+          const userPhoto =
+            (user && user.photo) ||
+            api.getUserInitialAvatar((user && user.fullName) || '?')
 
-        const { user, action } = notifItem.arguments
-        const userPhoto =
-          (user && user.photo) ||
-          api.getUserInitialAvatar((user && user.fullName) || '?')
+          return (
+            <NotificationItem key={index}>
+              <NotificationPicture>
+                <img src={userPhoto} alt="" />
+              </NotificationPicture>
+              <NotificationBody>
+                <div>
+                  <FormattedMessage
+                    id="app.newsPage.notification.userDidAction"
+                    values={{
+                      user: (
+                        <BoldNameTag>
+                          {(user && user.fullName) ||
+                            formatMessage({
+                              id: 'app.newsPage.userWithoutName',
+                            })}
+                        </BoldNameTag>
+                      ),
+                      action: (
+                        <NotificationLink
+                          to={`/account/news/actions/${action.slug}`}
+                        >
+                          {action.translatedName[locale] || action.name}
+                        </NotificationLink>
+                      ),
+                    }}
+                  />
+                </div>
 
-        return (
-          <NotificationItem key={index}>
-            <NotificationPicture>
-              <img src={userPhoto} alt="" />
-            </NotificationPicture>
-            <NotificationBody>
-              <div>
-                <FormattedMessage
-                  id="app.newsPage.notification.userDidAction"
-                  values={{
-                    user: (
-                      <BoldNameTag>
-                        {(user && user.fullName) ||
-                          formatMessage({
-                            id: 'app.newsPage.userWithoutName',
-                          })}
-                      </BoldNameTag>
-                    ),
-                    action: (
-                      <NotificationLink
-                        to={`/account/news/actions/${action.slug}`}
-                      >
-                        {action.translatedName[locale] || action.name}
-                      </NotificationLink>
-                    ),
-                  }}
-                />
-              </div>
-
-              <div>{formatRelative(notifItem.date)}</div>
-            </NotificationBody>
-          </NotificationItem>
-        )
-      })}
+                <div>{formatRelative(notifItem.date)}</div>
+              </NotificationBody>
+            </NotificationItem>
+          )
+        })
+      ) : (
+        <NotificationEmptySection>
+          <NotificationEmptySectionBackground
+            src={emptyNotifBackground}
+            alt=""
+          />
+          <NotificationsEmptyText fontNames={fontNames}>
+            <FormattedMessage id="app.header.menu.noNotificationsYet" />
+          </NotificationsEmptyText>
+        </NotificationEmptySection>
+      )}
     </NotificationContent>
     {notification.length > 5 && (
       <ViewAllNewsContainer>

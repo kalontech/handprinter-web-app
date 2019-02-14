@@ -377,6 +377,12 @@ const CollapseContent = styled.div`
   `}
 `
 
+const ProfileSettingsPopover = styled(Popover)`
+  .ant-popover-content .ant-popover-arrow {
+    top: 3px;
+  }
+`
+
 const ProfileMenu = styled.div`
   color: inherit;
 
@@ -430,6 +436,17 @@ const GrayBorderedButton = styled(Button)`
     background: ${colors.interfaceFooterColor2};
     color: ${colors.white};
     }
+  }
+`
+
+const StyledNotificationsPopover = styled(Popover)`
+  .ant-popover-inner-content {
+    padding: 0;
+  }
+  .ant-popover-content .ant-popover-arrow {
+    top: 3px;
+    background-color: ${colors.green};
+    border-color: ${colors.green};
   }
 `
 
@@ -910,9 +927,9 @@ class Header extends Component {
                 </Link>
               </LogoSmall>
               {isTablet && !isMobile && (
-                <Popover
-                  overlayClassName="notification-popover"
+                <StyledNotificationsPopover
                   placement="bottomRight"
+                  overlayStyle={{ paddingTop: '10px' }}
                   content={
                     <NotificationsContainer
                       notification={notification}
@@ -920,9 +937,14 @@ class Header extends Component {
                       fontNames={fontNames}
                     />
                   }
+                  getPopupContainer={() => this.$notifContainer}
                   onVisibleChange={this.sendLastTimeReadNotif}
                 >
-                  <NotificationPopoverTitle>
+                  <NotificationPopoverTitle
+                    ref={node => {
+                      this.$notifContainer = node
+                    }}
+                  >
                     <img src={newsBellIcon} alt="" />
                     {unreadCount > 1 && (
                       <NotificationCount fontNames={fontNames}>
@@ -930,7 +952,7 @@ class Header extends Component {
                       </NotificationCount>
                     )}
                   </NotificationPopoverTitle>
-                </Popover>
+                </StyledNotificationsPopover>
               )}
               <Fragment>
                 {!isTablet && (
@@ -1019,9 +1041,9 @@ class Header extends Component {
                       </Popover>
                     </CenterMenu>
                     <RightAlign>
-                      <Popover
-                        overlayClassName="notification-popover"
+                      <StyledNotificationsPopover
                         placement="bottomRight"
+                        overlayStyle={{ paddingTop: '10px' }}
                         content={
                           <NotificationsContainer
                             notification={notification}
@@ -1029,9 +1051,14 @@ class Header extends Component {
                             fontNames={fontNames}
                           />
                         }
+                        getPopupContainer={() => this.$notifContainer}
                         onVisibleChange={this.sendLastTimeReadNotif}
                       >
-                        <NotificationPopoverTitle>
+                        <NotificationPopoverTitle
+                          ref={node => {
+                            this.$notifContainer = node
+                          }}
+                        >
                           <img src={newsBellIcon} alt="" />
                           {unreadCount >= 1 && (
                             <NotificationCount fontNames={fontNames}>
@@ -1039,9 +1066,10 @@ class Header extends Component {
                             </NotificationCount>
                           )}
                         </NotificationPopoverTitle>
-                      </Popover>
-                      <Popover
+                      </StyledNotificationsPopover>
+                      <ProfileSettingsPopover
                         placement="bottomRight"
+                        overlayStyle={{ paddingTop: '10px' }}
                         content={
                           <UserInfo fontColor={fontColor}>
                             <Name>{(user && user.fullName) || ''}</Name>
@@ -1059,8 +1087,14 @@ class Header extends Component {
                             </Links>
                           </UserInfo>
                         }
+                        getPopupContainer={() => this.$profileSettingsPopover}
                       >
-                        <PopoverTitle fontColor={fontColor}>
+                        <PopoverTitle
+                          fontColor={fontColor}
+                          ref={node => {
+                            this.$profileSettingsPopover = node
+                          }}
+                        >
                           <Avatar>
                             <img
                               src={
@@ -1073,7 +1107,7 @@ class Header extends Component {
                             />
                           </Avatar>
                         </PopoverTitle>
-                      </Popover>
+                      </ProfileSettingsPopover>
                     </RightAlign>
                   </Fragment>
                 )}

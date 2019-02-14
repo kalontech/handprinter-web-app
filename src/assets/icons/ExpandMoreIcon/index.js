@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 const ExpandMoreIcon = props => {
   const { id, iconColor } = props
   return (
-    <i style={{ color: iconColor }}>
+    <i style={{ color: iconColor, maxHeight: '20px' }}>
       <svg
-        width="24"
-        height="24"
+        width="20"
+        height="20"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
