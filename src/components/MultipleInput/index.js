@@ -33,8 +33,7 @@ const MultipleInputWrap = styled.div`
 `
 
 const InputWrap = styled.span`
-  display: flex;
-  align-items: flex-start;
+  flex-grow: 1;
 
   .ant-input {
     height: 30px;
@@ -65,6 +64,10 @@ const Wrap = styled.div`
 class MultipleInput extends Component {
   state = {
     inputVisible: false,
+  }
+
+  static defaultProps = {
+    placeholder: this,
   }
 
   multipleInputRef = React.createRef()
@@ -172,7 +175,9 @@ class MultipleInput extends Component {
       intl: { formatMessage },
       form: { getFieldDecorator },
       values,
-      placeholder,
+      placeholder = formatMessage({
+        id: 'app.increaseHandprintPage.form.enterEmailAddress',
+      }),
     } = this.props
 
     return (
@@ -207,12 +212,7 @@ class MultipleInput extends Component {
                   ref={this.multipleInputRef}
                   type="text"
                   size="small"
-                  placeholder={
-                    placeholder ||
-                    formatMessage({
-                      id: 'app.increaseHandprintPage.form.enterEmailAddress',
-                    })
-                  }
+                  placeholder={values.length < 1 && placeholder}
                   onBlur={this.handleAddValueConfirm}
                   onPressEnter={this.handleAddValueConfirm}
                   onKeyPress={this.handleKeyPress}
