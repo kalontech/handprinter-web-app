@@ -1,8 +1,5 @@
 export default error => {
-  const {
-    code,
-    payload: { isMultiple },
-  } = error
+  const { code, payload = {} } = error
 
   if (typeof code === 'number') {
     // error code 100 - validation errors
@@ -12,7 +9,7 @@ export default error => {
       return Object.values(error.problems)[0]
     }
 
-    return `app.errors.${code}${isMultiple ? '.multiple' : ''}`
+    return `app.errors.${code}${payload.isMultiple ? '.multiple' : ''}`
   }
 
   return 'app.errors.unknown'
