@@ -36,7 +36,7 @@ const WidgetContainer = styled.div`
   background-color: ${colors.white};
   border-radius: 4px;
   box-shadow: 0 1px 10px 0 rgba(52, 68, 66, 0.08);
-  padding: 40px 30px 20px 30px;
+  padding: 30px 30px 20px 30px;
 
   ${media.phone`
     padding: 30px 10px 30px 10px;
@@ -137,6 +137,7 @@ const DashboardHeaderUserRow = styled.div`
   padding: 0 0 0 199px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   ${media.largeDesktop`
     padding: 0 39px 0 199px;
   `}
@@ -204,14 +205,11 @@ const DashboardHeaderUserPicture = styled.img`
 
 const DashboardHeaderUserName = styled.div`
   color: ${colors.dark};
-  font-size: 22px;
-  ${media.desktop`
-    line-height: 35px;
-  `}
+  font-size: 28px;
+  line-height: 35px;
 `
 
 const DashboardHeaderUserInfoValue = styled.div`
-  padding-top: 11px;
   margin-bottom: 3px;
   color: ${colors.dark};
   font-size: 28px;
@@ -239,7 +237,7 @@ const DashboardHeaderUserInfoCol = styled(Col)`
 
 const DashboardHeaderUserSince = styled.div`
   color: ${colors.darkGray};
-  font-size: 14px;
+  font-size: 16px;
   line-height: 20px;
   ${media.desktop`
     margin-top: 4px;
@@ -251,7 +249,7 @@ const ImpactCategorySelector = styled(Tabs)`
     text-align: center;
   }
   .ant-tabs-tab {
-    padding: 16.5px 16px;
+    padding: 16.5px 4px;
     ${media.desktop`
       padding: 16.5px 0;
     `}
@@ -318,10 +316,14 @@ const HeaderUserInfoRowCol = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-left: 20px;
+  padding-left: 60px;
+   ${media.largeDesktop`
+     padding-left: 20px;
+  `}
 
   ${media.desktop`
     padding: 0 10px;
+     padding-left: 60px;
   `}
 
   ${media.phone`
@@ -347,7 +349,7 @@ const MyNetworkCol = styled(Col)`
 `
 
 const InfoElementWrap = styled.div`
-  margin-left: 10px;
+  margin-left: 5px;
   display: inline-block;
 `
 

@@ -18,9 +18,13 @@ import media from 'utils/mediaQueryTemplate'
 import LampImgPath from 'assets/actions-page/lamp.png'
 
 const ButtonSuccess = styled(PrimaryButton)`
+  display: block;
   width: 100%;
   max-width: 300px;
   margin: 30px auto 0;
+  ${media.phone`
+    width: 100%;
+  `}
 `
 const Content = styled(OceanModal)`
   padding: 14px 60px;
