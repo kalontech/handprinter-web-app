@@ -26,6 +26,12 @@ const StyledCol = styled(Col)`
   `}
 `
 
+const MonthBlock = styled.div`
+  min-width: 117px;
+  height: 123px;
+  margin: 11.5px 0px;
+`
+
 const Year = ({ activeDays, year }) => (
   <Wrap>
     {times(3, x => (
@@ -34,12 +40,14 @@ const Year = ({ activeDays, year }) => (
           const month = x * 4 + y
           return (
             <StyledCol span={6} xs={12} sm={6}>
-              <Month
-                activeDays={get(activeDays, month, [])}
-                month={month}
-                tiny
-                year={year}
-              />
+              <MonthBlock>
+                <Month
+                  activeDays={get(activeDays, month, [])}
+                  month={month}
+                  tiny
+                  year={year}
+                />
+              </MonthBlock>
             </StyledCol>
           )
         })}

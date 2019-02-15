@@ -9,6 +9,12 @@ import media from 'utils/mediaQueryTemplate'
 
 const WeekRow = styled.div`
   display: flex;
+  ${props =>
+    props.tiny &&
+    css`
+      height: 15px;
+      width: 100%;
+    `};
 `
 
 const WeekDay = styled.div`

@@ -10,7 +10,7 @@ const Wrap = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-  height: 498px;
+  height: 512px;
   position: relative;
   top: -40px;
 
