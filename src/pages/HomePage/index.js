@@ -26,7 +26,8 @@ import PageMetadata from 'components/PageMetadata'
 import api from 'api'
 
 import client1 from 'assets/homepage/client-2.png'
-import client2 from 'assets/homepage/interfaceLogo.png'
+import client2 from 'assets/homepage/client-monarch.png'
+import client3 from 'assets/homepage/interfaceLogo.png'
 import heroImg from 'assets/homepage/hero-image.png'
 import hpAboutImg from 'assets/homepage/what-image.png'
 import hpActionImg from 'assets/homepage/actions-image.png'
@@ -265,6 +266,10 @@ const ClientsWrap = styled(Row)`
   `};
 `
 
+const ClientImg = styled.img`
+  max-width: 150px;
+`
+
 class HomePage extends Component {
   state = {
     actions: [],
@@ -434,10 +439,13 @@ class HomePage extends Component {
                 gutter={{ xs: 25, sm: 25, md: 30, xl: 80 }}
               >
                 <Col xs={{ order: 1 }} xl={{ order: 1 }}>
-                  <img src={client1} alt="logo" />
+                  <ClientImg src={client1} alt="logo" />
                 </Col>
                 <Col xs={{ order: 2 }} xl={{ order: 2 }}>
-                  <img src={client2} alt="logo" />
+                  <ClientImg src={client2} alt="logo" />
+                </Col>
+                <Col xs={{ order: 2 }} xl={{ order: 2 }}>
+                  <ClientImg src={client3} alt="logo" />
                 </Col>
               </ClientsWrap>
             </BlockContainer>
