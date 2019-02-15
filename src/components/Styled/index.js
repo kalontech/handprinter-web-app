@@ -636,21 +636,6 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  .ant-select_override-for_actions-page {
-    z-index: 1061;
-
-    .ant-select-dropdown-menu-item:hover,
-    .ant-select-dropdown-menu-item-active {
-      background-color: ${colors.lightGray};
-    }
-    .ant-select-selected-icon {
-      display: none;
-    }
-    .ant-select-dropdown-menu {
-      max-height: 500px;    
-    }
-  }
-
   .ant-popover {
     z-index: 1070;
   }
