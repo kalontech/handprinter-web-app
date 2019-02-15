@@ -516,7 +516,7 @@ class ActionModalPage extends Component {
   }
 
   renderActionTakenView = ({ type }) => {
-    const { user, closeModal } = this.props
+    const { user, closeModal, history } = this.props
     const { action } = this.state
 
     return this.renderInContainer({
@@ -554,7 +554,12 @@ class ActionModalPage extends Component {
             {user ? (
               <TakenActionAuthWrap>
                 <TakenActionAuthContent>
-                  <Button type="primary" onClick={closeModal}>
+                  <Button
+                    type="primary"
+                    onClick={() => {
+                      history.length > 1 ? history.goBack() : closeModal()
+                    }}
+                  >
                     <FormattedMessage id="app.actions.congratulations.nice" />
                   </Button>
                 </TakenActionAuthContent>

@@ -478,6 +478,49 @@ export const VideoModalWrap = styled.div`
   }
 `
 
+export const Modal = styled(Ant.Modal)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  z-index: 1070;
+
+  ${media.tablet`
+    max-width: initial;
+  `}
+
+  ${media.phone`
+    height: 100%;
+    width: 100% !important;
+  `}
+
+  .ant-modal {
+    width: auto;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+
+    ${media.phone`
+      height: 100%;
+    `}
+  }
+
+  .ant-modal-content {
+    ${media.phone`
+      height: 100%;
+    `}
+  }
+
+  .ant-modal-body {
+    padding: 0;
+
+    ${media.phone`
+      height: 100%;
+    `}
+  }
+`
+
 export const GlobalStyle = createGlobalStyle`
 
 
@@ -485,10 +528,14 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
   
+  #root {
+    height: 100%;
+  }
+  
   #root > .ant-layout {
     overflow-x: hidden;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100%;
   }
   
   .ant-layout-content {
@@ -501,6 +548,10 @@ export const GlobalStyle = createGlobalStyle`
   
   p {
     margin: 0;
+  }
+  
+  .ant-modal-centered {
+    z-index: 1070;
   }
   
   .react-router-modal__modal {
@@ -739,39 +790,6 @@ export const GlobalStyle = createGlobalStyle`
       width: 100%;
       border: none;
       border-radius: 0px;
-      height: 100%;
-    `}
-  }
-  
-  .ant-modal_theme_page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-    z-index: 1070;
-  }
-  
-  .ant-modal_theme_page > .ant-modal {
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-    
-    ${media.phone`
-      height: 100%;
-    `}
-  }
-  
-  .ant-modal_theme_page .ant-modal-content {
-    ${media.phone`
-      height: 100%;
-    `}
-  }
-  
-  .ant-modal_theme_page .ant-modal-body {
-    padding: 0;
-    
-    ${media.phone`
       height: 100%;
     `}
   }

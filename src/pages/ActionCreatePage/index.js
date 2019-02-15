@@ -3,7 +3,7 @@ import { compose } from 'redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Upload, Form, Icon } from 'antd'
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+import { injectIntl, intlShape } from 'react-intl'
 
 import CloseIcon from 'assets/icons/CloseIcon'
 import { FormItem, Input, PrimaryButton } from 'components/Styled'
@@ -29,12 +29,12 @@ const Container = styled.section`
   ${media.tablet`
     max-width: 100%;
     height: 100%;
-    width: 100%;
     overflow-y: scroll;
   `}
 
   ${media.phone`
     width: 100%;
+    border-radius: 0;
   `}
 `
 
@@ -170,14 +170,11 @@ const Preview = styled.div`
   position: relative;
   height: 100%;
   flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
   max-width: 100%;
 
   ${media.tablet`
-    max-height: 40vh;
+    max-height: 250px;
     width: auto;
   `}
 
@@ -311,7 +308,6 @@ class ActionCreatePage extends React.PureComponent {
     isSubmitting: false,
     submitFailed: false,
     submitSucceeded: false,
-    validationErrorId: null,
   }
 
   handleSubmit = e => {
@@ -324,14 +320,9 @@ class ActionCreatePage extends React.PureComponent {
 
       const body = new FormData()
 
-      if (!values.photo || !values.photo.file) {
-        this.setState({
-          validationErrorId: `app.errors.image.required`,
-        })
-        return
-      }
+      if (values.photo && values.photo.file)
+        body.append('picture', values.photo.file)
 
-      body.append('picture', values.photo.file)
       body.append('description', values.description)
       body.append('name', values.name)
 
@@ -342,13 +333,12 @@ class ActionCreatePage extends React.PureComponent {
       this.setState(
         {
           isSubmitting: true,
-          validationErrorId: null,
         },
         async () => {
           return request({
             body,
             id: action._id,
-            method: action.slug ? 'PUT' : 'POST',
+            method: action._id ? 'PUT' : 'POST',
           })
             .then(() => {
               this.setState(
@@ -378,16 +368,16 @@ class ActionCreatePage extends React.PureComponent {
       form: { getFieldDecorator, getFieldError, getFieldValue },
       intl: { formatMessage },
       action = {},
-      closeModal,
+      onCancel,
     } = this.props
-    const { submitFailed, isSubmitting, validationErrorId } = this.state
+    const { submitFailed, isSubmitting } = this.state
 
     const { fileUrl: photoPreviewUrl } = getFieldValue('photo') || {}
     const photoError = getFieldError('photo')
 
     return (
       <Container>
-        <CloseButton onClick={closeModal}>
+        <CloseButton onClick={onCancel}>
           <CloseIcon />
         </CloseButton>
 
@@ -395,8 +385,8 @@ class ActionCreatePage extends React.PureComponent {
           <UploadWrap>
             {getFieldDecorator('photo', {
               getValueFromEvent,
-              validateFirst: true,
               rules: [
+                required(formatMessage({ id: 'app.errors.image.required' })),
                 {
                   validator: fileSize({
                     message: formatMessage(
@@ -431,19 +421,19 @@ class ActionCreatePage extends React.PureComponent {
                     <AddPhotoBlockWrap>
                       <AddPhotoBlock>
                         <ButtonAddPhoto type="button">
-                          {photoError ? (
-                            <PhotoError inButton>{photoError}</PhotoError>
-                          ) : (
-                            <ButtonAddPhotoContent>
-                              <Icon type="camera" />
-                              <span>
-                                <FormattedMessage id="app.actionCreatePage.addPhoto" />
-                              </span>
-                            </ButtonAddPhotoContent>
-                          )}
+                          <ButtonAddPhotoContent>
+                            <Icon type="camera" />
+                            <span>
+                              {formatMessage({
+                                id: 'app.actionCreatePage.addPhoto',
+                              })}
+                            </span>
+                          </ButtonAddPhotoContent>
                         </ButtonAddPhoto>
                         <AddPhotoBlockText>
-                          <FormattedMessage id="app.actionCreatePage.uploadImageDescription" />
+                          {formatMessage({
+                            id: 'app.actionCreatePage.uploadImageDescription',
+                          })}
                         </AddPhotoBlockText>
                       </AddPhotoBlock>
                     </AddPhotoBlockWrap>
@@ -457,7 +447,7 @@ class ActionCreatePage extends React.PureComponent {
             <div>
               <Title>
                 {formatMessage({
-                  id: action.slug
+                  id: action._id
                     ? 'app.actions.card.edit'
                     : 'app.actionCreatePage.title',
                 })}
@@ -501,7 +491,7 @@ class ActionCreatePage extends React.PureComponent {
 
             <BottomPanelWrap>
               <ButtonsWrapper>
-                <ButtonCancel onClick={closeModal}>
+                <ButtonCancel onClick={onCancel}>
                   {formatMessage({ id: 'app.actionCreatePage.cancel' })}
                 </ButtonCancel>
 
@@ -511,30 +501,24 @@ class ActionCreatePage extends React.PureComponent {
                   loading={isSubmitting}
                 >
                   {formatMessage({
-                    id: action.slug
-                      ? 'app.actions.card.edit'
+                    id: action._id
+                      ? 'app.form.submit'
                       : 'app.actionCreatePage.title',
                   })}
                 </SaveButton>
               </ButtonsWrapper>
-              {submitFailed ? (
+
+              {(submitFailed || photoError) && (
                 <FormError>
-                  {formatMessage({
-                    id: `app.errors.${
-                      [19, 20].includes(Number(submitFailed.code))
-                        ? submitFailed.code
-                        : 'unknown'
-                    }`,
-                  })}
+                  {photoError ||
+                    formatMessage({
+                      id: `app.errors.${
+                        [19, 20].includes(Number(submitFailed.code))
+                          ? submitFailed.code
+                          : 'unknown'
+                      }`,
+                    })}
                 </FormError>
-              ) : validationErrorId ? (
-                <FormError>
-                  {formatMessage({
-                    id: validationErrorId,
-                  })}
-                </FormError>
-              ) : (
-                ''
               )}
             </BottomPanelWrap>
           </MainFields>
@@ -548,7 +532,7 @@ ActionCreatePage.propTypes = {
   form: PropTypes.object,
   intl: intlShape.isRequired,
   action: PropTypes.object,
-  closeModal: PropTypes.func,
+  onCancel: PropTypes.func,
   onSuccess: PropTypes.func,
 }
 
@@ -560,7 +544,9 @@ export default compose(
       return {
         name: Form.createFormField({ value: name }),
         description: Form.createFormField({ value: description }),
-        photo: Form.createFormField({ value: { fileUrl } }),
+        photo: Form.createFormField(
+          fileUrl ? { value: { fileUrl } } : undefined,
+        ),
       }
     },
   }),

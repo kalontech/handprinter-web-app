@@ -427,5 +427,6 @@
     "app.header.menu.notificationTitle": "Vos notifications",
     "app.header.menu.viewAllNews": "Voir toutes les nouvelles",
     "app.newsPage.notification.userDidAction": "{user} fait l'action {action}",
-    "app.header.menu.noNotificationsYet": "Vous n'avez pas encore de notifications"
+    "app.header.menu.noNotificationsYet": "Vous n'avez pas encore de notifications",
+    "app.form.submit": "soumettre"
 }

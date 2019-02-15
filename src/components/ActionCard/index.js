@@ -24,9 +24,9 @@ const CardWrap = styled.div`
 const CardContainer = styled.div`
   display: block;
   position: relative;
-  max-width: ${props => (props.isSlide ? '380px' : '100%')}
-  margin-right: ${props => (props.isSlide ? '20px' : '0')}
-  height: 364px;
+  max-width: ${props => (props.isSlide ? '380px' : '100%')};
+  margin-right: ${props => (props.isSlide ? '20px' : '0')};
+  min-height: 364px;
   border-radius: 4px;
   box-shadow: 0 1px 10px 0 ${hexToRgba(colors.dark, 0.08)};
   background-color: ${colors.white};
@@ -37,7 +37,7 @@ const CardContainer = styled.div`
     margin-right: 0;
     max-width: ${props => (props.isSlide ? 'calc(100% - 15px)' : '100%')};
   `}
-  
+
   &:hover {
     transform: translateY(-4px);
   }
@@ -81,6 +81,7 @@ const CardHeading = styled.h3`
   line-height: 1.37;
   font-family: 'Noto Serif', serif;
   margin-bottom: 20px;
+  text-align: left;
 `
 
 const SuggestedInfoInitiator = styled.div`
@@ -152,10 +153,11 @@ const ActionCard = props => {
     onDelete,
     isSlide,
     style,
+    onClick,
   } = props
 
   return (
-    <Link to={to}>
+    <Link to={to} onClick={onClick}>
       <CardWrap>
         <CardContainer isSlide={isSlide} style={style}>
           <CardImage>
@@ -232,6 +234,7 @@ ActionCard.propTypes = {
   style: PropTypes.object,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
+  onClick: PropTypes.func,
   suggestedBy: PropTypes.object,
   suggestedAt: PropTypes.string,
 }

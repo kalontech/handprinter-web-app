@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Select, Spin, Icon, Menu, Popover, Modal } from 'antd'
+import { Row, Col, Select, Spin, Icon, Menu, Popover } from 'antd'
 import qs from 'qs'
 import styled from 'styled-components'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
@@ -17,6 +17,7 @@ import {
   Pagination,
   HeaderPopover,
   DefaultButton,
+  Modal,
 } from 'components/Styled'
 import ActionCard from 'components/ActionCard'
 import api from 'api'
@@ -34,6 +35,7 @@ import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Tooltip from 'components/Tooltip'
 import ScrollAnimation from 'components/ScrollAnimation'
 import ActionCreate from 'pages/ActionCreatePage'
+import ActionOpenView from 'components/ActionOpenView'
 
 import filterToggleImg from 'assets/actions-page/ic_filter_list.png'
 import filterToggleActiveImg from 'assets/actions-page/ic_filter_list_active.png'
@@ -299,6 +301,11 @@ const ImpactButton = styled(DefaultButton)`
   }
 `
 
+const MODAL_TYPES = {
+  create: 'create',
+  preview: 'preview',
+}
+
 function configParamsForFilter({ location: { search } }) {
   const queries = qs.parse(search, { ignoreQueryPrefix: true })
   const params = {}
@@ -378,9 +385,8 @@ class ActionsPage extends React.PureComponent {
     subsetDropdownVisible: false,
     currentAction: undefined,
     modalOpen: false,
+    modalType: MODAL_TYPES.create,
   }
-
-  searchSelect = React.createRef()
 
   componentDidMount() {
     animateScroll.scrollToTop()
@@ -547,9 +553,10 @@ class ActionsPage extends React.PureComponent {
     )
   }
 
-  onActionEdit = action => e => {
+  openModal = (action, modalType = MODAL_TYPES.create) => e => {
     e.preventDefault()
-    this.setState({ currentAction: action, modalOpen: true })
+    e.stopPropagation()
+    this.setState({ currentAction: action, modalOpen: true, modalType })
   }
 
   onActionDelete = id => e => {
@@ -558,6 +565,7 @@ class ActionsPage extends React.PureComponent {
     } = this.props
 
     e.preventDefault()
+    e.stopPropagation()
 
     Modal.confirm({
       title: formatMessage({
@@ -582,7 +590,11 @@ class ActionsPage extends React.PureComponent {
   }
 
   closeModal = () => {
-    this.setState({ currentAction: undefined, modalOpen: false })
+    this.setState({
+      currentAction: undefined,
+      modalOpen: false,
+      modalType: MODAL_TYPES.create,
+    })
   }
 
   render() {
@@ -607,6 +619,7 @@ class ActionsPage extends React.PureComponent {
       subsetDropdownVisible,
       currentAction,
       modalOpen,
+      modalType,
     } = this.state
 
     return (
@@ -723,7 +736,6 @@ class ActionsPage extends React.PureComponent {
                               <span />
                             )
                           }
-                          ref={this.searchSelect}
                           /*
                            * Filter by match searched value and option value.
                            *
@@ -794,9 +806,14 @@ class ActionsPage extends React.PureComponent {
                       <ScrollAnimation>
                         <ActionCard
                           to={`/actions/${match.params.subset}/${action.slug}`}
+                          onClick={
+                            action.status === ACTION_STATES.PROPOSED
+                              ? this.openModal(action, MODAL_TYPES.preview)
+                              : undefined
+                          }
                           picture={action.picture}
                           canChange={action.status === ACTION_STATES.PROPOSED}
-                          onEdit={this.onActionEdit(action)}
+                          onEdit={this.openModal(action)}
                           onDelete={this.onActionDelete(action._id)}
                           name={action.name}
                           impacts={() =>
@@ -836,6 +853,7 @@ class ActionsPage extends React.PureComponent {
                       </ScrollAnimation>
                     </Col>
                   ))}
+
                   {actions.length === 0 && (
                     <NotFoundWrap>
                       <FormattedMessage id="app.actionsPage.actionsNotFound" />
@@ -862,21 +880,36 @@ class ActionsPage extends React.PureComponent {
           onCancel={this.closeModal}
           centered
           footer={null}
-          wrapClassName="ant-modal_theme_page"
           width="auto"
           destroyOnClose
         >
-          <ActionCreate
-            onSuccess={() => {
-              history.push(
-                `/account/submit-succeeded/${
-                  currentAction ? currentAction.slug : ''
-                }`,
-              )
-            }}
-            action={currentAction}
-            closeModal={this.closeModal}
-          />
+          {modalType === MODAL_TYPES.preview ? (
+            <ActionOpenView
+              action={currentAction}
+              cancel={{
+                onClick: this.closeModal,
+                message: formatMessage({ id: 'app.actionCreatePage.cancel' }),
+              }}
+              success={{
+                onClick: () => {
+                  this.setState({ modalType: MODAL_TYPES.create })
+                },
+                message: formatMessage({ id: 'app.actions.card.edit' }),
+              }}
+            />
+          ) : (
+            <ActionCreate
+              action={currentAction}
+              onCancel={this.closeModal}
+              onSuccess={() => {
+                history.push(
+                  `/account/submit-succeeded/${
+                    currentAction ? currentAction.slug : ''
+                  }`,
+                )
+              }}
+            />
+          )}
         </Modal>
       </React.Fragment>
     )

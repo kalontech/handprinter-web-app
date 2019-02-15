@@ -427,5 +427,6 @@
     "app.header.menu.notificationTitle": "Jouw notificaties",
     "app.header.menu.viewAllNews": "Bekijk al het nieuws",
     "app.newsPage.notification.userDidAction": "{user} heeft actie uitgevoerd {action}",
-    "app.header.menu.noNotificationsYet": "U heeft nog geen meldingen"
+    "app.header.menu.noNotificationsYet": "U heeft nog geen meldingen",
+    "app.form.submit": "voorleggen"
 }

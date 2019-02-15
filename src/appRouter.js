@@ -43,8 +43,6 @@ if (REACT_APP_ENVIRONMENT === 'production') {
   })
 }
 
-const getParentPath = getter => match => getter(match, history)
-
 const AppRouter = () => {
   const brandedConfig = getBrandedConfig()
   return (
