@@ -615,11 +615,6 @@ export const GlobalStyle = createGlobalStyle`
       top: 50%;
     }
 
-    .ant-select-dropdown-menu {
-      max-height: 242px;
-      padding: 6px 0;
-    }
-
     .ant-select-dropdown-menu-item {
       border-radius: 4px;
       margin: 0 6px;
@@ -633,21 +628,6 @@ export const GlobalStyle = createGlobalStyle`
 
     .ant-select-arrow {
       margin-top: -12px;
-    }
-  }
-
-  .ant-select_override-for_actions-page {
-    z-index: 1061;
-
-    .ant-select-dropdown-menu-item:hover,
-    .ant-select-dropdown-menu-item-active {
-      background-color: ${colors.lightGray};
-    }
-    .ant-select-selected-icon {
-      display: none;
-    }
-    .ant-select-dropdown-menu {
-      max-height: 500px;    
     }
   }
 
