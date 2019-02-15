@@ -458,6 +458,7 @@ const NotificationPopoverTitle = styled.div`
   width: 50px;
   img {
     cursor: pointer;
+    opacity: 0.4;
   }
 `
 
@@ -931,6 +932,7 @@ class Header extends Component {
               {isTablet && !isMobile && (
                 <StyledNotificationsPopover
                   placement="bottomRight"
+                  trigger="click"
                   overlayStyle={{ paddingTop: '10px' }}
                   content={
                     <NotificationsContainer
@@ -1046,6 +1048,7 @@ class Header extends Component {
                       <StyledNotificationsPopover
                         placement="bottomRight"
                         overlayStyle={{ paddingTop: '10px' }}
+                        trigger={['hover', 'click']}
                         content={
                           <NotificationsContainer
                             notification={notification}
