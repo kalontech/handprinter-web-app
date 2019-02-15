@@ -1,4 +1,4 @@
-import { call, put } from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 
 import decodeError from 'utils/decodeError'
 import { Types as UserStoreTypes } from 'redux/userStore'

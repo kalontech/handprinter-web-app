@@ -62,18 +62,13 @@ const InnerContainer = styled.div`
   `}
 `
 
-const ActionSearchDropdownPicture = styled.div`
-  background-image: url(${props => props.src});
-  background-size: cover;
-  background-position: center center;
-  width: 70px;
-  height: 70px;
+const ActionSearchDropdownPicture = styled.img`
+  width: 90px;
   border-radius: 5px;
   margin-right: 10px;
-  display: inline-block;
 `
 
-const SearchBlockWrapper = styled.div`
+const SearchWrapper = styled.div`
   background-color: ${colors.white};
   padding: 20px;
   margin: 30px 0 20px 0;
@@ -117,7 +112,7 @@ const StyledSearchIcon = styled(Icon)`
   top: 15px;
 `
 
-const SearchWrap = styled.div`
+const SearchFieldWrap = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
@@ -306,26 +301,6 @@ const ImpactButton = styled(DefaultButton)`
   }
 `
 
-const ActionSearchDropdownOptionContent = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const SearchFieldWrap = styled.div`
-  width: 100%;
-  .ant-select-dropdown,
-  .ant-select-dropdown-menu {
-    max-height: 402px;
-    z-index: 1061;
-  }
-  .ant-select-dropdown-menu-item:hover,
-  .ant-select-dropdown-menu-item-active {
-    background-color: ${colors.lightGray};
-  }
-  .ant-select-selected-icon {
-    display: none;
-  }
-`
 const MODAL_TYPES = {
   create: 'create',
   preview: 'preview',
@@ -723,8 +698,8 @@ class ActionsPage extends React.PureComponent {
               <Row span={8} xl={8} lg={12} md={12} xs={24}>
                 <Col>
                   {match.params.subset === ACTIONS_SUBSETS.DISCOVER && (
-                    <SearchBlockWrapper>
-                      <SearchWrap>
+                    <SearchWrapper ref={this.$search}>
+                      <SearchFieldWrap>
                         <ToggleFilterButton onClick={this.toggleFilter}>
                           <img
                             src={
@@ -740,77 +715,73 @@ class ActionsPage extends React.PureComponent {
                             </ToggleFilterActiveIcon>
                           )}
                         </ToggleFilterButton>
-                        <SearchFieldWrap ref={this.$search}>
-                          <SearchField
-                            placeholder={formatMessage({
-                              id: 'app.actionsPage.searchPlaceholder',
-                            })}
-                            value={searchData.searchFieldValue}
-                            notFoundContent={
-                              searchData.searching ? (
-                                <Spin size="small" />
-                              ) : !searchData.searching &&
-                                Number.isInteger(searchData.total) &&
-                                searchData.total === 0 ? (
-                                <FormattedMessage id="app.actionsPage.searchNotFound" />
-                              ) : null
-                            }
-                            showSearch
-                            suffixIcon={
-                              searchData.searching ? (
-                                <Spin size="small" />
-                              ) : (
-                                <span />
-                              )
-                            }
-                            /*
-                             * Filter by match searched value and option value.
-                             *
-                             * How it works:
-                             * Search option has 2 values: [ picture, name ].
-                             * We filter option value (option.props.children[1]) with
-                             * search value (value from search input)
-                             *
-                             * Why we use it:
-                             * We need filter data from search response and
-                             * show to user matched data
-                             */
-                            filterOption={(input, option) =>
-                              option.props.children[1]
-                                .toLowerCase()
-                                .indexOf(input.toLowerCase()) >= 0
-                            }
-                            onSearch={value =>
-                              value.length > 0 &&
-                              this.searchActions({ name: value })
-                            }
-                            onChange={this.handleSearchFieldChange}
-                            onDropdownVisibleChange={
-                              this.handleDropdownVisibleChange
-                            }
-                            getPopupContainer={() => this.$search.current}
-                          >
-                            {searchData.searchedActions.map(action => (
-                              <Select.Option
-                                key={action.picture}
-                                onClick={() =>
-                                  this.handleOpenActionCard(action)
-                                }
-                              >
-                                <ActionSearchDropdownOptionContent>
-                                  <ActionSearchDropdownPicture
-                                    src={action.picture}
-                                  />
-                                  {action.name}
-                                </ActionSearchDropdownOptionContent>
-                              </Select.Option>
-                            ))}
-                          </SearchField>
-                        </SearchFieldWrap>
+                        <SearchField
+                          placeholder={formatMessage({
+                            id: 'app.actionsPage.searchPlaceholder',
+                          })}
+                          value={searchData.searchFieldValue}
+                          dropdownClassName="ant-select_override-for_actions-page"
+                          notFoundContent={
+                            searchData.searching ? (
+                              <Spin size="small" />
+                            ) : !searchData.searching &&
+                              Number.isInteger(searchData.total) &&
+                              searchData.total === 0 ? (
+                              <FormattedMessage id="app.actionsPage.searchNotFound" />
+                            ) : null
+                          }
+                          showSearch
+                          suffixIcon={
+                            searchData.searching ? (
+                              <Spin size="small" />
+                            ) : (
+                              <span />
+                            )
+                          }
+                          /*
+                           * Filter by match searched value and option value.
+                           *
+                           * How it works:
+                           * Search option has 2 values: [ picture, name ].
+                           * We filter option value (option.props.children[1]) with
+                           * search value (value from search input)
+                           *
+                           * Why we use it:
+                           * We need filter data from search response and
+                           * show to user matched data
+                           */
+                          filterOption={(input, option) =>
+                            option.props.children[1]
+                              .toLowerCase()
+                              .indexOf(input.toLowerCase()) >= 0
+                          }
+                          onSearch={value =>
+                            value.length > 0 &&
+                            this.searchActions({ name: value })
+                          }
+                          onChange={this.handleSearchFieldChange}
+                          onDropdownVisibleChange={
+                            this.handleDropdownVisibleChange
+                          }
+                          getPopupContainer={() => this.$search.current}
+                        >
+                          {searchData.searchedActions.map(action => (
+                            <Select.Option
+                              key={action.picture}
+                              onClick={() => this.handleOpenActionCard(action)}
+                            >
+                              <ActionSearchDropdownPicture
+                                src={action.picture}
+                                alt=""
+                              />
+                              {action.name}
+                            </Select.Option>
+                          ))}
+                        </SearchField>
                         {!searchData.searching && (
                           <StyledSearchIcon type="search" />
                         )}
-                      </SearchWrap>
+                      </SearchFieldWrap>
                       <Animate show={timeValues.length > 0 && showFilter}>
                         <FilterWrap>
                           <ActionsFilters
@@ -823,7 +794,7 @@ class ActionsPage extends React.PureComponent {
                           />
                         </FilterWrap>
                       </Animate>
-                    </SearchBlockWrapper>
+                    </SearchWrapper>
                   )}
                 </Col>
               </Row>
