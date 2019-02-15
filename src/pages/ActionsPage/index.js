@@ -388,6 +388,8 @@ class ActionsPage extends React.PureComponent {
     modalType: MODAL_TYPES.create,
   }
 
+  $search = React.createRef()
+
   componentDidMount() {
     animateScroll.scrollToTop()
   }
@@ -696,7 +698,7 @@ class ActionsPage extends React.PureComponent {
               <Row span={8} xl={8} lg={12} md={12} xs={24}>
                 <Col>
                   {match.params.subset === ACTIONS_SUBSETS.DISCOVER && (
-                    <SearchWrapper>
+                    <SearchWrapper ref={this.$search}>
                       <SearchFieldWrap>
                         <ToggleFilterButton onClick={this.toggleFilter}>
                           <img
@@ -761,6 +763,7 @@ class ActionsPage extends React.PureComponent {
                           onDropdownVisibleChange={
                             this.handleDropdownVisibleChange
                           }
+                          getPopupContainer={() => this.$search.current}
                         >
                           {searchData.searchedActions.map(action => (
                             <Select.Option
