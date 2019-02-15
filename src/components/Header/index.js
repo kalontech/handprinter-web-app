@@ -530,7 +530,9 @@ class Header extends Component {
     } else {
       this.setState({
         loadingNews: false,
-        notification: news,
+        notification: news.filter(
+          item => item.arguments.user.id !== this.props.user._id,
+        ),
         unreadCount,
       })
     }
