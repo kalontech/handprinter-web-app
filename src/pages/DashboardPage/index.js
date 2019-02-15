@@ -53,7 +53,6 @@ const WidgetContainer = styled.div`
 `
 
 const WidgetTitle = styled.p`
-  margin-top: 12px;
   color: ${colors.dark};
   font-size: 22px;
   line-height: 30px;
@@ -78,6 +77,7 @@ const WidgetHeader = styled.div`
   ${props =>
     props.withBorder &&
     css`
+      padding-bottom: 32px;
       border-bottom: 1px solid ${colors.whiteSmoke};
     `};
 `
@@ -312,7 +312,7 @@ const DashboardHeaderUserInfoRow = styled.div`
   `}
 `
 
-const HeaderUserInfoRowCol = styled.div`
+const HeaderUserInfoRowCol = styled(Col)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -656,7 +656,7 @@ class DashboardPage extends Component {
                     <WidgetContainer>
                       <WidgetHeader withBorder>
                         <Row type="flex">
-                          <Col span={16} sm={11} lg={15} xs={24}>
+                          <Col span={16} sm={11} lg={12} xs={24}>
                             <WidgetTitle>
                               <FormattedMessage id="app.dashboardPage.myNetwork" />
                               <InfoElementWrap>
@@ -688,7 +688,7 @@ class DashboardPage extends Component {
                               <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
                             </WidgetDescription>
                           </Col>
-                          <MyNetworkCol span={8} sm={13} lg={8} xs={24}>
+                          <MyNetworkCol span={8} sm={15} lg={12} xs={24}>
                             <Row>
                               <HeaderUserInfoRowCol
                                 span={8}
