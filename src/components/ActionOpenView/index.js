@@ -19,11 +19,12 @@ const Block = styled.section`
   overflow: hidden;
 
   ${media.tablet`
+    height: initial;
+    min-height: 100%;
     width: 100vw;
   `}
 
   ${media.phone`
-    height: 100%;
     flex-direction: column;
     border-radius: 0; 
   `}
@@ -76,11 +77,11 @@ const Description = styled.p`
   overflow-y: auto;
 
   @media screen and (max-height: ${sizes.phone}px) and (orientation: landscape) {
-    max-height: 75vh;
+    max-height: 30vh;
   }
 
   ${media.phone`
-    max-height: 35vh;
+    max-height: 30vh;
   `}
 `
 
