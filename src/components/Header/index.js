@@ -43,7 +43,9 @@ const LeftAlignPublic = styled.div`
 const RightAlign = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 40px;
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
 `
 const CenterAlign = styled.div`
   display: flex;
@@ -125,6 +127,9 @@ const LeftMenu = styled.div`
 `
 
 const CenterMenu = styled(LeftMenu)`
+  flex: 1;
+  display: flex;
+  justify-content: center;
   .ant-menu-item {
     margin-right: 40px;
   }
@@ -155,6 +160,12 @@ const Logo = styled.div`
 
 const LogoSmall = styled.div`
   display: block;
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  ${media.largeDesktop`
+    justify-content: center;
+  `}
   a {
     display: flex;
     aligh-items: center;
@@ -456,6 +467,9 @@ const NotificationPopoverTitle = styled.div`
   justify-content: center;
   margin-right: 17px;
   width: 50px;
+  ${media.largeDesktop`
+    margin-right: 0;
+  `}
   img {
     cursor: pointer;
     opacity: 0.4;
