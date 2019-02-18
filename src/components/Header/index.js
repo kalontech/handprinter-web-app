@@ -22,7 +22,7 @@ import {
 } from 'components/Styled'
 import colors from 'config/colors'
 import { getBrandedConfig } from 'config/branded'
-import media from 'utils/mediaQueryTemplate'
+import media, { sizes } from 'utils/mediaQueryTemplate'
 import hexToRgba from 'utils/hexToRgba'
 import { logOut } from 'redux/accountStore'
 import api from 'api'
@@ -566,9 +566,9 @@ class Header extends Component {
 
   render() {
     const { type, user, withoutHeaderContent, location, overrides } = this.props
-    const { notification, unreadCount } = this.state
-    const isTablet = this.state.width < 1200
-    const isMobile = this.state.width < 768
+    const { notification, unreadCount, width, collapsed } = this.state
+    const isTablet = width < sizes.largeDesktop
+    const isMobile = width < sizes.tablet
 
     const { brandColor, fontNames, fontColor } = (overrides &&
       getBrandedConfig().headerOverrides) || {
@@ -597,7 +597,7 @@ class Header extends Component {
         )}
         {type === 'public' && (
           <Fragment>
-            <Animate type="fade" show={!this.state.collapsed && isTablet}>
+            <Animate type="fade" show={!collapsed && isTablet}>
               <CollapseMenu>
                 <CollapseTop>
                   {((overrides && !overrides.logInOnly) || !overrides) && (
@@ -789,8 +789,8 @@ class Header extends Component {
                     </MenuWrap>
                   )) || (
                     <Hamburger onClick={this.onClick}>
-                      {this.state.collapsed && <MenuIcon />}
-                      {!this.state.collapsed && <CloseIcon />}
+                      {collapsed && <MenuIcon />}
+                      {!collapsed && <CloseIcon />}
                     </Hamburger>
                   )}
                 </Fragment>
@@ -800,7 +800,7 @@ class Header extends Component {
         )}
         {type === 'private' && (
           <Fragment>
-            <Animate type="fade" show={!this.state.collapsed && isTablet}>
+            <Animate type="fade" show={!collapsed && isTablet}>
               <CollapseMenu>
                 {((overrides && !overrides.logInOnly) || !overrides) && (
                   <CollapseTop />
@@ -931,8 +931,8 @@ class Header extends Component {
             >
               {isTablet && (
                 <Hamburger onClick={this.onClick}>
-                  {this.state.collapsed && <MenuIcon />}
-                  {!this.state.collapsed && <CloseIcon />}
+                  {collapsed && <MenuIcon />}
+                  {!collapsed && <CloseIcon />}
                 </Hamburger>
               )}
               <LogoSmall>

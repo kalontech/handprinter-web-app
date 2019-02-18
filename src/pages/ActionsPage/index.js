@@ -40,10 +40,10 @@ import ActionOpenView from 'components/ActionOpenView'
 import filterToggleImg from 'assets/actions-page/ic_filter_list.png'
 import filterToggleActiveImg from 'assets/actions-page/ic_filter_list_active.png'
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
-import DiscoverIcon from 'assets/icons/ic_discover.svg'
-import SuggestedIcon from 'assets/icons/ic_suggested.svg'
-import HistoryIcon from 'assets/icons/ic_history.svg'
-import FlagIcon from 'assets/icons/ic_flag.svg'
+import DiscoverIcon from 'assets/icons/DiscoverIcon'
+import SuggestedIcon from 'assets/icons/SuggestedIcon'
+import HistoryIcon from 'assets/icons/HistoryIcon'
+import FlagIcon from 'assets/icons/FlagIcon'
 
 import ActionsFilters from './ActionFilter'
 
@@ -200,15 +200,12 @@ const ActionTabItemList = styled.ul`
   justify-content: center;
   margin: 0;
   padding: 0;
-  ${media.phone`
-    display: none;
-  `}
 `
 
 const ActionTabItemListMobile = styled(HeaderPopover)`
   border-bottom: none !important; // override ant menu styles
   .ant-menu-submenu-title {
-    color: ${colors.white};
+    color: ${colors.dark};
     padding: 0;
   }
   .ant-menu-submenu {
@@ -245,14 +242,12 @@ const ActionTabsInnerContainer = styled.div`
 const ActionTabDropdown = styled.span`
   align-items: center;
   justify-content: center;
-  display: none;
-
-  ${media.phone`
-    display: flex;
-  `}
+  display: flex;
+  line-height: 24px;
 
   i {
     margin-right: 8px;
+    display: flex;
   }
 `
 
@@ -270,17 +265,10 @@ const Button = styled(DefaultButton)`
   }
 `
 
-const ActionTabIcon = styled.img`
-  height: 18px;
-  width: 18px;
-  object-fit: contain;
-  margin-right: 6px;
-  align-self: center;
-`
-
 const ActionTabWrapper = styled.div`
   display: flex;
   align-items: center;
+  color: ${({ fontColor }) => fontColor || colors.darkGray};
 `
 
 const ImpactButton = styled(DefaultButton)`
@@ -408,6 +396,7 @@ class ActionsPage extends React.PureComponent {
     activeFiltersCount: (configParamsForFilter(this.props) || '').length,
     subset: null,
     subsetDropdownVisible: false,
+    isTablet: window.innerWidth <= sizes.largeDesktop,
     currentAction: undefined,
     modalOpen: false,
     modalType: MODAL_TYPES.create,
@@ -552,29 +541,35 @@ class ActionsPage extends React.PureComponent {
     )
   }
 
-  getTabItemContent = subset => {
+  getTabItemContent = (subset, isDropDownMenu = false) => {
+    const isActive = subset === this.props.match.params.subset
+    let tabItemColor = colors.darkGray
+    if (isActive) {
+      tabItemColor = isDropDownMenu ? colors.dark : colors.white
+    }
+
     const data = [
       {
-        type: DiscoverIcon,
+        type: <DiscoverIcon style={{ color: tabItemColor }} />,
         id: 'app.actionsPage.tabs.discover',
       },
       {
-        type: SuggestedIcon,
+        type: <SuggestedIcon style={{ color: tabItemColor }} />,
         id: 'app.actionsPage.tabs.suggested',
       },
       {
-        type: FlagIcon,
+        type: <FlagIcon style={{ color: tabItemColor }} />,
         id: 'app.actionsPage.tabs.my-ideas',
       },
       {
-        type: HistoryIcon,
+        type: <HistoryIcon style={{ color: tabItemColor }} />,
         id: 'app.actionsPage.tabs.history',
       },
     ][Object.values(ACTIONS_SUBSETS).indexOf(subset)]
 
     return (
-      <ActionTabWrapper>
-        <ActionTabIcon alt="" src={data.type} />
+      <ActionTabWrapper fontColor={tabItemColor}>
+        {data.type}
         <FormattedMessage id={data.id} />
       </ActionTabWrapper>
     )
@@ -646,6 +641,7 @@ class ActionsPage extends React.PureComponent {
       subsetDropdownVisible,
       currentAction,
       modalOpen,
+      isTablet,
       modalType,
     } = this.state
 
@@ -659,49 +655,47 @@ class ActionsPage extends React.PureComponent {
               <BlockContainer>
                 <ActionTabsInnerContainer>
                   <ActionTabsRow>
-                    <ActionTabItemList>
-                      {Object.values(ACTIONS_SUBSETS).map(subset => (
-                        <ActionTabItem
-                          key={subset}
-                          onClick={() => this.handleTabItemSelect(subset)}
-                          active={match.params.subset === subset}
-                        >
-                          {this.getTabItemContent(subset)}
-                        </ActionTabItem>
-                      ))}
-                    </ActionTabItemList>
-
-                    <Popover
-                      placement="bottomLeft"
-                      visible={subsetDropdownVisible}
-                      content={
-                        <ActionTabItemListMobile
-                          mode="vertical"
-                          theme="light"
-                          selectedKeys={[match.params.subset]}
-                        >
-                          {Object.values(ACTIONS_SUBSETS).map(subset => (
-                            <Menu.Item
-                              key={subset}
-                              onClick={() => this.handleTabItemSelect(subset)}
-                            >
-                              {this.getTabItemContent(subset)}
-                            </Menu.Item>
-                          ))}
-                        </ActionTabItemListMobile>
-                      }
-                    >
-                      <ActionTabDropdown
-                        onClick={this.handleSubsetDropdownClick}
+                    {isTablet ? (
+                      <Popover
+                        placement="bottomLeft"
+                        visible={subsetDropdownVisible}
+                        content={
+                          <ActionTabItemListMobile
+                            mode="vertical"
+                            theme="light"
+                            selectedKeys={[match.params.subset]}
+                          >
+                            {Object.values(ACTIONS_SUBSETS).map(subset => (
+                              <Menu.Item
+                                key={subset}
+                                onClick={() => this.handleTabItemSelect(subset)}
+                              >
+                                {this.getTabItemContent(subset, true)}
+                              </Menu.Item>
+                            ))}
+                          </ActionTabItemListMobile>
+                        }
                       >
-                        {this.getTabItemContent(match.params.subset)}
-                        <ExpandMoreIcon
-                          style={{
-                            color: `${colors.green}`,
-                          }}
-                        />
-                      </ActionTabDropdown>
-                    </Popover>
+                        <ActionTabDropdown
+                          onClick={this.handleSubsetDropdownClick}
+                        >
+                          {this.getTabItemContent(match.params.subset)}
+                          <ExpandMoreIcon iconColor={colors.green} />
+                        </ActionTabDropdown>
+                      </Popover>
+                    ) : (
+                      <ActionTabItemList>
+                        {Object.values(ACTIONS_SUBSETS).map(subset => (
+                          <ActionTabItem
+                            key={subset}
+                            onClick={() => this.handleTabItemSelect(subset)}
+                            active={match.params.subset === subset}
+                          >
+                            {this.getTabItemContent(subset)}
+                          </ActionTabItem>
+                        ))}
+                      </ActionTabItemList>
+                    )}
 
                     <div>
                       <Button
