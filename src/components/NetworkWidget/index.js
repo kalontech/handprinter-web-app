@@ -12,6 +12,31 @@ const Wrap = styled.div`
   overflow: hidden;
   display: flex;
   justify-content: center;
+
+  .d3-tooltip-container {
+    background-color: ${colors.dark};
+    border-radius: 4px;
+    display: table;
+    white-space: nowrap;
+    min-width: 100px;
+
+    p {
+      color: white;
+      padding: 6px 8px;
+      text-align: center;
+    }
+  }
+
+  .d3-tooltip-container:after {
+    background: inherit;
+    bottom: 2px;
+    content: '';
+    height: 10px;
+    left: 45px;
+    position: absolute;
+    transform: rotate(45deg);
+    width: 10px;
+  }
 `
 
 // Returns node size depending on the depth level
@@ -175,8 +200,8 @@ class NetworkWidget extends Component {
               class: 'd3-tooltip',
               ...(d.y > 100
                 ? {
-                    y: d.y - getNodeSize(d.depth) / 2 - 40,
-                    height: 29,
+                    y: d.y - getNodeSize(d.depth) / 2 - 50,
+                    height: 39,
                   }
                 : { y: d.y + getNodeSize(d.depth) / 2 + 12, height: 0 }),
             })

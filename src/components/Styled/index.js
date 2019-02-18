@@ -779,20 +779,6 @@ export const GlobalStyle = createGlobalStyle`
     `}
   }
 
-  .d3-tooltip-container {
-    background-color: black;
-    border-radius: 4px;
-    display: table;
-    white-space: nowrap;
-    min-width: 100px;
-
-    p {
-      color: white;
-      padding: 4px;
-      text-align: center;
-    }
-  }
-
   .ant-tooltip {
     &.action-tooltip, &.info-tooltip {
     height: auto;
@@ -810,17 +796,6 @@ export const GlobalStyle = createGlobalStyle`
       display: block;
     }
   }
-  }
-
-  .d3-tooltip-container:after{
-    background: inherit;
-    bottom: -5px;
-    content: '';
-    height: 10px;
-    left: 45px;
-    position: absolute;
-    transform: rotate(45deg);
-    width: 10px;
   }
 `
 
