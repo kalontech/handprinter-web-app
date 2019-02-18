@@ -943,20 +943,21 @@ export const Pagination = styled(Ant.Pagination)`
       font-weight: bold;
       font-family: Noto Sans, sans-serif;
     }
-  }
 
-  &:hover {
-    a {
-      color: ${colors.dark};
+    &:hover {
+      a {
+        color: ${colors.dark};
+      }
+    }
+
+    &.ant-pagination-item-active {
+      border-color: ${colors.gray};
+      a {
+        color: ${colors.dark};
+      }
     }
   }
 
-  &.ant-pagination-item-active {
-    border-color: ${colors.gray};
-    a {
-      color: ${colors.dark};
-    }
-  }
   .ant-pagination-jump-next,
   .ant-pagination-jump-prev {
     height: 45px;
