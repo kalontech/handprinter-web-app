@@ -40,7 +40,8 @@ const Content = styled(OceanModal)`
   }
 
   ${media.tablet`
-    padding: 14px 5%;
+    padding-left: 15px;
+    padding-right: 15px;
   `}
 
   img {

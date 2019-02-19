@@ -31,7 +31,11 @@ const SliderContainer = styled.div`
       top: -30px;
       margin-bottom: 20px;
    `}
-    
+    .slick-list {
+      overflow-x: visible !important;
+      overflow: unset;
+    }
+  
     .slick-dots {
       visibility: hidden;
       bottom: -14px;

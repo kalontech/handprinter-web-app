@@ -22,7 +22,8 @@ const CardWrap = styled.div`
 `
 
 const CardContainer = styled.div`
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: relative;
   max-width: ${props => (props.isSlide ? '380px' : '100%')};
   margin-right: ${props => (props.isSlide ? '20px' : '0')};
@@ -58,6 +59,10 @@ const CardImage = styled.div`
 
 const CardWrapper = styled.div`
   padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   ${media.phone`
     padding: 20px 10px;
@@ -80,7 +85,7 @@ const CardHeading = styled.h3`
   font-size: 19px;
   line-height: 1.37;
   font-family: 'Noto Serif', serif;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   text-align: left;
 `
 
@@ -152,14 +157,14 @@ const ActionCard = props => {
     onEdit,
     onDelete,
     isSlide,
-    style,
+    styles,
     onClick,
   } = props
 
   return (
     <Link to={to} onClick={onClick}>
       <CardWrap>
-        <CardContainer isSlide={isSlide} style={style}>
+        <CardContainer isSlide={isSlide} style={styles && styles}>
           <CardImage>
             {picture && <img src={picture} alt={name} />}
 
@@ -231,7 +236,7 @@ ActionCard.propTypes = {
   placeholder: PropTypes.bool,
   canChange: PropTypes.bool,
   isSlide: PropTypes.bool,
-  style: PropTypes.object,
+  styles: PropTypes.object,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
   onClick: PropTypes.func,

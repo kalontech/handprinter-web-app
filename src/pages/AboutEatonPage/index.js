@@ -286,6 +286,7 @@ const Actions = styled.section`
   }
   ${BlockContainer} {
     top: -100px;
+    text-align: center;
   }
   ${media.phone`
     height: 345px;
@@ -422,7 +423,7 @@ class AboutEatonPage extends Component {
               {actions.slice(0, 3).map(action => (
                 <div key={action._id}>
                   <ActionCard
-                    style={{ margin: '0 10px' }}
+                    styles={{ margin: '0 10px' }}
                     font={{
                       fontFamily: 'Arial',
                       fontWeight: '700',

@@ -613,9 +613,12 @@ class ActionModalPage extends Component {
           <EngageViewPanel>
             <EngageViewPicture src={action.picture} />
             <EngageViewContentContainer>
-              <EngageViewContentSubtitle>
-                <FormattedMessage id="app.actionsPage.engage.subtitle" />
-              </EngageViewContentSubtitle>
+              {!successEngageSent && (
+                <EngageViewContentSubtitle>
+                  <FormattedMessage id="app.actionsPage.engage.subtitle" />
+                </EngageViewContentSubtitle>
+              )}
+
               <EngageViewContentTitle>
                 {this.state.action.name}
               </EngageViewContentTitle>
@@ -651,13 +654,14 @@ class ActionModalPage extends Component {
     })
   }
 
-  renderInContainer = ({ children, width, height }) => {
+  renderInContainer = ({ children, width, height, closeBtnColor }) => {
     const { closeModal, history } = this.props
 
     return (
       <Container width={width} height={height}>
         {children}
         <CloseButton
+          style={{ color: closeBtnColor }}
           onClick={() => {
             history.length > 1 ? history.goBack() : closeModal()
           }}

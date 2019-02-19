@@ -10,6 +10,7 @@ import { PrimaryButton } from 'components/Styled'
 
 const Block = styled.section`
   width: 93vw;
+  max-width: 930px;
   height: 580px;
   display: flex;
   justify-content: space-between;

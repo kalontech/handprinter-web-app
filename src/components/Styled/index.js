@@ -646,11 +646,9 @@ export const GlobalStyle = createGlobalStyle`
 
   .ant-carousel {
     .slick-list {
-      overflow-x: visible !important;
-      overflow: unset;
-    }
-    .slick-slide {
-      pointer-events: all;
+      .slick-slide {
+        pointer-events: all;
+      }
     }
   }
   

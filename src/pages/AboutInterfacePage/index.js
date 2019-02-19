@@ -343,6 +343,7 @@ const ClimateFit = styled.section`
 const SliderWrap = styled(Carousel)`
   margin-left: -10px;
   margin-right: -10px;
+
   .slick-dots {
     bottom: -14px;
     padding-right: 15px;
@@ -580,7 +581,7 @@ class AboutInterfacePage extends Component {
               {actions.slice(0, 3).map(action => (
                 <div key={action._id}>
                   <ActionCard
-                    style={{ margin: '0 10px' }}
+                    styles={{ margin: '0 10px' }}
                     font={{
                       fontFamily: 'Helvetica Neue',
                       fontWeight: '300',
