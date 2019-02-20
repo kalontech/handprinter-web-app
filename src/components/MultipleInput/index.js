@@ -187,12 +187,9 @@ class MultipleInput extends Component {
             const isLongTag = value.length > MAX_VISIBLE_EMAIL_LENGTH
             const TooltipWrap = isLongTag ? Tooltip : React.Fragment
             const title = isLongTag ? { title: value } : {}
-            const overlayClassName = isLongTag
-              ? { overlayClassName: 'info-tooltip' }
-              : ''
 
             return (
-              <TooltipWrap {...title} {...overlayClassName} key={value}>
+              <TooltipWrap {...title} key={value}>
                 <Tag
                   closable={true}
                   afterClose={() => this.handleRemoveValue(value)}

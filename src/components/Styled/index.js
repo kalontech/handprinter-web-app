@@ -446,6 +446,7 @@ export const CollapsePanel = styled(Ant.Collapse.Panel)`
       }
     }
   }
+
   .ant-collapse-content {
     color: inherit;
   }
@@ -719,52 +720,19 @@ export const GlobalStyle = createGlobalStyle`
   //   with override class name
   // Ant.Tooltip component docs: https://ant.design/components/tooltip/
 
-  .ant-tooltip {
-    height: 0;
-    width: 0;
-  }
-  
-  .ant-tooltip .ant-tooltip-inner {
-    position: relative;
-    padding: 15px;
-    text-align: center;
-    width: 70px;
-    height: 30px;
-    left: -30px;
-    top: 10px;
-  }
-
-  .ant-tooltip, .ant-tooltip-inner  {
-    box-shadow: none;
-    border-radius: 30px;
-    background: transparent;
-  }
 
   .ant-tooltip__global-overlay {
-    position: relative;
-    padding: 15px;
     text-align: center;
-    min-width: 200px;
-    width: fit-content;
-    height: auto;
-    background-color: ${colors.dark};
-    
-    .ant-tooltip-inner {
-      position: relative;
-      padding: 0;
+    .ant-tooltip-inner { 
       text-align: center;
-      min-width: 200px;
-      width: fit-content;
-      height: auto;
       background-color: ${colors.dark};
-      left: auto;
-      top: auto;
+      padding: 15px;
+    }
+    .ant-tooltip-arrow {
+      border-top-color: ${colors.dark};
     }
   }
-  
-  .ant-tooltip-arrow {
-    display: none;
-  }
+
   .react-router-modal__container {
     z-index: 1070;
   }
@@ -778,22 +746,23 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .ant-tooltip {
-    &.action-tooltip, &.info-tooltip {
-    height: auto;
-    width: auto;
-    z-index: 1070;
-    .ant-tooltip-inner  {
-      position: static;
-      width: auto;
+    &.action-tooltip, 
+    &.info-tooltip {
       height: auto;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      border-radius: 4px;
-      background: ${colors.dark};
+      width: auto;
+      z-index: 1070;
+      .ant-tooltip-inner  {
+        position: static;
+        width: auto;
+        height: auto;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        background: ${colors.dark};
+      }
+      .ant-tooltip-arrow {
+        display: block;
+      }
     }
-    .ant-tooltip-arrow {
-      display: block;
-    }
-  }
   }
 `
 

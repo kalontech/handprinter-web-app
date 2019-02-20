@@ -428,5 +428,6 @@
     "app.header.menu.viewAllNews": "查看所有新闻",
     "app.newsPage.notification.userDidAction": "{user}了操作{action}",
     "app.header.menu.noNotificationsYet": "你还没有通知",
-    "app.form.submit": "提交"
+    "app.form.submit": "提交",
+    "app.actionsPage.filterModalTitle": "过滤"
 }

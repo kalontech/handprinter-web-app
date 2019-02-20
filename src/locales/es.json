@@ -428,5 +428,6 @@
     "app.header.menu.viewAllNews": "Ver todas las noticias",
     "app.newsPage.notification.userDidAction": "{user} hizo action {action}",
     "app.header.menu.noNotificationsYet": "Aún no tienes notificaciones.",
-    "app.form.submit": "enviar"
+    "app.form.submit": "enviar",
+    "app.actionsPage.filterModalTitle": "Filtrar"
 }

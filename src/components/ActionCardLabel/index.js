@@ -123,7 +123,6 @@ const ActionCardLabel = ({
   return (
     <Tooltip
       {...tooltipProps}
-      overlayClassName="action-tooltip"
       title={() => (
         <TooltipContainer>
           <FormattedMessage

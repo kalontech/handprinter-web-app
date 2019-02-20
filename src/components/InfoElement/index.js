@@ -65,11 +65,7 @@ class InfoElement extends Component {
     const { showTooltip } = this.state
 
     return (
-      <Tooltip
-        onVisibleChange={this.toggleTooltipVisible}
-        overlayClassName="info-tooltip"
-        {...tooltipProps}
-      >
+      <Tooltip onVisibleChange={this.toggleTooltipVisible} {...tooltipProps}>
         <IconWrap showTooltip={showTooltip}>
           <Icon>{this.getIcon(type || INFO_ELEMENT_TYPES.INFO)}</Icon>
         </IconWrap>

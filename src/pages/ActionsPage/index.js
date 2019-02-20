@@ -11,7 +11,6 @@ import { animateScroll } from 'react-scroll/modules'
 import { Animate } from 'react-animate-mount'
 
 import hexToRgba from 'utils/hexToRgba'
-
 import {
   BlockContainer,
   Pagination,
@@ -79,6 +78,34 @@ const SearchBlockWrapper = styled.div`
   margin: 30px 0 20px 0;
   ${media.phone`
     margin: 0;
+    .ant-popover-content {
+      width: 100vw;
+    }
+    .ant-modal-content {
+      height: 100vh;
+      .ant-modal-close-x {
+        position: absolute;
+        top: 15px;
+        right: -1px;
+      }
+      .ant-modal-header {
+        padding: 36px 15px 15px;
+        .ant-modal-title {
+          font-size: 22px;
+        }
+      }
+      .ant-modal-body {
+        padding: 15px;
+      }
+    }
+    
+    .ant-modal-wrap {
+      z-index: 1070;
+      overflow: unset;
+    }
+    .ant-modal-header {
+      border-bottom: none;
+    }
   `}
 `
 
@@ -163,8 +190,16 @@ const NotFoundWrap = styled.div`
 `
 
 const FilterWrap = styled.div`
-  padding-right: 35px;
-  margin-top: 45px;
+  padding-right: 18px;
+  margin-top: 38px;
+  ${media.phone`
+    margin-top: 0px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  `}
 `
 
 const ActionTabsWrap = styled.div`
@@ -392,7 +427,9 @@ class ActionsPage extends React.PureComponent {
       // if value will be defined
       searchFieldValue: undefined,
     },
-    showFilter: Boolean(configParamsForFilter(this.props)),
+    showFilter:
+      window.innerWidth > sizes.phone &&
+      Boolean(configParamsForFilter(this.props)),
     filterValuesFromQuery: configParamsForFilter(this.props) || null,
     activeFiltersCount: (configParamsForFilter(this.props) || '').length,
     subset: null,
@@ -401,6 +438,7 @@ class ActionsPage extends React.PureComponent {
     currentAction: undefined,
     modalOpen: false,
     modalType: MODAL_TYPES.create,
+    mobileFilterModalVisible: false,
   }
 
   $search = React.createRef()
@@ -481,13 +519,11 @@ class ActionsPage extends React.PureComponent {
     if (this.state.subsetDropdownVisible) {
       this.setState({ subsetDropdownVisible: false })
     }
-
     this.props.history.push(`/actions/${subset}?page=1`)
   }
 
   handleOpenActionCard = ({ slug }) => {
     const { match, location, history } = this.props
-
     history.push(`/actions/${match.params.subset}/${slug}${location.search}`)
   }
 
@@ -512,8 +548,13 @@ class ActionsPage extends React.PureComponent {
   }
 
   handleOnAfterFiltersChange = debounce(({ data, activeFilterCount }) => {
+    const { match, history } = this.props
     this.setState({ activeFiltersCount: activeFilterCount })
-    this.updateQueries({ ...data, page: 1 })
+    if (Object.keys(data).length === 0) {
+      history.push(`/actions/${match.params.subset}`)
+    } else {
+      this.updateQueries({ ...data, page: 1 })
+    }
   }, 600)
 
   handleSubsetDropdownClick = () => {
@@ -523,12 +564,17 @@ class ActionsPage extends React.PureComponent {
   }
 
   toggleFilter = () => {
-    this.setState({ showFilter: !this.state.showFilter })
+    if (window.innerWidth < sizes.phone) {
+      this.setState({
+        mobileFilterModalVisible: !this.state.mobileFilterModalVisible,
+      })
+    } else {
+      this.setState({ showFilter: !this.state.showFilter })
+    }
   }
 
   updateQueries = query => {
     const { location, match, history } = this.props
-
     history.push(
       `/actions/${match.params.subset}?${qs.stringify(
         {
@@ -644,6 +690,7 @@ class ActionsPage extends React.PureComponent {
       modalOpen,
       isTablet,
       modalType,
+      mobileFilterModalVisible,
     } = this.state
 
     return (
@@ -735,6 +782,31 @@ class ActionsPage extends React.PureComponent {
                             </ToggleFilterActiveIcon>
                           )}
                         </ToggleFilterButton>
+                        <Modal
+                          title={formatMessage({
+                            id: 'app.actionsPage.filterModalTitle',
+                          })}
+                          visible={mobileFilterModalVisible}
+                          onCancel={() =>
+                            this.setState({
+                              mobileFilterModalVisible: false,
+                            })
+                          }
+                          getContainer={() => this.$search.current}
+                          centered
+                          destroyOnClose
+                        >
+                          <FilterWrap>
+                            <ActionsFilters
+                              showFilter={showFilter}
+                              timeValues={timeValues}
+                              values={filterValuesFromQuery}
+                              onReset={this.handleFilterReset}
+                              onAfterChange={this.handleOnAfterFiltersChange}
+                              actionsPageSubset={match.params.subset}
+                            />
+                          </FilterWrap>
+                        </Modal>
                         <SearchFieldWrap ref={this.$search}>
                           <SearchField
                             placeholder={formatMessage({
@@ -751,13 +823,7 @@ class ActionsPage extends React.PureComponent {
                               ) : null
                             }
                             showSearch
-                            suffixIcon={
-                              searchData.searching ? (
-                                <Spin size="small" />
-                              ) : (
-                                <span />
-                              )
-                            }
+                            suffixIcon={<span />}
                             /*
                              * Filter by match searched value and option value.
                              *
@@ -797,6 +863,7 @@ class ActionsPage extends React.PureComponent {
                                 <ActionSearchDropdownOptionContent>
                                   <ActionSearchDropdownPicture
                                     src={action.picture}
+                                    alt=""
                                   />
                                   {action.name}
                                 </ActionSearchDropdownOptionContent>
@@ -804,9 +871,7 @@ class ActionsPage extends React.PureComponent {
                             ))}
                           </SearchField>
                         </SearchFieldWrap>
-                        {!searchData.searching && (
-                          <StyledSearchIcon type="search" />
-                        )}
+                        <StyledSearchIcon type="search" />
                       </SearchWrap>
                       <Animate show={timeValues.length > 0 && showFilter}>
                         <FilterWrap>

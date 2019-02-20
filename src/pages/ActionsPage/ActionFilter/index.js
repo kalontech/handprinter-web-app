@@ -7,8 +7,7 @@ import { isEqual } from 'lodash'
 import colors from 'config/colors'
 import icons from 'components/ActionCardLabel/icons'
 import { IMPACT_CATEGORIES } from 'utils/constants'
-import { history } from 'appRouter'
-
+import media from 'utils/mediaQueryTemplate'
 import CloseIcon from 'assets/icons/CloseIcon'
 
 import ImpactSlider from './slider'
@@ -34,6 +33,10 @@ const ButtonsWrap = styled.div`
   font-size: 14px;
   color: ${colors.darkGray};
   letter-spacing: 0.2px;
+  ${media.phone`
+    padding-right: 15px;
+    margin-top: 17px;
+  `}
 `
 
 class ActionsFilters extends Component {
@@ -63,6 +66,7 @@ class ActionsFilters extends Component {
 
     this.state = {
       values,
+      prevStateValues: values,
       timeValues: [],
       timeValuesCount,
       filterIsChanged: false,
@@ -76,23 +80,30 @@ class ActionsFilters extends Component {
   }
 
   handleChange = (values, impactName) => {
-    this.setState({
-      values: {
-        ...this.state.values,
-        [impactName]: values,
+    this.setState(
+      {
+        prevStateValues: this.state.values,
+        values: {
+          ...this.state.values,
+          [impactName]: values,
+        },
+        filterIsChanged: true,
       },
-      filterIsChanged: true,
-    })
+      () => {
+        this.props.onAfterChange(this.createQuery())
+      },
+    )
   }
 
   createQuery = () => {
     const { timeValues } = this.props
-    const { values, timeValuesCount } = this.state
+    const { values, timeValuesCount, prevStateValues } = this.state
     let data = {}
     let activeFilterCount = 0
 
     Object.keys(values).forEach(key => {
-      if (!isEqual(values[key], [0, timeValuesCount])) {
+      // impact value is changed
+      if (!isEqual(prevStateValues[key], values[key])) {
         data[key] = {
           from: timeValues[values[key][0]].minutes,
           to: timeValues[values[key][1]].minutes,
@@ -110,20 +121,21 @@ class ActionsFilters extends Component {
 
   resetFilter = () => {
     const { timeValuesCount } = this.state
+    const defaultValues = {
+      climate: [0, timeValuesCount],
+      health: [0, timeValuesCount],
+      ecosystem: [0, timeValuesCount],
+      water: [0, timeValuesCount],
+      waste: [0, timeValuesCount],
+    }
     this.setState(
       {
-        values: {
-          climate: [0, timeValuesCount],
-          health: [0, timeValuesCount],
-          ecosystem: [0, timeValuesCount],
-          water: [0, timeValuesCount],
-          waste: [0, timeValuesCount],
-        },
+        values: defaultValues,
+        prevStateValues: defaultValues,
         filterIsChanged: false,
       },
       () => {
         this.props.onAfterChange(this.createQuery())
-        history.push(`/actions/${this.props.actionsPageSubset}`)
       },
     )
   }
@@ -135,53 +147,53 @@ class ActionsFilters extends Component {
       <Fragment>
         <ImpactSlider
           showFilter={showFilter}
-          onAfterChange={() => this.props.onAfterChange(this.createQuery())}
           onChange={values =>
             this.handleChange(values, IMPACT_CATEGORIES.CLIMATE)
           }
           value={values.climate}
           timeValues={timeValues}
           icon={icons.positive.climate}
+          impactCategory={IMPACT_CATEGORIES.CLIMATE}
         />
         <ImpactSlider
           showFilter={showFilter}
-          onAfterChange={() => this.props.onAfterChange(this.createQuery())}
           onChange={values =>
             this.handleChange(values, IMPACT_CATEGORIES.HEALTH)
           }
           value={values.health}
           timeValues={timeValues}
           icon={icons.positive.health}
+          impactCategory={IMPACT_CATEGORIES.HEALTH}
         />
         <ImpactSlider
           showFilter={showFilter}
-          onAfterChange={() => this.props.onAfterChange(this.createQuery())}
           onChange={values =>
             this.handleChange(values, IMPACT_CATEGORIES.ECOSYSTEM)
           }
           value={values.ecosystem}
           timeValues={timeValues}
           icon={icons.positive.ecosystem}
+          impactCategory={IMPACT_CATEGORIES.ECOSYSTEM}
         />
         <ImpactSlider
           showFilter={showFilter}
-          onAfterChange={() => this.props.onAfterChange(this.createQuery())}
           onChange={values =>
             this.handleChange(values, IMPACT_CATEGORIES.WATER)
           }
           value={values.water}
           timeValues={timeValues}
           icon={icons.positive.water}
+          impactCategory={IMPACT_CATEGORIES.WATER}
         />
         <ImpactSlider
           showFilter={showFilter}
-          onAfterChange={() => this.props.onAfterChange(this.createQuery())}
           onChange={values =>
             this.handleChange(values, IMPACT_CATEGORIES.WASTE)
           }
           value={values.waste}
           timeValues={timeValues}
           icon={icons.positive.waste}
+          impactCategory={IMPACT_CATEGORIES.WASTE}
         />
         <ButtonsWrap>
           {filterIsChanged && (

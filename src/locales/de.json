@@ -428,5 +428,6 @@
     "app.header.menu.viewAllNews": "Alle Neuigkeiten anzeigen",
     "app.newsPage.notification.userDidAction": "{user} hat Aktion ausgeführt {action}",
     "app.header.menu.noNotificationsYet": "Sie haben noch keine Benachrichtigungen",
-    "app.form.submit": "einreichen"
+    "app.form.submit": "einreichen",
+    "app.actionsPage.filterModalTitle": "Filter"
 }
