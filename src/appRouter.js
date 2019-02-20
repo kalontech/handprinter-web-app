@@ -79,6 +79,12 @@ const AppRouter = () => {
             withoutCTA
           />
           <Route
+            path="/account/person/:personId"
+            component={DashboardPage}
+            requireAuthentication
+            withoutCTA
+          />
+          <Route
             path="/account/code"
             component={IncreaseHandprintPage}
             requireAuthentication
@@ -180,6 +186,12 @@ const AppRouter = () => {
           <ModalRoute
             path="/pages/:page/actions/:slug"
             parentPath={({ params }) => `/pages/${params.page}`}
+            component={ActionModalPage}
+          />
+
+          <ModalRoute
+            path="/account/news/actions/:slug"
+            parentPath="/account/news"
             component={ActionModalPage}
           />
         </Switch>

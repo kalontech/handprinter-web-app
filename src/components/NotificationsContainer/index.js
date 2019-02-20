@@ -84,11 +84,6 @@ const NotificationLink = styled(Link)`
   font-weight: bold;
 `
 
-const BoldNameTag = styled.span`
-  font-weight: bold;
-  color: ${colors.dark};
-`
-
 const NotificationEmptySection = styled.div`
   display: flex;
   justify-content: center;
@@ -136,12 +131,12 @@ const NotificationsContainer = ({
                     id="app.newsPage.notification.userDidAction"
                     values={{
                       user: (
-                        <BoldNameTag>
+                        <NotificationLink to={`/account/person/${user.id}`}>
                           {(user && user.fullName) ||
                             formatMessage({
                               id: 'app.newsPage.userWithoutName',
                             })}
-                        </BoldNameTag>
+                        </NotificationLink>
                       ),
                       action: (
                         <NotificationLink

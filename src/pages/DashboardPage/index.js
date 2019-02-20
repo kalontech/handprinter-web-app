@@ -23,6 +23,7 @@ import icons from 'components/ActionCardLabel/icons'
 import media from 'utils/mediaQueryTemplate'
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 import { QUESTIONS_ANCHOR } from 'utils/constants'
+import fetch, { configDefault as fetchConfigDefault } from 'utils/fetch'
 
 const PageContainer = styled.div`
   background-color: ${colors.lightGray};
@@ -368,24 +369,36 @@ const StyledIcon = styled(Icon)`
   `}
 `
 
+async function getDashboardData(props) {
+  const personId = props.match.params.personId
+  if (personId) {
+    const { calendar, ratio, stats } = await api.getDashboardData(personId)
+    const { user } = await api.getUser({ userId: personId })
+
+    return { calendar, ratio, stats, user }
+  }
+  const { calendar, network, ratio, stats } = await api.getDashboardData()
+  const { user } = await api.getMe()
+  return { calendar, network, ratio, stats, user }
+}
+
 class DashboardPage extends Component {
   state = {
-    calendar: null,
-    network: null,
-    ratio: null,
-    stats: null,
     currentImpactCategory: 'climate',
   }
 
   componentDidMount() {
     animateScroll.scrollToTop()
 
-    this.fetchDashboardData()
+    this.props.fetch()
   }
 
-  fetchDashboardData = async () => {
-    const { calendar, network, ratio, stats } = await api.getDashboardData()
-    this.setState({ calendar, network, ratio, stats })
+  componentDidUpdate(prevProps) {
+    const { match } = this.props
+
+    if (prevProps.match.params.personId !== match.params.personId) {
+      this.props.fetch()
+    }
   }
 
   handleImpactCategoryChange = category => {
@@ -393,22 +406,14 @@ class DashboardPage extends Component {
   }
 
   render() {
-    const {
-      calendar,
-      network,
-      ratio,
-      stats,
-      currentImpactCategory,
-    } = this.state
-    const { user } = this.props
+    const { currentImpactCategory } = this.state
+    const { match, user, stats, ratio, network, calendar, loading } = this.props
+
     return (
       <Fragment>
         <PageMetadata pageName="dashboardPage" />
         <PageContainer>
-          {calendar === null ||
-          network === null ||
-          ratio === null ||
-          stats === null ? (
+          {loading ? (
             <Spinner />
           ) : (
             <Fragment>
@@ -651,98 +656,100 @@ class DashboardPage extends Component {
                     </WidgetContainer>
                   </GoodRatioCol>
                 </Row>
-                <Row gutter={20} style={{ marginTop: '20px' }}>
-                  <Col span={24}>
-                    <WidgetContainer>
-                      <WidgetHeader withBorder>
-                        <Row type="flex">
-                          <Col span={16} sm={11} lg={12} xs={24}>
-                            <WidgetTitle>
-                              <FormattedMessage id="app.dashboardPage.myNetwork" />
-                              <InfoElementWrap>
-                                <InfoElement
-                                  type={INFO_ELEMENT_TYPES.QUESTION}
-                                  tooltipProps={{
-                                    placement: 'bottomLeft',
-                                    title: (
-                                      <Fragment>
-                                        <p>
-                                          <FormattedMessage id="app.dashboardPage.myNetwork.infoTooltip" />
-                                        </p>
-                                        <div>
-                                          <InfoElementLink
-                                            to={`/pages/faq#${
-                                              QUESTIONS_ANCHOR.WHAT_NETWORK_SHOWING
-                                            }`}
-                                          >
-                                            <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
-                                          </InfoElementLink>
-                                        </div>
-                                      </Fragment>
-                                    ),
-                                  }}
-                                />
-                              </InfoElementWrap>
-                            </WidgetTitle>
-                            <WidgetDescription>
-                              <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
-                            </WidgetDescription>
-                          </Col>
-                          <MyNetworkCol span={8} sm={15} lg={12} xs={24}>
-                            <Row>
-                              <HeaderUserInfoRowCol
-                                span={8}
-                                lg={8}
-                                sm={8}
-                                xs={24}
-                              >
-                                <DashboardHeaderUserName>
-                                  {stats.network.networkUsers}
-                                </DashboardHeaderUserName>
-                                <DashboardHeaderUserSince>
-                                  <FormattedMessage id="app.dashboardPage.usersInvited" />
-                                </DashboardHeaderUserSince>
-                              </HeaderUserInfoRowCol>
-                              <HeaderUserInfoRowCol
-                                span={8}
-                                lg={8}
-                                sm={8}
-                                xs={24}
-                              >
-                                <DashboardHeaderUserName>
-                                  {stats.network.actionsTaken}
-                                </DashboardHeaderUserName>
-                                <DashboardHeaderUserSince>
-                                  <FormattedMessage id="app.dashboardPage.actionsTaken" />
-                                </DashboardHeaderUserSince>
-                              </HeaderUserInfoRowCol>
-                              <HeaderUserInfoRowCol
-                                span={8}
-                                lg={8}
-                                sm={8}
-                                xs={24}
-                              >
-                                <DashboardHeaderUserName>
-                                  {Math.round(
-                                    stats.network.netPositiveDays[
-                                      currentImpactCategory
-                                    ],
-                                  )}
-                                </DashboardHeaderUserName>
-                                <DashboardHeaderUserSince>
-                                  <FormattedMessage id="app.dashboardPage.netPositiveDays" />
-                                </DashboardHeaderUserSince>
-                              </HeaderUserInfoRowCol>
-                            </Row>
-                          </MyNetworkCol>
-                        </Row>
-                      </WidgetHeader>
-                      <WidgetContent>
-                        <NetworkWidget data={network} />
-                      </WidgetContent>
-                    </WidgetContainer>
-                  </Col>
-                </Row>
+                {!match.params.personId && stats.network && (
+                  <Row gutter={20} style={{ marginTop: '20px' }}>
+                    <Col span={24}>
+                      <WidgetContainer>
+                        <WidgetHeader withBorder>
+                          <Row type="flex">
+                            <Col span={16} sm={11} lg={12} xs={24}>
+                              <WidgetTitle>
+                                <FormattedMessage id="app.dashboardPage.myNetwork" />
+                                <InfoElementWrap>
+                                  <InfoElement
+                                    type={INFO_ELEMENT_TYPES.QUESTION}
+                                    tooltipProps={{
+                                      placement: 'bottomLeft',
+                                      title: (
+                                        <Fragment>
+                                          <p>
+                                            <FormattedMessage id="app.dashboardPage.myNetwork.infoTooltip" />
+                                          </p>
+                                          <div>
+                                            <InfoElementLink
+                                              to={`/pages/faq#${
+                                                QUESTIONS_ANCHOR.WHAT_NETWORK_SHOWING
+                                              }`}
+                                            >
+                                              <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
+                                            </InfoElementLink>
+                                          </div>
+                                        </Fragment>
+                                      ),
+                                    }}
+                                  />
+                                </InfoElementWrap>
+                              </WidgetTitle>
+                              <WidgetDescription>
+                                <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
+                              </WidgetDescription>
+                            </Col>
+                            <MyNetworkCol span={8} sm={15} lg={12} xs={24}>
+                              <Row>
+                                <HeaderUserInfoRowCol
+                                  span={8}
+                                  lg={8}
+                                  sm={8}
+                                  xs={24}
+                                >
+                                  <DashboardHeaderUserName>
+                                    {stats.network.networkUsers}
+                                  </DashboardHeaderUserName>
+                                  <DashboardHeaderUserSince>
+                                    <FormattedMessage id="app.dashboardPage.usersInvited" />
+                                  </DashboardHeaderUserSince>
+                                </HeaderUserInfoRowCol>
+                                <HeaderUserInfoRowCol
+                                  span={8}
+                                  lg={8}
+                                  sm={8}
+                                  xs={24}
+                                >
+                                  <DashboardHeaderUserName>
+                                    {stats.network.actionsTaken}
+                                  </DashboardHeaderUserName>
+                                  <DashboardHeaderUserSince>
+                                    <FormattedMessage id="app.dashboardPage.actionsTaken" />
+                                  </DashboardHeaderUserSince>
+                                </HeaderUserInfoRowCol>
+                                <HeaderUserInfoRowCol
+                                  span={8}
+                                  lg={8}
+                                  sm={8}
+                                  xs={24}
+                                >
+                                  <DashboardHeaderUserName>
+                                    {Math.round(
+                                      stats.network.netPositiveDays[
+                                        currentImpactCategory
+                                      ],
+                                    )}
+                                  </DashboardHeaderUserName>
+                                  <DashboardHeaderUserSince>
+                                    <FormattedMessage id="app.dashboardPage.netPositiveDays" />
+                                  </DashboardHeaderUserSince>
+                                </HeaderUserInfoRowCol>
+                              </Row>
+                            </MyNetworkCol>
+                          </Row>
+                        </WidgetHeader>
+                        <WidgetContent>
+                          <NetworkWidget data={network} />
+                        </WidgetContent>
+                      </WidgetContainer>
+                    </Col>
+                  </Row>
+                )}
               </WidgetBlockContainer>
             </Fragment>
           )}
@@ -758,9 +765,18 @@ const mapStateToProps = state => ({
 
 DashboardPage.propTypes = {
   user: PropTypes.object.isRequired,
+  match: PropTypes.object,
+  fetch: PropTypes.func,
+  location: PropTypes.object,
+  stats: PropTypes.object.isRequired,
+  ratio: PropTypes.object.isRequired,
+  network: PropTypes.object.isRequired,
+  calendar: PropTypes.object.isRequired,
+  loading: PropTypes.bool,
 }
 
 export default compose(
   connect(mapStateToProps),
+  fetch(getDashboardData, { ...fetchConfigDefault, loader: false }),
   injectIntl,
 )(DashboardPage)

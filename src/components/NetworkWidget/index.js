@@ -7,6 +7,7 @@ import hexToRgba from 'utils/hexToRgba'
 import colors from 'config/colors'
 import { sizes } from 'utils/mediaQueryTemplate'
 import api from 'api'
+import { history } from 'appRouter'
 
 const Wrap = styled.div`
   overflow: hidden;
@@ -189,6 +190,7 @@ class NetworkWidget extends Component {
       .enter()
       .append('g')
       .attr('class', 'node')
+      .attr('cursor', 'pointer')
       .attr('transform', d => `translate(${d.x}, ${d.y})`)
       .on('mouseover', function(d) {
         if (!d.badge) {
@@ -216,6 +218,9 @@ class NetworkWidget extends Component {
       })
       .on('mouseout', function() {
         widget.selectAll('.d3-tooltip').remove()
+      })
+      .on('click', function(e) {
+        history.push(`/account/person/${e.id}`)
       })
       .call(force.drag)
 

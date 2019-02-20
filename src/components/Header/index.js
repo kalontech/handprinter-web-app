@@ -564,6 +564,43 @@ class Header extends Component {
     this.fetchNews()
   }
 
+  getNotificationsPopover = (
+    fontColor,
+    fontNames,
+    notification,
+    unreadCount,
+  ) => {
+    return (
+      <StyledNotificationsPopover
+        overlayClassName="notification-popover"
+        placement="bottomRight"
+        trigger={['hover', 'click']}
+        content={
+          <NotificationsContainer
+            notification={notification}
+            fontColor={fontColor}
+            fontNames={fontNames}
+          />
+        }
+        getPopupContainer={() => this.$notifContainer}
+        onVisibleChange={this.sendLastTimeReadNotif}
+      >
+        <NotificationPopoverTitle
+          ref={node => {
+            this.$notifContainer = node
+          }}
+        >
+          <img src={newsBellIcon} alt="" />
+          {unreadCount > 1 && (
+            <NotificationCount fontNames={fontNames}>
+              {unreadCount}
+            </NotificationCount>
+          )}
+        </NotificationPopoverTitle>
+      </StyledNotificationsPopover>
+    )
+  }
+
   render() {
     const { type, user, withoutHeaderContent, location, overrides } = this.props
     const { notification, unreadCount, width, collapsed } = this.state
@@ -943,35 +980,14 @@ class Header extends Component {
                   />
                 </Link>
               </LogoSmall>
-              {isTablet && !isMobile && (
-                <StyledNotificationsPopover
-                  placement="bottomRight"
-                  trigger="click"
-                  overlayStyle={{ paddingTop: '10px' }}
-                  content={
-                    <NotificationsContainer
-                      notification={notification}
-                      fontColor={fontColor}
-                      fontNames={fontNames}
-                    />
-                  }
-                  getPopupContainer={() => this.$notifContainer}
-                  onVisibleChange={this.sendLastTimeReadNotif}
-                >
-                  <NotificationPopoverTitle
-                    ref={node => {
-                      this.$notifContainer = node
-                    }}
-                  >
-                    <img src={newsBellIcon} alt="" />
-                    {unreadCount > 1 && (
-                      <NotificationCount fontNames={fontNames}>
-                        {unreadCount}
-                      </NotificationCount>
-                    )}
-                  </NotificationPopoverTitle>
-                </StyledNotificationsPopover>
-              )}
+              {isTablet &&
+                !isMobile &&
+                this.getNotificationsPopover(
+                  fontColor,
+                  fontNames,
+                  notification,
+                  unreadCount,
+                )}
               <Fragment>
                 {!isTablet && (
                   <Fragment>
@@ -1059,33 +1075,12 @@ class Header extends Component {
                       </Popover>
                     </CenterMenu>
                     <RightAlign>
-                      <StyledNotificationsPopover
-                        placement="bottomRight"
-                        overlayStyle={{ paddingTop: '10px' }}
-                        trigger={['hover', 'click']}
-                        content={
-                          <NotificationsContainer
-                            notification={notification}
-                            fontColor={fontColor}
-                            fontNames={fontNames}
-                          />
-                        }
-                        getPopupContainer={() => this.$notifContainer}
-                        onVisibleChange={this.sendLastTimeReadNotif}
-                      >
-                        <NotificationPopoverTitle
-                          ref={node => {
-                            this.$notifContainer = node
-                          }}
-                        >
-                          <img src={newsBellIcon} alt="" />
-                          {unreadCount >= 1 && (
-                            <NotificationCount fontNames={fontNames}>
-                              {unreadCount}
-                            </NotificationCount>
-                          )}
-                        </NotificationPopoverTitle>
-                      </StyledNotificationsPopover>
+                      {this.getNotificationsPopover(
+                        fontColor,
+                        fontNames,
+                        notification,
+                        unreadCount,
+                      )}
                       <ProfileSettingsPopover
                         placement="bottomRight"
                         overlayStyle={{ paddingTop: '10px' }}

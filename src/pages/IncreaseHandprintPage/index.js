@@ -335,6 +335,7 @@ class IncreaseHandprintPage extends Component {
   state = {
     emails: [],
     invitationLink: getInvitationLink(this.props.user.invitationCode),
+    inviterId: this.props.user._id,
     isSharingInvitationCode: false,
     shareInvitationCodeError: null,
     inputVisible: false,
@@ -375,16 +376,17 @@ class IncreaseHandprintPage extends Component {
       this.setState({
         isCodeCustomizing: false,
         invitationLink: getInvitationLink(this.props.user.invitationCode),
+        inviterId: this.props.user._id,
       })
   }
 
   handleSendInvites = async e => {
     e.preventDefault()
-    const { emails, invitationLink } = this.state
-    this.fetchShareInvitationCode(emails, invitationLink)
+    const { emails, invitationLink, inviterId } = this.state
+    this.fetchShareInvitationCode(emails, invitationLink, inviterId)
   }
 
-  fetchShareInvitationCode = (emails, invitationLink) => {
+  fetchShareInvitationCode = (emails, invitationLink, inviterId) => {
     const {
       form: { validateFields },
     } = this.props
@@ -395,6 +397,7 @@ class IncreaseHandprintPage extends Component {
         const data = {
           emails: emails,
           invitationCodeUrl: invitationLink,
+          inviterId,
         }
 
         if (invitationMessage && invitationMessage.length > 0) {

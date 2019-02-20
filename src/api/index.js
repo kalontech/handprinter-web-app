@@ -171,13 +171,19 @@ const getUser = body =>
     method: 'POST',
   })
 
-const getDashboardData = () => fetchAPI(`/users/me/dashboard_data`)
+const getDashboardData = userId => {
+  const url = userId
+    ? `/users/dashboard_data/${userId}`
+    : `/users/dashboard_data`
+  return fetchAPI(url)
+}
 
-const engageAction = (action, emails) =>
+const engageAction = (action, emails, executorId) =>
   fetchAPI(`/actions/engage`, {
     body: {
       action,
       emails,
+      executorId,
     },
     method: 'POST',
   })

@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import {
-  injectIntl,
-  FormattedMessage,
-  FormattedHTMLMessage,
-  intlShape,
-} from 'react-intl'
+import { injectIntl, FormattedMessage, intlShape } from 'react-intl'
 import { Menu, Dropdown } from 'antd'
 import { animateScroll } from 'react-scroll/modules'
 
@@ -108,6 +104,10 @@ const DropdownLink = styled.a`
   .anticon {
     color: ${colors.green};
   }
+`
+
+const NewsItemLink = styled(Link)`
+  font-weight: bold;
 `
 
 const NewsItemBody = styled.div``
@@ -234,37 +234,38 @@ class NewsPage extends Component {
             {this.state.news.map((news, index) => {
               switch (news.type) {
                 case 'USER_DID_ACTION':
+                  const { user, action, impacts } = news.arguments
                   return (
                     <NewsItem
                       key={index}
                       picture={
-                        (news.arguments.user && news.arguments.user.photo) ||
-                        api.getUserInitialAvatar(
-                          (news.arguments.user &&
-                            news.arguments.user.fullName) ||
-                            '?',
-                        )
+                        (user && user.photo) ||
+                        api.getUserInitialAvatar((user && user.fullName) || '?')
                       }
                       subject={
-                        <FormattedHTMLMessage
+                        <FormattedMessage
                           id="app.newsPage.news.userDidAction"
                           values={{
-                            user:
-                              (news.arguments.user &&
-                                news.arguments.user.fullName) ||
-                              this.props.intl.formatMessage({
-                                id: 'app.newsPage.userWithoutName',
-                              }),
-                            action:
-                              news.arguments.action.translatedName[locale] ||
-                              news.arguments.action.name,
+                            user: (
+                              <NewsItemLink to={`/account/person/${user.id}`}>
+                                {(user && user.fullName) ||
+                                  this.props.intl.formatMessage({
+                                    id: 'app.newsPage.userWithoutName',
+                                  })}
+                              </NewsItemLink>
+                            ),
+                            action: (
+                              <NewsItemLink
+                                to={`/account/news/actions/${action.slug}`}
+                              >
+                                {action.translatedName[locale] || action.name}
+                              </NewsItemLink>
+                            ),
                           }}
                         />
                       }
                       date={formatRelative(news.date)}
-                      suffix={
-                        <ActionCardLabelSet impacts={news.arguments.impacts} />
-                      }
+                      suffix={<ActionCardLabelSet impacts={impacts} />}
                     />
                   )
                 default:

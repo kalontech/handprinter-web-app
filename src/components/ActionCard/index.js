@@ -89,10 +89,11 @@ const CardHeading = styled.h3`
   text-align: left;
 `
 
-const SuggestedInfoInitiator = styled.div`
+const SuggestedInfoInitiator = styled(Link)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: ${colors.darkGray};
   span.name {
     color: ${colors.dark};
     margin-left: 3px;
@@ -201,7 +202,7 @@ const ActionCard = props => {
 
       {suggestedBy && suggestedAt && (
         <SuggestedInfo>
-          <SuggestedInfoInitiator>
+          <SuggestedInfoInitiator to={`/account/person/${suggestedBy.id}`}>
             {suggestedBy.photo && (
               <SuggestedInfoInitiatorPhoto src={suggestedBy.photo} />
             )}

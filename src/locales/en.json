@@ -316,7 +316,7 @@
     "app.aboutEatonPage.becomeGuardian.title": "Become an Eaton Green Guardian",
     "app.aboutEatonPage.becomeGuardian.description": "What can you do to make your community, your work, your planet more sustainable?",
     "app.newsPage.title": "My handprinting news",
-    "app.newsPage.news.userDidAction": "<strong>{user}<\/strong> did action <strong>{action}<\/strong>",
+    "app.newsPage.news.userDidAction": "{user} did action {action}",
     "app.newsPage.ranges.network": "Network",
     "app.newsPage.ranges.world": "World",
     "app.newsPage.userWithoutName": "User without name",

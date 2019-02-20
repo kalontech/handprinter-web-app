@@ -389,7 +389,7 @@ class ActionModalPage extends Component {
     this.setState({ sendingEngage: true })
 
     try {
-      await api.engageAction(action._id, engageEmails)
+      await api.engageAction(action._id, engageEmails, this.props.user._id)
       this.setState({
         successEngageSent: true,
       })
