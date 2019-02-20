@@ -256,6 +256,7 @@ const Button = styled(DefaultButton)`
   color: ${colors.white};
   height: 44px;
   min-width: 134px;
+  font-weight: 700;
 
   &&:hover,
   &&:active,
