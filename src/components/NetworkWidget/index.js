@@ -22,9 +22,12 @@ const Wrap = styled.div`
     min-width: 100px;
 
     p {
+      width: 100px;
       color: white;
       padding: 6px 8px;
       text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
