@@ -29,6 +29,9 @@ const Wrap = styled.div`
   }
 `
 
+const YEAR = 365
+const MAX_ALLOWABLE_DAYS_COUNT = 600
+
 class GoodRatioWidget extends Component {
   state = {
     footprintDays: 0,
@@ -148,6 +151,25 @@ class GoodRatioWidget extends Component {
 
   setWeightsBarRawTransformValue = value => {
     this.weightsBar.style.transform = `rotate(${value}deg)`
+  }
+
+  formatDays(days) {
+    const allowable = [1, 2, 5, 10, 20, 50, 100, 101]
+    let years = Math.floor(days / YEAR)
+    if (days < MAX_ALLOWABLE_DAYS_COUNT) return days
+    if (years >= 101) {
+      years = years / 100
+    }
+    const allowableIndex = allowable.findIndex(i => years < i)
+    return allowable[allowableIndex - 1] || '100+'
+  }
+
+  getDaysLabel(days) {
+    if (days < MAX_ALLOWABLE_DAYS_COUNT) return 'DAYS'
+    if (days >= YEAR && days < YEAR * 2) return 'YEAR'
+    if (days >= YEAR * 2 && days <= YEAR * 100) return 'YEARS'
+    if (days > YEAR * 100 && days < YEAR * 200) return 'CENTURE'
+    return 'CENTURIES'
   }
 
   render = () => {
@@ -280,7 +302,7 @@ class GoodRatioWidget extends Component {
                 fontSize={16}
               >
                 <tspan x={366.594} y={19.102} textAnchor="middle">
-                  {this.state.handprintDays}
+                  {this.formatDays(this.state.handprintDays)}
                 </tspan>
               </text>
               <text
@@ -292,7 +314,7 @@ class GoodRatioWidget extends Component {
                 fontWeight="bold"
               >
                 <tspan x={354.168} y={32.688}>
-                  DAYS
+                  {this.getDaysLabel(this.state.handprintDays)}
                 </tspan>
               </text>
             </g>
