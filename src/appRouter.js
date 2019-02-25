@@ -194,6 +194,12 @@ const AppRouter = () => {
             parentPath="/account/news"
             component={ActionModalPage}
           />
+
+          <ModalRoute
+            path="/account/news/actions/:actionSlug"
+            parentPath="/account/news"
+            component={ActionModalPage}
+          />
         </Switch>
       </ErrorCatcher>
     </Router>
