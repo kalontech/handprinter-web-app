@@ -171,10 +171,10 @@ const getUser = body =>
     method: 'POST',
   })
 
-const getDashboardData = userId => {
+const getDashboardData = (userId, subset = 'me') => {
   const url = userId
-    ? `/users/dashboard_data/${userId}`
-    : `/users/dashboard_data`
+    ? `/users/dashboard_data/${userId}?for=${subset}`
+    : `/users/dashboard_data?for=${subset}`
   return fetchAPI(url)
 }
 
