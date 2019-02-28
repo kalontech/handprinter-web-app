@@ -477,8 +477,8 @@ class IncreaseHandprintPage extends Component {
   }
 
   async getInvitationsList() {
-    const invitationsList = await api.getInvitationsList()
-    this.setState({ invitationsList })
+    const { invitations } = await api.getInvitationsList()
+    this.setState({ invitationsList: invitations })
   }
 
   renderStatusColumn = status => (
