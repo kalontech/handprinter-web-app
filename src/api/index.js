@@ -5,13 +5,6 @@ import { store } from 'app'
 import { getTemporaryToken } from 'utils/temporaryToken'
 import colors from 'config/colors'
 
-const { REACT_APP_API_BASE_URL, REACT_APP_WEB_APP_COOKIES_DOMAIN } = process.env
-
-const apiBaseUrl = window.location.hostname.includes(
-  REACT_APP_WEB_APP_COOKIES_DOMAIN || 'localhost',
-)
-  ? REACT_APP_API_BASE_URL
-  : `${window.location.protocol}//${window.location.host}/api`
 export const webAppBaseUrl = `${window.location.protocol}//${
   window.location.host
 }`
@@ -38,10 +31,11 @@ const fetchAPI = async (url, options) => {
     ...options,
     body,
     headers,
+    credentials: 'include',
   }
 
   const { data, error, success } = await fetch(
-    `${apiBaseUrl}${url}`,
+    `/api${url}`,
     transformedOptions,
   ).then(response => response.json())
 
