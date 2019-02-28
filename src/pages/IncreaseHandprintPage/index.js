@@ -43,7 +43,6 @@ export const TitleSectionWrap = styled.div`
   padding: 40px 100px;
   background-color: ${colors.lightGray};
   ${media.desktop`
-    height: 524px;
     width: 100%;
   `}
   ${media.phone`
@@ -345,6 +344,13 @@ const EmptyStateWrapper = styled.div`
   flex-direction: column;
   width: 50%;
   text-align: center;
+  ${media.desktop`
+    height: 524px;
+    width: 100%;
+  `}
+  ${media.phone`
+    padding: 30px 10px;
+  `}
 `
 
 const AddInvitingMessageTextArea = styled(Input.TextArea)`
@@ -421,7 +427,7 @@ class IncreaseHandprintPage extends Component {
           id: 'app.increaseHandprintPage.table.action',
         })
         .toUpperCase(),
-      dataIndex: 'invitedBy',
+      dataIndex: 'user',
       className: 'column-action',
       render: (id, row) => this.renderActionColumn(id, row),
     },
