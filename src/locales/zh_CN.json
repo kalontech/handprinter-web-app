@@ -429,5 +429,14 @@
     "app.newsPage.notification.userDidAction": "{user}了操作{action}",
     "app.header.menu.noNotificationsYet": "你还没有通知",
     "app.form.submit": "提交",
+    "app.increaseHandprintPage.table.pending": "有待",
+    "app.increaseHandprintPage.table.accepted": "公认",
+    "app.increaseHandprintPage.table.myInvitations": "我的邀请",
+    "app.increaseHandprintPage.table.viewProfile": "查看资料",
+    "app.increaseHandprintPage.table.resendInvitation": "重新发送邀请",
+    "app.increaseHandprintPage.table.action": "行动",
+    "app.increaseHandprintPage.table.email": "电子邮件",
+    "app.increaseHandprintPage.table.status": "状态",
+    "app.increaseHandprintPage.table.sentInvitations": "邀请已发送",
     "app.actionsPage.filterModalTitle": "过滤"
 }

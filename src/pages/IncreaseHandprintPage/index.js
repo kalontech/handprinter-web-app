@@ -2,10 +2,12 @@ import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Icon } from 'antd'
+import { Form, Icon, Table as TableAnt } from 'antd'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { bindActionCreators, compose } from 'redux'
 import { animateScroll } from 'react-scroll'
+import { Link } from 'react-router-dom'
+import isEmpty from 'lodash/isEmpty'
 
 import colors from 'config/colors'
 import { MAX_INVITING_MESSAGE_LENGTH } from 'config/common'
@@ -19,6 +21,12 @@ import media from 'utils/mediaQueryTemplate'
 import PageMetadata from 'components/PageMetadata'
 import MultipleInput from 'components/MultipleInput'
 import getValidationRules from 'config/validationRules'
+import ResendButton from 'components/ResendButton'
+
+export const INVITATION_STATUSES = {
+  ACCEPTED: 'ACCEPTED',
+  PENDING: 'PENDING',
+}
 
 export const Wrapper = styled.div`
   display: flex;
@@ -30,13 +38,9 @@ export const Wrapper = styled.div`
 `
 
 export const TitleSectionWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   width: 50%;
-  text-align: center;
-  padding: 30px;
+  text-align: left;
+  padding: 40px 100px;
   background-color: ${colors.lightGray};
   ${media.desktop`
     height: 524px;
@@ -47,9 +51,10 @@ export const TitleSectionWrap = styled.div`
   `}
 `
 
-const TitleSectionContent = styled.div`
-  position: relative;
-  top: 0;
+const Title = styled.span`
+  font-family: 'Noto Sans';
+  font-size: 22px;
+  margin-left: 7px;
 `
 
 export const FormSectionWrap = styled.div`
@@ -187,6 +192,32 @@ export const InvitationCodeBlock = styled.div`
   `}
 `
 
+const Table = styled(TableAnt)`
+  th {
+    font-size: 10px;
+    font-weight: bold;
+    width: 33%;
+  }
+  th.column-action {
+    text-align: right;
+  }
+  .ant-table-tbody > tr > td {
+    border-bottom: 0px;
+  }
+  td.column-action {
+    text-align: right;
+  }
+
+  .ant-table-pagination {
+    text-align: center;
+    float: none;
+
+    & li {
+      display: inline-block;
+    }
+  }
+`
+
 export const CopyToClipboardInput = styled(Input)`
   ${media.phone`
     border-top-right-radius: 0px;
@@ -303,6 +334,18 @@ const AddInvitingMessageTextAreaWrap = styled(FormItem)`
     min-height: 85px;
   }
 `
+const TitleSectionContent = styled.div`
+  position: relative;
+  top: 0;
+`
+const EmptyStateWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  text-align: center;
+`
 
 const AddInvitingMessageTextArea = styled(Input.TextArea)`
   resize: none;
@@ -329,9 +372,60 @@ const IgnoredInvitations = styled.p`
 const InputCode = styled(FormItem)`
   width: 100%;
 `
+const Circle = styled.div`
+  height: 10px;
+  width: 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+  background-color: ${props =>
+    props.status === INVITATION_STATUSES.ACCEPTED ? colors.green : colors.blue};
+`
+const StatusRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+const ProfileLink = styled(Link)`
+  color: ${colors.ocean};
+  font-weight: bold;
+  font-size: 14px;
+  text-align: right;
+`
 
 const CODE_PREFIX = 'hp'
+
 class IncreaseHandprintPage extends Component {
+  columns = [
+    {
+      title: this.props.intl
+        .formatMessage({
+          id: 'app.increaseHandprintPage.table.email',
+        })
+        .toUpperCase(),
+      dataIndex: 'inviteeEmail',
+    },
+    {
+      title: this.props.intl
+        .formatMessage({
+          id: 'app.increaseHandprintPage.table.status',
+        })
+        .toUpperCase(),
+      dataIndex: 'status',
+      sorter: (a, b) =>
+        a.status !== b.status ? (a.status < b.status ? -1 : 1) : 0,
+      render: status => this.renderStatusColumn(status),
+    },
+    {
+      title: this.props.intl
+        .formatMessage({
+          id: 'app.increaseHandprintPage.table.action',
+        })
+        .toUpperCase(),
+      dataIndex: 'invitedBy',
+      className: 'column-action',
+      render: (id, row) => this.renderActionColumn(id, row),
+    },
+  ]
   state = {
     emails: [],
     invitationLink: getInvitationLink(this.props.user.invitationCode),
@@ -346,12 +440,14 @@ class IncreaseHandprintPage extends Component {
     ignoredEmails: [],
     isCodeCustomizing: false,
     invitationCode: '',
+    invitationsList: [],
   }
 
   shareInviteRef = React.createRef()
 
   componentDidMount() {
     animateScroll.scrollToTop()
+    this.getInvitationsList()
   }
 
   componentDidUpdate = async (prevProps, prevState) => {
@@ -380,19 +476,66 @@ class IncreaseHandprintPage extends Component {
       })
   }
 
+  async getInvitationsList() {
+    const invitationsList = await api.getInvitationsList()
+    this.setState({ invitationsList })
+  }
+
+  renderStatusColumn = status => (
+    <StatusRow>
+      <Circle status={status} />
+      {status === INVITATION_STATUSES.ACCEPTED ? (
+        <FormattedMessage id="app.increaseHandprintPage.table.accepted" />
+      ) : (
+        <FormattedMessage id="app.increaseHandprintPage.table.pending" />
+      )}
+    </StatusRow>
+  )
+
+  renderActionColumn = (id, row) => {
+    const { invitationLink, shareInvitationCodeError } = this.state
+    /**
+     * If user click on resend invite, text will change to `Invitation was sent` and
+     * button become disabled, before the user leave current page
+     */
+    return row.status === INVITATION_STATUSES.ACCEPTED ? (
+      <ProfileLink to={`/account/person/${id}`}>
+        <FormattedMessage id="app.increaseHandprintPage.table.viewProfile" />
+      </ProfileLink>
+    ) : (
+      <ResendButton
+        status={row.status}
+        onClick={() => {
+          this.fetchShareInvitationCode(
+            [row.inviteeEmail],
+            invitationLink,
+            id,
+            false,
+          )
+        }}
+        error={shareInvitationCodeError}
+      />
+    )
+  }
+
   handleSendInvites = async e => {
     e.preventDefault()
     const { emails, invitationLink, inviterId } = this.state
     this.fetchShareInvitationCode(emails, invitationLink, inviterId)
   }
 
-  fetchShareInvitationCode = (emails, invitationLink, inviterId) => {
+  fetchShareInvitationCode = (
+    emails,
+    invitationLink,
+    inviterId,
+    animation = true,
+  ) => {
     const {
       form: { validateFields },
     } = this.props
     validateFields(async (err, { invitationMessage }) => {
       if (!err) {
-        this.setState({ isSharingInvitationCode: true })
+        animation && this.setState({ isSharingInvitationCode: true })
 
         const data = {
           emails: emails,
@@ -406,6 +549,7 @@ class IncreaseHandprintPage extends Component {
 
         try {
           const { ignored = [] } = (await api.shareInvitationCode(data)) || {}
+          this.getInvitationsList()
 
           this.setState({
             isSharingInvitationCode: false,
@@ -472,6 +616,7 @@ class IncreaseHandprintPage extends Component {
       ignoredEmails,
       isCodeCustomizing,
       invitationCode,
+      invitationsList,
     } = this.state
     const {
       user,
@@ -483,17 +628,32 @@ class IncreaseHandprintPage extends Component {
       <Fragment>
         <PageMetadata pageName="increaseHandprintPage" />
         <Wrapper>
-          <TitleSectionWrap>
-            <TitleSectionContent>
-              <SavePlanetImg src={savePlanetImg} />
-              <TitleSectionHeading>
-                <FormattedMessage id="app.increaseHandprintPage.title" />
-              </TitleSectionHeading>
-              <TitleSectionDescription>
-                <FormattedMessage id="app.increaseHandprintPage.description" />
-              </TitleSectionDescription>
-            </TitleSectionContent>
-          </TitleSectionWrap>
+          {isEmpty(invitationsList) ? (
+            <EmptyStateWrapper>
+              <TitleSectionContent>
+                <SavePlanetImg src={savePlanetImg} />
+                <TitleSectionHeading>
+                  <FormattedMessage id="app.increaseHandprintPage.title" />
+                </TitleSectionHeading>
+                <TitleSectionDescription>
+                  <FormattedMessage id="app.increaseHandprintPage.description" />
+                </TitleSectionDescription>
+              </TitleSectionContent>
+            </EmptyStateWrapper>
+          ) : (
+            <TitleSectionWrap>
+              <Title>
+                <FormattedMessage id="app.increaseHandprintPage.table.myInvitations" />
+              </Title>
+              <Table
+                columns={this.columns}
+                dataSource={invitationsList}
+                size="middle"
+                rowKey={record => record.inviteeEmail}
+                pagination={invitationsList.length > 10}
+              />
+            </TitleSectionWrap>
+          )}
 
           <FormSectionWrap>
             <FormWrap>

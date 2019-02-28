@@ -429,5 +429,14 @@
     "app.newsPage.notification.userDidAction": "{user} fait l'action {action}",
     "app.header.menu.noNotificationsYet": "Vous n'avez pas encore de notifications",
     "app.form.submit": "soumettre",
+    "app.increaseHandprintPage.table.pending": "en attendant",
+    "app.increaseHandprintPage.table.accepted": "Accepté",
+    "app.increaseHandprintPage.table.myInvitations": "Mes invitations",
+    "app.increaseHandprintPage.table.viewProfile": "Voir le profil",
+    "app.increaseHandprintPage.table.resendInvitation": "Renvoyer l'invitation",
+    "app.increaseHandprintPage.table.action": "Action",
+    "app.increaseHandprintPage.table.email": "Email",
+    "app.increaseHandprintPage.table.status": "Statut",
+    "app.increaseHandprintPage.table.sentInvitations": "L'invitation a été envoyée",
     "app.actionsPage.filterModalTitle": "Filtre"
 }

@@ -429,5 +429,14 @@
     "app.newsPage.notification.userDidAction": "{user} heeft actie uitgevoerd {action}",
     "app.header.menu.noNotificationsYet": "U heeft nog geen meldingen",
     "app.form.submit": "voorleggen",
+    "app.increaseHandprintPage.table.pending": "In afwachting",
+    "app.increaseHandprintPage.table.accepted": "Aanvaard",
+    "app.increaseHandprintPage.table.myInvitations": "Mijn uitnodigingen",
+    "app.increaseHandprintPage.table.viewProfile": "Bekijk profiel",
+    "app.increaseHandprintPage.table.resendInvitation": "Verstuur de uitnodiging opnieuw",
+    "app.increaseHandprintPage.table.action": "Actie",
+    "app.increaseHandprintPage.table.email": "E-mail",
+    "app.increaseHandprintPage.table.status": "Status",
+    "app.increaseHandprintPage.table.sentInvitations": "Uitnodiging is verzonden",
     "app.actionsPage.filterModalTitle": "Filter"
 }

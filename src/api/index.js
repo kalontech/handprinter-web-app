@@ -170,6 +170,7 @@ const getUser = body =>
     body,
     method: 'POST',
   })
+const getInvitationsList = () => fetchAPI(`/users/invitations`)
 
 const getDashboardData = (userId, subset = 'me') => {
   const url = userId
@@ -233,4 +234,5 @@ export default {
   getNews,
   fetchProposedAction,
   sendLastTimeReadNewsAt,
+  getInvitationsList,
 }
