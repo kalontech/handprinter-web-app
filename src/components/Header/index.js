@@ -575,6 +575,7 @@ class Header extends Component {
         overlayClassName="notification-popover"
         placement="bottomRight"
         trigger={['hover', 'click']}
+        overlayStyle={{ paddingTop: '10px' }}
         content={
           <NotificationsContainer
             notification={notification}

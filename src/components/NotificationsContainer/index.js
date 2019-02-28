@@ -13,7 +13,7 @@ import viewAllIcon from './assets/viewAllIcon.svg'
 
 const NotificationBox = styled.div`
   width: 436px;
-  height: 307px;
+  min-height: 307px;
   color: ${({ fontColor }) => fontColor || colors.darkGray};
 `
 
@@ -114,7 +114,7 @@ const NotificationsContainer = ({
     </NotificationTitle>
     <NotificationContent>
       {notification.length > 0 ? (
-        notification.map((notifItem, index) => {
+        notification.slice(0, 5).map((notifItem, index) => {
           const { user, action } = notifItem.arguments
           const userPhoto =
             (user && user.photo) ||
