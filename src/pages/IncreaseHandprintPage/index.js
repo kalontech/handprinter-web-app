@@ -208,6 +208,7 @@ const Table = styled(TableAnt)`
   }
 
   .ant-table-pagination {
+    display: ${props => !props.isPaginationVisible && 'none'};
     text-align: center;
     float: none;
 
@@ -499,7 +500,7 @@ class IncreaseHandprintPage extends Component {
   )
 
   renderActionColumn = (id, row) => {
-    const { invitationLink, shareInvitationCodeError } = this.state
+    const { invitationLink, shareInvitationCodeError, inviterId } = this.state
     /**
      * If user click on resend invite, text will change to `Invitation was sent` and
      * button become disabled, before the user leave current page
@@ -515,7 +516,7 @@ class IncreaseHandprintPage extends Component {
           this.fetchShareInvitationCode(
             [row.inviteeEmail],
             invitationLink,
-            id,
+            inviterId,
             false,
           )
         }}
@@ -656,7 +657,7 @@ class IncreaseHandprintPage extends Component {
                 dataSource={invitationsList}
                 size="middle"
                 rowKey={record => record.inviteeEmail}
-                pagination={invitationsList.length > 10}
+                isPaginationVisible={invitationsList.length > 10}
               />
             </TitleSectionWrap>
           )}
