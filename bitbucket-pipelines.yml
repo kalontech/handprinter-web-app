@@ -1,13 +1,9 @@
 definitions:
   anchors:
-    authenticate-to-gcp: &authenticate-to-gcp |
-      echo $GCP_SERVICE_ACCOUNT_KEY | base64 --decode --ignore-garbage > ./gcp-service-account-key.json
-      gcloud auth activate-service-account --key-file gcp-service-account-key.json
     install-and-configure-kubectl: &install-and-configure-kubectl |
-      apt-get install kubectl
-      gcloud config set compute/zone $GCP_COMPUTE_ZONE
-      gcloud config set core/project $GCP_PROJECT_NAME
-      gcloud container clusters get-credentials $GCP_CLUSTER_NAME
+      mkdir ~/.kube
+      curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $DO_ACCESS_TOKEN" "https://api.digitalocean.com/v2/kubernetes/clusters/$DO_K8S_CLUSTER_ID/kubeconfig" > ~/.kube/config
+      kubectl config use-context $DO_K8S_CLUSTER_NAME
   services:
     docker:
       memory: 2048
@@ -19,14 +15,11 @@ definitions:
           - npm install
           - npm test
     - deploy-docker-image: &deploy-docker-image
-        image: google/cloud-sdk:latest
-        max-time: 5
         name: Deploy Docker image
         script:
-          - docker build --tag $GCR_IMAGE_PATH:$BITBUCKET_COMMIT .
-          - *authenticate-to-gcp
-          - gcloud auth configure-docker --quiet
-          - docker push $GCR_IMAGE_PATH:$BITBUCKET_COMMIT
+          - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          - docker build -t $DOCKER_IMAGE_NAME:$BITBUCKET_COMMIT .
+          - docker push $DOCKER_IMAGE_NAME:$BITBUCKET_COMMIT
         services:
           - docker
     - deploy-to-production: &deploy-to-production
@@ -34,9 +27,8 @@ definitions:
         image: google/cloud-sdk:latest
         name: Deploy to production
         script:
-          - *authenticate-to-gcp
           - *install-and-configure-kubectl
-          - kubectl set image deployment/$GKE_PRODUCTION_DEPLOYMENT_NAME $GCR_IMAGE_NAME=$GCR_IMAGE_PATH:$BITBUCKET_COMMIT
+          - kubectl set image deployment/$DO_K8S_DEPLOYMENT_NAME $DO_K8S_DEPLOYMENT_IMAGE_NAME=$DOCKER_IMAGE_NAME:$BITBUCKET_COMMIT
         services:
           - docker
         trigger: manual
@@ -45,9 +37,8 @@ definitions:
         image: google/cloud-sdk:latest
         name: Deploy to staging
         script:
-          - *authenticate-to-gcp
           - *install-and-configure-kubectl
-          - kubectl set image deployment/$GKE_STAGING_DEPLOYMENT_NAME $GCR_IMAGE_NAME=$GCR_IMAGE_PATH:$BITBUCKET_COMMIT
+          - kubectl set image deployment/$DO_K8S_DEPLOYMENT_NAME $DO_K8S_DEPLOYMENT_IMAGE_NAME=$DOCKER_IMAGE_NAME:$BITBUCKET_COMMIT
         services:
           - docker
     - deploy-to-test: &deploy-to-test
@@ -55,9 +46,8 @@ definitions:
         image: google/cloud-sdk:latest
         name: Deploy to test
         script:
-          - *authenticate-to-gcp
           - *install-and-configure-kubectl
-          - kubectl set image deployment/$GKE_TEST_DEPLOYMENT_NAME $GCR_IMAGE_NAME=$GCR_IMAGE_PATH:$BITBUCKET_COMMIT
+          - kubectl set image deployment/$DO_K8S_DEPLOYMENT_NAME $DO_K8S_DEPLOYMENT_IMAGE_NAME=$DOCKER_IMAGE_NAME:$BITBUCKET_COMMIT
         services:
           - docker
         trigger: manual
