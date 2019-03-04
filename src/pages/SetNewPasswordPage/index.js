@@ -121,6 +121,6 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
-  Form.create,
+  Form.create(),
   injectIntl,
 )(SetNewPasswordPage)
