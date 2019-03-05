@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Select, Spin, Icon, Menu, Popover } from 'antd'
+import { Row, Col, Select, Spin, Icon } from 'antd'
 import qs from 'qs'
 import styled from 'styled-components'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
@@ -10,11 +10,9 @@ import { compose } from 'redux'
 import { animateScroll } from 'react-scroll/modules'
 import { Animate } from 'react-animate-mount'
 
-import hexToRgba from 'utils/hexToRgba'
 import {
   BlockContainer,
   Pagination,
-  HeaderPopover,
   DefaultButton,
   Modal,
 } from 'components/Styled'
@@ -24,6 +22,7 @@ import Spinner from 'components/Spinner'
 import colors from 'config/colors'
 import PageMetadata from 'components/PageMetadata'
 import media, { sizes } from 'utils/mediaQueryTemplate'
+import hexToRgba from 'utils/hexToRgba'
 import {
   IMPACT_CATEGORIES,
   ACTIONS_SUBSETS,
@@ -33,16 +32,16 @@ import fetch, { configDefault as fetchConfigDefault } from 'utils/fetch'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Tooltip from 'components/Tooltip'
 import ScrollAnimation from 'components/ScrollAnimation'
+import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
 import ActionCreate from 'pages/ActionCreatePage'
 import ActionOpenView from 'components/ActionOpenView'
 
 import filterToggleImg from 'assets/actions-page/ic_filter_list.png'
 import filterToggleActiveImg from 'assets/actions-page/ic_filter_list_active.png'
-import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
-import DiscoverIcon from 'assets/icons/DiscoverIcon'
-import SuggestedIcon from 'assets/icons/SuggestedIcon'
-import HistoryIcon from 'assets/icons/HistoryIcon'
-import FlagIcon from 'assets/icons/FlagIcon'
+import FlagIconComponent from 'assets/icons/FlagIcon'
+import DiscoverIconComponent from 'assets/icons/DiscoverIcon'
+import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
+import HistoryIconComponent from 'assets/icons/HistoryIcon'
 
 import ActionsFilters from './ActionFilter'
 
@@ -157,7 +156,6 @@ const ToggleFilterButton = styled.button`
   margin-right: 15px;
   border: none;
   position: relative;
-  z-index: 1061;
   background: transparent;
 
   &:focus,
@@ -202,111 +200,6 @@ const FilterWrap = styled.div`
   `}
 `
 
-const ActionTabsWrap = styled.div`
-  background-color: ${colors.dark};
-  color: ${colors.white};
-  position: relative;
-  z-index: 1063;
-`
-
-const ActionTabsRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
-
-const ActionTabItem = styled.li`
-  font-size: 16px;
-  color: ${props => (props.active ? colors.white : colors.darkGray)};
-  margin-right: 45px;
-  list-style-type: none;
-  cursor: pointer;
-
-  &:last-child {
-    margin-right: 0;
-  }
-  i {
-    margin-right: 8px;
-  }
-`
-
-const ActionTabItemList = styled.ul`
-  display: flex;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-`
-
-const ActionTabItemListMobile = styled(HeaderPopover)`
-  border-bottom: none !important; // override ant menu styles
-  .ant-menu-submenu-title {
-    color: ${colors.dark};
-    padding: 0;
-  }
-  .ant-menu-submenu {
-    border-bottom: none !important;
-  }
-  .ant-menu-item {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-  .ant-menu-item-selected {
-    border-bottom: none;
-    background: ${colors.lightGray};
-  }
-
-  ${media.phone`
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
-  `}
-`
-
-const ActionTabsInnerContainer = styled.div`
-  padding: 6px 0;
-
-  ${media.phone`
-    padding-top: 3px;
-    padding-bottom: 3px;
-  `}
-`
-
-const ActionTabDropdown = styled.span`
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  line-height: 24px;
-
-  i {
-    margin-right: 8px;
-    display: flex;
-  }
-`
-
-const Button = styled(DefaultButton)`
-  background-color: ${hexToRgba(colors.white, 0.1)};
-  color: ${colors.white};
-  height: 44px;
-  min-width: 134px;
-  font-weight: 700;
-
-  &&:hover,
-  &&:active,
-  &&:focus {
-    background-color: ${hexToRgba(colors.white, 0.15)};
-    color: ${colors.white};
-  }
-`
-
-const ActionTabWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  color: ${({ fontColor }) => fontColor || colors.darkGray};
-`
-
 const ImpactButton = styled(DefaultButton)`
   min-width: 100%;
   background-color: transparent;
@@ -340,7 +233,7 @@ const SearchFieldWrap = styled.div`
   .ant-select-dropdown,
   .ant-select-dropdown-menu {
     max-height: 402px;
-    z-index: 1061;
+    z-index: 900;
   }
   .ant-select-dropdown-menu-item:hover,
   .ant-select-dropdown-menu-item-active {
@@ -350,6 +243,7 @@ const SearchFieldWrap = styled.div`
     display: none;
   }
 `
+
 const MODAL_TYPES = {
   create: 'create',
   preview: 'preview',
@@ -432,11 +326,13 @@ class ActionsPage extends React.PureComponent {
       Boolean(configParamsForFilter(this.props)),
     filterValuesFromQuery: configParamsForFilter(this.props) || null,
     activeFiltersCount: (configParamsForFilter(this.props) || '').length,
-    subset: null,
-    subsetDropdownVisible: false,
-    isTablet: window.innerWidth <= sizes.largeDesktop,
     currentAction: undefined,
     modalOpen: false,
+    visibleTabs: false,
+    listType:
+      window.screen.availWidth <= sizes.tablet
+        ? TABS_TYPES.select
+        : TABS_TYPES.default,
     modalType: MODAL_TYPES.create,
     mobileFilterModalVisible: false,
   }
@@ -445,6 +341,7 @@ class ActionsPage extends React.PureComponent {
 
   componentDidMount() {
     animateScroll.scrollToTop()
+    window.addEventListener('orientationchange', this.changeTabsType)
   }
 
   componentDidUpdate(prevProps) {
@@ -457,6 +354,20 @@ class ActionsPage extends React.PureComponent {
       (!match.params.slug && !oldMatch.params.slug)
     )
       this.props.fetch()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('orientationchange', this.changeTabsType)
+  }
+
+  changeTabsType = () => {
+    this.setState({
+      listType:
+        window.screen.availWidth <= sizes.tablet
+          ? TABS_TYPES.select
+          : TABS_TYPES.default,
+      visibleTabs: false,
+    })
   }
 
   searchActions = debounce(async query => {
@@ -481,24 +392,6 @@ class ActionsPage extends React.PureComponent {
     })
   }, 600)
 
-  paginationItemRender = (current, type, originalElement) => {
-    if (type === 'page') {
-      return (
-        <button
-          onClick={() => {
-            this.updateQueries({ page: current })
-          }}
-        >
-          {originalElement}
-        </button>
-      )
-    }
-    if (type === 'prev' || type === 'next') {
-      return null
-    }
-    return originalElement
-  }
-
   handleSearchFieldChange = (searchFieldValue, option) => {
     if (option) {
       this.resetSearchData()
@@ -515,16 +408,10 @@ class ActionsPage extends React.PureComponent {
     })
   }
 
-  handleTabItemSelect = subset => {
-    if (this.state.subsetDropdownVisible) {
-      this.setState({ subsetDropdownVisible: false })
-    }
-    this.props.history.push(`/actions/${subset}?page=1`)
-  }
+  handleOpenActionCard = ({ slug }) => () => {
+    const { match, history } = this.props
 
-  handleOpenActionCard = ({ slug }) => {
-    const { match, location, history } = this.props
-    history.push(`/actions/${match.params.subset}/${slug}${location.search}`)
+    history.push(`/actions/${match.params.subset}/${slug}`)
   }
 
   resetSearchData = () => {
@@ -557,12 +444,6 @@ class ActionsPage extends React.PureComponent {
     }
   }, 600)
 
-  handleSubsetDropdownClick = () => {
-    if (!this.state.subsetDropdownVisible) {
-      this.setState({ subsetDropdownVisible: true })
-    }
-  }
-
   toggleFilter = () => {
     if (window.innerWidth < sizes.phone) {
       this.setState({
@@ -575,6 +456,7 @@ class ActionsPage extends React.PureComponent {
 
   updateQueries = query => {
     const { location, match, history } = this.props
+
     history.push(
       `/actions/${match.params.subset}?${qs.stringify(
         {
@@ -585,40 +467,6 @@ class ActionsPage extends React.PureComponent {
           encode: false,
         },
       )}`,
-    )
-  }
-
-  getTabItemContent = (subset, isDropDownMenu = false) => {
-    const isActive = subset === this.props.match.params.subset
-    let tabItemColor = colors.darkGray
-    if (isActive) {
-      tabItemColor = isDropDownMenu ? colors.dark : colors.white
-    }
-
-    const data = [
-      {
-        type: <DiscoverIcon style={{ color: tabItemColor }} />,
-        id: 'app.actionsPage.tabs.discover',
-      },
-      {
-        type: <SuggestedIcon style={{ color: tabItemColor }} />,
-        id: 'app.actionsPage.tabs.suggested',
-      },
-      {
-        type: <FlagIcon style={{ color: tabItemColor }} />,
-        id: 'app.actionsPage.tabs.my-ideas',
-      },
-      {
-        type: <HistoryIcon style={{ color: tabItemColor }} />,
-        id: 'app.actionsPage.tabs.history',
-      },
-    ][Object.values(ACTIONS_SUBSETS).indexOf(subset)]
-
-    return (
-      <ActionTabWrapper fontColor={tabItemColor}>
-        {data.type}
-        <FormattedMessage id={data.id} />
-      </ActionTabWrapper>
     )
   }
 
@@ -685,11 +533,11 @@ class ActionsPage extends React.PureComponent {
       showFilter,
       activeFiltersCount,
       filterValuesFromQuery,
-      subsetDropdownVisible,
       currentAction,
       modalOpen,
-      isTablet,
       modalType,
+      visibleTabs,
+      listType,
       mobileFilterModalVisible,
     } = this.state
 
@@ -699,65 +547,45 @@ class ActionsPage extends React.PureComponent {
 
         <Wrapper>
           {user && (
-            <ActionTabsWrap>
-              <BlockContainer>
-                <ActionTabsInnerContainer>
-                  <ActionTabsRow>
-                    {isTablet ? (
-                      <Popover
-                        placement="bottomLeft"
-                        visible={subsetDropdownVisible}
-                        content={
-                          <ActionTabItemListMobile
-                            mode="vertical"
-                            theme="light"
-                            selectedKeys={[match.params.subset]}
-                          >
-                            {Object.values(ACTIONS_SUBSETS).map(subset => (
-                              <Menu.Item
-                                key={subset}
-                                onClick={() => this.handleTabItemSelect(subset)}
-                              >
-                                {this.getTabItemContent(subset, true)}
-                              </Menu.Item>
-                            ))}
-                          </ActionTabItemListMobile>
-                        }
-                      >
-                        <ActionTabDropdown
-                          onClick={this.handleSubsetDropdownClick}
-                        >
-                          {this.getTabItemContent(match.params.subset)}
-                          <ExpandMoreIcon iconColor={colors.green} />
-                        </ActionTabDropdown>
-                      </Popover>
-                    ) : (
-                      <ActionTabItemList>
-                        {Object.values(ACTIONS_SUBSETS).map(subset => (
-                          <ActionTabItem
-                            key={subset}
-                            onClick={() => this.handleTabItemSelect(subset)}
-                            active={match.params.subset === subset}
-                          >
-                            {this.getTabItemContent(subset)}
-                          </ActionTabItem>
-                        ))}
-                      </ActionTabItemList>
-                    )}
-
-                    <div>
-                      <Button
-                        onClick={() => {
-                          this.setState({ modalOpen: true })
-                        }}
-                      >
-                        <FormattedMessage id="app.headerActions.addAction" />
-                      </Button>
-                    </div>
-                  </ActionTabsRow>
-                </ActionTabsInnerContainer>
-              </BlockContainer>
-            </ActionTabsWrap>
+            <TabsSecondary
+              list={[
+                {
+                  to: `/actions/${ACTIONS_SUBSETS.DISCOVER}`,
+                  icon: DiscoverIconComponent,
+                  text: formatMessage({ id: 'app.actionsPage.tabs.discover' }),
+                  active: match.params.subset === ACTIONS_SUBSETS.DISCOVER,
+                },
+                {
+                  to: `/actions/${ACTIONS_SUBSETS.SUGGESTED}`,
+                  icon: SuggestedIconComponent,
+                  text: formatMessage({ id: 'app.actionsPage.tabs.suggested' }),
+                  active: match.params.subset === ACTIONS_SUBSETS.SUGGESTED,
+                },
+                {
+                  to: `/actions/${ACTIONS_SUBSETS.MY_IDEAS}`,
+                  icon: FlagIconComponent,
+                  text: formatMessage({ id: 'app.actionsPage.tabs.my-ideas' }),
+                  active: match.params.subset === ACTIONS_SUBSETS.MY_IDEAS,
+                },
+                {
+                  to: `/actions/${ACTIONS_SUBSETS.TAKEN}`,
+                  icon: HistoryIconComponent,
+                  text: formatMessage({ id: 'app.actionsPage.tabs.history' }),
+                  active: match.params.subset === ACTIONS_SUBSETS.TAKEN,
+                },
+              ]}
+              isOpen={visibleTabs}
+              listType={listType}
+              toggleVisible={visible => {
+                this.setState({ visibleTabs: visible })
+              }}
+              button={{
+                text: formatMessage({ id: 'app.headerActions.addAction' }),
+                onClick: () => {
+                  this.setState({ modalOpen: true })
+                },
+              }}
+            />
           )}
 
           <BlockContainer>
@@ -774,7 +602,7 @@ class ActionsPage extends React.PureComponent {
                                 ? filterToggleActiveImg
                                 : filterToggleImg
                             }
-                            alt=""
+                            alt="toggle filters"
                           />
                           {activeFiltersCount > 0 && (
                             <ToggleFilterActiveIcon>
@@ -782,31 +610,7 @@ class ActionsPage extends React.PureComponent {
                             </ToggleFilterActiveIcon>
                           )}
                         </ToggleFilterButton>
-                        <Modal
-                          title={formatMessage({
-                            id: 'app.actionsPage.filterModalTitle',
-                          })}
-                          visible={mobileFilterModalVisible}
-                          onCancel={() =>
-                            this.setState({
-                              mobileFilterModalVisible: false,
-                            })
-                          }
-                          getContainer={() => this.$search.current}
-                          centered
-                          destroyOnClose
-                        >
-                          <FilterWrap>
-                            <ActionsFilters
-                              showFilter={showFilter}
-                              timeValues={timeValues}
-                              values={filterValuesFromQuery}
-                              onReset={this.handleFilterReset}
-                              onAfterChange={this.handleOnAfterFiltersChange}
-                              actionsPageSubset={match.params.subset}
-                            />
-                          </FilterWrap>
-                        </Modal>
+
                         <SearchFieldWrap ref={this.$search}>
                           <SearchField
                             placeholder={formatMessage({
@@ -856,9 +660,7 @@ class ActionsPage extends React.PureComponent {
                             {searchData.searchedActions.map(action => (
                               <Select.Option
                                 key={action.picture}
-                                onClick={() =>
-                                  this.handleOpenActionCard(action)
-                                }
+                                onClick={this.handleOpenActionCard(action)}
                               >
                                 <ActionSearchDropdownOptionContent>
                                   <ActionSearchDropdownPicture
@@ -889,6 +691,7 @@ class ActionsPage extends React.PureComponent {
                   )}
                 </Col>
               </Row>
+
               {loading ? (
                 <NotFoundWrap>
                   <Spinner />
@@ -956,12 +759,28 @@ class ActionsPage extends React.PureComponent {
                 </Row>
               )}
 
-              {total > limit && (
+              {!loading && total > limit && (
                 <Pagination
                   current={page}
-                  itemRender={this.paginationItemRender}
                   pageSize={limit}
                   total={total}
+                  itemRender={(current, type, originalElement) => {
+                    if (type === 'page') {
+                      return (
+                        <button
+                          onClick={() => {
+                            this.updateQueries({ page: current })
+                          }}
+                        >
+                          {originalElement}
+                        </button>
+                      )
+                    }
+                    if (type === 'prev' || type === 'next') {
+                      return null
+                    }
+                    return originalElement
+                  }}
                 />
               )}
             </InnerContainer>
@@ -977,33 +796,66 @@ class ActionsPage extends React.PureComponent {
           width="auto"
           destroyOnClose
         >
-          {modalType === MODAL_TYPES.preview ? (
-            <ActionOpenView
-              action={currentAction}
-              cancel={{
-                onClick: this.closeModal,
-                message: formatMessage({ id: 'app.actionCreatePage.cancel' }),
-              }}
-              success={{
-                onClick: () => {
-                  this.setState({ modalType: MODAL_TYPES.create })
-                },
-                message: formatMessage({ id: 'app.actions.card.edit' }),
-              }}
+          {
+            {
+              [MODAL_TYPES.preview]: (
+                <ActionOpenView
+                  action={currentAction}
+                  cancel={{
+                    onClick: this.closeModal,
+                    message: formatMessage({
+                      id: 'app.actionCreatePage.cancel',
+                    }),
+                  }}
+                  success={{
+                    onClick: () => {
+                      this.setState({ modalType: MODAL_TYPES.create })
+                    },
+                    message: formatMessage({ id: 'app.actions.card.edit' }),
+                  }}
+                />
+              ),
+              [MODAL_TYPES.create]: (
+                <ActionCreate
+                  action={currentAction}
+                  onCancel={this.closeModal}
+                  onSuccess={() => {
+                    history.push(
+                      `/account/submit-succeeded/${
+                        currentAction ? currentAction.slug : ''
+                      }`,
+                    )
+                  }}
+                />
+              ),
+            }[modalType || MODAL_TYPES.create]
+          }
+        </Modal>
+
+        <Modal
+          title={formatMessage({
+            id: 'app.actionsPage.filterModalTitle',
+          })}
+          visible={mobileFilterModalVisible}
+          onCancel={() =>
+            this.setState({
+              mobileFilterModalVisible: false,
+            })
+          }
+          getContainer={() => this.$search.current}
+          centered
+          destroyOnClose
+        >
+          <FilterWrap>
+            <ActionsFilters
+              showFilter={showFilter}
+              timeValues={timeValues}
+              values={filterValuesFromQuery}
+              onReset={this.handleFilterReset}
+              onAfterChange={this.handleOnAfterFiltersChange}
+              actionsPageSubset={match.params.subset}
             />
-          ) : (
-            <ActionCreate
-              action={currentAction}
-              onCancel={this.closeModal}
-              onSuccess={() => {
-                history.push(
-                  `/account/submit-succeeded/${
-                    currentAction ? currentAction.slug : ''
-                  }`,
-                )
-              }}
-            />
-          )}
+          </FilterWrap>
         </Modal>
       </React.Fragment>
     )

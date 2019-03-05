@@ -550,7 +550,7 @@ export const GlobalStyle = createGlobalStyle`
   p {
     margin: 0;
   }
-  
+  .ant-notification,
   .ant-modal-centered {
     z-index: 1070;
   }
@@ -565,11 +565,6 @@ export const GlobalStyle = createGlobalStyle`
 
   .ant-layout {
     background: #fff;
-  }
-  
-  .ant-popover-placement-bottomLeft > .ant-popover-content > .ant-popover-arrow {
-    left: 30px;
-    top: 9px;
   }
   
   .ant-btn {
@@ -639,10 +634,6 @@ export const GlobalStyle = createGlobalStyle`
 
   .ant-popover {
     z-index: 1070;
-  }
-
-  .ant-affix {
-    box-shadow: 0 1px 10px 0 ${hexToRgba(colors.dark, 0.08)};
   }
 
   .ant-carousel {

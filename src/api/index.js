@@ -9,7 +9,7 @@ export const webAppBaseUrl = `${window.location.protocol}//${
   window.location.host
 }`
 
-const fetchAPI = async (url, options) => {
+export const fetchAPI = async (url, options) => {
   const hasBody = options && Boolean(options.body)
   const isFormData = hasBody && options.body instanceof FormData
 
@@ -166,10 +166,11 @@ const getUser = body =>
   })
 const getInvitationsList = () => fetchAPI(`/users/invitations`)
 
-const getDashboardData = (userId, subset = 'me') => {
-  const url = userId
-    ? `/users/dashboard_data/${userId}?for=${subset}`
-    : `/users/dashboard_data?for=${subset}`
+export const getDashboardData = ({ userId, groupId, subset = 'me' } = {}) => {
+  const url =
+    userId || groupId
+      ? `/users/dashboard_data/${userId || groupId}?for=${subset}`
+      : `/users/dashboard_data?for=${subset}`
   return fetchAPI(url)
 }
 
@@ -183,7 +184,7 @@ const engageAction = (action, emails, executorId) =>
     method: 'POST',
   })
 
-const getUserInitialAvatar = fullName =>
+export const getUserInitialAvatar = fullName =>
   `https://ui-avatars.com/api/?background=${colors.lightGray.slice(
     1,
   )}&color=${colors.gray.slice(1)}&length=1&name=${fullName}&size=256`
@@ -195,7 +196,8 @@ const fetchProposedAction = ({ body, ...params }) =>
     ...params,
   })
 
-const getNews = (query = {}) => fetchAPI(`/actions/news?${qs.stringify(query)}`)
+export const getNews = ({ page, range, groupId } = {}) =>
+  fetchAPI(`/actions/news?${qs.stringify({ page, range, groupId })}`)
 
 const sendLastTimeReadNewsAt = at =>
   fetchAPI(`/actions/news/read_all`, {
@@ -222,7 +224,6 @@ export default {
   resetPasswordRequest,
   deleteMe,
   shareInvitationCode,
-  getDashboardData,
   getUserInitialAvatar,
   engageAction,
   getNews,

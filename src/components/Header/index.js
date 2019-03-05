@@ -25,7 +25,7 @@ import { getBrandedConfig } from 'config/branded'
 import media, { sizes } from 'utils/mediaQueryTemplate'
 import hexToRgba from 'utils/hexToRgba'
 import { logOut } from 'redux/accountStore'
-import api from 'api'
+import api, { getNews, getUserInitialAvatar } from 'api'
 
 import { Animate } from 'react-animate-mount'
 
@@ -63,7 +63,7 @@ const ImgLeftIndent = styled.img`
 
 const HeaderWrap = styled(Layout.Header)`
   position: relative;
-  z-index: 1070;
+  z-index: 970;
   background: ${colors.white};
   height: 90px;
   display: flex;
@@ -418,8 +418,9 @@ const ProfileMenu = styled.div`
 
 const StyledAffix = styled(Affix)`
   .ant-affix {
-    z-index: 1070;
+    z-index: 970;
     width: 100% !important;
+    box-shadow: 0 1px 10px 0 ${hexToRgba(colors.dark, 0.08)};
   }
 `
 
@@ -510,9 +511,11 @@ class Header extends Component {
   get selectedMenuItem() {
     const { location } = this.props
 
-    return location.pathname.includes('actions')
-      ? '/actions'
-      : location.pathname
+    if (location.pathname.includes('actions')) return '/actions'
+
+    if (location.pathname.includes('groups')) return '/groups'
+
+    return location.pathname
   }
 
   componentDidMount() {
@@ -535,7 +538,7 @@ class Header extends Component {
   }
 
   fetchNews = async (counterOnly = false) => {
-    const { news, unreadCount } = await api.getNews({
+    const { news, unreadCount } = await getNews({
       page: 1,
       range: 'network',
     })
@@ -865,6 +868,11 @@ class Header extends Component {
                         <FormattedMessage id="app.header.menu.news" />
                       </Link>
                     </Menu.Item>
+                    <Menu.Item key="/groups">
+                      <Link to="/groups/discover">
+                        <FormattedMessage id="app.pages.groups" />
+                      </Link>
+                    </Menu.Item>
                     <SubMenu
                       key="about"
                       title={
@@ -925,7 +933,7 @@ class Header extends Component {
                                   src={
                                     user
                                       ? user.photo ||
-                                        api.getUserInitialAvatar(user.fullName)
+                                        getUserInitialAvatar(user.fullName)
                                       : ''
                                   }
                                   alt="Avatar"
@@ -1015,6 +1023,12 @@ class Header extends Component {
                         <Menu.Item key="/account/news">
                           <Link to="/account/news">
                             <FormattedMessage id="app.header.menu.news" />
+                          </Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="/groups">
+                          <Link to="/groups/discover">
+                            <FormattedMessage id="app.pages.groups" />
                           </Link>
                         </Menu.Item>
 
@@ -1115,7 +1129,7 @@ class Header extends Component {
                               src={
                                 user
                                   ? user.photo ||
-                                    api.getUserInitialAvatar(user.fullName)
+                                    getUserInitialAvatar(user.fullName)
                                   : ''
                               }
                               alt="Avatar"

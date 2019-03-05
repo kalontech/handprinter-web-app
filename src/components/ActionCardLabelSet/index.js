@@ -16,33 +16,35 @@ const ActionCardLabelSet = props => {
   const { impacts, hideTooltip, mobileFixedWidth } = props
   return (
     <CardLabelWrap mobileFixedWidth={mobileFixedWidth}>
-      {Object.entries(impacts.footprint)
-        .filter(([category, timeValue]) => timeValue.minutes > 0)
-        .map(([category, timeValue], index) => (
-          <ActionCardLabel
-            hideTooltip={hideTooltip}
-            key={index}
-            category={category}
-            unit={timeValue.humanReadable.unit}
-            value={timeValue.humanReadable.value}
-            variant={
-              timeValue.humanReadable.value >= 0 ? 'positive' : 'negative'
-            }
-          />
-        ))}
-      {Object.entries(impacts.handprint)
-        .filter(([category, timeValue]) => timeValue.minutes > 0)
-        .map(([category, timeValue], index) => (
-          <ActionCardLabel
-            key={index}
-            category={category}
-            unit={timeValue.humanReadable.unit}
-            value={timeValue.humanReadable.value}
-            variant={
-              timeValue.humanReadable.value >= 0 ? 'positive' : 'negative'
-            }
-          />
-        ))}
+      {impacts.footprint &&
+        Object.entries(impacts.footprint)
+          .filter(([category, timeValue]) => timeValue.minutes > 0)
+          .map(([category, timeValue], index) => (
+            <ActionCardLabel
+              hideTooltip={hideTooltip}
+              key={index}
+              category={category}
+              unit={timeValue.humanReadable.unit}
+              value={timeValue.humanReadable.value}
+              variant={
+                timeValue.humanReadable.value >= 0 ? 'positive' : 'negative'
+              }
+            />
+          ))}
+      {impacts.handprint &&
+        Object.entries(impacts.handprint)
+          .filter(([category, timeValue]) => timeValue.minutes > 0)
+          .map(([category, timeValue], index) => (
+            <ActionCardLabel
+              key={index}
+              category={category}
+              unit={timeValue.humanReadable.unit}
+              value={timeValue.humanReadable.value}
+              variant={
+                timeValue.humanReadable.value >= 0 ? 'positive' : 'negative'
+              }
+            />
+          ))}
     </CardLabelWrap>
   )
 }

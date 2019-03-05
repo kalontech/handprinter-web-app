@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import { Link } from 'react-router-dom'
 
-import api from 'api'
+import { getUserInitialAvatar } from 'api'
 import styled from 'styled-components'
 import colors from 'config/colors'
 
@@ -118,7 +118,7 @@ const NotificationsContainer = ({
           const { user, action } = notifItem.arguments
           const userPhoto =
             (user && user.photo) ||
-            api.getUserInitialAvatar((user && user.fullName) || '?')
+            getUserInitialAvatar((user && user.fullName) || '?')
 
           return (
             <NotificationItem key={index}>

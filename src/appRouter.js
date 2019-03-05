@@ -11,7 +11,8 @@ import Route from './routeWrapper'
 
 import ActionModalPage from './pages/ActionModalPage'
 import ActionsPage from './pages/ActionsPage'
-
+import GroupsListPage from './pages/GroupsList'
+import GroupViewPage from './pages/GroupView'
 import CheckYourEmailPage from './pages/CheckYourEmailPage'
 import DashboardPage from './pages/DashboardPage'
 import FaqPage from './pages/FaqPage'
@@ -63,6 +64,20 @@ const AppRouter = () => {
             component={ActionsPage}
             useAuthentication
             withoutCTA
+          />
+          <Route
+            path="/groups/view/:id/:subset"
+            component={GroupViewPage}
+            useAuthentication
+            withoutCTA
+            requireAuthentication
+          />
+          <Route
+            path="/groups/:subset"
+            component={GroupsListPage}
+            useAuthentication
+            withoutCTA
+            requireAuthentication
           />
           <Route
             path="/account/check-your-email"
@@ -196,8 +211,10 @@ const AppRouter = () => {
           />
 
           <ModalRoute
-            path="/account/news/actions/:actionSlug"
-            parentPath="/account/news"
+            path="/groups/view/:id/:subset/:slug"
+            parentPath={({ params }) =>
+              `/groups/view/${params.id}/${params.subset}`
+            }
             component={ActionModalPage}
           />
         </Switch>

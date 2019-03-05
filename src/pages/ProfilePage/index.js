@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Modal, Button, Form, Select, Icon } from 'antd'
+import { Modal, Button, Form, Select, Icon, Tabs, Popover } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { animateScroll } from 'react-scroll'
 
@@ -30,12 +30,17 @@ import {
   ACCEPT_IMAGE_FORMATS,
 } from 'config/files'
 import handleFormError from 'utils/handleFormError'
-import api from 'api'
+import api, { getUserInitialAvatar } from 'api'
 import decodeError from 'utils/decodeError'
 import { logOut } from 'redux/accountStore'
 import hexToRgba from 'utils/hexToRgba'
 import PageMetadata from 'components/PageMetadata'
 import media from 'utils/mediaQueryTemplate'
+import { fetchGroupsList, fetchDeleteGroup } from 'api/groups'
+import { GROUPS_SUBSETS, USER_GROUP_ROLES } from 'utils/constants'
+import { history } from 'appRouter'
+
+const { TabPane } = Tabs
 
 export const Wrapper = styled.div`
   background-color: ${colors.lightGray};
@@ -49,11 +54,11 @@ export const Wrapper = styled.div`
   `}
 `
 
-export const FormWrapper = styled.div`
+export const TabContent = styled.div`
   background-color: ${colors.white};
-  padding: 25px 28px;
+  padding: 25px 20px;
   border-radius: 5px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   width: 575px;
   ${media.phone`
     padding: 15px;
@@ -243,9 +248,142 @@ export const DeleteAccountButton = styled(DefaultButton)`
   }
 `
 
+export const DeleteMyGroupButton = styled(DeleteAccountButton)`
+  padding: 0 30px;
+  height: 30px;
+`
+
+const ListItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 68px;
+  padding: 0 7px;
+`
+
+const GroupsList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  position: relative;
+  height: 273px;
+  width: 100%;
+  overflow-y: auto;
+  padding: 0;
+`
+
+const MyGroupItem = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`
+
+const MyGroupPicture = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+`
+
+const MyGroupInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: baseline;
+`
+
+const MyGroupInfoName = styled.span`
+  line-height: 1.1;
+  font-size: 16px;
+  color: ${colors.dark};
+`
+
+const MyGroupInfoMyRole = styled.span`
+  font-size: 14px;
+  color: ${colors.darkGray};
+`
+
+const StyledTabs = styled(Tabs)`
+  .ant-tabs-nav-container,
+  .ant-tabs-tab {
+    background: ${colors.lightBlack} !important;
+  }
+
+  .ant-tabs-nav {
+    display: flex;
+    justify-content: center;
+  }
+
+  .ant-tabs-tab {
+    border: none !important;
+    color: ${colors.darkGray};
+    font-weight: bold;
+    font-family: Noto Sans, sans-serif;
+  }
+
+  .ant-tabs-tab-active,
+  .ant-tabs-tab:hover {
+    color: ${colors.white} !important;
+  }
+
+  .ant-tabs-bar {
+    margin: 0;
+  }
+
+  .ant-tabs-nav-container {
+    height: 51px !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .ant-tabs-nav-wrap {
+    height: 51px;
+    line-height: 3.5;
+  }
+`
+
+const MyGroupsOptionButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:focus,
+  &:active,
+  &:hover {
+    outline: none;
+  }
+
+  i {
+    font-size: 25px;
+    color: ${colors.dark};
+  }
+`
+
+const GroupsNotFoundWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const PROFILE_MODAL_TYPES = {
   DELETE_ACCOUNT_CONFIRMATION: 'DELETE_ACCOUNT_CONFIRMATION',
   DELETE_ACCOUNT_FAILURE: 'DELETE_ACCOUNT_FAILURE',
+  DELETE_MY_GROUP: 'DELETE_MY_GROUP',
+}
+
+const PROFILE_TABS_KEYS = {
+  GENERAL: 'GENERAL',
+  MY_GROUPS: 'MY_GROUPS',
+}
+
+async function getMyGroupsList() {
+  return fetchGroupsList({
+    subset: GROUPS_SUBSETS.MY,
+  })
 }
 
 class ProfilePage extends Component {
@@ -255,6 +393,10 @@ class ProfilePage extends Component {
     formInfoChanged: false,
     countryChanged: false,
     isDeletingAccount: false,
+    tabActiveKey: PROFILE_TABS_KEYS.GENERAL,
+    myGroups: [],
+    showMyGroupsOptionPopover: false,
+    activeMyGroupsOptionPopover: undefined,
   }
 
   canvasRef = React.createRef()
@@ -507,6 +649,39 @@ class ProfilePage extends Component {
           centered: true,
         })
         break
+      case PROFILE_MODAL_TYPES.DELETE_MY_GROUP:
+        Modal.confirm({
+          title: formatMessage({ id: 'app.actions.card.delete' }),
+          content: formatMessage({ id: 'app.pages.groups.confirm' }),
+          okText: formatMessage({
+            id: 'app.profilePage.deleteAccountModal.confirmButton',
+          }),
+          cancelText: formatMessage({
+            id: 'app.profilePage.deleteAccountModal.cancelButton',
+          }),
+          okType: 'danger',
+          className: 'ant-modal-confirm_profile-page',
+          centered: true,
+          onOk: async () => {
+            await fetchDeleteGroup(payload.groupId)
+            const groups = (await getMyGroupsList()).groups.docs
+            this.setState({ myGroups: groups })
+          },
+        })
+        break
+    }
+  }
+
+  handleTabClick = async key => {
+    if (key !== this.state.tabActiveKey) {
+      let updatedMyGroupsList
+      if (key === PROFILE_TABS_KEYS.MY_GROUPS) {
+        updatedMyGroupsList = (await getMyGroupsList()).groups.docs
+      }
+      this.setState({
+        tabActiveKey: key,
+        myGroups: updatedMyGroupsList || this.state.myGroups,
+      })
     }
   }
 
@@ -563,6 +738,10 @@ class ProfilePage extends Component {
       showChangePasswordSection,
       formInfoChanged,
       isDeletingAccount,
+      myGroups,
+      tabActiveKey,
+      activeMyGroupsOptionPopover,
+      showMyGroupsOptionPopover,
     } = this.state
 
     return (
@@ -573,95 +752,226 @@ class ProfilePage extends Component {
             <AppleBackgroundSection />
             {this.renderProfilePictureBlock({ user })}
             <Fragment>
-              <FormWrapper>
-                <Form onChange={this.handleFormChange}>
-                  <FormSectionHeading>
-                    <FormattedMessage id="app.profilePage.generalInformation" />
-                  </FormSectionHeading>
-                  <FormItem>
-                    {getFieldDecorator('fullName', {
-                      rules: getValidationRules(formatMessage).fullName,
-                    })(
-                      <Input
-                        type="text"
-                        placeholder={formatMessage({
-                          id: 'app.forms.fullName',
-                        })}
-                      />,
-                    )}
-                  </FormItem>
-                  <FormItem>
-                    {getFieldDecorator('email', {
-                      rules: getValidationRules(formatMessage).email,
-                    })(
-                      <Input
-                        type="email"
-                        placeholder={formatMessage({ id: 'app.forms.email' })}
-                      />,
-                    )}
-                  </FormItem>
-                  <FormItem>
-                    {getFieldDecorator('country', {
-                      rules: getValidationRules(formatMessage).country,
-                    })(
-                      <Select
-                        onChange={this.handleCountryChange}
-                        showSearch
-                        placeholder={formatMessage({
-                          id: 'app.forms.country',
-                        })}
-                        optionFilterProp="children"
-                        className="ant-select__override-for__register-page"
-                        dropdownClassName="ant-select__override-for__register-page"
-                        suffixIcon={
-                          <img src={arrowDownIcon} alt="arrowDownIcon" />
-                        }
-                      >
-                        {countries.map(country => (
-                          <Select.Option key={country._id} value={country._id}>
-                            {country.name}
-                          </Select.Option>
-                        ))}
-                      </Select>,
-                    )}
-                  </FormItem>
-                  <ErrorItemWrap>
-                    <FormItem>
-                      {getFieldDecorator('errorInfo')(<Input type="hidden" />)}
-                      {/* {uploadImageError && uploadImageError} */}
-                    </FormItem>
-                    <FormItem>
-                      {getFieldDecorator('errorPhoto')(<Input type="hidden" />)}
-                    </FormItem>
-                  </ErrorItemWrap>
+              <StyledTabs
+                type="card"
+                onTabClick={this.handleTabClick}
+                activeKey={tabActiveKey}
+              >
+                <TabPane
+                  tab={formatMessage({
+                    id: 'app.profilePage.tabs.general',
+                  })}
+                  key={PROFILE_TABS_KEYS.GENERAL}
+                >
+                  <TabContent>
+                    <Form onChange={this.handleFormChange}>
+                      <FormSectionHeading>
+                        <FormattedMessage id="app.profilePage.generalInformation" />
+                      </FormSectionHeading>
+                      <FormItem>
+                        {getFieldDecorator('fullName', {
+                          rules: getValidationRules(formatMessage).fullName,
+                        })(
+                          <Input
+                            type="text"
+                            placeholder={formatMessage({
+                              id: 'app.forms.fullName',
+                            })}
+                          />,
+                        )}
+                      </FormItem>
+                      <FormItem>
+                        {getFieldDecorator('email', {
+                          rules: getValidationRules(formatMessage).email,
+                        })(
+                          <Input
+                            type="email"
+                            placeholder={formatMessage({
+                              id: 'app.forms.email',
+                            })}
+                          />,
+                        )}
+                      </FormItem>
+                      <FormItem>
+                        {getFieldDecorator('country', {
+                          rules: getValidationRules(formatMessage).country,
+                        })(
+                          <Select
+                            onChange={this.handleCountryChange}
+                            showSearch
+                            placeholder={formatMessage({
+                              id: 'app.forms.country',
+                            })}
+                            optionFilterProp="children"
+                            className="ant-select__override-for__register-page"
+                            dropdownClassName="ant-select__override-for__register-page"
+                            suffixIcon={
+                              <img src={arrowDownIcon} alt="arrowDownIcon" />
+                            }
+                          >
+                            {countries.map(country => (
+                              <Select.Option
+                                key={country._id}
+                                value={country._id}
+                              >
+                                {country.name}
+                              </Select.Option>
+                            ))}
+                          </Select>,
+                        )}
+                      </FormItem>
+                      <ErrorItemWrap>
+                        <FormItem>
+                          {getFieldDecorator('errorInfo')(
+                            <Input type="hidden" />,
+                          )}
+                        </FormItem>
+                        <FormItem>
+                          {getFieldDecorator('errorPhoto')(
+                            <Input type="hidden" />,
+                          )}
+                        </FormItem>
+                      </ErrorItemWrap>
 
-                  {formInfoChanged && (
-                    <StyledSaveChangesButton
-                      type="primary"
-                      onClick={this.handleInfoSubmit}
-                      style={{ width: '100%' }}
-                      loading={isUpdatingMeInfo}
-                    >
-                      <FormattedMessage id="app.profilePage.saveChanges" />
-                    </StyledSaveChangesButton>
-                  )}
+                      {formInfoChanged && (
+                        <StyledSaveChangesButton
+                          type="primary"
+                          onClick={this.handleInfoSubmit}
+                          style={{ width: '100%' }}
+                          loading={isUpdatingMeInfo}
+                        >
+                          <FormattedMessage id="app.profilePage.saveChanges" />
+                        </StyledSaveChangesButton>
+                      )}
 
-                  {showChangePasswordSection ? (
-                    this.renderChangePasswordSection({
-                      getFieldDecorator,
-                      formatMessage,
-                      isUpdatingMePassword,
-                    })
-                  ) : (
-                    <ChangePasswordButton
-                      type="primary"
-                      onClick={this.toggleShowChangePasswordSection}
-                    >
-                      <FormattedMessage id="app.profilePage.changePassword" />
-                    </ChangePasswordButton>
-                  )}
-                </Form>
-              </FormWrapper>
+                      {showChangePasswordSection ? (
+                        this.renderChangePasswordSection({
+                          getFieldDecorator,
+                          formatMessage,
+                          isUpdatingMePassword,
+                        })
+                      ) : (
+                        <ChangePasswordButton
+                          type="primary"
+                          onClick={this.toggleShowChangePasswordSection}
+                        >
+                          <FormattedMessage id="app.profilePage.changePassword" />
+                        </ChangePasswordButton>
+                      )}
+                    </Form>
+                  </TabContent>
+                </TabPane>
+                <TabPane
+                  tab={formatMessage({
+                    id: 'app.profilePage.tabs.myGroups',
+                  })}
+                  key={PROFILE_TABS_KEYS.MY_GROUPS}
+                >
+                  <TabContent>
+                    <GroupsList>
+                      {myGroups.length > 0 ? (
+                        myGroups.map((group, index) => (
+                          <ListItem key={group._id}>
+                            <MyGroupItem
+                              onClick={() =>
+                                history.push(
+                                  `/groups/view/${group._id}/statistics`,
+                                )
+                              }
+                            >
+                              <MyGroupPicture
+                                src={
+                                  group.picture ||
+                                  getUserInitialAvatar(group.name)
+                                }
+                                alt="Group picture"
+                              />
+                              <MyGroupInfo>
+                                <MyGroupInfoName>{group.name}</MyGroupInfoName>
+                                <MyGroupInfoMyRole>
+                                  <FormattedMessage
+                                    id={
+                                      {
+                                        MEMBER: 'app.pages.groups.member',
+                                        OWNER: 'app.pages.groups.owner',
+                                        ADMIN: 'app.pages.groups.admin',
+                                      }[group.info.memberRole]
+                                    }
+                                  />
+                                </MyGroupInfoMyRole>
+                              </MyGroupInfo>
+                            </MyGroupItem>
+                            <Popover
+                              trigger="click"
+                              placement="bottomRight"
+                              getPopupContainer={() =>
+                                this[`$myGroupsOptionButton_${index}`]
+                              }
+                              visible={
+                                showMyGroupsOptionPopover &&
+                                activeMyGroupsOptionPopover === index
+                              }
+                              onVisibleChange={(asda, asdasd) => {
+                                if (showMyGroupsOptionPopover) {
+                                  this.setState({
+                                    showMyGroupsOptionPopover: false,
+                                  })
+                                }
+                              }}
+                              content={
+                                <Fragment>
+                                  <DeleteMyGroupButton
+                                    type="primary"
+                                    onClick={() => {
+                                      this.showModal({
+                                        type:
+                                          PROFILE_MODAL_TYPES.DELETE_MY_GROUP,
+                                        payload: {
+                                          groupId: group._id,
+                                        },
+                                      })
+                                      this.setState({
+                                        activeMyGroupsOptionPopover: undefined,
+                                        showMyGroupsOptionPopover: false,
+                                      })
+                                    }}
+                                  >
+                                    <FormattedMessage id="app.profilePage.deleteMyGroup" />
+                                  </DeleteMyGroupButton>
+                                </Fragment>
+                              }
+                            >
+                              {group.info.memberRole ===
+                                USER_GROUP_ROLES.OWNER && (
+                                <MyGroupsOptionButton
+                                  ref={ref => {
+                                    this[`$myGroupsOptionButton_${index}`] = ref
+                                  }}
+                                  onClick={() => {
+                                    this.setState({
+                                      activeMyGroupsOptionPopover: index,
+                                      showMyGroupsOptionPopover: true,
+                                    })
+                                  }}
+                                >
+                                  <Icon type="ellipsis" rotate={90} />
+                                </MyGroupsOptionButton>
+                              )}
+                            </Popover>
+                          </ListItem>
+                        ))
+                      ) : (
+                        <GroupsNotFoundWrapper>
+                          <span>
+                            <FormattedMessage id="app.pages.groups.emptyGroupsList" />
+                          </span>
+                        </GroupsNotFoundWrapper>
+                      )}
+                    </GroupsList>
+                  </TabContent>
+                </TabPane>
+              </StyledTabs>
+
               <DeleteButtonWrap>
                 <DeleteAccountButton
                   type="primary"

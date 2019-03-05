@@ -13,7 +13,7 @@ import CalendarWidget from 'components/CalendarWidget'
 import GoodRatioWidget from 'components/GoodRatioWidget'
 import NetworkWidget from 'components/NetworkWidget'
 import colors from 'config/colors'
-import api from 'api'
+import api, { getDashboardData, getUserInitialAvatar } from 'api'
 import Spinner from 'components/Spinner'
 import PageMetadata from 'components/PageMetadata'
 import { BlockContainer } from 'components/Styled'
@@ -369,16 +369,21 @@ const StyledIcon = styled(Icon)`
   `}
 `
 
-async function getDashboardData(props) {
-  const personId = props.match.params.personId
+async function fetchDashboardData(props) {
+  const { personId } = props.match.params
+
   if (personId) {
-    const { calendar, ratio, stats } = await api.getDashboardData(personId)
+    const { calendar, ratio, stats } = await getDashboardData({
+      userId: personId,
+    })
     const { user } = await api.getUser({ userId: personId })
 
     return { calendar, ratio, stats, user }
   }
-  const { calendar, network, ratio, stats } = await api.getDashboardData()
+
+  const { calendar, network, ratio, stats } = await getDashboardData()
   const { user } = await api.getMe()
+
   return { calendar, network, ratio, stats, user }
 }
 
@@ -427,9 +432,7 @@ class DashboardPage extends Component {
                       <DashboardHeaderUserPictureTree src={treeImage} />
                       <DashboardHeaderUserPictureBackground />
                       <DashboardHeaderUserPicture
-                        src={
-                          user.photo || api.getUserInitialAvatar(user.fullName)
-                        }
+                        src={user.photo || getUserInitialAvatar(user.fullName)}
                       />
                     </DashboardHeaderUserPictureWrap>
                   </BlockContainer>
@@ -777,6 +780,6 @@ DashboardPage.propTypes = {
 
 export default compose(
   connect(mapStateToProps),
-  fetch(getDashboardData, { ...fetchConfigDefault, loader: false }),
+  fetch(fetchDashboardData, { ...fetchConfigDefault, loader: false }),
   injectIntl,
 )(DashboardPage)

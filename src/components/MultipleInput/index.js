@@ -209,7 +209,7 @@ class MultipleInput extends Component {
                   ref={this.multipleInputRef}
                   type="text"
                   size="small"
-                  placeholder={values.length < 1 && placeholder}
+                  placeholder={values.length === 0 ? placeholder : undefined}
                   onBlur={this.handleAddValueConfirm}
                   onPressEnter={this.handleAddValueConfirm}
                   onKeyPress={this.handleKeyPress}

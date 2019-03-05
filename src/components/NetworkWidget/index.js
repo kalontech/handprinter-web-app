@@ -6,7 +6,7 @@ import hexToRgba from 'utils/hexToRgba'
 
 import colors from 'config/colors'
 import { sizes } from 'utils/mediaQueryTemplate'
-import api from 'api'
+import { getUserInitialAvatar } from 'api'
 import { history } from 'appRouter'
 
 const Wrap = styled.div`
@@ -269,7 +269,7 @@ class NetworkWidget extends Component {
       .append('image')
       .attr(
         'xlink:href',
-        d => d.photo || api.getUserInitialAvatar(d.fullName || '?'),
+        d => d.photo || getUserInitialAvatar(d.fullName || '?'),
       )
       .attr('x', d => -(getNodeSize(d.depth) / 2))
       .attr('y', d => -(getNodeSize(d.depth) / 2))

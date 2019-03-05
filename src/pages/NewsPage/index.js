@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { injectIntl, FormattedMessage, intlShape } from 'react-intl'
 import { Menu, Dropdown } from 'antd'
 import { animateScroll } from 'react-scroll/modules'
 
-import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Spinner from 'components/Spinner'
+import NewsList from 'components/NewsList'
 import { BlockContainer, DefaultButton } from 'components/Styled'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 import hexToRgba from 'utils/hexToRgba'
-import api from 'api'
+import api, { getNews } from 'api'
 
 const NEWS_RANGES = {
   NETWORK: 'network',
@@ -70,31 +68,6 @@ const NewsContainer = styled.div`
   `}
 `
 
-const NewsItemContainer = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 13px 0;
-`
-
-const NewsItemPicture = styled.div`
-  margin-right: 17px;
-  width: 50px;
-
-  img {
-    border-radius: 25px;
-    height: 50px;
-    width: 50px;
-  }
-`
-
-const NewsItemContent = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-`
-
 const DropdownLink = styled.a`
   font-size: 16px;
   line-height: 30px;
@@ -104,22 +77,6 @@ const DropdownLink = styled.a`
   .anticon {
     color: ${colors.green};
   }
-`
-
-const NewsItemLink = styled(Link)`
-  font-weight: bold;
-`
-
-const NewsItemBody = styled.div``
-
-const NewsItemMessage = styled.div``
-
-const NewsItemDate = styled.div``
-
-const NewsItemSuffix = styled.div`
-  ${media.desktop`
-    display: none;
-  `}
 `
 
 const NewsFooter = styled.div`
@@ -133,28 +90,6 @@ const NewsFooter = styled.div`
     }
   `}
 `
-
-const NewsItem = ({ picture, subject, date, suffix }) => (
-  <NewsItemContainer>
-    <NewsItemContent>
-      <NewsItemPicture>
-        <img src={picture} />
-      </NewsItemPicture>
-      <NewsItemBody>
-        <NewsItemMessage>{subject}</NewsItemMessage>
-        <NewsItemDate>{date}</NewsItemDate>
-      </NewsItemBody>
-    </NewsItemContent>
-    <NewsItemSuffix>{suffix}</NewsItemSuffix>
-  </NewsItemContainer>
-)
-
-NewsItem.propTypes = {
-  picture: PropTypes.string.isRequired,
-  subject: PropTypes.node.isRequired,
-  date: PropTypes.node.isRequired,
-  suffix: PropTypes.node.isRequired,
-}
 
 class NewsPage extends Component {
   state = {
@@ -173,13 +108,21 @@ class NewsPage extends Component {
 
   fetchNews = async () => {
     this.setState({ loadingNews: true })
-    const { news } = await api.getNews({
+    const { news = [] } = await getNews({
       page: this.state.page,
       range: this.state.range,
     })
     this.setState({
       loadingNews: false,
-      news: [...this.state.news, ...news],
+      news: [
+        ...this.state.news,
+        ...news.filter(oneNews => {
+          return (
+            oneNews.type === 'USER_DID_ACTION' &&
+            Boolean(oneNews.arguments.user)
+          )
+        }),
+      ],
     })
   }
 
@@ -197,7 +140,7 @@ class NewsPage extends Component {
 
   render() {
     const {
-      intl: { locale, formatRelative },
+      intl: { locale },
     } = this.props
     return (
       <PageContainer>
@@ -231,47 +174,8 @@ class NewsPage extends Component {
             </Dropdown>
           </NewsHeader>
           <NewsContainer>
-            {this.state.news.map((news, index) => {
-              switch (news.type) {
-                case 'USER_DID_ACTION':
-                  const { user, action, impacts } = news.arguments
-                  return (
-                    <NewsItem
-                      key={index}
-                      picture={
-                        (user && user.photo) ||
-                        api.getUserInitialAvatar((user && user.fullName) || '?')
-                      }
-                      subject={
-                        <FormattedMessage
-                          id="app.newsPage.news.userDidAction"
-                          values={{
-                            user: (
-                              <NewsItemLink to={`/account/person/${user.id}`}>
-                                {(user && user.fullName) ||
-                                  this.props.intl.formatMessage({
-                                    id: 'app.newsPage.userWithoutName',
-                                  })}
-                              </NewsItemLink>
-                            ),
-                            action: (
-                              <NewsItemLink
-                                to={`/account/news/actions/${action.slug}`}
-                              >
-                                {action.translatedName[locale] || action.name}
-                              </NewsItemLink>
-                            ),
-                          }}
-                        />
-                      }
-                      date={formatRelative(news.date)}
-                      suffix={<ActionCardLabelSet impacts={impacts} />}
-                    />
-                  )
-                default:
-                  return null
-              }
-            })}
+            <NewsList news={this.state.news} locale={locale} />
+
             {this.state.loadingNews && this.state.page === 1 && <Spinner />}
           </NewsContainer>
           <NewsFooter>

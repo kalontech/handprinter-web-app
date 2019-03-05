@@ -2,13 +2,14 @@ import React from 'react'
 
 import Spinner from 'components/Spinner'
 
-const { NODE_ENV } = process.env
-
 const actionDefault = () => Promise.resolve()
 
 export const configDefault = {
   filter: () => true,
   loader: true,
+  inject: true,
+  onSuccess() {},
+  onError() {},
 }
 
 /**
@@ -27,13 +28,18 @@ export const configDefault = {
  *
  * fetching on props update:
  *  - simply call this.props.fetch() inside your wrapped component to run steps mentioned above
+ *
+ *  changing fetched data manually: *DEPRECATED USE STORE NOT FETCH STATE INSTEAD*
+ *  - call this.props.mutate(value) - merges value with old injected props
  */
-export default (action = actionDefault, config = configDefault) => Component =>
+export default (action = actionDefault, config) => Component =>
   class FetchDecorator extends React.Component {
     static displayName = `Fetch(${Component.displayName || Component.name})`
 
+    static config = { ...configDefault, ...config }
+
     state = {
-      loading: config.filter(this.props),
+      loading: FetchDecorator.config.filter(this.props),
       injectedProps: {},
     }
 
@@ -41,6 +47,10 @@ export default (action = actionDefault, config = configDefault) => Component =>
 
     componentDidMount() {
       this.startFetch()
+    }
+
+    componentWillUnmount() {
+      this.fetchId = undefined
     }
 
     startFetch = () => {
@@ -52,22 +62,21 @@ export default (action = actionDefault, config = configDefault) => Component =>
 
     fetch = fetchId => {
       action({ ...this.props, ...this.state.injectedProps })
-        .then((fetched = {}) => {
+        .then(async (fetched = {}) => {
           if (fetchId !== this.fetchId) return
 
-          this.setState(state => ({
+          await FetchDecorator.config.onSuccess({ ...this.props, ...fetched })
+          this.setState({
             loading: false,
-            injectedProps: {
-              ...state.injectedProps,
-              ...fetched,
-            },
-          }))
+            injectedProps: FetchDecorator.config.inject ? fetched : {},
+          })
         })
-        .catch(error => {
+        .catch(async error => {
           if (fetchId !== this.fetchId) return
 
-          if (NODE_ENV !== 'production') console.error(error)
+          console.error(error)
 
+          await FetchDecorator.config.onError(this.props, error)
           this.setState({ loading: false })
         })
     }
@@ -86,9 +95,15 @@ export default (action = actionDefault, config = configDefault) => Component =>
           loading={loading}
           fetch={() => {
             this.setState(
-              { loading: config.filter(this.props) },
+              { loading: FetchDecorator.config.filter(this.props) },
               this.startFetch,
             )
+          }}
+          // DEPRECATED
+          mutate={(mutated = {}) => {
+            this.setState(state => ({
+              injectedProps: { ...state.injectedProps, ...mutated },
+            }))
           }}
         />
       )

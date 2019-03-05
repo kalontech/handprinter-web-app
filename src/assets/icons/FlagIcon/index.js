@@ -10,7 +10,7 @@ const FlagSvg = () => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <mask
-      id="mask0"
+      id="mask01231"
       mask-type="alpha"
       maskUnits="userSpaceOnUse"
       x="3"
@@ -25,7 +25,7 @@ const FlagSvg = () => (
         fill="currentColor"
       />
     </mask>
-    <g mask="url(#mask0)">
+    <g mask="url(#mask01231)">
       <rect
         x="-9.75"
         y="-9.75"

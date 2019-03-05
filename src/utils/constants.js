@@ -21,6 +21,24 @@ export const ACTIONS_SUBSETS = {
   TAKEN: 'history',
 }
 
+export const GROUPS_SUBSETS = {
+  DISCOVER: 'discover',
+  MY: 'my',
+  FEATURED: 'featured',
+}
+
+export const USER_GROUP_STATUSES = {
+  INVITED: 'INVITED',
+  REQUESTING: 'REQUESTING',
+  ACTIVE: 'ACTIVE',
+}
+
+export const USER_GROUP_ROLES = {
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER',
+  OWNER: 'OWNER',
+}
+
 export const ACTION_STATES = {
   PROPOSED: 'PROPOSED',
   MODELING: 'MODELING',

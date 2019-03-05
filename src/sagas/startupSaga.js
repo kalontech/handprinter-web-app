@@ -8,8 +8,7 @@ import { Creators as AppStoreCreators } from 'redux/appStore'
 import { prepareUserProfile } from './helpers'
 
 function* startup(action) {
-  // Print env
-  console.log('env', process.env)
+  window.__CONFIG__ = encodeURIComponent(JSON.stringify(process.env))
   // Zero-delay at the same beginning (this is workaround)
   yield call(delay, 0)
   // Retrieve state
