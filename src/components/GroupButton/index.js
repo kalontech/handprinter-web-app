@@ -173,7 +173,7 @@ class GroupButton extends React.PureComponent {
           >
             {intl.formatMessage({
               id: disabled
-                ? 'app.pages.groups.Pending'
+                ? 'app.pages.groups.pending'
                 : 'app.pages.groups.sendRequest',
             })}
           </ButtonRequest>
