@@ -93,6 +93,10 @@ const SearchWrap = styled.div`
   padding: 20px 30px;
   background-color: ${colors.white};
 
+  ${media.phone`
+    padding: 10px 15px;
+  `}
+
   .ant-select-dropdown,
   .ant-select-dropdown-menu {
     max-height: 402px;

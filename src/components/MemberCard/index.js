@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 
 const Block = styled(Link)`
@@ -17,6 +18,10 @@ const Block = styled(Link)`
   background-color: ${colors.white};
   box-shadow: 0 1px 10px rgba(52, 68, 66, 0.08);
   border-radius: 4px;
+
+  ${media.phone`
+    min-width: 290px;
+  `}
 `
 
 const User = styled.div`

@@ -9,6 +9,7 @@ import { ReactComponent as Star } from 'assets/icons/ic_star.svg'
 
 import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
+import media from 'utils/mediaQueryTemplate'
 
 const Block = styled(Link)`
   padding: 40px 40px 40px 30px;
@@ -19,6 +20,10 @@ const Block = styled(Link)`
   font-family: Noto Sans, sans-serif;
   box-shadow: 0 1px 10px ${hexToRgba(colors.dark, 0.08)};
   border-radius: 4px;
+
+  ${media.phone`
+    padding: 30px 10px 30px 10px;
+  `}
 `
 
 const PictureWrap = styled.div`
@@ -26,6 +31,10 @@ const PictureWrap = styled.div`
   align-items: center;
   justify-content: center;
   margin-right: 20px;
+
+  ${media.phone`
+    margin-right: 10px;
+  `}
 `
 
 const GroupImage = styled.img`
@@ -34,6 +43,11 @@ const GroupImage = styled.img`
   border-radius: 50%;
   object-fit: cover;
   background-color: ${colors.lightGray};
+
+  ${media.phone`
+    width: 90px;
+    height: 90px;
+  `}
 `
 
 const Info = styled.div`
