@@ -776,7 +776,7 @@ class GroupViewPage extends PureComponent {
                     <AdminsList>
                       {group.admins.map(({ user, groupInfo }, index) => (
                         <AdminsListItem index={index} key={user._id}>
-                          <Link to={`/account/person/${user._id}`}>
+                          <Link to={`/account/${user._id}`}>
                             <Tooltip
                               placement="top"
                               title={`${user.fullName ||
