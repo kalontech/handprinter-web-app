@@ -468,7 +468,7 @@
     "app.pages.groups.invitationsSent": "邀请已发送",
     "app.pages.groups.invitationsRequested": "请求邀请，请稍候",
     "app.pages.groups.confirm": "您确定要删除此群组吗？",
-    "app.pages.groups.addRemovePeople": "添加\/删除人{count}用户等待批准）",
+    "app.pages.groups.addRemovePeople": "添加\/删除人员",
     "app.pages.groups.statistics": "统计",
     "app.pages.groups.myGroups": "我的团队",
     "app.pages.groups.featured": "精选",
@@ -490,5 +490,6 @@
     "app.errors.35": "行动无效",
     "app.errors.36": "您已经是该群组的活跃成员",
     "app.errors.37": "等待批准加入此群组",
-    "app.pages.groups.pending": "待批准"
+    "app.pages.groups.pending": "待批准",
+    "app.pages.groups.addRemovePeopleCounter": "（ {count}用户等待批准）"
 }

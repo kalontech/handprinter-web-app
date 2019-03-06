@@ -468,7 +468,7 @@
     "app.pages.groups.invitationsSent": "Invitation has sent",
     "app.pages.groups.invitationsRequested": "Requested for invitation, please wait",
     "app.pages.groups.confirm": "Are you sure that you want to delete this group?",
-    "app.pages.groups.addRemovePeople": "Add\/remove people {count} users waits for approval)",
+    "app.pages.groups.addRemovePeople": "Add\/remove people",
     "app.pages.groups.statistics": "Statistics",
     "app.pages.groups.myGroups": "My groups",
     "app.pages.groups.featured": "Featured",
@@ -490,5 +490,6 @@
     "app.errors.35": "Invalid action",
     "app.errors.36": "You are already active member of this group",
     "app.errors.37": "Wait for approve to join this group",
-    "app.pages.groups.pending": "Pending approval"
+    "app.pages.groups.pending": "Pending approval",
+    "app.pages.groups.addRemovePeopleCounter": "({count} users waits for approval)"
 }

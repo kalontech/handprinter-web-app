@@ -468,7 +468,7 @@
     "app.pages.groups.invitationsSent": "Einladung wurde gesendet",
     "app.pages.groups.invitationsRequested": "Bitte um Einladung, bitte warten",
     "app.pages.groups.confirm": "Möchten Sie diese Gruppe wirklich löschen?",
-    "app.pages.groups.addRemovePeople": "Personen hinzufügen \/ entfernen {count} Benutzer warten auf Genehmigung)",
+    "app.pages.groups.addRemovePeople": "Personen hinzufügen \/ entfernen",
     "app.pages.groups.statistics": "Statistiken",
     "app.pages.groups.myGroups": "Meine Gruppen",
     "app.pages.groups.featured": "Vorgestellt",
@@ -490,5 +490,6 @@
     "app.errors.35": "Ungültige Aktion",
     "app.errors.36": "Sie sind bereits aktives Mitglied dieser Gruppe",
     "app.errors.37": "Warten Sie, bis Sie der Gruppe zugestimmt haben",
-    "app.pages.groups.pending": "Ausstehende Genehmigung"
+    "app.pages.groups.pending": "Ausstehende Genehmigung",
+    "app.pages.groups.addRemovePeopleCounter": "( {count} Benutzer warten auf Genehmigung)"
 }

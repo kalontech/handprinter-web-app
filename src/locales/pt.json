@@ -468,7 +468,7 @@
     "app.pages.groups.invitationsSent": "Convite enviado",
     "app.pages.groups.invitationsRequested": "Solicitado por convite, por favor aguarde",
     "app.pages.groups.confirm": "Tem certeza de que deseja excluir este grupo?",
-    "app.pages.groups.addRemovePeople": "Adicionar \/ remover pessoas {count} usuários aguardam aprovação)",
+    "app.pages.groups.addRemovePeople": "Adicionar \/ remover pessoas",
     "app.pages.groups.statistics": "Estatisticas",
     "app.pages.groups.myGroups": "Meus grupos",
     "app.pages.groups.featured": "Destaque",
@@ -490,5 +490,6 @@
     "app.errors.35": "Ação inválida",
     "app.errors.36": "Você já é membro ativo deste grupo",
     "app.errors.37": "Aguarde aprovar para participar deste grupo",
-    "app.pages.groups.pending": "Aprovação pendente"
+    "app.pages.groups.pending": "Aprovação pendente",
+    "app.pages.groups.addRemovePeopleCounter": "( {count} usuários aguardam aprovação)"
 }

@@ -468,7 +468,7 @@
     "app.pages.groups.invitationsSent": "Uitnodiging heeft verzonden",
     "app.pages.groups.invitationsRequested": "Gevraagd voor de uitnodiging, even geduld",
     "app.pages.groups.confirm": "Weet je zeker dat je deze groep wilt verwijderen?",
-    "app.pages.groups.addRemovePeople": "Mensen toevoegen \/ verwijderen {count} gebruikers wachten op goedkeuring)",
+    "app.pages.groups.addRemovePeople": "Mensen toevoegen \/ verwijderen",
     "app.pages.groups.statistics": "Statistieken",
     "app.pages.groups.myGroups": "Mijn groepen",
     "app.pages.groups.featured": "Uitgelicht",
@@ -490,5 +490,6 @@
     "app.errors.35": "Ongeldige actie",
     "app.errors.36": "Je bent al actief lid van deze groep",
     "app.errors.37": "Wacht op goedkeuring om lid te worden van deze groep",
-    "app.pages.groups.pending": "In afwachting van goedkeuring"
+    "app.pages.groups.pending": "In afwachting van goedkeuring",
+    "app.pages.groups.addRemovePeopleCounter": "( {count} gebruikers wachten op goedkeuring)"
 }

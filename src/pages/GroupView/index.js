@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import { compose } from 'redux'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
@@ -84,6 +83,7 @@ const Container = styled.div`
   max-width: 1180px;
   flex-grow: 1;
   display: flex;
+  align-items: center;
   padding: 10px 0;
   margin: 0 auto;
 
@@ -119,7 +119,6 @@ const UserPhoto = styled.img`
 `
 
 const DashedAdminCircle = styled.button`
-  z-index: 1;
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -131,7 +130,8 @@ const DashedAdminCircle = styled.button`
   outline: 0;
   background-color: transparent;
   cursor: pointer;
-  transform: translateX(-10px);
+  transform: translateX(${({ index }) => `${index * -10}px`});
+  z-index: 1;
 
   i {
     opacity: 0.4;
@@ -355,6 +355,38 @@ const ImpactCategorySelectorName = styled.strong`
   `}
 `
 
+const AdminsList = styled.ul`
+  list-style: none;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+`
+
+const AdminsListItem = styled.li`
+  margin: 0;
+
+  :not(:first-child) {
+    transform: translateX(${({ index }) => `${index * -10}px`});
+    z-index: ${({ index }) => index * -1};
+  }
+`
+
+const MoreAdminsItem = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: ${colors.ocean};
+  color: ${colors.white};
+  font-size: 14px;
+  line-height: 19px;
+  height: 42px;
+  width: 42px;
+  font-weight: bold;
+`
+
 const GROUP_TABS = {
   MEMBERS: 'members',
   STATISTICS: 'statistics',
@@ -371,7 +403,10 @@ async function getGroupData(props) {
     [GROUP_TABS.STATISTICS]: getDashboardData,
   }[match.params.subset]
 
-  const [{ group, requestingMembersCount }, tabsData] = await Promise.all([
+  const [
+    { group, requestingMembersCount, admins },
+    tabsData,
+  ] = await Promise.all([
     fetchedGroup ? () => Promise.resolve() : fetchGroupById(match.params.id),
     tabsFetch({
       groupId: match.params.id,
@@ -383,12 +418,12 @@ async function getGroupData(props) {
   ])
 
   return {
-    group: fetchedGroup || { ...group, requestingMembersCount },
+    group: fetchedGroup || { ...group, requestingMembersCount, admins },
     ...tabsData,
   }
 }
 
-class GroupViewPage extends React.PureComponent {
+class GroupViewPage extends PureComponent {
   static displayName = 'GroupViewPage'
 
   static propTypes = {
@@ -702,7 +737,6 @@ class GroupViewPage extends React.PureComponent {
       loading,
       group,
       intl,
-      user,
       match,
       members,
       news,
@@ -717,7 +751,7 @@ class GroupViewPage extends React.PureComponent {
         {loading && !group && <SpinnerStyled />}
 
         {group && (
-          <React.Fragment>
+          <Fragment>
             <FingerPrint />
 
             <GroupDetailedForm
@@ -735,40 +769,79 @@ class GroupViewPage extends React.PureComponent {
 
             <WhiteBlock>
               <Container>
-                <UserPhoto
-                  src={user.photo || getUserInitialAvatar(user.fullName)}
-                  alt="your photo"
-                />
+                {[USER_GROUP_ROLES.ADMIN, USER_GROUP_ROLES.OWNER].includes(
+                  group.info.memberRole,
+                ) && (
+                  <Fragment>
+                    <AdminsList>
+                      {group.admins.map(({ user, groupInfo }, index) => (
+                        <AdminsListItem index={index} key={user._id}>
+                          <Link to={`/account/person/${user._id}`}>
+                            <Tooltip
+                              placement="top"
+                              title={`${user.fullName ||
+                                ''} (${intl.formatMessage({
+                                id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
+                              })})`}
+                            >
+                              <UserPhoto
+                                src={
+                                  user.photo ||
+                                  getUserInitialAvatar(user.fullName)
+                                }
+                                alt="your photo"
+                              />
+                            </Tooltip>
+                          </Link>
+                        </AdminsListItem>
+                      ))}
 
-                <Tooltip
-                  getPopupContainer={() => this.$counter.current}
-                  placement="top"
-                  title={
-                    <TooltipTitle>
-                      {intl.formatMessage(
-                        { id: 'app.pages.groups.addRemovePeople' },
-                        { count: group.requestingMembersCount },
+                      {group.admins.length > 5 && (
+                        <AdminsListItem index={6}>
+                          <MoreAdminsItem>
+                            +{group.admins.length - 5}
+                          </MoreAdminsItem>
+                        </AdminsListItem>
                       )}
-                    </TooltipTitle>
-                  }
-                >
-                  {[USER_GROUP_ROLES.ADMIN, USER_GROUP_ROLES.OWNER].includes(
-                    group.info.memberRole,
-                  ) && (
-                    <DashedAdminCircle
-                      ref={this.$counter}
-                      onClick={() => {
-                        this.setState({ modalVisible: true })
-                      }}
+                    </AdminsList>
+
+                    <Tooltip
+                      getPopupContainer={() => this.$counter.current}
+                      placement="top"
+                      title={
+                        <TooltipTitle>
+                          {intl.formatMessage({
+                            id: 'app.pages.groups.addRemovePeople',
+                          })}
+                          <br />
+                          {group.requestingMembersCount > 0 &&
+                            intl.formatMessage(
+                              {
+                                id: 'app.pages.groups.addRemovePeopleCounter',
+                              },
+                              { count: group.requestingMembersCount },
+                            )}
+                        </TooltipTitle>
+                      }
                     >
-                      {group.requestingMembersCount > 0 && (
-                        <Counter>{group.requestingMembersCount}</Counter>
-                      )}
+                      <DashedAdminCircle
+                        index={
+                          group.admins.length > 5 ? 7 : group.admins.length
+                        }
+                        ref={this.$counter}
+                        onClick={() => {
+                          this.setState({ modalVisible: true })
+                        }}
+                      >
+                        {group.requestingMembersCount > 0 && (
+                          <Counter>{group.requestingMembersCount}</Counter>
+                        )}
 
-                      <Icon type="plus" />
-                    </DashedAdminCircle>
-                  )}
-                </Tooltip>
+                        <Icon type="plus" />
+                      </DashedAdminCircle>
+                    </Tooltip>
+                  </Fragment>
+                )}
 
                 <GroupButton {...this.buttonProps} />
               </Container>
@@ -810,7 +883,7 @@ class GroupViewPage extends React.PureComponent {
                 {loading ? (
                   <Spinner />
                 ) : (
-                  <React.Fragment>
+                  <Fragment>
                     <Row gutter={20}>
                       <Col span={24}>
                         <WidgetContainer noPaddings>
@@ -911,7 +984,7 @@ class GroupViewPage extends React.PureComponent {
                                   tooltipProps={{
                                     placement: 'bottomLeft',
                                     title: (
-                                      <React.Fragment>
+                                      <Fragment>
                                         <p>
                                           <FormattedMessage id="app.dashboardPage.myNetPositiveDays.infoTooltip" />
                                         </p>
@@ -924,7 +997,7 @@ class GroupViewPage extends React.PureComponent {
                                             <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
                                           </InfoElementLink>
                                         </div>
-                                      </React.Fragment>
+                                      </Fragment>
                                     ),
                                   }}
                                 />
@@ -951,7 +1024,7 @@ class GroupViewPage extends React.PureComponent {
                                   tooltipProps={{
                                     placement: 'bottomLeft',
                                     title: (
-                                      <React.Fragment>
+                                      <Fragment>
                                         <p>
                                           <FormattedMessage id="app.dashboardPage.goodRatio.infoTooltip" />
                                         </p>
@@ -964,7 +1037,7 @@ class GroupViewPage extends React.PureComponent {
                                             <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
                                           </InfoElementLink>
                                         </div>
-                                      </React.Fragment>
+                                      </Fragment>
                                     ),
                                   }}
                                 />
@@ -986,7 +1059,7 @@ class GroupViewPage extends React.PureComponent {
                         </WidgetContainer>
                       </GoodRatioCol>
                     </Row>
-                  </React.Fragment>
+                  </Fragment>
                 )}
               </Content>
 
@@ -1079,7 +1152,7 @@ class GroupViewPage extends React.PureComponent {
                 )}
               </Content>
             </TabsSecondary>
-          </React.Fragment>
+          </Fragment>
         )}
 
         <Modal
@@ -1098,9 +1171,6 @@ class GroupViewPage extends React.PureComponent {
 }
 
 export default compose(
-  connect(state => ({
-    user: state.user.data,
-  })),
   fetch(getGroupData, { loader: false }),
   injectIntl,
 )(GroupViewPage)
