@@ -990,7 +990,7 @@ class GroupViewPage extends React.PureComponent {
                           xs={24}
                         >
                           <MemberCard
-                            to={`/account/person/${item.user._id}`}
+                            to={`/account/${item.user._id}`}
                             fullName={item.user.fullName}
                             photo={
                               item.user.photo ||

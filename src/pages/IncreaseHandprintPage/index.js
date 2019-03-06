@@ -506,7 +506,7 @@ class IncreaseHandprintPage extends Component {
      * button become disabled, before the user leave current page
      */
     return row.status === INVITATION_STATUSES.ACCEPTED ? (
-      <ProfileLink to={`/account/person/${id}`}>
+      <ProfileLink to={`/account/${id}`}>
         <FormattedMessage id="app.increaseHandprintPage.table.viewProfile" />
       </ProfileLink>
     ) : (

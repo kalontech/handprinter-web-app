@@ -131,7 +131,7 @@ const NotificationsContainer = ({
                     id="app.newsPage.notification.userDidAction"
                     values={{
                       user: (
-                        <NotificationLink to={`/account/person/${user.id}`}>
+                        <NotificationLink to={`/account/${user.id}`}>
                           {(user && user.fullName) ||
                             formatMessage({
                               id: 'app.newsPage.userWithoutName',

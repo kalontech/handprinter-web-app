@@ -24,7 +24,7 @@ export default class NewsList extends React.PureComponent {
   static defaultProps = {
     news: [],
     locale: 'en',
-    personLinkPrefix: '/account/person/',
+    personLinkPrefix: '/account/',
     actionLinkPrefix: '/account/news/actions/',
   }
 

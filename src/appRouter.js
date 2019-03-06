@@ -94,12 +94,6 @@ const AppRouter = () => {
             withoutCTA
           />
           <Route
-            path="/account/person/:personId"
-            component={DashboardPage}
-            requireAuthentication
-            withoutCTA
-          />
-          <Route
             path="/account/code"
             component={IncreaseHandprintPage}
             requireAuthentication
@@ -177,6 +171,12 @@ const AppRouter = () => {
             withoutHeaderContent
             withoutCTA
             withoutFooter
+          />
+          <Route
+            path="/account/:personId"
+            component={DashboardPage}
+            requireAuthentication
+            withoutCTA
           />
           <Route component={NotFoundPage} withoutCTA />
         </Switch>

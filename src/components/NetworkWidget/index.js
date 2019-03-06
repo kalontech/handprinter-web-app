@@ -223,7 +223,7 @@ class NetworkWidget extends Component {
         widget.selectAll('.d3-tooltip').remove()
       })
       .on('click', function(e) {
-        history.push(`/account/person/${e.id}`)
+        history.push(`/account/${e.id}`)
       })
       .call(force.drag)
 

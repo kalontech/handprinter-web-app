@@ -456,40 +456,42 @@ class DashboardPage extends Component {
                             {moment(user.createdAt).format('MMMM DD, YYYY')}
                           </DashboardHeaderUserSince>
                         </DashboardHeaderUserNameCol>
-                        <DashboardHeaderUserInfoCol>
-                          <DashboardHeaderUserInfoRow>
-                            <HeaderUserInfoRowCol>
-                              <DashboardHeaderUserInfoValue>
-                                {stats.personal.usersInvited}
-                              </DashboardHeaderUserInfoValue>
-                              <DashboardHeaderUserSince>
-                                <FormattedMessage id="app.dashboardPage.usersInvited" />
-                              </DashboardHeaderUserSince>
-                            </HeaderUserInfoRowCol>
+                        {stats && (
+                          <DashboardHeaderUserInfoCol>
+                            <DashboardHeaderUserInfoRow>
+                              <HeaderUserInfoRowCol>
+                                <DashboardHeaderUserInfoValue>
+                                  {stats.personal.usersInvited}
+                                </DashboardHeaderUserInfoValue>
+                                <DashboardHeaderUserSince>
+                                  <FormattedMessage id="app.dashboardPage.usersInvited" />
+                                </DashboardHeaderUserSince>
+                              </HeaderUserInfoRowCol>
 
-                            <HeaderUserInfoRowCol>
-                              <DashboardHeaderUserInfoValue>
-                                {stats.personal.actionsTaken}
-                              </DashboardHeaderUserInfoValue>
-                              <DashboardHeaderUserSince>
-                                <FormattedMessage id="app.dashboardPage.actionsTaken" />
-                              </DashboardHeaderUserSince>
-                            </HeaderUserInfoRowCol>
+                              <HeaderUserInfoRowCol>
+                                <DashboardHeaderUserInfoValue>
+                                  {stats.personal.actionsTaken}
+                                </DashboardHeaderUserInfoValue>
+                                <DashboardHeaderUserSince>
+                                  <FormattedMessage id="app.dashboardPage.actionsTaken" />
+                                </DashboardHeaderUserSince>
+                              </HeaderUserInfoRowCol>
 
-                            <HeaderUserInfoRowCol>
-                              <DashboardHeaderUserInfoValue>
-                                {Math.round(
-                                  stats.personal.netPositiveDays[
-                                    currentImpactCategory
-                                  ],
-                                )}
-                              </DashboardHeaderUserInfoValue>
-                              <DashboardHeaderUserSince>
-                                <FormattedMessage id="app.dashboardPage.netPositiveDays" />
-                              </DashboardHeaderUserSince>
-                            </HeaderUserInfoRowCol>
-                          </DashboardHeaderUserInfoRow>
-                        </DashboardHeaderUserInfoCol>
+                              <HeaderUserInfoRowCol>
+                                <DashboardHeaderUserInfoValue>
+                                  {Math.round(
+                                    stats.personal.netPositiveDays[
+                                      currentImpactCategory
+                                    ],
+                                  )}
+                                </DashboardHeaderUserInfoValue>
+                                <DashboardHeaderUserSince>
+                                  <FormattedMessage id="app.dashboardPage.netPositiveDays" />
+                                </DashboardHeaderUserSince>
+                              </HeaderUserInfoRowCol>
+                            </DashboardHeaderUserInfoRow>
+                          </DashboardHeaderUserInfoCol>
+                        )}
                       </DashboardHeaderUserRow>
                     </BlockContainer>
                   </Col>

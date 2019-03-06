@@ -21,6 +21,7 @@ const NEWS_RANGES = {
 const PageContainer = styled.div`
   background-color: ${colors.lightGray};
   padding: 40px 0;
+  flex: 1;
   ${media.phone`
     padding-bottom: 50px;
   `}
@@ -142,6 +143,7 @@ class NewsPage extends Component {
     const {
       intl: { locale },
     } = this.props
+    const { news, range, loadingNews, page } = this.state
     return (
       <PageContainer>
         <BlockContainer>
@@ -166,22 +168,19 @@ class NewsPage extends Component {
               trigger={['click']}
             >
               <DropdownLink className="ant-dropdown-link" href="#">
-                <FormattedMessage
-                  id={`app.newsPage.ranges.${this.state.range}`}
-                />{' '}
+                <FormattedMessage id={`app.newsPage.ranges.${range}`} />{' '}
                 <ExpandMoreIcon />
               </DropdownLink>
             </Dropdown>
           </NewsHeader>
           <NewsContainer>
-            <NewsList news={this.state.news} locale={locale} />
-
-            {this.state.loadingNews && this.state.page === 1 && <Spinner />}
+            <NewsList news={news} locale={locale} />
+            {loadingNews && page === 1 && <Spinner />}
           </NewsContainer>
           <NewsFooter>
             <DefaultButton
-              disabled={this.state.loadingNews}
-              loading={this.state.loadingNews && this.state.page > 1}
+              disabled={loadingNews}
+              loading={loadingNews && page > 1}
               onClick={this.handleLoadMoreNews}
             >
               <FormattedMessage id="app.newsPage.loadMoreNews" />
