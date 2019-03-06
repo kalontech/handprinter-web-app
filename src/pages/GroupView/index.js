@@ -683,6 +683,7 @@ class GroupViewPage extends PureComponent {
           ...group,
           info: {
             ...group.info,
+            isMember: approve,
             membersCount: approve
               ? group.info.membersCount + 1
               : group.info.membersCount - 1,
