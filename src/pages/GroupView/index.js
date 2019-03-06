@@ -28,6 +28,7 @@ import {
 import fetch from 'utils/fetch'
 import decodeError from 'utils/decodeError'
 import media, { sizes } from 'utils/mediaQueryTemplate'
+import hexToRgba from 'utils/hexToRgba'
 import CalendarWidget from 'components/CalendarWidget'
 import GoodRatioWidget from 'components/GoodRatioWidget'
 import Spinner from 'components/Spinner'
@@ -194,7 +195,7 @@ const ButtonLoadMore = styled(SecondaryButton)`
   background-color: ${colors.gray};
   color: ${colors.ocean};
   max-width: 170px;
-  margin: 0 auto;
+  margin: 40px auto 0;
 
   :hover,
   :focus,
@@ -222,6 +223,23 @@ const WidgetContent = styled.div`
 const GoodRatioCol = styled(Col)`
   ${media.desktop`
     margin-top: 20px;
+  `}
+`
+
+const NewsContainer = styled.div`
+  background-color: ${colors.white};
+  padding: 17px 40px;
+  box-shadow: 0 0 10px ${hexToRgba(colors.dark, 0.08)};
+  border-radius: 4px;
+  ${media.desktop`
+    padding-left: 34px;
+    padding-right: 34px;
+  `}
+  ${media.phone`
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 15px;
+    padding-right: 15px;
   `}
 `
 
@@ -360,6 +378,7 @@ async function getGroupData(props) {
       page: queries.page || 1,
       range: 'group',
       subset: 'group',
+      status: USER_GROUP_STATUSES.ACTIVE,
     }),
   ])
 
@@ -1039,13 +1058,15 @@ class GroupViewPage extends React.PureComponent {
                 {loading ? (
                   <Spinner />
                 ) : (
-                  <NewsList
-                    actionLinkPrefix={`/groups/view/${match.params.id}/${
-                      match.params.subset
-                    }/`}
-                    news={news}
-                    locale={intl.locale}
-                  />
+                  <NewsContainer>
+                    <NewsList
+                      actionLinkPrefix={`/groups/view/${match.params.id}/${
+                        match.params.subset
+                      }/`}
+                      news={news}
+                      locale={intl.locale}
+                    />
+                  </NewsContainer>
                 )}
 
                 {!loading && (

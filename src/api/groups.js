@@ -34,8 +34,8 @@ export const fetchGroupById = id => fetchAPI(`/groups/${id}`)
 export const fetchUpdateGroup = (id, body) =>
   fetchAPI(`/groups/${id}`, { method: 'PUT', body })
 
-export const fetchGroupMembers = ({ groupId, page }) =>
-  fetchAPI(`/groups/${groupId}/members?page=${page}`)
+export const fetchGroupMembers = ({ groupId, page, status }) =>
+  fetchAPI(`/groups/${groupId}/members?${qs.stringify({ page, status })}`)
 
 export const fetchUpdateGroupMember = ({ id, memberId, body }) =>
   fetchAPI(`/groups/${id}/members/${memberId}`, { method: 'PUT', body })
