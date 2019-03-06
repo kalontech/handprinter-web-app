@@ -107,13 +107,13 @@ const SuggestedInfoDate = styled.div`
   }
 `
 
-const SuggestedInfoInitiatorPhoto = styled.div`
-  background-image: url('${props => props.src}');
+const SuggestedInfoInitiatorPhoto = styled.img`
   height: 20px;
   width: 20px;
   border-radius: 50%;
   display: inline-block;
-  margin-right: 5px;
+  margin-right: 10px;
+  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.1);
 `
 
 const IconsWrap = styled.div`
@@ -202,7 +202,7 @@ const ActionCard = props => {
 
       {suggestedBy && suggestedAt && (
         <SuggestedInfo>
-          <SuggestedInfoInitiator to={`/account/person/${suggestedBy.id}`}>
+          <SuggestedInfoInitiator to={`/account/person/${suggestedBy._id}`}>
             {suggestedBy.photo && (
               <SuggestedInfoInitiatorPhoto src={suggestedBy.photo} />
             )}
