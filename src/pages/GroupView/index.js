@@ -769,9 +769,7 @@ class GroupViewPage extends PureComponent {
 
             <WhiteBlock>
               <Container>
-                {[USER_GROUP_ROLES.ADMIN, USER_GROUP_ROLES.OWNER].includes(
-                  group.info.memberRole,
-                ) && (
+                {group.info.memberStatus === USER_GROUP_STATUSES.ACTIVE && (
                   <Fragment>
                     <AdminsList>
                       {group.admins.map(({ user, groupInfo }, index) => (
@@ -805,41 +803,45 @@ class GroupViewPage extends PureComponent {
                       )}
                     </AdminsList>
 
-                    <Tooltip
-                      getPopupContainer={() => this.$counter.current}
-                      placement="top"
-                      title={
-                        <TooltipTitle>
-                          {intl.formatMessage({
-                            id: 'app.pages.groups.addRemovePeople',
-                          })}
-                          <br />
-                          {group.requestingMembersCount > 0 &&
-                            intl.formatMessage(
-                              {
-                                id: 'app.pages.groups.addRemovePeopleCounter',
-                              },
-                              { count: group.requestingMembersCount },
-                            )}
-                        </TooltipTitle>
-                      }
-                    >
-                      <DashedAdminCircle
-                        index={
-                          group.admins.length > 5 ? 7 : group.admins.length
+                    {[USER_GROUP_ROLES.ADMIN, USER_GROUP_ROLES.OWNER].includes(
+                      group.info.memberRole,
+                    ) && (
+                      <Tooltip
+                        getPopupContainer={() => this.$counter.current}
+                        placement="top"
+                        title={
+                          <TooltipTitle>
+                            {intl.formatMessage({
+                              id: 'app.pages.groups.addRemovePeople',
+                            })}
+                            <br />
+                            {group.requestingMembersCount > 0 &&
+                              intl.formatMessage(
+                                {
+                                  id: 'app.pages.groups.addRemovePeopleCounter',
+                                },
+                                { count: group.requestingMembersCount },
+                              )}
+                          </TooltipTitle>
                         }
-                        ref={this.$counter}
-                        onClick={() => {
-                          this.setState({ modalVisible: true })
-                        }}
                       >
-                        {group.requestingMembersCount > 0 && (
-                          <Counter>{group.requestingMembersCount}</Counter>
-                        )}
+                        <DashedAdminCircle
+                          index={
+                            group.admins.length > 5 ? 7 : group.admins.length
+                          }
+                          ref={this.$counter}
+                          onClick={() => {
+                            this.setState({ modalVisible: true })
+                          }}
+                        >
+                          {group.requestingMembersCount > 0 && (
+                            <Counter>{group.requestingMembersCount}</Counter>
+                          )}
 
-                        <Icon type="plus" />
-                      </DashedAdminCircle>
-                    </Tooltip>
+                          <Icon type="plus" />
+                        </DashedAdminCircle>
+                      </Tooltip>
+                    )}
                   </Fragment>
                 )}
 
