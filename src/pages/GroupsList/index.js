@@ -412,7 +412,7 @@ class GroupsPage extends React.PureComponent {
           {loading ? (
             <Spinner />
           ) : (
-            <Row type="flex" gutter={{ md: 20 }} style={{ flexGrow: '1' }}>
+            <Row gutter={{ md: 20 }} style={{ flexGrow: '1' }}>
               {(groups.docs || []).map(item => (
                 <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
                   <GroupCard
