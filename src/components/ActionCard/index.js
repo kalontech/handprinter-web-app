@@ -202,7 +202,13 @@ const ActionCard = props => {
 
       {suggestedBy && suggestedAt && (
         <SuggestedInfo>
-          <SuggestedInfoInitiator to={`/account/${suggestedBy._id}`}>
+          <SuggestedInfoInitiator
+            to={
+              suggestedBy.selfTaken
+                ? '/account/dashboard'
+                : `/account/${suggestedBy._id}`
+            }
+          >
             {suggestedBy.photo && (
               <SuggestedInfoInitiatorPhoto src={suggestedBy.photo} />
             )}
