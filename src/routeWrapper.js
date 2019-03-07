@@ -67,22 +67,30 @@ const RouteWrapper = ({
                         ? 'private'
                         : 'public'
                     }
-                    overrides={brandedConfig && brandedConfig.headerOverrides}
+                    overrides={
+                      brandedConfig && {
+                        brandName: brandedConfig.brandName,
+                        ...brandedConfig.headerOverrides,
+                      }
+                    }
                   />
                 )}
                 <Layout.Content>
                   <Component
                     {...props}
-                    overrides={brandedConfig && brandedConfig.headerOverrides}
+                    overrides={
+                      brandedConfig && {
+                        brandName: brandedConfig.brandName,
+                        ...brandedConfig.headerOverrides,
+                      }
+                    }
                   />
                 </Layout.Content>
                 {!withoutCTA &&
                   !user &&
-                  ((brandedConfig && <brandedConfig.ctaComponent />) || (
-                    <Cta />
-                  ))}
+                  ((brandedConfig && brandedConfig.ctaComponent) || <Cta />)}
                 {!withoutFooter &&
-                  ((brandedConfig && <brandedConfig.footerComponent />) || (
+                  ((brandedConfig && brandedConfig.footerComponent) || (
                     <Footer />
                   ))}
                 <ModalContainer />

@@ -505,5 +505,9 @@
     "app.footer.menu.privacyPolicy": "Politique de confidentialité",
     "app.privacyPolicy.head.title": "Bienvenue chez Handprinter!",
     "app.privacyPolicy.head.keywords": "empreinte de la main, nature, empreinte, empreinte de la main",
-    "app.privacyPolicy.head.description": "Voulez-vous faire le bien à l'échelle mondiale? Tu n'es pas seul. Grâce à Handprinter, des actions individuelles créatives et des actions de proximité génèrent des effets d'entraînement qui vont toucher et soigner votre communauté et le monde entier."
+    "app.privacyPolicy.head.description": "Voulez-vous faire le bien à l'échelle mondiale? Tu n'es pas seul. Grâce à Handprinter, des actions individuelles créatives et des actions de proximité génèrent des effets d'entraînement qui vont toucher et soigner votre communauté et le monde entier.",
+    "app.eatonHomePage.block.heading": "Eaton apporte Handprinter à 100 000 employés dans le monde entier!",
+    "app.eatonHomePage.block.description": "Eaton a collaboré avec Handprinter.org pour offrir aux employés un moyen simple de suivre l’impact des actions personnelles sur l’environnement. Handprinter vous aide à calculer et à suivre vos efforts et à suivre les progrès de vos collègues à mesure que vous vous rapprochez de l'objectif de devenir Net Positive en réduisant votre empreinte et en augmentant votre empreinte.",
+    "app.eatonHomePage.block.registerBlock.text": "Il est temps de mettre au lit l'idée que les actions d'une seule personne ne peuvent pas changer les choses. Vous pouvez maintenant voir ce que vous et vos près de 100 000 collaborateurs pouvez faire pour rendre votre communauté, votre travail et votre planète plus durables! Inscrivez-vous aujourd'hui et participez à un avenir positif.",
+    "app.eatonHomePage.block.registerBlock.highlightedText": "Inscrivez-vous aujourd'hui et participez à un avenir positif."
 }
