@@ -494,7 +494,7 @@
     "app.pages.groups.addRemovePeopleCounter": "（ {count}用户等待批准）",
     "app.registerPage.privacyPolicyAccept.1": "我接受",
     "app.registerPage.privacyPolicyAccept.2": "隐私政策",
-    "app.registerPage.policyAcceptedError": "您必须接受阅读和接受隐私政策",
+    "app.registerPage.policyAcceptedError": "您必须阅读并接受隐私政策",
     "app.pages.termsOfUse.title": "使用条款",
     "app.pages.privacyPolicy.title": "隐私政策",
     "app.pages.privacyPolicy.paragraph.1": "在注册期间，Handprinter仅收集您的姓名，电子邮件地址和国家\/地区。",

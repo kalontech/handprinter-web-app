@@ -494,7 +494,7 @@
     "app.pages.groups.addRemovePeopleCounter": "( {count} gebruikers wachten op goedkeuring)",
     "app.registerPage.privacyPolicyAccept.1": "ik aanvaard",
     "app.registerPage.privacyPolicyAccept.2": "Privacybeleid",
-    "app.registerPage.policyAcceptedError": "U moet accepteren het privacybeleid lezen en accepteren",
+    "app.registerPage.policyAcceptedError": "U moet het privacybeleid lezen en accepteren",
     "app.pages.termsOfUse.title": "Gebruiksvoorwaarden",
     "app.pages.privacyPolicy.title": "Privacybeleid",
     "app.pages.privacyPolicy.paragraph.1": "Tijdens de registratie verzamelt Handprinter alleen uw naam, e-mailadres en land.",

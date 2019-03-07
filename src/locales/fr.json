@@ -494,7 +494,7 @@
     "app.pages.groups.addRemovePeopleCounter": "( {count} utilisateurs attend l'approbation)",
     "app.registerPage.privacyPolicyAccept.1": "J'accepte",
     "app.registerPage.privacyPolicyAccept.2": "Politique de confidentialité",
-    "app.registerPage.policyAcceptedError": "Vous devez accepter lire et accepter la politique de confidentialité",
+    "app.registerPage.policyAcceptedError": "Vous devez lire et accepter la politique de confidentialité",
     "app.pages.termsOfUse.title": "Conditions d'utilisation",
     "app.pages.privacyPolicy.title": "Politique de confidentialité",
     "app.pages.privacyPolicy.paragraph.1": "Lors de l'inscription, Handprinter ne collecte que votre nom, votre adresse électronique et votre pays.",
