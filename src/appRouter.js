@@ -6,7 +6,6 @@ import GoogleAnalytics from 'react-ga'
 
 import ErrorCatcher from './utils/errorCatcher'
 import { getBrandedConfig } from './config/branded'
-
 import Route from './routeWrapper'
 
 import ActionModalPage from './pages/ActionModalPage'
@@ -28,6 +27,7 @@ import SubmitSucceededPage from './pages/SubmitSucceededPage'
 import SetNewPasswordPage from './pages/SetNewPasswordPage'
 import ProfilePage from './pages/ProfilePage'
 import IncreaseHandprintPage from './pages/IncreaseHandprintPage'
+import PrivacyPolicyTermsPages from './pages/PrivacyPolicyTermsPages'
 
 const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = process.env
 
@@ -118,6 +118,11 @@ const AppRouter = () => {
             path="/pages/measurement-units"
             component={MeasurementUnitsPage}
             useAuthentication
+          />
+          <Route
+            path="/pages/privacy-policy"
+            component={PrivacyPolicyTermsPages}
+            withoutCTA
           />
           <Route
             path="/account/news"

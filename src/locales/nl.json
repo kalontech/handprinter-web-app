@@ -491,5 +491,19 @@
     "app.errors.36": "Je bent al actief lid van deze groep",
     "app.errors.37": "Wacht op goedkeuring om lid te worden van deze groep",
     "app.pages.groups.pending": "In afwachting van goedkeuring",
-    "app.pages.groups.addRemovePeopleCounter": "( {count} gebruikers wachten op goedkeuring)"
+    "app.pages.groups.addRemovePeopleCounter": "( {count} gebruikers wachten op goedkeuring)",
+    "app.registerPage.privacyPolicyAccept.1": "ik aanvaard",
+    "app.registerPage.privacyPolicyAccept.2": "Privacybeleid",
+    "app.registerPage.policyAcceptedError": "U moet accepteren het privacybeleid lezen en accepteren",
+    "app.pages.termsOfUse.title": "Gebruiksvoorwaarden",
+    "app.pages.privacyPolicy.title": "Privacybeleid",
+    "app.pages.privacyPolicy.paragraph.1": "Tijdens de registratie verzamelt Handprinter alleen uw naam, e-mailadres en land.",
+    "app.pages.privacyPolicy.paragraph.2": "We gebruiken ALLEEN uw e-mailadres om met u te communiceren in situaties zoals het opnieuw instellen van uw wachtwoord en om uw vrienden en collega's die ook handprinter gebruiken u informatie te sturen, zoals actiesuggesties. We zullen het anders niet delen met een persoon of organisatie.",
+    "app.pages.privacyPolicy.paragraph.3": "We gebruiken ALLEEN uw naam om uw gebruikerservaring te personaliseren en om u in het netwerkdiagram te verwijzen naar mensen die u direct of indirect hebben uitgenodigd om lid te worden van handprinter en om u in nieuwsfeeds naar andere handprintergebruikers te verwijzen over acties die door handprinter-gebruikers. We zullen het anders niet delen met een persoon of organisatie.",
+    "app.pages.privacyPolicy.paragraph.4": "We gebruiken uw land om uw footprint te schatten. We zullen het anders niet delen met een persoon of organisatie.",
+    "app.pages.privacyPolicy.paragraph.5": "Handprinter verzamelt tijdens het gebruik winkelinformatie die u indient over acties die u onderneemt of suggereert, en actie-ideeën die u indient. Het enige doel van deze informatie is om u en anderen aan te moedigen zulke positieve acties te ondernemen. Het wordt gedeeld in de nieuwsfeed met andere handprintergebruikers. We zullen het niet gebruiken voor andere doeleinden, noch op een andere manier delen met een persoon of organisatie.",
+    "app.footer.menu.privacyPolicy": "Privacybeleid",
+    "app.privacyPolicy.head.title": "Welkom bij Handprinter!",
+    "app.privacyPolicy.head.keywords": "handprinter, natuur, voetafdruk, handafdruk",
+    "app.privacyPolicy.head.description": "Wil je goed doen op wereldschaal? Je bent niet alleen. Via Handprinter genereren creatieve individuele acties en bereik rimpelingseffecten om uw gemeenschap en de hele wereld te raken en te helen."
 }

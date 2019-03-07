@@ -491,5 +491,19 @@
     "app.errors.36": "Vous êtes déjà membre actif de ce groupe",
     "app.errors.37": "Attendre l'approbation pour rejoindre ce groupe",
     "app.pages.groups.pending": "Validation en attente",
-    "app.pages.groups.addRemovePeopleCounter": "( {count} utilisateurs attend l'approbation)"
+    "app.pages.groups.addRemovePeopleCounter": "( {count} utilisateurs attend l'approbation)",
+    "app.registerPage.privacyPolicyAccept.1": "J'accepte",
+    "app.registerPage.privacyPolicyAccept.2": "Politique de confidentialité",
+    "app.registerPage.policyAcceptedError": "Vous devez accepter lire et accepter la politique de confidentialité",
+    "app.pages.termsOfUse.title": "Conditions d'utilisation",
+    "app.pages.privacyPolicy.title": "Politique de confidentialité",
+    "app.pages.privacyPolicy.paragraph.1": "Lors de l'inscription, Handprinter ne collecte que votre nom, votre adresse électronique et votre pays.",
+    "app.pages.privacyPolicy.paragraph.2": "Nous utilisons votre adresse e-mail UNIQUEMENT pour communiquer avec vous dans des situations telles que la réinitialisation de votre mot de passe et pour permettre à vos amis et collègues qui utilisent également l’imprimante à la main de vous envoyer des informations telles que des suggestions d’action. Nous ne le partagerons pas autrement avec une personne ou une organisation.",
+    "app.pages.privacyPolicy.paragraph.3": "Nous utilisons votre nom UNIQUEMENT pour personnaliser votre expérience utilisateur et pour vous référer au diagramme de réseau des personnes qui vous ont directement ou indirectement invité à rejoindre Handprinter, et dans les fils de nouvelles à d'autres utilisateurs d'imprimantes à main pour vous informer des actions entreprises par utilisateurs d'imprimantes à la main. Nous ne le partagerons pas autrement avec une personne ou une organisation.",
+    "app.pages.privacyPolicy.paragraph.4": "Nous utilisons votre pays pour estimer votre empreinte. Nous ne le partagerons pas autrement avec une personne ou une organisation.",
+    "app.pages.privacyPolicy.paragraph.5": "Lors de son utilisation, Handprinter collecte les informations que vous soumettez sur les actions que vous prenez ou suggérez, ainsi que sur les idées d’action que vous soumettez. Le seul but de cette information est de vous encourager, vous et d’autres, à prendre des mesures aussi positives. Il est partagé dans le fil d'actualités avec d'autres utilisateurs d'imprimante à main. Nous ne les utiliserons pas à d'autres fins ni ne les partagerons avec aucune personne ou organisation.",
+    "app.footer.menu.privacyPolicy": "Politique de confidentialité",
+    "app.privacyPolicy.head.title": "Bienvenue chez Handprinter!",
+    "app.privacyPolicy.head.keywords": "empreinte de la main, nature, empreinte, empreinte de la main",
+    "app.privacyPolicy.head.description": "Voulez-vous faire le bien à l'échelle mondiale? Tu n'es pas seul. Grâce à Handprinter, des actions individuelles créatives et des actions de proximité génèrent des effets d'entraînement qui vont toucher et soigner votre communauté et le monde entier."
 }

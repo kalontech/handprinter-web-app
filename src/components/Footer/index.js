@@ -152,6 +152,11 @@ const Footer = () => (
                           <FormattedMessage id="app.footer.menu.contact" />
                         </a>
                       </li>
+                      <li>
+                        <Link to="/pages/privacy-policy">
+                          <FormattedMessage id="app.footer.menu.privacyPolicy" />
+                        </Link>
+                      </li>
                     </FooterMenu>
                   </Col>
                 </RowWrapper>

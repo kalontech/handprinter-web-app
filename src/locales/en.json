@@ -491,5 +491,19 @@
     "app.errors.36": "You are already active member of this group",
     "app.errors.37": "Wait for approve to join this group",
     "app.pages.groups.pending": "Pending approval",
-    "app.pages.groups.addRemovePeopleCounter": "({count} users waits for approval)"
+    "app.pages.groups.addRemovePeopleCounter": "({count} users waits for approval)",
+    "app.registerPage.privacyPolicyAccept.1": "I accept",
+    "app.registerPage.privacyPolicyAccept.2": "Privacy Policy",
+    "app.registerPage.policyAcceptedError": "You must accept read and accept privacy policy ",
+    "app.pages.termsOfUse.title": "Terms of use",
+    "app.pages.privacyPolicy.title": "Privacy Policy",
+    "app.pages.privacyPolicy.paragraph.1": "During registration, Handprinter only collects your name, email address, and country.",
+    "app.pages.privacyPolicy.paragraph.2": "We use your email address ONLY in order to communicate with you in situations such as re-setting your password, and to enable your friends and colleagues who also use handprinter can send you information such as action suggestions.  We will not otherwise share it with any person or organization.",
+    "app.pages.privacyPolicy.paragraph.3": "We use your name ONLY to personalize your user experience, and to refer to you in the network diagram of people who have directly or indirectly invited you to join handprinter, and to refer to you in news feeds to other handprinter users about actions being taken by handprinter users. We will not otherwise share it with any person or organization.",
+    "app.pages.privacyPolicy.paragraph.4": "We use your country in order to estimate your footprint. We will not otherwise share it with any person or organization.",
+    "app.pages.privacyPolicy.paragraph.5": "During use, Handprinter collects stores information that you submit about actions that you take or suggest, and action ideas that you submit. The sole purpose for this information is to encourage you and others to take such positive actions. It is shared in the news feed with other handprinter users. We will not use it for other purposes nor otherwise share it with any person or organziation.",
+    "app.footer.menu.privacyPolicy": "Privacy Policy",
+    "app.privacyPolicy.head.title": "Welcome to Handprinter!",
+    "app.privacyPolicy.head.keywords": "handprinter, nature, footprint, handprint",
+    "app.privacyPolicy.head.description": "Want to take doing good to a global scale? You’re not alone. Through Handprinter, creative individual actions and outreach generate ripple effects to touch and heal your community and the globe."
 }

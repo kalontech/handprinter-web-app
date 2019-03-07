@@ -130,6 +130,36 @@ export const HeaderPopover = styled(Ant.Menu)`
   }
 `
 
+export const Checkbox = styled(Ant.Checkbox)`
+  color: ${colors.darkGray};
+
+  input {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .ant-checkbox-checked:after {
+    border: 1px solid ${colors.gray};
+  }
+  .ant-checkbox-inner {
+    border-radius: 4px;
+    &:after {
+      border: none;
+      left: -13%;
+    }
+  }
+  .ant-checkbox-checked .ant-checkbox-inner:after {
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+    background-color: ${colors.green};
+    transform: rotate(90deg) scale(1) translate(-50%, -50%);
+  }
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: transparent;
+    border-color: ${colors.gray};
+  }
+`
+
 export const PrimaryButton = styled(Ant.Button)`
   min-width: 170px;
   border: none;

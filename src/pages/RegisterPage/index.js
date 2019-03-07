@@ -25,6 +25,7 @@ import {
   ActionCardRegisterBlock,
   Input,
   FormItem,
+  Checkbox,
 } from 'components/Styled'
 import getValidationRules from 'config/validationRules'
 import InputForPassword from 'components/InputForPassword'
@@ -192,6 +193,10 @@ const BrandedBlockPhotoWrap = styled.div`
   position: relative;
 `
 
+const PrivacyLink = styled(Link)`
+  color: ${colors.dark};
+`
+
 class RegisterPage extends Component {
   state = {
     referrer: null,
@@ -238,6 +243,7 @@ class RegisterPage extends Component {
       form: { validateFields },
       registerRequest,
     } = this.props
+
     validateFields((err, values) => {
       if (!err) {
         delete values.formError
@@ -386,6 +392,30 @@ class RegisterPage extends Component {
                           />
                         }
                       />,
+                    )}
+                  </FormItem>
+                  <FormItem>
+                    {getFieldDecorator('privacyPolicy', {
+                      valuePropName: 'checked',
+                      initialValue: false,
+                      rules: [
+                        {
+                          required: true,
+                          transform: value => value || undefined,
+                          type: 'boolean',
+                          message: formatMessage({
+                            id: 'app.registerPage.policyAcceptedError',
+                          }),
+                        },
+                      ],
+                    })(
+                      <Checkbox>
+                        <FormattedMessage id="app.registerPage.privacyPolicyAccept.1" />{' '}
+                        <PrivacyLink to="/pages/privacy-policy">
+                          <FormattedMessage id="app.registerPage.privacyPolicyAccept.2" />
+                        </PrivacyLink>
+                        .
+                      </Checkbox>,
                     )}
                   </FormItem>
                   <Button

@@ -491,5 +491,19 @@
     "app.errors.36": "Você já é membro ativo deste grupo",
     "app.errors.37": "Aguarde aprovar para participar deste grupo",
     "app.pages.groups.pending": "Aprovação pendente",
-    "app.pages.groups.addRemovePeopleCounter": "( {count} usuários aguardam aprovação)"
+    "app.pages.groups.addRemovePeopleCounter": "( {count} usuários aguardam aprovação)",
+    "app.registerPage.privacyPolicyAccept.1": "eu aceito",
+    "app.registerPage.privacyPolicyAccept.2": "Política de Privacidade",
+    "app.registerPage.policyAcceptedError": "Você deve aceitar ler e aceitar a política de privacidade",
+    "app.pages.termsOfUse.title": "Termos de uso",
+    "app.pages.privacyPolicy.title": "Política de Privacidade",
+    "app.pages.privacyPolicy.paragraph.1": "Durante o registro, o Handprinter apenas coleta seu nome, endereço de e-mail e país.",
+    "app.pages.privacyPolicy.paragraph.2": "Usamos APENAS o seu endereço de e-mail para nos comunicarmos com você em situações como redefinir sua senha e permitir que seus amigos e colegas que também usam handprinter possam enviar informações como sugestões de ação. De outra forma, não compartilharemos com qualquer pessoa ou organização.",
+    "app.pages.privacyPolicy.paragraph.3": "Usamos o seu nome SOMENTE para personalizar a sua experiência de usuário, e nos referirmos a você no diagrama de rede de pessoas que direta ou indiretamente o convidaram para participar da handprinter, e nos referirmos a você em feeds de notícias para outros usuários manuais sobre ações sendo tomadas por usuários de impressoras manuais. De outra forma, não compartilharemos com qualquer pessoa ou organização.",
+    "app.pages.privacyPolicy.paragraph.4": "Usamos seu país para estimar sua pegada. De outra forma, não compartilharemos com qualquer pessoa ou organização.",
+    "app.pages.privacyPolicy.paragraph.5": "Durante o uso, o Handprinter coleta informações de lojas que você envia sobre ações que você toma ou sugere e ideias de ação que você envia. O único propósito dessa informação é encorajar você e outras pessoas a tomar tais ações positivas. Ele é compartilhado no feed de notícias com outros usuários de impressoras manuais. Nós não a usaremos para outros fins nem compartilharemos com qualquer pessoa ou organização.",
+    "app.footer.menu.privacyPolicy": "Política de Privacidade",
+    "app.privacyPolicy.head.title": "Bem vindo ao Handprinter!",
+    "app.privacyPolicy.head.keywords": "handprinter, natureza, pegada, handprint",
+    "app.privacyPolicy.head.description": "Quer fazer o bem a uma escala global? Você não está sozinho. Através da Handprinter, ações individuais criativas e divulgação geram efeitos ondulatórios para tocar e curar sua comunidade e o mundo."
 }

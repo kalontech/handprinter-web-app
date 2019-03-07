@@ -491,5 +491,19 @@
     "app.errors.36": "Sie sind bereits aktives Mitglied dieser Gruppe",
     "app.errors.37": "Warten Sie, bis Sie der Gruppe zugestimmt haben",
     "app.pages.groups.pending": "Ausstehende Genehmigung",
-    "app.pages.groups.addRemovePeopleCounter": "( {count} Benutzer warten auf Genehmigung)"
+    "app.pages.groups.addRemovePeopleCounter": "( {count} Benutzer warten auf Genehmigung)",
+    "app.registerPage.privacyPolicyAccept.1": "Ich nehme an",
+    "app.registerPage.privacyPolicyAccept.2": "Datenschutz-Bestimmungen",
+    "app.registerPage.policyAcceptedError": "Sie müssen die Datenschutzbestimmungen lesen und akzeptieren",
+    "app.pages.termsOfUse.title": "Nutzungsbedingungen",
+    "app.pages.privacyPolicy.title": "Datenschutz-Bestimmungen",
+    "app.pages.privacyPolicy.paragraph.1": "Während der Registrierung erfasst Handprinter nur Ihren Namen, Ihre E-Mail-Adresse und Ihr Land.",
+    "app.pages.privacyPolicy.paragraph.2": "Wir verwenden NUR Ihren Namen, um Ihre Benutzererfahrung zu personalisieren und um Sie im Netzwerkdiagramm von Personen zu referenzieren, die Sie direkt oder indirekt zum Handdrucker eingeladen haben, und um Sie in Newsfeeds an andere Handdruckerbenutzer über durchgeführte Aktionen zu verweisen Handdrucker Benutzer. Wir werden es ansonsten nicht mit Personen oder Organisationen teilen.",
+    "app.pages.privacyPolicy.paragraph.3": "Wir verwenden NUR Ihren Namen, um Ihre Benutzererfahrung zu personalisieren und um Sie im Netzwerkdiagramm von Personen zu referenzieren, die Sie direkt oder indirekt zum Handdrucker eingeladen haben, und um Sie in Newsfeeds an andere Handdruckerbenutzer über durchgeführte Aktionen zu verweisen Handdrucker Benutzer. Wir werden es ansonsten nicht mit Personen oder Organisationen teilen.",
+    "app.pages.privacyPolicy.paragraph.4": "Wir verwenden Ihr Land, um Ihren Fußabdruck zu schätzen. Wir werden es ansonsten nicht mit Personen oder Organisationen teilen.",
+    "app.pages.privacyPolicy.paragraph.5": "During use, Handprinter collects stores information that you submit about actions that you take or suggest, and action ideas that you submit. The sole purpose for this information is to encourage you and others to take such positive actions. It is shared in the news feed with other handprinter users. We will not use it for other purposes nor otherwise share it with any person or organziation.",
+    "app.footer.menu.privacyPolicy": "Datenschutz-Bestimmungen",
+    "app.privacyPolicy.head.title": "Willkommen bei Handprinter!",
+    "app.privacyPolicy.head.keywords": "Handdrucker, Natur, Fußabdruck, Handabdruck",
+    "app.privacyPolicy.head.description": "Willst du Gutes auf globaler Ebene tun? Du bist nicht allein. Mit Handprinter erzeugen kreative individuelle Aktionen und Outreach Welleneffekte, um Ihre Community und den Globus zu berühren und zu heilen."
 }
