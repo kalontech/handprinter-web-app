@@ -191,12 +191,13 @@ const FilterWrap = styled.div`
   padding-right: 18px;
   margin-top: 38px;
   ${media.phone`
-    margin-top: 0px;
+    margin: 0 auto;
     padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    max-width: 300px;
   `}
 `
 
@@ -299,6 +300,7 @@ async function getActionsList(props) {
     limit,
     page,
     total,
+    timeValues,
   }
 
   if (!timeValues && timeValuesResponse)
@@ -436,7 +438,9 @@ class ActionsPage extends React.PureComponent {
 
   handleOnAfterFiltersChange = debounce(({ data, activeFilterCount }) => {
     const { match, history } = this.props
+
     this.setState({ activeFiltersCount: activeFilterCount })
+
     if (Object.keys(data).length === 0) {
       history.push(`/actions/${match.params.subset}`)
     } else {
@@ -683,7 +687,6 @@ class ActionsPage extends React.PureComponent {
                             values={filterValuesFromQuery}
                             onReset={this.handleFilterReset}
                             onAfterChange={this.handleOnAfterFiltersChange}
-                            actionsPageSubset={match.params.subset}
                           />
                         </FilterWrap>
                       </Animate>
@@ -853,7 +856,12 @@ class ActionsPage extends React.PureComponent {
               values={filterValuesFromQuery}
               onReset={this.handleFilterReset}
               onAfterChange={this.handleOnAfterFiltersChange}
-              actionsPageSubset={match.params.subset}
+              closeModal={() => {
+                this.setState({
+                  mobileFilterModalVisible: false,
+                })
+              }}
+              inModal
             />
           </FilterWrap>
         </Modal>

@@ -2,13 +2,14 @@ import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage, intlShape } from 'react-intl'
-import { isEqual } from 'lodash'
+import isEqual from 'lodash/isEqual'
 
+import CloseIcon from 'assets/icons/CloseIcon'
 import colors from 'config/colors'
-import icons from 'components/ActionCardLabel/icons'
 import { IMPACT_CATEGORIES } from 'utils/constants'
 import media from 'utils/mediaQueryTemplate'
-import CloseIcon from 'assets/icons/CloseIcon'
+import icons from 'components/ActionCardLabel/icons'
+import { SecondaryButton } from 'components/Styled'
 
 import ImpactSlider from './slider'
 
@@ -30,13 +31,20 @@ const ButtonsWrap = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  align-self: flex-end;
   font-size: 14px;
   color: ${colors.darkGray};
   letter-spacing: 0.2px;
+
   ${media.phone`
-    padding-right: 15px;
-    margin-top: 17px;
+    margin-bottom: 10px;
   `}
+`
+
+const ButtonSubmit = styled(SecondaryButton)`
+  align-self: flex-end;
+  background-color: ${colors.green};
+  text-transform: capitalize;
 `
 
 class ActionsFilters extends Component {
@@ -79,23 +87,7 @@ class ActionsFilters extends Component {
     }
   }
 
-  handleChange = (values, impactName) => {
-    this.setState(
-      {
-        prevStateValues: this.state.values,
-        values: {
-          ...this.state.values,
-          [impactName]: values,
-        },
-        filterIsChanged: true,
-      },
-      () => {
-        this.props.onAfterChange(this.createQuery())
-      },
-    )
-  }
-
-  createQuery = () => {
+  get queries() {
     const { timeValues } = this.props
     const { values, timeValuesCount, prevStateValues } = this.state
     let data = {}
@@ -119,6 +111,24 @@ class ActionsFilters extends Component {
     return { data, activeFilterCount }
   }
 
+  handleChange = (values, impactName) => {
+    this.setState(
+      {
+        prevStateValues: this.state.values,
+        values: {
+          ...this.state.values,
+          [impactName]: values,
+        },
+        filterIsChanged: true,
+      },
+      () => {
+        if (!this.props.inModal) {
+          this.props.onAfterChange(this.queries)
+        }
+      },
+    )
+  }
+
   resetFilter = () => {
     const { timeValuesCount } = this.state
     const defaultValues = {
@@ -135,16 +145,37 @@ class ActionsFilters extends Component {
         filterIsChanged: false,
       },
       () => {
-        this.props.onAfterChange(this.createQuery())
+        this.props.onAfterChange(this.queries)
       },
     )
   }
 
+  onSubmit = () => {
+    const { closeModal, onAfterChange } = this.props
+
+    onAfterChange(this.queries)
+    closeModal()
+  }
+
   render() {
     const { values, filterIsChanged } = this.state
-    const { timeValues, showFilter } = this.props
+    const { timeValues, showFilter, inModal } = this.props
     return (
       <Fragment>
+        {inModal && filterIsChanged && (
+          <ButtonsWrap>
+            <ClearAllButton
+              onClick={() => {
+                this.resetFilter()
+                this.props.onReset()
+              }}
+            >
+              <ClearAllIcon />
+            </ClearAllButton>
+            <FormattedMessage id="app.actionsPage.clearAllFilters" />
+          </ButtonsWrap>
+        )}
+
         <ImpactSlider
           showFilter={showFilter}
           onChange={values =>
@@ -195,8 +226,9 @@ class ActionsFilters extends Component {
           icon={icons.positive.waste}
           impactCategory={IMPACT_CATEGORIES.WASTE}
         />
+
         <ButtonsWrap>
-          {filterIsChanged && (
+          {!inModal && filterIsChanged && (
             <Fragment>
               <ClearAllButton
                 onClick={() => {
@@ -210,6 +242,12 @@ class ActionsFilters extends Component {
             </Fragment>
           )}
         </ButtonsWrap>
+
+        {inModal && filterIsChanged && (
+          <ButtonSubmit onClick={this.onSubmit}>
+            <FormattedMessage id="app.form.submit" />
+          </ButtonSubmit>
+        )}
       </Fragment>
     )
   }
@@ -219,9 +257,10 @@ ActionsFilters.propTypes = {
   onAfterChange: PropTypes.func.isRequired,
   timeValues: PropTypes.array,
   onReset: PropTypes.func,
+  closeModal: PropTypes.func,
   values: PropTypes.object,
-  actionsPageSubset: PropTypes.string,
   showFilter: PropTypes.bool.isRequired,
+  inModal: PropTypes.bool,
   intl: intlShape,
 }
 

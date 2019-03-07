@@ -81,8 +81,9 @@ const StyledIcon = styled(Icon)`
   position: absolute;
   top: -5px;
   left: 8px;
-  color: ${colors.lightGreen}};
+  color: ${colors.lightGreen};
   cursor: pointer;
+
   ${media.phone`
     position: initial;
     left: 8px;
@@ -97,9 +98,10 @@ const StyledSelectWrap = styled.div`
   position: absolute;
   top: -14px;
   left: 53px;
-  color: ${colors.darkGray}};
+  color: ${colors.darkGray};
   border: 1px solid #d9d9d9;
   border-radius: 4px;
+
   ${media.phone`
     position: initial;
   `}
@@ -119,7 +121,7 @@ const StyledSelectWrap = styled.div`
 
 const StyledDeviderWrap = styled.div`
   display: inline-block;
-  height: 40px
+  height: 40px;
   width: 45px;
   position: relative;
   top: 1px;
@@ -289,7 +291,6 @@ class ImpactSlider extends Component {
 ImpactSlider.propTypes = {
   defaultValue: PropTypes.array,
   icon: PropTypes.element.isRequired,
-  onAfterChange: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.array.isRequired,
   intl: intlShape.isRequired,
