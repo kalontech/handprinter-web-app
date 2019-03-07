@@ -268,6 +268,7 @@ class GroupCreateForm extends React.PureComponent {
         <FormItem>
           {form.getFieldDecorator('description', {
             rules: [
+              required(intl.formatMessage({ id: 'app.errors.isRequired' })),
               {
                 max: MAX_DESCRIPTION_LENGTH,
                 message: intl.formatMessage(
