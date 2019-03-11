@@ -651,9 +651,9 @@ class Header extends Component {
                         <FingerPrintIcon id="primaryBtnIcon" />
                         <FormattedMessage
                           id={
-                            overrides
-                              ? 'app.brandedHeader.link'
-                              : 'app.header.link'
+                            overrides && overrides.brandName === 'Eaton'
+                              ? 'app.header.link'
+                              : 'app.brandedHeader.link'
                           }
                         />
                       </PrimaryButton>
@@ -818,9 +818,9 @@ class Header extends Component {
                               <FingerPrintIcon id="primaryBtnIcon" />
                               <FormattedMessage
                                 id={
-                                  overrides
-                                    ? 'app.brandedHeader.link'
-                                    : 'app.header.link'
+                                  overrides && overrides.brandName === 'Eaton'
+                                    ? 'app.header.link'
+                                    : 'app.brandedHeader.link'
                                 }
                               />
                             </PrimaryButton>
@@ -904,7 +904,7 @@ class Header extends Component {
                       <Menu.Item key="/pages/home">
                         <Link to="/">
                           <CenterAlign>
-                            <FormattedMessage id="app.header.menu.about" />
+                            <FormattedMessage id="app.header.menu.aboutEaton" />
                             <ImgLeftIndent src={overrides.inLinkLogo} />
                           </CenterAlign>
                         </Link>
@@ -1038,8 +1038,8 @@ class Header extends Component {
                           <Menu.Item key="/pages/home">
                             <Link to="/">
                               <CenterAlign>
-                                <FormattedMessage id="app.header.menu.about" />{' '}
-                                <ImgLeftIndent src={overrides.inLinkLogo} />
+                                <ImgRightIndent src={overrides.inLinkLogo} />
+                                <FormattedMessage id="app.header.menu.aboutEaton" />
                               </CenterAlign>
                             </Link>
                           </Menu.Item>

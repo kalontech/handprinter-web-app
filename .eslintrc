@@ -40,7 +40,8 @@
     "FileReader": true,
     "Image": true,
     "fetch": true,
-    "it": true
+    "it": true,
+    "sessionStorage": true
   },
   "rules": {
     "import/order": ["error", {

@@ -215,6 +215,17 @@ class RegisterPage extends Component {
     if (invitationCode) this.fetchReferrer(invitationCode)
   }
 
+  componentWillUnmount() {
+    const {
+      form: { isFieldsTouched, getFieldsValue },
+    } = this.props
+
+    if (isFieldsTouched()) {
+      const formString = JSON.stringify(getFieldsValue())
+      sessionStorage.setItem('registrationFrom', formString)
+    }
+  }
+
   componentDidUpdate(prevProps) {
     handleFormError('registerError', 'formError', prevProps, this.props)
   }
@@ -270,6 +281,9 @@ class RegisterPage extends Component {
     } = this.props
     const { referrer } = this.state
 
+    const formString = sessionStorage.getItem('registrationFrom')
+    const formInitialValues = JSON.parse(formString) || {}
+
     return (
       <Fragment>
         <PageMetadata pageName="registerPage" />
@@ -324,6 +338,7 @@ class RegisterPage extends Component {
                   <FormItem>
                     {getFieldDecorator('fullName', {
                       rules: getValidationRules(formatMessage).fullName,
+                      initialValue: formInitialValues.fullName,
                     })(
                       <Input
                         type="text"
@@ -337,6 +352,7 @@ class RegisterPage extends Component {
                     {getFieldDecorator('email', {
                       rules: getValidationRules(formatMessage).email,
                       validateTrigger: 'onBlur',
+                      initialValue: formInitialValues.email,
                     })(
                       <Input
                         type="email"
@@ -350,11 +366,13 @@ class RegisterPage extends Component {
                     {getFieldDecorator('password', {
                       rules: getValidationRules(formatMessage).password,
                       validateTrigger: 'onBlur',
+                      initialValue: formInitialValues.password,
                     })(<InputForPassword />)}
                   </FormItem>
                   <FormItem style={{ marginTop: '-3px' }}>
                     {getFieldDecorator('country', {
                       rules: getValidationRules(formatMessage).country,
+                      initialValue: formInitialValues.country,
                     })(
                       <Select
                         showSearch
@@ -397,7 +415,7 @@ class RegisterPage extends Component {
                   <FormItem>
                     {getFieldDecorator('privacyPolicy', {
                       valuePropName: 'checked',
-                      initialValue: false,
+                      initialValue: formInitialValues.privacyPolicy || false,
                       rules: [
                         {
                           required: true,
@@ -465,6 +483,7 @@ RegisterPage.propTypes = {
   countries: PropTypes.array.isRequired,
   form: PropTypes.shape({
     setFields: PropTypes.func.isRequired,
+    getFieldsValue: PropTypes.func.isRequired,
   }),
   intl: PropTypes.object.isRequired,
   match: PropTypes.shape({

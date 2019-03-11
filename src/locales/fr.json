@@ -443,7 +443,7 @@
     "app.dashboardPage.ourGoodRatio": "Notre bon ratio",
     "app.pages.groups": "Groupes",
     "app.pages.groups.membersCount": "{count} membres",
-    "app.pages.groups.emptyGroupsList": "Groupes non trouvés",
+    "app.pages.groups.emptyGroupsList": "Aucun groupe trouvé",
     "app.pages.groups.youAreMember": "Vous êtes membre",
     "app.pages.groups.leave": "Laisser",
     "app.pages.groups.sendRequest": "Envoyer une demande",
@@ -494,7 +494,7 @@
     "app.pages.groups.addRemovePeopleCounter": "( {count} utilisateurs attend l'approbation)",
     "app.registerPage.privacyPolicyAccept.1": "J'accepte",
     "app.registerPage.privacyPolicyAccept.2": "Politique de confidentialité",
-    "app.registerPage.policyAcceptedError": "Vous devez lire et accepter la politique de confidentialité",
+    "app.registerPage.policyAcceptedError": "Veuillez lire et accepter notre politique de confidentialité",
     "app.pages.termsOfUse.title": "Conditions d'utilisation",
     "app.pages.privacyPolicy.title": "Politique de confidentialité",
     "app.pages.privacyPolicy.paragraph.1": "Lors de l'inscription, Handprinter ne collecte que votre nom, votre adresse électronique et votre pays.",
@@ -509,5 +509,6 @@
     "app.eatonHomePage.block.heading": "Eaton apporte Handprinter à 100 000 employés dans le monde entier!",
     "app.eatonHomePage.block.description": "Eaton a collaboré avec Handprinter.org pour offrir aux employés un moyen simple de suivre l’impact des actions personnelles sur l’environnement. Handprinter vous aide à calculer et à suivre vos efforts et à suivre les progrès de vos collègues à mesure que vous vous rapprochez de l'objectif de devenir Net Positive en réduisant votre empreinte et en augmentant votre empreinte.",
     "app.eatonHomePage.block.registerBlock.text": "Il est temps de mettre au lit l'idée que les actions d'une seule personne ne peuvent pas changer les choses. Vous pouvez maintenant voir ce que vous et vos près de 100 000 collaborateurs pouvez faire pour rendre votre communauté, votre travail et votre planète plus durables! Inscrivez-vous aujourd'hui et participez à un avenir positif.",
-    "app.eatonHomePage.block.registerBlock.highlightedText": "Inscrivez-vous aujourd'hui et participez à un avenir positif."
+    "app.eatonHomePage.block.registerBlock.highlightedText": "Inscrivez-vous aujourd'hui et participez à un avenir positif.",
+    "app.header.menu.aboutEaton": "Empreinte de la main"
 }

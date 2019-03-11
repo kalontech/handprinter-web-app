@@ -443,7 +443,7 @@
     "app.dashboardPage.ourGoodRatio": "Our good ratio",
     "app.pages.groups": "Groups",
     "app.pages.groups.membersCount": "{count} members",
-    "app.pages.groups.emptyGroupsList": "Groups not found",
+    "app.pages.groups.emptyGroupsList": "No groups found",
     "app.pages.groups.youAreMember": "You are a member",
     "app.pages.groups.leave": "Leave",
     "app.pages.groups.sendRequest": "Send request",
@@ -494,7 +494,7 @@
     "app.pages.groups.addRemovePeopleCounter": "({count} users waits for approval)",
     "app.registerPage.privacyPolicyAccept.1": "I accept",
     "app.registerPage.privacyPolicyAccept.2": "Privacy Policy",
-    "app.registerPage.policyAcceptedError": "You must read and accept privacy policy ",
+    "app.registerPage.policyAcceptedError": "Please read and accept our privacy policy",
     "app.pages.termsOfUse.title": "Terms of use",
     "app.pages.privacyPolicy.title": "Privacy Policy",
     "app.pages.privacyPolicy.paragraph.1": "During registration, Handprinter only collects your name, email address, and country.",
@@ -509,5 +509,6 @@
     "app.eatonHomePage.block.heading": "Eaton brings Handprinter to 100,000 employees around the world!",
     "app.eatonHomePage.block.description": "Eaton collaborated with Handprinter.org to offer employees a simple way to track the impact that personal actions can have on the environment. Handprinter helps you calculate and track your efforts, and see your colleagues' progress, as you get closer to the goal of becoming Net Positive by reducing your footprint and growing your handprint.",
     "app.eatonHomePage.block.registerBlock.text": "Time to put to bed the idea that just one person’s actions can’t make a difference. Now you can see what you and your nearly 100,000 co-workers can do to make your community, your work, your planet more sustainable! Register today and become a part of a positive future.",
-    "app.eatonHomePage.block.registerBlock.highlightedText": "Register today and become a part of a positive future."
+    "app.eatonHomePage.block.registerBlock.highlightedText": "Register today and become a part of a positive future.",
+    "app.header.menu.aboutEaton": "Handprint"
 }

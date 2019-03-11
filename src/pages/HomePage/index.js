@@ -26,7 +26,6 @@ import media from 'utils/mediaQueryTemplate'
 import PageMetadata from 'components/PageMetadata'
 import api from 'api'
 
-import client1 from 'assets/homepage/client-2.png'
 import client2 from 'assets/homepage/client-monarch.png'
 import client3 from 'assets/homepage/interfaceLogo.png'
 import heroImg from 'assets/homepage/hero-image.png'
@@ -612,9 +611,6 @@ class HomePage extends Component {
                 align="middle"
                 gutter={{ xs: 25, sm: 25, md: 30, xl: 80 }}
               >
-                <Col xs={{ order: 1 }} xl={{ order: 1 }}>
-                  <ClientImg src={client1} alt="logo" />
-                </Col>
                 <Col xs={{ order: 2 }} xl={{ order: 2 }}>
                   <ClientImg src={client2} alt="logo" />
                 </Col>
