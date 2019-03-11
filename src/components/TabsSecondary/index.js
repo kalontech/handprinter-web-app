@@ -84,6 +84,7 @@ const NavLinkStyled = styled(NavLink)`
   justify-content: flex-start;
   align-items: center;
   font-size: 14px;
+  letter-spacing: 1px;
   color: ${colors.darkGray};
 
   &:hover {
@@ -138,7 +139,7 @@ const ButtonToggle = styled.button`
 const Button = styled(DefaultButton)`
   background-color: ${hexToRgba(colors.white, 0.1)};
   color: ${colors.white};
-  height: 44px;
+  height: 38px;
   min-width: 134px;
   display: inline-flex;
 
