@@ -43,7 +43,6 @@ const LeftAlignPublic = styled.div`
 const RightAlign = styled.div`
   display: flex;
   flex-direction: row;
-  display: flex;
   justify-content: flex-end;
   flex: 1;
 `

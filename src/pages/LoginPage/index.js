@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { bindActionCreators, compose } from 'redux'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Button, Form } from 'antd'
@@ -138,20 +138,6 @@ class LoginPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  isLoggingIn: state.account.isLoggingIn,
-  logInError: state.account.logInError,
-})
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      logInRequest: (email, password) =>
-        AccountCreators.logInRequest(email, password),
-    },
-    dispatch,
-  )
-
 LoginPage.propTypes = {
   form: PropTypes.object.isRequired,
   intl: PropTypes.object.isRequired,
@@ -163,8 +149,11 @@ LoginPage.propTypes = {
 
 export default compose(
   connect(
-    mapStateToProps,
-    mapDispatchToProps,
+    state => ({
+      isLoggingIn: state.account.isLoggingIn,
+      logInError: state.account.logInError,
+    }),
+    { logInRequest: AccountCreators.logInRequest },
   ),
   Form.create(),
   injectIntl,

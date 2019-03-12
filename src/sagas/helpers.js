@@ -6,6 +6,8 @@ import { Creators as UserStoreCreators } from 'redux/userStore'
 import { logOut } from 'redux/accountStore'
 import { getBrandedHostnamePrefix } from 'config/branded'
 
+const { REACT_APP_WEB_APP_BASE_HOST: host } = process.env
+
 export function* prepareUserProfile() {
   const { account } = yield select()
 
@@ -13,7 +15,6 @@ export function* prepareUserProfile() {
     try {
       const { user } = yield call(api.getMe)
       if (user) {
-        const { REACT_APP_WEB_APP_BASE_HOST: host } = process.env
         const { pathname, protocol } = window.location
         if (
           has(user, 'belongsToBrand') &&

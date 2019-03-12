@@ -47,13 +47,15 @@ export default class NewsList extends React.PureComponent {
                     {oneNews.user.fullName}
                   </NewsItemLink>
                 ),
-                action: (
+                action: oneNews.action ? (
                   <NewsItemLink
                     to={`${actionLinkPrefix}${oneNews.action.slug}`}
                   >
                     {oneNews.action.translatedName[locale] ||
                       oneNews.action.name}
                   </NewsItemLink>
+                ) : (
+                  ''
                 ),
               }}
             />

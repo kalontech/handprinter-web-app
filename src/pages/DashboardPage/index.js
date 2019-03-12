@@ -23,7 +23,7 @@ import icons from 'components/ActionCardLabel/icons'
 import media from 'utils/mediaQueryTemplate'
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 import { QUESTIONS_ANCHOR } from 'utils/constants'
-import fetch, { configDefault as fetchConfigDefault } from 'utils/fetch'
+import fetch from 'utils/fetch'
 
 const PageContainer = styled.div`
   background-color: ${colors.lightGray};
@@ -382,9 +382,8 @@ async function fetchDashboardData(props) {
   }
 
   const { calendar, network, ratio, stats } = await getDashboardData()
-  const { user } = await api.getMe()
 
-  return { calendar, network, ratio, stats, user }
+  return { calendar, network, ratio, stats }
 }
 
 class DashboardPage extends Component {
@@ -394,8 +393,6 @@ class DashboardPage extends Component {
 
   componentDidMount() {
     animateScroll.scrollToTop()
-
-    this.props.fetch()
   }
 
   componentDidUpdate(prevProps) {
@@ -782,6 +779,6 @@ DashboardPage.propTypes = {
 
 export default compose(
   connect(mapStateToProps),
-  fetch(fetchDashboardData, { ...fetchConfigDefault, loader: false }),
+  fetch(fetchDashboardData, { loader: false }),
   injectIntl,
 )(DashboardPage)
