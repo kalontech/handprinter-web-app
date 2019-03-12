@@ -8,7 +8,7 @@ import { compose } from 'redux'
 import { Link } from 'react-router-dom'
 
 import { ACTIONS_SUBSETS, ACTION_STATES } from 'utils/constants'
-import api from 'api'
+import * as api from 'api/actions'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import colors from 'config/colors'
 import Spinner from 'components/Spinner'
@@ -162,16 +162,14 @@ const BottomPanel = styled.div`
   width: 100%;
   max-width: calc(339px + 30px);
 
+  @media screen and (max-width: ${sizes.tablet}px) and (orientation: landscape) {
+    position: static;
+  }
+
   ${media.tablet`
     max-width: initial;
     bottom: 0px;
   `}
-
-  @media screen and (max-width: ${
-    sizes.tablet
-  }px) and (orientation: landscape) {
-    position: static;
-  }
 `
 
 const TakenActionPanel = styled.div`

@@ -10,6 +10,13 @@ import { compose } from 'redux'
 import { animateScroll } from 'react-scroll/modules'
 import { Animate } from 'react-animate-mount'
 
+import filterToggleImg from 'assets/actions-page/ic_filter_list.png'
+import filterToggleActiveImg from 'assets/actions-page/ic_filter_list_active.png'
+import FlagIconComponent from 'assets/icons/FlagIcon'
+import DiscoverIconComponent from 'assets/icons/DiscoverIcon'
+import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
+import HistoryIconComponent from 'assets/icons/HistoryIcon'
+
 import {
   BlockContainer,
   Pagination,
@@ -17,7 +24,6 @@ import {
   Modal,
 } from 'components/Styled'
 import ActionCard from 'components/ActionCard'
-import api from 'api'
 import Spinner from 'components/Spinner'
 import colors from 'config/colors'
 import PageMetadata from 'components/PageMetadata'
@@ -33,15 +39,8 @@ import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Tooltip from 'components/Tooltip'
 import ScrollAnimation from 'components/ScrollAnimation'
 import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
-import ActionCreate from 'pages/ActionCreatePage'
-import ActionOpenView from 'components/ActionOpenView'
 
-import filterToggleImg from 'assets/actions-page/ic_filter_list.png'
-import filterToggleActiveImg from 'assets/actions-page/ic_filter_list_active.png'
-import FlagIconComponent from 'assets/icons/FlagIcon'
-import DiscoverIconComponent from 'assets/icons/DiscoverIcon'
-import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
-import HistoryIconComponent from 'assets/icons/HistoryIcon'
+import * as api from 'api/actions'
 
 import ActionsFilters from './ActionFilter'
 
@@ -245,11 +244,6 @@ const SearchFieldWrap = styled.div`
   }
 `
 
-const MODAL_TYPES = {
-  create: 'create',
-  preview: 'preview',
-}
-
 function configParamsForFilter({ location: { search } }) {
   const queries = qs.parse(search, { ignoreQueryPrefix: true })
   const params = {}
@@ -328,15 +322,12 @@ class ActionsPage extends React.PureComponent {
       Boolean(configParamsForFilter(this.props)),
     filterValuesFromQuery: configParamsForFilter(this.props) || null,
     activeFiltersCount: (configParamsForFilter(this.props) || '').length,
-    currentAction: undefined,
-    modalOpen: false,
     visibleTabs: false,
     listType:
       window.screen.availWidth <= sizes.tablet
         ? TABS_TYPES.select
         : TABS_TYPES.default,
-    modalType: MODAL_TYPES.create,
-    mobileFilterModalVisible: false,
+    modalVisible: false,
   }
 
   $search = React.createRef()
@@ -451,7 +442,7 @@ class ActionsPage extends React.PureComponent {
   toggleFilter = () => {
     if (window.innerWidth < sizes.phone) {
       this.setState({
-        mobileFilterModalVisible: !this.state.mobileFilterModalVisible,
+        modalVisible: !this.state.modalVisible,
       })
     } else {
       this.setState({ showFilter: !this.state.showFilter })
@@ -474,19 +465,12 @@ class ActionsPage extends React.PureComponent {
     )
   }
 
-  openModal = (action, modalType = MODAL_TYPES.create) => e => {
-    e.preventDefault()
-    e.stopPropagation()
-    this.setState({ currentAction: action, modalOpen: true, modalType })
-  }
-
   onActionDelete = id => e => {
     const {
       intl: { formatMessage },
     } = this.props
 
     e.preventDefault()
-    e.stopPropagation()
 
     Modal.confirm({
       title: formatMessage({
@@ -510,14 +494,6 @@ class ActionsPage extends React.PureComponent {
     })
   }
 
-  closeModal = () => {
-    this.setState({
-      currentAction: undefined,
-      modalOpen: false,
-      modalType: MODAL_TYPES.create,
-    })
-  }
-
   render() {
     const {
       intl: { formatMessage, formatRelative },
@@ -537,12 +513,9 @@ class ActionsPage extends React.PureComponent {
       showFilter,
       activeFiltersCount,
       filterValuesFromQuery,
-      currentAction,
-      modalOpen,
-      modalType,
       visibleTabs,
       listType,
-      mobileFilterModalVisible,
+      modalVisible,
     } = this.state
 
     return (
@@ -586,7 +559,7 @@ class ActionsPage extends React.PureComponent {
               button={{
                 text: formatMessage({ id: 'app.headerActions.addAction' }),
                 onClick: () => {
-                  this.setState({ modalOpen: true })
+                  history.push('/account/actions/create')
                 },
               }}
             />
@@ -705,15 +678,18 @@ class ActionsPage extends React.PureComponent {
                     <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
                       <ScrollAnimation>
                         <ActionCard
-                          to={`/actions/${match.params.subset}/${action.slug}`}
-                          onClick={
+                          to={
                             action.status === ACTION_STATES.PROPOSED
-                              ? this.openModal(action, MODAL_TYPES.preview)
-                              : undefined
+                              ? `/account/actions/preview/${action.slug}`
+                              : `/actions/${match.params.subset}/${action.slug}`
                           }
                           picture={action.picture}
                           canChange={action.status === ACTION_STATES.PROPOSED}
-                          onEdit={this.openModal(action)}
+                          onEdit={e => {
+                            e.preventDefault()
+
+                            history.push(`/account/actions/edit/${action.slug}`)
+                          }}
                           onDelete={this.onActionDelete(action._id)}
                           name={action.name}
                           impacts={() =>
@@ -791,58 +767,13 @@ class ActionsPage extends React.PureComponent {
         </Wrapper>
 
         <Modal
-          visible={modalOpen}
-          closable={false}
-          onCancel={this.closeModal}
-          centered
-          footer={null}
-          width="auto"
-          destroyOnClose
-        >
-          {
-            {
-              [MODAL_TYPES.preview]: (
-                <ActionOpenView
-                  action={currentAction}
-                  cancel={{
-                    onClick: this.closeModal,
-                    message: formatMessage({
-                      id: 'app.actionCreatePage.cancel',
-                    }),
-                  }}
-                  success={{
-                    onClick: () => {
-                      this.setState({ modalType: MODAL_TYPES.create })
-                    },
-                    message: formatMessage({ id: 'app.actions.card.edit' }),
-                  }}
-                />
-              ),
-              [MODAL_TYPES.create]: (
-                <ActionCreate
-                  action={currentAction}
-                  onCancel={this.closeModal}
-                  onSuccess={() => {
-                    history.push(
-                      `/account/submit-succeeded/${
-                        currentAction ? currentAction.slug : ''
-                      }`,
-                    )
-                  }}
-                />
-              ),
-            }[modalType || MODAL_TYPES.create]
-          }
-        </Modal>
-
-        <Modal
           title={formatMessage({
             id: 'app.actionsPage.filterModalTitle',
           })}
-          visible={mobileFilterModalVisible}
+          visible={modalVisible}
           onCancel={() =>
             this.setState({
-              mobileFilterModalVisible: false,
+              modalVisible: false,
             })
           }
           getContainer={() => this.$search.current}
@@ -858,7 +789,7 @@ class ActionsPage extends React.PureComponent {
               onAfterChange={this.handleOnAfterFiltersChange}
               closeModal={() => {
                 this.setState({
-                  mobileFilterModalVisible: false,
+                  modalVisible: false,
                 })
               }}
               inModal

@@ -9,9 +9,10 @@ import hexToRgba from 'utils/hexToRgba'
 import { PrimaryButton } from 'components/Styled'
 
 const Block = styled.section`
+  margin: 10px;
   width: 93vw;
   max-width: 930px;
-  height: 580px;
+  min-height: 580px;
   display: flex;
   justify-content: space-between;
   background-color: ${colors.white};
@@ -19,21 +20,15 @@ const Block = styled.section`
   border-radius: 4px;
   overflow: hidden;
 
-  ${media.tablet`
-    height: initial;
-    min-height: 100%;
-    width: 100vw;
-  `}
-
   ${media.phone`
     flex-direction: column;
-    border-radius: 0; 
   `}
 `
 
 const ImgWrap = styled.div`
   width: 50%;
   overflow: hidden;
+  position: relative;
 
   ${media.phone`
     width: 100%;
@@ -41,8 +36,9 @@ const ImgWrap = styled.div`
   `}
 
   img {
-    min-width: 100%;
-    min-height: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `
 

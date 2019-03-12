@@ -5,6 +5,7 @@ import { Layout, Menu, Popover, Affix, Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled, { css } from 'styled-components'
 import { connect } from 'react-redux'
+import { Animate } from 'react-animate-mount'
 
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 import FingerPrintIcon from 'assets/icons/FingerPrintIcon'
@@ -25,9 +26,8 @@ import { getBrandedConfig } from 'config/branded'
 import media, { sizes } from 'utils/mediaQueryTemplate'
 import hexToRgba from 'utils/hexToRgba'
 import { logOut } from 'redux/accountStore'
-import api, { getNews, getUserInitialAvatar } from 'api'
-
-import { Animate } from 'react-animate-mount'
+import { getUserInitialAvatar } from 'api'
+import * as apiActions from 'api/actions'
 
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
@@ -535,7 +535,7 @@ class Header extends Component {
   }
 
   fetchNews = async (counterOnly = false) => {
-    const { news, unreadCount } = await getNews({
+    const { news, unreadCount } = await apiActions.getNews({
       page: 1,
       range: 'network',
     })
@@ -560,7 +560,7 @@ class Header extends Component {
   sendLastTimeReadNotif = async shouldReset => {
     if (!shouldReset) return
 
-    await api.sendLastTimeReadNewsAt(Date.now())
+    await apiActions.sendLastTimeReadNewsAt(Date.now())
     this.fetchNews()
   }
 

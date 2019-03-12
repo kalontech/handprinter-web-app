@@ -5,6 +5,23 @@ import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { animateScroll, Link as AnchorLink } from 'react-scroll'
+import 'react-modal-video/css/modal-video.min.css'
+import ModalVideo from 'react-modal-video'
+
+import client2 from 'assets/homepage/client-monarch.png'
+import client3 from 'assets/homepage/interfaceLogo.png'
+import heroImg from 'assets/homepage/hero-image.png'
+import hpAboutImg from 'assets/homepage/what-image.png'
+import hpActionImg from 'assets/homepage/actions-image.png'
+import eatonFullLogo from 'assets/branded/logos/eatonFullLogoTransparent.svg'
+import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
+import FingerPrintIcon from 'assets/icons/FingerPrintIcon'
+import ScrollAnimation from 'components/ScrollAnimation'
+import fingerPrintleft from 'assets/homepage/actions-fingerprint.svg'
+import eatonRegisterBlockImg from 'assets/homepage/eatonRegisterBlockImg.svg'
+
+import WatchVideoIcon from 'assets/icons/WatchVideoIcon'
+
 import {
   PrimaryButton,
   SecondaryButton,
@@ -24,23 +41,8 @@ import ActionsCarousel from 'components/ActionsCarousel'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import PageMetadata from 'components/PageMetadata'
-import api from 'api'
 
-import client2 from 'assets/homepage/client-monarch.png'
-import client3 from 'assets/homepage/interfaceLogo.png'
-import heroImg from 'assets/homepage/hero-image.png'
-import hpAboutImg from 'assets/homepage/what-image.png'
-import hpActionImg from 'assets/homepage/actions-image.png'
-import eatonFullLogo from 'assets/branded/logos/eatonFullLogoTransparent.svg'
-import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
-import FingerPrintIcon from 'assets/icons/FingerPrintIcon'
-import ScrollAnimation from 'components/ScrollAnimation'
-import fingerPrintleft from 'assets/homepage/actions-fingerprint.svg'
-import eatonRegisterBlockImg from 'assets/homepage/eatonRegisterBlockImg.svg'
-
-import 'react-modal-video/css/modal-video.min.css'
-import ModalVideo from 'react-modal-video'
-import WatchVideoIcon from 'assets/icons/WatchVideoIcon'
+import * as api from 'api/actions'
 
 const HeroTitle = styled(BlockTitleGreen)`
   margin-bottom: 24px;

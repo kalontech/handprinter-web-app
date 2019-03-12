@@ -23,7 +23,7 @@ import NotFoundPage from './pages/NotFoundPage'
 import OurVisionPage from './pages/OurVisionPage'
 import RegisterPage from './pages/RegisterPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
-import SubmitSucceededPage from './pages/SubmitSucceededPage'
+import CurrentActionPage from './pages/CurrentAction'
 import SetNewPasswordPage from './pages/SetNewPasswordPage'
 import ProfilePage from './pages/ProfilePage'
 import IncreaseHandprintPage from './pages/IncreaseHandprintPage'
@@ -160,19 +160,19 @@ const AppRouter = () => {
             withoutFooter
           />
           <Route
-            path="/account/submit-succeeded/:id?"
-            component={SubmitSucceededPage}
+            path="/account/set-new-password/:code"
+            component={SetNewPasswordPage}
             headerType="minimal"
-            requireAuthentication
+            unauthorizedOnly
             withoutHeaderContent
             withoutCTA
             withoutFooter
           />
           <Route
-            path="/account/set-new-password/:code"
-            component={SetNewPasswordPage}
+            path="/account/actions/:type(preview|edit|create|success)/:slug?"
+            component={CurrentActionPage}
             headerType="minimal"
-            unauthorizedOnly
+            requireAuthentication
             withoutHeaderContent
             withoutCTA
             withoutFooter

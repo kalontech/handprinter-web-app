@@ -375,6 +375,7 @@ async function fetchDashboardData(props) {
   if (personId) {
     const { calendar, ratio, stats } = await getDashboardData({
       userId: personId,
+      subset: 'user',
     })
     const { user } = await api.getUser({ userId: personId })
 

@@ -1,4 +1,3 @@
-import qs from 'qs'
 import * as Sentry from '@sentry/browser'
 
 import { store } from 'app'
@@ -58,22 +57,6 @@ export const fetchAPI = async (url, options) => {
   }
 }
 
-const fetchAction = ({ id, slug, ...params }) =>
-  fetchAPI(`/actions/find_one/${slug || id}`, params)
-
-const getActions = (query = {}) => fetchAPI(`/actions?${qs.stringify(query)}`)
-
-const getSuggestedActions = (query = {}) =>
-  fetchAPI(`/actions/suggested?${qs.stringify(query)}`)
-
-const getActionsHistory = (query = {}) =>
-  fetchAPI(`/actions/taken?${qs.stringify(query)}`)
-
-const getActionsMyIdeas = (query = {}) =>
-  fetchAPI(`/actions/get_ideas?${qs.stringify(query)}`)
-
-const getTimeValues = () => fetchAPI(`/actions/time_values`)
-
 const getCountries = () => fetchAPI(`/countries`)
 
 const getMe = () => fetchAPI(`/users/me`)
@@ -127,15 +110,6 @@ const resetPasswordRequest = email =>
     method: 'POST',
   })
 
-const takeAction = actionId =>
-  fetchAPI(`/actions/take`, {
-    body: {
-      actionId,
-      temporaryToken: getTemporaryToken(),
-    },
-    method: 'POST',
-  })
-
 const updateMe = body =>
   fetchAPI(`/users/me`, {
     body,
@@ -174,50 +148,17 @@ export const getDashboardData = ({ userId, groupId, subset = 'me' } = {}) => {
   return fetchAPI(url)
 }
 
-const engageAction = (action, emails, executorId) =>
-  fetchAPI(`/actions/engage`, {
-    body: {
-      action,
-      emails,
-      executorId,
-    },
-    method: 'POST',
-  })
-
 export const getUserInitialAvatar = fullName =>
   `https://ui-avatars.com/api/?background=${colors.lightGray.slice(
     1,
   )}&color=${colors.gray.slice(1)}&length=1&name=${fullName}&size=256`
 
-const fetchProposedAction = ({ body, ...params }) =>
-  fetchAPI(`/actions/add_idea`, {
-    body,
-    method: 'POST',
-    ...params,
-  })
-
-export const getNews = ({ page, range, groupId } = {}) =>
-  fetchAPI(`/actions/news?${qs.stringify({ page, range, groupId })}`)
-
-const sendLastTimeReadNewsAt = at =>
-  fetchAPI(`/actions/news/read_all`, {
-    body: { at },
-    method: 'POST',
-  })
-
 export default {
-  fetchAction,
-  getActions,
-  getSuggestedActions,
-  getActionsHistory,
-  getActionsMyIdeas,
   getCountries,
-  getTimeValues,
   getMe,
   logIn,
   register,
   getUser,
-  takeAction,
   updateMe,
   updateMePhoto,
   resetPasswordConfirm,
@@ -225,9 +166,5 @@ export default {
   deleteMe,
   shareInvitationCode,
   getUserInitialAvatar,
-  engageAction,
-  getNews,
-  fetchProposedAction,
-  sendLastTimeReadNewsAt,
   getInvitationsList,
 }

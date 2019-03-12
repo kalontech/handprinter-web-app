@@ -4,6 +4,10 @@ import { Row, Col } from 'antd'
 import styled from 'styled-components'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import { animateScroll } from 'react-scroll'
+import 'react-modal-video/css/modal-video.min.css'
+import ModalVideo from 'react-modal-video'
+
+import WatchVideoIcon from 'assets/icons/WatchVideoIcon'
 
 import heroBg from 'assets/our-vision/hero-bg.jpg'
 import planet from 'assets/our-vision/planet.png'
@@ -32,6 +36,7 @@ import arrow from 'assets/our-vision/arrow.png'
 import FingerPrintIcon from 'assets/icons/FingerPrintIcon'
 
 import media from 'utils/mediaQueryTemplate'
+import colors from 'config/colors'
 import {
   PrimaryButton,
   BlockContainer,
@@ -45,12 +50,8 @@ import {
 import PageMetadata from 'components/PageMetadata'
 import ImpactCarousel from 'components/ImpactCarousel'
 import ActionsCarousel from 'components/ActionsCarousel'
-import colors from 'config/colors'
-import api from 'api'
 import ScrollAnimation from 'components/ScrollAnimation'
-import 'react-modal-video/css/modal-video.min.css'
-import ModalVideo from 'react-modal-video'
-import WatchVideoIcon from 'assets/icons/WatchVideoIcon'
+import * as api from 'api/actions'
 
 const OurVisionWrap = styled.div`
   background: ${colors.white};

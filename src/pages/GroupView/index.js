@@ -40,7 +40,8 @@ import MemberCard from 'components/MemberCard'
 import icons from 'components/ActionCardLabel/icons'
 import { SecondaryButton, Modal, Pagination } from 'components/Styled'
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
-import { getUserInitialAvatar, getNews, getDashboardData } from 'api'
+import { getUserInitialAvatar, getDashboardData } from 'api'
+import { getNews } from 'api/actions'
 import {
   fetchUpdateGroup,
   fetchGroupById,

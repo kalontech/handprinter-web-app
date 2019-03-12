@@ -11,7 +11,7 @@ import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 import hexToRgba from 'utils/hexToRgba'
-import api, { getNews } from 'api'
+import * as api from 'api/actions'
 
 const NEWS_RANGES = {
   NETWORK: 'network',
@@ -109,7 +109,7 @@ class NewsPage extends Component {
 
   fetchNews = async () => {
     this.setState({ loadingNews: true })
-    const { news = [] } = await getNews({
+    const { news = [] } = await api.getNews({
       page: this.state.page,
       range: this.state.range,
     })
