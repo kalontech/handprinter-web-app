@@ -144,7 +144,7 @@ const RightMenu = styled.div`
   align-items: center;
 
   a {
-    display: inline-block;
+    display: inline-flex;
     margin-left: 35px;
   }
 
@@ -154,14 +154,12 @@ const RightMenu = styled.div`
 `
 
 const Logo = styled.div`
-  display: block;
   margin-right: 40px;
 `
 
 const LogoSmall = styled.div`
   display: block;
   flex: 1;
-  display: flex;
   justify-content: flex-start;
   ${media.largeDesktop`
     justify-content: center;
@@ -649,13 +647,7 @@ class Header extends Component {
                         style={overrides && { borderRadius: '0' }}
                       >
                         <FingerPrintIcon id="primaryBtnIcon" />
-                        <FormattedMessage
-                          id={
-                            overrides && overrides.brandName === 'Eaton'
-                              ? 'app.header.link'
-                              : 'app.brandedHeader.link'
-                          }
-                        />
+                        <FormattedMessage id={'app.header.link'} />
                       </PrimaryButton>
                     </Link>
                   )}
@@ -816,13 +808,7 @@ class Header extends Component {
                           <Link to="/account/register">
                             <PrimaryButton type="primary" size="large">
                               <FingerPrintIcon id="primaryBtnIcon" />
-                              <FormattedMessage
-                                id={
-                                  overrides && overrides.brandName === 'Eaton'
-                                    ? 'app.header.link'
-                                    : 'app.brandedHeader.link'
-                                }
-                              />
+                              <FormattedMessage id={'app.header.link'} />
                             </PrimaryButton>
                           </Link>
                         )}
