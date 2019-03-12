@@ -166,7 +166,7 @@ const LogoSmall = styled.div`
   `}
   a {
     display: flex;
-    aligh-items: center;
+    justify-content: center;
   }
 `
 
