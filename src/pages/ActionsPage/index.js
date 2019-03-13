@@ -496,7 +496,7 @@ class ActionsPage extends React.PureComponent {
 
   render() {
     const {
-      intl: { formatMessage, formatRelative },
+      intl: { formatMessage, formatRelative, locale },
       user,
       loading,
       actions,
@@ -691,7 +691,12 @@ class ActionsPage extends React.PureComponent {
                             history.push(`/account/actions/edit/${action.slug}`)
                           }}
                           onDelete={this.onActionDelete(action._id)}
-                          name={action.name}
+                          name={
+                            action.translatedName &&
+                            action.translatedName[locale]
+                              ? action.translatedName[locale]
+                              : action.name
+                          }
                           impacts={() =>
                             action.status !== ACTION_STATES.PUBLISHED ? (
                               <Tooltip
