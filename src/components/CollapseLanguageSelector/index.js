@@ -37,10 +37,6 @@ const LangMenu = styled(Menu)`
   }
 `
 
-const Icon = styled(ExpandMoreIcon)`
-  color: ${({ iconColor }) => iconColor || colors.green};
-`
-
 const CollapseLanguageSelector = props => {
   const { intl, setLocale, className } = props
   return (
@@ -62,7 +58,7 @@ const CollapseLanguageSelector = props => {
               />
               <FormattedMessage id={`app.languages.${intl.locale}`} />
             </div>
-            <Icon {...props} />
+            <ExpandMoreIcon iconColor={colors.green} />
           </LangTitle>
         }
       >
