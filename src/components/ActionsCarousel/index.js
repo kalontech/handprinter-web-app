@@ -196,7 +196,11 @@ class ActionsCarousel extends React.Component {
                 key={index}
                 to={`${this.props.actionLinkPrefix}/${action.slug}`}
                 picture={action.picture}
-                name={action.translatedName[locale] || action.name}
+                name={
+                  action.translatedName
+                    ? action.translatedName[locale]
+                    : action.name
+                }
                 impacts={action.impacts}
                 isSlide
               />

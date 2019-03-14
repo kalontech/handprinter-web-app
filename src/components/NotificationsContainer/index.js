@@ -142,7 +142,9 @@ const NotificationsContainer = ({
                         <NotificationLink
                           to={`/account/news/actions/${action.slug}`}
                         >
-                          {action.translatedName[locale] || action.name}
+                          {action.translatedName
+                            ? action.translatedName[locale]
+                            : action.name}
                         </NotificationLink>
                       ),
                     }}

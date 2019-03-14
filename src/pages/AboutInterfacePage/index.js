@@ -589,7 +589,11 @@ class AboutInterfacePage extends Component {
                     }}
                     to={`/pages/home/actions/${action.slug}`}
                     picture={action.picture}
-                    name={action.translatedName[locale] || action.name}
+                    name={
+                      action.translatedName
+                        ? action.translatedName[locale]
+                        : action.name
+                    }
                     impacts={action.impacts}
                     suggestedBy={action.suggestedBy}
                     suggestedAt={formatRelative(action.suggestedAt)}
