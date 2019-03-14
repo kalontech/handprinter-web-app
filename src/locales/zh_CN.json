@@ -509,5 +509,7 @@
     "app.eatonHomePage.block.description": "伊顿与Handprinter.org合作，为员工提供了一种简单的方法来跟踪个人行为对环境的影响。 Handprinter可帮助您计算和跟踪您的工作量，并了解您的同事的进展情况，因为您可以通过减少占地面积和增加手印来更接近实现净积极的目标。",
     "app.eatonHomePage.block.registerBlock.text": "是时候告诉我们只有一个人的行为无法发挥作用的想法。现在，您可以看到您和您近10万名同事可以做些什么来使您的社区，工作，地球更具可持续性！立即注册，成为积极未来的一部分。",
     "app.eatonHomePage.block.registerBlock.highlightedText": "立即注册，成为积极未来的一部分。",
-    "app.header.menu.aboutEaton": "手印"
+    "app.header.menu.aboutEaton": "手印",
+    "app.actions.card.denied": "被拒绝",
+    "app.actions.card.deniedHint": "Handprinter的管理员拒绝了你的行动想法"
 }

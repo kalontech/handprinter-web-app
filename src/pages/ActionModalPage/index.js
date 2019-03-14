@@ -474,37 +474,40 @@ class ActionModalPage extends Component {
                   </ActionAssumptions>
                 )}
               </ActionContent>
-              <BottomPanel isIphone={isSafariMobile}>
-                {action.status !== ACTION_STATES.PROPOSED && (
-                  <ActionViewButtonsWrapper isIphone={isSafariMobile}>
-                    {user && (
-                      <DefaultButton
-                        type="primary"
-                        htmlType="submit"
-                        onClick={this.switchToEngageView}
-                      >
-                        <FormattedMessage id="app.actions.engage" />
-                      </DefaultButton>
-                    )}
-                    {!location.pathname.includes(ACTIONS_SUBSETS.TAKEN) && (
-                      <TakeActionButton
-                        type="primary"
-                        loading={takingAction}
-                        onClick={this.takeAction}
-                        isLoggedIn={user}
-                      >
-                        <FormattedMessage id="app.actions.takeAction" />
-                      </TakeActionButton>
-                    )}
-                  </ActionViewButtonsWrapper>
-                )}
-                {takeActionError && (
-                  <FormItem
-                    validateStatus="error"
-                    help={formatMessage({ id: takeActionError })}
-                  />
-                )}
-              </BottomPanel>
+
+              {action.status !== ACTION_STATES.DENIED && (
+                <BottomPanel isIphone={isSafariMobile}>
+                  {action.status !== ACTION_STATES.PROPOSED && (
+                    <ActionViewButtonsWrapper isIphone={isSafariMobile}>
+                      {user && (
+                        <DefaultButton
+                          type="primary"
+                          htmlType="submit"
+                          onClick={this.switchToEngageView}
+                        >
+                          <FormattedMessage id="app.actions.engage" />
+                        </DefaultButton>
+                      )}
+                      {!location.pathname.includes(ACTIONS_SUBSETS.TAKEN) && (
+                        <TakeActionButton
+                          type="primary"
+                          loading={takingAction}
+                          onClick={this.takeAction}
+                          isLoggedIn={user}
+                        >
+                          <FormattedMessage id="app.actions.takeAction" />
+                        </TakeActionButton>
+                      )}
+                    </ActionViewButtonsWrapper>
+                  )}
+                  {takeActionError && (
+                    <FormItem
+                      validateStatus="error"
+                      help={formatMessage({ id: takeActionError })}
+                    />
+                  )}
+                </BottomPanel>
+              )}
             </ModalContentWrap>
           </RightPanel>
         </Fragment>

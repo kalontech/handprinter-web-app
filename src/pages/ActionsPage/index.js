@@ -697,15 +697,27 @@ class ActionsPage extends React.PureComponent {
                               ? action.translatedName[locale]
                               : action.name
                           }
-                          impacts={() =>
-                            action.status !== ACTION_STATES.PUBLISHED ? (
+                          impacts={() => {
+                            let tooltipTextId, buttonTextId
+                            switch (action.status) {
+                              case ACTION_STATES.MODELING:
+                                tooltipTextId =
+                                  'app.actions.card.waitModelingHint'
+                                buttonTextId = 'app.actions.card.waitModeling'
+                                break
+                              case ACTION_STATES.DENIED:
+                                tooltipTextId = 'app.actions.card.deniedHint'
+                                buttonTextId = 'app.actions.card.denied'
+                                break
+                              default:
+                                tooltipTextId = 'app.actions.card.waitAdminHint'
+                                buttonTextId = 'app.actions.card.waitAdmin'
+                            }
+                            return action.status !== ACTION_STATES.PUBLISHED ? (
                               <Tooltip
                                 placement="top"
                                 title={formatMessage({
-                                  id:
-                                    action.status === ACTION_STATES.MODELING
-                                      ? 'app.actions.card.waitModelingHint'
-                                      : 'app.actions.card.waitAdminHint',
+                                  id: tooltipTextId,
                                 })}
                               >
                                 <ImpactButton
@@ -714,17 +726,14 @@ class ActionsPage extends React.PureComponent {
                                   }
                                 >
                                   {formatMessage({
-                                    id:
-                                      action.status === ACTION_STATES.MODELING
-                                        ? 'app.actions.card.waitModeling'
-                                        : 'app.actions.card.waitAdmin',
+                                    id: buttonTextId,
                                   })}
                                 </ImpactButton>
                               </Tooltip>
                             ) : (
                               <ActionCardLabelSet impacts={action.impacts} />
                             )
-                          }
+                          }}
                           suggestedBy={action.suggestedBy}
                           suggestedAt={
                             action.suggestedAt &&

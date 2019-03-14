@@ -509,5 +509,7 @@
     "app.eatonHomePage.block.description": "Eaton arbeitete mit Handprinter.org zusammen, um Mitarbeitern eine einfache Möglichkeit zu bieten, die Auswirkungen persönlicher Handlungen auf die Umwelt zu verfolgen. Handprinter hilft Ihnen dabei, Ihre Anstrengungen zu berechnen und zu verfolgen und den Fortschritt Ihrer Kollegen zu sehen, während Sie dem Ziel näher kommen, Net Positive zu werden, indem Sie Ihren Fußabdruck reduzieren und Ihren Handabdruck vergrößern.",
     "app.eatonHomePage.block.registerBlock.text": "Es ist an der Zeit, die Idee zu legen, dass die Aktionen einer einzigen Person keinen Unterschied machen können. Jetzt können Sie sehen, was Sie und Ihre fast 100.000 Mitarbeiter tun können, um Ihre Gemeinschaft, Ihre Arbeit und Ihren Planeten nachhaltiger zu machen! Registrieren Sie sich noch heute und werden Sie Teil einer positiven Zukunft.",
     "app.eatonHomePage.block.registerBlock.highlightedText": "Registrieren Sie sich noch heute und werden Sie Teil einer positiven Zukunft.",
-    "app.header.menu.aboutEaton": "Handabdruck"
+    "app.header.menu.aboutEaton": "Handabdruck",
+    "app.actions.card.denied": "Verweigert",
+    "app.actions.card.deniedHint": "Ihre Aktionsidee wird vom Administrator des Handprinter abgelehnt"
 }
