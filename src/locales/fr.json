@@ -511,5 +511,7 @@
     "app.eatonHomePage.block.registerBlock.highlightedText": "Inscrivez-vous aujourd'hui et participez à un avenir positif.",
     "app.header.menu.aboutEaton": "Empreinte de la main",
     "app.actions.card.denied": "Refusé",
-    "app.actions.card.deniedHint": "Votre idée d'action est refusée par l'administrateur de Handprinter"
+    "app.actions.card.deniedHint": "Votre idée d'action est refusée par l'administrateur de Handprinter",
+    "app.errors.38": "Ce groupe est déjà supprimé",
+    "app.groups.delete": "Supprimé"
 }

@@ -19,13 +19,14 @@ import {
   GROUPS_SUBSETS,
   USER_GROUP_STATUSES,
   USER_GROUP_ROLES,
+  GROUPS_STATUSES,
 } from 'utils/constants'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import fetch from 'utils/fetch'
 import { Creators } from 'redux/groups'
 
-import { Pagination, Input } from 'components/Styled'
+import { Pagination, Input, SecondaryButton } from 'components/Styled'
 import GroupButton, { BUTTON_TYPES } from 'components/GroupButton'
 import GroupsListHeader from 'components/GroupsListHeader'
 import Spinner from 'components/Spinner'
@@ -132,6 +133,18 @@ const SearchItemImg = styled.img`
   margin-right: 10px;
   display: inline-block;
   object-fit: cover;
+`
+
+const ButtonDeleted = styled(SecondaryButton)`
+  border: 1px solid ${colors.orange};
+  color: ${colors.orange};
+  font-size: 10px;
+  background-color: transparent;
+  text-transform: uppercase;
+  min-width: 98px;
+  height: 28px;
+  pointer-events: none;
+  margin-top: 6px;
 `
 
 async function getGroups(props) {
@@ -430,6 +443,14 @@ class GroupsPage extends React.PureComponent {
                       }
                     }
                     buttons={() => {
+                      if (item.status === GROUPS_STATUSES.DELETED) {
+                        return (
+                          <ButtonDeleted>
+                            {intl.formatMessage({ id: 'app.groups.delete' })}
+                          </ButtonDeleted>
+                        )
+                      }
+
                       let type
 
                       if (

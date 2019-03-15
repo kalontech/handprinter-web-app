@@ -7,10 +7,16 @@ import Form from 'antd/lib/form'
 import Upload from 'antd/lib/upload'
 
 import { MAX_DESCRIPTION_LENGTH } from 'config/common'
+import { GROUPS_STATUSES } from 'utils/constants'
+import media from 'utils/mediaQueryTemplate'
 import { ACCEPT_IMAGE_FORMATS } from 'config/files'
 import colors from 'config/colors'
 import { required } from 'config/validationRules'
-import { FormItem as FormItemDefault, Input } from 'components/Styled'
+import {
+  FormItem as FormItemDefault,
+  Input,
+  SecondaryButton,
+} from 'components/Styled'
 import { getUserInitialAvatar } from 'api'
 
 const FormStyled = styled(Form)`
@@ -70,6 +76,30 @@ const FormItem = styled(FormItemDefault)`
 const TextArea = styled(Input.TextArea)`
   resize: none;
   margin-bottom: 10px;
+`
+
+const TitleWrap = styled.div`
+  position: relative;
+`
+
+const ButtonDeleted = styled(SecondaryButton)`
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateX(100%) translateX(20px) translateY(-50%) translateY(-3px);
+  border: 1px solid ${colors.orange};
+  color: ${colors.orange};
+  font-size: 10px;
+  background-color: transparent;
+  text-transform: uppercase;
+  min-width: 98px;
+  height: 28px;
+  pointer-events: none;
+
+  ${media.phone`
+    min-width: 48px;
+    padding: 0 10px;  
+  `}
 `
 
 class GroupDetailedForm extends React.PureComponent {
@@ -181,9 +211,17 @@ class GroupDetailedForm extends React.PureComponent {
             )}
           </FormItem>
         ) : (
-          <Name onClick={this.toggleFieldVisibility('name')}>
-            {initialValues.name}
-          </Name>
+          <TitleWrap>
+            <Name onClick={this.toggleFieldVisibility('name')}>
+              {initialValues.name}
+            </Name>
+
+            {initialValues.status === GROUPS_STATUSES.DELETED && (
+              <ButtonDeleted>
+                {intl.formatMessage({ id: 'app.groups.delete' })}
+              </ButtonDeleted>
+            )}
+          </TitleWrap>
         )}
 
         <Counter>{counter}</Counter>

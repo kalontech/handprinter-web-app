@@ -21,6 +21,11 @@ export const ACTIONS_SUBSETS = {
   TAKEN: 'history',
 }
 
+export const GROUPS_STATUSES = {
+  DELETED: 'DELETED',
+  ACTIVE: 'ACTIVE',
+}
+
 export const GROUPS_SUBSETS = {
   DISCOVER: 'discover',
   MY: 'my',

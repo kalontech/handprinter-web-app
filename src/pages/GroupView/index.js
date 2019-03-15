@@ -23,6 +23,7 @@ import {
   QUESTIONS_ANCHOR,
   USER_GROUP_ROLES,
   USER_GROUP_STATUSES,
+  GROUPS_STATUSES,
 } from 'utils/constants'
 import fetch from 'utils/fetch'
 import decodeError from 'utils/decodeError'
@@ -470,7 +471,9 @@ class GroupViewPage extends PureComponent {
     const { group } = this.props
     let type
 
-    if (group.info.memberStatus === USER_GROUP_STATUSES.INVITED) {
+    if (group.status === GROUPS_STATUSES.DELETED) {
+      type = BUTTON_TYPES.leave
+    } else if (group.info.memberStatus === USER_GROUP_STATUSES.INVITED) {
       type = BUTTON_TYPES.invited
     } else if (group.info.memberStatus === USER_GROUP_STATUSES.REQUESTING) {
       type = BUTTON_TYPES.request
@@ -494,6 +497,7 @@ class GroupViewPage extends PureComponent {
       [BUTTON_TYPES.leave]: {
         onClick: this.toggleMembership(false),
         loading: loadingButton,
+        disabled: group.status === GROUPS_STATUSES.DELETED,
       },
       [BUTTON_TYPES.join]: {
         onClick: this.toggleMembership(true),
@@ -763,8 +767,9 @@ class GroupViewPage extends PureComponent {
               )}
               initialValues={group}
               disabled={
-                group.info.memberRole &&
-                group.info.memberRole === USER_GROUP_ROLES.MEMBER
+                group.status === GROUPS_STATUSES.DELETED ||
+                (group.info.memberRole &&
+                  group.info.memberRole === USER_GROUP_ROLES.MEMBER)
               }
               onSubmit={this.handleSubmit}
             />
@@ -807,43 +812,45 @@ class GroupViewPage extends PureComponent {
 
                     {[USER_GROUP_ROLES.ADMIN, USER_GROUP_ROLES.OWNER].includes(
                       group.info.memberRole,
-                    ) && (
-                      <Tooltip
-                        getPopupContainer={() => this.$counter.current}
-                        placement="top"
-                        title={
-                          <TooltipTitle>
-                            {intl.formatMessage({
-                              id: 'app.pages.groups.addRemovePeople',
-                            })}
-                            <br />
-                            {group.requestingMembersCount > 0 &&
-                              intl.formatMessage(
-                                {
-                                  id: 'app.pages.groups.addRemovePeopleCounter',
-                                },
-                                { count: group.requestingMembersCount },
-                              )}
-                          </TooltipTitle>
-                        }
-                      >
-                        <DashedAdminCircle
-                          index={
-                            group.admins.length > 5 ? 7 : group.admins.length
+                    ) &&
+                      group.status === GROUPS_STATUSES.ACTIVE && (
+                        <Tooltip
+                          getPopupContainer={() => this.$counter.current}
+                          placement="top"
+                          title={
+                            <TooltipTitle>
+                              {intl.formatMessage({
+                                id: 'app.pages.groups.addRemovePeople',
+                              })}
+                              <br />
+                              {group.requestingMembersCount > 0 &&
+                                intl.formatMessage(
+                                  {
+                                    id:
+                                      'app.pages.groups.addRemovePeopleCounter',
+                                  },
+                                  { count: group.requestingMembersCount },
+                                )}
+                            </TooltipTitle>
                           }
-                          ref={this.$counter}
-                          onClick={() => {
-                            this.setState({ modalVisible: true })
-                          }}
                         >
-                          {group.requestingMembersCount > 0 && (
-                            <Counter>{group.requestingMembersCount}</Counter>
-                          )}
+                          <DashedAdminCircle
+                            index={
+                              group.admins.length > 5 ? 7 : group.admins.length
+                            }
+                            ref={this.$counter}
+                            onClick={() => {
+                              this.setState({ modalVisible: true })
+                            }}
+                          >
+                            {group.requestingMembersCount > 0 && (
+                              <Counter>{group.requestingMembersCount}</Counter>
+                            )}
 
-                          <Icon type="plus" />
-                        </DashedAdminCircle>
-                      </Tooltip>
-                    )}
+                            <Icon type="plus" />
+                          </DashedAdminCircle>
+                        </Tooltip>
+                      )}
                   </Fragment>
                 )}
 
