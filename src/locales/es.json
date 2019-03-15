@@ -510,6 +510,7 @@
     "app.eatonHomePage.block.registerBlock.text": "Es hora de poner a dormir la idea de que las acciones de una sola persona no pueden hacer una diferencia. ¡Ahora puede ver lo que usted y sus casi 100,000 compañeros de trabajo pueden hacer para que su comunidad, su trabajo, su planeta sean más sostenibles! Regístrese hoy y forme parte de un futuro positivo.",
     "app.eatonHomePage.block.registerBlock.highlightedText": "Regístrese hoy y forme parte de un futuro positivo.",
     "app.header.menu.aboutEaton": "Handprint",
+    "app.dashboardPage.deletedUser": "Usuario eliminado",
     "app.actions.card.denied": "Negado",
     "app.actions.card.deniedHint": "Su idea de acción está siendo denegada por el administrador de Handprinter",
     "app.errors.38": "Este grupo ya está eliminado",

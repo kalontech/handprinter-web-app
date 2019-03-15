@@ -510,6 +510,7 @@
     "app.eatonHomePage.block.registerBlock.text": "Es ist an der Zeit, die Idee zu legen, dass die Aktionen einer einzigen Person keinen Unterschied machen können. Jetzt können Sie sehen, was Sie und Ihre fast 100.000 Mitarbeiter tun können, um Ihre Gemeinschaft, Ihre Arbeit und Ihren Planeten nachhaltiger zu machen! Registrieren Sie sich noch heute und werden Sie Teil einer positiven Zukunft.",
     "app.eatonHomePage.block.registerBlock.highlightedText": "Registrieren Sie sich noch heute und werden Sie Teil einer positiven Zukunft.",
     "app.header.menu.aboutEaton": "Handabdruck",
+    "app.dashboardPage.deletedUser": "Gelöschter Benutzer",
     "app.actions.card.denied": "Verweigert",
     "app.actions.card.deniedHint": "Ihre Aktionsidee wird vom Administrator des Handprinter abgelehnt",
     "app.errors.38": "Diese Gruppe ist bereits gelöscht",

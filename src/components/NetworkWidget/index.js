@@ -3,6 +3,8 @@ import d3 from 'd3'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import hexToRgba from 'utils/hexToRgba'
+import { injectIntl } from 'react-intl'
+import { compose } from 'redux'
 
 import colors from 'config/colors'
 import { sizes } from 'utils/mediaQueryTemplate'
@@ -17,12 +19,10 @@ const Wrap = styled.div`
   .d3-tooltip-container {
     background-color: ${colors.dark};
     border-radius: 4px;
-    display: table;
     white-space: nowrap;
     min-width: 100px;
 
     p {
-      width: 100px;
       color: white;
       padding: 6px 8px;
       text-align: center;
@@ -36,7 +36,7 @@ const Wrap = styled.div`
     bottom: 2px;
     content: '';
     height: 10px;
-    left: 45px;
+    left: calc(50% - 5px);
     position: absolute;
     transform: rotate(45deg);
     width: 10px;
@@ -75,38 +75,13 @@ const nodeTransform = d => {
 
 function addChildrenLength(data) {
   const recurse = node => {
+    if (!node.children) node.children = []
     node.children.forEach(el => {
-      el.brothers = node.children.length
+      el.brothers = node.children
       if (el.children) recurse(el)
     })
   }
   recurse(data)
-}
-
-// Transforms input data by adding depth indexes
-const flatten = root => {
-  addChildrenLength(root)
-  let children = Array.isArray(root.children) && root.children.slice(0, 5)
-  root = { ...root, children }
-  const nodes = []
-  let i = 0
-  const recurse = (node, depth, childIndex) => {
-    node.depth = depth
-    if (node.children) {
-      node.children.forEach((n, childIndex) => {
-        n.children = n.children && n.children.slice(0, 5)
-        recurse(n, node.depth + 1, childIndex)
-      })
-    }
-
-    if (!node.id) node.id = ++i
-    if (childIndex >= 4 && node.brothers > 5) {
-      node.badge = `+${node.brothers - 4}`
-    }
-    nodes.push(node)
-  }
-  recurse(root, 0)
-  return nodes
 }
 
 // Returns widget container dimensions
@@ -117,36 +92,12 @@ const getDimensions = () => {
     height: window.innerWidth < sizes.phone ? 300 : 500,
   }
 }
-
-// Sets new positions for links and nodes on tick
-const tick = (link, node) => {
-  link
-    .attr('x1', d => {
-      if (d.source.depth === 0) {
-        const { width } = getDimensions()
-        return width / 2
-      }
-      return d.source.x
-    })
-    .attr('y1', d => {
-      if (d.source.depth === 0) {
-        const { height } = getDimensions()
-        return height / 2
-      }
-      return d.source.y
-    })
-    .attr('x2', d => d.target.x)
-    .attr('y2', d => d.target.y)
-  node.attr('transform', nodeTransform)
-}
+let force, link, node, widget, defs
 
 class NetworkWidget extends Component {
   componentDidMount() {
-    // Get widget container dimensions
     const { width, height } = getDimensions()
-
-    // Create widget container
-    const widget = d3
+    widget = d3
       .select('#network_widget')
       .append('svg')
       .attr('width', width)
@@ -155,117 +106,94 @@ class NetworkWidget extends Component {
         'filter',
         `drop-shadow(0 1px 10px ${hexToRgba(`${colors.dark}`, 0.08)})`,
       )
-
-    // Create definitions container
-    const defs = widget.append('defs')
-
-    // Initialize force layout, nodes and links
-    const force = d3.layout.force()
-    const nodes = flatten(this.props.data)
-    const links = d3.layout.tree().links(nodes)
-
-    // Get references to the links and nodes
-    let link = widget.selectAll('line.link').data(links, d => d.target.id)
-    let node = widget.selectAll('g.node').data(nodes, d => d.id)
-
-    // Configure force layout
-    force
-      .nodes(nodes)
-      .links(links)
+    defs = widget.append('defs')
+    force = d3.layout
+      .force()
       .gravity(0)
       .charge(-5000)
       .linkDistance(d => getLinkLength(d.source.depth, d.target.depth))
       .friction(0.2)
       .linkStrength(() => 10)
       .size([width, height])
-      .on('tick', () => tick(link, node))
+      .on('tick', () => this.tick(link, node))
+    link = widget.selectAll('.link')
+    node = widget.selectAll('.node')
+    this.update()
+  }
+
+  update = () => {
+    var nodes = this.flatten(this.props.data)
+    var links = d3.layout.tree().links(nodes)
+
+    // Restart the force layout.
+    force
+      .links(links)
+      .nodes(nodes)
       .start()
 
-    // Draw links
+    // Update links.
+    link = link.data(links, function(d) {
+      return d.target.id
+    })
+
+    link.exit().remove()
+
     link
       .enter()
-      .insert('line')
+      .insert('line', '.node')
       .attr('class', 'link')
       .style('stroke', colors.gray)
 
-    // Draw nodes
-    const nodeWithFiveChildren = node
+    // Update nodes.
+    node = node.data(nodes, function(d) {
+      return d.id
+    })
+    node.exit().remove()
+
+    node.selectAll('circle').remove()
+    widget.selectAll('.d3-tooltip').remove()
+
+    node
       .enter()
       .append('g')
       .attr('class', 'node')
       .attr('cursor', 'pointer')
       .attr('transform', d => `translate(${d.x}, ${d.y})`)
-      .on('mouseover', function(d) {
-        if (!d.badge) {
-          widget
-            .append('foreignObject')
-            .attr({
-              x: d.x - 50,
-              width: 100,
-              class: 'd3-tooltip',
-              ...(d.y > 100
-                ? {
-                    y: d.y - getNodeSize(d.depth) / 2 - 50,
-                    height: 39,
-                  }
-                : { y: d.y + getNodeSize(d.depth) / 2 + 12, height: 0 }),
-            })
-            .append('xhtml:div')
-            .append('div')
-            .attr({
-              class: 'd3-tooltip-container',
-            })
-            .append('p')
-            .html(d.fullName || 'Deleted user')
-        }
+      .on('mouseover', d => {
+        const label =
+          d.fullName ||
+          this.props.intl.formatMessage({
+            id: 'app.dashboardPage.deletedUser',
+          })
+        const fullNameWidth = Math.max(100, label.length * 7.8 + 16)
+        widget
+          .append('foreignObject')
+          .attr({
+            x: d.x - fullNameWidth / 2,
+            width: fullNameWidth,
+            class: 'd3-tooltip',
+            ...(d.y > 100
+              ? {
+                  y: d.y - getNodeSize(d.depth) / 2 - 50,
+                  height: 39,
+                }
+              : { y: d.y + getNodeSize(d.depth) / 2 + 12, height: 0 }),
+          })
+          .append('xhtml:div')
+          .append('div')
+          .attr({
+            class: 'd3-tooltip-container',
+          })
+          .append('p')
+          .html(label)
       })
       .on('mouseout', function() {
         widget.selectAll('.d3-tooltip').remove()
       })
-      .on('click', function(e) {
-        history.push(`/account/${e.id}`)
-      })
+      .on('click', this.handleClick)
       .call(force.drag)
 
-    nodeWithFiveChildren
-      .filter(i => i.badge)
-      .append('circle')
-      .attr('r', d => getNodeSize(d.depth) / 2)
-      .attr('stroke', colors.ocean)
-      .attr('fill', colors.ocean)
-
-    nodeWithFiveChildren
-      .filter(i => i.badge)
-      .append('text')
-      .attr('font-size', d => getNodeSize(d.depth) * 0.4)
-      .attr('font-family', 'Noto Sans')
-      .attr('fill', 'white')
-      .text(d => d.badge)
-      .attr('x', d => -getNodeSize(d.depth) * (d.brothers > 13 ? 0.3 : 0.2))
-      .attr('y', d => getNodeSize(d.depth) * 0.1)
-
-    nodeWithFiveChildren
-      .filter(i => i.badge)
-      .append('text')
-      .attr('x', d => -(getNodeSize(d.depth) / 2))
-      .attr('y', d => -(getNodeSize(d.depth) / 10))
-      .attr('height', d => getNodeSize(d.depth))
-      .attr('width', d => getNodeSize(d.depth))
-
-      .attr('clip-path', d => {
-        // Create clip-path definition
-        defs
-          .append('clipPath')
-          .attr('id', `clipPath${d.id}`)
-          .append('circle')
-          .attr('r', getNodeSize(d.depth) / 2)
-        // Set clip-path definition
-        return `url(#clipPath${d.id})`
-      })
-      .attr('preserveAspectRatio', 'none')
-
-    nodeWithFiveChildren
-      .filter(i => !i.badge)
+    node
       .append('image')
       .attr(
         'xlink:href',
@@ -286,6 +214,109 @@ class NetworkWidget extends Component {
         return `url(#clipPath${d.id})`
       })
       .attr('preserveAspectRatio', 'none')
+
+    node
+      .filter(i => i.badge && !i.expanded)
+      .append('circle')
+      .attr('r', d => getNodeSize(d.depth) / 4)
+      .attr('stroke', colors.ocean)
+      .attr('fill', colors.ocean)
+      .attr(
+        'transform',
+        d =>
+          `translate(${getNodeSize(d.depth) * 0.3}, ${-getNodeSize(d.depth) *
+            0.3})`,
+      )
+
+    node
+      .filter(i => i.badge && !i.expanded)
+      .append('text')
+      .attr('font-size', d => getNodeSize(d.depth) * 0.2)
+      .attr('font-family', 'Noto Sans')
+      .attr('text-anchor', 'middle')
+      .attr('alignment-baseline', 'middle')
+      .attr('fill', 'white')
+      .text(d => d.badge)
+      .attr('x', d => getNodeSize(d.depth) * 0.3)
+      .attr('y', d => -getNodeSize(d.depth) * 0.3)
+    node
+      .filter(i => i.badge && !i.expanded)
+      .append('text')
+      .attr('x', d => -(getNodeSize(d.depth) / 2))
+      .attr('y', d => -(getNodeSize(d.depth) / 10))
+      .attr('height', d => getNodeSize(d.depth))
+      .attr('width', d => getNodeSize(d.depth))
+      .attr('clip-path', d => {
+        // Create clip-path definition
+        defs
+          .append('clipPath')
+          .attr('id', `clipPath${d.id}`)
+          .append('circle')
+          .attr('r', getNodeSize(d.depth) / 2)
+        // Set clip-path definition
+        return `url(#clipPath${d.id})`
+      })
+      .attr('preserveAspectRatio', 'none')
+  }
+
+  handleClick = user => {
+    if (user.children && user.children.length === 0 && !user._children) {
+      history.push(`/account/${user.id}`)
+    }
+    if (d3.event.defaultPrevented) return // ignore drag
+    if (user.children && user.children.length > 0) {
+      user._children = user.children
+      user.children = null
+      user.expanded = false
+    } else {
+      user.children = user._children
+      user._children = null
+      user.expanded = true
+    }
+    this.update()
+  }
+
+  // Transforms input data by adding depth indexes and badges
+  flatten = root => {
+    addChildrenLength(root)
+    let nodes = []
+    let i = 0
+    function recurse(node, depth, childIndex) {
+      node.depth = depth
+      if (node.children) {
+        node.children.forEach((n, childIndex) => {
+          recurse(n, node.depth + 1, childIndex)
+        })
+      }
+      if (!node.id) node.id = ++i
+      if (node.children && node.children.length > 0) {
+        node.badge = `+${node.children.length}`
+      }
+      nodes.push(node)
+    }
+    recurse(root, 0)
+    return nodes
+  }
+
+  tick = (link, node) => {
+    link
+      .attr('x1', d => {
+        if (d.source.depth === 0) {
+          const { width } = getDimensions()
+          return width / 2
+        }
+        return d.source.x
+      })
+      .attr('y1', d => {
+        if (d.source.depth === 0) {
+          const { height } = getDimensions()
+          return height / 2
+        }
+        return d.source.y
+      })
+      .attr('x2', d => d.target.x)
+      .attr('y2', d => d.target.y)
+    node.attr('transform', nodeTransform)
   }
 
   render() {
@@ -295,6 +326,7 @@ class NetworkWidget extends Component {
 
 NetworkWidget.propTypes = {
   data: PropTypes.object.isRequired,
+  intl: PropTypes.object,
 }
 
-export default NetworkWidget
+export default compose(injectIntl)(NetworkWidget)
