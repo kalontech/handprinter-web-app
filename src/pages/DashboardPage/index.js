@@ -747,7 +747,9 @@ class DashboardPage extends Component {
                           </Row>
                         </WidgetHeader>
                         <WidgetContent>
-                          <NetworkWidget data={network} />
+                          <NetworkWidget
+                            data={{ ...network, expanded: true }}
+                          />
                         </WidgetContent>
                       </WidgetContainer>
                     </Col>
