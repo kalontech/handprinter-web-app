@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import { Link } from 'react-router-dom'
 
-import { getUserInitialAvatar } from 'api'
 import styled from 'styled-components'
 import colors from 'config/colors'
 
@@ -116,14 +115,11 @@ const NotificationsContainer = ({
       {notification.length > 0 ? (
         notification.slice(0, 5).map((notifItem, index) => {
           const { user, action } = notifItem.arguments
-          const userPhoto =
-            (user && user.photo) ||
-            getUserInitialAvatar((user && user.fullName) || '?')
 
           return (
             <NotificationItem key={index}>
               <NotificationPicture>
-                <img src={userPhoto} alt="" />
+                <img src={user && user.photo} alt="photo" />
               </NotificationPicture>
               <NotificationBody>
                 <div>
@@ -131,7 +127,7 @@ const NotificationsContainer = ({
                     id="app.newsPage.notification.userDidAction"
                     values={{
                       user: (
-                        <NotificationLink to={`/account/${user.id}`}>
+                        <NotificationLink to={`/account/${user._id}`}>
                           {(user && user.fullName) ||
                             formatMessage({
                               id: 'app.newsPage.userWithoutName',

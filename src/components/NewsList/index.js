@@ -7,8 +7,6 @@ import { FormattedMessage, FormattedRelative } from 'react-intl'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import NewsItem from 'components/NewsItem'
 
-import { getUserInitialAvatar } from 'api'
-
 const NewsItemLink = styled(Link)`
   font-weight: bold;
 `
@@ -34,16 +32,14 @@ export default class NewsList extends React.PureComponent {
     return (Array.isArray(news) ? news : []).map(
       ({ arguments: oneNews, date }) => (
         <NewsItem
-          key={oneNews.user.id}
-          picture={
-            oneNews.user.photo || getUserInitialAvatar(oneNews.user.fullName)
-          }
+          key={oneNews.user._id}
+          picture={oneNews.user.photo}
           subject={
             <FormattedMessage
               id="app.newsPage.news.userDidAction"
               values={{
                 user: (
-                  <NewsItemLink to={`${personLinkPrefix}${oneNews.user.id}`}>
+                  <NewsItemLink to={`${personLinkPrefix}${oneNews.user._id}`}>
                     {oneNews.user.fullName}
                   </NewsItemLink>
                 ),
