@@ -7,7 +7,6 @@ import { injectIntl, intlShape } from 'react-intl'
 import styled from 'styled-components'
 import notification from 'antd/lib/notification'
 
-import Print from 'assets/icons/fingerprint-part.svg'
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import StarIconComponent from 'assets/icons/StarIcon'
 import DiscoverIconComponent from 'assets/icons/DiscoverIcon'
@@ -16,71 +15,19 @@ import CloseIcon from 'assets/icons/CloseIcon'
 import { Creators } from 'redux/groups'
 import colors from 'config/colors'
 import { GROUPS_SUBSETS } from 'utils/constants'
-import media, { sizes } from 'utils/mediaQueryTemplate'
+import { sizes } from 'utils/mediaQueryTemplate'
 import { getInvitationLink } from 'utils/helpers'
-import { Modal } from 'components/Styled'
+import {
+  Modal,
+  ModalContent,
+  CloseButton,
+  FingerPrint,
+} from 'components/Styled'
 import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
 import GroupCreateForm from 'components/GroupCreateForm'
 import SendGroupInvitesForm from 'components/SendGroupInvitesForm'
 import { fetchCreateGroup, fetchInviteInGroup } from 'api/groups'
 import { getUserInitialAvatar } from 'api'
-
-const ModalContent = styled.section`
-  width: 550px;
-  margin: 0 auto;
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-  box-shadow: 0 1px 10px rgba(52, 68, 66, 0.08);
-  border-radius: 4px;
-  background-color: ${colors.ocean};
-  flex-direction: column;
-
-  ${media.phone`
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-  `}
-`
-
-const CloseButton = styled.button`
-  border: 0;
-  outline: 0;
-  background-color: transparent;
-  align-items: center;
-  cursor: pointer;
-  display: flex;
-  height: 50px;
-  justify-content: center;
-  position: absolute;
-  right: 17px;
-  top: 10px;
-  width: 50px;
-  z-index: 12;
-  transition: color 0.3s;
-  color: ${colors.white};
-
-  &:hover {
-    color: ${colors.white};
-  }
-
-  @media screen and (max-height: ${sizes.phone}px) {
-    color: ${colors.gray};
-  }
-`
-
-const FingerPrint = styled.div`
-  height: 140px;
-  width: 100%;
-  background-color: ${colors.ocean};
-  text-align: center;
-  background: url(${Print}) no-repeat center bottom;
-  background-size: initial;
-
-  @media screen and (max-height: ${sizes.phone}px) {
-    display: none;
-  }
-`
 
 const GroupInfo = styled.div`
   background-color: ${colors.white};

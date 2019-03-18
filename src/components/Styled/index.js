@@ -4,7 +4,8 @@ import styled, { createGlobalStyle, keyframes } from 'styled-components'
 import hexToRgba from 'utils/hexToRgba'
 import arrowDownIcon from 'assets/icons/arrowDown.svg'
 import colors from 'config/colors'
-import media from 'utils/mediaQueryTemplate'
+import media, { sizes } from 'utils/mediaQueryTemplate'
+import Print from 'assets/icons/fingerprint-part.svg'
 
 import backgroundOceanContainerImage from 'assets/images/backgroundOceanContainer.png'
 
@@ -851,6 +852,63 @@ export const OceanDescription = styled.p`
 
 export const OceanForm = styled.div`
   margin-top: 40px;
+`
+
+export const ModalContent = styled.section`
+  width: 550px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  box-shadow: 0 1px 10px rgba(52, 68, 66, 0.08);
+  border-radius: 4px;
+  background-color: ${colors.ocean};
+  flex-direction: column;
+
+  ${media.phone`
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+  `}
+`
+
+export const CloseButton = styled.button`
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  position: absolute;
+  right: 17px;
+  top: 10px;
+  width: 50px;
+  z-index: 12;
+  transition: color 0.3s;
+  color: ${colors.white};
+
+  &:hover {
+    color: ${colors.white};
+  }
+
+  @media screen and (max-height: ${sizes.phone}px) {
+    color: ${colors.gray};
+  }
+`
+
+export const FingerPrint = styled.div`
+  height: 140px;
+  width: 100%;
+  background-color: ${colors.ocean};
+  text-align: center;
+  background: url(${Print}) no-repeat center bottom;
+  background-size: initial;
+
+  @media screen and (max-height: ${sizes.phone}px) {
+    display: none;
+  }
 `
 
 export const Pagination = styled(Ant.Pagination)`

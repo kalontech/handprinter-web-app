@@ -514,5 +514,6 @@
     "app.actions.card.denied": "Negado",
     "app.actions.card.deniedHint": "Sua idéia de ação está sendo negada pelo administrador da Handprinter",
     "app.errors.38": "Este grupo já foi excluído",
-    "app.groups.delete": "Excluído"
+    "app.groups.delete": "Excluído",
+    "app.profilePage.createGroupButton": "Criar grupo"
 }

@@ -21,7 +21,7 @@ import colors from 'config/colors'
 import {
   GROUPS_SUBSETS,
   QUESTIONS_ANCHOR,
-  USER_GROUP_ROLES,
+  MEMBER_GROUP_ROLES,
   USER_GROUP_STATUSES,
   GROUPS_STATUSES,
 } from 'utils/constants'
@@ -479,12 +479,12 @@ class GroupViewPage extends PureComponent {
       type = BUTTON_TYPES.request
     } else if (
       group.info.isMember &&
-      group.info.memberRole === USER_GROUP_ROLES.OWNER
+      group.info.memberRole === MEMBER_GROUP_ROLES.OWNER
     ) {
       type = BUTTON_TYPES.delete
     } else if (
       group.info.isMember &&
-      group.info.memberRole !== USER_GROUP_ROLES.OWNER
+      group.info.memberRole !== MEMBER_GROUP_ROLES.OWNER
     ) {
       type = BUTTON_TYPES.leave
     } else if (group.private) {
@@ -769,7 +769,7 @@ class GroupViewPage extends PureComponent {
               disabled={
                 group.status === GROUPS_STATUSES.DELETED ||
                 (group.info.memberRole &&
-                  group.info.memberRole === USER_GROUP_ROLES.MEMBER)
+                  group.info.memberRole === MEMBER_GROUP_ROLES.MEMBER)
               }
               onSubmit={this.handleSubmit}
             />
@@ -810,9 +810,10 @@ class GroupViewPage extends PureComponent {
                       )}
                     </AdminsList>
 
-                    {[USER_GROUP_ROLES.ADMIN, USER_GROUP_ROLES.OWNER].includes(
-                      group.info.memberRole,
-                    ) &&
+                    {[
+                      MEMBER_GROUP_ROLES.ADMIN,
+                      MEMBER_GROUP_ROLES.OWNER,
+                    ].includes(group.info.memberRole) &&
                       group.status === GROUPS_STATUSES.ACTIVE && (
                         <Tooltip
                           getPopupContainer={() => this.$counter.current}

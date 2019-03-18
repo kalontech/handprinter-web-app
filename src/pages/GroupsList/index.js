@@ -18,7 +18,7 @@ import Icon from 'antd/lib/icon'
 import {
   GROUPS_SUBSETS,
   USER_GROUP_STATUSES,
-  USER_GROUP_ROLES,
+  MEMBER_GROUP_ROLES,
   GROUPS_STATUSES,
 } from 'utils/constants'
 import colors from 'config/colors'
@@ -474,7 +474,7 @@ class GroupsPage extends React.PureComponent {
                         [BUTTON_TYPES.leave]: {
                           onClick: this.toggleMembership(item),
                           disabled:
-                            item.info.memberRole === USER_GROUP_ROLES.OWNER,
+                            item.info.memberRole === MEMBER_GROUP_ROLES.OWNER,
                         },
                         [BUTTON_TYPES.join]: {
                           onClick: this.toggleMembership(item),

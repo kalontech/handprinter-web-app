@@ -514,5 +514,6 @@
     "app.actions.card.denied": "Denied",
     "app.actions.card.deniedHint": "Your action idea is being denied by administrator of Handprinter",
     "app.errors.38": "Deze groep is al verwijderd",
-    "app.groups.delete": "verwijderde"
+    "app.groups.delete": "verwijderde",
+    "app.profilePage.createGroupButton": "Maak een groep"
 }

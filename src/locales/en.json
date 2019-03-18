@@ -477,6 +477,12 @@
     "app.pages.groups.successCreated": "You successfully created the group",
     "app.pages.groups.invited": "Invited",
     "app.profilePage.deleteMyGroup": "Delete group",
+    "app.profilePage.leaveAdminPosition": "Leave admin position",
+    "app.profilePage.leaveAdminPositionContent": "Are you sure that you want to leave admin position and become a member?",
+    "app.profilePage.leaveAdminPositionSubmitButton": "Submit",
+    "app.profilePage.leaveAdminPositionCancelButton": "Cancel",
+    "app.profilePage.leaveGroup": "Leave group",
+    "app.profilePage.leaveGroupContent": "Are you sure that you want to leave group?",
     "app.profilePage.tabs.general": "General",
     "app.profilePage.tabs.myGroups": "My groups",
     "app.errors.27": "Chosen group is not in your featured list",
@@ -514,5 +520,6 @@
     "app.actions.card.denied": "Denied",
     "app.actions.card.deniedHint": "Your action idea is being denied by administrator of Handprinter",
     "app.errors.38": "This group is already deleted",
-    "app.groups.delete": "Deleted"
+    "app.groups.delete": "Deleted",
+    "app.profilePage.createGroupButton": "Create group"
 }

@@ -514,5 +514,6 @@
     "app.actions.card.denied": "Verweigert",
     "app.actions.card.deniedHint": "Ihre Aktionsidee wird vom Administrator des Handprinter abgelehnt",
     "app.errors.38": "Diese Gruppe ist bereits gelöscht",
-    "app.groups.delete": "Gelöscht"
+    "app.groups.delete": "Gelöscht",
+    "app.profilePage.createGroupButton": "Gruppe erstellen"
 }

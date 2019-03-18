@@ -38,7 +38,7 @@ export const USER_GROUP_STATUSES = {
   ACTIVE: 'ACTIVE',
 }
 
-export const USER_GROUP_ROLES = {
+export const MEMBER_GROUP_ROLES = {
   ADMIN: 'ADMIN',
   MEMBER: 'MEMBER',
   OWNER: 'OWNER',

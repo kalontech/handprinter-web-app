@@ -6,7 +6,7 @@ import Select from 'antd/lib/select'
 import AntForm from 'antd/lib/form'
 import { injectIntl, intlShape } from 'react-intl'
 
-import { USER_GROUP_ROLES } from 'utils/constants'
+import { MEMBER_GROUP_ROLES } from 'utils/constants'
 import decodeError from 'utils/decodeError'
 import colors from 'config/colors'
 import { PrimaryButton, DefaultButton } from 'components/Styled'
@@ -175,14 +175,14 @@ class SendGroupInvitesForm extends React.PureComponent {
 
         <SelectField ref={this.$select}>
           {form.getFieldDecorator('role', {
-            initialValue: USER_GROUP_ROLES.MEMBER,
+            initialValue: MEMBER_GROUP_ROLES.MEMBER,
           })(
             <Select getPopupContainer={() => this.$select.current}>
-              <Select.Option value={USER_GROUP_ROLES.MEMBER}>
+              <Select.Option value={MEMBER_GROUP_ROLES.MEMBER}>
                 {intl.formatMessage({ id: 'app.pages.groups.member' })}
               </Select.Option>
 
-              <Select.Option value={USER_GROUP_ROLES.ADMIN}>
+              <Select.Option value={MEMBER_GROUP_ROLES.ADMIN}>
                 {intl.formatMessage({ id: 'app.pages.groups.admin' })}
               </Select.Option>
             </Select>,

@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import Upload from 'antd/lib/upload'
 import AntForm from 'antd/lib/form'
 import Icon from 'antd/lib/icon'
-import AntCheckbox from 'antd/lib/checkbox'
 import { injectIntl, intlShape } from 'react-intl'
 
 import { MAX_DESCRIPTION_LENGTH } from 'config/common'
@@ -17,6 +16,7 @@ import {
   FormItem as FormItemDefault,
   Input,
   PrimaryButton,
+  Checkbox,
 } from 'components/Styled'
 import media, { sizes } from 'utils/mediaQueryTemplate'
 
@@ -111,14 +111,6 @@ const SubTitle = styled.h3`
 const TextArea = styled(Input.TextArea)`
   resize: none;
   margin-bottom: 10px;
-`
-
-const Checkbox = styled(AntCheckbox)`
-  color: ${colors.dark};
-
-  .ant-checkbox {
-    color: ${colors.green};
-  }
 `
 
 const ButtonSubmit = styled(PrimaryButton)`

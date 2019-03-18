@@ -514,5 +514,6 @@
     "app.actions.card.denied": "被拒绝",
     "app.actions.card.deniedHint": "Handprinter的管理员拒绝了你的行动想法",
     "app.errors.38": "该组已被删除",
-    "app.groups.delete": "删除"
+    "app.groups.delete": "删除",
+    "app.profilePage.createGroupButton": "创建组"
 }

@@ -12,7 +12,7 @@ import { intlShape, injectIntl } from 'react-intl'
 import colors from 'config/colors'
 import { getInvitationLink } from 'utils/helpers'
 import media from 'utils/mediaQueryTemplate'
-import { USER_GROUP_STATUSES, USER_GROUP_ROLES } from 'utils/constants'
+import { USER_GROUP_STATUSES, MEMBER_GROUP_ROLES } from 'utils/constants'
 import fetch, { configDefault as fetchConfigDefault } from 'utils/fetch'
 import hexToRgba from 'utils/hexToRgba'
 import SendGroupInvitesForm from 'components/SendGroupInvitesForm'
@@ -220,11 +220,11 @@ class GroupManage extends React.PureComponent {
     return [
       {
         label: intl.formatMessage({ id: 'app.pages.groups.admin' }),
-        value: USER_GROUP_ROLES.ADMIN,
+        value: MEMBER_GROUP_ROLES.ADMIN,
       },
       {
         label: intl.formatMessage({ id: 'app.pages.groups.member' }),
-        value: USER_GROUP_ROLES.MEMBER,
+        value: MEMBER_GROUP_ROLES.MEMBER,
       },
     ]
   }
@@ -373,7 +373,7 @@ class GroupManage extends React.PureComponent {
                         this[`$button_${index}`] = ref
                       }}
                       disabled={
-                        groupInfo.memberRole === USER_GROUP_ROLES.OWNER ||
+                        groupInfo.memberRole === MEMBER_GROUP_ROLES.OWNER ||
                         groupInfo.memberStatus === USER_GROUP_STATUSES.INVITED
                       }
                     >
