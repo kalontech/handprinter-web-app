@@ -57,12 +57,12 @@ export const fetchAPI = async (url, options) => {
   }
 }
 
-const getCountries = () => fetchAPI(`/countries`)
+const getCountries = () => fetchAPI('/countries')
 
-const getMe = () => fetchAPI(`/users/me`)
+const getMe = () => fetchAPI('/users/me')
 
 const logIn = (email, password) =>
-  fetchAPI(`/auth/login`, {
+  fetchAPI('/auth/login', {
     body: {
       email,
       password,
@@ -79,7 +79,7 @@ const register = (
   invitationCode,
   belongsToBrand,
 ) =>
-  fetchAPI(`/auth/register`, {
+  fetchAPI('/auth/register', {
     body: {
       email,
       password,
@@ -93,7 +93,7 @@ const register = (
   })
 
 const resetPasswordConfirm = (code, password) =>
-  fetchAPI(`/auth/password-reset/confirm`, {
+  fetchAPI('/auth/password-reset/confirm', {
     body: {
       code,
       password,
@@ -102,7 +102,7 @@ const resetPasswordConfirm = (code, password) =>
   })
 
 const resetPasswordRequest = email =>
-  fetchAPI(`/auth/password-reset/request`, {
+  fetchAPI('/auth/password-reset/request', {
     body: {
       email,
       redirectUrl: `${webAppBaseUrl}/account/set-new-password`,
@@ -111,34 +111,34 @@ const resetPasswordRequest = email =>
   })
 
 const updateMe = body =>
-  fetchAPI(`/users/me`, {
+  fetchAPI('/users/me', {
     body,
     method: 'PUT',
   })
 
 const updateMePhoto = body =>
-  fetchAPI(`/users/me`, {
+  fetchAPI('/users/me', {
     body,
     method: 'PUT',
   })
 
 const deleteMe = () =>
-  fetchAPI(`/users/me`, {
+  fetchAPI('/users/me', {
     method: 'DELETE',
   })
 
 const shareInvitationCode = body =>
-  fetchAPI(`/users/me/code/share`, {
+  fetchAPI('/users/me/code/share', {
     body,
     method: 'POST',
   })
 
 const getUser = body =>
-  fetchAPI(`/users/find_one`, {
+  fetchAPI('/users/find_one', {
     body,
     method: 'POST',
   })
-const getInvitationsList = () => fetchAPI(`/users/invitations`)
+const getInvitationsList = () => fetchAPI('/users/invitations')
 
 export const getDashboardData = ({ userId, groupId, subset = 'me' } = {}) => {
   const url =

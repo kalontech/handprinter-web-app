@@ -16,7 +16,7 @@ import hexToRgba from 'utils/hexToRgba'
 import { BlockContainer } from 'components/Styled'
 import PageMetadata from 'components/PageMetadata'
 import ActionCard from 'components/ActionCard'
-import api from 'api'
+import * as api from 'api/actions'
 
 import heroImg from 'assets/about-interface/hero.jpg'
 import heroBoy from 'assets/about-interface/boy.svg'
