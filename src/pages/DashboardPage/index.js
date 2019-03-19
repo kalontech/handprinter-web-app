@@ -241,7 +241,7 @@ const DashboardHeaderUserSince = styled.div`
   font-size: 16px;
   line-height: 20px;
   ${media.desktop`
-    margin-top: 4px;
+    margin-top: 30px;
   `}
 `
 
@@ -318,16 +318,11 @@ const HeaderUserInfoRowCol = styled(Col)`
   flex-direction: column;
   justify-content: space-between;
   padding-left: 60px;
-   ${media.largeDesktop`
+  ${media.largeDesktop`
      padding-left: 20px;
   `}
 
   ${media.desktop`
-    padding: 0 10px;
-     padding-left: 60px;
-  `}
-
-  ${media.phone`
     padding: 0;
     display: flex;
     justify-content: space-between;
@@ -665,7 +660,7 @@ class DashboardPage extends Component {
                       <WidgetContainer>
                         <WidgetHeader withBorder>
                           <Row type="flex">
-                            <Col span={16} sm={11} lg={12} xs={24}>
+                            <Col span={16} sm={24} lg={11} xs={24}>
                               <WidgetTitle>
                                 <FormattedMessage id="app.dashboardPage.myNetwork" />
                                 <InfoElementWrap>
@@ -697,12 +692,12 @@ class DashboardPage extends Component {
                                 <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
                               </WidgetDescription>
                             </Col>
-                            <MyNetworkCol span={8} sm={15} lg={12} xs={24}>
+                            <MyNetworkCol span={8} sm={24} lg={13} xs={24}>
                               <Row>
                                 <HeaderUserInfoRowCol
                                   span={8}
                                   lg={8}
-                                  sm={8}
+                                  sm={24}
                                   xs={24}
                                 >
                                   <DashboardHeaderUserName>
@@ -715,7 +710,7 @@ class DashboardPage extends Component {
                                 <HeaderUserInfoRowCol
                                   span={8}
                                   lg={8}
-                                  sm={8}
+                                  sm={24}
                                   xs={24}
                                 >
                                   <DashboardHeaderUserName>
@@ -728,7 +723,7 @@ class DashboardPage extends Component {
                                 <HeaderUserInfoRowCol
                                   span={8}
                                   lg={8}
-                                  sm={8}
+                                  sm={24}
                                   xs={24}
                                 >
                                   <DashboardHeaderUserName>
