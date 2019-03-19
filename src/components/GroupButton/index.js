@@ -79,13 +79,13 @@ const ButtonsWrap = styled.div`
 `
 
 const ButtonJoin = styled(SecondaryButton)`
-  color: ${colors.ocean};
-  background-color: ${colors.lightGray};
+  color: ${({ color = colors.ocean }) => color};
+  background-color: ${({ bgColor = colors.lightGray }) => bgColor};
 
   &.ant-btn-loading,
   &:hover {
-    color: ${colors.ocean};
-    background-color: ${colors.whiteSmoke};
+    color: ${({ hoverColor = colors.ocean }) => hoverColor};
+    background-color: ${({ hoverBgColor = colors.whiteSmoke }) => hoverBgColor};
   }
 `
 
@@ -193,6 +193,10 @@ class GroupButton extends React.PureComponent {
               loading={loading}
               disabled={disabled}
               onClick={onClick.onAccept}
+              color={colors.white}
+              bgColor={colors.ocean}
+              hoverColor={colors.white}
+              hoverBgColor={colors.btnSecondaryHover}
             >
               {intl.formatMessage({
                 id: 'app.pages.groups.join',
