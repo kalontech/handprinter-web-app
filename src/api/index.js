@@ -149,9 +149,9 @@ export const getDashboardData = ({ userId, groupId, subset = 'me' } = {}) => {
 }
 
 export const getUserInitialAvatar = fullName =>
-  `https://ui-avatars.com/api/?background=${colors.lightGray.slice(
+  `https://ui-avatars.com/api/?background=${colors.gray.slice(
     1,
-  )}&color=${colors.gray.slice(1)}&length=1&name=${fullName}&size=256`
+  )}&color=${colors.darkGray.slice(1)}&length=1&name=${fullName}&size=256`
 
 export default {
   getCountries,

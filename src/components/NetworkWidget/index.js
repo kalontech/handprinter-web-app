@@ -55,9 +55,12 @@ const getNodeSize = depth => {
   }
 }
 
-// Calculates link length depending on the depth level
-const getLinkLength = (sourceDepth, targetDepth) =>
-  15 + getNodeSize(sourceDepth) / 2 + getNodeSize(targetDepth) / 2
+// Calculates link length depending on the depth level and children count
+const getLinkLength = (sourceDepth, targetDepth, children = []) =>
+  15 +
+  getNodeSize(sourceDepth) / 2 +
+  getNodeSize(targetDepth) / 2 +
+  children.length * 2.5
 
 // Transforms nodes positions to avoid falling out of the edges
 const nodeTransform = d => {
@@ -111,7 +114,9 @@ class NetworkWidget extends Component {
       .force()
       .gravity(0)
       .charge(-5000)
-      .linkDistance(d => getLinkLength(d.source.depth, d.target.depth))
+      .linkDistance(d =>
+        getLinkLength(d.source.depth, d.target.depth, d.source.children),
+      )
       .friction(0.2)
       .linkStrength(() => 10)
       .size([width, height])
@@ -191,6 +196,7 @@ class NetworkWidget extends Component {
         widget.selectAll('.d3-tooltip').remove()
       })
       .on('click', this.handleClick)
+      .on('dblclick', this.handleDoubleClick)
       .call(force.drag)
 
     node
@@ -260,9 +266,6 @@ class NetworkWidget extends Component {
   }
 
   handleClick = user => {
-    if (user.children && user.children.length === 0 && !user._children) {
-      history.push(`/account/${user.id}`)
-    }
     if (d3.event.defaultPrevented) return // ignore drag
     if (user.children && user.children.length > 0) {
       user._children = user.children
@@ -274,6 +277,10 @@ class NetworkWidget extends Component {
       user.expanded = true
     }
     this.update()
+  }
+
+  handleDoubleClick = user => {
+    history.push(`/account/${user.id}`)
   }
 
   // Transforms input data by adding depth indexes and badges
