@@ -94,6 +94,9 @@ class PrivacyPolicyPage extends Component {
             <p>
               <FormattedMessage id={`app.pages.${pageNameIntl}.paragraph.5`} />
             </p>
+            <p>
+              <FormattedMessage id={`app.pages.${pageNameIntl}.paragraph.6`} />
+            </p>
           </Content>
         </BlockContainer>
       </Fragment>
