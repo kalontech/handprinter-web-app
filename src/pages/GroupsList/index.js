@@ -264,7 +264,9 @@ class GroupsPage extends React.PureComponent {
         ),
       }),
       () => {
-        if (info.isMember && match.params.subset === GROUPS_SUBSETS.MY) {
+        fetchLeaveGroup(_id)
+
+        if (match.params.subset === GROUPS_SUBSETS.MY) {
           this.props.removeListItem(_id)
           return
         }
@@ -275,17 +277,13 @@ class GroupsPage extends React.PureComponent {
             _id,
             info: {
               ...info,
-              isMember: !info.isMember,
-              membersRole: info.isMember ? undefined : info.membersRole,
-              membersCount: info.isMember
-                ? info.membersCount - 1
-                : info.membersCount + 1,
+              isMember: false,
+              membersRole: undefined,
+              membersCount: info.membersCount - 1,
             },
           },
           _id,
         )
-
-        if (info.isMember) fetchLeaveGroup(_id)
       },
     )
   }
