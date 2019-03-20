@@ -4,6 +4,8 @@ import { store } from 'app'
 import { getTemporaryToken } from 'utils/temporaryToken'
 import colors from 'config/colors'
 
+import errorHandler from './errorHandler'
+
 export const webAppBaseUrl = `${window.location.protocol}//${
   window.location.host
 }`
@@ -52,9 +54,9 @@ export const fetchAPI = async (url, options) => {
 
   if (success) {
     return data
-  } else {
-    throw error
   }
+
+  errorHandler(error)
 }
 
 const getCountries = () => fetchAPI('/countries')

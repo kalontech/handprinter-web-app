@@ -34,7 +34,7 @@ import {
   ACTIONS_SUBSETS,
   ACTION_STATES,
 } from 'utils/constants'
-import fetch, { configDefault as fetchConfigDefault } from 'utils/fetch'
+import fetch from 'utils/fetch'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Tooltip from 'components/Tooltip'
 import ScrollAnimation from 'components/ScrollAnimation'
@@ -306,6 +306,25 @@ async function getActionsList(props) {
 }
 
 class ActionsPage extends React.PureComponent {
+  static propTypes = {
+    intl: intlShape.isRequired,
+    user: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object,
+    history: PropTypes.object,
+    fetch: PropTypes.func,
+    loading: PropTypes.bool,
+    actions: PropTypes.array,
+    limit: PropTypes.number,
+    page: PropTypes.number,
+    total: PropTypes.number,
+    timeValues: PropTypes.array,
+  }
+
+  static defaultProps = {
+    actions: [],
+  }
+
   state = {
     searchData: {
       searchedActions: [],
@@ -815,27 +834,10 @@ class ActionsPage extends React.PureComponent {
   }
 }
 
-ActionsPage.propTypes = {
-  intl: intlShape.isRequired,
-  user: PropTypes.object,
-  location: PropTypes.object,
-  match: PropTypes.object,
-  history: PropTypes.object,
-  fetch: PropTypes.func,
-  loading: PropTypes.bool,
-  actions: PropTypes.array,
-  limit: PropTypes.number,
-  page: PropTypes.number,
-  total: PropTypes.number,
-  timeValues: PropTypes.array,
-}
-
-const mapStateToProps = state => ({
-  user: state.user.data,
-})
-
 export default compose(
-  connect(mapStateToProps),
-  fetch(getActionsList, { ...fetchConfigDefault, loader: false }),
+  connect(state => ({
+    user: state.user.data,
+  })),
+  fetch(getActionsList, { loader: false }),
   injectIntl,
 )(ActionsPage)
