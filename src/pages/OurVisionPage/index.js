@@ -4,8 +4,10 @@ import { Row, Col } from 'antd'
 import styled from 'styled-components'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import { animateScroll } from 'react-scroll'
-import 'react-modal-video/css/modal-video.min.css'
+import PropTypes from 'prop-types'
 import ModalVideo from 'react-modal-video'
+
+import 'react-modal-video/css/modal-video.min.css'
 
 import WatchVideoIcon from 'assets/icons/WatchVideoIcon'
 
@@ -25,12 +27,15 @@ import num4 from 'assets/our-vision/number-4.svg'
 import num5 from 'assets/our-vision/number-5.svg'
 import num6 from 'assets/our-vision/number-6.svg'
 import stepsImg1 from 'assets/our-vision/section1.png'
+import eatonStepsImg1 from 'assets/our-vision/eaton_section1.png'
 import stepsImg2 from 'assets/our-vision/section2.png'
 import stepsImg3a from 'assets/our-vision/section3.1.png'
 import stepsImg3b from 'assets/our-vision/section3.2.png'
 import stepsImg3c from 'assets/our-vision/section3.3.png'
 import stepsImg4 from 'assets/our-vision/section4.png'
+import eatonStepsImg4 from 'assets/our-vision/eaton_section4.png'
 import stepsImg5 from 'assets/our-vision/section5.png'
+import eatonStepsImg5 from 'assets/our-vision/eaton_section5.png'
 import stepsImg6 from 'assets/our-vision/section6.png'
 import arrow from 'assets/our-vision/arrow.png'
 import FingerPrintIcon from 'assets/icons/FingerPrintIcon'
@@ -340,6 +345,14 @@ const StepSixContentWrap = styled(StepFourContentWrap)`
 `
 
 class OurVisionPage extends React.PureComponent {
+  static propTypes = {
+    overrides: PropTypes.object,
+  }
+
+  static defaultPropss = {
+    overrides: {},
+  }
+
   state = {
     actions: [],
     isOpen: false,
@@ -361,6 +374,8 @@ class OurVisionPage extends React.PureComponent {
 
   render = () => {
     const { actions } = this.state
+    const { overrides } = this.props
+
     return (
       <Fragment>
         <PageMetadata pageName="ourVision" />
@@ -546,7 +561,14 @@ class OurVisionPage extends React.PureComponent {
                   <Col lg={{ span: 14 }} md={{ span: 22 }}>
                     <ScrollAnimation bottom>
                       <ImgWrap>
-                        <StepImg src={stepsImg1} alt="" />
+                        <StepImg
+                          src={
+                            overrides && overrides.brandName === 'Eaton'
+                              ? eatonStepsImg1
+                              : stepsImg1
+                          }
+                          alt=""
+                        />
                       </ImgWrap>
                     </ScrollAnimation>
                   </Col>
@@ -642,7 +664,11 @@ class OurVisionPage extends React.PureComponent {
                   >
                     <ScrollAnimation bottom>
                       <StepFourScreenshotWrap
-                        src={stepsImg4}
+                        src={
+                          overrides && overrides.brandName === 'Eaton'
+                            ? eatonStepsImg4
+                            : stepsImg4
+                        }
                         alt="Add action"
                       />
                     </ScrollAnimation>
@@ -682,7 +708,14 @@ class OurVisionPage extends React.PureComponent {
                   <Col lg={{ span: 14 }} md={{ span: 22 }}>
                     <ScrollAnimation bottom>
                       <ImgWrap>
-                        <StepImg src={stepsImg5} alt="" />
+                        <StepImg
+                          src={
+                            overrides && overrides.brandName === 'Eaton'
+                              ? eatonStepsImg5
+                              : stepsImg5
+                          }
+                          alt=""
+                        />
                       </ImgWrap>
                     </ScrollAnimation>
                   </Col>
