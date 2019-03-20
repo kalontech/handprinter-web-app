@@ -522,5 +522,6 @@
     "app.profilePage.leaveAdminPositionSubmitButton": "einreichen",
     "app.profilePage.leaveAdminPositionCancelButton": "Stornieren",
     "app.profilePage.leaveGroup": "Gruppe verlassen",
-    "app.profilePage.leaveGroupContent": "Möchten Sie die Gruppe wirklich verlassen?"
+    "app.profilePage.leaveGroupContent": "Möchten Sie die Gruppe wirklich verlassen?",
+    "app.header.ieDetected": "Sie scheinen Microsoft Internet Explorer als Ihren Webbrowser zu verwenden. Handdrucker funktionieren mit moderneren Browsern wie Chrome, Firefox, Safari und Edge wesentlich besser. Wir empfehlen, zu einem dieser besseren Browser zu wechseln, bevor Sie fortfahren. Vielen Dank!"
 }

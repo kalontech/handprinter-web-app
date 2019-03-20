@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Layout, Menu, Popover, Affix, Button } from 'antd'
+import { Layout, Menu, Popover, Affix, Button, Alert } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled, { css } from 'styled-components'
 import { connect } from 'react-redux'
@@ -496,6 +496,10 @@ const NotificationCount = styled.div`
   `}
 `
 
+const isIE =
+  navigator.userAgent.indexOf('MSIE') !== -1 ||
+  navigator.appVersion.indexOf('Trident/') > -1
+
 class Header extends Component {
   state = {
     collapsed: true,
@@ -617,6 +621,13 @@ class Header extends Component {
 
     return (
       <StyledAffix>
+        {isIE && (
+          <Alert
+            message={<FormattedMessage id="app.header.ieDetected" />}
+            banner
+          />
+        )}
+
         {type === 'minimal' && (
           <HeaderWrap isLoggedIn={user}>
             <Logo>
@@ -708,6 +719,7 @@ class Header extends Component {
                 </CollapseContent>
               </CollapseMenu>
             </Animate>
+
             <HeaderWrap
               isLoggedIn={user}
               font={fontNames}
@@ -955,6 +967,7 @@ class Header extends Component {
                 </CollapseContent>
               </CollapseMenu>
             </Animate>
+
             <HeaderWrap
               isLoggedIn={user}
               font={fontNames}

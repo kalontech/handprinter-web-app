@@ -522,5 +522,6 @@
     "app.profilePage.leaveAdminPositionSubmitButton": "Submit",
     "app.profilePage.leaveAdminPositionCancelButton": "Cancel",
     "app.profilePage.leaveGroup": "Leave group",
-    "app.profilePage.leaveGroupContent": "Are you sure that you want to leave group?"
+    "app.profilePage.leaveGroupContent": "Are you sure that you want to leave group?",
+    "app.header.ieDetected": "You appear to be using Microsoft Internet Explorer as your web browser. Handprinter works much better using more modern browsers including Chrome, Firefox, Safari, and Edge. We recommend switching to one of these better browsers before continuing. Thanks!"
 }

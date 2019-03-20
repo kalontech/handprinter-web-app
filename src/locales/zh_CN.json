@@ -522,5 +522,6 @@
     "app.profilePage.leaveAdminPositionSubmitButton": "提交",
     "app.profilePage.leaveAdminPositionCancelButton": "取消",
     "app.profilePage.leaveGroup": "离开组",
-    "app.profilePage.leaveGroupContent": "你确定要离开小组吗？"
+    "app.profilePage.leaveGroupContent": "你确定要离开小组吗？",
+    "app.header.ieDetected": "您似乎使用Microsoft Internet Explorer作为Web浏览器。使用更现代的浏览器（包括Chrome，Firefox，Safari和Edge），Handprinter的效果会更好。我们建议您在继续之前切换到其中一个更好的浏览器。谢谢！"
 }
