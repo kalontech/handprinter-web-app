@@ -262,12 +262,13 @@ const CollapseMenu = styled(CollapsedMenu)`
 const CollapseTop = styled.div`
   display: flex;
   justify-content: center;
-  padding: 28px 80px;
+  padding: 35px 80px;
   background: ${colors.lightGray};
+
   ${media.phone`
     flex-direction: column;
     justify-content: center;
-    padding: 20px 15px;
+    padding: 35px 15px;
   `}
   a {
     width: 100%;
@@ -496,6 +497,23 @@ const NotificationCount = styled.div`
   `}
 `
 
+const TakeActionButton = styled(PrimaryButton)`
+  color: ${colors.white};
+  background-color: ${colors.green};
+  min-width: 140px;
+  margin-left: 25px;
+  font-size: 14px;
+  &:focus,
+  &:active,
+  &:hover {
+    color: ${colors.white};
+  }
+  ${media.desktop`
+    margin-left: 0px;
+    min-width: 274px;
+  `}
+`
+
 const isIE =
   navigator.userAgent.indexOf('MSIE') !== -1 ||
   navigator.appVersion.indexOf('Trident/') > -1
@@ -517,6 +535,16 @@ class Header extends Component {
     if (location.pathname.includes('groups')) return '/groups'
 
     return location.pathname
+  }
+
+  get takenActionButton() {
+    return (
+      <TakeActionButton>
+        <Link to="/actions">
+          <FormattedMessage id="app.header.takeActionButton" />
+        </Link>
+      </TakeActionButton>
+    )
   }
 
   componentDidMount() {
@@ -841,7 +869,11 @@ class Header extends Component {
             <Animate type="fade" show={!collapsed && isTablet}>
               <CollapseMenu>
                 {((overrides && !overrides.logInOnly) || !overrides) && (
-                  <CollapseTop />
+                  <CollapseTop>
+                    {overrides &&
+                      overrides.brandName === 'Eaton' &&
+                      this.takenActionButton}
+                  </CollapseTop>
                 )}
                 <CollapseContent>
                   <Menu
@@ -980,7 +1012,13 @@ class Header extends Component {
                 </Hamburger>
               )}
               <LogoSmall>
-                <Link to={overrides ? '/pages/home' : '/account/dashboard'}>
+                <Link
+                  to={
+                    overrides && overrides.brandName !== 'Eaton'
+                      ? '/pages/home'
+                      : '/account/dashboard'
+                  }
+                >
                   <img
                     src={(overrides && overrides.partialLogo) || partialLogoImg}
                     alt="Handprinter"
@@ -1135,6 +1173,9 @@ class Header extends Component {
                           </Avatar>
                         </PopoverTitle>
                       </ProfileSettingsPopover>
+                      {overrides &&
+                        overrides.brandName === 'Eaton' &&
+                        this.takenActionButton}
                     </RightAlign>
                   </Fragment>
                 )}
