@@ -29,6 +29,27 @@ const PageHeading = styled.h1`
   font-weight: bold;
 `
 
+const translationsIds = {
+  privacyPolicy: {
+    pageName: 'privacyPolicy',
+    title: 'app.pages.privacyPolicy.title',
+    paragraphs: [
+      'app.pages.privacyPolicy.paragraph.1',
+      'app.pages.privacyPolicy.paragraph.2',
+      'app.pages.privacyPolicy.paragraph.3',
+      'app.pages.privacyPolicy.paragraph.4',
+      'app.pages.privacyPolicy.paragraph.5',
+      'app.pages.privacyPolicy.paragraph.6',
+      'app.pages.privacyPolicy.paragraph.7',
+      'app.pages.privacyPolicy.paragraph.8',
+    ],
+  },
+  termsOfUse: {
+    // TODO:
+    // add translations when will be created terms of use page
+  },
+}
+
 class PrivacyPolicyPage extends Component {
   static propTypes = {
     match: PropTypes.shape({
@@ -37,22 +58,20 @@ class PrivacyPolicyPage extends Component {
     }),
   }
 
+  get translationsIds() {
+    return this.props.match.path.includes('privacy-policy')
+      ? translationsIds.privacyPolicy
+      : translationsIds.termsOfUse
+  }
+
   componentDidMount() {
     animateScroll.scrollToTop()
   }
 
   render() {
-    const {
-      match: { path },
-    } = this.props
-
-    const pageNameIntl = path.includes('privacy-policy')
-      ? 'privacyPolicy'
-      : 'termsOfUse'
-
     return (
       <Fragment>
-        <PageMetadata pageName="privacyPolicy" />
+        <PageMetadata pageName={this.translationsIds.pageName} />
         {/* 
           Hide tabs for now.
           Waiting for Greg reply about Terms of use.
@@ -77,26 +96,13 @@ class PrivacyPolicyPage extends Component {
         <BlockContainer>
           <Content>
             <PageHeading>
-              <FormattedMessage id={`app.pages.${pageNameIntl}.title`} />
+              <FormattedMessage id={this.translationsIds.title} />
             </PageHeading>
-            <p>
-              <FormattedMessage id={`app.pages.${pageNameIntl}.paragraph.1`} />
-            </p>
-            <p>
-              <FormattedMessage id={`app.pages.${pageNameIntl}.paragraph.2`} />
-            </p>
-            <p>
-              <FormattedMessage id={`app.pages.${pageNameIntl}.paragraph.3`} />
-            </p>
-            <p>
-              <FormattedMessage id={`app.pages.${pageNameIntl}.paragraph.4`} />
-            </p>
-            <p>
-              <FormattedMessage id={`app.pages.${pageNameIntl}.paragraph.5`} />
-            </p>
-            <p>
-              <FormattedMessage id={`app.pages.${pageNameIntl}.paragraph.6`} />
-            </p>
+            {this.translationsIds.paragraphs.map(id => (
+              <p key={id}>
+                <FormattedMessage id={id} />
+              </p>
+            ))}
           </Content>
         </BlockContainer>
       </Fragment>
