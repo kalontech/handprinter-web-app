@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "Tomé acción",
     "app.actionsPage.tabs.history": "Historia",
     "app.header.menu.aboutInterface": "Handprint",
-    "app.increaseHandprintPage.ignoredEmails": "Algunas direcciones de la invitación no llegaron porque hay usuarios registrados con dichas direcciones, a saber: \n {list}",
+    "app.increaseHandprintPage.ignoredEmails": "Las siguientes direcciones de correo electrónico no recibirán una invitación, ya que la dirección de correo electrónico pertenece a una persona que ya es un usuario registrado.",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "El calendario muestra los días en los que está \"Neto Positivo\", lo que provoca un progreso ambiental mayor que su huella para ese día.",
     "app.dashboardPage.infoTooltipLinkToFAQ": "aprende más",
     "app.dashboardPage.goodRatio.infoTooltip": "Buena relación es la relación entre su huella y su huella. Auméntelo haciendo crecer su huella de la mano y reduciendo su huella.",

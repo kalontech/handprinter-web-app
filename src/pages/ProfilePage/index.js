@@ -6,8 +6,9 @@ import PropTypes from 'prop-types'
 import { Button, Form, Select, Icon, Tabs, Popover } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { animateScroll } from 'react-scroll'
-import notification from 'antd/lib/notification'
+import { withRouter } from 'react-router-dom'
 
+import notification from 'antd/lib/notification'
 import CloseIcon from 'assets/icons/CloseIcon'
 import profileLeavesBackgroundImage from 'assets/images/profileLeavesBackgroundImage.png'
 import arrowDownIcon from 'assets/icons/arrowDown.svg'
@@ -52,7 +53,6 @@ import hexToRgba from 'utils/hexToRgba'
 import PageMetadata from 'components/PageMetadata'
 import media from 'utils/mediaQueryTemplate'
 import { GROUPS_SUBSETS, MEMBER_GROUP_ROLES } from 'utils/constants'
-import { history } from 'appRouter'
 
 const { TabPane } = Tabs
 
@@ -854,6 +854,7 @@ class ProfilePage extends Component {
       isUpdatingMeInfo,
       isUpdatingMePassword,
       user,
+      history,
     } = this.props
     const {
       showChangePasswordSection,
@@ -1230,6 +1231,7 @@ ProfilePage.propTypes = {
   form: PropTypes.object.isRequired,
   intl: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
+  history: PropTypes.object,
   isUpdatingMeInfo: PropTypes.bool.isRequired,
   isUpdatingMePassword: PropTypes.bool.isRequired,
   isUpdatingMePhoto: PropTypes.bool.isRequired,
@@ -1258,4 +1260,5 @@ export default compose(
     }),
   }),
   injectIntl,
+  withRouter,
 )(ProfilePage)

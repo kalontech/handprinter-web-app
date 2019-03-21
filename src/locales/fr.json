@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "J'ai agi",
     "app.actionsPage.tabs.history": "L'histoire",
     "app.header.menu.aboutInterface": "Handprint",
-    "app.increaseHandprintPage.ignoredEmails": "Certaines adresses de l'invitation ne sont pas venues car il y a des utilisateurs enregistrés avec de telles adresses, à savoir: \n {list}",
+    "app.increaseHandprintPage.ignoredEmails": "The following email addresses will not be sent an invitation, because the email address belongs to a person who is already a registered user",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "Le calendrier indique les jours où vous êtes \"Net positif\" - ce qui provoque un progrès environnemental plus important que votre empreinte pour ce jour!",
     "app.dashboardPage.infoTooltipLinkToFAQ": "apprendre encore plus",
     "app.dashboardPage.goodRatio.infoTooltip": "Le bon ratio est le ratio de votre empreinte de main sur votre empreinte. Augmentez-le en augmentant votre empreinte de main et en réduisant votre empreinte.",

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import { compose } from 'redux'
 import { Layout, Menu, Popover, Affix, Button, Alert } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled, { css } from 'styled-components'
@@ -28,7 +29,6 @@ import hexToRgba from 'utils/hexToRgba'
 import { logOut } from 'redux/accountStore'
 import { getUserInitialAvatar } from 'api'
 import * as apiActions from 'api/actions'
-import { history } from 'appRouter'
 
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
@@ -540,7 +540,7 @@ class Header extends Component {
 
   get takenActionButton() {
     return (
-      <TakeActionButton onClick={() => history.push('/actions')}>
+      <TakeActionButton onClick={() => this.props.history.push('/actions')}>
         <FormattedMessage id="app.header.takeActionButton" />
       </TakeActionButton>
     )
@@ -1203,6 +1203,11 @@ Header.propTypes = {
   type: PropTypes.oneOf(['minimal', 'public', 'private']).isRequired,
   user: PropTypes.object,
   overrides: PropTypes.object,
+  withRouter: PropTypes.object,
+  history: PropTypes.object,
 }
 
-export default connect(mapStateToProps)(Header)
+export default compose(
+  withRouter,
+  connect(mapStateToProps),
+)(Header)

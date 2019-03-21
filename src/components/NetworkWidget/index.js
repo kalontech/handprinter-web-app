@@ -5,11 +5,11 @@ import styled from 'styled-components'
 import hexToRgba from 'utils/hexToRgba'
 import { injectIntl } from 'react-intl'
 import { compose } from 'redux'
+import { withRouter } from 'react-router-dom'
 
 import colors from 'config/colors'
 import { sizes } from 'utils/mediaQueryTemplate'
 import { getUserInitialAvatar } from 'api'
-import { history } from 'appRouter'
 
 const Wrap = styled.div`
   overflow: hidden;
@@ -280,7 +280,7 @@ class NetworkWidget extends Component {
   }
 
   handleDoubleClick = user => {
-    history.push(`/account/${user.id}`)
+    this.props.history.push(`/account/${user.id}`)
   }
 
   // Transforms input data by adding depth indexes and badges
@@ -334,6 +334,10 @@ class NetworkWidget extends Component {
 NetworkWidget.propTypes = {
   data: PropTypes.object.isRequired,
   intl: PropTypes.object,
+  history: PropTypes.object,
 }
 
-export default compose(injectIntl)(NetworkWidget)
+export default compose(
+  injectIntl,
+  withRouter,
+)(NetworkWidget)

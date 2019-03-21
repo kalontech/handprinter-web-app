@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "Ik ondernam actie",
     "app.actionsPage.tabs.history": "Geschiedenis",
     "app.header.menu.aboutInterface": "Handprint",
-    "app.increaseHandprintPage.ignoredEmails": "Sommige adressen van de uitnodiging kwamen niet omdat er geregistreerde gebruikers zijn met dergelijke adressen, namelijk: \n {list}",
+    "app.increaseHandprintPage.ignoredEmails": "Aan de volgende e-mailadressen wordt geen uitnodiging verzonden, omdat het e-mailadres toebehoort aan een persoon die al een geregistreerde gebruiker is",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "In de kalender worden de dagen weergegeven waarop u 'Net Positief' bent - waardoor de ecologische vooruitgang groter is dan uw voetafdruk voor die dag!",
     "app.dashboardPage.infoTooltipLinkToFAQ": "kom meer te weten",
     "app.dashboardPage.goodRatio.infoTooltip": "De goede verhouding is de verhouding tussen uw handafdruk en uw voetafdruk. Verhoog het door je handafdruk te laten groeien en door je voetafdruk te verkleinen.",

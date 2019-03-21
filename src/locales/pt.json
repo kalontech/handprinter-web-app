@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "Tomei ação",
     "app.actionsPage.tabs.history": "História",
     "app.header.menu.aboutInterface": "Handprint",
-    "app.increaseHandprintPage.ignoredEmails": "Alguns endereços do convite não vieram porque há usuários registrados com tais endereços, a saber: \n {list}",
+    "app.increaseHandprintPage.ignoredEmails": "Os seguintes endereços de e-mail não receberão um convite, porque o endereço de e-mail pertence a uma pessoa que já é um usuário registrado",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "O calendário mostra os dias em que você é \"Positivo Líquido\" - causando um progresso ambiental maior do que a sua pegada naquele dia!",
     "app.dashboardPage.infoTooltipLinkToFAQ": "Saber mais",
     "app.dashboardPage.goodRatio.infoTooltip": "Boa proporção é a proporção de seu handprint para sua pegada. Aumente-a aumentando sua pegada e diminuindo sua pegada.",
