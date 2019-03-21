@@ -28,6 +28,7 @@ import hexToRgba from 'utils/hexToRgba'
 import { logOut } from 'redux/accountStore'
 import { getUserInitialAvatar } from 'api'
 import * as apiActions from 'api/actions'
+import { history } from 'appRouter'
 
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
@@ -539,10 +540,8 @@ class Header extends Component {
 
   get takenActionButton() {
     return (
-      <TakeActionButton>
-        <Link to="/actions">
-          <FormattedMessage id="app.header.takeActionButton" />
-        </Link>
+      <TakeActionButton onClick={() => history.push('/actions')}>
+        <FormattedMessage id="app.header.takeActionButton" />
       </TakeActionButton>
     )
   }
