@@ -183,7 +183,7 @@ const AppRouter = () => {
             requireAuthentication
             withoutCTA
           />
-          <Route component={NotFoundPage} withoutCTA />
+          <Route component={NotFoundPage} useAuthentication withoutCTA />
         </Switch>
 
         <Switch>
