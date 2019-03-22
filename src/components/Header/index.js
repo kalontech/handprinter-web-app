@@ -520,6 +520,21 @@ const isIE =
   navigator.appVersion.indexOf('Trident/') > -1
 
 class Header extends Component {
+  static propTypes = {
+    location: PropTypes.object,
+    withoutHeaderContent: PropTypes.bool,
+    type: PropTypes.oneOf(['minimal', 'public', 'private']).isRequired,
+    user: PropTypes.object,
+    token: PropTypes.string,
+    overrides: PropTypes.object,
+    withRouter: PropTypes.object,
+    history: PropTypes.object,
+  }
+
+  static defaultProps = {
+    user: {},
+  }
+
   state = {
     collapsed: true,
     width: window.innerWidth,
@@ -552,6 +567,12 @@ class Header extends Component {
     if (this.props.type === 'private') {
       this.fetchNews()
       this.fetchNewsIntervalId = setInterval(() => this.fetchNews(true), 10000)
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.fetchNewsIntervalId && !this.props.token) {
+      clearInterval(this.fetchNewsIntervalId)
     }
   }
 
@@ -1189,23 +1210,8 @@ class Header extends Component {
 
 const mapStateToProps = state => ({
   user: state.user.data,
+  token: state.account.token,
 })
-
-Header.defaultProps = {
-  user: {},
-}
-
-Header.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }),
-  withoutHeaderContent: PropTypes.bool,
-  type: PropTypes.oneOf(['minimal', 'public', 'private']).isRequired,
-  user: PropTypes.object,
-  overrides: PropTypes.object,
-  withRouter: PropTypes.object,
-  history: PropTypes.object,
-}
 
 export default compose(
   withRouter,
