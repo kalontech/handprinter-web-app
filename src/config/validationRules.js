@@ -30,6 +30,12 @@ export default formatMessage => ({
         id: 'app.forms.fullName.required',
       }),
     },
+    {
+      pattern: /[^\s]+/,
+      message: formatMessage({
+        id: 'app.forms.fullName.noBlankSpace',
+      }),
+    },
   ],
   password: [
     {
