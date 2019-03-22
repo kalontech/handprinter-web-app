@@ -562,7 +562,7 @@ class IncreaseHandprintPage extends Component {
             isSharingInvitationCode: false,
             showInvitingMessageInput: false,
             shareInvitationCodeError: null,
-            ignoredEmails: ignored.map(item => item.email),
+            ignoredEmails: ignored,
           })
         } catch (error) {
           this.setState({
