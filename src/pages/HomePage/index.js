@@ -451,25 +451,28 @@ class HomePage extends Component {
             </Row>
           </BlockContainer>
         </About>
-        <Clients>
-          <ScrollAnimation bottom>
-            <BlockContainer>
-              <ClientsWrap
-                type="flex"
-                justify="center"
-                align="middle"
-                gutter={{ xs: 25, sm: 25, md: 30, xl: 80 }}
-              >
-                <Col xs={{ order: 2 }} xl={{ order: 2 }}>
-                  <ClientImg src={client2} alt="logo" />
-                </Col>
-                <Col xs={{ order: 2 }} xl={{ order: 2 }}>
-                  <ClientImg src={client3} alt="logo" />
-                </Col>
-              </ClientsWrap>
-            </BlockContainer>
-          </ScrollAnimation>
-        </Clients>
+        {!overrides ||
+          (overrides.brandName !== 'Eaton' && (
+            <Clients>
+              <ScrollAnimation bottom>
+                <BlockContainer>
+                  <ClientsWrap
+                    type="flex"
+                    justify="center"
+                    align="middle"
+                    gutter={{ xs: 25, sm: 25, md: 30, xl: 80 }}
+                  >
+                    <Col xs={{ order: 2 }} xl={{ order: 2 }}>
+                      <ClientImg src={client2} alt="logo" />
+                    </Col>
+                    <Col xs={{ order: 2 }} xl={{ order: 2 }}>
+                      <ClientImg src={client3} alt="logo" />
+                    </Col>
+                  </ClientsWrap>
+                </BlockContainer>
+              </ScrollAnimation>
+            </Clients>
+          ))}
         <VideoModalWrap>
           <ModalVideo
             channel="youtube"
