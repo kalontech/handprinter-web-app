@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "我采取了行动",
     "app.actionsPage.tabs.history": "历史",
     "app.header.menu.aboutInterface": "手印",
-    "app.increaseHandprintPage.ignoredEmails": "以下电子邮件地址不会收到邀请，因为电子邮件地址属于已经是注册用户的人",
+    "app.increaseHandprintPage.ignoredEmails": "Some addresses of the invitation did not come because there are registered users with such addresses, namely: \n{list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "日历显示您“净正面”的日子 - 导致环境进展大于当天的足迹！",
     "app.dashboardPage.infoTooltipLinkToFAQ": "学到更多",
     "app.dashboardPage.goodRatio.infoTooltip": "良好的比例是您的手印与您的足迹的比率。通过增加手印和缩小占地面积来增加它。",
@@ -536,5 +536,7 @@
     "app.pages.privacyPolicy.paragraph.7": "控制信息共享：您可以控制允许哪些用户在平台中查看您的姓名，照片和仪表板。您可以随时更改这些设置。",
     "app.pages.privacyPolicy.paragraph.8": "删除您的帐户：您也可以选择删除您的帐户并随时终止使用Handprinter。如果您删除了自己的帐户，则Handprinter会删除您的所有个人数据：您的姓名，密码，国家\/地区位置和照片。 Handprinter将不再保留此信息。剩下的就是因果网络中的一个未命名的节点，记录了这个未命名的人所采取的行动。保留此信息是因为它有助于直接或间接导致您采取行动的其他人的手印。",
     "app.forms.fullName.noBlankSpace": "全名不应以空格开头",
-    "app.header.takeActionButton": "采取行动"
+    "app.header.takeActionButton": "采取行动",
+    "app.dashboard.userFrom": "来自{country}用户",
+    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "立即采取行动，成为积极未来的一部分。"
 }

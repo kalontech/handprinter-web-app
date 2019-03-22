@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "Ich habe etwas unternommen",
     "app.actionsPage.tabs.history": "Geschichte",
     "app.header.menu.aboutInterface": "Handprint",
-    "app.increaseHandprintPage.ignoredEmails": "Die folgenden E-Mail-Adressen erhalten keine Einladung, da die E-Mail-Adresse einer Person gehört, die bereits ein registrierter Benutzer ist",
+    "app.increaseHandprintPage.ignoredEmails": "Some addresses of the invitation did not come because there are registered users with such addresses, namely: \n{list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "Der Kalender zeigt die Tage, an denen Sie \"Netto-Positiv\" sind - einen Umweltfortschritt, der größer ist als Ihr Fußabdruck für diesen Tag!",
     "app.dashboardPage.infoTooltipLinkToFAQ": "Lern mehr",
     "app.dashboardPage.goodRatio.infoTooltip": "Ein gutes Verhältnis ist das Verhältnis Ihres Handabdrucks zu Ihrem Fußabdruck. Steigern Sie es, indem Sie Ihren Handabdruck vergrößern und Ihren Fußabdruck verkleinern.",
@@ -536,5 +536,7 @@
     "app.pages.privacyPolicy.paragraph.7": "Informationsaustausch steuern: Sie können steuern, welche Benutzer Ihren Namen, Ihr Foto und Ihr Dashboard innerhalb der Plattform sehen dürfen. Sie können diese Einstellungen jederzeit ändern.",
     "app.pages.privacyPolicy.paragraph.8": "Löschen Ihres Kontos: Sie können Ihr Konto auch löschen und die Verwendung von Handprinter jederzeit beenden. Wenn Sie Ihr Konto löschen, löscht der Handprinter alle Ihre persönlichen Daten: Ihren Namen, Ihr Passwort, Ihren Standort und Ihr Foto. Der Handdrucker speichert diese Informationen nicht mehr. Alles, was übrig bleibt, ist ein unbenannter Knoten im kausalen Netzwerk mit einer Aufzeichnung der Aktionen, die diese unbenannte Person durchgeführt hat. Diese Informationen werden beibehalten, da sie zu den Handabdrücken anderer Personen beitragen, die direkt oder indirekt die von Ihnen durchgeführten Aktionen verursacht haben.",
     "app.forms.fullName.noBlankSpace": "Der vollständige Name sollte nicht mit Leerzeichen beginnen",
-    "app.header.takeActionButton": "Handeln Sie"
+    "app.header.takeActionButton": "Handeln Sie",
+    "app.dashboard.userFrom": "Nutzer aus {country}",
+    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "Handeln Sie noch heute und werden Sie Teil einer positiven Zukunft."
 }

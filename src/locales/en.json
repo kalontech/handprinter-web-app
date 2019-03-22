@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "I took action",
     "app.actionsPage.tabs.history": "History",
     "app.header.menu.aboutInterface": "Handprint",
-    "app.increaseHandprintPage.ignoredEmails": "The following email addresses will not be sent an invitation, because the email address belongs to a person who is already a registered user",
+    "app.increaseHandprintPage.ignoredEmails": "Some addresses of the invitation did not come because there are registered users with such addresses, namely: \n{list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "Calendar shows the days on which you are \"Net Positive\" – causing environmental progress larger than your footprint for that day!",
     "app.dashboardPage.infoTooltipLinkToFAQ": "learn more",
     "app.dashboardPage.goodRatio.infoTooltip": "Good ratio is the ratio of your handprint to your footprint. Increase it by growing your handprint and by shrinking your footprint. ",
@@ -536,5 +536,7 @@
     "app.pages.privacyPolicy.paragraph.7": "Controlling Information Sharing: You can control which users are allowed to see your name, photo, and dashboard within the platform.  You can make changes to these settings at any time. ",
     "app.pages.privacyPolicy.paragraph.8": "Deleting your Account: You can also choose to delete your account and terminate use of Handprinter at any time. If you delete your account, then Handprinter deletes all your personal data: Your name, password, country location, and photo.  Handprinter will no longer retain this information.  All that will remain is an unnamed node in the causal network, with a record of the actions that this unnamed person took.  This information is retained because it contributes to the handprints of other people who directly or indirectly caused the actions that you took.",
     "app.forms.fullName.noBlankSpace": "Full name should not start with blank space",
-    "app.header.takeActionButton": "Take Action"
+    "app.header.takeActionButton": "Take Action",
+    "app.dashboard.userFrom": "User from {country}",
+    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "Take action today and become a part of a positive future."
 }

@@ -6,10 +6,13 @@ import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import { animateScroll } from 'react-scroll'
 import PropTypes from 'prop-types'
 import ModalVideo from 'react-modal-video'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 
 import 'react-modal-video/css/modal-video.min.css'
 
 import WatchVideoIcon from 'assets/icons/WatchVideoIcon'
+import EatonBrandedBlock from 'components/EatonBrandedBlock'
 
 import heroBg from 'assets/our-vision/hero-bg.jpg'
 import planet from 'assets/our-vision/planet.png'
@@ -344,13 +347,19 @@ const StepSixContentWrap = styled(StepFourContentWrap)`
   left: -1px;
 `
 
+const EatonBrandedBlockWrap = styled.div`
+  padding: 75px 0;
+`
+
 class OurVisionPage extends React.PureComponent {
   static propTypes = {
     overrides: PropTypes.object,
+    user: PropTypes.object,
   }
 
   static defaultPropss = {
     overrides: {},
+    user: null,
   }
 
   state = {
@@ -374,7 +383,7 @@ class OurVisionPage extends React.PureComponent {
 
   render = () => {
     const { actions } = this.state
-    const { overrides } = this.props
+    const { overrides, user } = this.props
 
     return (
       <Fragment>
@@ -410,6 +419,12 @@ class OurVisionPage extends React.PureComponent {
             </BlockContainer>
             <HeroBg src={heroBg} alt="" />
           </Hero>
+
+          {overrides && overrides.brandName === 'Eaton' && (
+            <EatonBrandedBlockWrap>
+              <EatonBrandedBlock isLoggedIn={Boolean(user)} />
+            </EatonBrandedBlockWrap>
+          )}
 
           <section>
             <BlockContainer>
@@ -770,4 +785,8 @@ class OurVisionPage extends React.PureComponent {
   }
 }
 
-export default OurVisionPage
+const mapStateToProps = state => ({
+  user: state.user.data,
+})
+
+export default compose(connect(mapStateToProps))(OurVisionPage)

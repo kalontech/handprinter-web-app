@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "J'ai agi",
     "app.actionsPage.tabs.history": "L'histoire",
     "app.header.menu.aboutInterface": "Handprint",
-    "app.increaseHandprintPage.ignoredEmails": "The following email addresses will not be sent an invitation, because the email address belongs to a person who is already a registered user",
+    "app.increaseHandprintPage.ignoredEmails": "Some addresses of the invitation did not come because there are registered users with such addresses, namely: \n{list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "Le calendrier indique les jours où vous êtes \"Net positif\" - ce qui provoque un progrès environnemental plus important que votre empreinte pour ce jour!",
     "app.dashboardPage.infoTooltipLinkToFAQ": "apprendre encore plus",
     "app.dashboardPage.goodRatio.infoTooltip": "Le bon ratio est le ratio de votre empreinte de main sur votre empreinte. Augmentez-le en augmentant votre empreinte de main et en réduisant votre empreinte.",
@@ -536,5 +536,7 @@
     "app.pages.privacyPolicy.paragraph.7": "Contrôle du partage d'informations: vous pouvez choisir les utilisateurs autorisés à voir votre nom, votre photo et votre tableau de bord sur la plateforme. Vous pouvez modifier ces paramètres à tout moment.",
     "app.pages.privacyPolicy.paragraph.8": "Suppression de votre compte: Vous pouvez également choisir de supprimer votre compte et de mettre fin à l’utilisation de l’imprimante à tout moment. Si vous supprimez votre compte, Handprinter supprime toutes vos données personnelles: votre nom, votre mot de passe, votre pays et votre photo. Handprinter ne conservera plus ces informations. Il ne restera qu'un nœud non nommé dans le réseau causal, avec un enregistrement des actions effectuées par cette personne non nommée. Ces informations sont conservées car elles contribuent aux empreintes de mains d'autres personnes qui ont directement ou indirectement provoqué les actions que vous avez entreprises.",
     "app.forms.fullName.noBlankSpace": "Le nom complet ne doit pas commencer par un espace",
-    "app.header.takeActionButton": "Passer à l'action"
+    "app.header.takeActionButton": "Passer à l'action",
+    "app.dashboard.userFrom": "Utilisateur de {country}",
+    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "Agissez dès aujourd'hui et faites partie d'un avenir positif."
 }
