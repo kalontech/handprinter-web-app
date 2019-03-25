@@ -409,6 +409,7 @@ const PROFILE_MODAL_TYPES = {
   DELETE_MY_GROUP: 'DELETE_MY_GROUP',
   GROUP_ADMIN_TO_MEMBERL: 'GROUP_ADMIN_TO_MEMBER',
   LEAVE_GROUP: 'LEAVE_GROUP',
+  RESET_PROFILE_PHOTO: 'RESET_PROFILE_PHOTO',
 }
 
 const PROFILE_TABS_KEYS = {
@@ -435,6 +436,7 @@ class ProfilePage extends Component {
     showMyGroupsOptionPopover: false,
     activeMyGroupsOptionPopover: undefined,
     createGroupModalVisible: false,
+    isResettingPhoto: false,
   }
 
   canvasRef = React.createRef()
@@ -501,6 +503,25 @@ class ProfilePage extends Component {
         })
         this.setState({
           isDeletingAccount: false,
+        })
+      })
+  }
+
+  fetchResetPhoto = () => {
+    this.setState({ isResettingPhoto: true })
+
+    return apiUser
+      .updateMe({ photo: null })
+      .then(() => {
+        this.props.getMeRequest()
+        this.setState({
+          isResettingPhoto: false,
+        })
+      })
+      .catch(error => {
+        console.error(error)
+        this.setState({
+          isResettingPhoto: false,
         })
       })
   }
@@ -775,6 +796,27 @@ class ProfilePage extends Component {
           },
         })
         break
+      case PROFILE_MODAL_TYPES.RESET_PROFILE_PHOTO:
+        Modal.confirm({
+          title: formatMessage({
+            id: 'app.profilePage.resetProfilePhotoModal.title',
+          }),
+          content: formatMessage({
+            id: 'app.profilePage.resetProfilePhotoModal.context',
+          }),
+          okText: formatMessage({
+            id: 'app.profilePage.resetProfilePhotoModal.confirmButton',
+          }),
+          cancelText: formatMessage({
+            id: 'app.profilePage.resetProfilePhotoModal.cancelButton',
+          }),
+          okType: 'danger',
+          className: 'ant-modal-confirm_profile-page',
+          centered: true,
+          confirmLoading: this.state.isResettingPhoto,
+          onOk: this.fetchResetPhoto,
+        })
+        break
     }
   }
 
@@ -973,6 +1015,17 @@ class ProfilePage extends Component {
                       <FormattedMessage id="app.profilePage.changePassword" />
                     </ChangePasswordButton>
                   )}
+
+                  <ChangePasswordButton
+                    type="primary"
+                    onClick={() =>
+                      this.showModal({
+                        type: PROFILE_MODAL_TYPES.RESET_PROFILE_PHOTO,
+                      })
+                    }
+                  >
+                    <FormattedMessage id="app.profilePage.resetProfilePhoto" />
+                  </ChangePasswordButton>
                 </Form>
               </TabContent>
             </TabPane>
@@ -1215,6 +1268,7 @@ const mapDispatchToProps = dispatch =>
       updateMePasswordRequest: data =>
         UserCreators.updateMePasswordRequest(data),
       updateMePhotoRequest: data => UserCreators.updateMePhotoRequest(data),
+      getMeRequest: () => UserCreators.getMeRequest(),
     },
     dispatch,
   )
@@ -1238,6 +1292,7 @@ ProfilePage.propTypes = {
   updateMePasswordRequest: PropTypes.func.isRequired,
   updateMePhotoRequest: PropTypes.func.isRequired,
   setGroupsList: PropTypes.func.isRequired,
+  getMeRequest: PropTypes.func.isRequired,
 }
 
 export default compose(

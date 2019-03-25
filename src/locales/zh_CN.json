@@ -536,7 +536,12 @@
     "app.pages.privacyPolicy.paragraph.7": "控制信息共享：您可以控制允许哪些用户在平台中查看您的姓名，照片和仪表板。您可以随时更改这些设置。",
     "app.pages.privacyPolicy.paragraph.8": "删除您的帐户：您也可以选择删除您的帐户并随时终止使用Handprinter。如果您删除了自己的帐户，则Handprinter会删除您的所有个人数据：您的姓名，密码，国家\/地区位置和照片。 Handprinter将不再保留此信息。剩下的就是因果网络中的一个未命名的节点，记录了这个未命名的人所采取的行动。保留此信息是因为它有助于直接或间接导致您采取行动的其他人的手印。",
     "app.forms.fullName.noBlankSpace": "全名不应以空格开头",
-    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "立即采取行动，成为积极未来的一部分。",
     "app.header.takeActionButton": "采取行动",
-    "app.dashboard.userFrom": "来自{country}用户"
+    "app.dashboard.userFrom": "来自{country}用户",
+    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "立即采取行动，成为积极未来的一部分。",
+    "app.profilePage.resetProfilePhoto": "重置个人资料照片",
+    "app.profilePage.resetProfilePhotoModal.title": "重置个人资料照片",
+    "app.profilePage.resetProfilePhotoModal.context": "您确定要重置个人资料照片吗？",
+    "app.profilePage.resetProfilePhotoModal.confirmButton": "重启",
+    "app.profilePage.resetProfilePhotoModal.cancelButton": "取消"
 }

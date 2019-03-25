@@ -536,7 +536,12 @@
     "app.pages.privacyPolicy.paragraph.7": "Controlling Information Sharing: You can control which users are allowed to see your name, photo, and dashboard within the platform.  You can make changes to these settings at any time. ",
     "app.pages.privacyPolicy.paragraph.8": "Deleting your Account: You can also choose to delete your account and terminate use of Handprinter at any time. If you delete your account, then Handprinter deletes all your personal data: Your name, password, country location, and photo.  Handprinter will no longer retain this information.  All that will remain is an unnamed node in the causal network, with a record of the actions that this unnamed person took.  This information is retained because it contributes to the handprints of other people who directly or indirectly caused the actions that you took.",
     "app.forms.fullName.noBlankSpace": "Full name should not start with blank space",
-    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "Take action today and become a part of a positive future.",
     "app.header.takeActionButton": "Take Action",
-    "app.dashboard.userFrom": "User from {country}"
+    "app.dashboard.userFrom": "User from {country}",
+    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "Take action today and become a part of a positive future.",
+    "app.profilePage.resetProfilePhoto": "Reset profile photo",
+    "app.profilePage.resetProfilePhotoModal.title": "Reset profile photo",
+    "app.profilePage.resetProfilePhotoModal.context": "Are you sure that you want to reset your profile photo?",
+    "app.profilePage.resetProfilePhotoModal.confirmButton": "Reset",
+    "app.profilePage.resetProfilePhotoModal.cancelButton": "Cancel"
 }
