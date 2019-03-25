@@ -284,13 +284,15 @@ class RegisterPage extends Component {
                       <BrandedBlockLeaves src={registerBrandedPhotoLeaves} />
                       <BrandedBlockPhotoBlock>
                         <BrandedBlockPhotoBg>
-                          {referrer.photo ? (
-                            <BrandedBlockPhoto src={referrer.photo} />
-                          ) : (
-                            <BrandedBlockReferrerName>
-                              {referrer.fullName.slice(0, 1).toUpperCase()}
-                            </BrandedBlockReferrerName>
-                          )}
+                          <Link to={`/account/${referrer._id}`}>
+                            {referrer.photo ? (
+                              <BrandedBlockPhoto src={referrer.photo} />
+                            ) : (
+                              <BrandedBlockReferrerName>
+                                {referrer.fullName.slice(0, 1).toUpperCase()}
+                              </BrandedBlockReferrerName>
+                            )}
+                          </Link>
                         </BrandedBlockPhotoBg>
                       </BrandedBlockPhotoBlock>
                     </BrandedBlockPhotoWrap>
@@ -301,7 +303,11 @@ class RegisterPage extends Component {
                       <FormattedMessage
                         id="app.registerPage.brandedBlock.description"
                         values={{
-                          referrerFullName: referrer.fullName,
+                          referrerFullName: (
+                            <Link to={`/account/${referrer._id}`}>
+                              {referrer.fullName}
+                            </Link>
+                          ),
                         }}
                       />
                     </BrandedBlockDescription>
