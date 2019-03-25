@@ -9,30 +9,12 @@ import { animateScroll } from 'react-scroll'
 import { withRouter } from 'react-router-dom'
 
 import notification from 'antd/lib/notification'
+
 import CloseIcon from 'assets/icons/CloseIcon'
 import profileLeavesBackgroundImage from 'assets/images/profileLeavesBackgroundImage.png'
 import arrowDownIcon from 'assets/icons/arrowDown.svg'
-import GroupCreateForm from 'components/GroupCreateForm'
-import {
-  fetchCreateGroup,
-  fetchUpdateGroup,
-  fetchUpdateGroupMember,
-  fetchLeaveGroup,
-  fetchGroupsList,
-  fetchDeleteGroup,
-} from 'api/groups'
+
 import { Creators as UserCreators } from 'redux/userStore'
-import {
-  FormItem,
-  Input,
-  PrimaryButton,
-  DefaultButton,
-  Modal,
-  Checkbox,
-  CloseButton,
-  FingerPrint,
-  ModalContent,
-} from 'components/Styled'
 import colors from 'config/colors'
 import {
   convertBase64ToFile,
@@ -46,13 +28,28 @@ import {
   ACCEPT_IMAGE_FORMATS,
 } from 'config/files'
 import handleFormError from 'utils/handleFormError'
-import api, { getUserInitialAvatar } from 'api'
 import decodeError from 'utils/decodeError'
 import { logOut } from 'redux/accountStore'
 import hexToRgba from 'utils/hexToRgba'
-import PageMetadata from 'components/PageMetadata'
 import media from 'utils/mediaQueryTemplate'
 import { GROUPS_SUBSETS, MEMBER_GROUP_ROLES } from 'utils/constants'
+import {
+  FormItem,
+  Input,
+  PrimaryButton,
+  DefaultButton,
+  Modal,
+  Checkbox,
+  CloseButton,
+  FingerPrint,
+  ModalContent,
+} from 'components/Styled'
+import GroupCreateForm from 'components/GroupCreateForm'
+import PageMetadata from 'components/PageMetadata'
+import ConfidentialitySettings from 'components/ConfidentialitySettings'
+import * as apiGroups from 'api/groups'
+import * as apiUser from 'api/user'
+import { getUserInitialAvatar } from 'api'
 
 const { TabPane } = Tabs
 
@@ -417,10 +414,11 @@ const PROFILE_MODAL_TYPES = {
 const PROFILE_TABS_KEYS = {
   GENERAL: 'GENERAL',
   MY_GROUPS: 'MY_GROUPS',
+  CONFIDENTIALITY: 'CONFIDENTIALITY',
 }
 
 async function getMyGroupsList() {
-  return fetchGroupsList({
+  return apiGroups.fetchGroupsList({
     subset: GROUPS_SUBSETS.MY,
   })
 }
@@ -485,7 +483,7 @@ class ProfilePage extends Component {
   fetchDeleteAccount = () => {
     this.setState({ isDeletingAccount: true })
 
-    return api
+    return apiUser
       .deleteMe()
       .then(() => {
         this.setState({
@@ -555,7 +553,7 @@ class ProfilePage extends Component {
     body.append('name', values.name)
     body.append('private', values.private)
 
-    const response = await fetchCreateGroup(body)
+    const response = await apiGroups.fetchCreateGroup(body)
 
     this.setState({
       myGroups: [response.group, ...this.state.myGroups],
@@ -722,7 +720,7 @@ class ProfilePage extends Component {
           className: 'ant-modal-confirm_profile-page',
           centered: true,
           onOk: async () => {
-            await fetchDeleteGroup(payload.groupId)
+            await apiGroups.fetchDeleteGroup(payload.groupId)
             const { groups } = await getMyGroupsList()
             this.setState({ myGroups: groups.docs })
           },
@@ -744,7 +742,7 @@ class ProfilePage extends Component {
           className: 'ant-modal-confirm_profile-page',
           centered: true,
           onOk: async () => {
-            await fetchUpdateGroupMember({
+            await apiGroups.fetchUpdateGroupMember({
               id: payload.groupId,
               memberId: this.props.user._id,
               body: { role: MEMBER_GROUP_ROLES.MEMBER },
@@ -768,7 +766,7 @@ class ProfilePage extends Component {
           className: 'ant-modal-confirm_profile-page',
           centered: true,
           onOk: async () => {
-            await fetchLeaveGroup(payload.groupId)
+            await apiGroups.fetchLeaveGroup(payload.groupId)
             this.setState({
               myGroups: this.state.myGroups.filter(
                 myGroup => String(myGroup._id) !== String(payload.groupId),
@@ -781,70 +779,37 @@ class ProfilePage extends Component {
   }
 
   handleTabClick = async key => {
-    if (key !== this.state.tabActiveKey) {
-      let updatedMyGroupsList
-      if (key === PROFILE_TABS_KEYS.MY_GROUPS) {
-        const { groups } = await getMyGroupsList()
-        updatedMyGroupsList = groups.docs
-      }
-      this.setState({
-        tabActiveKey: key,
-        myGroups: updatedMyGroupsList || this.state.myGroups,
-      })
-    }
-  }
+    const { myGroups, tabActiveKey } = this.state
 
-  handlePrivateGroupChange = e => {
-    const groupId = e.target.name.split('-')[1]
-    fetchUpdateGroup(groupId, {
-      private: e.target.checked,
-    }).catch(error => {
-      console.error(error)
-      notification.error({
-        message: this.props.intl.formatMessage({ id: decodeError(error) }),
-      })
+    if (key === tabActiveKey) return
+
+    let updatedMyGroupsList
+
+    if (key === PROFILE_TABS_KEYS.MY_GROUPS) {
+      const { groups } = await getMyGroupsList()
+      updatedMyGroupsList = groups.docs
+    }
+
+    this.setState({
+      tabActiveKey: key,
+      myGroups: updatedMyGroupsList || myGroups,
     })
   }
 
-  renderProfilePictureBlock = ({ user }) => (
-    <Fragment>
-      <ProfileImgWrap
-        onClick={() => this.uploadProfilePictureRef.current.click()}
-      >
-        <LeavesTopBackgroundImage src={profileLeavesBackgroundImage} />
+  handlePrivateGroupChange = e => {
+    const [, groupId] = e.target.name.split('-')
 
-        {user.photo && (
-          <OuterPlusButton>
-            <Icon type="plus" />
-          </OuterPlusButton>
-        )}
-
-        <ProfileImgBackground>
-          {(user.photo ? user.photo : null) && (
-            <ProfileImg src={user.photo ? user.photo : null} />
-          )}
-          {!user.photo && (
-            <AddPhotoHint>
-              <InnerPlusButton>
-                <Icon type="plus" />
-              </InnerPlusButton>
-              <div>
-                <FormattedMessage id="app.profilePage.addPhoto" />
-              </div>
-            </AddPhotoHint>
-          )}
-        </ProfileImgBackground>
-      </ProfileImgWrap>
-
-      <HiddenPictureCanvas ref={this.canvasRef} />
-      <HiddenUploadPictureInput
-        type="file"
-        accept={Object.values(ACCEPT_IMAGE_FORMATS).join()}
-        ref={this.uploadProfilePictureRef}
-        onChange={this.handleUploadImage}
-      />
-    </Fragment>
-  )
+    apiGroups
+      .fetchUpdateGroup(groupId, {
+        private: e.target.checked,
+      })
+      .catch(error => {
+        console.error(error)
+        notification.error({
+          message: this.props.intl.formatMessage({ id: decodeError(error) }),
+        })
+      })
+  }
 
   render() {
     const {
@@ -871,310 +836,338 @@ class ProfilePage extends Component {
       <Fragment>
         <PageMetadata pageName="profilePage" />
         <Wrapper>
-          <Fragment>
-            <AppleBackgroundSection />
-            {this.renderProfilePictureBlock({ user })}
-            <Fragment>
-              <StyledTabs
-                type="card"
-                onTabClick={this.handleTabClick}
-                activeKey={tabActiveKey}
-              >
-                <TabPane
-                  tab={formatMessage({
-                    id: 'app.profilePage.tabs.general',
-                  })}
-                  key={PROFILE_TABS_KEYS.GENERAL}
-                >
-                  <TabContent>
-                    <Form onChange={this.handleFormChange}>
-                      <FormSectionHeading>
-                        <FormattedMessage id="app.profilePage.generalInformation" />
-                      </FormSectionHeading>
-                      <FormItem>
-                        {getFieldDecorator('fullName', {
-                          rules: getValidationRules(formatMessage).fullName,
-                        })(
-                          <Input
-                            type="text"
-                            placeholder={formatMessage({
-                              id: 'app.forms.fullName',
-                            })}
-                          />,
-                        )}
-                      </FormItem>
-                      <FormItem>
-                        {getFieldDecorator('email', {
-                          rules: getValidationRules(formatMessage).email,
-                        })(
-                          <Input
-                            type="email"
-                            placeholder={formatMessage({
-                              id: 'app.forms.email',
-                            })}
-                          />,
-                        )}
-                      </FormItem>
-                      <FormItem>
-                        {getFieldDecorator('country', {
-                          rules: getValidationRules(formatMessage).country,
-                        })(
-                          <Select
-                            onChange={this.handleCountryChange}
-                            showSearch
-                            placeholder={formatMessage({
-                              id: 'app.forms.country',
-                            })}
-                            optionFilterProp="children"
-                            className="ant-select__override-for__register-page"
-                            dropdownClassName="ant-select__override-for__register-page"
-                            suffixIcon={
-                              <img src={arrowDownIcon} alt="arrowDownIcon" />
-                            }
-                          >
-                            {countries.map(country => (
-                              <Select.Option
-                                key={country._id}
-                                value={country._id}
-                              >
-                                {country.name}
-                              </Select.Option>
-                            ))}
-                          </Select>,
-                        )}
-                      </FormItem>
-                      <ErrorItemWrap>
-                        <FormItem>
-                          {getFieldDecorator('errorInfo')(
-                            <Input type="hidden" />,
-                          )}
-                        </FormItem>
-                        <FormItem>
-                          {getFieldDecorator('errorPhoto')(
-                            <Input type="hidden" />,
-                          )}
-                        </FormItem>
-                      </ErrorItemWrap>
+          <AppleBackgroundSection />
 
-                      {formInfoChanged && (
-                        <StyledSaveChangesButton
-                          type="primary"
-                          onClick={this.handleInfoSubmit}
-                          style={{ width: '100%' }}
-                          loading={isUpdatingMeInfo}
-                        >
-                          <FormattedMessage id="app.profilePage.saveChanges" />
-                        </StyledSaveChangesButton>
-                      )}
+          <ProfileImgWrap
+            onClick={() => this.uploadProfilePictureRef.current.click()}
+          >
+            <LeavesTopBackgroundImage src={profileLeavesBackgroundImage} />
 
-                      {showChangePasswordSection ? (
-                        this.renderChangePasswordSection({
-                          getFieldDecorator,
-                          formatMessage,
-                          isUpdatingMePassword,
-                        })
-                      ) : (
-                        <ChangePasswordButton
-                          type="primary"
-                          onClick={this.toggleShowChangePasswordSection}
-                        >
-                          <FormattedMessage id="app.profilePage.changePassword" />
-                        </ChangePasswordButton>
-                      )}
-                    </Form>
-                  </TabContent>
-                </TabPane>
-                <TabPane
-                  tab={formatMessage({
-                    id: 'app.profilePage.tabs.myGroups',
-                  })}
-                  key={PROFILE_TABS_KEYS.MY_GROUPS}
-                >
-                  <TabContent>
-                    <GroupsList>
-                      {myGroups.length > 0 ? (
-                        myGroups.map((group, index) => {
-                          let options
-                          switch (group.info.memberRole) {
-                            case MEMBER_GROUP_ROLES.OWNER:
-                              options = {
-                                buttonTitleId: 'app.profilePage.deleteMyGroup',
-                                modalType: PROFILE_MODAL_TYPES.DELETE_MY_GROUP,
-                              }
-                              break
-                            case MEMBER_GROUP_ROLES.ADMIN:
-                              options = {
-                                buttonTitleId:
-                                  'app.profilePage.leaveAdminPosition',
-                                modalType:
-                                  PROFILE_MODAL_TYPES.GROUP_ADMIN_TO_MEMBER,
-                              }
-                              break
+            {user.photo && (
+              <OuterPlusButton>
+                <Icon type="plus" />
+              </OuterPlusButton>
+            )}
+
+            <ProfileImgBackground>
+              {(user.photo ? user.photo : null) && (
+                <ProfileImg src={user.photo ? user.photo : null} />
+              )}
+              {!user.photo && (
+                <AddPhotoHint>
+                  <InnerPlusButton>
+                    <Icon type="plus" />
+                  </InnerPlusButton>
+                  <div>
+                    <FormattedMessage id="app.profilePage.addPhoto" />
+                  </div>
+                </AddPhotoHint>
+              )}
+            </ProfileImgBackground>
+          </ProfileImgWrap>
+
+          <HiddenPictureCanvas ref={this.canvasRef} />
+          <HiddenUploadPictureInput
+            type="file"
+            accept={Object.values(ACCEPT_IMAGE_FORMATS).join()}
+            ref={this.uploadProfilePictureRef}
+            onChange={this.handleUploadImage}
+          />
+
+          <StyledTabs
+            type="card"
+            onTabClick={this.handleTabClick}
+            activeKey={tabActiveKey}
+          >
+            <TabPane
+              tab={formatMessage({
+                id: 'app.profilePage.tabs.general',
+              })}
+              key={PROFILE_TABS_KEYS.GENERAL}
+            >
+              <TabContent>
+                <Form onChange={this.handleFormChange}>
+                  <FormSectionHeading>
+                    <FormattedMessage id="app.profilePage.generalInformation" />
+                  </FormSectionHeading>
+                  <FormItem>
+                    {getFieldDecorator('fullName', {
+                      rules: getValidationRules(formatMessage).fullName,
+                    })(
+                      <Input
+                        type="text"
+                        placeholder={formatMessage({
+                          id: 'app.forms.fullName',
+                        })}
+                      />,
+                    )}
+                  </FormItem>
+                  <FormItem>
+                    {getFieldDecorator('email', {
+                      rules: getValidationRules(formatMessage).email,
+                    })(
+                      <Input
+                        type="email"
+                        placeholder={formatMessage({
+                          id: 'app.forms.email',
+                        })}
+                      />,
+                    )}
+                  </FormItem>
+                  <FormItem>
+                    {getFieldDecorator('country', {
+                      rules: getValidationRules(formatMessage).country,
+                    })(
+                      <Select
+                        onChange={this.handleCountryChange}
+                        showSearch
+                        placeholder={formatMessage({
+                          id: 'app.forms.country',
+                        })}
+                        optionFilterProp="children"
+                        className="ant-select__override-for__register-page"
+                        dropdownClassName="ant-select__override-for__register-page"
+                        suffixIcon={
+                          <img src={arrowDownIcon} alt="arrowDownIcon" />
+                        }
+                      >
+                        {countries.map(country => (
+                          <Select.Option key={country._id} value={country._id}>
+                            {country.name}
+                          </Select.Option>
+                        ))}
+                      </Select>,
+                    )}
+                  </FormItem>
+                  <ErrorItemWrap>
+                    <FormItem>
+                      {getFieldDecorator('errorInfo')(<Input type="hidden" />)}
+                    </FormItem>
+                    <FormItem>
+                      {getFieldDecorator('errorPhoto')(<Input type="hidden" />)}
+                    </FormItem>
+                  </ErrorItemWrap>
+
+                  {formInfoChanged && (
+                    <StyledSaveChangesButton
+                      type="primary"
+                      onClick={this.handleInfoSubmit}
+                      style={{ width: '100%' }}
+                      loading={isUpdatingMeInfo}
+                    >
+                      <FormattedMessage id="app.profilePage.saveChanges" />
+                    </StyledSaveChangesButton>
+                  )}
+
+                  {showChangePasswordSection ? (
+                    this.renderChangePasswordSection({
+                      getFieldDecorator,
+                      formatMessage,
+                      isUpdatingMePassword,
+                    })
+                  ) : (
+                    <ChangePasswordButton
+                      type="primary"
+                      onClick={this.toggleShowChangePasswordSection}
+                    >
+                      <FormattedMessage id="app.profilePage.changePassword" />
+                    </ChangePasswordButton>
+                  )}
+                </Form>
+              </TabContent>
+            </TabPane>
+
+            <TabPane
+              tab={formatMessage({
+                id: 'app.profilePage.tabs.confidentiality',
+              })}
+              key={PROFILE_TABS_KEYS.CONFIDENTIALITY}
+            >
+              <TabContent>
+                <ConfidentialitySettings />
+              </TabContent>
+            </TabPane>
+
+            <TabPane
+              tab={formatMessage({
+                id: 'app.profilePage.tabs.myGroups',
+              })}
+              key={PROFILE_TABS_KEYS.MY_GROUPS}
+            >
+              <TabContent>
+                <GroupsList>
+                  {myGroups.map((group, index) => {
+                    let options
+                    switch (group.info.memberRole) {
+                      case MEMBER_GROUP_ROLES.OWNER:
+                        options = {
+                          buttonTitleId: 'app.profilePage.deleteMyGroup',
+                          modalType: PROFILE_MODAL_TYPES.DELETE_MY_GROUP,
+                        }
+                        break
+                      case MEMBER_GROUP_ROLES.ADMIN:
+                        options = {
+                          buttonTitleId: 'app.profilePage.leaveAdminPosition',
+                          modalType: PROFILE_MODAL_TYPES.GROUP_ADMIN_TO_MEMBER,
+                        }
+                        break
+                    }
+
+                    return (
+                      <ListItem key={group._id}>
+                        <MyGroupItem
+                          onClick={() =>
+                            history.push(`/groups/view/${group._id}/statistics`)
                           }
-
-                          return (
-                            <ListItem key={group._id}>
-                              <MyGroupItem
-                                onClick={() =>
-                                  history.push(
-                                    `/groups/view/${group._id}/statistics`,
-                                  )
+                        >
+                          <MyGroupPicture
+                            src={
+                              group.picture || getUserInitialAvatar(group.name)
+                            }
+                            alt="Group picture"
+                          />
+                          <MyGroupInfo>
+                            <MyGroupInfoName>{group.name}</MyGroupInfoName>
+                            <MyGroupInfoMyRole>
+                              <FormattedMessage
+                                id={
+                                  {
+                                    MEMBER: 'app.pages.groups.member',
+                                    OWNER: 'app.pages.groups.owner',
+                                    ADMIN: 'app.pages.groups.admin',
+                                  }[group.info.memberRole]
                                 }
-                              >
-                                <MyGroupPicture
-                                  src={
-                                    group.picture ||
-                                    getUserInitialAvatar(group.name)
-                                  }
-                                  alt="Group picture"
-                                />
-                                <MyGroupInfo>
-                                  <MyGroupInfoName>
-                                    {group.name}
-                                  </MyGroupInfoName>
-                                  <MyGroupInfoMyRole>
-                                    <FormattedMessage
-                                      id={
-                                        {
-                                          MEMBER: 'app.pages.groups.member',
-                                          OWNER: 'app.pages.groups.owner',
-                                          ADMIN: 'app.pages.groups.admin',
-                                        }[group.info.memberRole]
-                                      }
-                                    />
-                                  </MyGroupInfoMyRole>
-                                </MyGroupInfo>
-                              </MyGroupItem>
-                              <MyGroupItemRightSide>
-                                {group.info.memberRole !==
-                                  MEMBER_GROUP_ROLES.MEMBER && (
-                                  <Checkbox
-                                    onChange={this.handlePrivateGroupChange}
-                                    name={`isPrivateGroupe-${group._id}`}
-                                    defaultChecked={group.private}
-                                  >
-                                    <FormattedMessage id="app.pages.groups.createGroupPrivate" />
-                                  </Checkbox>
-                                )}
-                                <Popover
-                                  trigger="click"
-                                  placement="bottomRight"
-                                  getPopupContainer={() =>
-                                    this[`$myGroupsOptionButton_${index}`]
-                                  }
-                                  visible={
-                                    showMyGroupsOptionPopover &&
-                                    activeMyGroupsOptionPopover === index
-                                  }
-                                  onVisibleChange={() => {
-                                    if (showMyGroupsOptionPopover) {
+                              />
+                            </MyGroupInfoMyRole>
+                          </MyGroupInfo>
+                        </MyGroupItem>
+                        <MyGroupItemRightSide>
+                          {group.info.memberRole !==
+                            MEMBER_GROUP_ROLES.MEMBER && (
+                            <Checkbox
+                              onChange={this.handlePrivateGroupChange}
+                              name={`isPrivateGroupe-${group._id}`}
+                              defaultChecked={group.private}
+                            >
+                              <FormattedMessage id="app.pages.groups.createGroupPrivate" />
+                            </Checkbox>
+                          )}
+                          <Popover
+                            trigger="click"
+                            placement="bottomRight"
+                            getPopupContainer={() =>
+                              this[`$myGroupsOptionButton_${index}`]
+                            }
+                            visible={
+                              showMyGroupsOptionPopover &&
+                              activeMyGroupsOptionPopover === index
+                            }
+                            onVisibleChange={() => {
+                              if (showMyGroupsOptionPopover) {
+                                this.setState({
+                                  showMyGroupsOptionPopover: false,
+                                })
+                              }
+                            }}
+                            content={
+                              <GroupMemberOptionWrap>
+                                {options && (
+                                  <GroupMemberOptionButton
+                                    type="primary"
+                                    onClick={() => {
+                                      this.showModal({
+                                        type: options.modalType,
+                                        payload: {
+                                          groupId: group._id,
+                                        },
+                                      })
+
                                       this.setState({
+                                        activeMyGroupsOptionPopover: undefined,
                                         showMyGroupsOptionPopover: false,
                                       })
-                                    }
-                                  }}
-                                  content={
-                                    <GroupMemberOptionWrap>
-                                      {options && (
-                                        <GroupMemberOptionButton
-                                          type="primary"
-                                          onClick={() => {
-                                            this.showModal({
-                                              type: options.modalType,
-                                              payload: {
-                                                groupId: group._id,
-                                              },
-                                            })
-
-                                            this.setState({
-                                              activeMyGroupsOptionPopover: undefined,
-                                              showMyGroupsOptionPopover: false,
-                                            })
-                                          }}
-                                        >
-                                          <FormattedMessage
-                                            id={options.buttonTitleId}
-                                          />
-                                        </GroupMemberOptionButton>
-                                      )}
-                                      {group.info.memberRole !==
-                                        MEMBER_GROUP_ROLES.OWNER && (
-                                        <GroupMemberOptionButton
-                                          type="primary"
-                                          onClick={() => {
-                                            this.showModal({
-                                              type:
-                                                PROFILE_MODAL_TYPES.LEAVE_GROUP,
-                                              payload: {
-                                                groupId: group._id,
-                                              },
-                                            })
-                                            this.setState({
-                                              activeMyGroupsOptionPopover: undefined,
-                                              showMyGroupsOptionPopover: false,
-                                            })
-                                          }}
-                                        >
-                                          <FormattedMessage id="app.profilePage.leaveGroup" />
-                                        </GroupMemberOptionButton>
-                                      )}
-                                    </GroupMemberOptionWrap>
-                                  }
-                                >
-                                  <MyGroupsOptionButton
-                                    ref={ref => {
-                                      this[
-                                        `$myGroupsOptionButton_${index}`
-                                      ] = ref
                                     }}
+                                  >
+                                    <FormattedMessage
+                                      id={options.buttonTitleId}
+                                    />
+                                  </GroupMemberOptionButton>
+                                )}
+                                {group.info.memberRole !==
+                                  MEMBER_GROUP_ROLES.OWNER && (
+                                  <GroupMemberOptionButton
+                                    type="primary"
                                     onClick={() => {
+                                      this.showModal({
+                                        type: PROFILE_MODAL_TYPES.LEAVE_GROUP,
+                                        payload: {
+                                          groupId: group._id,
+                                        },
+                                      })
                                       this.setState({
-                                        activeMyGroupsOptionPopover: index,
-                                        showMyGroupsOptionPopover: true,
+                                        activeMyGroupsOptionPopover: undefined,
+                                        showMyGroupsOptionPopover: false,
                                       })
                                     }}
                                   >
-                                    <Icon type="ellipsis" rotate={90} />
-                                  </MyGroupsOptionButton>
-                                </Popover>
-                              </MyGroupItemRightSide>
-                            </ListItem>
-                          )
-                        })
-                      ) : (
-                        <GroupsNotFoundWrapper>
-                          <span>
-                            <FormattedMessage id="app.pages.groups.emptyGroupsList" />
-                          </span>
-                        </GroupsNotFoundWrapper>
-                      )}
-                    </GroupsList>
-                    <CreateGroupButton
-                      onClick={() =>
-                        this.setState({ createGroupModalVisible: true })
-                      }
-                    >
-                      <FormattedMessage id="app.profilePage.createGroupButton" />
-                    </CreateGroupButton>
-                  </TabContent>
-                </TabPane>
-              </StyledTabs>
+                                    <FormattedMessage id="app.profilePage.leaveGroup" />
+                                  </GroupMemberOptionButton>
+                                )}
+                              </GroupMemberOptionWrap>
+                            }
+                          >
+                            <MyGroupsOptionButton
+                              ref={ref => {
+                                this[`$myGroupsOptionButton_${index}`] = ref
+                              }}
+                              onClick={() => {
+                                this.setState({
+                                  activeMyGroupsOptionPopover: index,
+                                  showMyGroupsOptionPopover: true,
+                                })
+                              }}
+                            >
+                              <Icon type="ellipsis" rotate={90} />
+                            </MyGroupsOptionButton>
+                          </Popover>
+                        </MyGroupItemRightSide>
+                      </ListItem>
+                    )
+                  })}
 
-              <DeleteButtonWrap>
-                <DeleteAccountButton
-                  type="primary"
-                  loading={isDeletingAccount}
+                  {myGroups.length === 0 && (
+                    <GroupsNotFoundWrapper>
+                      <span>
+                        <FormattedMessage id="app.pages.groups.emptyGroupsList" />
+                      </span>
+                    </GroupsNotFoundWrapper>
+                  )}
+                </GroupsList>
+                <CreateGroupButton
                   onClick={() =>
-                    this.showModal({
-                      type: PROFILE_MODAL_TYPES.DELETE_ACCOUNT_CONFIRMATION,
-                    })
+                    this.setState({ createGroupModalVisible: true })
                   }
                 >
-                  <FormattedMessage id="app.profilePage.deleteAccount" />
-                </DeleteAccountButton>
-              </DeleteButtonWrap>
-            </Fragment>
-          </Fragment>
+                  <FormattedMessage id="app.profilePage.createGroupButton" />
+                </CreateGroupButton>
+              </TabContent>
+            </TabPane>
+          </StyledTabs>
+
+          <DeleteButtonWrap>
+            <DeleteAccountButton
+              type="primary"
+              loading={isDeletingAccount}
+              onClick={() =>
+                this.showModal({
+                  type: PROFILE_MODAL_TYPES.DELETE_ACCOUNT_CONFIRMATION,
+                })
+              }
+            >
+              <FormattedMessage id="app.profilePage.deleteAccount" />
+            </DeleteAccountButton>
+          </DeleteButtonWrap>
+
           <Modal
             visible={createGroupModalVisible}
             closable={false}
@@ -1230,8 +1223,8 @@ ProfilePage.propTypes = {
   countries: PropTypes.array.isRequired,
   form: PropTypes.object.isRequired,
   intl: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  history: PropTypes.object,
   isUpdatingMeInfo: PropTypes.bool.isRequired,
   isUpdatingMePassword: PropTypes.bool.isRequired,
   isUpdatingMePhoto: PropTypes.bool.isRequired,
@@ -1248,6 +1241,7 @@ ProfilePage.propTypes = {
 }
 
 export default compose(
+  withRouter,
   connect(
     mapStateToProps,
     mapDispatchToProps,
@@ -1260,5 +1254,4 @@ export default compose(
     }),
   }),
   injectIntl,
-  withRouter,
 )(ProfilePage)

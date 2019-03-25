@@ -1,7 +1,7 @@
 import { put, select, call } from 'redux-saga/effects'
 import has from 'lodash/has'
 
-import api from 'api'
+import * as apiUsers from 'api/user'
 import { Creators as UserStoreCreators } from 'redux/userStore'
 import { logOut } from 'redux/accountStore'
 import { getBrandedHostnamePrefix } from 'config/branded'
@@ -13,7 +13,7 @@ export function* prepareUserProfile() {
 
   if (account.token) {
     try {
-      const { user } = yield call(api.getMe)
+      const { user } = yield call(apiUsers.getMe)
       if (user) {
         const { pathname, protocol } = window.location
         if (

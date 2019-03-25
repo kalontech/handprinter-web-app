@@ -41,8 +41,9 @@ import MemberCard from 'components/MemberCard'
 import icons from 'components/ActionCardLabel/icons'
 import { SecondaryButton, Modal, Pagination } from 'components/Styled'
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
-import { getUserInitialAvatar, getDashboardData } from 'api'
-import { getNews } from 'api/actions'
+import { getUserInitialAvatar } from 'api'
+import * as apiUser from 'api/user'
+import * as apiActions from 'api/actions'
 import {
   fetchUpdateGroup,
   fetchGroupById,
@@ -401,8 +402,8 @@ async function getGroupData(props) {
 
   const tabsFetch = {
     [GROUP_TABS.MEMBERS]: fetchGroupMembers,
-    [GROUP_TABS.ACTIVITY]: getNews,
-    [GROUP_TABS.STATISTICS]: getDashboardData,
+    [GROUP_TABS.ACTIVITY]: apiActions.getNews,
+    [GROUP_TABS.STATISTICS]: apiUser.getDashboardData,
   }[match.params.subset]
 
   const [
@@ -709,7 +710,7 @@ class GroupViewPage extends PureComponent {
 
     this.setState({ loadingMorelNews: true, newsPage: newsPage + 1 })
 
-    const response = await getNews({
+    const response = await apiActions.getNews({
       groupId: match.params.id,
       page: newsPage + 1,
       range: 'group',

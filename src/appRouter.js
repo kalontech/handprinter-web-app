@@ -180,7 +180,7 @@ const AppRouter = () => {
           <Route
             path="/account/:personId"
             component={DashboardPage}
-            requireAuthentication
+            useAuthentication
             withoutCTA
           />
           <Route component={NotFoundPage} useAuthentication withoutCTA />

@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects'
 
 import decodeError from 'utils/decodeError'
 import { Types as UserStoreTypes } from 'redux/userStore'
-import api from 'api'
+import * as api from 'api/user'
 
 function* getMe() {
   try {
@@ -30,7 +30,7 @@ function* updateMeInfo({ data }) {
 
 function* updateMePhoto({ data }) {
   try {
-    const { user } = yield call(api.updateMePhoto, data)
+    const { user } = yield call(api.updateMe, data)
     yield put.resolve({ type: UserStoreTypes.UPDATE_ME_PHOTO_SUCCESS, user })
   } catch (error) {
     yield put.resolve({

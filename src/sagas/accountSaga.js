@@ -1,16 +1,16 @@
 import { call, put } from 'redux-saga/effects'
 
 import { history } from 'appRouter'
-import api from 'api'
 import decodeError from 'utils/decodeError'
 import { Creators } from 'redux/accountStore'
 import { getBrandedConfig } from 'config/branded'
+import * as apiAuth from 'api/auth'
 
 import { prepareUserProfile } from './helpers'
 
 function* logIn({ email, password }) {
   try {
-    const { token } = yield call(api.logIn, email, password)
+    const { token } = yield call(apiAuth.logIn, email, password)
     yield put(Creators.logInSuccess(token))
     yield call(prepareUserProfile)
     const brandedConfig = getBrandedConfig()
@@ -33,7 +33,7 @@ function* register({
 }) {
   try {
     const { token } = yield call(
-      api.register,
+      apiAuth.register,
       email,
       password,
       fullName,
@@ -51,7 +51,7 @@ function* register({
 
 function* resetPassword({ email, password }) {
   try {
-    yield call(api.resetPasswordRequest, email)
+    yield call(apiAuth.resetPasswordRequest, email)
     yield put(Creators.resetPasswordSuccess())
     yield call(history.push, '/account/check-your-email')
   } catch (error) {
@@ -61,7 +61,7 @@ function* resetPassword({ email, password }) {
 
 function* setNewPassword({ code, password }) {
   try {
-    yield call(api.resetPasswordConfirm, code, password)
+    yield call(apiAuth.resetPasswordConfirm, code, password)
     yield put(Creators.setNewPasswordSuccess())
     yield call(history.push, '/account/login')
   } catch (error) {

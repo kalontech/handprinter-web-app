@@ -16,6 +16,12 @@ import registerBrandedPhotoLeaves from 'assets/images/registerBrandedPhotoLeaves
 import arrowDownIcon from 'assets/icons/arrowDown.svg'
 
 import { Creators as AccountCreators } from 'redux/accountStore'
+import getValidationRules from 'config/validationRules'
+import { getBrandedHostnamePrefix } from 'config/branded'
+import handleFormError from 'utils/handleFormError'
+import decodeError from 'utils/decodeError'
+import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
 import {
   ActionCard,
   ActionCardLeftHalf,
@@ -27,16 +33,10 @@ import {
   FormItem,
   Checkbox,
 } from 'components/Styled'
-import getValidationRules from 'config/validationRules'
-import InputForPassword from 'components/InputForPassword'
-import handleFormError from 'utils/handleFormError'
-import decodeError from 'utils/decodeError'
-import { getBrandedHostnamePrefix } from 'config/branded'
-import api from 'api'
-import colors from 'config/colors'
-import PageMetadata from 'components/PageMetadata'
-import media from 'utils/mediaQueryTemplate'
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
+import PageMetadata from 'components/PageMetadata'
+import InputForPassword from 'components/InputForPassword'
+import * as apiUser from 'api/user'
 
 export const BrandedBlockWrap = styled.div`
   position: relative;
@@ -225,7 +225,7 @@ class RegisterPage extends Component {
       form: { setFieldsValue, setFields },
     } = this.props
     try {
-      const { user } = await api.getUser({ invitationCode })
+      const { user } = await apiUser.getUser({ invitationCode })
       if (user) this.setState({ referrer: user })
       setFieldsValue({ invitationCode: user.invitationCode })
     } catch (error) {

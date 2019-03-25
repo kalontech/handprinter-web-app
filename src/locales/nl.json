@@ -536,7 +536,7 @@
     "app.pages.privacyPolicy.paragraph.7": "Besturen van gegevensuitwisseling: u kunt bepalen welke gebruikers uw naam, foto en dashboard mogen zien binnen het platform. U kunt op elk gewenst moment deze instellingen wijzigen.",
     "app.pages.privacyPolicy.paragraph.8": "Uw account verwijderen: u kunt er ook voor kiezen om uw account te verwijderen en het gebruik van Handprinter op elk gewenst moment te beëindigen. Als u uw account verwijdert, verwijdert Handprinter al uw persoonlijke gegevens: uw naam, wachtwoord, landlocatie en foto. Handprinter zal deze informatie niet langer bewaren. Het enige dat overblijft is een naamloos knooppunt in het oorzakelijke netwerk, met een verslag van de acties die deze niet nader genoemde persoon nam. Deze informatie wordt bewaard omdat deze bijdraagt aan de handafdrukken van andere mensen die direct of indirect de acties hebben veroorzaakt die u hebt ondernomen.",
     "app.forms.fullName.noBlankSpace": "Volledige naam mag niet beginnen met lege ruimte",
+    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "Onderneem vandaag actie en word een deel van een positieve toekomst.",
     "app.header.takeActionButton": "Actie ondernemen",
-    "app.dashboard.userFrom": "Gebruiker van {country}",
-    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "Onderneem vandaag actie en word een deel van een positieve toekomst."
+    "app.dashboard.userFrom": "Gebruiker van {country}"
 }

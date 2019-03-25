@@ -9,19 +9,19 @@ import { animateScroll } from 'react-scroll'
 import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 
+import savePlanetImg from 'assets/increase-handprint/save_planet.png'
 import colors from 'config/colors'
 import { MAX_INVITING_MESSAGE_LENGTH } from 'config/common'
 import { Creators as UserCreators } from 'redux/userStore'
-import { Input, DefaultButton, FormItem } from 'components/Styled'
 import hexToRgba from 'utils/hexToRgba'
-import savePlanetImg from 'assets/increase-handprint/save_planet.png'
 import { getInvitationLink } from 'utils/helpers'
-import api from 'api'
 import media from 'utils/mediaQueryTemplate'
+import getValidationRules from 'config/validationRules'
+import { Input, DefaultButton, FormItem } from 'components/Styled'
 import PageMetadata from 'components/PageMetadata'
 import MultipleInput from 'components/MultipleInput'
-import getValidationRules from 'config/validationRules'
 import ResendButton from 'components/ResendButton'
+import * as apiUser from 'api/user'
 
 export const INVITATION_STATUSES = {
   ACCEPTED: 'ACCEPTED',
@@ -484,7 +484,7 @@ class IncreaseHandprintPage extends Component {
   }
 
   async getInvitationsList() {
-    const { invitations } = await api.getInvitationsList()
+    const { invitations } = await apiUser.getInvitationsList()
     this.setState({ invitationsList: invitations })
   }
 
@@ -555,7 +555,8 @@ class IncreaseHandprintPage extends Component {
         }
 
         try {
-          const { ignored = [] } = (await api.shareInvitationCode(data)) || {}
+          const { ignored = [] } =
+            (await apiUser.shareInvitationCode(data)) || {}
           this.getInvitationsList()
 
           this.setState({

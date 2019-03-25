@@ -536,7 +536,7 @@
     "app.pages.privacyPolicy.paragraph.7": "Informationsaustausch steuern: Sie können steuern, welche Benutzer Ihren Namen, Ihr Foto und Ihr Dashboard innerhalb der Plattform sehen dürfen. Sie können diese Einstellungen jederzeit ändern.",
     "app.pages.privacyPolicy.paragraph.8": "Löschen Ihres Kontos: Sie können Ihr Konto auch löschen und die Verwendung von Handprinter jederzeit beenden. Wenn Sie Ihr Konto löschen, löscht der Handprinter alle Ihre persönlichen Daten: Ihren Namen, Ihr Passwort, Ihren Standort und Ihr Foto. Der Handdrucker speichert diese Informationen nicht mehr. Alles, was übrig bleibt, ist ein unbenannter Knoten im kausalen Netzwerk mit einer Aufzeichnung der Aktionen, die diese unbenannte Person durchgeführt hat. Diese Informationen werden beibehalten, da sie zu den Handabdrücken anderer Personen beitragen, die direkt oder indirekt die von Ihnen durchgeführten Aktionen verursacht haben.",
     "app.forms.fullName.noBlankSpace": "Der vollständige Name sollte nicht mit Leerzeichen beginnen",
+    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "Handeln Sie noch heute und werden Sie Teil einer positiven Zukunft.",
     "app.header.takeActionButton": "Handeln Sie",
-    "app.dashboard.userFrom": "Nutzer aus {country}",
-    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "Handeln Sie noch heute und werden Sie Teil einer positiven Zukunft."
+    "app.dashboard.userFrom": "Nutzer aus {country}"
 }

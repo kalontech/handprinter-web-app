@@ -133,6 +133,7 @@ export const HeaderPopover = styled(Ant.Menu)`
 
 export const Checkbox = styled(Ant.Checkbox)`
   color: ${colors.darkGray};
+  line-height: 1.5;
 
   input {
     width: 100% !important;

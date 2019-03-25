@@ -81,10 +81,17 @@ export default (action = actionDefault, config) => Component =>
         })
     }
 
+    fetchOnUpdate = () => {
+      this.setState(
+        { loading: FetchDecorator.config.filter(this.props) },
+        this.startFetch,
+      )
+    }
+
     render() {
       const { loading, injectedProps } = this.state
 
-      if (config.loader && loading) {
+      if (FetchDecorator.config.loader && loading) {
         return <Spinner />
       }
 
@@ -93,12 +100,7 @@ export default (action = actionDefault, config) => Component =>
           {...this.props}
           {...injectedProps}
           loading={loading}
-          fetch={() => {
-            this.setState(
-              { loading: FetchDecorator.config.filter(this.props) },
-              this.startFetch,
-            )
-          }}
+          fetch={this.fetchOnUpdate}
           // DEPRECATED
           mutate={(mutated = {}) => {
             this.setState(state => ({

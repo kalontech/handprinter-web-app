@@ -536,7 +536,7 @@
     "app.pages.privacyPolicy.paragraph.7": "Controlling Information Sharing: You can control which users are allowed to see your name, photo, and dashboard within the platform.  You can make changes to these settings at any time. ",
     "app.pages.privacyPolicy.paragraph.8": "Excluindo sua conta: Você também pode optar por excluir sua conta e encerrar o uso da Handprinter a qualquer momento. Se você excluir sua conta, a Handprinter excluirá todos os seus dados pessoais: seu nome, senha, local do país e foto. Handprinter deixará de reter esta informação. Tudo o que permanecerá é um nó sem nome na rede causal, com um registro das ações que essa pessoa não identificada tomou. Esta informação é retida porque contribui para as impressões de mãos de outras pessoas que direta ou indiretamente causaram as ações que você tomou.",
     "app.forms.fullName.noBlankSpace": "Nome completo não deve começar com espaço em branco",
+    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "Entre em ação hoje e torne-se parte de um futuro positivo.",
     "app.header.takeActionButton": "Tome uma atitude",
-    "app.dashboard.userFrom": "Usuário de {country}",
-    "app.eatonHomePage.block.registerBlock.highlightedText.loggedIn": "Entre em ação hoje e torne-se parte de um futuro positivo."
+    "app.dashboard.userFrom": "Usuário de {country}"
 }
