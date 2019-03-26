@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "我采取了行动",
     "app.actionsPage.tabs.history": "历史",
     "app.header.menu.aboutInterface": "手印",
-    "app.increaseHandprintPage.ignoredEmails": "Some addresses of the invitation did not come because there are registered users with such addresses, namely: \n{list}",
+    "app.increaseHandprintPage.ignoredEmails": "以下电子邮件地址不会收到邀请，因为该电子邮件地址属于已注册用户的人： \n {list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "日历显示您“净正面”的日子 - 导致环境进展大于当天的足迹！",
     "app.dashboardPage.infoTooltipLinkToFAQ": "学到更多",
     "app.dashboardPage.goodRatio.infoTooltip": "良好的比例是您的手印与您的足迹的比率。通过增加手印和缩小占地面积来增加它。",

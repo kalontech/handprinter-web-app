@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "Ich habe etwas unternommen",
     "app.actionsPage.tabs.history": "Geschichte",
     "app.header.menu.aboutInterface": "Handprint",
-    "app.increaseHandprintPage.ignoredEmails": "Some addresses of the invitation did not come because there are registered users with such addresses, namely: \n{list}",
+    "app.increaseHandprintPage.ignoredEmails": "Die folgenden E-Mail-Adressen erhalten keine Einladung, da die E-Mail-Adresse einer Person gehört, die bereits ein registrierter Benutzer ist: \n {list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "Der Kalender zeigt die Tage, an denen Sie \"Netto-Positiv\" sind - einen Umweltfortschritt, der größer ist als Ihr Fußabdruck für diesen Tag!",
     "app.dashboardPage.infoTooltipLinkToFAQ": "Lern mehr",
     "app.dashboardPage.goodRatio.infoTooltip": "Ein gutes Verhältnis ist das Verhältnis Ihres Handabdrucks zu Ihrem Fußabdruck. Steigern Sie es, indem Sie Ihren Handabdruck vergrößern und Ihren Fußabdruck verkleinern.",

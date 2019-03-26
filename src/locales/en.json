@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "I took action",
     "app.actionsPage.tabs.history": "History",
     "app.header.menu.aboutInterface": "Handprint",
-    "app.increaseHandprintPage.ignoredEmails": "Some addresses of the invitation did not come because there are registered users with such addresses, namely: \n{list}",
+    "app.increaseHandprintPage.ignoredEmails": "The following email addresses will not be sent an invitation, because the email address belongs to a person who is already a registered user: \n{list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "Calendar shows the days on which you are \"Net Positive\" – causing environmental progress larger than your footprint for that day!",
     "app.dashboardPage.infoTooltipLinkToFAQ": "learn more",
     "app.dashboardPage.goodRatio.infoTooltip": "Good ratio is the ratio of your handprint to your footprint. Increase it by growing your handprint and by shrinking your footprint. ",
