@@ -30,6 +30,7 @@ function* register({
   country,
   invitationCode,
   belongsToBrand,
+  siloSecureCode,
 }) {
   try {
     const { token } = yield call(
@@ -40,6 +41,7 @@ function* register({
       country,
       invitationCode,
       belongsToBrand,
+      siloSecureCode,
     )
     yield put(Creators.registerSuccess(token))
     yield call(prepareUserProfile)

@@ -19,6 +19,7 @@ export const register = (
   country,
   invitationCode,
   belongsToBrand,
+  siloSecureCode,
 ) =>
   fetchAPI('/auth/register', {
     body: {
@@ -28,6 +29,7 @@ export const register = (
       country,
       invitationCode,
       belongsToBrand,
+      siloSecureCode,
       temporaryToken: getTemporaryToken(),
     },
     method: 'POST',

@@ -247,13 +247,22 @@ class RegisterPage extends Component {
     validateFields((err, values) => {
       if (!err) {
         delete values.formError
-        const { email, password, fullName, country, invitationCode } = values
+        console.log(values)
+        const {
+          email,
+          password,
+          fullName,
+          country,
+          invitationCode,
+          siloSecureCode,
+        } = values
         const data = {
           email,
           password,
           fullName,
           country,
           belongsToBrand: getBrandedHostnamePrefix(),
+          siloSecureCode,
         }
         if (invitationCode) data.invitationCode = invitationCode
         registerRequest(data)
@@ -267,6 +276,7 @@ class RegisterPage extends Component {
       form: { getFieldDecorator },
       intl: { formatMessage },
       isRegistering,
+      overrides,
     } = this.props
     const { referrer } = this.state
 
@@ -400,6 +410,27 @@ class RegisterPage extends Component {
                       />,
                     )}
                   </FormItem>
+                  {overrides && overrides.brandName === 'Eaton' && (
+                    <FormItem>
+                      {getFieldDecorator('siloSecureCode', {
+                        rules: [
+                          {
+                            required: true,
+                            message: formatMessage({
+                              id: 'app.errors.isRequired',
+                            }),
+                          },
+                        ],
+                      })(
+                        <Input
+                          type="text"
+                          placeholder={formatMessage({
+                            id: 'app.forms.eatonCode',
+                          })}
+                        />,
+                      )}
+                    </FormItem>
+                  )}
                   <FormItem>
                     {getFieldDecorator('privacyPolicy', {
                       valuePropName: 'checked',
@@ -479,6 +510,7 @@ RegisterPage.propTypes = {
   isRegistering: PropTypes.bool.isRequired,
   registerError: PropTypes.string,
   registerRequest: PropTypes.func.isRequired,
+  overrides: PropTypes.object.isRequired,
 }
 
 export default compose(
