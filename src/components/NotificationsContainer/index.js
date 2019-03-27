@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import styled from 'styled-components'
 import colors from 'config/colors'
+import Spinner from 'components/Spinner'
 
 import emptyNotifBackground from 'assets/notifications-popover/notifications-empty-background.png'
 
@@ -101,10 +102,20 @@ const NotificationsEmptyText = styled.div`
   font-family: ${({ fontNames }) => fontNames || '"Noto Sans", sans-serif'};
 `
 
+const SpinnerWrap = styled.div`
+  height: 150px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`
+
 const NotificationsContainer = ({
   fontColor,
   fontNames,
   notification,
+  loading,
   intl: { locale, formatMessage, formatRelative },
 }) => (
   <NotificationBox fontColor={fontColor}>
@@ -112,7 +123,11 @@ const NotificationsContainer = ({
       <FormattedMessage id="app.header.menu.notificationTitle" />
     </NotificationTitle>
     <NotificationContent>
-      {notification.length > 0 ? (
+      {loading ? (
+        <SpinnerWrap>
+          <Spinner />
+        </SpinnerWrap>
+      ) : notification.length > 0 ? (
         notification.slice(0, 5).map((notifItem, index) => {
           const { user, action } = notifItem.arguments
 
@@ -180,6 +195,7 @@ NotificationsContainer.propTypes = {
   notification: PropTypes.array.isRequired,
   fontColor: PropTypes.string.isRequired,
   fontNames: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
 }
 
 export default injectIntl(NotificationsContainer)

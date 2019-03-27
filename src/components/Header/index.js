@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
-import { compose } from 'redux'
+import { compose, bindActionCreators } from 'redux'
 import { Layout, Menu, Popover, Affix, Button, Alert } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled, { css } from 'styled-components'
 import { connect } from 'react-redux'
 import { Animate } from 'react-animate-mount'
+import moment from 'moment'
 
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 import FingerPrintIcon from 'assets/icons/FingerPrintIcon'
@@ -29,6 +30,7 @@ import hexToRgba from 'utils/hexToRgba'
 import { logOut } from 'redux/accountStore'
 import { getUserInitialAvatar } from 'api'
 import * as apiActions from 'api/actions'
+import { Creators as UserStoreCreators } from 'redux/userStore'
 
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
@@ -529,6 +531,7 @@ class Header extends Component {
     overrides: PropTypes.object,
     withRouter: PropTypes.object,
     history: PropTypes.object,
+    setUser: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -540,6 +543,7 @@ class Header extends Component {
     width: window.innerWidth,
     notification: [],
     unreadCount: 0,
+    isFetchingNews: false,
   }
   fetchNewsIntervalId = null
 
@@ -578,7 +582,6 @@ class Header extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange)
-
     if (this.fetchNewsIntervalId) clearInterval(this.fetchNewsIntervalId)
   }
 
@@ -587,20 +590,25 @@ class Header extends Component {
   }
 
   fetchNews = async (counterOnly = false) => {
+    this.setState({ isFetchingNews: true })
     const { news, unreadCount } = await apiActions.getNews({
       page: 1,
       range: 'network',
     })
 
     if (counterOnly) {
-      this.setState({ unreadCount })
+      this.setState({ unreadCount, isFetchingNews: false })
     } else {
+      const { user } = this.props
       this.setState({
         loadingNews: false,
         notification: news.filter(
-          item => item.arguments.user.id !== this.props.user._id,
+          item =>
+            item.arguments.user.id !== user._id &&
+            moment(item.date).isAfter(user.lastTimeReadNewsAt),
         ),
         unreadCount,
+        isFetchingNews: false,
       })
     }
   }
@@ -611,9 +619,13 @@ class Header extends Component {
 
   sendLastTimeReadNotif = async shouldReset => {
     if (!shouldReset) return
-
-    await apiActions.sendLastTimeReadNewsAt(Date.now())
-    this.fetchNews()
+    const date = Date.now()
+    await apiActions.sendLastTimeReadNewsAt(date)
+    await this.fetchNews()
+    this.props.setUser({
+      ...this.props.user,
+      lastTimeReadNewsAt: date,
+    })
   }
 
   getNotificationsPopover = (
@@ -621,6 +633,7 @@ class Header extends Component {
     fontNames,
     notification,
     unreadCount,
+    isFetchingNews,
   ) => {
     return (
       <StyledNotificationsPopover
@@ -633,6 +646,7 @@ class Header extends Component {
             notification={notification}
             fontColor={fontColor}
             fontNames={fontNames}
+            loading={isFetchingNews}
           />
         }
         getPopupContainer={() => this.$notifContainer}
@@ -644,7 +658,7 @@ class Header extends Component {
           }}
         >
           <img src={newsBellIcon} alt="" />
-          {unreadCount > 1 && (
+          {unreadCount > 0 && (
             <NotificationCount fontNames={fontNames}>
               {unreadCount}
             </NotificationCount>
@@ -656,7 +670,13 @@ class Header extends Component {
 
   render() {
     const { type, user, withoutHeaderContent, location, overrides } = this.props
-    const { notification, unreadCount, width, collapsed } = this.state
+    const {
+      notification,
+      unreadCount,
+      width,
+      collapsed,
+      isFetchingNews,
+    } = this.state
     const isTablet = width < sizes.largeDesktop
     const isMobile = width < sizes.tablet
 
@@ -1052,6 +1072,7 @@ class Header extends Component {
                   fontNames,
                   notification,
                   unreadCount,
+                  isFetchingNews,
                 )}
               <Fragment>
                 {!isTablet && (
@@ -1151,6 +1172,7 @@ class Header extends Component {
                         fontNames,
                         notification,
                         unreadCount,
+                        isFetchingNews,
                       )}
                       <ProfileSettingsPopover
                         placement="bottomRight"
@@ -1213,7 +1235,18 @@ const mapStateToProps = state => ({
   token: state.account.token,
 })
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setUser: user => UserStoreCreators.setUser(user),
+    },
+    dispatch,
+  )
+
 export default compose(
   withRouter,
-  connect(mapStateToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
 )(Header)
