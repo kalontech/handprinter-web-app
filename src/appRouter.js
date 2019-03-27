@@ -122,6 +122,7 @@ const AppRouter = () => {
           <Route
             path="/pages/privacy-policy"
             component={PrivacyPolicyTermsPages}
+            useAuthentication
             withoutCTA
           />
           <Route
