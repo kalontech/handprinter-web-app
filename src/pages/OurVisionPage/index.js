@@ -569,7 +569,13 @@ class OurVisionPage extends React.PureComponent {
                         <FormattedHTMLMessage id="app.ourVision.step1.title" />
                       </SubtitleGreen>
                       <TextMedium>
-                        <FormattedMessage id="app.ourVision.step1.text" />
+                        <FormattedMessage
+                          id={
+                            overrides && overrides.brandName === 'Eaton'
+                              ? 'app.ourVision.step1.text.eaton'
+                              : 'app.ourVision.step1.text'
+                          }
+                        />
                       </TextMedium>
                     </ScrollAnimation>
                   </Col>
@@ -761,7 +767,13 @@ class OurVisionPage extends React.PureComponent {
                           <FormattedHTMLMessage id="app.ourVision.step6.title" />
                         </SubtitleGreen>
                         <TextMedium>
-                          <FormattedMessage id="app.ourVision.step6.text" />
+                          <FormattedMessage
+                            id={
+                              overrides && overrides.brandName === 'Eaton'
+                                ? 'app.ourVision.step6.text.eaton'
+                                : 'app.ourVision.step6.text'
+                            }
+                          />
                         </TextMedium>
                       </StepSixContentWrap>
                     </ScrollAnimation>

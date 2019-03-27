@@ -432,7 +432,13 @@ class HomePage extends Component {
                     <FormattedHTMLMessage id="app.homePage.aboutText" />
                   </AboutText>
                   <AboutText>
-                    <FormattedHTMLMessage id="app.homePage.aboutText2" />
+                    <FormattedHTMLMessage
+                      id={
+                        overrides && overrides.brandName === 'Eaton'
+                          ? 'app.homePage.aboutText2.eaton'
+                          : 'app.homePage.aboutText2'
+                      }
+                    />
                   </AboutText>
                   <AboutText>
                     <strong>
