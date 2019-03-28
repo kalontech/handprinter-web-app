@@ -550,5 +550,7 @@
     "app.eatonHomePage.block.description.eaton": "伊顿正在与Handprinter.org合作，为您提供一种简单的方法来跟踪您的个人行为对环境的影响。 Handprinter可帮助您通过减少占用空间和增加手印来计算和跟踪您成为NetPositive的努力。并且，您可以看到您的同事在此过程中取得的进展。",
     "app.eatonHomePage.block.registerBlock.text.eaton": "是时候告诉我们只有一个人的行为无法发挥作用的想法。现在，您可以看到您和您近10万名同事可以做些什么来使您的社区，工作和地球更具可持续性！立即注册，成为积极未来的一部分。",
     "app.forms.eatonCode": "伊顿代码",
-    "app.errors.39": "无效的安全代码"
+    "app.errors.39": "无效的安全代码",
+    "app.footer.description": "Handprinter is a project of NewEarth B, which is a for-benefit corporation, with a mission of providing positive environmental and social impacts. The two current projects of NewEarth B are Handprinter and",
+    "app.footer.description.link": "社交热点数据库"
 }

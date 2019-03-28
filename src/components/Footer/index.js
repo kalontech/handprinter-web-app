@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout, Row, Col } from 'antd'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 
@@ -48,9 +48,25 @@ const FooterMenu = styled.ul`
   }
 `
 
-const Logo = styled.div`
+const FooterImage = styled.div`
   margin-top: 15px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
+  ${({ desktop }) =>
+    desktop
+      ? css`
+          ${media.largeDesktop`
+        display: none;
+      `}
+        `
+      : css`
+          display: none;
+          ${media.largeDesktop`
+        display: block;
+      `}
+          ${media.phone`
+        display: none;
+      `}
+        `}
 
   ${media.largeDesktop`
    margin-top: 0;
@@ -88,14 +104,60 @@ const LangsWrap = styled(Col)`
     align-items: center;
   `};
   ${media.phone`
-   display: block;
+    display: block;
   `};
+
+  ${({ largeDesktopPhone, tablet }) =>
+    largeDesktopPhone
+      ? css`
+          ${media.largeDesktop`
+        display: none;
+      `}
+          ${media.phone`
+        display: block;
+      `}
+        `
+      : tablet
+      ? css`
+          display: none;
+          ${media.largeDesktop`
+        display: block;
+      `}
+          ${media.phone`
+        display: none;
+      `}
+        `
+      : ''}
 `
 const Langs = styled(FooterLanguageSelector)`
   ${media.phone`
    max-width: 100%;
     margin-bottom: 20px;
   `};
+`
+
+const Decription = styled.p`
+  text-transform: uppercase;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: ${hexToRgba(colors.white, 0.43)};
+  ${media.largeDesktop`
+    margin-bottom: 30px;
+  `}
+`
+
+const DecriptionLink = styled.a`
+  color: ${hexToRgba(colors.white, 0.43)};
+  text-decoration: underline;
+  &:hover,
+  &:focus,
+  &:active {
+    color: ${hexToRgba(colors.white, 0.43)};
+  }
 `
 
 const Footer = () => (
@@ -106,9 +168,18 @@ const Footer = () => (
           <Col md={{ span: 18, offset: 3 }} xl={{ span: 24, offset: 0 }}>
             <Row gutter={{ md: 20 }}>
               <Col md={24} xl={8}>
-                <Logo>
+                <FooterImage desktop>
                   <img src={footerLogo} alt="" />
-                </Logo>
+                </FooterImage>
+                <Decription>
+                  <FormattedMessage id="app.footer.description" />{' '}
+                  <DecriptionLink
+                    href="http://socialhotspot.org"
+                    target="_blank"
+                  >
+                    <FormattedMessage id="app.footer.description.link" />
+                  </DecriptionLink>
+                </Decription>
               </Col>
               <Col md={24} xl={12}>
                 <RowWrapper gutter={{ md: 20 }}>
@@ -130,6 +201,9 @@ const Footer = () => (
                         </Link>
                       </li>
                     </FooterMenu>
+                    <FooterImage mobile>
+                      <img src={footerLogo} alt="" />
+                    </FooterImage>
                   </Col>
                   <Col
                     xs={12}
@@ -158,10 +232,19 @@ const Footer = () => (
                         </Link>
                       </li>
                     </FooterMenu>
+                    <LangsWrap md={24} xl={4} tablet>
+                      <div style={{ width: '100%' }}>
+                        <Row gutter={{ md: 20 }} type="flex">
+                          <Col xs={{ span: 24 }}>
+                            <Langs />
+                          </Col>
+                        </Row>
+                      </div>
+                    </LangsWrap>
                   </Col>
                 </RowWrapper>
               </Col>
-              <LangsWrap md={24} xl={4}>
+              <LangsWrap md={24} xl={4} largeDesktopPhone>
                 <div style={{ width: '100%' }}>
                   <Row gutter={{ md: 20 }} type="flex">
                     <Col xs={{ span: 24 }}>

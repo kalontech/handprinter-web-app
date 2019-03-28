@@ -550,5 +550,7 @@
     "app.eatonHomePage.block.description.eaton": "Eaton arbeitet mit Handprinter.org zusammen, um Ihnen eine einfache Möglichkeit zu bieten, Ihre persönlichen Aktivitäten in der Umgebung nachzuverfolgen. Handprinter hilft Ihnen dabei, Ihre Bemühungen um NetPositive zu kalkulieren und zu verfolgen, indem Sie Ihren Footprint reduzieren und Ihren Handprint vergrößern. Und Sie können die Fortschritte Ihrer Kollegen auf dem Weg sehen.",
     "app.eatonHomePage.block.registerBlock.text.eaton": "Es ist an der Zeit, die Idee zu legen, dass die Aktionen einer einzigen Person keinen Unterschied machen können. Jetzt können Sie sehen, was Sie und Ihre fast 100.000 Mitarbeiter tun können, um Ihre Gemeinschaft, Ihre Arbeit und Ihren Planeten nachhaltiger zu machen! Registrieren Sie sich noch heute und werden Sie Teil einer positiven Zukunft.",
     "app.forms.eatonCode": "Eaton Code",
-    "app.errors.39": "Ungültiger Sicherheitscode"
+    "app.errors.39": "Ungültiger Sicherheitscode",
+    "app.footer.description": "Handprinter is a project of NewEarth B, which is a for-benefit corporation, with a mission of providing positive environmental and social impacts. The two current projects of NewEarth B are Handprinter and",
+    "app.footer.description.link": "die Social Hotspots-Datenbank"
 }
