@@ -206,12 +206,15 @@ class RegisterPage extends Component {
   componentDidMount() {
     const {
       match: {
-        params: { invitationCode },
+        params: { invitationCode, eatonCode },
       },
     } = this.props
-
     animateScroll.scrollToTop()
 
+    if (eatonCode) {
+      const siloSecureCode = Buffer.from(eatonCode, 'base64').toString('ascii')
+      this.props.form.setFieldsValue({ siloSecureCode })
+    }
     if (invitationCode) this.fetchReferrer(invitationCode)
   }
 
@@ -247,7 +250,6 @@ class RegisterPage extends Component {
     validateFields((err, values) => {
       if (!err) {
         delete values.formError
-        console.log(values)
         const {
           email,
           password,
@@ -502,6 +504,7 @@ RegisterPage.propTypes = {
   form: PropTypes.shape({
     setFields: PropTypes.func.isRequired,
     getFieldsValue: PropTypes.func.isRequired,
+    setFieldsValue: PropTypes.func.isRequired,
   }),
   intl: PropTypes.object.isRequired,
   match: PropTypes.shape({

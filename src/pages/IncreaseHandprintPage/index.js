@@ -14,7 +14,7 @@ import colors from 'config/colors'
 import { MAX_INVITING_MESSAGE_LENGTH } from 'config/common'
 import { Creators as UserCreators } from 'redux/userStore'
 import hexToRgba from 'utils/hexToRgba'
-import { getInvitationLink } from 'utils/helpers'
+import { getInvitationLink, getInvitationLinkEaton } from 'utils/helpers'
 import media from 'utils/mediaQueryTemplate'
 import getValidationRules from 'config/validationRules'
 import { Input, DefaultButton, FormItem } from 'components/Styled'
@@ -435,7 +435,7 @@ class IncreaseHandprintPage extends Component {
   ]
   state = {
     emails: [],
-    invitationLink: getInvitationLink(this.props.user.invitationCode),
+    invitationLink: this.chooseCorrectInvitation(),
     inviterId: this.props.user._id,
     isSharingInvitationCode: false,
     shareInvitationCodeError: null,
@@ -478,7 +478,7 @@ class IncreaseHandprintPage extends Component {
     )
       this.setState({
         isCodeCustomizing: false,
-        invitationLink: getInvitationLink(this.props.user.invitationCode),
+        invitationLink: this.chooseCorrectInvitation(),
         inviterId: this.props.user._id,
       })
   }
@@ -486,6 +486,18 @@ class IncreaseHandprintPage extends Component {
   async getInvitationsList() {
     const { invitations } = await apiUser.getInvitationsList()
     this.setState({ invitationsList: invitations })
+  }
+
+  chooseCorrectInvitation() {
+    const {
+      overrides,
+      user: { invitationCode },
+    } = this.props
+    if (overrides && overrides.brandName === 'Eaton') {
+      return getInvitationLinkEaton(invitationCode)
+    } else {
+      return getInvitationLink(invitationCode)
+    }
   }
 
   renderStatusColumn = status => (
@@ -818,6 +830,7 @@ IncreaseHandprintPage.propTypes = {
   updateMeInfoError: PropTypes.string,
   updateMeInfoFailure: PropTypes.func,
   isUpdatingMeInfo: PropTypes.bool,
+  overrides: PropTypes.object,
 }
 
 const mapDispatchToProps = dispatch =>

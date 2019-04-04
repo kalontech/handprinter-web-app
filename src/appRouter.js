@@ -143,7 +143,7 @@ const AppRouter = () => {
             withoutCTA
           />
           <Route
-            path="/account/register/:invitationCode?"
+            path="/account/register/:invitationCode?/:eatonCode?"
             component={RegisterPage}
             headerType="minimal"
             unauthorizedOnly
