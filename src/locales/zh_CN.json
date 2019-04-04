@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "我采取了行动",
     "app.actionsPage.tabs.history": "历史",
     "app.header.menu.aboutInterface": "手印",
-    "app.increaseHandprintPage.ignoredEmails": "邀请的某些地址没有来，因为有注册用户有这样的地址，即： \n {list}",
+    "app.increaseHandprintPage.ignoredEmails": "邀请的某些地址没有出现, 因为已有注册用户使用这样的地址, 即: {list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "日历显示您“净正面”的日子 - 导致环境进展大于当天的足迹！",
     "app.dashboardPage.infoTooltipLinkToFAQ": "学到更多",
     "app.dashboardPage.goodRatio.infoTooltip": "良好的比例是您的手印与您的足迹的比率。通过增加手印和缩小占地面积来增加它。",
@@ -551,6 +551,6 @@
     "app.eatonHomePage.block.registerBlock.text.eaton": "是时候告诉我们只有一个人的行为无法发挥作用的想法。现在，您可以看到您和您近10万名同事可以做些什么来使您的社区，工作和地球更具可持续性！立即注册，成为积极未来的一部分。",
     "app.forms.eatonCode": "伊顿代码",
     "app.errors.39": "无效的安全代码",
-    "app.footer.description": "Handprinter is a project of NewEarth B, which is a for-benefit corporation, with a mission of providing positive environmental and social impacts. The two current projects of NewEarth B are Handprinter and",
-    "app.footer.description.link": "社交热点数据库"
+    "app.footer.description": "Handprinter是NewEarth B的一个项目，是一个有利于公司的项目，其使命是提供积极的环境和社会影响。 NewEarth B目前的两个项目是Handprinter和",
+    "app.footer.description.link": "the Social Hotspots Database"
 }

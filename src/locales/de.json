@@ -511,7 +511,7 @@
     "app.eatonHomePage.block.registerBlock.highlightedText": "Registrieren Sie sich noch heute und werden Sie Teil einer positiven Zukunft.",
     "app.header.menu.aboutEaton": "Handabdruck",
     "app.dashboardPage.deletedUser": "Gelöschter Benutzer",
-    "app.pages.privacyPolicy.paragraph.6": "Photo: You may opt to upload a photo or other image by which you may be associated, for sharing within the platform. We use this image ONLY to personalize your user experience, and to provide a unique visual reference to you in the network diagram of Handprinter users to whom you have allowed access to view this image, and when referring to you in news feeds about actions being taken by Handprinter users, to users to whom you have allowed access to view this image. It is also used to help personalize email messages that you choose to send from within the platform. We will not otherwise share it with any person or organization.",
+    "app.pages.privacyPolicy.paragraph.6": "Foto: Sie können ein Foto oder ein anderes Bild hochladen, mit dem Sie möglicherweise verbunden sind, um es innerhalb der Plattform zu teilen. Wir verwenden dieses Bild NUR, um Ihre Benutzererfahrung zu personalisieren und Ihnen einen eindeutigen visuellen Hinweis im Netzwerkdiagramm von Handprinter-Benutzern zu geben, denen Sie Zugriff auf das Bild gewährt haben, und wenn Sie in Newsfeeds auf Sie verweisen, welche Aktionen ausgeführt werden von Handprinter-Benutzern an Benutzer, denen Sie Zugriff zum Anzeigen dieses Bildes gewährt haben. Es wird auch verwendet, um E-Mail-Nachrichten zu personalisieren, die Sie innerhalb der Plattform versenden möchten. Wir werden es ansonsten nicht mit Personen oder Organisationen teilen.",
     "app.actions.card.denied": "Verweigert",
     "app.actions.card.deniedHint": "Ihre Aktionsidee wird vom Administrator des Handprinter abgelehnt",
     "app.errors.38": "Diese Gruppe ist bereits gelöscht",
@@ -551,6 +551,6 @@
     "app.eatonHomePage.block.registerBlock.text.eaton": "Es ist an der Zeit, die Idee zu legen, dass die Aktionen einer einzigen Person keinen Unterschied machen können. Jetzt können Sie sehen, was Sie und Ihre fast 100.000 Mitarbeiter tun können, um Ihre Gemeinschaft, Ihre Arbeit und Ihren Planeten nachhaltiger zu machen! Registrieren Sie sich noch heute und werden Sie Teil einer positiven Zukunft.",
     "app.forms.eatonCode": "Eaton Code",
     "app.errors.39": "Ungültiger Sicherheitscode",
-    "app.footer.description": "Handprinter is a project of NewEarth B, which is a for-benefit corporation, with a mission of providing positive environmental and social impacts. The two current projects of NewEarth B are Handprinter and",
-    "app.footer.description.link": "die Social Hotspots-Datenbank"
+    "app.footer.description": "Handprinter ist ein Projekt von NewEarth B, einem gemeinnützigen Unternehmen mit dem Ziel, positive ökologische und soziale Auswirkungen zu erzielen. Die beiden aktuellen Projekte von NewEarth B sind Handprinter und",
+    "app.footer.description.link": "the Social Hotspots Database"
 }

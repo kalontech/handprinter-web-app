@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "Tomé acción",
     "app.actionsPage.tabs.history": "Historia",
     "app.header.menu.aboutInterface": "Handprint",
-    "app.increaseHandprintPage.ignoredEmails": "Algunas direcciones de la invitación no llegaron porque hay usuarios registrados con dichas direcciones, a saber: \n {list}",
+    "app.increaseHandprintPage.ignoredEmails": "Algunas invitaciones no se enviaron porque hay usuarios registrados con dichas direcciones, a saber: \n {list}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "El calendario muestra los días en los que está \"Neto Positivo\", lo que provoca un progreso ambiental mayor que su huella para ese día.",
     "app.dashboardPage.infoTooltipLinkToFAQ": "aprende más",
     "app.dashboardPage.goodRatio.infoTooltip": "Buena relación es la relación entre su huella y su huella. Auméntelo haciendo crecer su huella de la mano y reduciendo su huella.",
@@ -500,7 +500,7 @@
     "app.pages.privacyPolicy.paragraph.2": "Dirección de correo electrónico: usamos su dirección de correo electrónico SOLAMENTE para comunicarnos con usted en situaciones como restablecer su contraseña y permitir que sus amigos y colegas que también usan Handprinter le envíen información como sugerencias de acción. De lo contrario, no compartiremos su correo electrónico con ninguna persona u organización.",
     "app.pages.privacyPolicy.paragraph.3": "Nombre: Usamos su nombre SOLAMENTE para personalizar su experiencia de usuario, y para referirnos a usted en el diagrama de red de los usuarios de Handprinter a los que ha permitido acceder para leer su nombre, y para referirlo en fuentes de noticias sobre las acciones que está realizando Los usuarios de Handprinter, a los usuarios a los que ha permitido acceder para leer su nombre. De lo contrario, no lo compartiremos con ninguna persona u organización.",
     "app.pages.privacyPolicy.paragraph.4": "Usamos su país para estimar su huella. Para los usuarios de Handprinter con los que no ha compartido el acceso a su nombre, simplemente nos referiremos a usted como \"Un usuario en [su país]\". \n No compartiremos la ubicación de su país con ninguna persona u organización.",
-    "app.pages.privacyPolicy.paragraph.5": "Actions: During use, Handprinter stores information that you submit about actions that you take or suggest, and action ideas that you submit. The sole purposes for which this information are: to encourage you and others to take such positive actions, and relatedly to assess the impacts of actions taken by members of the handprinting community. Information about actions taken is shared in news feeds with other Handprinter users. We will not use it for other purposes nor otherwise share it with any person or organization.",
+    "app.pages.privacyPolicy.paragraph.5": "Acciones: durante el uso, Handprinter almacena la información que usted envía sobre las acciones que realiza o sugiere, y las ideas de acción que envía. Los únicos propósitos para los cuales esta información son: alentarlo a usted y a otros a tomar tales acciones positivas y, de manera relacionada, a evaluar los impactos de las acciones tomadas por los miembros de la comunidad de huellas dactilares. La información sobre las acciones tomadas se comparte en las fuentes de noticias con otros usuarios de Handprinter. No lo utilizaremos para otros fines ni lo compartiremos con ninguna otra persona u organización.",
     "app.footer.menu.privacyPolicy": "Política de privacidad",
     "app.privacyPolicy.head.title": "¡Bienvenido a Handprinter!",
     "app.privacyPolicy.head.keywords": "huella digital, naturaleza, huella, huella de la mano",
@@ -551,6 +551,6 @@
     "app.eatonHomePage.block.registerBlock.text.eaton": "Es hora de poner a dormir la idea de que las acciones de una sola persona no pueden hacer una diferencia. ¡Ahora puede ver lo que usted y sus casi 100,000 compañeros de trabajo pueden hacer para que su comunidad, su trabajo y su planeta sean más sostenibles! Regístrese hoy y forme parte de un futuro positivo.",
     "app.forms.eatonCode": "Codigo Eaton",
     "app.errors.39": "Código de seguridad inválido",
-    "app.footer.description": "Handprinter is a project of NewEarth B, which is a for-benefit corporation, with a mission of providing positive environmental and social impacts. The two current projects of NewEarth B are Handprinter and",
-    "app.footer.description.link": "la base de datos de puntos de acceso sociales"
+    "app.footer.description": "Handprinter es un proyecto de NewEarth B, que es una corporación de beneficio, con la misión de proporcionar impactos ambientales y sociales positivos. Los dos proyectos actuales de NewEarth B son Handprinter y",
+    "app.footer.description.link": "the Social Hotspots Database"
 }

@@ -379,7 +379,7 @@
     "app.actions.card.iTookAction": "Ik ondernam actie",
     "app.actionsPage.tabs.history": "Geschiedenis",
     "app.header.menu.aboutInterface": "Handprint",
-    "app.increaseHandprintPage.ignoredEmails": "Sommige adressen van de uitnodiging kwamen niet omdat er geregistreerde gebruikers zijn met dergelijke adressen, namelijk: \n {list}",
+    "app.increaseHandprintPage.ignoredEmails": "Sommige adressen van de uitnodiging kwamen niet omdat er geregistreerde gebruikers met dergelijke adressen zijn, namelijk:\n{lijst}",
     "app.dashboardPage.myNetPositiveDays.infoTooltip": "In de kalender worden de dagen weergegeven waarop u 'Net Positief' bent - waardoor de ecologische vooruitgang groter is dan uw voetafdruk voor die dag!",
     "app.dashboardPage.infoTooltipLinkToFAQ": "kom meer te weten",
     "app.dashboardPage.goodRatio.infoTooltip": "De goede verhouding is de verhouding tussen uw handafdruk en uw voetafdruk. Verhoog het door je handafdruk te laten groeien en door je voetafdruk te verkleinen.",
@@ -512,7 +512,7 @@
     "app.header.menu.aboutEaton": "Handprint",
     "app.dashboardPage.deletedUser": "Verwijderde gebruiker",
     "app.pages.privacyPolicy.paragraph.6": "Foto: u kunt ervoor kiezen om een foto of een andere afbeelding waarmee u mogelijk bent verbonden te uploaden voor het delen op het platform. We gebruiken deze afbeelding ALLEEN om uw gebruikerservaring te personaliseren en om u een unieke visuele referentie te geven in het netwerkdiagram van Handprinter-gebruikers aan wie u toegang hebt verleend om deze afbeelding te bekijken, en wanneer u in nieuwsfeeds naar de acties verwijst die worden genomen door Handprinter-gebruikers, aan gebruikers aan wie u toegang hebt verleend om deze afbeelding te bekijken. Het wordt ook gebruikt om e-mailberichten te personaliseren die u vanuit het platform wilt verzenden. We zullen het anders niet delen met een persoon of organisatie.",
-    "app.actions.card.denied": "Denied",
+    "app.actions.card.denied": "Ontkend",
     "app.actions.card.deniedHint": "Uw actie-idee wordt geweigerd door de beheerder van Handprinter",
     "app.errors.38": "Deze groep is al verwijderd",
     "app.groups.delete": "verwijderde",
@@ -542,7 +542,7 @@
     "app.profilePage.resetProfilePhoto": "Profielfoto opnieuw instellen",
     "app.profilePage.resetProfilePhotoModal.title": "Profielfoto opnieuw instellen",
     "app.profilePage.resetProfilePhotoModal.context": "Weet je zeker dat je je profielfoto opnieuw wilt instellen?",
-    "app.profilePage.resetProfilePhotoModal.confirmButton": "Reset",
+    "app.profilePage.resetProfilePhotoModal.confirmButton": "Het terugstellen",
     "app.profilePage.resetProfilePhotoModal.cancelButton": "Annuleren",
     "app.homePage.aboutText2.eaton": "We kunnen ook handafdrukken: <strong> positieve effecten in de wereld <\/strong> , inclusief manieren waarop we anderen helpen hun voetafdrukken te verminderen. Met Handprinter kunt u samenwerken met uw Eaton-collega's in uw buurt of over de hele wereld om uw handafdruk te vergroten — en verminder ook je voetafdruk. Begin vandaag!",
     "app.ourVision.step1.text.eaton": "Stimuleer, informeer en inspireer bestaande leden over hoe ze hun voetafdrukken kunnen verkleinen, bestaande acties aanbevelen aan uw collega's. Nodig ze misschien uit om een actie uit te proberen die onlangs voor u heeft gewerkt.",
@@ -551,6 +551,6 @@
     "app.eatonHomePage.block.registerBlock.text.eaton": "Tijd om het idee in te palmen dat alleen de acties van één persoon geen verschil kunnen maken. Nu kunt u zien wat u en uw bijna 100.000 collega's kunnen doen om uw gemeenschap, uw werk en uw planeet duurzamer te maken! Registreer u vandaag en word deel van een positieve toekomst.",
     "app.forms.eatonCode": "Eaton code",
     "app.errors.39": "Ongeldige beveiligde code",
-    "app.footer.description": "Handprinter is a project of NewEarth B, which is a for-benefit corporation, with a mission of providing positive environmental and social impacts. The two current projects of NewEarth B are Handprinter and",
-    "app.footer.description.link": "de Social Hotspots-database"
+    "app.footer.description": "Handprinter is een project van NewEarth B, een bedrijf met winstoogmerk, met als missie het leveren van positieve milieu- en sociale effecten. De twee huidige projecten van NewEarth B zijn Handprinter en",
+    "app.footer.description.link": "the Social Hotspots Database"
 }
