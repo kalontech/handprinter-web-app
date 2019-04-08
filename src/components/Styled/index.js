@@ -746,6 +746,7 @@ export const GlobalStyle = createGlobalStyle`
 
   .ant-tooltip__global-overlay {
     text-align: center;
+    z-index: 1080;
     .ant-tooltip-inner { 
       text-align: center;
       background-color: ${colors.dark};

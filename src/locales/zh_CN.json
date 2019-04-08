@@ -86,7 +86,7 @@
     "app.forms.email.required": "需要电子邮件",
     "app.forms.email.invalid": "这不是电子邮件",
     "app.forms.password": "密码",
-    "app.forms.createPassword": "密码",
+    "app.forms.createPassword": "创建您的handprinter密码",
     "app.forms.password.required": "密码是必需的",
     "app.forms.password.tooShort": "密码长度必须至少为8个字符",
     "app.forms.password.tooLong": "密码太长了",
@@ -95,7 +95,7 @@
     "app.forms.country": "国家",
     "app.forms.country.required": "国家是必需信息",
     "app.forms.invitationCode": "ID码",
-    "app.forms.invitationCode.hint": "这是邀请您加入handprinter的个人或组织的唯一邀请ID代码",
+    "app.forms.invitationCode.hint": "这是邀请您加入handprinter的人的可选ID代码。如果不相关，您可以将其留空。",
     "app.forms.actionName": "行动名称",
     "app.forms.updatePhoto": "选择其他图像",
     "app.forms.actionDescription": "描述",
@@ -552,5 +552,5 @@
     "app.forms.eatonCode": "伊顿代码",
     "app.errors.39": "无效的安全代码",
     "app.footer.description": "Handprinter是NewEarth B的一个项目，是一个有利于公司的项目，其使命是提供积极的环境和社会影响。 NewEarth B目前的两个项目是Handprinter和",
-    "app.footer.description.link": "the Social Hotspots Database"
+    "app.footer.description.link": "社交热点数据库"
 }

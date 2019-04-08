@@ -86,7 +86,7 @@
     "app.forms.email.required": "E-mail is verplicht",
     "app.forms.email.invalid": "Dit is geen e-mail",
     "app.forms.password": "Wachtwoord",
-    "app.forms.createPassword": "Wachtwoord",
+    "app.forms.createPassword": "Maak uw handprinter wachtwoord",
     "app.forms.password.required": "Een wachtwoord is verplicht",
     "app.forms.password.tooShort": "Wachtwoord moet minimaal 8 tekens lang zijn",
     "app.forms.password.tooLong": "Wachtwoord is te lang",
@@ -95,7 +95,7 @@
     "app.forms.country": "land",
     "app.forms.country.required": "Land is verplicht",
     "app.forms.invitationCode": "ID code",
-    "app.forms.invitationCode.hint": "Dit is de unieke ID-code voor de uitnodiging voor de persoon of organisatie die u heeft uitgenodigd om lid te worden van handprinter",
+    "app.forms.invitationCode.hint": "Dit is de optionele ID-code voor de persoon die u heeft uitgenodigd om zich aan te sluiten bij handprinter. U kunt dit veld leeglaten als dit niet relevant is.",
     "app.forms.actionName": "Actienaam",
     "app.forms.updatePhoto": "Selecteer een andere afbeelding",
     "app.forms.actionDescription": "Omschrijving",
@@ -552,5 +552,5 @@
     "app.forms.eatonCode": "Eaton code",
     "app.errors.39": "Ongeldige beveiligde code",
     "app.footer.description": "Handprinter is een project van NewEarth B, een bedrijf met winstoogmerk, met als missie het leveren van positieve milieu- en sociale effecten. De twee huidige projecten van NewEarth B zijn Handprinter en",
-    "app.footer.description.link": "the Social Hotspots Database"
+    "app.footer.description.link": "de Social Hotspots-database"
 }

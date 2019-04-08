@@ -86,7 +86,7 @@
     "app.forms.email.required": "Email est requis",
     "app.forms.email.invalid": "Ce n'est pas un email",
     "app.forms.password": "Mot de passe",
-    "app.forms.createPassword": "Mot de passe",
+    "app.forms.createPassword": "Créez votre mot de passe d'imprimante à main",
     "app.forms.password.required": "Mot de passe requis",
     "app.forms.password.tooShort": "Le mot de passe doit comporter au moins 8 caractères.",
     "app.forms.password.tooLong": "Le mot de passe est trop long",
@@ -95,7 +95,7 @@
     "app.forms.country": "Pays",
     "app.forms.country.required": "Le pays est requis",
     "app.forms.invitationCode": "code d'identification",
-    "app.forms.invitationCode.hint": "C'est le code d'identification d'invitation unique de la personne ou de l'organisation qui vous a invité à rejoindre handprinter.",
+    "app.forms.invitationCode.hint": "C'est le code d'identification facultatif de la personne qui vous a invité à rejoindre Handprinter. Vous pouvez laisser ce champ vide si cela ne vous concerne pas.",
     "app.forms.actionName": "Nom de l'action",
     "app.forms.updatePhoto": "Sélectionnez une autre image",
     "app.forms.actionDescription": "La description",
@@ -552,5 +552,5 @@
     "app.forms.eatonCode": "Code Eaton",
     "app.errors.39": "Code sécurisé invalide",
     "app.footer.description": "Handprinter est un projet de NewEarth B, qui est une société à but non lucratif dont la mission est de fournir des impacts environnementaux et sociaux positifs. Les deux projets actuels de NewEarth B sont Handprinter et",
-    "app.footer.description.link": "the Social Hotspots Database"
+    "app.footer.description.link": "la base de données des points chauds sociaux"
 }
