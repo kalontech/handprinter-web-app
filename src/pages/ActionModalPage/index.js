@@ -6,6 +6,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { Link } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
 
 import { ACTIONS_SUBSETS, ACTION_STATES } from 'utils/constants'
 import * as api from 'api/actions'
@@ -459,18 +460,26 @@ class ActionModalPage extends Component {
                     action.name}
                 </ActionName>
                 <ActionDescription>
-                  {(action.translatedDescription &&
-                    action.translatedDescription[locale]) ||
-                    action.description}
+                  <ReactMarkdown
+                    source={
+                      (action.translatedDescription &&
+                        action.translatedDescription[locale]) ||
+                      action.description
+                    }
+                  />
                 </ActionDescription>
 
                 {action.status === ACTION_STATES.PUBLISHED && (
                   <ActionAssumptions>
                     <FormattedMessage id="app.actions.assumptions" />
                     <br />
-                    {(action.translatedAssumptions &&
-                      action.translatedAssumptions[locale]) ||
-                      action.assumptions}
+                    <ReactMarkdown
+                      source={
+                        (action.translatedAssumptions &&
+                          action.translatedAssumptions[locale]) ||
+                        action.assumptions
+                      }
+                    />
                   </ActionAssumptions>
                 )}
               </ActionContent>
