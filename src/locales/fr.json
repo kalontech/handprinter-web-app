@@ -414,7 +414,7 @@
     "app.actions.card.edit": "modifier",
     "app.actions.card.delete": "Effacer",
     "app.actions.card.waitAdmin": "En attente de l'approbation de l'administrateur",
-    "app.actions.card.waitModeling": "Modélisation par le modélisateur",
+    "app.actions.card.waitModeling": "En attente de modélisation",
     "app.actions.card.waitAdminHint": "Votre idée d'action est en cours de révision par l'administrateur Handprinter pour vous assurer que tout est correct. L'administrateur peut vous contacter pour améliorer certains détails de l'action.",
     "app.actions.card.waitModelingHint": "Votre idée d'action a été approuvée par l'administrateur et est disponible pour les autres utilisateurs. nous calculons maintenant l'impact. Quand ce sera fait, vous verrez des signes d’impact.",
     "app.actions.page.delete.title": "Supprimer l'action",
@@ -552,5 +552,6 @@
     "app.forms.eatonCode": "Code Eaton",
     "app.errors.39": "Code sécurisé invalide",
     "app.footer.description": "Handprinter est un projet de NewEarth B, qui est une société à but non lucratif dont la mission est de fournir des impacts environnementaux et sociaux positifs. Les deux projets actuels de NewEarth B sont Handprinter et",
-    "app.footer.description.link": "la base de données des points chauds sociaux"
+    "app.footer.description.link": "la base de données des points chauds sociaux",
+    "app.actions.thanks.taking.actions": "Vous avez pris une mesure censée réduire votre empreinte. Dès que cette action a été modélisée, votre empreinte sera ajustée en fonction des impacts de l'action."
 }

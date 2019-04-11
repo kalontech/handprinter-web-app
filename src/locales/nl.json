@@ -414,7 +414,7 @@
     "app.actions.card.edit": "Bewerk",
     "app.actions.card.delete": "Verwijder",
     "app.actions.card.waitAdmin": "Wachten op goedkeuring door beheerder",
-    "app.actions.card.waitModeling": "Modelleren door modeller",
+    "app.actions.card.waitModeling": "In afwachting van modellering",
     "app.actions.card.waitAdminHint": "Uw actie-idee wordt beoordeeld door de Handprinter-beheerder om ervoor te zorgen dat alles correct is. De beheerder kan contact met u opnemen om enkele actiedetails te verbeteren.",
     "app.actions.card.waitModelingHint": "Uw actie-idee is goedgekeurd door de beheerder en is beschikbaar voor de andere gebruikers. we berekenen nu impact. Als het klaar is, zie je de inslagborden daar.",
     "app.actions.page.delete.title": "Actie verwijderen",
@@ -552,5 +552,6 @@
     "app.forms.eatonCode": "Eaton code",
     "app.errors.39": "Ongeldige beveiligde code",
     "app.footer.description": "Handprinter is een project van NewEarth B, een bedrijf met winstoogmerk, met als missie het leveren van positieve milieu- en sociale effecten. De twee huidige projecten van NewEarth B zijn Handprinter en",
-    "app.footer.description.link": "de Social Hotspots-database"
+    "app.footer.description.link": "de Social Hotspots-database",
+    "app.actions.thanks.taking.actions": "U hebt een actie ondernomen waarvan wordt gedacht dat die uw voetafdruk vermindert. Zodra deze actie is gemodelleerd, wordt uw footprint aangepast met de impact van de actie."
 }

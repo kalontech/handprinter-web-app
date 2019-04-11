@@ -414,7 +414,7 @@
     "app.actions.card.edit": "编辑",
     "app.actions.card.delete": "删除",
     "app.actions.card.waitAdmin": "等待管理员批准",
-    "app.actions.card.waitModeling": "由建模者建模",
+    "app.actions.card.waitModeling": "等待建模",
     "app.actions.card.waitAdminHint": "Handprinter管理员正在审核您的行动构想，以确保一切正确。管理员可能会与您联系以改进某些操作详细信息。",
     "app.actions.card.waitModelingHint": "您的操作提示已获得管理员批准，可供其他用户使用。我们现在正在计算影响。完成后，你会看到那里的冲击迹象。",
     "app.actions.page.delete.title": "删除操作",
@@ -552,5 +552,6 @@
     "app.forms.eatonCode": "伊顿代码",
     "app.errors.39": "无效的安全代码",
     "app.footer.description": "Handprinter是NewEarth B的一个项目，是一个有利于公司的项目，其使命是提供积极的环境和社会影响。 NewEarth B目前的两个项目是Handprinter和",
-    "app.footer.description.link": "社交热点数据库"
+    "app.footer.description.link": "社交热点数据库",
+    "app.actions.thanks.taking.actions": "你采取的行动被认为可以减少你的足迹。一旦对此操作进行了建模，您的足迹就会根据操作的影响进行调整。"
 }

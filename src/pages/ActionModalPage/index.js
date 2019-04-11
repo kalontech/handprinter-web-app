@@ -17,9 +17,11 @@ import treeImage from 'assets/actions/tree.png'
 import pigImage from 'assets/actions/pig.png'
 import decodeError from 'utils/decodeError'
 import { DefaultButton, FormItem } from 'components/Styled'
+import Tooltip from 'components/Tooltip'
 import media, { sizes } from 'utils/mediaQueryTemplate'
 import MultipleInput from 'components/MultipleInput'
 import CloseIcon from 'assets/icons/CloseIcon'
+import hexToRgba from 'utils/hexToRgba'
 
 const Container = styled(Row)`
   align-items: center;
@@ -65,6 +67,30 @@ const Container = styled(Row)`
         justify-content: flex-start;
       `}
     `};
+`
+
+const ImpactButton = styled(DefaultButton)`
+  min-width: ${props => (props.isActive ? '80px' : 'calc(100% - 120px)')};
+  background-color: transparent;
+  color: ${props => (props.isActive ? colors.blue : colors.darkGray)};
+
+  border: 1px solid
+    ${props =>
+      props.isActive
+        ? hexToRgba(colors.blue, 0.6)
+        : hexToRgba(colors.dark, 0.6)};
+  border-radius: 4px;
+  font-weight: 400;
+
+  &&:hover,
+  &&:active {
+    background-color: transparent;
+    color: ${props => (props.isModelling ? colors.blue : colors.dark)};
+    border-color: ${props =>
+      props.isModelling
+        ? hexToRgba(colors.blue, 0.6)
+        : hexToRgba(colors.dark, 0.6)};
+  }
 `
 
 const LeftPanel = styled.div`
@@ -235,6 +261,7 @@ const ActionModalPageSteps = {
   ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW: 'ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW',
   ACTION_TAKEN_INCREACE_HANDPRINT_VIEW: 'ACTION_TAKEN_INCREACE_HANDPRINT_VIEW',
   ENGAGE_VIEW: 'ENGAGE_VIEW',
+  ACTION_TAKEN_MODELING_VIEW: 'ACTION_TAKEN_MODELING_VIEW',
 }
 
 const EngageViewPicture = styled.div`
@@ -403,7 +430,10 @@ class ActionModalPage extends Component {
   takeAction = async () => {
     const { action } = this.state
 
-    let modalType = ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW
+    let modalType =
+      action.status === ACTION_STATES.MODELING
+        ? ActionModalPageSteps.ACTION_TAKEN_MODELING_VIEW
+        : ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW
 
     Object.values(action.impacts.handprint).forEach(impact => {
       if (impact.minutes > 0) {
@@ -441,7 +471,20 @@ class ActionModalPage extends Component {
       user,
     } = this.props
     const { action, takeActionError, takingAction } = this.state
-
+    let tooltipTextId, buttonTextId
+    switch (action.status) {
+      case ACTION_STATES.MODELING:
+        tooltipTextId = 'app.actions.card.waitModelingHint'
+        buttonTextId = 'app.actions.card.waitModeling'
+        break
+      case ACTION_STATES.DENIED:
+        tooltipTextId = 'app.actions.card.deniedHint'
+        buttonTextId = 'app.actions.card.denied'
+        break
+      default:
+        tooltipTextId = 'app.actions.card.waitAdminHint'
+        buttonTextId = 'app.actions.card.waitAdmin'
+    }
     return this.renderInContainer({
       children: (
         <Fragment>
@@ -450,8 +493,24 @@ class ActionModalPage extends Component {
           </LeftPanel>
           <RightPanel isIphone={isSafariMobile} span={12}>
             <ModalContentWrap isIphone={isSafariMobile}>
-              {action.status === ACTION_STATES.PUBLISHED && (
+              {action.status === ACTION_STATES.PUBLISHED ? (
                 <ActionCardLabelSet impacts={action.impacts} mobileFixedWidth />
+              ) : (
+                <Tooltip
+                  placement="top"
+                  title={formatMessage({
+                    id: tooltipTextId,
+                  })}
+                >
+                  <ImpactButton
+                    style={{ height: 40 }}
+                    isModelling={action.status === ACTION_STATES.MODELING}
+                  >
+                    {formatMessage({
+                      id: buttonTextId,
+                    })}
+                  </ImpactButton>
+                </Tooltip>
               )}
 
               <ActionContent>
@@ -526,9 +585,40 @@ class ActionModalPage extends Component {
   }
 
   renderActionTakenView = ({ type }) => {
-    const { user, closeModal, history } = this.props
+    const {
+      user,
+      closeModal,
+      history,
+      intl: { formatMessage },
+    } = this.props
     const { action } = this.state
 
+    let label = ''
+    switch (type) {
+      case ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW:
+        label = 'app.actions.reduceFootprint'
+        break
+      case ActionModalPageSteps.ACTION_TAKEN_MODELING_VIEW:
+        label = 'app.actions.thanks.taking.actions'
+        break
+      default:
+        label = 'app.actions.handprintIncreased'
+        break
+    }
+    let tooltipTextId, buttonTextId
+    switch (action.status) {
+      case ACTION_STATES.MODELING:
+        tooltipTextId = 'app.actions.card.waitModelingHint'
+        buttonTextId = 'app.actions.card.waitModeling'
+        break
+      case ACTION_STATES.DENIED:
+        tooltipTextId = 'app.actions.card.deniedHint'
+        buttonTextId = 'app.actions.card.denied'
+        break
+      default:
+        tooltipTextId = 'app.actions.card.waitAdminHint'
+        buttonTextId = 'app.actions.card.waitAdmin'
+    }
     return this.renderInContainer({
       children: (
         <Fragment>
@@ -546,21 +636,33 @@ class ActionModalPage extends Component {
             </TakenActionTitle>
 
             <TakenActionDescription>
-              <FormattedMessage
-                id={
-                  type ===
-                  ActionModalPageSteps.ACTION_TAKEN_REDUCE_FOOTPRINT_VIEW
-                    ? 'app.actions.reduceFootprint'
-                    : 'app.actions.handprintIncreased'
-                }
-              />
+              <FormattedMessage id={label} />
             </TakenActionDescription>
 
-            <ActionCardLabelSet
-              impacts={action.impacts}
-              mobileFixedWidth={true}
-              hideTooltip={true}
-            />
+            {type === ActionModalPageSteps.ACTION_TAKEN_MODELING_VIEW ? (
+              <Tooltip
+                placement="top"
+                title={formatMessage({
+                  id: tooltipTextId,
+                })}
+              >
+                <ImpactButton
+                  style={{ height: 30, width: '40%' }}
+                  isModelling={action.status === ACTION_STATES.MODELING}
+                  isActive
+                >
+                  {formatMessage({
+                    id: buttonTextId,
+                  })}
+                </ImpactButton>
+              </Tooltip>
+            ) : (
+              <ActionCardLabelSet
+                impacts={action.impacts}
+                mobileFixedWidth={true}
+                hideTooltip={true}
+              />
+            )}
             {user ? (
               <TakenActionAuthWrap>
                 <TakenActionAuthContent>
@@ -705,6 +807,10 @@ class ActionModalPage extends Component {
         })
       case ActionModalPageSteps.ENGAGE_VIEW:
         return this.renderEngageView()
+      case ActionModalPageSteps.ACTION_TAKEN_MODELING_VIEW:
+        return this.renderActionTakenView({
+          type: ActionModalPageSteps.ACTION_TAKEN_MODELING_VIEW,
+        })
     }
   }
 }

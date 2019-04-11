@@ -740,6 +740,7 @@ class ActionsPage extends React.PureComponent {
                                 })}
                               >
                                 <ImpactButton
+                                  style={{ height: 35 }}
                                   isModelling={
                                     action.status === ACTION_STATES.MODELING
                                   }

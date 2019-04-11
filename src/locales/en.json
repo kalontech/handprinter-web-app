@@ -414,7 +414,7 @@
     "app.actions.card.edit": "edit",
     "app.actions.card.delete": "Delete",
     "app.actions.card.waitAdmin": "Waiting for admin approval",
-    "app.actions.card.waitModeling": "Modelling by modeller",
+    "app.actions.card.waitModeling": "Awaiting modelling",
     "app.actions.card.waitAdminHint": "Your action idea is being reviewed by Handprinter administrator to ensure that everything is correct. The administrator may contact you for improving some action details.",
     "app.actions.card.waitModelingHint": "Your action idea was approved by admin and are available to the other users. we are calculating impact now. When it is done you will see impact signs there.",
     "app.actions.page.delete.title": "Delete action",
@@ -552,5 +552,6 @@
     "app.forms.eatonCode": "Eaton code",
     "app.errors.39": "Invalid secure code",
     "app.footer.description": "Handprinter is a project of NewEarth B, which is a for-benefit corporation, with a mission of providing positive environmental and social impacts. The two current projects of NewEarth B are Handprinter and",
-    "app.footer.description.link": "the Social Hotspots Database"
+    "app.footer.description.link": "the Social Hotspots Database",
+    "app.actions.thanks.taking.actions": "You've taken an action that is believed to reduce your footprint. As soon as this action has been modeled, your footprint will be adjusted with the action's impacts."
 }
