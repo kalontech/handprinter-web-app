@@ -368,7 +368,7 @@ class RegisterPage extends Component {
                     {getFieldDecorator('password', {
                       rules: getValidationRules(formatMessage).password,
                       validateTrigger: 'onBlur',
-                    })(<InputForPassword />)}
+                    })(<InputForPassword createPass />)}
                   </FormItem>
                   <FormItem style={{ marginTop: '-3px' }}>
                     {getFieldDecorator('country', {

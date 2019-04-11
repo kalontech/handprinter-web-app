@@ -18,13 +18,14 @@ class InputForPassword extends Component {
   render() {
     const {
       intl: { formatMessage },
+      createPass,
     } = this.props
     const { showPassword } = this.state
     return (
       <Input
         type={showPassword ? 'text' : 'password'}
         placeholder={formatMessage({
-          id: 'app.forms.createPassword',
+          id: createPass ? 'app.forms.createPassword' : 'app.forms.password',
         })}
         suffix={
           <img
