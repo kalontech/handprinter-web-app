@@ -222,8 +222,8 @@ const TakenActionTitle = styled.h1`
 const TakenActionDescription = styled.p`
   font-size: 16px;
   line-height: 22px;
-  margin-bottom: 25px;
-  margin-top: -10px;
+  margin: -10px 30px 25px 30px;
+  text-align: center;
 `
 
 const EngageViewPanel = styled.div`
