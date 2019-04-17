@@ -7,7 +7,6 @@ import { Button, Form, Select, Icon, Tabs, Popover } from 'antd'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { animateScroll } from 'react-scroll'
 import { withRouter } from 'react-router-dom'
-
 import notification from 'antd/lib/notification'
 
 import CloseIcon from 'assets/icons/CloseIcon'
@@ -47,6 +46,7 @@ import {
 import GroupCreateForm from 'components/GroupCreateForm'
 import PageMetadata from 'components/PageMetadata'
 import ConfidentialitySettings from 'components/ConfidentialitySettings'
+import PersonalizedFootprint from 'components/PersonalizedFootprint'
 import * as apiGroups from 'api/groups'
 import * as apiUser from 'api/user'
 import { getUserInitialAvatar } from 'api'
@@ -416,6 +416,7 @@ const PROFILE_TABS_KEYS = {
   GENERAL: 'GENERAL',
   MY_GROUPS: 'MY_GROUPS',
   CONFIDENTIALITY: 'CONFIDENTIALITY',
+  FOOTPRINT: 'FOOTPRINT',
 }
 
 async function getMyGroupsList() {
@@ -437,6 +438,7 @@ class ProfilePage extends Component {
     activeMyGroupsOptionPopover: undefined,
     createGroupModalVisible: false,
     isResettingPhoto: false,
+    isFootprintUpdating: false,
   }
 
   canvasRef = React.createRef()
@@ -480,6 +482,17 @@ class ProfilePage extends Component {
       updateMeInfoError === null
     )
       this.setState({ formInfoChanged: false })
+  }
+
+  updateFootprint = async footprintValue => {
+    this.setState({ isFootprintUpdating: true })
+    try {
+      await apiUser.updateMe({ personalizedFootprint: footprintValue })
+      this.setState({ isFootprintUpdating: false })
+    } catch (error) {
+      console.error(error)
+      this.setState({ isFootprintUpdating: false })
+    }
   }
 
   fetchDeleteAccount = () => {
@@ -551,7 +564,6 @@ class ProfilePage extends Component {
     validateFields(['email', 'fullName', 'country'], (err, values) => {
       if (!err) {
         const { email, fullName, country } = values
-
         updateMeInfoRequest({ email, fullName, country })
       }
     })
@@ -853,6 +865,16 @@ class ProfilePage extends Component {
       })
   }
 
+  getCountryAvarageFootprint = async () => {
+    try {
+      const res = await apiUser.getCountryAvarageFootprint()
+      return res
+    } catch (error) {
+      console.error(error)
+    }
+    return null
+  }
+
   render() {
     const {
       countries,
@@ -872,6 +894,7 @@ class ProfilePage extends Component {
       activeMyGroupsOptionPopover,
       showMyGroupsOptionPopover,
       createGroupModalVisible,
+      isFootprintUpdating,
     } = this.state
 
     return (
@@ -1203,6 +1226,21 @@ class ProfilePage extends Component {
                 >
                   <FormattedMessage id="app.profilePage.createGroupButton" />
                 </CreateGroupButton>
+              </TabContent>
+            </TabPane>
+
+            <TabPane
+              tab={formatMessage({
+                id: 'app.profilePage.tabs.footprint',
+              })}
+              key={PROFILE_TABS_KEYS.FOOTPRINT}
+            >
+              <TabContent>
+                <PersonalizedFootprint
+                  updateFootprint={this.updateFootprint}
+                  isFootprintUpdating={isFootprintUpdating}
+                  getCountryAvarageFootprint={this.getCountryAvarageFootprint}
+                />
               </TabContent>
             </TabPane>
           </StyledTabs>

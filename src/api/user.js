@@ -34,3 +34,6 @@ export const getDashboardData = ({ userId, groupId, subset = 'me' } = {}) => {
       : `/users/dashboard_data?for=${subset}`
   return fetchAPI(url)
 }
+
+export const getCountryAvarageFootprint = () =>
+  fetchAPI('/users/avarage_footprint')

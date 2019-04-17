@@ -60,3 +60,8 @@ export const QUESTIONS_ANCHOR = {
 export const CONTACT_DATA = {
   EMAIL: 'mailto:greg@newearthb.com',
 }
+
+export const METRICS = {
+  TONS: 'Metric tons',
+  KG: 'kg CO2',
+}

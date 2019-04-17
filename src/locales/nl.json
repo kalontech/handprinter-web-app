@@ -557,5 +557,17 @@
     "app.actionsPage.without.using.handprinter": "I would have done this action without using Handprinter.",
     "app.actionsPage.oneOfCauses": "My use of Handprinter is one of the causes of me taking this action.",
     "app.actionsPage.oneOfCausesEmails": "One of the causes of me taking this action is an event or another user:",
-    "app.actionsPage.oneOfCausesEmailsHint": "Enter email or ID code"
+    "app.actionsPage.oneOfCausesEmailsHint": "Enter email or ID code",
+    "app.profilePage.tabs.footprint": "Footprint",
+    "app.pages.footprint.personalizedFootprint": "Personalized footprint",
+    "app.pages.footprint.personalizedFootprint.first.paragraph": "Handprinter uses published data to provide users with an estimate of their starting footprints based on their country of origin. However, within a country, people vary widely in their actual footprint for a host of reasons including travel habits, housing, diet, and more. Therefore, Handprinter allows you to adjust your starting footprint estimate.",
+    "app.pages.footprint.personalizedFootprint.second.paragraph": "To do this, you can use any of several available carbon footprint calculators (see some suggestions below) to calculate a personalized estimate of your carbon footprint, and enter the result into Handprinter. Then Handprinter uses “normalization data” from the ReCiPe method of Life Cycle Impact Assessment, for different regions of the world, to estimate your footprint for impacts for other impact categories based on your carbon footprint.",
+    "app.pages.footprint.enterFootprint": "Enter your footprint value",
+    "app.pages.footprint.unpdateFootprint": "Update footprint",
+    "app.pages.footprint.usePointDecimalSeparator": "Please, use point as a decimal separator",
+    "app.pages.footprint.listOfNoCostCarbon": "Here is a list of no-cost carbon footprint calculators that we recommend. If you would recommend another one to users of Handprinter, please contact us, thanks!",
+    "app.pages.footprint.alert.title": "Wow, that's really low value for an annual carbon footprint!",
+    "app.pages.footprint.alert.text": "We recommended that you double check your estimate, including the units, to be sure of your value.",
+    "app.pages.footprint.alert.confirm": "Confirm",
+    "app.pages.footprint.alert.edit": "Edit"
 }

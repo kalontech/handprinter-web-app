@@ -735,6 +735,65 @@ export const GlobalStyle = createGlobalStyle`
       }
     }
   }
+  .ant-modal-footprint_profile-page {
+    .ant-modal-confirm-title {
+      font-size: 28px;
+      text-align: center;
+      color: ${colors.dark};
+    }
+    .ant-modal-confirm-content {
+      font-size: 14px;
+      color: ${colors.darkGray};
+      text-align: center;
+    }
+    .ant-modal-confirm-btns {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      ${media.phone`
+        flex-direction: column;
+      `}
+      .ant-btn {
+        color: ${colors.ocean};
+        background-color: ${hexToRgba(colors.ocean, 0.1)};
+        border: none;
+        width: 150px;
+        margin: 0 auto;
+        ${media.tablet`
+          width: 100%;
+          max-width: 250px;
+        `}
+        ${media.phone`
+          max-width: 100%;
+          margin-bottom: 10px;
+        `}
+        &&:hover,
+        &&:focus {
+          background-color: ${hexToRgba(colors.ocean, 0.18)};
+          color: ${colors.ocean};
+        }
+        &&.active,
+        &&:active {
+          background-color: ${hexToRgba(colors.ocean, 0.26)};
+          color: ${colors.ocean};
+        }
+      }
+      .ant-btn-primary {
+        background: ${colors.ocean};
+        color: ${colors.white};
+        width: 150px;
+        margin: 0 auto;
+        ${media.tablet`
+          width: 100%;
+          max-width: 250px;
+        `}
+        ${media.phone`
+          max-width: 100%;
+        `}
+      }
+    }
+  }
 
   // - global styles for .ant-tooltip & .ant-tooltip-inner classes
   //   uses for filters in "actions page".
