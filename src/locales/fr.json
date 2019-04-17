@@ -553,5 +553,9 @@
     "app.errors.39": "Code sécurisé invalide",
     "app.footer.description": "Handprinter est un projet de NewEarth B, qui est une société à but non lucratif dont la mission est de fournir des impacts environnementaux et sociaux positifs. Les deux projets actuels de NewEarth B sont Handprinter et",
     "app.footer.description.link": "la base de données des points chauds sociaux",
-    "app.actions.thanks.taking.actions": "Vous avez pris une mesure censée réduire votre empreinte. Dès que cette action a été modélisée, votre empreinte sera ajustée en fonction des impacts de l'action."
+    "app.actions.thanks.taking.actions": "Vous avez pris une mesure censée réduire votre empreinte. Dès que cette action a été modélisée, votre empreinte sera ajustée en fonction des impacts de l'action.",
+    "app.actionsPage.without.using.handprinter": "J'aurais fait cette action sans nous utiliser Handprinter.",
+    "app.actionsPage.oneOfCauses": "Mon utilisation de Handprinter est l'une des causes de ma décision.",
+    "app.actionsPage.oneOfCausesEmails": "L'une des causes de cette action est un événement ou un autre utilisateur:",
+    "app.actionsPage.oneOfCausesEmailsHint": "Entrez l'adresse email ou le code d'identification"
 }

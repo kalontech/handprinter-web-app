@@ -553,5 +553,9 @@
     "app.errors.39": "无效安全代码",
     "app.footer.description": "Handprinter是NewEarth B的一个公益项目，其使命是提供积极的环境和社会影响。 NewEarth B目前的两个项目分别是Handprinter和",
     "app.footer.description.link": "社交热点数据库",
-    "app.actions.thanks.taking.actions": "您采取的行动被认为可以减少您的足迹。一旦该行动被建模，您的足迹将会随着该行动所带来的影响进行相应调整。"
+    "app.actions.thanks.taking.actions": "您采取的行动被认为可以减少您的足迹。一旦该行动被建模，您的足迹将会随着该行动所带来的影响进行相应调整。",
+    "app.actionsPage.without.using.handprinter": "没有usnig Handprinter我会做这个动作。",
+    "app.actionsPage.oneOfCauses": "我对Handprinter的使用是我采取这一行动的原因之一。",
+    "app.actionsPage.oneOfCausesEmails": "我采取此行动的原因之一是事件或其他用户：",
+    "app.actionsPage.oneOfCausesEmailsHint": "输入电子邮件或ID代码"
 }

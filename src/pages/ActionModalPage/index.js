@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Row, Button, Form, Input } from 'antd'
+import { Row, Button, Form, Input, Radio } from 'antd'
 import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -16,7 +16,7 @@ import Spinner from 'components/Spinner'
 import treeImage from 'assets/actions/tree.png'
 import pigImage from 'assets/actions/pig.png'
 import decodeError from 'utils/decodeError'
-import { DefaultButton, FormItem } from 'components/Styled'
+import { DefaultButton } from 'components/Styled'
 import Tooltip from 'components/Tooltip'
 import media, { sizes } from 'utils/mediaQueryTemplate'
 import MultipleInput from 'components/MultipleInput'
@@ -255,6 +255,10 @@ const ModalContentWrap = styled.div`
   }
 `
 
+const FormItem = styled(Form.Item)`
+  margin-bottom: 0;
+`
+
 const ActionModalPageSteps = {
   LOADING: 'LOADING',
   ACTION_VIEW: 'ACTION_VIEW',
@@ -262,6 +266,7 @@ const ActionModalPageSteps = {
   ACTION_TAKEN_INCREACE_HANDPRINT_VIEW: 'ACTION_TAKEN_INCREACE_HANDPRINT_VIEW',
   ENGAGE_VIEW: 'ENGAGE_VIEW',
   ACTION_TAKEN_MODELING_VIEW: 'ACTION_TAKEN_MODELING_VIEW',
+  ACTION_TAKE_PROPOSE: 'ACTION_TAKE_PROPOSE',
 }
 
 const EngageViewPicture = styled.div`
@@ -317,6 +322,21 @@ const EngageViewInput = styled(Input)`
   height: 47px;
   margin-right: 5px;
   color: ${colors.darkGray};
+`
+
+const ProposeViewContentInputWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 80%;
+  margin-bottom: 40px;
+`
+
+const ProposeViewRadioWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 80%;
 `
 
 const ActionViewButtonsWrapper = styled.div`
@@ -386,8 +406,30 @@ const ActionContent = styled.div`
   width: 100%;
 `
 
-const isSafariMobile = window.navigator.userAgent.match(/iPhone/i)
+const RadioButton = styled(Radio)`
+  display: block;
+  height: 30px;
+  lineheight: 30px;
+  borderradius: 1px;
+  .ant-radio-inner {
+    border-radius: 4px;
+    &:after {
+      border: none;
+    }
+  }
+`
 
+const CausesHpInput = styled(Input)`
+  height: 40px;
+  margin-bottom: 20px;
+  margin-top: 7px;
+`
+
+const isSafariMobile = window.navigator.userAgent.match(/iPhone/i)
+const RADIO_CHOICE = {
+  withHP: 'withHandprinter',
+  withoutHP: 'withoutHandprinter',
+}
 class ActionModalPage extends Component {
   state = {
     action: null,
@@ -399,6 +441,8 @@ class ActionModalPage extends Component {
     successEngageSent: false,
     engageEmails: [],
     engageInputIsTyping: false,
+    causedByEmail: '',
+    radioChoice: RADIO_CHOICE.withHP,
   }
 
   componentDidMount() {
@@ -427,8 +471,18 @@ class ActionModalPage extends Component {
     }
   }
 
+  handleTakeAction = async () => {
+    if (this.props.user) {
+      this.setState({
+        step: ActionModalPageSteps.ACTION_TAKE_PROPOSE,
+      })
+    } else {
+      this.takeAction()
+    }
+  }
+
   takeAction = async () => {
-    const { action } = this.state
+    const { action, radioChoice, causedByEmail } = this.state
 
     let modalType =
       action.status === ACTION_STATES.MODELING
@@ -443,7 +497,13 @@ class ActionModalPage extends Component {
 
     this.setState({ takeActionError: null, takingAction: true })
     try {
-      const { takenAction } = await api.takeAction(action._id)
+      const notCausedByHandprint = radioChoice === RADIO_CHOICE.withoutHP
+
+      const { takenAction } = await api.takeAction(
+        action._id,
+        notCausedByHandprint,
+        causedByEmail,
+      )
       this.setState({
         step: modalType,
         takeActionError: null,
@@ -462,6 +522,14 @@ class ActionModalPage extends Component {
     this.setState({
       step: ActionModalPageSteps.ENGAGE_VIEW,
     })
+  }
+
+  handleRecruitingEmailsInputChange = e => {
+    this.setState({ causedByEmail: e.target.value })
+  }
+
+  handleRadioChange = e => {
+    this.setState({ radioChoice: e.target.value })
   }
 
   renderActionView = () => {
@@ -560,7 +628,7 @@ class ActionModalPage extends Component {
                         <TakeActionButton
                           type="primary"
                           loading={takingAction}
-                          onClick={this.takeAction}
+                          onClick={this.handleTakeAction}
                           isLoggedIn={user}
                         >
                           <FormattedMessage id="app.actions.takeAction" />
@@ -791,6 +859,61 @@ class ActionModalPage extends Component {
     })
   }
 
+  renderActionProposeView() {
+    const { action, causedByEmail } = this.state
+    const {
+      intl: { formatMessage },
+    } = this.props
+
+    return this.renderInContainer({
+      children: (
+        <Fragment>
+          <EngageViewPanel>
+            <EngageViewPicture src={action.picture} />
+            <ProposeViewRadioWrap>
+              <Radio.Group
+                onChange={this.handleRadioChange}
+                defaultValue={RADIO_CHOICE.withHP}
+              >
+                <RadioButton value={RADIO_CHOICE.withoutHP}>
+                  {formatMessage({
+                    id: 'app.actionsPage.without.using.handprinter',
+                  })}
+                </RadioButton>
+                <RadioButton value={RADIO_CHOICE.withHP}>
+                  {formatMessage({
+                    id: 'app.actionsPage.oneOfCauses',
+                  })}
+                </RadioButton>
+              </Radio.Group>
+            </ProposeViewRadioWrap>
+            <ProposeViewContentInputWrap>
+              <FormattedMessage id="app.actionsPage.oneOfCausesEmails" />
+              <CausesHpInput
+                onChange={this.handleRecruitingEmailsInputChange}
+                type="text"
+                value={causedByEmail}
+                placeholder={formatMessage({
+                  id: 'app.actionsPage.oneOfCausesEmailsHint',
+                })}
+              />
+              <EngageViewSendButton
+                type="primary"
+                htmlType="submit"
+                loading={false}
+                onClick={this.takeAction}
+              >
+                <FormattedMessage id="app.header.takeActionButton" />
+              </EngageViewSendButton>
+            </ProposeViewContentInputWrap>
+          </EngageViewPanel>
+        </Fragment>
+      ),
+      width: 'medium',
+      closeBtnColor: colors.white,
+    })
+  }
+
   render() {
     switch (this.state.step) {
       case ActionModalPageSteps.LOADING:
@@ -810,6 +933,10 @@ class ActionModalPage extends Component {
       case ActionModalPageSteps.ACTION_TAKEN_MODELING_VIEW:
         return this.renderActionTakenView({
           type: ActionModalPageSteps.ACTION_TAKEN_MODELING_VIEW,
+        })
+      case ActionModalPageSteps.ACTION_TAKE_PROPOSE:
+        return this.renderActionProposeView({
+          type: ActionModalPageSteps.ACTION_TAKE_PROPOSE,
         })
     }
   }

@@ -553,5 +553,9 @@
     "app.errors.39": "Código de segurança inválido",
     "app.footer.description": "Handprinter é um projeto do NewEarth B, que é uma corporação para benefício, com a missão de prover impactos ambientais e sociais positivos. Os dois projetos atuais do NewEarth B são Handprinter e",
     "app.footer.description.link": "o banco de dados do Social Hotspots",
-    "app.actions.thanks.taking.actions": "Você tomou uma ação que acredita reduzir sua pegada. Assim que esta ação for modelada, sua pegada será ajustada com os impactos da ação."
+    "app.actions.thanks.taking.actions": "Você tomou uma ação que acredita reduzir sua pegada. Assim que esta ação for modelada, sua pegada será ajustada com os impactos da ação.",
+    "app.actionsPage.without.using.handprinter": "Eu teria feito essa ação sem usar a Handprinter.",
+    "app.actionsPage.oneOfCauses": "Meu uso de Handprinter é uma das causas de minha ação.",
+    "app.actionsPage.oneOfCausesEmails": "Uma das causas de minha ação é um evento ou outro usuário:",
+    "app.actionsPage.oneOfCausesEmailsHint": "Digite o código de email ou ID"
 }
