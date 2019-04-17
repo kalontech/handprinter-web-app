@@ -554,8 +554,8 @@
     "app.footer.description": "Handprinter es un proyecto de NewEarth B, que es una corporación de beneficio, con la misión de proporcionar impactos ambientales y sociales positivos. Los dos proyectos actuales de NewEarth B son Handprinter y",
     "app.footer.description.link": "la base de datos de puntos de acceso sociales",
     "app.actions.thanks.taking.actions": "Has tomado una acción que se cree que reduce tu huella. Tan pronto como esta acción haya sido modelada, su huella se ajustará a los impactos de la acción.",
-    "app.actionsPage.without.using.handprinter": "Habría hecho esta acción sin usnig Handprinter.",
-    "app.actionsPage.oneOfCauses": "Mi uso de Handprinter es una de las causas por las que tomo esta acción.",
-    "app.actionsPage.oneOfCausesEmails": "Una de las causas por las que tomo esta acción es un evento u otro usuario:",
-    "app.actionsPage.oneOfCausesEmailsHint": "Introduzca el correo electrónico o el código de identificación"
+    "app.actionsPage.without.using.handprinter": "I would have done this action without using Handprinter.",
+    "app.actionsPage.oneOfCauses": "My use of Handprinter is one of the causes of me taking this action.",
+    "app.actionsPage.oneOfCausesEmails": "One of the causes of me taking this action is an event or another user:",
+    "app.actionsPage.oneOfCausesEmailsHint": "Enter email or ID code"
 }

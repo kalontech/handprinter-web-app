@@ -554,8 +554,8 @@
     "app.footer.description": "Handprinter ist ein Projekt von NewEarth B, einem gemeinnützigen Unternehmen mit dem Ziel, positive ökologische und soziale Auswirkungen zu erzielen. Die beiden aktuellen Projekte von NewEarth B sind Handprinter und",
     "app.footer.description.link": "die Social Hotspots-Datenbank",
     "app.actions.thanks.taking.actions": "Sie haben eine Maßnahme ergriffen, von der angenommen wird, dass sie Ihren Fußabdruck verringert. Sobald diese Aktion modelliert wurde, wird Ihr Fußabdruck an die Auswirkungen der Aktion angepasst.",
-    "app.actionsPage.without.using.handprinter": "Ich hätte diese Aktion ohne den Handdrucker gemacht.",
-    "app.actionsPage.oneOfCauses": "Die Verwendung von Handdrucker ist eine der Ursachen für diese Maßnahme.",
-    "app.actionsPage.oneOfCausesEmails": "Eine der Ursachen dafür, dass ich diese Aktion durchführe, ist ein Ereignis oder ein anderer Benutzer:",
-    "app.actionsPage.oneOfCausesEmailsHint": "E-Mail oder ID-Code eingeben"
+    "app.actionsPage.without.using.handprinter": "I would have done this action without using Handprinter.",
+    "app.actionsPage.oneOfCauses": "My use of Handprinter is one of the causes of me taking this action.",
+    "app.actionsPage.oneOfCausesEmails": "One of the causes of me taking this action is an event or another user:",
+    "app.actionsPage.oneOfCausesEmailsHint": "Enter email or ID code"
 }
