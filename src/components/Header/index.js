@@ -41,6 +41,7 @@ const SubMenu = Menu.SubMenu
 
 const LeftAlignPublic = styled.div`
   margin-right: 34px;
+  width: 100px;
 `
 
 const RightAlign = styled.div`
