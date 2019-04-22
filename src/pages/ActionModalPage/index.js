@@ -328,15 +328,14 @@ const ProposeViewContentInputWrap = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  width: 80%;
-  margin-bottom: 40px;
+  margin: 20px 20px 40px 20px;
 `
 
 const ProposeViewRadioWrap = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  width: 80%;
+  margin: 0px 20px;
 `
 
 const ActionViewButtonsWrapper = styled.div`
@@ -407,9 +406,9 @@ const ActionContent = styled.div`
 `
 
 const RadioButton = styled(Radio)`
+  white-space: normal;
   display: block;
-  height: 30px;
-  lineheight: 30px;
+  margin: 10px 0px
   borderradius: 1px;
   .ant-radio-inner {
     border-radius: 4px;
