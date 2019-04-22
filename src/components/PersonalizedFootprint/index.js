@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 
 import colors from 'config/colors'
 import arrowDownIcon from 'assets/icons/arrowDown.svg'
+import media from 'utils/mediaQueryTemplate'
 
 import { METRICS } from '../../utils/constants'
 
@@ -35,6 +36,9 @@ const FootprintInputWrap = styled.div`
   background-color: ${colors.lightGray};
   width: 100%;
   padding: 30px;
+  ${media.phone`
+    padding: 0px;
+  `}
 `
 const Row = styled.div`
   flex-direction: row;
