@@ -46,6 +46,8 @@ const Content = styled(OceanModal)`
     max-width: 230px;
     max-height: 230px;
     margin: 0 auto 15px;
+    display: block;
+    object-fit: cover;
   }
 `
 
