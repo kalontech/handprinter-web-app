@@ -52,7 +52,7 @@ const Wrapper = styled.div`
 `
 
 const InnerContainer = styled.div`
-  padding: 25px 0;
+  padding: 20px 0;
 
   ${media.largeDesktop`
     padding: 15px 0;
@@ -73,7 +73,6 @@ const ActionSearchDropdownPicture = styled.div`
 const SearchBlockWrapper = styled.div`
   background-color: ${colors.white};
   padding: 20px;
-  margin: 30px 0 20px 0;
   ${media.phone`
     margin: 0;
     .ant-popover-content {

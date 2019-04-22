@@ -687,6 +687,10 @@ class Header extends Component {
       fontNames: '"Noto Sans", sans-serif',
       fontColor: colors.darkGray,
     }
+    const headerLogoLinkStyle = {
+      justifyContent: 'flex-start',
+      display: 'flex',
+    }
 
     return (
       <StyledAffix>
@@ -1054,6 +1058,7 @@ class Header extends Component {
               )}
               <LogoSmall>
                 <Link
+                  style={headerLogoLinkStyle}
                   to={
                     overrides && overrides.brandName !== 'Eaton'
                       ? '/pages/home'
