@@ -347,10 +347,6 @@ const StepSixContentWrap = styled(StepFourContentWrap)`
   left: -1px;
 `
 
-const EatonBrandedBlockWrap = styled.div`
-  padding: 75px 0;
-`
-
 class OurVisionPage extends React.PureComponent {
   static propTypes = {
     overrides: PropTypes.object,
@@ -388,6 +384,10 @@ class OurVisionPage extends React.PureComponent {
     return (
       <Fragment>
         <PageMetadata pageName="ourVision" />
+        {overrides && overrides.brandName === 'Eaton' && (
+          <EatonBrandedBlock isLoggedIn={Boolean(user)} />
+        )}
+
         <OurVisionWrap>
           <Hero>
             <BlockContainer>
@@ -419,12 +419,6 @@ class OurVisionPage extends React.PureComponent {
             </BlockContainer>
             <HeroBg src={heroBg} alt="" />
           </Hero>
-
-          {overrides && overrides.brandName === 'Eaton' && (
-            <EatonBrandedBlockWrap>
-              <EatonBrandedBlock isLoggedIn={Boolean(user)} />
-            </EatonBrandedBlockWrap>
-          )}
 
           <section>
             <BlockContainer>
