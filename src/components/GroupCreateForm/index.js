@@ -240,10 +240,10 @@ class GroupCreateForm extends React.PureComponent {
             rules: [
               required(intl.formatMessage({ id: 'app.errors.isRequired' })),
               {
-                max: 15,
+                max: 100,
                 message: intl.formatMessage(
                   { id: 'app.errors.maxLength' },
-                  { count: 15 },
+                  { count: 100 },
                 ),
               },
             ],
