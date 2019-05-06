@@ -22,6 +22,7 @@ import media, { sizes } from 'utils/mediaQueryTemplate'
 import MultipleInput from 'components/MultipleInput'
 import CloseIcon from 'assets/icons/CloseIcon'
 import hexToRgba from 'utils/hexToRgba'
+import stepsImg6 from 'assets/our-vision/section6.png'
 
 const Container = styled(Row)`
   align-items: center;
@@ -429,6 +430,7 @@ const RADIO_CHOICE = {
   withHP: 'withHandprinter',
   withoutHP: 'withoutHandprinter',
 }
+export const INVITE_ACTION_SLUG = 'invite-people-to-join-handprinter'
 class ActionModalPage extends Component {
   state = {
     action: null,
@@ -471,6 +473,9 @@ class ActionModalPage extends Component {
   }
 
   handleTakeAction = async () => {
+    if (this.state.action.slug === INVITE_ACTION_SLUG) {
+      this.props.history.push('/account/code')
+    }
     if (this.props.user) {
       this.setState({
         step: ActionModalPageSteps.ACTION_TAKE_PROPOSE,
@@ -556,7 +561,16 @@ class ActionModalPage extends Component {
       children: (
         <Fragment>
           <LeftPanel>
-            {action.picture && <img src={action.picture} alt="" />}
+            {action.picture && (
+              <img
+                src={
+                  action.slug === INVITE_ACTION_SLUG
+                    ? stepsImg6
+                    : action.picture
+                }
+                alt=""
+              />
+            )}
           </LeftPanel>
           <RightPanel isIphone={isSafariMobile} span={12}>
             <ModalContentWrap isIphone={isSafariMobile}>
@@ -614,7 +628,7 @@ class ActionModalPage extends Component {
                 <BottomPanel isIphone={isSafariMobile}>
                   {action.status !== ACTION_STATES.PROPOSED && (
                     <ActionViewButtonsWrapper isIphone={isSafariMobile}>
-                      {user && (
+                      {user && action.slug !== INVITE_ACTION_SLUG && (
                         <DefaultButton
                           type="primary"
                           htmlType="submit"

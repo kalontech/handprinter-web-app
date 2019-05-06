@@ -39,8 +39,11 @@ import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Tooltip from 'components/Tooltip'
 import ScrollAnimation from 'components/ScrollAnimation'
 import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
+import stepsImg6 from 'assets/our-vision/section6.png'
 
 import * as api from 'api/actions'
+
+import { INVITE_ACTION_SLUG } from '../ActionModalPage'
 
 import ActionsFilters from './ActionFilter'
 
@@ -701,7 +704,11 @@ class ActionsPage extends React.PureComponent {
                               ? `/account/actions/preview/${action.slug}`
                               : `/actions/${match.params.subset}/${action.slug}`
                           }
-                          picture={action.picture}
+                          picture={
+                            action.slug === INVITE_ACTION_SLUG
+                              ? stepsImg6
+                              : action.picture
+                          }
                           canChange={action.status === ACTION_STATES.PROPOSED}
                           onEdit={e => {
                             e.preventDefault()
