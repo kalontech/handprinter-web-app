@@ -704,11 +704,7 @@ class ActionsPage extends React.PureComponent {
                               ? `/account/actions/preview/${action.slug}`
                               : `/actions/${match.params.subset}/${action.slug}`
                           }
-                          picture={
-                            action.slug === INVITE_ACTION_SLUG
-                              ? stepsImg6
-                              : action.picture
-                          }
+                          picture={action.picture}
                           canChange={action.status === ACTION_STATES.PROPOSED}
                           onEdit={e => {
                             e.preventDefault()

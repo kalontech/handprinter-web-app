@@ -561,16 +561,7 @@ class ActionModalPage extends Component {
       children: (
         <Fragment>
           <LeftPanel>
-            {action.picture && (
-              <img
-                src={
-                  action.slug === INVITE_ACTION_SLUG
-                    ? stepsImg6
-                    : action.picture
-                }
-                alt=""
-              />
-            )}
+            {action.picture && <img src={action.picture} alt="" />}
           </LeftPanel>
           <RightPanel isIphone={isSafariMobile} span={12}>
             <ModalContentWrap isIphone={isSafariMobile}>
