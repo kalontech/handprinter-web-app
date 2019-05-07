@@ -474,6 +474,7 @@ class ActionModalPage extends Component {
   handleTakeAction = async () => {
     if (this.state.action.slug === INVITE_ACTION_SLUG) {
       this.props.history.push('/account/code')
+      return
     }
     if (this.props.user) {
       this.setState({
