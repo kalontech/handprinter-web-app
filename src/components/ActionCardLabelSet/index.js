@@ -14,6 +14,7 @@ const CardLabelWrap = styled.div`
 
 const ActionCardLabelSet = props => {
   const { impacts, hideTooltip, mobileFixedWidth } = props
+  if (!impacts) return null
   return (
     <CardLabelWrap mobileFixedWidth={mobileFixedWidth}>
       {impacts.footprint &&

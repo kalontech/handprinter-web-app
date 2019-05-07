@@ -429,6 +429,7 @@ const RADIO_CHOICE = {
   withHP: 'withHandprinter',
   withoutHP: 'withoutHandprinter',
 }
+export const INVITE_ACTION_SLUG = 'invite-people-to-join-handprinter'
 class ActionModalPage extends Component {
   state = {
     action: null,
@@ -471,6 +472,10 @@ class ActionModalPage extends Component {
   }
 
   handleTakeAction = async () => {
+    if (this.state.action.slug === INVITE_ACTION_SLUG) {
+      this.props.history.push('/account/code')
+      return
+    }
     if (this.props.user) {
       this.setState({
         step: ActionModalPageSteps.ACTION_TAKE_PROPOSE,
@@ -614,7 +619,7 @@ class ActionModalPage extends Component {
                 <BottomPanel isIphone={isSafariMobile}>
                   {action.status !== ACTION_STATES.PROPOSED && (
                     <ActionViewButtonsWrapper isIphone={isSafariMobile}>
-                      {user && (
+                      {user && action.slug !== INVITE_ACTION_SLUG && (
                         <DefaultButton
                           type="primary"
                           htmlType="submit"
