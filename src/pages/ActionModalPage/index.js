@@ -22,7 +22,6 @@ import media, { sizes } from 'utils/mediaQueryTemplate'
 import MultipleInput from 'components/MultipleInput'
 import CloseIcon from 'assets/icons/CloseIcon'
 import hexToRgba from 'utils/hexToRgba'
-import stepsImg6 from 'assets/our-vision/section6.png'
 
 const Container = styled(Row)`
   align-items: center;
