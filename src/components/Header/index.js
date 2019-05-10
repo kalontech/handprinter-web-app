@@ -709,25 +709,20 @@ class Header extends Component {
 
     return (
       <StyledAffix>
-        {isIE ||
-          (true && (
-            <Alert
-              style={alertStyle}
-              icon={
-                <Icon
-                  style={alertIconStyle}
-                  type="close-circle"
-                  theme="filled"
-                />
-              }
-              message={
-                <h2 style={{ textAlign: 'center' }}>
-                  <FormattedMessage id="app.header.ieDetected" />
-                </h2>
-              }
-              banner
-            />
-          ))}
+        {isIE && (
+          <Alert
+            style={alertStyle}
+            icon={
+              <Icon style={alertIconStyle} type="close-circle" theme="filled" />
+            }
+            message={
+              <h2 style={{ textAlign: 'center' }}>
+                <FormattedMessage id="app.header.ieDetected" />
+              </h2>
+            }
+            banner
+          />
+        )}
 
         {type === 'minimal' && (
           <HeaderWrap isLoggedIn={user}>
