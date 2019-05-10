@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { compose, bindActionCreators } from 'redux'
-import { Layout, Menu, Popover, Affix, Button, Alert } from 'antd'
+import { Layout, Menu, Popover, Affix, Button, Alert, Icon } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import styled, { css } from 'styled-components'
 import { connect } from 'react-redux'
@@ -692,11 +692,34 @@ class Header extends Component {
       display: 'flex',
     }
 
+    const alertStyle = {
+      background: colors.orange,
+      justifyContent: 'center',
+      alignItems: 'center',
+      display: 'flex',
+    }
+
+    const alertIconStyle = {
+      fontSize: 30,
+      color: 'yellow',
+      textAlign: 'center',
+      alignSelf: 'center',
+      marginTop: 13,
+    }
+
     return (
       <StyledAffix>
         {isIE && (
           <Alert
-            message={<FormattedMessage id="app.header.ieDetected" />}
+            style={alertStyle}
+            icon={
+              <Icon style={alertIconStyle} type="close-circle" theme="filled" />
+            }
+            message={
+              <h2 style={{ textAlign: 'center' }}>
+                <FormattedMessage id="app.header.ieDetected" />
+              </h2>
+            }
             banner
           />
         )}
