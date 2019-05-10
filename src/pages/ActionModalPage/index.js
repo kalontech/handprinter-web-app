@@ -602,8 +602,6 @@ class ActionModalPage extends Component {
 
                 {action.status === ACTION_STATES.PUBLISHED && (
                   <ActionAssumptions>
-                    <FormattedMessage id="app.actions.assumptions" />
-                    <br />
                     <ReactMarkdown
                       source={
                         (action.translatedAssumptions &&
