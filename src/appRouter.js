@@ -28,6 +28,7 @@ import SetNewPasswordPage from './pages/SetNewPasswordPage'
 import ProfilePage from './pages/ProfilePage'
 import IncreaseHandprintPage from './pages/IncreaseHandprintPage'
 import PrivacyPolicyTermsPages from './pages/PrivacyPolicyTermsPages'
+import ForOrganizationsPage from './pages/ForOrganizationsPage'
 
 const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = process.env
 
@@ -104,6 +105,12 @@ const AppRouter = () => {
             component={FaqPage}
             withoutCTA
             useAuthentication
+          />
+          <Route
+            path="/pages/for-organizations"
+            component={ForOrganizationsPage}
+            useAuthentication
+            withoutCTA
           />
           <Route
             path="/account/login"
