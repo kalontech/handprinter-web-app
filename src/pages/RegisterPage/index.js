@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { animateScroll } from 'react-scroll/modules'
-
+import SearchableInput from 'components/SearchInfluencerInput'
 import registerFingerprintTop from 'assets/images/registerFingerprintTop.png'
 import registerFingerprintBot from 'assets/images/registerFingerprintBot.png'
 import registerActionCardImage from 'assets/images/registerActionCard.jpg'
@@ -33,7 +33,6 @@ import {
   FormItem,
   Checkbox,
 } from 'components/Styled'
-import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 import PageMetadata from 'components/PageMetadata'
 import InputForPassword from 'components/InputForPassword'
 import * as apiUser from 'api/user'
@@ -201,6 +200,7 @@ class RegisterPage extends Component {
   state = {
     referrer: null,
     getReferrerError: null,
+    matchedUsersByCode: undefined,
   }
 
   componentDidMount() {
@@ -272,6 +272,22 @@ class RegisterPage extends Component {
     })
   }
 
+  handleCodeSearch = async query => {
+    try {
+      const response = await apiUser.search(query)
+      this.setState({ matchedUsersByCode: response.users })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  handleCodeSelect = code => {
+    const {
+      form: { setFieldsValue },
+    } = this.props
+    setFieldsValue({ invitationCode: code })
+  }
+
   render() {
     const {
       countries,
@@ -280,7 +296,7 @@ class RegisterPage extends Component {
       isRegistering,
       overrides,
     } = this.props
-    const { referrer } = this.state
+    const { referrer, matchedUsersByCode } = this.state
 
     return (
       <Fragment>
@@ -394,21 +410,10 @@ class RegisterPage extends Component {
                   </FormItem>
                   <FormItem>
                     {getFieldDecorator('invitationCode')(
-                      <Input
-                        type="text"
-                        placeholder={formatMessage({
-                          id: 'app.forms.invitationCode',
-                        })}
-                        suffix={
-                          <InfoElement
-                            type={INFO_ELEMENT_TYPES.INFO}
-                            tooltipProps={{
-                              title: formatMessage({
-                                id: 'app.forms.invitationCode.hint',
-                              }),
-                            }}
-                          />
-                        }
+                      <SearchableInput
+                        onSearch={this.handleCodeSearch}
+                        suggestions={matchedUsersByCode}
+                        onSelect={this.handleCodeSelect}
                       />,
                     )}
                   </FormItem>
