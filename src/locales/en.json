@@ -148,7 +148,6 @@
     "app.header.menu.profileSettings": "Profile settings",
     "app.header.menu.increaseHandprint": "Increase handprint",
     "app.header.menu.news": "News",
-    "app.header.menu.forOrganizations": "For organizations",
     "app.header.link": "Join handprinters",
     "app.headerActions.addAction": "Add action",
     "app.actionCreatePage.title": "Add action",
@@ -571,6 +570,7 @@
     "app.pages.footprint.alert.text": "We recommended that you double check your estimate, including the units, to be sure of your value.",
     "app.pages.footprint.alert.confirm": "Confirm",
     "app.pages.footprint.alert.edit": "Edit",
+    "app.header.menu.forOrganizations": "For organizations",
     "app.forOrganizationsPage.head.title": "Welcome to Handprinter!",
     "app.forOrganizationsPage.head.description": "Want to take doing good to a global scale? You’re not alone. Through Handprinter, creative individual actions and outreach generate ripple effects to touch and heal your community and the globe.",
     "app.forOrganizationsPage.head.keywords": "handprinter, nature, footprint, handprint",
@@ -579,11 +579,11 @@
     "app.forOrganizations.Hero.Link": "Create organization",
     "app.forOrganizations.ScrollText": "Why become a handprinting organization?",
     "app.forOrganizations.Internal.Title": "The <strong>internal<\/strong><br \/> case for handprinting",
-    "app.forOrganizations.Internal.Text1": "<strong>Engagement and Purpose <\/strong> <br \/>Employees seek meaning and purpose at work, and they want to work for companies striving for a better world. ",
-    "app.forOrganizations.Internal.Text2": "<strong>Training <\/strong> <br \/>Leading organizations want all employees to understand and be a part of their positive impacts. Handprinting makes it data-driven, personal, social, and real.",
-    "app.forOrganizations.External.Title": "The <strong>external <\/strong> <br \/>case for handprinting",
-    "app.forOrganizations.External.Text1": "<strong>Reputation  <\/strong> <br \/>Brand value and stakeholder support increase when the world knows you're serious about creating positive change. Handprinter is an independent, data-driven platform in which your positive actions and impacts flourish, speak for themselves, and spread.",
-    "app.forOrganizations.External.Text2": "<strong>Community Engagement <\/strong> <br \/>Engage  and support your customers in becoming a vibrant force for good that sees its own collective impact updated daily. Schools can engage their alumni, events can engage their attendees, museums can engage their visitors...",
+    "app.forOrganizations.Internal.Text1": "<strong>Engagement and Purpose\u2028<\/strong> <br \/>Employees seek meaning and purpose at work, and they want to work for companies striving for a better world. ",
+    "app.forOrganizations.Internal.Text2": "<strong>Training\u2028<\/strong> <br \/>Leading organizations want all employees to understand and be a part of their positive impacts. Handprinting makes it data-driven, personal, social, and real.",
+    "app.forOrganizations.External.Title": "The <strong>external\u2028<\/strong> <br \/>case for handprinting",
+    "app.forOrganizations.External.Text1": "<strong>Reputation\u2028\u2028<\/strong> <br \/>Brand value and stakeholder support increase when the world knows you're serious about creating positive change. Handprinter is an independent, data-driven platform in which your positive actions and impacts flourish, speak for themselves, and spread.",
+    "app.forOrganizations.External.Text2": "<strong>Community Engagement\u2028<\/strong> <br \/>Engage\u2028 and support your customers in becoming a vibrant force for good that sees its own collective impact updated daily. Schools can engage their alumni, events can engage their attendees, museums can engage their visitors...",
     "app.forOrganizations.External.Text3": "and <em>You can engage Your people!<\/em>",
     "app.forOrganizations.Handprint.Title": "How can our organization handprint?",
     "app.forOrganizations.Handprint.Text": "Organizations can handprint in each of the same 6 ways that individuals can, while drawing on the organization’s special strengths.",
