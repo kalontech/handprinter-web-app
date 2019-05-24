@@ -181,6 +181,9 @@ class SearchInfluencerInput extends React.Component<Props> {
                   <SearchWrap>
                     <AutoCompleteStyled
                       onSelect={this.handleSelect}
+                      dropdownAlign={{
+                        points: ['bl', 'tl'], // align dropdown bottom-left to top-left of input element
+                      }}
                       onSearch={this.handleSearch}
                       dataSource={suggestions.map(item => (
                         <SearchItem
