@@ -20,6 +20,8 @@ import {
   SlideDown,
   SecondaryButton,
   PrimaryButton,
+  Collapse,
+  CollapsePanel,
 } from 'components/Styled'
 
 import PageMetadata from 'components/PageMetadata'
@@ -30,11 +32,12 @@ import heroImg from 'assets/for-organizations/organization.png'
 import internalImg from 'assets/for-organizations/internal.png'
 import externalImg from 'assets/for-organizations/external.png'
 import leafImg from 'assets/for-organizations/leaf.png'
+import slide5 from 'assets/for-organizations/slide5.png'
 
 import ctaImg from 'assets/for-organizations/cta-image.png'
 
-import ctaBg from '../../components/Cta/assets/cta-left-fingerprint.png'
-import ctaBgRight from '../../components/Cta/assets/cta-right-fingerprint.png'
+import ctaBg from 'assets/for-organizations/CTA_left.png'
+import ctaBgRight from 'assets/for-organizations/CTA_right.png'
 
 const sliderContent = [
   {
@@ -56,6 +59,7 @@ const sliderContent = [
   {
     title: <FormattedMessage id={`app.forOrganizations.slider.slide5.title`} />,
     text: <FormattedMessage id={`app.forOrganizations.slider.slide5.text`} />,
+    img: slide5,
   },
   {
     title: <FormattedMessage id={`app.forOrganizations.slider.slide6.title`} />,
@@ -69,24 +73,34 @@ const ImgWrapCentered = styled.div`
 `
 
 const HeroSection = styled.section`
-  padding: 130px 0 95px;
+  padding: 130px 0 215px;
+  ${SecondaryButton} {
+    min-width: 1;
+  }
   ${media.largeDesktop`
     padding-bottom: 150px;
-    .ant-row-flex {
-      justify-content: center;
-    }
-  `};
-  ${media.desktop`
-    padding: 30px 0 90px;
-    max-width: 630px;
-    margin: 0 auto;
     text-align: center;
     .ant-row-flex {
       justify-content: center;
     }
   `};
+  ${media.desktop`
+    padding: 30px 0 60px;
+    max-width: 630px;
+    margin: 0 auto;
+    ${BlockTitleGreen} {
+      font-size: 48px;
+    }
+  `};
   ${media.phone`
-    padding-bottom: 70px;
+    padding: 10px 0 0;
+    ${BlockTitleGreen} {
+      font-size: 25px;
+    }
+    .ant-row-flex > div,
+    ${SecondaryButton} {
+      width: 100%;
+    }
   `};
 `
 
@@ -102,6 +116,9 @@ const HeroText = styled(TextLarge)`
 
 const HeroButton = styled.div`
   margin-top: 40px;
+  ${media.phone`
+    margin-top: 25px;
+  `};
 `
 
 const HeroBlockImage = styled(ImgWrapCentered)`
@@ -109,20 +126,23 @@ const HeroBlockImage = styled(ImgWrapCentered)`
   left: -15px;
   ${media.largeDesktop`
     position: static;
-    margin-top: 20px;
+    margin-top: 65px;
     img {
-      max-width: 100%;
+      max-width: 93%;
     }
-  `};
-  ${media.desktop`
-    margin-top: 60px;
   `};
   ${media.phone`
     margin-top: 0;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     img {
-      width: 240px;
+      width: 210px;
     }
+  `};
+`
+
+const StyledTextMediumGroup = styled(TextMediumGroup)`
+  ${media.desktop`
+    margin-bottom: 0;
   `};
 `
 
@@ -133,22 +153,29 @@ const ExternalSection = styled.section`
     letter-spacing: 0;
   }
   ${media.desktop`
-    padding: 130px 0 140px;
+    padding: 115px 0 0;
   `};
   ${media.phone`
-    padding: 0 0 70px;
+    padding: 0 0 10px;
+    ${BlockSubTitleGreen} {
+      margin-bottom: 30px;
+      letter-spacing: 0;
+    }
   `};
 `
 
 const ExternalContent = styled.div`
   ${media.desktop`
-    max-width: 480px;
-    margin: 0 auto 50px;
-    text-align: center;
+    margin: 0 auto 35px;
+    ${BlockSubTitleGreen} {
+      br {
+        display: none;
+      }
+    }
   `};
   ${media.phone`
     max-width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     text-align: left;
   `};
 `
@@ -164,18 +191,10 @@ const ExternalBlockImage = styled.img`
     }
   `};
   ${media.desktop`
-    max-width: 615px;
+    max-width: 62%;
   `};
   ${media.phone`
-    display: none;
-  `};
-`
-
-const MobileImg = styled.img`
-  display: none;
-  max-width: 100%;
-  ${media.phone`
-    display: block;
+    max-width: 100%;
   `};
 `
 
@@ -183,26 +202,29 @@ const InternalBlockImage = styled.img`
   position: relative;
   top: -30px;
   ${media.largeDesktop`
+    display: block;
     position: static;
+    max-width: 90%;
+    margin: 0 auto;
+  `};
+  ${media.phone`
     max-width: 100%;
   `};
 `
 
 const InternalContent = styled.div`
   ${media.desktop`
-    max-width: 480px;
-    margin: 0 auto 50px;
-    text-align: center;
+    margin: 0 auto 25px;
   `};
   ${media.phone`
     max-width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     text-align: left;
   `};
 `
 
 const InternalSection = styled.section`
-  padding-top: 205px;
+  padding-top: 85px;
   ${BlockSubTitleGreen} {
     margin-bottom: 40px;
     letter-spacing: 0;
@@ -213,16 +235,25 @@ const InternalSection = styled.section`
     }
   `};
   ${media.desktop`
-    padding-bottom: 140px;
+    padding-top: 225px;
+    ${BlockSubTitleGreen} {
+      br {
+        display: none;
+      }
+    }
   `};
   ${media.phone`
-    padding-bottom: 70px;
+    padding-top: 60px;
+    padding-bottom: 55px;
+    ${BlockSubTitleGreen} {
+      margin-bottom: 30px;
+    }
   `};
 `
 
 const HandprintSection = styled.section`
   padding-top: 140px;
-  padding-bottom: 320px;
+  padding-bottom: 400px;
   ${BlockSubTitle} {
     letter-spacing: 0;
   }
@@ -232,13 +263,10 @@ const HandprintSection = styled.section`
     }
   `};
   ${media.desktop`
-    padding: 120px 0 160px;
-    ${MobileImg} {
-      display: block;
-    }
+    padding: 120px 0 60px;
   `};
   ${media.phone`
-    padding: 70px 0 150px;
+    padding: 70px 0 45px;
     .ant-row-flex {
       justify-content: stretch;
       > div {
@@ -250,16 +278,23 @@ const HandprintSection = styled.section`
 
 const BlockHeader = styled.div`
   text-align: center;
-  padding-bottom: 80px;
+  padding-bottom: ;
   p {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
   }
   ${media.desktop`
-    max-width: 480px;
+    max-width: 4;
     margin: 0 auto 50px;
     padding-bottom: 0;
+    ${BlockSubTitle} {
+      max-width: 470px;
+      margin: 0 auto;
+    }
+    ${TextMedium} {
+      max-width: 520px;
+    }
   `};
   ${media.phone`
     max-width: 100%;
@@ -271,12 +306,18 @@ const CtaTitle = styled(BlockSubTitle)`
   color: ${colors.white};
   margin-bottom: 26px;
   letter-spacing: 0;
+  ${media.desktop`
+    max-width: 525px;
+  `};
 `
 
 const CtaImage = styled.img`
   position: absolute;
   right: 10px;
   bottom: 0;
+  ${media.desktop`
+    display: none;
+  `};
 `
 
 const CtaWrap = styled.section`
@@ -284,10 +325,14 @@ const CtaWrap = styled.section`
   background: url("${ctaBg}") no-repeat left center, ${
   colors.ocean
 } url("${ctaBgRight}") no-repeat right center;
+  ${PrimaryButton}{
+      min-width: 197px;
+    }
  ${media.desktop`
    text-align: center;
    `};
   ${media.phone`
+    background: ${colors.ocean};
     a,
     ${PrimaryButton}{
       width: 100%;
@@ -303,6 +348,8 @@ const Wrap = styled(BlockContainer)`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
   `};
   ${media.phone`
     padding-top: 40px;
@@ -351,9 +398,44 @@ const SliderControlsCaption = styled.span`
     opacity: 1;
   }
 `
+
+const StyledImg = styled(ImgWrapCentered)`
+  position: relative;
+  margin: 40px auto;
+  max-width: 312px;
+  &:before {
+    z-index: 1;
+    position: absolute;
+    bottom: -25px;
+    right: 50%;
+    transform: translateX(190px);
+    width: 107px;
+    height: 168px;
+    content: '';
+    background: url(${leafImg}) no-repeat center / 100%;
+  }
+  img {
+    position: relative;
+    left: -25px;
+  }
+  ${media.phone`
+    margin: 20px auto 0;
+    img {
+      left: -15px;
+      width: 165px;
+    }
+    &:before {
+      bottom: -50px;
+      right: 50%;
+      transform: translateX(105px);
+      width: 57px;
+    }
+  `};
+`
+
 const StyledCarousel = styled(Carousel)`
   padding: 60px;
-  background: #fff url(${leafImg}) no-repeat bottom 60px right 60px;
+  background: #fff;
   width: 580px;
   height: 638px;
   box-shadow: 0px 1px 10px rgba(52, 68, 66, 0.08);
@@ -371,12 +453,54 @@ const SliderTitle = styled.h3`
   font-size: 22px;
   line-height: 30px;
   margin-bottom: 10px;
+  ${media.desktop`
+    font-size: 19px;
+    margin-bottom: 0;
+  `};
+  ${media.phone`
+    font-size: 16px;
+  `};
 `
 
 const SliderSection = styled.section`
-  padding-bottom: 180px;
+  padding-bottom: 1;
   height: 500px;
   background: ${colors.lightGray};
+`
+
+const CollapseWrapper = styled.section`
+  background: ${colors.lightGray};
+  ${Collapse} {
+    margin-top: -60px;
+    & > .ant-collapse-item > .ant-collapse-header {
+      padding: 26px 10px;
+    }
+    ${media.phone`
+      margin-top: -45px;
+      padding-top: 10px;
+      margin-bottom: 55px;
+      & > .ant-collapse-item > .ant-collapse-header {
+        padding: 20px 0;
+        min-height: 82px;
+      }
+      & > .ant-collapse-header .ant-collapse-arrow {
+        top: 0;
+        right: 2px;
+      }
+      ${SliderTitle} {
+        display: flex;
+        align-items: center;
+      }
+    `};
+  }
+`
+
+const Num = styled.span`
+  margin-right: 4px;
+  color: ${colors.green};
+  ${media.phone`
+    font-weight: bold;
+  `};
 `
 
 export default class ForOrganizationsPage extends React.PureComponent {
@@ -462,12 +586,18 @@ export default class ForOrganizationsPage extends React.PureComponent {
                     <BlockSubTitleGreen>
                       <FormattedHTMLMessage id="app.forOrganizations.Internal.Title" />
                     </BlockSubTitleGreen>
-                    <TextMediumGroup>
-                      <FormattedHTMLMessage id="app.forOrganizations.Internal.Text1" />
-                    </TextMediumGroup>
-                    <TextMediumGroup>
-                      <FormattedHTMLMessage id="app.forOrganizations.Internal.Text2" />
-                    </TextMediumGroup>
+                    <Row gutter={{ md: 20, xl: 0 }}>
+                      <Col md={{ span: 12 }} xl={{ span: 24 }}>
+                        <TextMediumGroup>
+                          <FormattedHTMLMessage id="app.forOrganizations.Internal.Text1" />
+                        </TextMediumGroup>
+                      </Col>
+                      <Col md={{ span: 12 }} xl={{ span: 24 }}>
+                        <TextMediumGroup>
+                          <FormattedHTMLMessage id="app.forOrganizations.Internal.Text2" />
+                        </TextMediumGroup>
+                      </Col>
+                    </Row>
                   </InternalContent>
                 </ScrollAnimation>
               </Col>
@@ -484,15 +614,21 @@ export default class ForOrganizationsPage extends React.PureComponent {
                     <BlockSubTitleGreen>
                       <FormattedHTMLMessage id="app.forOrganizations.External.Title" />
                     </BlockSubTitleGreen>
-                    <TextMediumGroup>
-                      <FormattedHTMLMessage id="app.forOrganizations.External.Text1" />
-                    </TextMediumGroup>
-                    <TextMediumGroup>
-                      <FormattedHTMLMessage id="app.forOrganizations.External.Text2" />
-                    </TextMediumGroup>
-                    <TextMediumGroup>
-                      <FormattedHTMLMessage id="app.forOrganizations.External.Text3" />
-                    </TextMediumGroup>
+                    <Row gutter={{ md: 20, xl: 0 }}>
+                      <Col md={{ span: 12 }} xl={{ span: 24 }}>
+                        <TextMediumGroup>
+                          <FormattedHTMLMessage id="app.forOrganizations.External.Text1" />
+                        </TextMediumGroup>
+                      </Col>
+                      <Col md={{ span: 12 }} xl={{ span: 24 }}>
+                        <StyledTextMediumGroup>
+                          <FormattedHTMLMessage id="app.forOrganizations.External.Text2" />
+                        </StyledTextMediumGroup>
+                        <TextMediumGroup>
+                          <FormattedHTMLMessage id="app.forOrganizations.External.Text3" />
+                        </TextMediumGroup>
+                      </Col>
+                    </Row>
                   </ExternalContent>
                 </ScrollAnimation>
               </Col>
@@ -525,12 +661,37 @@ export default class ForOrganizationsPage extends React.PureComponent {
             </ScrollAnimation>
           </BlockContainer>
         </HandprintSection>
-        <SliderSection>
-          <BlockContainer>
-            <SliderWrapper>
-              <SliderControls>
-                {sliderContent.map((slide, index) => {
-                  return (
+        {window.innerWidth <= 991 ? (
+          <CollapseWrapper>
+            <BlockContainer>
+              <Collapse accordion defaultActiveKey={['0']} bordered={false}>
+                {sliderContent.map((slide, index) => (
+                  <CollapsePanel
+                    key={index}
+                    header={
+                      <SliderTitle>
+                        <Num>{`${index + 1}.`}</Num>
+                        <span>{slide.title}</span>
+                      </SliderTitle>
+                    }
+                  >
+                    <TextMedium>{slide.text}</TextMedium>
+                    {slide.img && (
+                      <StyledImg>
+                        <img src={slide.img} alt="" />
+                      </StyledImg>
+                    )}
+                  </CollapsePanel>
+                ))}
+              </Collapse>
+            </BlockContainer>
+          </CollapseWrapper>
+        ) : (
+          <SliderSection>
+            <BlockContainer>
+              <SliderWrapper>
+                <SliderControls>
+                  {sliderContent.map((slide, index) => (
                     <SliderControlsItem
                       key={index}
                       className={
@@ -543,26 +704,32 @@ export default class ForOrganizationsPage extends React.PureComponent {
                         {slide.title}
                       </SliderControlsCaption>
                     </SliderControlsItem>
-                  )
-                })}
-              </SliderControls>
-              <StyledCarousel
-                {...this.props}
-                ref={node => (this.carousel = node)}
-                dots={false}
-                effect="fade"
-                infinite={false}
-              >
-                {sliderContent.map((slide, index) => (
-                  <div key={index}>
-                    <SliderTitle>{slide.title}</SliderTitle>
-                    <TextMedium>{slide.text}</TextMedium>
-                  </div>
-                ))}
-              </StyledCarousel>
-            </SliderWrapper>
-          </BlockContainer>
-        </SliderSection>
+                  ))}
+                </SliderControls>
+                <StyledCarousel
+                  {...this.props}
+                  ref={node => (this.carousel = node)}
+                  dots={false}
+                  effect="fade"
+                  infinite={false}
+                >
+                  {sliderContent.map((slide, index) => (
+                    <div key={index}>
+                      <SliderTitle>{slide.title}</SliderTitle>
+                      <TextMedium>{slide.text}</TextMedium>
+                      {slide.img && (
+                        <StyledImg>
+                          <img src={slide.img} alt="" />
+                        </StyledImg>
+                      )}
+                    </div>
+                  ))}
+                </StyledCarousel>
+              </SliderWrapper>
+            </BlockContainer>
+          </SliderSection>
+        )}
+
         <CtaWrap>
           <Wrap>
             <CtaTitle>
