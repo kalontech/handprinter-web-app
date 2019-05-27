@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Row, Button, Form, Input, Radio } from 'antd'
+import { Row, Button, Form, Input } from 'antd'
 import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -8,6 +8,7 @@ import { compose } from 'redux'
 import { Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import SearchableInput from 'components/SearchInfluencerInput'
+import _ from 'lodash'
 
 import { ACTIONS_SUBSETS, ACTION_STATES } from 'utils/constants'
 import * as api from 'api/actions'
@@ -17,7 +18,7 @@ import Spinner from 'components/Spinner'
 import treeImage from 'assets/actions/tree.png'
 import pigImage from 'assets/actions/pig.png'
 import decodeError from 'utils/decodeError'
-import { DefaultButton } from 'components/Styled'
+import { DefaultButton, Checkbox } from 'components/Styled'
 import Tooltip from 'components/Tooltip'
 import media, { sizes } from 'utils/mediaQueryTemplate'
 import MultipleInput from 'components/MultipleInput'
@@ -331,14 +332,7 @@ const ProposeViewContentInputWrap = styled.div`
   justify-content: space-between;
   flex-direction: column;
   flex: 1;
-  margin: 10px 20px 20px 20px;
-`
-
-const ProposeViewRadioWrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  margin: 0px 20px;
+  margin-top: 20px;
 `
 
 const ActionViewButtonsWrapper = styled.div`
@@ -408,28 +402,27 @@ const ActionContent = styled.div`
   width: 100%;
 `
 
-const RadioButton = styled(Radio)`
-  white-space: normal;
-  display: block;
-  margin: 10px 0px
-  borderradius: 1px;
-  .ant-radio-inner {
-    border-radius: 4px;
-    &:after {
-      border: none;
-    }
-  }
+const CheckboxStyled = styled(Checkbox)`
+  color: ${colors.dark};
+`
+
+const CheckboxWrapper = styled.div`
+  border-bottom: 1px solid ${colors.gray};
+  padding-bottom: 20px;
 `
 
 const SearchableInputHeader = styled.div`
   margin-bottom: 5px;
 `
 
+const ProposeView = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 30px; 0px;
+`
+
 const isSafariMobile = window.navigator.userAgent.match(/iPhone/i)
-const RADIO_CHOICE = {
-  withHP: 'withHandprinter',
-  withoutHP: 'withoutHandprinter',
-}
 export const INVITE_ACTION_SLUG = 'invite-people-to-join-handprinter'
 class ActionModalPage extends Component {
   state = {
@@ -443,7 +436,7 @@ class ActionModalPage extends Component {
     engageEmails: [],
     engageInputIsTyping: false,
     initiatorId: '',
-    radioChoice: RADIO_CHOICE.withHP,
+    isHabit: false,
   }
 
   componentDidMount() {
@@ -487,7 +480,7 @@ class ActionModalPage extends Component {
   }
 
   takeAction = async () => {
-    const { action, radioChoice, initiatorId } = this.state
+    const { action, initiatorId, isHabit } = this.state
 
     let modalType =
       action.status === ACTION_STATES.MODELING
@@ -502,11 +495,9 @@ class ActionModalPage extends Component {
 
     this.setState({ takeActionError: null, takingAction: true })
     try {
-      const notCausedByHandprint = radioChoice === RADIO_CHOICE.withoutHP
-
       const { takenAction } = await api.takeAction(
         action._id,
-        notCausedByHandprint,
+        isHabit,
         initiatorId,
       )
       this.setState({
@@ -878,6 +869,10 @@ class ActionModalPage extends Component {
     setFieldsValue({ invitationCode: code })
   }
 
+  handleHabitCheckbox = e => {
+    this.setState({ isHabit: e.target.checked })
+  }
+
   renderActionProposeView() {
     const { action, matchedUsersByCode } = this.state
     const {
@@ -889,47 +884,43 @@ class ActionModalPage extends Component {
         <Fragment>
           <EngageViewPanel>
             <EngageViewPicture src={action.picture} />
-            <ProposeViewRadioWrap>
-              <Radio.Group
-                onChange={this.handleRadioChange}
-                defaultValue={RADIO_CHOICE.withHP}
-              >
-                <RadioButton value={RADIO_CHOICE.withoutHP}>
+            <ProposeView>
+              <CheckboxWrapper>
+                <CheckboxStyled
+                  disabled={!_.get(action, 'habit.canBeHabit')}
+                  onChange={this.handleHabitCheckbox}
+                >
                   {formatMessage({
-                    id: 'app.actionsPage.without.using.handprinter',
+                    id: 'app.actions.card.habitCheckbox',
                   })}
-                </RadioButton>
-                <RadioButton value={RADIO_CHOICE.withHP}>
-                  {formatMessage({
-                    id: 'app.actionsPage.oneOfCauses',
-                  })}
-                </RadioButton>
-              </Radio.Group>
-            </ProposeViewRadioWrap>
-            <ProposeViewContentInputWrap>
-              <div>
-                <SearchableInputHeader>
-                  <FormattedMessage id="app.actionsPage.oneOfCausesEmails" />
-                </SearchableInputHeader>
-                <SearchableInput
-                  onSearch={this.handleCodeSearch}
-                  suggestions={matchedUsersByCode}
-                  onSelect={value =>
-                    this.handleRecruitingEmailsInputChange(value)
-                  }
-                  onChange={this.handleRecruitingEmailsInputChange}
-                />
-              </div>
+                </CheckboxStyled>
+              </CheckboxWrapper>
 
-              <EngageViewSendButton
-                type="primary"
-                htmlType="submit"
-                loading={false}
-                onClick={this.takeAction}
-              >
-                <FormattedMessage id="app.header.takeActionButton" />
-              </EngageViewSendButton>
-            </ProposeViewContentInputWrap>
+              <ProposeViewContentInputWrap>
+                <div>
+                  <SearchableInputHeader>
+                    <FormattedMessage id="app.actionsPage.oneOfCausesEmails" />
+                  </SearchableInputHeader>
+                  <SearchableInput
+                    onSearch={this.handleCodeSearch}
+                    suggestions={matchedUsersByCode}
+                    onSelect={value =>
+                      this.handleRecruitingEmailsInputChange(value)
+                    }
+                    onChange={this.handleRecruitingEmailsInputChange}
+                  />
+                </div>
+
+                <EngageViewSendButton
+                  type="primary"
+                  htmlType="submit"
+                  loading={false}
+                  onClick={this.takeAction}
+                >
+                  <FormattedMessage id="app.header.takeActionButton" />
+                </EngageViewSendButton>
+              </ProposeViewContentInputWrap>
+            </ProposeView>
           </EngageViewPanel>
         </Fragment>
       ),

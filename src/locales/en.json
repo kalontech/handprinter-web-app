@@ -570,5 +570,6 @@
     "app.pages.footprint.alert.text": "We recommended that you double check your estimate, including the units, to be sure of your value.",
     "app.pages.footprint.alert.confirm": "Confirm",
     "app.pages.footprint.alert.edit": "Edit",
-    "app.search.influencer.searchForInfluencer": "Search for influencer"
+    "app.search.influencer.searchForInfluencer": "Search for influencer",
+    "app.actions.card.habitCheckbox": "This action is a well established habit for me."
 }
