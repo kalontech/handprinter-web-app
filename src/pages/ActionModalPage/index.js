@@ -653,7 +653,7 @@ class ActionModalPage extends Component {
       history,
       intl: { formatMessage },
     } = this.props
-    const { action } = this.state
+    const { action, takenAction } = this.state
 
     let label = ''
     switch (type) {
@@ -720,7 +720,7 @@ class ActionModalPage extends Component {
               </Tooltip>
             ) : (
               <ActionCardLabelSet
-                impacts={action.impacts}
+                impacts={takenAction.impacts}
                 mobileFixedWidth={true}
                 hideTooltip={true}
               />
