@@ -37,3 +37,9 @@ export const getDashboardData = ({ userId, groupId, subset = 'me' } = {}) => {
 
 export const getCountryAvarageFootprint = () =>
   fetchAPI('/users/avarage_footprint')
+
+export const search = query =>
+  fetchAPI('/users/search', {
+    body: { query },
+    method: 'POST',
+  })

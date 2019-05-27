@@ -1,0 +1,54 @@
+<svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  transform="rotate(270)"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <mask
+    id="mask0"
+    mask-type="alpha"
+    maskUnits="userSpaceOnUse"
+    x="6"
+    y="8"
+    width="12"
+    height="9"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M18 10L16.59 8.59003L12 13.17L7.41 8.59003L6 10L12 16L18 10Z"
+      fill="white"
+    />
+  </mask>
+  <g mask="url(#mask0)">
+    <rect
+      x="37"
+      y="-13"
+      width="50"
+      height="50"
+      transform="rotate(90 37 -13)"
+      fill="#87BD24"
+    />
+    <mask
+      id="mask1"
+      mask-type="alpha"
+      maskUnits="userSpaceOnUse"
+      x="-13"
+      y="-13"
+      width="50"
+      height="50"
+    >
+      <rect
+        x="37"
+        y="-13"
+        width="50"
+        height="50"
+        transform="rotate(90 37 -13)"
+        fill="white"
+      />
+    </mask>
+    <g mask="url(#mask1)"></g>
+  </g>
+</svg>

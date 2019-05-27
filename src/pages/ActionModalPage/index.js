@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
+import SearchableInput from 'components/SearchInfluencerInput'
 
 import { ACTIONS_SUBSETS, ACTION_STATES } from 'utils/constants'
 import * as api from 'api/actions'
@@ -22,6 +23,7 @@ import media, { sizes } from 'utils/mediaQueryTemplate'
 import MultipleInput from 'components/MultipleInput'
 import CloseIcon from 'assets/icons/CloseIcon'
 import hexToRgba from 'utils/hexToRgba'
+import * as apiUser from 'api/user'
 
 const Container = styled(Row)`
   align-items: center;
@@ -328,7 +330,8 @@ const ProposeViewContentInputWrap = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  margin: 20px 20px 40px 20px;
+  flex: 1;
+  margin: 10px 20px 20px 20px;
 `
 
 const ProposeViewRadioWrap = styled.div`
@@ -418,10 +421,8 @@ const RadioButton = styled(Radio)`
   }
 `
 
-const CausesHpInput = styled(Input)`
-  height: 40px;
-  margin-bottom: 20px;
-  margin-top: 7px;
+const SearchableInputHeader = styled.div`
+  margin-bottom: 5px;
 `
 
 const isSafariMobile = window.navigator.userAgent.match(/iPhone/i)
@@ -441,7 +442,7 @@ class ActionModalPage extends Component {
     successEngageSent: false,
     engageEmails: [],
     engageInputIsTyping: false,
-    causedByEmail: '',
+    initiatorId: '',
     radioChoice: RADIO_CHOICE.withHP,
   }
 
@@ -486,7 +487,7 @@ class ActionModalPage extends Component {
   }
 
   takeAction = async () => {
-    const { action, radioChoice, causedByEmail } = this.state
+    const { action, radioChoice, initiatorId } = this.state
 
     let modalType =
       action.status === ACTION_STATES.MODELING
@@ -506,7 +507,7 @@ class ActionModalPage extends Component {
       const { takenAction } = await api.takeAction(
         action._id,
         notCausedByHandprint,
-        causedByEmail,
+        initiatorId,
       )
       this.setState({
         step: modalType,
@@ -528,8 +529,8 @@ class ActionModalPage extends Component {
     })
   }
 
-  handleRecruitingEmailsInputChange = e => {
-    this.setState({ causedByEmail: e.target.value })
+  handleRecruitingEmailsInputChange = initiatorId => {
+    this.setState({ initiatorId })
   }
 
   handleRadioChange = e => {
@@ -861,8 +862,24 @@ class ActionModalPage extends Component {
     })
   }
 
+  handleCodeSearch = async query => {
+    try {
+      const response = await apiUser.search(query)
+      this.setState({ matchedUsersByCode: response.users })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  handleCodeSelect = code => {
+    const {
+      form: { setFieldsValue },
+    } = this.props
+    setFieldsValue({ invitationCode: code })
+  }
+
   renderActionProposeView() {
-    const { action, causedByEmail } = this.state
+    const { action, matchedUsersByCode } = this.state
     const {
       intl: { formatMessage },
     } = this.props
@@ -890,15 +907,20 @@ class ActionModalPage extends Component {
               </Radio.Group>
             </ProposeViewRadioWrap>
             <ProposeViewContentInputWrap>
-              <FormattedMessage id="app.actionsPage.oneOfCausesEmails" />
-              <CausesHpInput
-                onChange={this.handleRecruitingEmailsInputChange}
-                type="text"
-                value={causedByEmail}
-                placeholder={formatMessage({
-                  id: 'app.actionsPage.oneOfCausesEmailsHint',
-                })}
-              />
+              <div>
+                <SearchableInputHeader>
+                  <FormattedMessage id="app.actionsPage.oneOfCausesEmails" />
+                </SearchableInputHeader>
+                <SearchableInput
+                  onSearch={this.handleCodeSearch}
+                  suggestions={matchedUsersByCode}
+                  onSelect={value =>
+                    this.handleRecruitingEmailsInputChange(value)
+                  }
+                  onChange={this.handleRecruitingEmailsInputChange}
+                />
+              </div>
+
               <EngageViewSendButton
                 type="primary"
                 htmlType="submit"

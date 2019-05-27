@@ -21,12 +21,12 @@ export const getActionsMyIdeas = (query = {}) =>
 
 export const getTimeValues = () => fetchAPI(`/actions/time_values`)
 
-export const takeAction = (actionId, notCausedByHandprint, causedByEmail) =>
+export const takeAction = (actionId, notCausedByHandprint, initiatorId) =>
   fetchAPI(`/actions/take`, {
     body: {
       actionId,
       notCausedByHandprint,
-      causedByEmail,
+      initiatorId,
       temporaryToken: getTemporaryToken(),
     },
     method: 'POST',
