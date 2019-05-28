@@ -874,7 +874,7 @@ class ActionModalPage extends Component {
   }
 
   renderActionProposeView() {
-    const { action, matchedUsersByCode } = this.state
+    const { action, matchedUsersByCode, takingAction } = this.state
     const {
       intl: { formatMessage },
     } = this.props
@@ -904,9 +904,7 @@ class ActionModalPage extends Component {
                   <SearchableInput
                     onSearch={this.handleCodeSearch}
                     suggestions={matchedUsersByCode}
-                    onSelect={value =>
-                      this.handleRecruitingEmailsInputChange(value)
-                    }
+                    onSelect={this.handleRecruitingEmailsInputChange}
                     onChange={this.handleRecruitingEmailsInputChange}
                   />
                 </div>
@@ -914,7 +912,7 @@ class ActionModalPage extends Component {
                 <EngageViewSendButton
                   type="primary"
                   htmlType="submit"
-                  loading={false}
+                  loading={takingAction}
                   onClick={this.takeAction}
                 >
                   <FormattedMessage id="app.header.takeActionButton" />
