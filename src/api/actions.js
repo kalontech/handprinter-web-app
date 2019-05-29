@@ -16,6 +16,9 @@ export const getSuggestedActions = (query = {}) =>
 export const getActionsHistory = (query = {}) =>
   fetchAPI(`/actions/taken?${qs.stringify(query)}`)
 
+export const getTakenActionAvailableFrom = (query = {}) =>
+  fetchAPI(`/actions/taken/available_from?${qs.stringify(query)}`)
+
 export const getActionsMyIdeas = (query = {}) =>
   fetchAPI(`/actions/get_ideas?${qs.stringify(query)}`)
 

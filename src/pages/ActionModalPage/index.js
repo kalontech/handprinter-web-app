@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import SearchableInput from 'components/SearchInfluencerInput'
 import _ from 'lodash'
+import moment from 'moment'
 
 import { ACTIONS_SUBSETS, ACTION_STATES } from 'utils/constants'
 import * as api from 'api/actions'
@@ -25,6 +26,7 @@ import MultipleInput from 'components/MultipleInput'
 import CloseIcon from 'assets/icons/CloseIcon'
 import hexToRgba from 'utils/hexToRgba'
 import * as apiUser from 'api/user'
+import { getTakenActionAvailableFrom } from 'api/actions'
 
 const Container = styled(Row)`
   align-items: center;
@@ -316,6 +318,11 @@ const EngageViewContentTitle = styled.p`
   margin-bottom: 20px;
 `
 
+const TextError = styled.p`
+  color: ${colors.orange};
+  font-size: 14px;
+`
+
 const EngageViewSendButton = styled(Button)`
   width: 100%;
   height: 47px;
@@ -397,8 +404,8 @@ const TakeActionButton = styled(Button)`
 
 const ActionContent = styled.div`
   height: 400px;
-  overflow: auto;
-  padding: 0 60px;
+  overflow: scroll;
+  padding: 0 60px 60px 60px;
   width: 100%;
 `
 
@@ -437,6 +444,7 @@ class ActionModalPage extends Component {
     engageInputIsTyping: false,
     initiatorId: '',
     isHabit: false,
+    availableFrom: moment(),
   }
 
   componentDidMount() {
@@ -444,6 +452,7 @@ class ActionModalPage extends Component {
 
     api.fetchAction({ slug: match.params.slug }).then(({ action }) => {
       this.setState({ action, step: ActionModalPageSteps.ACTION_VIEW })
+      this.checkAvailableTakeAction(action && action._id)
     })
   }
 
@@ -528,13 +537,23 @@ class ActionModalPage extends Component {
     this.setState({ radioChoice: e.target.value })
   }
 
+  checkAvailableTakeAction = async actionId => {
+    if (!actionId) return
+    try {
+      const res = await getTakenActionAvailableFrom({ actionId })
+      this.setState({ availableFrom: res.availableFrom })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   renderActionView = () => {
     const {
       location,
       intl: { formatMessage, locale },
       user,
     } = this.props
-    const { action, takeActionError, takingAction } = this.state
+    const { action, takeActionError, takingAction, availableFrom } = this.state
     let tooltipTextId, buttonTextId
     switch (action.status) {
       case ACTION_STATES.MODELING:
@@ -549,6 +568,8 @@ class ActionModalPage extends Component {
         tooltipTextId = 'app.actions.card.waitAdminHint'
         buttonTextId = 'app.actions.card.waitAdmin'
     }
+
+    const disabled = moment().isBefore(availableFrom)
     return this.renderInContainer({
       children: (
         <Fragment>
@@ -607,6 +628,18 @@ class ActionModalPage extends Component {
 
               {action.status !== ACTION_STATES.DENIED && (
                 <BottomPanel isIphone={isSafariMobile}>
+                  {!location.pathname.includes(ACTIONS_SUBSETS.TAKEN) &&
+                    moment().isBefore(availableFrom) && (
+                      <TextError>
+                        <FormattedMessage
+                          id={'app.actions.card.alreadyTaken'}
+                          values={{
+                            date: moment(availableFrom).format('MMM DD, YYYY'),
+                          }}
+                        />
+                      </TextError>
+                    )}
+
                   {action.status !== ACTION_STATES.PROPOSED && (
                     <ActionViewButtonsWrapper isIphone={isSafariMobile}>
                       {user && action.slug !== INVITE_ACTION_SLUG && (
@@ -624,6 +657,7 @@ class ActionModalPage extends Component {
                           loading={takingAction}
                           onClick={this.handleTakeAction}
                           isLoggedIn={user}
+                          disabled={disabled}
                         >
                           <FormattedMessage id="app.actions.takeAction" />
                         </TakeActionButton>
