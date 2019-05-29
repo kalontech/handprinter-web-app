@@ -31,8 +31,12 @@ import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 import heroImg from 'assets/for-organizations/organization.png'
 import internalImg from 'assets/for-organizations/internal.png'
 import externalImg from 'assets/for-organizations/external.png'
-import leafImg from 'assets/for-organizations/leaf.png'
-import slide5 from 'assets/for-organizations/slide5.png'
+import section1 from 'assets/for-organizations/section1.png'
+import section2 from 'assets/for-organizations/section2.png'
+import section3 from 'assets/for-organizations/section3.png'
+import section4 from 'assets/for-organizations/section4.png'
+import section5 from 'assets/for-organizations/section5.png'
+import section6 from 'assets/for-organizations/section6.png'
 
 import ctaImg from 'assets/for-organizations/cta-image.png'
 
@@ -43,27 +47,32 @@ const sliderContent = [
   {
     title: <FormattedMessage id={`app.forOrganizations.slider.slide1.title`} />,
     text: <FormattedMessage id={`app.forOrganizations.slider.slide1.text`} />,
+    img: section1,
   },
   {
     title: <FormattedMessage id={`app.forOrganizations.slider.slide2.title`} />,
     text: <FormattedMessage id={`app.forOrganizations.slider.slide2.text`} />,
+    img: section2,
   },
   {
     title: <FormattedMessage id={`app.forOrganizations.slider.slide3.title`} />,
     text: <FormattedMessage id={`app.forOrganizations.slider.slide3.text`} />,
+    img: section3,
   },
   {
     title: <FormattedMessage id={`app.forOrganizations.slider.slide4.title`} />,
     text: <FormattedMessage id={`app.forOrganizations.slider.slide4.text`} />,
+    img: section4,
   },
   {
     title: <FormattedMessage id={`app.forOrganizations.slider.slide5.title`} />,
     text: <FormattedMessage id={`app.forOrganizations.slider.slide5.text`} />,
-    img: slide5,
+    img: section5,
   },
   {
     title: <FormattedMessage id={`app.forOrganizations.slider.slide6.title`} />,
     text: <FormattedMessage id={`app.forOrganizations.slider.slide6.text`} />,
+    img: section6,
   },
 ]
 const ImgWrapCentered = styled.div`
@@ -400,36 +409,15 @@ const SliderControlsCaption = styled.span`
 `
 
 const StyledImg = styled(ImgWrapCentered)`
-  position: relative;
   margin: 40px auto;
-  max-width: 312px;
-  &:before {
-    z-index: 1;
-    position: absolute;
-    bottom: -25px;
-    right: 50%;
-    transform: translateX(190px);
-    width: 107px;
-    height: 168px;
-    content: '';
-    background: url(${leafImg}) no-repeat center / 100%;
-  }
+  display: flex;
+  justify-content: center;
   img {
-    position: relative;
-    left: -25px;
+    max-width: 100%;
+    max-height: 100%;
   }
   ${media.phone`
     margin: 20px auto 0;
-    img {
-      left: -15px;
-      width: 165px;
-    }
-    &:before {
-      bottom: -50px;
-      right: 50%;
-      transform: translateX(105px);
-      width: 57px;
-    }
   `};
 `
 
@@ -475,6 +463,11 @@ const CollapseWrapper = styled.section`
     & > .ant-collapse-item > .ant-collapse-header {
       padding: 26px 10px;
     }
+    .ant-collapse-item:last-child {
+      ${StyledImg} {
+        margin: 0;
+      }
+    }
     ${media.phone`
       margin-top: -45px;
       padding-top: 10px;
@@ -491,7 +484,30 @@ const CollapseWrapper = styled.section`
         display: flex;
         align-items: center;
       }
+      .ant-collapse-item:nth-child(5) {
+        ${StyledImg} {
+          img{
+            max-width: 200px;
+          }
+        }
+      }
     `};
+  }
+`
+
+const Slide = styled.div`
+  &.slide6 {
+    ${StyledImg} {
+      margin: -30px auto 0;
+    }
+  }
+  &.slide5 {
+    ${StyledImg} {
+      img {
+        position: relative;
+        left: 25px;
+      }
+    }
   }
 `
 
@@ -712,16 +728,17 @@ export default class ForOrganizationsPage extends React.PureComponent {
                   dots={false}
                   effect="fade"
                   infinite={false}
+                  adaptiveHeight
                 >
                   {sliderContent.map((slide, index) => (
                     <div key={index}>
-                      <SliderTitle>{slide.title}</SliderTitle>
-                      <TextMedium>{slide.text}</TextMedium>
-                      {slide.img && (
+                      <Slide className={`slide${index + 1}`}>
+                        <SliderTitle>{slide.title}</SliderTitle>
+                        <TextMedium>{slide.text}</TextMedium>
                         <StyledImg>
                           <img src={slide.img} alt="" />
                         </StyledImg>
-                      )}
+                      </Slide>
                     </div>
                   ))}
                 </StyledCarousel>
