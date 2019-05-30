@@ -352,7 +352,13 @@ class RegisterPage extends Component {
             <ActionCardRightHalf span={12}>
               <FormWrap>
                 <ActionCardTitle>
-                  <FormattedMessage id="app.registerPage.title" />
+                  <FormattedMessage
+                    id={
+                      overrides && overrides.brandName === 'Eaton'
+                        ? 'app.registerPage.title.eaton'
+                        : 'app.registerPage.title'
+                    }
+                  />
                 </ActionCardTitle>
                 <Form onSubmit={this.handleSubmit} className="login-form">
                   <FormItem>

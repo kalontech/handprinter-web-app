@@ -319,7 +319,7 @@ const EngageViewContentTitle = styled.p`
 `
 
 const TextError = styled.p`
-  color: ${colors.orange};
+  color: ${colors.ocean};
   font-size: 14px;
 `
 
