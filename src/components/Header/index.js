@@ -911,7 +911,13 @@ class Header extends Component {
                                   overrides.brandName === 'Interface' && (
                                     <LogoImg src={loginIcon} alt="icon" />
                                   )}
-                                <FormattedMessage id="app.header.menu.login" />
+                                <FormattedMessage
+                                  id={
+                                    overrides && overrides.brandName === 'Eaton'
+                                      ? 'app.header.menu.login.eaton'
+                                      : 'app.header.menu.login'
+                                  }
+                                />
                               </CenterAlign>
                             </Link>
                           </Menu.Item>
