@@ -652,6 +652,7 @@ class ActionModalPage extends Component {
       closeModal,
       history,
       intl: { formatMessage },
+      overrides,
     } = this.props
     const { action, takenAction } = this.state
 
@@ -746,7 +747,13 @@ class ActionModalPage extends Component {
                 <TakenActionAuthContent>
                   <Link to="/account/login">
                     <DefaultButton type="primary">
-                      <FormattedMessage id="app.actions.congratulations.login" />
+                      <FormattedMessage
+                        id={
+                          overrides && overrides.brandName === 'Eaton'
+                            ? 'app.actions.congratulations.login.eaton'
+                            : 'app.actions.congratulations.login'
+                        }
+                      />
                     </DefaultButton>
                   </Link>
                   <TakenActionAuthContentOr>
@@ -754,7 +761,13 @@ class ActionModalPage extends Component {
                   </TakenActionAuthContentOr>
                   <Link to="/account/register">
                     <Button type="primary">
-                      <FormattedMessage id="app.actions.congratulations.register" />
+                      <FormattedMessage
+                        id={
+                          overrides && overrides.brandName === 'Eaton'
+                            ? 'app.actions.congratulations.register.eaton'
+                            : 'app.actions.congratulations.register'
+                        }
+                      />
                     </Button>
                   </Link>
                 </TakenActionAuthContent>
@@ -963,6 +976,7 @@ ActionModalPage.propTypes = {
   match: PropTypes.object,
   history: PropTypes.object,
   user: PropTypes.object,
+  overrides: PropTypes.object,
 }
 
 const mapStateToProps = state => ({

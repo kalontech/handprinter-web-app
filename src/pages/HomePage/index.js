@@ -336,7 +336,13 @@ class HomePage extends Component {
                     <Link to="/account/register">
                       <PrimaryButton type="primary" size="large">
                         <FingerPrintIcon />
-                        <FormattedMessage id="app.homePage.hero.link" />
+                        <FormattedMessage
+                          id={
+                            overrides && overrides.brandName === 'Eaton'
+                              ? 'app.homePage.hero.link.eaton'
+                              : 'app.homePage.hero.link'
+                          }
+                        />
                       </PrimaryButton>
                     </Link>
                     <DefaultButton onClick={this.openModal}>

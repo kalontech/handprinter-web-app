@@ -753,14 +753,20 @@ class Header extends Component {
                         style={overrides && { borderRadius: '0' }}
                       >
                         <FingerPrintIcon id="primaryBtnIcon" />
-                        <FormattedMessage id={'app.header.link'} />
+                        <FormattedMessage
+                          id={
+                            overrides && overrides.brandName === 'Eaton'
+                              ? 'app.header.link.eaton'
+                              : 'app.header.link'
+                          }
+                        />
                       </PrimaryButton>
                     </Link>
                   )}
                   <Link to="/account/login" onClick={this.onClick}>
                     {overrides && overrides.brandName === 'Eaton' ? (
                       <BlueBorderedButton>
-                        <FormattedMessage id="app.header.menu.login" />
+                        <FormattedMessage id="app.header.menu.login.eaton" />
                       </BlueBorderedButton>
                     ) : overrides && overrides.brandName === 'Interface' ? (
                       <GrayBorderedButton>
@@ -915,7 +921,13 @@ class Header extends Component {
                           <Link to="/account/register">
                             <PrimaryButton type="primary" size="large">
                               <FingerPrintIcon id="primaryBtnIcon" />
-                              <FormattedMessage id={'app.header.link'} />
+                              <FormattedMessage
+                                id={
+                                  overrides && overrides.brandName === 'Eaton'
+                                    ? 'app.header.link.eaton'
+                                    : 'app.header.link'
+                                }
+                              />
                             </PrimaryButton>
                           </Link>
                         )}
