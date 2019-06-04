@@ -3,6 +3,7 @@ import { Layout, Row, Col } from 'antd'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
+import PropTypes from 'prop-types'
 
 import { BlockContainer } from 'components/Styled'
 import FooterLanguageSelector from 'components/FooterLanguageSelector'
@@ -160,7 +161,7 @@ const DecriptionLink = styled.a`
   }
 `
 
-const Footer = () => (
+const Footer = ({ brandedConfig }) => (
   <FooterWrap>
     <FooterContent>
       <Wrap>
@@ -200,6 +201,13 @@ const Footer = () => (
                           <FormattedMessage id="app.footer.menu.faq" />
                         </Link>
                       </li>
+                      {!brandedConfig && (
+                        <li>
+                          <Link to="/pages/donations">
+                            <FormattedMessage id="app.footer.menu.donations" />
+                          </Link>
+                        </li>
+                      )}
                     </FooterMenu>
                     <FooterImage mobile>
                       <img src={footerLogo} alt="" />
@@ -266,4 +274,7 @@ const Footer = () => (
   </FooterWrap>
 )
 
+Footer.propTypes = {
+  brandedConfig: PropTypes.object,
+}
 export default Footer
