@@ -100,7 +100,7 @@ const RouteWrapper = ({
                   ))}
                 {!withoutFooter &&
                   ((brandedConfig && brandedConfig.footerComponent) || (
-                    <Footer />
+                    <Footer brandedConfig={brandedConfig} />
                   ))}
                 <ModalContainer />
               </Layout>

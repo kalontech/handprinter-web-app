@@ -28,6 +28,7 @@ import SetNewPasswordPage from './pages/SetNewPasswordPage'
 import ProfilePage from './pages/ProfilePage'
 import IncreaseHandprintPage from './pages/IncreaseHandprintPage'
 import PrivacyPolicyTermsPages from './pages/PrivacyPolicyTermsPages'
+import DonationPage from './pages/DonationPage'
 
 const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = process.env
 
@@ -131,6 +132,14 @@ const AppRouter = () => {
             requireAuthentication
             withoutCTA
           />
+          {!brandedConfig && (
+            <Route
+              path="/pages/donations"
+              component={DonationPage}
+              withoutCTA
+              useAuthentication
+            />
+          )}
           <Route
             path="/pages/our-vision"
             component={OurVisionPage}

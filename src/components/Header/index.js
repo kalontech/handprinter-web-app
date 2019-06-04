@@ -249,9 +249,9 @@ const Hamburger = styled.div`
 `
 
 const CollapseMenu = styled(CollapsedMenu)`
-  z-index: 1;
+  z-index: 2;
   position: fixed;
-  top: 90px;
+  top: 89px;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -815,6 +815,13 @@ class Header extends Component {
                           <FormattedMessage id="app.header.menu.faq" />
                         </Link>
                       </Menu.Item>
+                      {(!overrides || !overrides.brandName) && (
+                        <Menu.Item key="/pages/donations">
+                          <Link to="/pages/donations">
+                            <FormattedMessage id="app.header.menu.donations" />
+                          </Link>
+                        </Menu.Item>
+                      )}
                     </SubMenu>
                   </Menu>
                   <CollapseLanguageSelector iconColor={brandColor} />
@@ -883,6 +890,13 @@ class Header extends Component {
                                   <FormattedMessage id="app.header.menu.faq" />
                                 </Link>
                               </Menu.Item>
+                              {(!overrides || !overrides.brandName) && (
+                                <Menu.Item key="/pages/donations">
+                                  <Link to="/pages/donations">
+                                    <FormattedMessage id="app.header.menu.donations" />
+                                  </Link>
+                                </Menu.Item>
+                              )}
                             </HeaderPopover>
                           }
                         >
@@ -1012,6 +1026,13 @@ class Header extends Component {
                           <FormattedMessage id="app.header.menu.faq" />
                         </Link>
                       </Menu.Item>
+                      {(!overrides || !overrides.brandName) && (
+                        <Menu.Item key="/pages/donations">
+                          <Link to="/pages/donations">
+                            <FormattedMessage id="app.header.menu.donations" />
+                          </Link>
+                        </Menu.Item>
+                      )}
                     </SubMenu>
                     {overrides &&
                     overrides.inLinkLogo &&
@@ -1099,7 +1120,7 @@ class Header extends Component {
               )}
               <LogoSmall>
                 <Link
-                  style={headerLogoLinkStyle}
+                  style={overrides && headerLogoLinkStyle}
                   to={
                     overrides && overrides.brandName !== 'Eaton'
                       ? '/pages/home'
@@ -1203,6 +1224,13 @@ class Header extends Component {
                                 <FormattedMessage id="app.header.menu.faq" />
                               </Link>
                             </Menu.Item>
+                            {(!overrides || !overrides.brandName) && (
+                              <Menu.Item key="/pages/donations">
+                                <Link to="/pages/donations">
+                                  <FormattedMessage id="app.header.menu.donations" />
+                                </Link>
+                              </Menu.Item>
+                            )}
                           </HeaderPopover>
                         }
                       >
