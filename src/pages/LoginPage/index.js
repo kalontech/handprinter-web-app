@@ -71,6 +71,7 @@ class LoginPage extends Component {
       form: { getFieldDecorator },
       intl: { formatMessage },
       isLoggingIn,
+      overrides,
     } = this.props
     return (
       <Fragment>
@@ -84,7 +85,13 @@ class LoginPage extends Component {
             <ActionCardRightHalf span={12}>
               <ActionCardFormWrapper>
                 <ActionCardTitle>
-                  <FormattedMessage id="app.loginPage.title" />
+                  <FormattedMessage
+                    id={
+                      overrides && overrides.brandName === 'Eaton'
+                        ? 'app.loginPage.title.eaton'
+                        : 'app.loginPage.title'
+                    }
+                  />
                 </ActionCardTitle>
                 <Form onSubmit={this.handleSubmit}>
                   <FormItem>
@@ -115,7 +122,13 @@ class LoginPage extends Component {
                     style={{ width: '100%' }}
                     loading={isLoggingIn}
                   >
-                    <FormattedMessage id="app.loginPage.login" />
+                    <FormattedMessage
+                      id={
+                        overrides && overrides.brandName === 'Eaton'
+                          ? 'app.loginPage.login.eaton'
+                          : 'app.loginPage.login'
+                      }
+                    />
                   </Button>
                   <FormItem>
                     {getFieldDecorator('formError')(<Input type="hidden" />)}
@@ -124,7 +137,13 @@ class LoginPage extends Component {
                     <span>
                       <FormattedMessage id="app.loginPage.doNotHaveAnAccount" />{' '}
                       <Link to="/account/register">
-                        <FormattedMessage id="app.loginPage.register" />
+                        <FormattedMessage
+                          id={
+                            overrides && overrides.brandName === 'Eaton'
+                              ? 'app.loginPage.register.eaton'
+                              : 'app.loginPage.register'
+                          }
+                        />
                       </Link>
                     </span>
                   </ActionCardRegisterBlock>

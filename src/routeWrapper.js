@@ -88,7 +88,16 @@ const RouteWrapper = ({
                 </Layout.Content>
                 {!withoutCTA &&
                   !user &&
-                  ((brandedConfig && brandedConfig.ctaComponent) || <Cta />)}
+                  ((brandedConfig && brandedConfig.ctaComponent) || (
+                    <Cta
+                      overrides={
+                        brandedConfig && {
+                          brandName: brandedConfig.brandName,
+                          ...brandedConfig.headerOverrides,
+                        }
+                      }
+                    />
+                  ))}
                 {!withoutFooter &&
                   ((brandedConfig && brandedConfig.footerComponent) || (
                     <Footer />

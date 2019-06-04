@@ -160,6 +160,7 @@ const ActionCard = props => {
     isSlide,
     styles,
     onClick,
+    isHabit,
   } = props
 
   return (
@@ -221,7 +222,13 @@ const ActionCard = props => {
               />
             )}
             {suggestedBy.selfTaken && (
-              <FormattedHTMLMessage id="app.actions.card.iTookAction" />
+              <FormattedHTMLMessage
+                id={
+                  isHabit
+                    ? 'app.actions.card.iTookAction.habit'
+                    : 'app.actions.card.iTookAction'
+                }
+              />
             )}{' '}
           </SuggestedInfoInitiator>
           <SuggestedInfoDate>
@@ -249,6 +256,7 @@ ActionCard.propTypes = {
   onClick: PropTypes.func,
   suggestedBy: PropTypes.object,
   suggestedAt: PropTypes.string,
+  isHabit: PropTypes.bool,
 }
 
 export default ActionCard

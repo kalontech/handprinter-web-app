@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Row, Button, Form, Input, Radio } from 'antd'
+import { Row, Button, Form, Input } from 'antd'
 import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -8,6 +8,8 @@ import { compose } from 'redux'
 import { Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import SearchableInput from 'components/SearchInfluencerInput'
+import _ from 'lodash'
+import moment from 'moment'
 
 import { ACTIONS_SUBSETS, ACTION_STATES } from 'utils/constants'
 import * as api from 'api/actions'
@@ -17,13 +19,14 @@ import Spinner from 'components/Spinner'
 import treeImage from 'assets/actions/tree.png'
 import pigImage from 'assets/actions/pig.png'
 import decodeError from 'utils/decodeError'
-import { DefaultButton } from 'components/Styled'
+import { DefaultButton, Checkbox } from 'components/Styled'
 import Tooltip from 'components/Tooltip'
 import media, { sizes } from 'utils/mediaQueryTemplate'
 import MultipleInput from 'components/MultipleInput'
 import CloseIcon from 'assets/icons/CloseIcon'
 import hexToRgba from 'utils/hexToRgba'
 import * as apiUser from 'api/user'
+import { getTakenActionAvailableFrom } from 'api/actions'
 
 const Container = styled(Row)`
   align-items: center;
@@ -315,6 +318,11 @@ const EngageViewContentTitle = styled.p`
   margin-bottom: 20px;
 `
 
+const TextError = styled.p`
+  color: ${colors.ocean};
+  font-size: 14px;
+`
+
 const EngageViewSendButton = styled(Button)`
   width: 100%;
   height: 47px;
@@ -331,14 +339,7 @@ const ProposeViewContentInputWrap = styled.div`
   justify-content: space-between;
   flex-direction: column;
   flex: 1;
-  margin: 10px 20px 20px 20px;
-`
-
-const ProposeViewRadioWrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  margin: 0px 20px;
+  margin-top: 20px;
 `
 
 const ActionViewButtonsWrapper = styled.div`
@@ -403,33 +404,32 @@ const TakeActionButton = styled(Button)`
 
 const ActionContent = styled.div`
   height: 400px;
-  overflow: auto;
-  padding: 0 60px;
+  overflow: scroll;
+  padding: 0 60px 60px 60px;
   width: 100%;
 `
 
-const RadioButton = styled(Radio)`
-  white-space: normal;
-  display: block;
-  margin: 10px 0px
-  borderradius: 1px;
-  .ant-radio-inner {
-    border-radius: 4px;
-    &:after {
-      border: none;
-    }
-  }
+const CheckboxStyled = styled(Checkbox)`
+  color: ${colors.dark};
+`
+
+const CheckboxWrapper = styled.div`
+  border-bottom: 1px solid ${colors.gray};
+  padding-bottom: 20px;
 `
 
 const SearchableInputHeader = styled.div`
   margin-bottom: 5px;
 `
 
+const ProposeView = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 30px; 0px;
+`
+
 const isSafariMobile = window.navigator.userAgent.match(/iPhone/i)
-const RADIO_CHOICE = {
-  withHP: 'withHandprinter',
-  withoutHP: 'withoutHandprinter',
-}
 export const INVITE_ACTION_SLUG = 'invite-people-to-join-handprinter'
 class ActionModalPage extends Component {
   state = {
@@ -443,7 +443,8 @@ class ActionModalPage extends Component {
     engageEmails: [],
     engageInputIsTyping: false,
     initiatorId: '',
-    radioChoice: RADIO_CHOICE.withHP,
+    isHabit: false,
+    availableFrom: moment(),
   }
 
   componentDidMount() {
@@ -451,6 +452,7 @@ class ActionModalPage extends Component {
 
     api.fetchAction({ slug: match.params.slug }).then(({ action }) => {
       this.setState({ action, step: ActionModalPageSteps.ACTION_VIEW })
+      this.checkAvailableTakeAction(action && action._id)
     })
   }
 
@@ -487,7 +489,7 @@ class ActionModalPage extends Component {
   }
 
   takeAction = async () => {
-    const { action, radioChoice, initiatorId } = this.state
+    const { action, initiatorId, isHabit } = this.state
 
     let modalType =
       action.status === ACTION_STATES.MODELING
@@ -502,11 +504,9 @@ class ActionModalPage extends Component {
 
     this.setState({ takeActionError: null, takingAction: true })
     try {
-      const notCausedByHandprint = radioChoice === RADIO_CHOICE.withoutHP
-
       const { takenAction } = await api.takeAction(
         action._id,
-        notCausedByHandprint,
+        isHabit,
         initiatorId,
       )
       this.setState({
@@ -537,13 +537,23 @@ class ActionModalPage extends Component {
     this.setState({ radioChoice: e.target.value })
   }
 
+  checkAvailableTakeAction = async actionId => {
+    if (!actionId) return
+    try {
+      const res = await getTakenActionAvailableFrom({ actionId })
+      this.setState({ availableFrom: res.availableFrom })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   renderActionView = () => {
     const {
       location,
       intl: { formatMessage, locale },
       user,
     } = this.props
-    const { action, takeActionError, takingAction } = this.state
+    const { action, takeActionError, takingAction, availableFrom } = this.state
     let tooltipTextId, buttonTextId
     switch (action.status) {
       case ACTION_STATES.MODELING:
@@ -558,6 +568,8 @@ class ActionModalPage extends Component {
         tooltipTextId = 'app.actions.card.waitAdminHint'
         buttonTextId = 'app.actions.card.waitAdmin'
     }
+
+    const disabled = moment().isBefore(availableFrom)
     return this.renderInContainer({
       children: (
         <Fragment>
@@ -616,6 +628,18 @@ class ActionModalPage extends Component {
 
               {action.status !== ACTION_STATES.DENIED && (
                 <BottomPanel isIphone={isSafariMobile}>
+                  {!location.pathname.includes(ACTIONS_SUBSETS.TAKEN) &&
+                    moment().isBefore(availableFrom) && (
+                      <TextError>
+                        <FormattedMessage
+                          id={'app.actions.card.alreadyTaken'}
+                          values={{
+                            date: moment(availableFrom).format('MMM DD, YYYY'),
+                          }}
+                        />
+                      </TextError>
+                    )}
+
                   {action.status !== ACTION_STATES.PROPOSED && (
                     <ActionViewButtonsWrapper isIphone={isSafariMobile}>
                       {user && action.slug !== INVITE_ACTION_SLUG && (
@@ -633,6 +657,7 @@ class ActionModalPage extends Component {
                           loading={takingAction}
                           onClick={this.handleTakeAction}
                           isLoggedIn={user}
+                          disabled={disabled}
                         >
                           <FormattedMessage id="app.actions.takeAction" />
                         </TakeActionButton>
@@ -661,8 +686,9 @@ class ActionModalPage extends Component {
       closeModal,
       history,
       intl: { formatMessage },
+      overrides,
     } = this.props
-    const { action } = this.state
+    const { action, takenAction } = this.state
 
     let label = ''
     switch (type) {
@@ -729,7 +755,7 @@ class ActionModalPage extends Component {
               </Tooltip>
             ) : (
               <ActionCardLabelSet
-                impacts={action.impacts}
+                impacts={takenAction.impacts}
                 mobileFixedWidth={true}
                 hideTooltip={true}
               />
@@ -755,7 +781,13 @@ class ActionModalPage extends Component {
                 <TakenActionAuthContent>
                   <Link to="/account/login">
                     <DefaultButton type="primary">
-                      <FormattedMessage id="app.actions.congratulations.login" />
+                      <FormattedMessage
+                        id={
+                          overrides && overrides.brandName === 'Eaton'
+                            ? 'app.actions.congratulations.login.eaton'
+                            : 'app.actions.congratulations.login'
+                        }
+                      />
                     </DefaultButton>
                   </Link>
                   <TakenActionAuthContentOr>
@@ -763,7 +795,13 @@ class ActionModalPage extends Component {
                   </TakenActionAuthContentOr>
                   <Link to="/account/register">
                     <Button type="primary">
-                      <FormattedMessage id="app.actions.congratulations.register" />
+                      <FormattedMessage
+                        id={
+                          overrides && overrides.brandName === 'Eaton'
+                            ? 'app.actions.congratulations.register.eaton'
+                            : 'app.actions.congratulations.register'
+                        }
+                      />
                     </Button>
                   </Link>
                 </TakenActionAuthContent>
@@ -878,8 +916,12 @@ class ActionModalPage extends Component {
     setFieldsValue({ invitationCode: code })
   }
 
+  handleHabitCheckbox = e => {
+    this.setState({ isHabit: e.target.checked })
+  }
+
   renderActionProposeView() {
-    const { action, matchedUsersByCode } = this.state
+    const { action, matchedUsersByCode, takingAction } = this.state
     const {
       intl: { formatMessage },
     } = this.props
@@ -889,47 +931,41 @@ class ActionModalPage extends Component {
         <Fragment>
           <EngageViewPanel>
             <EngageViewPicture src={action.picture} />
-            <ProposeViewRadioWrap>
-              <Radio.Group
-                onChange={this.handleRadioChange}
-                defaultValue={RADIO_CHOICE.withHP}
-              >
-                <RadioButton value={RADIO_CHOICE.withoutHP}>
+            <ProposeView>
+              <CheckboxWrapper>
+                <CheckboxStyled
+                  disabled={!_.get(action, 'habit.canBeHabit')}
+                  onChange={this.handleHabitCheckbox}
+                >
                   {formatMessage({
-                    id: 'app.actionsPage.without.using.handprinter',
+                    id: 'app.actions.card.habitCheckbox',
                   })}
-                </RadioButton>
-                <RadioButton value={RADIO_CHOICE.withHP}>
-                  {formatMessage({
-                    id: 'app.actionsPage.oneOfCauses',
-                  })}
-                </RadioButton>
-              </Radio.Group>
-            </ProposeViewRadioWrap>
-            <ProposeViewContentInputWrap>
-              <div>
-                <SearchableInputHeader>
-                  <FormattedMessage id="app.actionsPage.oneOfCausesEmails" />
-                </SearchableInputHeader>
-                <SearchableInput
-                  onSearch={this.handleCodeSearch}
-                  suggestions={matchedUsersByCode}
-                  onSelect={value =>
-                    this.handleRecruitingEmailsInputChange(value)
-                  }
-                  onChange={this.handleRecruitingEmailsInputChange}
-                />
-              </div>
+                </CheckboxStyled>
+              </CheckboxWrapper>
 
-              <EngageViewSendButton
-                type="primary"
-                htmlType="submit"
-                loading={false}
-                onClick={this.takeAction}
-              >
-                <FormattedMessage id="app.header.takeActionButton" />
-              </EngageViewSendButton>
-            </ProposeViewContentInputWrap>
+              <ProposeViewContentInputWrap>
+                <div>
+                  <SearchableInputHeader>
+                    <FormattedMessage id="app.actionsPage.oneOfCausesEmails" />
+                  </SearchableInputHeader>
+                  <SearchableInput
+                    onSearch={this.handleCodeSearch}
+                    suggestions={matchedUsersByCode}
+                    onSelect={this.handleRecruitingEmailsInputChange}
+                    onChange={this.handleRecruitingEmailsInputChange}
+                  />
+                </div>
+
+                <EngageViewSendButton
+                  type="primary"
+                  htmlType="submit"
+                  loading={takingAction}
+                  onClick={this.takeAction}
+                >
+                  <FormattedMessage id="app.header.takeActionButton" />
+                </EngageViewSendButton>
+              </ProposeViewContentInputWrap>
+            </ProposeView>
           </EngageViewPanel>
         </Fragment>
       ),
@@ -974,6 +1010,7 @@ ActionModalPage.propTypes = {
   match: PropTypes.object,
   history: PropTypes.object,
   user: PropTypes.object,
+  overrides: PropTypes.object,
 }
 
 const mapStateToProps = state => ({

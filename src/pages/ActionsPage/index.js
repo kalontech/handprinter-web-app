@@ -758,6 +758,7 @@ class ActionsPage extends React.PureComponent {
                             action.suggestedAt &&
                             formatRelative(action.suggestedAt)
                           }
+                          isHabit={action.isHabit}
                         />
                       </ScrollAnimation>
                     </Col>
