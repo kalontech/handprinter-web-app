@@ -657,7 +657,7 @@ class DonationPage extends Component {
                 <FormItem>
                   {form.getFieldDecorator('amount', {
                     valuePropName: 'checked',
-                    initialValue: false,
+                    initialValue: true,
                     rules: [
                       required(
                         intl.formatMessage({ id: 'app.errors.isRequired' }),
