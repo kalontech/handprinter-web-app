@@ -73,13 +73,7 @@ const Cta = overrides => (
       <Link to="/account/register">
         <PrimaryButton type="primary" size="large">
           <FingerPrintIcon />
-          <FormattedMessage
-            id={
-              overrides && overrides.brandName === 'Eaton'
-                ? 'app.footer.cta.link.eaton'
-                : 'app.footer.cta.link'
-            }
-          />
+          <FormattedMessage id={'app.footer.cta.link'} />
         </PrimaryButton>
       </Link>
       <CtaImage src={ctaImg} alt="cta image" />
