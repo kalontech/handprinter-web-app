@@ -790,11 +790,13 @@ class Header extends Component {
                         <FormattedMessage id="app.header.menu.actions" />
                       </Link>
                     </Menu.Item>
-                    <Menu.Item key="/pages/for-organizations">
-                      <Link to="/pages/for-organizations">
-                        <FormattedMessage id="app.header.menu.forOrganizations" />
-                      </Link>
-                    </Menu.Item>
+                    {(!overrides || !overrides.brandName) && (
+                      <Menu.Item key="/pages/for-organizations">
+                        <Link to="/pages/for-organizations">
+                          <FormattedMessage id="app.header.menu.forOrganizations" />
+                        </Link>
+                      </Menu.Item>
+                    )}
                     <SubMenu
                       key="about"
                       title={
@@ -870,11 +872,13 @@ class Header extends Component {
                               <FormattedMessage id="app.header.menu.actions" />
                             </Link>
                           </Menu.Item>
-                          <Menu.Item key="/pages/for-organizations">
-                            <Link to="/pages/for-organizations">
-                              <FormattedMessage id="app.header.menu.forOrganizations" />
-                            </Link>
-                          </Menu.Item>
+                          {(!overrides || !overrides.brandName) && (
+                            <Menu.Item key="/pages/for-organizations">
+                              <Link to="/pages/for-organizations">
+                                <FormattedMessage id="app.header.menu.forOrganizations" />
+                              </Link>
+                            </Menu.Item>
+                          )}
                         </Menu>
                         <Popover
                           placement="bottomLeft"
@@ -1001,6 +1005,13 @@ class Header extends Component {
                         <FormattedMessage id="app.header.menu.actions" />
                       </Link>
                     </Menu.Item>
+                    {(!overrides || !overrides.brandName) && (
+                      <Menu.Item key="/pages/for-organizations">
+                        <Link to="/pages/for-organizations">
+                          <FormattedMessage id="app.header.menu.forOrganizations" />
+                        </Link>
+                      </Menu.Item>
+                    )}
                     <Menu.Item key="/account/news">
                       <Link to="/account/news">
                         <FormattedMessage id="app.header.menu.news" />
@@ -1173,7 +1184,13 @@ class Header extends Component {
                             <FormattedMessage id="app.header.menu.actions" />
                           </Link>
                         </Menu.Item>
-
+                        {(!overrides || !overrides.brandName) && (
+                          <Menu.Item key="/pages/for-organizations">
+                            <Link to="/pages/for-organizations">
+                              <FormattedMessage id="app.header.menu.forOrganizations" />
+                            </Link>
+                          </Menu.Item>
+                        )}
                         <Menu.Item key="/account/news">
                           <Link to="/account/news">
                             <FormattedMessage id="app.header.menu.news" />

@@ -28,6 +28,8 @@ import SetNewPasswordPage from './pages/SetNewPasswordPage'
 import ProfilePage from './pages/ProfilePage'
 import IncreaseHandprintPage from './pages/IncreaseHandprintPage'
 import PrivacyPolicyTermsPages from './pages/PrivacyPolicyTermsPages'
+import CreateOrganizationPage from './pages/CreateOrganizationPage'
+import CreateOrganizationSuccessPage from './pages/CreateOrganizationSuccessPage'
 import ForOrganizationsPage from './pages/ForOrganizationsPage'
 import DonationPage from './pages/DonationPage'
 
@@ -107,12 +109,14 @@ const AppRouter = () => {
             withoutCTA
             useAuthentication
           />
-          <Route
-            path="/pages/for-organizations"
-            component={ForOrganizationsPage}
-            useAuthentication
-            withoutCTA
-          />
+          {!brandedConfig && (
+            <Route
+              path="/pages/for-organizations"
+              component={ForOrganizationsPage}
+              useAuthentication
+              withoutCTA
+            />
+          )}
           <Route
             path="/account/login"
             component={LoginPage}
@@ -193,6 +197,24 @@ const AppRouter = () => {
             withoutHeaderContent
             withoutCTA
             withoutFooter
+          />
+          <Route
+            path="/account/create-organization/success"
+            component={CreateOrganizationSuccessPage}
+            headerType="minimal"
+            withoutHeaderContent
+            withoutCTA
+            withoutFooter
+            useAuthentication
+          />
+          <Route
+            path="/account/create-organization"
+            component={CreateOrganizationPage}
+            headerType="minimal"
+            withoutHeaderContent
+            withoutCTA
+            withoutFooter
+            useAuthentication
           />
           <Route
             path="/account/:personId"

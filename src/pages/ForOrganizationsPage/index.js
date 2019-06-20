@@ -553,7 +553,7 @@ export default class ForOrganizationsPage extends React.PureComponent {
                     <FormattedMessage id="app.forOrganizations.Hero.Text" />
                   </HeroText>
                   <HeroButton>
-                    <Link to="/">
+                    <Link to="/account/create-organization">
                       <SecondaryButton>
                         <FormattedMessage id="app.forOrganizations.Hero.Link" />
                       </SecondaryButton>
@@ -752,7 +752,7 @@ export default class ForOrganizationsPage extends React.PureComponent {
             <CtaTitle>
               <FormattedMessage id="app.forOrganizations.Cta.Title" />
             </CtaTitle>
-            <Link to="/">
+            <Link to="/account/create-organization">
               <PrimaryButton type="primary" size="large">
                 <FormattedMessage id="app.forOrganizations.Cta.Link" />
               </PrimaryButton>

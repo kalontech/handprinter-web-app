@@ -18,7 +18,7 @@ export const INITIAL_STATE = {
 }
 
 export const { Types, Creators } = createActions({
-  logInRequest: ['email', 'password'],
+  logInRequest: ['email', 'password', 'createOrganizationFlow'],
   logInSuccess: ['token'],
   logInFailure: ['error'],
   registerRequest: data => ({

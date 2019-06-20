@@ -26,7 +26,6 @@ import MultipleInput from 'components/MultipleInput'
 import CloseIcon from 'assets/icons/CloseIcon'
 import hexToRgba from 'utils/hexToRgba'
 import * as apiUser from 'api/user'
-import { getTakenActionAvailableFrom } from 'api/actions'
 
 const Container = styled(Row)`
   align-items: center;
@@ -540,7 +539,7 @@ class ActionModalPage extends Component {
   checkAvailableTakeAction = async actionId => {
     if (!actionId) return
     try {
-      const res = await getTakenActionAvailableFrom({ actionId })
+      const res = await api.getTakenActionAvailableFrom({ actionId })
       this.setState({ availableFrom: res.availableFrom })
     } catch (error) {
       console.error(error)

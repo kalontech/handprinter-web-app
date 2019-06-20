@@ -75,6 +75,7 @@ export const ActionCardRightHalf = styled(Ant.Col)`
   ${media.tablet`
     width: 100%;
   `}
+  position: relative;
 `
 
 export const PopoverTitle = styled.div`
@@ -631,6 +632,10 @@ export const GlobalStyle = createGlobalStyle`
     .ant-select-selection {
       height: 46px;
     }
+
+    .ant-cascader-input  {
+      height: 46px;
+    }
   
     .ant-select-selection__rendered {
       height: 45px;
@@ -660,6 +665,12 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .ant-select-arrow {
+      margin-top: -12px;
+    }
+
+    .ant-cascader-picker-arrow {
+      width: 24px;
+      height: 24px;
       margin-top: -12px;
     }
   }
@@ -861,6 +872,10 @@ export const Input = styled(Ant.Input)`
   &:hover,
   .ant-input:hover {
     border-color: ${colors.green};
+  }
+
+  .ant-input-suffix {
+    color: ${colors.green};
   }
 `
 

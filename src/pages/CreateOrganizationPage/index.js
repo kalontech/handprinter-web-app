@@ -2,23 +2,19 @@ import React, { Component, Fragment } from 'react'
 import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Button, Form, Select } from 'antd'
-import { Link } from 'react-router-dom'
+import { Form } from 'antd'
+import { Link, Redirect } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { animateScroll } from 'react-scroll/modules'
-import queryString from 'query-string'
 
-import SearchableInput from 'components/SearchInfluencerInput'
 import registerFingerprintTop from 'assets/images/registerFingerprintTop.png'
 import registerFingerprintBot from 'assets/images/registerFingerprintBot.png'
 import registerActionCardImage from 'assets/images/registerActionCard.jpg'
 import registerActionCardImageTablet from 'assets/images/registerActionCardImageTablet.png'
 import registerBrandedPhotoLeaves from 'assets/images/registerBrandedPhotoLeaves.png'
-import arrowDownIcon from 'assets/icons/arrowDown.svg'
 
 import { Creators as AccountCreators } from 'redux/accountStore'
-import getValidationRules from 'config/validationRules'
 import { getBrandedHostnamePrefix } from 'config/branded'
 import handleFormError from 'utils/handleFormError'
 import decodeError from 'utils/decodeError'
@@ -30,15 +26,15 @@ import {
   ActionCardRightHalf,
   ActionCardWrapper,
   ActionCardTitle,
-  ActionCardRegisterBlock,
-  Input,
-  FormItem,
-  Checkbox,
 } from 'components/Styled'
 import PageMetadata from 'components/PageMetadata'
 import OrganizationCreationSteps from 'components/OrganizationCreationSteps'
-import InputForPassword from 'components/InputForPassword'
+
 import * as apiUser from 'api/user'
+
+import CreateOrganizationFrom from './CreateOrganizationFrom'
+import ConfirmEmail from './confirmEmail'
+import Summary from './summary'
 
 export const BrandedBlockWrap = styled.div`
   position: relative;
@@ -169,13 +165,24 @@ const StyledActionCardWrapper = styled(ActionCardWrapper)`
 `
 
 const FormWrap = styled.div`
-  width: 300px;
+  width: 100%;
+  height: 100%;
+  padding: 30px 36px;
+  justify-content: flex-between;
+  display: flex;
+  flex-direction: column;
   ${media.tablet`
     margin-top: 30px;
   `}
   ${media.phone`
     margin-top: 0;
   `}
+`
+
+const FlexView = styled.div`
+  height: 100%;
+  display: flex
+  flex-direction: column
 `
 
 const DogImgDesktop = styled.img`
@@ -196,16 +203,12 @@ const BrandedBlockPhotoWrap = styled.div`
   position: relative;
 `
 
-const PrivacyLink = styled(Link)`
-  color: ${colors.dark};
-`
-
-class RegisterPage extends Component {
+class CreateOrganizationPage extends Component {
   state = {
     referrer: null,
     getReferrerError: null,
-    createOrganizationFlow: undefined,
-    matchedUsersByCode: undefined,
+    step: 1,
+    organizationDetails: undefined,
   }
 
   componentDidMount() {
@@ -213,11 +216,8 @@ class RegisterPage extends Component {
       match: {
         params: { invitationCode, eatonCode },
       },
-      location: { search },
     } = this.props
-    if (queryString.parse(search).createOrganization) {
-      this.setState({ createOrganizationFlow: true })
-    }
+
     animateScroll.scrollToTop()
 
     if (eatonCode) {
@@ -255,7 +255,6 @@ class RegisterPage extends Component {
       form: { validateFields },
       registerRequest,
     } = this.props
-    const createOrganizationFlow = this.state.createOrganizationFlow
 
     validateFields((err, values) => {
       if (!err) {
@@ -275,7 +274,6 @@ class RegisterPage extends Component {
           country,
           belongsToBrand: getBrandedHostnamePrefix(),
           siloSecureCode,
-          createOrganizationFlow,
         }
         if (invitationCode) data.invitationCode = invitationCode
         registerRequest(data)
@@ -283,32 +281,71 @@ class RegisterPage extends Component {
     })
   }
 
-  handleCodeSearch = async query => {
-    try {
-      const response = await apiUser.search(query)
-      this.setState({ matchedUsersByCode: response.users })
-    } catch (error) {
-      console.error(error)
+  handleSubmitRegistration = () => {
+    this.setState({ step: 2 })
+  }
+
+  handleSubmitOrganizationDetails = organizationDetails => {
+    this.setState({ step: 3, organizationDetails })
+  }
+
+  handleSubmitSummary = () => {
+    this.props.history.push(`/account/create-organization/success`)
+  }
+
+  previousStep = () => {
+    this.setState({ step: Math.max(this.state.step - 1, 1) })
+  }
+
+  renderForm() {
+    const { organizationDetails, step } = this.state
+    switch (step) {
+      case 1:
+        return (
+          <FlexView>
+            <ActionCardTitle style={{ marginTop: 33 }}>
+              <FormattedMessage id="app.createOrganization.setOwner" />
+            </ActionCardTitle>
+            <ConfirmEmail
+              handleSubmit={this.handleSubmitRegistration}
+              email={this.props.user && this.props.user.email}
+            />
+          </FlexView>
+        )
+      case 2:
+        return (
+          <FlexView>
+            <ActionCardTitle style={{ marginTop: 33 }}>
+              <FormattedMessage id="app.createOrganization.account" />
+            </ActionCardTitle>
+            <CreateOrganizationFrom
+              handleSubmit={this.handleSubmitOrganizationDetails}
+              handleBack={this.previousStep}
+            />
+          </FlexView>
+        )
+      case 3:
+        return (
+          <FlexView>
+            <ActionCardTitle style={{ marginTop: 33 }}>
+              <FormattedMessage id="app.createOrganization.summary" />
+            </ActionCardTitle>
+            <Summary
+              handleSubmit={this.handleSubmitSummary}
+              handleBack={this.previousStep}
+              organizationDetails={organizationDetails}
+            />
+          </FlexView>
+        )
+      default:
+        return null
     }
   }
 
-  handleCodeSelect = code => {
-    const {
-      form: { setFieldsValue },
-    } = this.props
-    setFieldsValue({ invitationCode: code })
-  }
-
   render() {
-    const {
-      countries,
-      form: { getFieldDecorator },
-      intl: { formatMessage },
-      isRegistering,
-      overrides,
-    } = this.props
-    const { referrer, createOrganizationFlow, matchedUsersByCode } = this.state
-
+    const { referrer, step } = this.state
+    if (!this.props.user)
+      return <Redirect to="/account/login?createOrganization=true" />
     return (
       <Fragment>
         <PageMetadata pageName="registerPage" />
@@ -361,167 +398,8 @@ class RegisterPage extends Component {
               )}
             </ActionCardLeftHalf>
             <ActionCardRightHalf span={12}>
-              {createOrganizationFlow && (
-                <OrganizationCreationSteps steps={3} active={1} />
-              )}
-              <FormWrap>
-                <ActionCardTitle>
-                  <FormattedMessage
-                    id={
-                      overrides && overrides.brandName === 'Eaton'
-                        ? 'app.registerPage.title.eaton'
-                        : 'app.registerPage.title'
-                    }
-                  />
-                </ActionCardTitle>
-                <Form onSubmit={this.handleSubmit} className="login-form">
-                  <FormItem>
-                    {getFieldDecorator('fullName', {
-                      rules: getValidationRules(formatMessage).fullName,
-                    })(
-                      <Input
-                        type="text"
-                        placeholder={formatMessage({
-                          id: 'app.forms.fullName',
-                        })}
-                      />,
-                    )}
-                  </FormItem>
-                  <FormItem>
-                    {getFieldDecorator('email', {
-                      rules: getValidationRules(formatMessage).email,
-                      validateTrigger: 'onBlur',
-                    })(
-                      <Input
-                        type="email"
-                        placeholder={formatMessage({
-                          id: 'app.forms.email',
-                        })}
-                      />,
-                    )}
-                  </FormItem>
-                  <FormItem>
-                    {getFieldDecorator('password', {
-                      rules: getValidationRules(formatMessage).password,
-                      validateTrigger: 'onBlur',
-                    })(<InputForPassword createPass />)}
-                  </FormItem>
-                  <FormItem style={{ marginTop: '-3px' }}>
-                    {getFieldDecorator('country', {
-                      rules: getValidationRules(formatMessage).country,
-                    })(
-                      <Select
-                        showSearch
-                        placeholder={formatMessage({
-                          id: 'app.forms.country',
-                        })}
-                        optionFilterProp="children"
-                        className="ant-select__override-for__register-page"
-                        dropdownClassName="ant-select__override-for__register-page"
-                        suffixIcon={<img src={arrowDownIcon} />}
-                      >
-                        {countries.map(country => (
-                          <Select.Option key={country._id} value={country._id}>
-                            {country.name}
-                          </Select.Option>
-                        ))}
-                      </Select>,
-                    )}
-                  </FormItem>
-                  <FormItem>
-                    {getFieldDecorator('invitationCode')(
-                      <SearchableInput
-                        onSearch={this.handleCodeSearch}
-                        suggestions={matchedUsersByCode}
-                        onSelect={this.handleCodeSelect}
-                      />,
-                    )}
-                  </FormItem>
-                  {overrides && overrides.brandName === 'Eaton' && (
-                    <FormItem>
-                      {getFieldDecorator('siloSecureCode', {
-                        rules: [
-                          {
-                            required: true,
-                            message: formatMessage({
-                              id: 'app.errors.isRequired',
-                            }),
-                          },
-                        ],
-                      })(
-                        <Input
-                          type="text"
-                          placeholder={formatMessage({
-                            id: 'app.forms.eatonCode',
-                          })}
-                        />,
-                      )}
-                    </FormItem>
-                  )}
-                  <FormItem>
-                    {getFieldDecorator('privacyPolicy', {
-                      valuePropName: 'checked',
-                      rules: [
-                        {
-                          required: true,
-                          transform: value => value || undefined,
-                          type: 'boolean',
-                          message: formatMessage({
-                            id: 'app.registerPage.policyAcceptedError',
-                          }),
-                        },
-                      ],
-                    })(
-                      <Checkbox>
-                        <FormattedMessage id="app.registerPage.privacyPolicyAccept.1" />{' '}
-                        <PrivacyLink to="/pages/privacy-policy" target="_blank">
-                          <FormattedMessage id="app.registerPage.privacyPolicyAccept.2" />
-                        </PrivacyLink>
-                        .
-                      </Checkbox>,
-                    )}
-                  </FormItem>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    style={{ width: '100%' }}
-                    loading={isRegistering}
-                  >
-                    <FormattedMessage
-                      id={
-                        createOrganizationFlow
-                          ? 'app.createOrganization.continue'
-                          : overrides && overrides.brandName === 'Eaton'
-                          ? 'app.registerPage.register.eaton'
-                          : 'app.registerPage.register'
-                      }
-                    />
-                  </Button>
-                  <FormItem>
-                    {getFieldDecorator('formError')(<Input type="hidden" />)}
-                  </FormItem>
-                  <ActionCardRegisterBlock>
-                    <span>
-                      <FormattedMessage id="app.registerPage.alreadyHaveAnAccount" />{' '}
-                      <Link
-                        to={
-                          createOrganizationFlow
-                            ? '/account/login?createOrganization=true'
-                            : '/account/login'
-                        }
-                      >
-                        <FormattedMessage
-                          id={
-                            overrides && overrides.brandName === 'Eaton'
-                              ? 'app.registerPage.login.eaton'
-                              : 'app.registerPage.login'
-                          }
-                        />
-                      </Link>
-                    </span>
-                  </ActionCardRegisterBlock>
-                </Form>
-              </FormWrap>
+              <FormWrap>{this.renderForm()}</FormWrap>
+              <OrganizationCreationSteps steps={3} active={step} />
             </ActionCardRightHalf>
           </StyledActionCard>
         </StyledActionCardWrapper>
@@ -534,6 +412,7 @@ const mapStateToProps = state => ({
   isRegistering: state.account.isRegistering,
   registerError: state.account.registerError,
   countries: state.app.countries,
+  user: state.user.data,
 })
 
 const mapDispatchToProps = dispatch =>
@@ -544,7 +423,7 @@ const mapDispatchToProps = dispatch =>
     dispatch,
   )
 
-RegisterPage.propTypes = {
+CreateOrganizationPage.propTypes = {
   countries: PropTypes.array.isRequired,
   form: PropTypes.shape({
     setFields: PropTypes.func.isRequired,
@@ -555,13 +434,12 @@ RegisterPage.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.object.isRequired,
   }),
-  location: PropTypes.shape({
-    search: PropTypes.string,
-  }),
   isRegistering: PropTypes.bool.isRequired,
   registerError: PropTypes.string,
   registerRequest: PropTypes.func.isRequired,
   overrides: PropTypes.object.isRequired,
+  history: PropTypes.object,
+  user: PropTypes.object,
 }
 
 export default compose(
@@ -571,4 +449,4 @@ export default compose(
   ),
   Form.create(),
   injectIntl,
-)(RegisterPage)
+)(CreateOrganizationPage)

@@ -70,6 +70,36 @@ export default formatMessage => ({
       ),
     },
   ],
+  organizationName: [
+    {
+      required: true,
+      message: formatMessage({
+        id: 'app.errors.isRequired',
+      }),
+    },
+  ],
+  url: [
+    {
+      required: true,
+      message: formatMessage({
+        id: 'app.errors.isRequired',
+      }),
+    },
+    {
+      pattern: /^\S*$/,
+      message: formatMessage({
+        id: 'app.forms.noBlankSpace',
+      }),
+    },
+  ],
+  required: [
+    {
+      required: true,
+      message: formatMessage({
+        id: 'app.errors.isRequired',
+      }),
+    },
+  ],
 })
 
 export const required = message => ({

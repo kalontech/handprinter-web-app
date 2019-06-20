@@ -10,3 +10,9 @@ export const getSponsors = data =>
   fetchAPI('/payment/sponsors', {
     method: 'GET',
   })
+
+export const paySubscription = data =>
+  fetchAPI('/payment/organization-subscribe', {
+    body: { ...data },
+    method: 'POST',
+  })
