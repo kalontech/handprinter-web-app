@@ -8,10 +8,13 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { animateScroll } from 'react-scroll/modules'
+import qs from 'qs'
 
 import colors from 'config/colors'
 import fingerprintImage from 'assets/dashboard/fingerprint.png'
 import treeImage from 'assets/dashboard/tree.png'
+import cameraImage from 'assets/dashboard/ic_camera.svg'
+import addAdmin from 'assets/dashboard/add_admin.svg'
 import media from 'utils/mediaQueryTemplate'
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 import { QUESTIONS_ANCHOR } from 'utils/constants'
@@ -19,10 +22,15 @@ import fetch from 'utils/fetch'
 import CalendarWidget from 'components/CalendarWidget'
 import GoodRatioWidget from 'components/GoodRatioWidget'
 import NetworkWidget from 'components/NetworkWidget'
-import { BlockContainer } from 'components/Styled'
+import { HiddenUploadPictureInput } from 'pages/ProfilePage'
+import { BlockContainer, DefaultButton } from 'components/Styled'
 import icons from 'components/ActionCardLabel/icons'
 import { getUserInitialAvatar } from 'api'
 import * as apiUser from 'api/user'
+import { getOrganization, updateOne, getAdmins } from 'api/organization'
+import { PROFILE_PHOTO_WEIGHT_LIMIT, ACCEPT_IMAGE_FORMATS } from 'config/files'
+
+import { convertBytesToMegabytes } from 'utils/file'
 
 const WidgetContainer = styled.div`
   background-color: ${colors.white};
@@ -99,11 +107,13 @@ const DashboardHeader = styled.div`
 
 const DashboardHeaderGreenLine = styled.div`
   background-color: ${colors.ocean};
+  background-image: ${props => props.image && `url(${props.image})`};
   height: 140px;
 `
 
 const DashboardHeaderWhiteLine = styled(Row)`
-  background-color: ${colors.white};
+  background-color: ${props =>
+    props.organization ? colors.lightGray : colors.white};
   display: flex;
   height: 120px;
   justify-content: center;
@@ -143,7 +153,7 @@ const DashboardHeaderUserRow = styled.div`
 const DashboardHeaderBackgrounds = styled.div``
 
 const HeaderFingerprintBackground = styled.div`
-  background-image: url(${fingerprintImage});
+  background-image: ${props => !props.hideImage && `url(${fingerprintImage})`};
   background-position: top 0px right;
   background-repeat: no-repeat, no-repeat;
   height: 140px;
@@ -187,12 +197,13 @@ const DashboardHeaderUserPictureBackground = styled.div`
 
 const DashboardHeaderUserPicture = styled.img`
   border: 4px solid ${colors.white};
-  border-radius: 50%;
+  border-radius: ${props => (props.organization ? '4px' : '50%')};
   box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
   height: 190px;
   margin-top: -88px;
   width: 190px;
   position: relative;
+  object-fit: cover;
 `
 
 const DashboardHeaderUserName = styled.div`
@@ -357,6 +368,69 @@ const StyledIcon = styled(Icon)`
   `}
 `
 
+const SelectBannerWrapper = styled.div`
+  height: 140px;
+  width: 100%;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+`
+const SelectBGImage = styled.img`
+  cursor: pointer;
+`
+const SelectBGLabel = styled.p`
+  font-weight: bold;
+  font-size: 10px;
+  color: ${colors.darkGray};
+  text-transform: uppercase;
+  font-family: Noto Sans;
+  cursor: pointer;
+`
+
+const HeaderOuterPlusButton = styled.div`
+  height: 42px;
+  width: 42px;
+  background-color: white;
+  border-radius: 50%;
+  border: 2px solid ${colors.green};
+  color: ${colors.green};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0px;
+  left: 150px;
+  z-index: 2;
+  cursor: pointer;
+`
+
+const AdminsSectionWraper = styled.div`
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 131px;
+  align-items: center;
+`
+
+const AdminsSectionList = styled.div``
+const AdminItem = styled.img`
+  height: 42px;
+  width: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: -15px;
+  border: 1px solid ${colors.white};
+`
+const AdminPlusButton = styled.img`
+  height: 37.5px;
+  width: 37.5px;
+  border-radius: 50%;
+  margin-left: -15px;
+  cursor: pointer;
+`
+
 const PERMISSION_DENIED_CODE = 33
 const stubs = {
   dashboard: {
@@ -457,10 +531,31 @@ class DashboardPage extends Component {
 
   state = {
     currentImpactCategory: 'climate',
+    organization: undefined,
+    selectingLogo: false,
   }
 
   componentDidMount() {
     animateScroll.scrollToTop()
+    this.fetchOrganization()
+  }
+
+  fetchOrganization = async () => {
+    const { location } = this.props
+    const query = qs.parse(location.search, { ignoreQueryPrefix: true })
+    const organizationId = query && query.organizationId
+    if (!organizationId) return
+    try {
+      const res = await getOrganization(organizationId)
+      const adminsRes = await getAdmins(organizationId)
+      if (res.organization) {
+        this.setState({
+          organization: { ...res.organization, admins: adminsRes.admins },
+        })
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -475,28 +570,92 @@ class DashboardPage extends Component {
     this.setState({ currentImpactCategory: category })
   }
 
+  handleUploadImage = async ({ target: { files } }) => {
+    const file = files[0]
+
+    if (!file) return
+
+    if (convertBytesToMegabytes(file.size, 0) > PROFILE_PHOTO_WEIGHT_LIMIT) {
+      this.setState({ uploadImageError: 'app.errors.image.wrongWeight' })
+      return
+    }
+
+    const body = new FormData()
+    const fileType = this.state.selectingLogo ? 'photo' : 'banner'
+    body.append(fileType, file)
+
+    try {
+      const res = await updateOne(body, this.state.organization._id)
+      if (res.organization) this.setState({ organization: res.organization })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  handleSelectImage = selectingLogo => {
+    this.setState({ selectingLogo }, () => {
+      this.uploadProfilePictureRef.click()
+    })
+  }
+
+  handleIncreaseOrganizationHP = () => {}
+
   render() {
-    const { currentImpactCategory } = this.state
+    const { currentImpactCategory, organization } = this.state
     const { match, user, stats, ratio, network, calendar, error } = this.props
 
+    let avatar
+    if (organization) {
+      avatar = organization.photo || getUserInitialAvatar(organization.name)
+    } else {
+      avatar = user.photo || getUserInitialAvatar(user.fullName)
+    }
     return (
       <Fragment>
         <DashboardHeader>
-          <DashboardHeaderGreenLine>
+          <DashboardHeaderGreenLine image={organization && organization.banner}>
+            {organization && (
+              <SelectBannerWrapper>
+                <SelectBGImage
+                  onClick={this.handleSelectImage}
+                  src={cameraImage}
+                />
+                <SelectBGLabel onClick={this.handleSelectImage}>
+                  <FormattedMessage id={'app.dashboard.selectBackground'} />
+                </SelectBGLabel>
+
+                <HiddenUploadPictureInput
+                  type="file"
+                  accept={Object.values(ACCEPT_IMAGE_FORMATS).join()}
+                  ref={ref => (this.uploadProfilePictureRef = ref)}
+                  onChange={this.handleUploadImage}
+                />
+              </SelectBannerWrapper>
+            )}
             <DashboardHeaderBackgrounds>
-              <HeaderFingerprintBackground />
+              <HeaderFingerprintBackground hideImage={!!organization} />
             </DashboardHeaderBackgrounds>
             <BlockContainer style={{ zIndex: 1 }}>
               <DashboardHeaderUserPictureWrap>
-                <DashboardHeaderUserPictureTree src={treeImage} />
-                <DashboardHeaderUserPictureBackground />
-                <DashboardHeaderUserPicture
-                  src={user.photo || getUserInitialAvatar(user.fullName)}
+                <DashboardHeaderUserPictureTree
+                  src={!organization && treeImage}
                 />
+                {!organization && <DashboardHeaderUserPictureBackground />}
+                <DashboardHeaderUserPicture
+                  organization={organization}
+                  src={avatar}
+                />
+                {organization && (
+                  <HeaderOuterPlusButton
+                    onClick={() => this.handleSelectImage(true)}
+                  >
+                    <Icon type="plus" />
+                  </HeaderOuterPlusButton>
+                )}
               </DashboardHeaderUserPictureWrap>
             </BlockContainer>
           </DashboardHeaderGreenLine>
-          <DashboardHeaderWhiteLine>
+          <DashboardHeaderWhiteLine organization={organization}>
             <Col span={24}>
               <BlockContainer
                 style={{
@@ -508,11 +667,17 @@ class DashboardPage extends Component {
                 <DashboardHeaderUserRow>
                   <DashboardHeaderUserNameCol>
                     <DashboardHeaderUserName>
-                      {user.fullName}
+                      {organization ? organization.name : user.fullName}
                     </DashboardHeaderUserName>
                     <DashboardHeaderUserSince>
-                      <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
-                      {moment(user.createdAt).format('MMMM DD, YYYY')}
+                      {organization ? (
+                        <FormattedMessage id={'app.dahsboard.organization'} />
+                      ) : (
+                        <div>
+                          <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
+                          {moment(user.createdAt).format('MMMM DD, YYYY')}
+                        </div>
+                      )}
                     </DashboardHeaderUserSince>
                   </DashboardHeaderUserNameCol>
                   {stats && (
@@ -555,6 +720,28 @@ class DashboardPage extends Component {
               </BlockContainer>
             </Col>
           </DashboardHeaderWhiteLine>
+          {organization && (
+            <AdminsSectionWraper>
+              <AdminsSectionList>
+                {organization.admins.map(user => {
+                  return (
+                    <AdminItem
+                      key={user.id}
+                      src={user.photo || getUserInitialAvatar(user.fullName)}
+                    />
+                  )
+                })}
+                <AdminPlusButton src={addAdmin} />
+              </AdminsSectionList>
+              <DefaultButton
+                type="primary"
+                htmlType="submit"
+                onClick={this.handleIncreaseOrganizationHP}
+              >
+                <FormattedMessage id="app.dahsboard.organization.increaseHp" />
+              </DefaultButton>
+            </AdminsSectionWraper>
+          )}
         </DashboardHeader>
         <WidgetBlockContainer
           blur={error && error.code === PERMISSION_DENIED_CODE}
