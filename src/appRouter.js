@@ -32,6 +32,7 @@ import CreateOrganizationPage from './pages/CreateOrganizationPage'
 import CreateOrganizationSuccessPage from './pages/CreateOrganizationSuccessPage'
 import ForOrganizationsPage from './pages/ForOrganizationsPage'
 import DonationPage from './pages/DonationPage'
+import OrganizationList from './pages/OrganizationList'
 
 const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = process.env
 
@@ -220,6 +221,13 @@ const AppRouter = () => {
             path="/account/:personId"
             component={DashboardPage}
             useAuthentication
+            withoutCTA
+          />
+          <Route
+            path="/organizations/:subset"
+            component={OrganizationList}
+            useAuthentication
+            requireAuthentication
             withoutCTA
           />
           <Route component={NotFoundPage} useAuthentication withoutCTA />

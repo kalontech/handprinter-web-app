@@ -14,6 +14,7 @@ import appStore from './appStore'
 import userStore from './userStore'
 import groupsStore from './groups'
 import actionsStore from './actions'
+import organizationsStore from './organizations'
 
 const composeEnhancers =
   process.env.NODE_ENV !== 'production' &&
@@ -35,6 +36,7 @@ const configureStore = () => {
     intl: persistReducer(persistConfig.intl, intlReducer),
     groups: groupsStore,
     actions: actionsStore,
+    organizations: organizationsStore,
   })
   const sagaMiddleware = createSagaMiddleware()
   const store = createStore(
