@@ -164,7 +164,7 @@ class CreateOrganizationFrom extends React.Component {
               />,
             )}
           </FormItem>
-          <FormItem>
+          {/* <FormItem>
             {getFieldDecorator('organizationUrl', {
               rules: getValidationRules(formatMessage).url,
             })(
@@ -178,7 +178,7 @@ class CreateOrganizationFrom extends React.Component {
                 <TextLinkSuffix>.handprinter.org</TextLinkSuffix>
               </Row>,
             )}
-          </FormItem>
+          </FormItem> */}
           <FormItem style={{ marginTop: '-3px' }}>
             {getFieldDecorator('type', {
               rules: getValidationRules(formatMessage).required,
@@ -199,15 +199,6 @@ class CreateOrganizationFrom extends React.Component {
                   </Select.Option>
                 ))}
               </Select>,
-            )}
-          </FormItem>
-          <FormItem>
-            {getFieldDecorator('privateOrganization', {
-              valuePropName: 'checked',
-            })(
-              <Checkbox>
-                <FormattedMessage id="app.createOrganization.privateOrganization" />
-              </Checkbox>,
             )}
           </FormItem>
           <BasisWrapper>

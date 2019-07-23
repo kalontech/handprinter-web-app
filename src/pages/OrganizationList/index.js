@@ -186,7 +186,7 @@ class OrganizationsPage extends React.Component {
           {(organizations.docs || []).map(item => (
             <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
               <OrganizationCard
-                to={`/organization/view/${item._id}`}
+                to={`/account/dashboard?organizationId=${item._id}`}
                 counter={intl.formatMessage(
                   { id: 'app.pages.groups.membersCount' },
                   { count: item.members.length },

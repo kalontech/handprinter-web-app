@@ -690,5 +690,9 @@
     "app.organization.monthly.caps": "MONTHLY",
     "app.organization.annually.caps": "ANNUALLY",
     "app.errors.40": "Stripe service is currently not available",
-    "app.errors.41": "Error with creation stripe payment session"
+    "app.errors.41": "Error with creation stripe payment session",
+    "app.organization.adminUsers": "Admin users",
+    "app.organization.adminUsersDescription": "These users can perform actions and add ideas to the organization. You can also edit the profile and invite new users on behalf of the organization.",
+    "app.organization.addAdminUsers": "Add admin users",
+    "app.header.menu.organizations": "Organizations"
 }

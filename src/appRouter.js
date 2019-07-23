@@ -33,6 +33,7 @@ import CreateOrganizationSuccessPage from './pages/CreateOrganizationSuccessPage
 import ForOrganizationsPage from './pages/ForOrganizationsPage'
 import DonationPage from './pages/DonationPage'
 import OrganizationList from './pages/OrganizationList'
+import AddAdminsModalPage from './pages/AddAdminsModalPage'
 
 const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = process.env
 
@@ -268,6 +269,14 @@ const AppRouter = () => {
               `/groups/view/${params.id}/${params.subset}`
             }
             component={ActionModalPage}
+          />
+
+          <ModalRoute
+            path="/account/dashboard/organizations/add-admins/:organizationId"
+            parentPath={({ params }) =>
+              `/account/dashboard?organizationId=${params.organizationId}`
+            }
+            component={AddAdminsModalPage}
           />
         </Switch>
       </ErrorCatcher>

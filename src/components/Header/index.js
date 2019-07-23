@@ -554,6 +554,9 @@ class Header extends Component {
 
     if (location.pathname.includes('groups')) return '/groups'
 
+    if (location.pathname.includes('pages/for-organizations'))
+      return '/pages/for-organizations'
+
     if (location.pathname.includes('organizations')) return '/organizations'
 
     return location.pathname
@@ -1207,7 +1210,7 @@ class Header extends Component {
 
                         <Menu.Item key="/organizations">
                           <Link to="/organizations/discover">
-                            <FormattedMessage id="app.header.menu.forOrganizations" />
+                            <FormattedMessage id="app.header.menu.organizations" />
                           </Link>
                         </Menu.Item>
 

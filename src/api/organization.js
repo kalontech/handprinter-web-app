@@ -18,3 +18,8 @@ export const addAdmins = data =>
     body: { ...data },
     method: 'POST',
   })
+
+export const removeAdmin = adminId =>
+  fetchAPI(`/organizations/admins/${adminId}`, {
+    method: 'DELETE',
+  })

@@ -198,7 +198,6 @@ class Summary extends React.Component {
 
     const {
       organizationName,
-      organizationUrl,
       economicSector,
       type,
       annualRevenue,
@@ -215,10 +214,10 @@ class Summary extends React.Component {
               <FormattedMessage id="app.createOrganization.organizationName" />{' '}
               <Text>{organizationName}</Text>
             </SummaryRow>
-            <SummaryRow>
+            {/* <SummaryRow>
               <FormattedMessage id="app.createOrganization.subdomain" />{' '}
               <Text>{organizationUrl}.handprinter.org</Text>
-            </SummaryRow>
+            </SummaryRow> */}
             <SummaryRow>
               <FormattedMessage id="app.forms.economicSector" />{' '}
               <Text>{economicSector}</Text>

@@ -9,6 +9,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { animateScroll } from 'react-scroll/modules'
 import qs from 'qs'
+import { history } from 'appRouter'
 
 import colors from 'config/colors'
 import fingerprintImage from 'assets/dashboard/fingerprint.png'
@@ -564,6 +565,9 @@ class DashboardPage extends Component {
     if (prevProps.match.params.personId !== match.params.personId) {
       this.props.fetch()
     }
+    if (this.props !== prevProps) {
+      this.fetchOrganization()
+    }
   }
 
   handleImpactCategoryChange = category => {
@@ -599,6 +603,14 @@ class DashboardPage extends Component {
   }
 
   handleIncreaseOrganizationHP = () => {}
+
+  handleAddAdmin = () => {
+    history.push(
+      `/account/dashboard/organizations/add-admins/${
+        this.state.organization._id
+      }`,
+    )
+  }
 
   render() {
     const { currentImpactCategory, organization } = this.state
@@ -731,7 +743,7 @@ class DashboardPage extends Component {
                     />
                   )
                 })}
-                <AdminPlusButton src={addAdmin} />
+                <AdminPlusButton onClick={this.handleAddAdmin} src={addAdmin} />
               </AdminsSectionList>
               <DefaultButton
                 type="primary"
