@@ -10,6 +10,8 @@ import { webAppBaseUrl } from 'api'
 import { paySubscription } from 'api/payment'
 import decodeError from 'utils/decodeError'
 
+import { CONTACT_DATA } from 'utils/constants'
+
 import { MOUNTHLY_SUBSCRIPTION_AMOUNT } from './CreateOrganizationFrom/utils'
 
 const Main = styled.div`
@@ -244,6 +246,9 @@ class Summary extends React.Component {
             <FormattedMessage id={decodeError(payError)} />
           </TextError>
         )}
+        <a href={CONTACT_DATA.EMAIL}>
+          <FormattedMessage id="app.organizations.requestCustomized" />
+        </a>
         <ButtonsWrapper>
           <DefaultButton
             style={{ width: '49%', minWidth: '10px' }}

@@ -694,5 +694,6 @@
     "app.organization.adminUsers": "Admin users",
     "app.organization.adminUsersDescription": "These users can perform actions and add ideas to the organization. You can also edit the profile and invite new users on behalf of the organization.",
     "app.organization.addAdminUsers": "Add admin users",
-    "app.header.menu.organizations": "Organizations"
+    "app.header.menu.organizations": "Organizations",
+    "app.organizations.requestCustomized": "Request customized experiences"
 }
