@@ -533,6 +533,7 @@ class DashboardPage extends Component {
   state = {
     currentImpactCategory: 'climate',
     organization: undefined,
+    organizationOwner: undefined,
     selectingLogo: false,
   }
 
@@ -550,8 +551,12 @@ class DashboardPage extends Component {
       const res = await getOrganization(organizationId)
       const adminsRes = await getAdmins(organizationId)
       if (res.organization) {
+        const organizationOwner = await apiUser.getUser({
+          userId: res.organization.owner,
+        })
         this.setState({
           organization: { ...res.organization, admins: adminsRes.admins },
+          organizationOwner: organizationOwner.user,
         })
       }
     } catch (error) {
@@ -626,7 +631,11 @@ class DashboardPage extends Component {
   }
 
   render() {
-    const { currentImpactCategory, organization } = this.state
+    const {
+      currentImpactCategory,
+      organization,
+      organizationOwner,
+    } = this.state
     const { match, user, stats, ratio, network, calendar, error } = this.props
 
     let avatar
@@ -748,6 +757,15 @@ class DashboardPage extends Component {
           {organization && (
             <AdminsSectionWraper>
               <AdminsSectionList>
+                {organizationOwner && (
+                  <AdminItem
+                    key={organizationOwner._id}
+                    src={
+                      organizationOwner.photo ||
+                      getUserInitialAvatar(organizationOwner.fullName)
+                    }
+                  />
+                )}
                 {organization.admins.map(user => {
                   return (
                     <AdminItem

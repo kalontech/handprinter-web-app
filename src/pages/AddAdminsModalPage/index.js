@@ -16,7 +16,12 @@ import CloseIcon from 'assets/icons/CloseIcon'
 import MoreIcon from 'assets/icons/ic_more_vert.svg'
 
 import * as apiUsers from 'api/user'
-import { addAdmins, getAdmins, removeAdmin } from 'api/organization'
+import {
+  addAdmins,
+  getAdmins,
+  removeAdmin,
+  getOrganization,
+} from 'api/organization'
 
 import SearchableInput from '../../components/SearchableInput'
 
@@ -214,6 +219,13 @@ const DeleteAdminLabel = styled.p`
   cursor: pointer;
 `
 
+const UserRoleLabel = styled.p`
+  font-size: 16px;
+  font-family: Noto Sans;
+  color: ${colors.darkGray};
+  margin-right: 10px;
+`
+
 const DeleteAdminButton = styled.img`
   margin-right: 30px;
   cursor: pointer;
@@ -245,9 +257,23 @@ class AddAdminsModalPage extends Component {
     if (!organizationId) return
     try {
       const adminsRes = await getAdmins(organizationId)
+      const res = await getOrganization(organizationId)
+      let organizationOwner = null
+      if (res && res.organization) {
+        organizationOwner = await apiUsers.getUser({
+          userId: res.organization.owner,
+        })
+      }
       if (adminsRes) {
+        // Add organization owner at start of list
+        let existingAdmins = organizationOwner
+          ? [{ ...organizationOwner.user, organizationOwner: true }]
+          : []
+        existingAdmins = existingAdmins.concat(
+          adminsRes.admins.map(i => i._doc),
+        )
         this.setState({
-          existingAdmins: adminsRes.admins.map(i => i._doc),
+          existingAdmins,
           step: ModalPageSteps.ADD_ADMINS,
         })
       }
@@ -332,6 +358,15 @@ class AddAdminsModalPage extends Component {
                       <AdminName>{admin.fullName}</AdminName>
                       <AdminEmail>{admin.email}</AdminEmail>
                     </AdminNameWrapper>
+                    <UserRoleLabel>
+                      <FormattedMessage
+                        id={
+                          admin.organizationOwner
+                            ? 'app.pages.groups.owner'
+                            : 'app.pages.groups.admin'
+                        }
+                      />
+                    </UserRoleLabel>
                     <Popover
                       content={
                         <DeleteAdminLabel
@@ -345,7 +380,10 @@ class AddAdminsModalPage extends Component {
                         </DeleteAdminLabel>
                       }
                       trigger="click"
-                      visible={this.state.popoverVisibleAdmin === admin._id}
+                      visible={
+                        this.state.popoverVisibleAdmin === admin._id &&
+                        !admin.organizationOwner
+                      }
                       onVisibleChange={visible =>
                         this.handleVisibleChange(visible, admin._id)
                       }
