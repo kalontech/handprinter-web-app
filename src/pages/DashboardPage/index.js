@@ -595,7 +595,14 @@ class DashboardPage extends Component {
 
     try {
       const res = await updateOne(body, this.state.organization._id)
-      if (res.organization) this.setState({ organization: res.organization })
+      if (res.organization) {
+        let organization = {
+          ...this.state.organization,
+          photo: res.organization.photo,
+          banner: res.organization.banner,
+        }
+        this.setState({ organization })
+      }
     } catch (error) {
       console.error(error)
     }
@@ -651,10 +658,10 @@ class DashboardPage extends Component {
             {organization && this.getIsOrgAdmin() && (
               <SelectBannerWrapper>
                 <SelectBGImage
-                  onClick={this.handleSelectImage}
+                  onClick={() => this.handleSelectImage(false)}
                   src={cameraImage}
                 />
-                <SelectBGLabel onClick={this.handleSelectImage}>
+                <SelectBGLabel onClick={() => this.handleSelectImage(false)}>
                   <FormattedMessage id={'app.dashboard.selectBackground'} />
                 </SelectBGLabel>
 
