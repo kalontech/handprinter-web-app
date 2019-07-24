@@ -23,3 +23,12 @@ export const removeAdmin = adminId =>
   fetchAPI(`/organizations/admins/${adminId}`, {
     method: 'DELETE',
   })
+
+export const getInvitationsList = organizationId =>
+  fetchAPI(`/organizations/invitations/${organizationId}`)
+
+export const shareInvitationCode = body =>
+  fetchAPI('/organizations/code/share', {
+    body,
+    method: 'POST',
+  })

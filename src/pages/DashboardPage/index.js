@@ -602,7 +602,11 @@ class DashboardPage extends Component {
     })
   }
 
-  handleIncreaseOrganizationHP = () => {}
+  handleIncreaseOrganizationHP = () => {
+    history.push(
+      `/organizations/invite?organizationId=${this.state.organization._id}`,
+    )
+  }
 
   handleAddAdmin = () => {
     history.push(

@@ -34,6 +34,7 @@ import ForOrganizationsPage from './pages/ForOrganizationsPage'
 import DonationPage from './pages/DonationPage'
 import OrganizationList from './pages/OrganizationList'
 import AddAdminsModalPage from './pages/AddAdminsModalPage'
+import IncreaseOrganizationHandprintPage from './pages/IncreaseOrganizationHandprintPage'
 
 const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = process.env
 
@@ -222,6 +223,12 @@ const AppRouter = () => {
             path="/account/:personId"
             component={DashboardPage}
             useAuthentication
+            withoutCTA
+          />
+          <Route
+            path="/organizations/invite"
+            component={IncreaseOrganizationHandprintPage}
+            requireAuthentication
             withoutCTA
           />
           <Route

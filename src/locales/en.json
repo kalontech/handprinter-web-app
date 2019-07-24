@@ -695,5 +695,7 @@
     "app.organization.adminUsersDescription": "These users can perform actions and add ideas to the organization. You can also edit the profile and invite new users on behalf of the organization.",
     "app.organization.addAdminUsers": "Add admin users",
     "app.header.menu.organizations": "Organizations",
-    "app.organizations.requestCustomized": "Request customized experiences"
+    "app.organizations.requestCustomized": "Request customized experiences",
+    "app.organizations.increaseHandprint.inviteCode": "Your organizations ID code",
+    "app.increaseOrgHandprintPage.title": "Increase handprint of your organization!"
 }
