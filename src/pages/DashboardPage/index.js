@@ -616,6 +616,15 @@ class DashboardPage extends Component {
     )
   }
 
+  getIsOrgAdmin() {
+    const organization = this.state.organization
+    const user = this.props.user
+    if (!organization || !user) return
+    const adminIds = organization.admins.map(i => i._doc._id)
+    if (!adminIds) return
+    return organization.owner === user._id || adminIds.includes(user._id)
+  }
+
   render() {
     const { currentImpactCategory, organization } = this.state
     const { match, user, stats, ratio, network, calendar, error } = this.props
@@ -630,7 +639,7 @@ class DashboardPage extends Component {
       <Fragment>
         <DashboardHeader>
           <DashboardHeaderGreenLine image={organization && organization.banner}>
-            {organization && (
+            {organization && this.getIsOrgAdmin() && (
               <SelectBannerWrapper>
                 <SelectBGImage
                   onClick={this.handleSelectImage}
@@ -661,7 +670,7 @@ class DashboardPage extends Component {
                   organization={organization}
                   src={avatar}
                 />
-                {organization && (
+                {organization && this.getIsOrgAdmin() && (
                   <HeaderOuterPlusButton
                     onClick={() => this.handleSelectImage(true)}
                   >
@@ -747,15 +756,22 @@ class DashboardPage extends Component {
                     />
                   )
                 })}
-                <AdminPlusButton onClick={this.handleAddAdmin} src={addAdmin} />
+                {this.getIsOrgAdmin() && (
+                  <AdminPlusButton
+                    onClick={this.handleAddAdmin}
+                    src={addAdmin}
+                  />
+                )}
               </AdminsSectionList>
-              <DefaultButton
-                type="primary"
-                htmlType="submit"
-                onClick={this.handleIncreaseOrganizationHP}
-              >
-                <FormattedMessage id="app.dahsboard.organization.increaseHp" />
-              </DefaultButton>
+              {this.getIsOrgAdmin() && (
+                <DefaultButton
+                  type="primary"
+                  htmlType="submit"
+                  onClick={this.handleIncreaseOrganizationHP}
+                >
+                  <FormattedMessage id="app.dahsboard.organization.increaseHp" />
+                </DefaultButton>
+              )}
             </AdminsSectionWraper>
           )}
         </DashboardHeader>
