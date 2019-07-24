@@ -187,10 +187,6 @@ class OrganizationsPage extends React.Component {
             <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
               <OrganizationCard
                 to={`/account/dashboard?organizationId=${item._id}`}
-                counter={intl.formatMessage(
-                  { id: 'app.pages.groups.membersCount' },
-                  { count: item.members.length },
-                )}
                 name={item.name}
                 picture={item.picture || getUserInitialAvatar(item.name)}
               />
