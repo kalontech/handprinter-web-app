@@ -520,15 +520,6 @@ class DashboardPage extends Component {
                       <DashboardHeaderUserInfoRow>
                         <HeaderUserInfoRowCol>
                           <DashboardHeaderUserInfoValue>
-                            {stats.personal.usersInvited}
-                          </DashboardHeaderUserInfoValue>
-                          <DashboardHeaderUserSince>
-                            <FormattedMessage id="app.dashboardPage.usersInvited" />
-                          </DashboardHeaderUserSince>
-                        </HeaderUserInfoRowCol>
-
-                        <HeaderUserInfoRowCol>
-                          <DashboardHeaderUserInfoValue>
                             {stats.personal.actionsTaken}
                           </DashboardHeaderUserInfoValue>
                           <DashboardHeaderUserSince>
@@ -538,11 +529,39 @@ class DashboardPage extends Component {
 
                         <HeaderUserInfoRowCol>
                           <DashboardHeaderUserInfoValue>
-                            {Math.round(
-                              stats.personal.netPositiveDays[
-                                currentImpactCategory
-                              ],
-                            )}
+                            <BlockContainer style={{ zIndex: 1 }}>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                }}
+                              >
+                                {Math.round(
+                                  stats.personal.netPositiveDays[
+                                    currentImpactCategory
+                                  ],
+                                )}
+                                <InfoElementWrap>
+                                  <InfoElement
+                                    type={INFO_ELEMENT_TYPES.QUESTION}
+                                    tooltipProps={{
+                                      placement: 'bottomLeft',
+                                      title: (
+                                        <Fragment>
+                                          <p>
+                                            {Math.round(
+                                              stats.personal.netPositiveDays[
+                                                currentImpactCategory
+                                              ],
+                                            )}
+                                          </p>
+                                        </Fragment>
+                                      ),
+                                    }}
+                                  />
+                                </InfoElementWrap>
+                              </div>
+                            </BlockContainer>
                           </DashboardHeaderUserInfoValue>
                           <DashboardHeaderUserSince>
                             <FormattedMessage id="app.dashboardPage.netPositiveDays" />
