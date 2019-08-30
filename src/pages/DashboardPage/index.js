@@ -357,6 +357,7 @@ const StyledIcon = styled(Icon)`
   `}
 `
 
+const YEAR = 365
 const PERMISSION_DENIED_CODE = 33
 const stubs = {
   dashboard: {
@@ -549,8 +550,20 @@ class DashboardPage extends Component {
                                       title: (
                                         <Fragment>
                                           <p>
+                                            <FormattedMessage id="footprintReduction" />
+                                            {`: `}
                                             {Math.round(
-                                              stats.personal.netPositiveDays[
+                                              YEAR -
+                                                ratio.footprintDays[
+                                                  currentImpactCategory
+                                                ],
+                                            )}
+                                          </p>
+                                          <p>
+                                            <FormattedMessage id="externalHandprint" />
+                                            {`: `}
+                                            {Math.round(
+                                              ratio.handprintDays[
                                                 currentImpactCategory
                                               ],
                                             )}

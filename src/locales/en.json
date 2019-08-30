@@ -600,5 +600,7 @@
     "app.actions.congratulations.login": "Sign in",
     "app.actions.congratulations.register": "Sign up",
     "app.donation.anonymous": "Anonymous",
-    "app.actionsPage.tabs.modeling": "Modeling"
+    "app.actionsPage.tabs.modeling": "Modeling",
+    "footprintReduction": "My Footprint reduction",
+    "externalHandprint": "External Handprint"
 }
