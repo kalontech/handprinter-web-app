@@ -611,5 +611,9 @@
     "app.footer.cta.link.eaton": "注册",
     "app.actions.congratulations.login.eaton": "登陆",
     "app.actions.congratulations.register.eaton": "注册",
-    "app.donation.anonymous": "匿名"
+    "app.donation.anonymous": "匿名",
+    "app.actionsPage.tabs.modeling": "Modeling",
+    "footprintReduction": "My Footprint reduction",
+    "externalHandprint": "External Handprint",
+    "totalPositiveDays": "Total net Positive Days"
 }
