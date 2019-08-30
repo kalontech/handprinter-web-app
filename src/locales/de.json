@@ -611,5 +611,9 @@
     "app.footer.cta.link.eaton": "Anmelden",
     "app.actions.congratulations.login.eaton": "Einloggen",
     "app.actions.congratulations.register.eaton": "Anmelden",
-    "app.donation.anonymous": "Anonym"
+    "app.donation.anonymous": "Anonym",
+    "app.actionsPage.tabs.modeling": "Modeling",
+    "footprintReduction": "My Footprint reduction",
+    "externalHandprint": "External Handprint",
+    "totalPositiveDays": "Total net Positive Days"
 }
