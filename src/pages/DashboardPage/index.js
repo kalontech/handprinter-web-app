@@ -550,6 +550,16 @@ class DashboardPage extends Component {
                                       title: (
                                         <Fragment>
                                           <p>
+                                            <FormattedMessage id="totalPositiveDays" />
+                                            {`: `}
+                                            {Math.round(
+                                              stats.personal.netPositiveDays[
+                                                currentImpactCategory
+                                              ],
+                                            )}
+                                          </p>
+                                          <p>
+                                            {` - `}
                                             <FormattedMessage id="footprintReduction" />
                                             {`: `}
                                             {Math.round(
@@ -560,6 +570,7 @@ class DashboardPage extends Component {
                                             )}
                                           </p>
                                           <p>
+                                            {` - `}
                                             <FormattedMessage id="externalHandprint" />
                                             {`: `}
                                             {Math.round(

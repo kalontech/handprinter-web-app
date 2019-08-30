@@ -602,5 +602,6 @@
     "app.donation.anonymous": "Anonymous",
     "app.actionsPage.tabs.modeling": "Modeling",
     "footprintReduction": "My Footprint reduction",
-    "externalHandprint": "External Handprint"
+    "externalHandprint": "External Handprint",
+    "totalPositiveDays": "Total net Positive Days"
 }
