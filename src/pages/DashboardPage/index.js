@@ -541,7 +541,10 @@ class DashboardPage extends Component {
                                   stats.personal.netPositiveDays[
                                     currentImpactCategory
                                   ],
-                                )}
+                                ) +
+                                  Math.round(
+                                    ratio.handprintDays[currentImpactCategory],
+                                  )}
                                 <InfoElementWrap>
                                   <InfoElement
                                     type={INFO_ELEMENT_TYPES.QUESTION}
@@ -556,7 +559,12 @@ class DashboardPage extends Component {
                                               stats.personal.netPositiveDays[
                                                 currentImpactCategory
                                               ],
-                                            )}
+                                            ) +
+                                              Math.round(
+                                                ratio.handprintDays[
+                                                  currentImpactCategory
+                                                ],
+                                              )}
                                           </p>
                                           <p>
                                             {` - `}
