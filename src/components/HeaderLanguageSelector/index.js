@@ -45,7 +45,13 @@ const HeaderLanguageSelector = props => {
     >
       <PopoverTitle {...props}>
         <FormattedMessage id={`app.languages.${intl.locale}`}>
-          {message => <span>{message.substr(0, 3)}</span>}
+          {message =>
+            intl.locale === 'zh' ? (
+              <span>{message}</span>
+            ) : (
+              <span>{message.substr(0, 3)}</span>
+            )
+          }
         </FormattedMessage>
         <Icon {...props} />
       </PopoverTitle>
