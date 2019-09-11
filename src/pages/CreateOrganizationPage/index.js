@@ -203,6 +203,25 @@ const DogImgTablet = styled.img`
 const BrandedBlockPhotoWrap = styled.div`
   position: relative;
 `
+const Step1 = styled.div`
+  height: 100%;
+  display: none;
+  ${props => props.step === 1 && 'display: block;'}
+`
+
+const Step2 = styled.div`
+  height: 100%;
+  flex-direction: column;
+  display: none;
+  ${props => props.step === 2 && 'display: flex;'}
+`
+
+const Step3 = styled.div`
+  height: 100%;
+  flex-direction: column;
+  display: none;
+  ${props => props.step === 3 && 'display: flex;'}
+`
 
 class CreateOrganizationPage extends Component {
   state = {
@@ -300,9 +319,9 @@ class CreateOrganizationPage extends Component {
 
   renderForm() {
     const { organizationDetails, step } = this.state
-    switch (step) {
-      case 1:
-        return (
+    return (
+      <>
+        <Step1 step={step}>
           <FlexView>
             <ActionCardTitle style={{ marginTop: 33 }}>
               <FormattedMessage id="app.createOrganization.setOwner" />
@@ -312,35 +331,28 @@ class CreateOrganizationPage extends Component {
               email={this.props.user && this.props.user.email}
             />
           </FlexView>
-        )
-      case 2:
-        return (
-          <FlexView>
-            <ActionCardTitle style={{ marginTop: 33 }}>
-              <FormattedMessage id="app.createOrganization.account" />
-            </ActionCardTitle>
-            <CreateOrganizationFrom
-              handleSubmit={this.handleSubmitOrganizationDetails}
-              handleBack={this.previousStep}
-            />
-          </FlexView>
-        )
-      case 3:
-        return (
-          <FlexView>
-            <ActionCardTitle style={{ marginTop: 33 }}>
-              <FormattedMessage id="app.createOrganization.summary" />
-            </ActionCardTitle>
-            <Summary
-              handleSubmit={this.handleSubmitSummary}
-              handleBack={this.previousStep}
-              organizationDetails={organizationDetails}
-            />
-          </FlexView>
-        )
-      default:
-        return null
-    }
+        </Step1>
+        <Step2 step={step}>
+          <ActionCardTitle style={{ marginTop: 33 }}>
+            <FormattedMessage id="app.createOrganization.account" />
+          </ActionCardTitle>
+          <CreateOrganizationFrom
+            handleSubmit={this.handleSubmitOrganizationDetails}
+            handleBack={this.previousStep}
+          />
+        </Step2>
+        <Step3 step={step}>
+          <ActionCardTitle style={{ marginTop: 33 }}>
+            <FormattedMessage id="app.createOrganization.summary" />
+          </ActionCardTitle>
+          <Summary
+            handleSubmit={this.handleSubmitSummary}
+            handleBack={this.previousStep}
+            organizationDetails={organizationDetails}
+          />
+        </Step3>
+      </>
+    )
   }
 
   render() {

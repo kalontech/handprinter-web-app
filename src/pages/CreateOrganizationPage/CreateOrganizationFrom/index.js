@@ -31,7 +31,7 @@ const StyledForm = styled(Form)`
 `
 
 const ScrollView = styled.div`
-  overflow: scroll;
+  overflow-y: auto;
   width: 100%;
   heigth: 100%;
   flex: 1;
@@ -49,6 +49,7 @@ const Row = styled.div`
   align-items: center;
 `
 
+// eslint-disable-next-line no-unused-vars
 const TextLinkSuffix = styled.span`
   font-family: Noto Sans;
   font-style: normal;
