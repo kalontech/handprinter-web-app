@@ -151,7 +151,7 @@
     "app.headerActions.addAction": "Add action",
     "app.actionCreatePage.title": "Add action",
     "app.actionCreatePage.submitSucceededTitle": "Your idea was submitted",
-    "app.actionCreatePage.submitSucceededDescription": "Our moderators will check your idea as soon as possible and when approved it will appear on the action page. From that moment onward all users will be able to take your action and be part of your handprint! Also, our modelers will be invited to model the impacts of your action so that those impacts can be taken into account.",
+    "app.actionCreatePage.submitSucceededDescription": "Thank you for suggesting an action! A team of volunteers will review suggested actions each month. One or two actions will be nominated for modeling and added to Handprinter. It takes a month to model a new action. Actions that are in-progress can be seen ",
     "app.actionCreatePage.submitSucceededGoBack": "Actions page",
     "app.actionCreatePage.cancel": "Cancel",
     "app.footer.menu.actions": "Actions",
@@ -615,5 +615,6 @@
     "app.actionsPage.tabs.modeling": "Modeling",
     "footprintReduction": "My Footprint reduction",
     "externalHandprint": "External Handprint",
-    "totalPositiveDays": "Total net Positive Days"
+    "totalPositiveDays": "Total net Positive Days",
+    "app.actionCreatePage.submitSucceededLink": "here"
 }

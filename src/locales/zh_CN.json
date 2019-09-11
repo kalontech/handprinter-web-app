@@ -151,7 +151,7 @@
     "app.headerActions.addAction": "添加行动",
     "app.actionCreatePage.title": "添加行动",
     "app.actionCreatePage.submitSucceededTitle": "您的想法已提交",
-    "app.actionCreatePage.submitSucceededDescription": "我们的版主会尽快审阅您的想法，一旦获得批准，它就会显示在行动页面上。从那一刻开始，所有用户都可以采取行动并成为您手印的一部分！此外，我们的建模人员将被邀请模拟您的行动的影响，以便系统可纳入这些正面影响。",
+    "app.actionCreatePage.submitSucceededDescription": "感谢您提出建议！志愿者团队将每月审查建议的行动。将提名一个或两个动作进行建模并添加到Handprinter。建模新动作需要一个月的时间。可以看到正在进行的操作",
     "app.actionCreatePage.submitSucceededGoBack": "行动页面",
     "app.actionCreatePage.cancel": "取消",
     "app.footer.menu.actions": "行动",
@@ -615,5 +615,6 @@
     "app.actionsPage.tabs.modeling": "Modeling",
     "footprintReduction": "My Footprint reduction",
     "externalHandprint": "External Handprint",
-    "totalPositiveDays": "Total net Positive Days"
+    "totalPositiveDays": "Total net Positive Days",
+    "app.actionCreatePage.submitSucceededLink": "这里"
 }
