@@ -9,6 +9,7 @@ import { DefaultButton, PrimaryButton } from 'components/Styled'
 import { webAppBaseUrl } from 'api'
 import { paySubscription } from 'api/payment'
 import decodeError from 'utils/decodeError'
+import media from 'utils/mediaQueryTemplate'
 
 import { CONTACT_DATA } from 'utils/constants'
 
@@ -34,11 +35,14 @@ const PaymentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
   width: 49%;
   padding: 20px;
   border-radius: 4px;
   cursor: pointer;
+  text-align: center;
+  ${media.phone`
+    padding: 20px 5px;
+  `}
 `
 
 const Text = styled.span`
@@ -75,6 +79,10 @@ const Row = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  flex-wrap: wrap;
+  > span {
+    width: 100%;
+  }
 `
 
 const PaymentTitle = styled.p`
@@ -186,9 +194,7 @@ class Summary extends React.Component {
         <Row>
           <PaymentAmount>${amount}</PaymentAmount>
           <TextMedium>
-            {isAnnual
-              ? `$${amount / 12}/${monthLabel.substring(0, 2)}`
-              : `/${monthLabel}`}
+            {isAnnual ? `$${amount / 12}/${monthLabel}` : `${monthLabel}`}
           </TextMedium>
         </Row>
       </PaymentWrapper>

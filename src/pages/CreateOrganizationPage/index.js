@@ -176,6 +176,7 @@ const FormWrap = styled.div`
   `}
   ${media.phone`
     margin-top: 0;
+    padding: 30px 20px;
   `}
 `
 
