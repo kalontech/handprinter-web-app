@@ -165,11 +165,11 @@ const LogoSmall = styled.div`
   justify-content: flex-start;
   ${media.largeDesktop`
     justify-content: center;
+    a {
+      display: flex;
+      justify-content: center;
+    }
   `}
-  a {
-    display: flex;
-    justify-content: center;
-  }
 `
 
 const MenuWrap = styled.div`
@@ -1108,14 +1108,7 @@ class Header extends Component {
                 </Hamburger>
               )}
               <LogoSmall>
-                <Link
-                  style={overrides && headerLogoLinkStyle}
-                  to={
-                    overrides && overrides.brandName !== 'Eaton'
-                      ? '/pages/home'
-                      : '/account/dashboard'
-                  }
-                >
+                <Link style={overrides && headerLogoLinkStyle} to="/">
                   <img
                     src={(overrides && overrides.partialLogo) || partialLogoImg}
                     alt="Handprinter"
