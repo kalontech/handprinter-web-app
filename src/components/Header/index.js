@@ -1010,13 +1010,6 @@ class Header extends Component {
                         <FormattedMessage id="app.header.menu.actions" />
                       </Link>
                     </Menu.Item>
-                    {(!overrides || !overrides.brandName) && (
-                      <Menu.Item key="/pages/for-organizations">
-                        <Link to="/pages/for-organizations">
-                          <FormattedMessage id="app.header.menu.forOrganizations" />
-                        </Link>
-                      </Menu.Item>
-                    )}
                     <Menu.Item key="/account/news">
                       <Link to="/account/news">
                         <FormattedMessage id="app.header.menu.news" />
@@ -1027,6 +1020,13 @@ class Header extends Component {
                         <FormattedMessage id="app.pages.groups" />
                       </Link>
                     </Menu.Item>
+                    {(!overrides || !overrides.brandName) && (
+                      <Menu.Item key="/organizations">
+                        <Link to="/organizations/discover">
+                          <FormattedMessage id="app.header.menu.organizations" />
+                        </Link>
+                      </Menu.Item>
+                    )}
                     <SubMenu
                       key="about"
                       title={
@@ -1189,13 +1189,6 @@ class Header extends Component {
                             <FormattedMessage id="app.header.menu.actions" />
                           </Link>
                         </Menu.Item>
-                        {(!overrides || !overrides.brandName) && (
-                          <Menu.Item key="/pages/for-organizations">
-                            <Link to="/pages/for-organizations">
-                              <FormattedMessage id="app.header.menu.forOrganizations" />
-                            </Link>
-                          </Menu.Item>
-                        )}
                         <Menu.Item key="/account/news">
                           <Link to="/account/news">
                             <FormattedMessage id="app.header.menu.news" />
@@ -1207,13 +1200,13 @@ class Header extends Component {
                             <FormattedMessage id="app.pages.groups" />
                           </Link>
                         </Menu.Item>
-
-                        <Menu.Item key="/organizations">
-                          <Link to="/organizations/discover">
-                            <FormattedMessage id="app.header.menu.organizations" />
-                          </Link>
-                        </Menu.Item>
-
+                        {(!overrides || !overrides.brandName) && (
+                          <Menu.Item key="/organizations">
+                            <Link to="/organizations/discover">
+                              <FormattedMessage id="app.header.menu.organizations" />
+                            </Link>
+                          </Menu.Item>
+                        )}
                         {overrides &&
                         overrides.inLinkLogo &&
                         overrides.brandName === 'Eaton' ? (
