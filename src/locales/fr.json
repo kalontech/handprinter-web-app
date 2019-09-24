@@ -697,5 +697,10 @@
     "app.header.menu.organizations": "Les organisations",
     "app.organizations.requestCustomized": "Demander des expériences personnalisées",
     "app.organizations.increaseHandprint.inviteCode": "Votre code d'identification personnel",
-    "app.increaseOrgHandprintPage.title": "Augmentez l'empreinte de votre organisation!"
+    "app.increaseOrgHandprintPage.title": "Augmentez l'empreinte de votre organisation!",
+    "app.actionsPage.tabs.modeling": "Modeling",
+    "footprintReduction": "My Footprint reduction",
+    "externalHandprint": "External Handprint",
+    "totalPositiveDays": "Total net Positive Days",
+    "app.actionCreatePage.submitSucceededLink": "hier"
 }

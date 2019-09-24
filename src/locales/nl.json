@@ -697,5 +697,10 @@
     "app.header.menu.organizations": "Organisaties",
     "app.organizations.requestCustomized": "Vraag aangepaste ervaringen aan",
     "app.organizations.increaseHandprint.inviteCode": "De ID-code van uw organisatie",
-    "app.increaseOrgHandprintPage.title": "Vergroot de handafdruk van uw organisatie!"
+    "app.increaseOrgHandprintPage.title": "Vergroot de handafdruk van uw organisatie!",
+    "app.actionsPage.tabs.modeling": "Modeling",
+    "footprintReduction": "My Footprint reduction",
+    "externalHandprint": "External Handprint",
+    "totalPositiveDays": "Total net Positive Days",
+    "app.actionCreatePage.submitSucceededLink": "hier"
 }
