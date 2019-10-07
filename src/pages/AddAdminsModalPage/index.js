@@ -284,7 +284,9 @@ class AddAdminsModalPage extends Component {
 
   handleSend = async () => {
     try {
-      await addAdmins({ admins: this.state.admins })
+      const { match } = this.props
+      const organizationId = match.params.organizationId
+      await addAdmins({ admins: this.state.admins, organizationId })
       await this.fetchOrganization()
       this.setState({ admins: [] })
     } catch (error) {
