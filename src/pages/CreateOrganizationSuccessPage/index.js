@@ -108,7 +108,11 @@ class CreateOrganizationSuccessPage extends React.PureComponent {
 
   handleSend = async () => {
     try {
-      await addAdmins({ admins: this.state.admins })
+      const {
+        location: { search },
+      } = this.props
+      const organizationName = queryString.parse(search).organization
+      await addAdmins({ admins: this.state.admins, organizationName })
       this.props.history.push('/pages/our-vision')
     } catch (error) {
       console.error(error)
