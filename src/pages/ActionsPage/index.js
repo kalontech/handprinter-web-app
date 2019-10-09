@@ -274,6 +274,7 @@ async function getActionsList(props) {
       api.getSuggestedActions,
       api.getActionsMyIdeas,
       api.getActionsHistory,
+      api.getActionsModeling,
     ][Object.values(ACTIONS_SUBSETS).indexOf(match.params.subset)] ||
     api.getActions
 
@@ -567,6 +568,12 @@ class ActionsPage extends React.PureComponent {
                   icon: HistoryIconComponent,
                   text: formatMessage({ id: 'app.actionsPage.tabs.history' }),
                   active: match.params.subset === ACTIONS_SUBSETS.TAKEN,
+                },
+                {
+                  to: `/actions/${ACTIONS_SUBSETS.MODELING}`,
+                  icon: HistoryIconComponent,
+                  text: formatMessage({ id: 'app.actionsPage.tabs.modeling' }),
+                  active: match.params.subset === ACTIONS_SUBSETS.MODELING,
                 },
               ]}
               isOpen={visibleTabs}

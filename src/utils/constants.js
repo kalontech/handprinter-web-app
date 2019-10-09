@@ -19,6 +19,7 @@ export const ACTIONS_SUBSETS = {
   SUGGESTED: 'suggested',
   MY_IDEAS: 'my_ideas',
   TAKEN: 'history',
+  MODELING: 'modeling',
 }
 
 export const GROUPS_STATUSES = {

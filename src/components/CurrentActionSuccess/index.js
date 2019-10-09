@@ -72,7 +72,10 @@ class CurrentActionSuccess extends React.PureComponent {
           />
         </OceanTitle>
         <OceanDescription>
-          <FormattedMessage id="app.actionCreatePage.submitSucceededDescription" />
+          <FormattedMessage id="app.actionCreatePage.submitSucceededDescription" />{' '}
+          <Link to="/actions/modeling">
+            <FormattedMessage id="app.actionCreatePage.submitSucceededLink" />
+          </Link>
         </OceanDescription>
 
         <Link to="/actions">

@@ -94,7 +94,6 @@ class LoginPage extends Component {
       form: { getFieldDecorator },
       intl: { formatMessage },
       isLoggingIn,
-      overrides,
     } = this.props
     const createOrganizationFlow = this.state.createOrganizationFlow
     return (
@@ -112,13 +111,7 @@ class LoginPage extends Component {
               )}
               <ActionCardFormWrapper>
                 <ActionCardTitle>
-                  <FormattedMessage
-                    id={
-                      overrides && overrides.brandName === 'Eaton'
-                        ? 'app.loginPage.title.eaton'
-                        : 'app.loginPage.title'
-                    }
-                  />
+                  <FormattedMessage id={'app.loginPage.title'} />
                 </ActionCardTitle>
                 <Form onSubmit={this.handleSubmit}>
                   <FormItem>
@@ -149,15 +142,7 @@ class LoginPage extends Component {
                     style={{ width: '100%' }}
                     loading={isLoggingIn}
                   >
-                    <FormattedMessage
-                      id={
-                        createOrganizationFlow
-                          ? 'app.createOrganization.continue'
-                          : overrides && overrides.brandName === 'Eaton'
-                          ? 'app.loginPage.login.eaton'
-                          : 'app.loginPage.login'
-                      }
-                    />
+                    <FormattedMessage id={'app.loginPage.login'} />
                   </Button>
                   <FormItem>
                     {getFieldDecorator('formError')(<Input type="hidden" />)}
@@ -165,20 +150,8 @@ class LoginPage extends Component {
                   <ActionCardRegisterBlock>
                     <span>
                       <FormattedMessage id="app.loginPage.doNotHaveAnAccount" />{' '}
-                      <Link
-                        to={
-                          createOrganizationFlow
-                            ? '/account/register?createOrganization=true'
-                            : '/account/register'
-                        }
-                      >
-                        <FormattedMessage
-                          id={
-                            overrides && overrides.brandName === 'Eaton'
-                              ? 'app.loginPage.register.eaton'
-                              : 'app.loginPage.register'
-                          }
-                        />
+                      <Link to="/account/register">
+                        <FormattedMessage id={'app.loginPage.register'} />
                       </Link>
                     </span>
                   </ActionCardRegisterBlock>

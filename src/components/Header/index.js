@@ -165,11 +165,11 @@ const LogoSmall = styled.div`
   justify-content: flex-start;
   ${media.largeDesktop`
     justify-content: center;
+    a {
+      display: flex;
+      justify-content: center;
+    }
   `}
-  a {
-    display: flex;
-    justify-content: center;
-  }
 `
 
 const MenuWrap = styled.div`
@@ -757,20 +757,14 @@ class Header extends Component {
                         style={overrides && { borderRadius: '0' }}
                       >
                         <FingerPrintIcon id="primaryBtnIcon" />
-                        <FormattedMessage
-                          id={
-                            overrides && overrides.brandName === 'Eaton'
-                              ? 'app.header.link.eaton'
-                              : 'app.header.link'
-                          }
-                        />
+                        <FormattedMessage id={'app.header.link'} />
                       </PrimaryButton>
                     </Link>
                   )}
                   <Link to="/account/login" onClick={this.onClick}>
                     {overrides && overrides.brandName === 'Eaton' ? (
                       <BlueBorderedButton>
-                        <FormattedMessage id="app.header.menu.login.eaton" />
+                        <FormattedMessage id="app.header.menu.login" />
                       </BlueBorderedButton>
                     ) : overrides && overrides.brandName === 'Interface' ? (
                       <GrayBorderedButton>
@@ -944,11 +938,7 @@ class Header extends Component {
                                     <LogoImg src={loginIcon} alt="icon" />
                                   )}
                                 <FormattedMessage
-                                  id={
-                                    overrides && overrides.brandName === 'Eaton'
-                                      ? 'app.header.menu.login.eaton'
-                                      : 'app.header.menu.login'
-                                  }
+                                  id={'app.header.menu.login'}
                                 />
                               </CenterAlign>
                             </Link>
@@ -1144,14 +1134,7 @@ class Header extends Component {
                 </Hamburger>
               )}
               <LogoSmall>
-                <Link
-                  style={overrides && headerLogoLinkStyle}
-                  to={
-                    overrides && overrides.brandName !== 'Eaton'
-                      ? '/pages/home'
-                      : '/account/dashboard'
-                  }
-                >
+                <Link style={overrides && headerLogoLinkStyle} to="/">
                   <img
                     src={(overrides && overrides.partialLogo) || partialLogoImg}
                     alt="Handprinter"

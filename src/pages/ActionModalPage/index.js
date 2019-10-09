@@ -685,7 +685,6 @@ class ActionModalPage extends Component {
       closeModal,
       history,
       intl: { formatMessage },
-      overrides,
     } = this.props
     const { action, takenAction } = this.state
 
@@ -781,11 +780,7 @@ class ActionModalPage extends Component {
                   <Link to="/account/login">
                     <DefaultButton type="primary">
                       <FormattedMessage
-                        id={
-                          overrides && overrides.brandName === 'Eaton'
-                            ? 'app.actions.congratulations.login.eaton'
-                            : 'app.actions.congratulations.login'
-                        }
+                        id={'app.actions.congratulations.login'}
                       />
                     </DefaultButton>
                   </Link>
@@ -795,11 +790,7 @@ class ActionModalPage extends Component {
                   <Link to="/account/register">
                     <Button type="primary">
                       <FormattedMessage
-                        id={
-                          overrides && overrides.brandName === 'Eaton'
-                            ? 'app.actions.congratulations.register.eaton'
-                            : 'app.actions.congratulations.register'
-                        }
+                        id={'app.actions.congratulations.register'}
                       />
                     </Button>
                   </Link>
