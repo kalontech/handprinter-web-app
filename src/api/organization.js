@@ -32,3 +32,6 @@ export const shareInvitationCode = body =>
     body,
     method: 'POST',
   })
+
+export const getDashboardData = id =>
+  fetchAPI(`/organizations/${id}/get-dashboard-data`, { method: 'GET' })

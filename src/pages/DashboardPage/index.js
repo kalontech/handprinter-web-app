@@ -28,7 +28,12 @@ import { BlockContainer, DefaultButton } from 'components/Styled'
 import icons from 'components/ActionCardLabel/icons'
 import { getUserInitialAvatar } from 'api'
 import * as apiUser from 'api/user'
-import { getOrganization, updateOne, getAdmins } from 'api/organization'
+import {
+  getOrganization,
+  updateOne,
+  getAdmins,
+  getDashboardData,
+} from 'api/organization'
 import { PROFILE_PHOTO_WEIGHT_LIMIT, ACCEPT_IMAGE_FORMATS } from 'config/files'
 
 import { convertBytesToMegabytes } from 'utils/file'
@@ -477,7 +482,15 @@ const stubs = {
 
 async function fetchDashboardData(props) {
   const { personId } = props.match.params
-
+  const { location } = props
+  const query = qs.parse(location.search, { ignoreQueryPrefix: true })
+  const organizationId = query && query.organizationId
+  if (organizationId) {
+    const { calendar, network, ratio, stats } = await getDashboardData(
+      organizationId,
+    )
+    return { calendar, network, ratio, stats }
+  }
   if (personId) {
     const [{ calendar, ratio, stats }, { user }, error] = await Promise.all([
       apiUser.getDashboardData({
