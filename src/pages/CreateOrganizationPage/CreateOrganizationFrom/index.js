@@ -11,11 +11,7 @@ import arrowDownIcon from 'assets/icons/arrowDown.svg'
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 
 import ECONOMIC_SECTOR_TYPES from './sectors'
-import {
-  ORGANIZATION_TYPES,
-  ANNUAL_REVENUE_PROFIT,
-  ANNUAL_REVENUE_NON_PROFIT,
-} from './utils'
+import { ORGANIZATION_TYPES, ANNUAL_REVENUE } from './utils'
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -135,12 +131,8 @@ class CreateOrganizationFrom extends React.Component {
     const {
       intl: { formatMessage },
     } = this.props
-    const { nameIsAvailable, companyType } = this.state
-    let annualRevenue = []
-    if (companyType === ORGANIZATION_TYPES[0]._id)
-      annualRevenue = ANNUAL_REVENUE_PROFIT
-    if (companyType === ORGANIZATION_TYPES[1]._id)
-      annualRevenue = ANNUAL_REVENUE_NON_PROFIT
+    const { nameIsAvailable } = this.state
+    const annualRevenue = ANNUAL_REVENUE
 
     return (
       <StyledForm onSubmit={this.handleSubmit}>
