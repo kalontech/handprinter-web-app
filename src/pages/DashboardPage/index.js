@@ -665,6 +665,13 @@ class DashboardPage extends Component {
     } else {
       avatar = user.photo || getUserInitialAvatar(user.fullName)
     }
+
+    const footPrintReduction = Math.round(
+      YEAR - ratio.footprintDays[currentImpactCategory],
+    )
+    const externalHandprint = Math.round(
+      ratio.handprintDays[currentImpactCategory],
+    )
     return (
       <Fragment>
         <DashboardHeader>
@@ -756,14 +763,7 @@ class DashboardPage extends Component {
                                   alignItems: 'center',
                                 }}
                               >
-                                {Math.round(
-                                  stats.personal.netPositiveDays[
-                                    currentImpactCategory
-                                  ],
-                                ) +
-                                  Math.round(
-                                    ratio.handprintDays[currentImpactCategory],
-                                  )}
+                                {footPrintReduction + externalHandprint}
                                 <InfoElementWrap>
                                   <InfoElement
                                     type={INFO_ELEMENT_TYPES.QUESTION}
@@ -774,37 +774,20 @@ class DashboardPage extends Component {
                                           <p>
                                             <FormattedMessage id="totalPositiveDays" />
                                             {`: `}
-                                            {Math.round(
-                                              stats.personal.netPositiveDays[
-                                                currentImpactCategory
-                                              ],
-                                            ) +
-                                              Math.round(
-                                                ratio.handprintDays[
-                                                  currentImpactCategory
-                                                ],
-                                              )}
+                                            {footPrintReduction +
+                                              externalHandprint}
                                           </p>
                                           <p>
                                             {` - `}
                                             <FormattedMessage id="footprintReduction" />
                                             {`: `}
-                                            {Math.round(
-                                              YEAR -
-                                                ratio.footprintDays[
-                                                  currentImpactCategory
-                                                ],
-                                            )}
+                                            {footPrintReduction}
                                           </p>
                                           <p>
                                             {` - `}
                                             <FormattedMessage id="externalHandprint" />
                                             {`: `}
-                                            {Math.round(
-                                              ratio.handprintDays[
-                                                currentImpactCategory
-                                              ],
-                                            )}
+                                            {externalHandprint}
                                           </p>
                                         </Fragment>
                                       ),
