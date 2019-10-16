@@ -820,7 +820,8 @@ class DashboardPage extends Component {
                     }
                   />
                 )}
-                {organization.admins.map(user => {
+                {organization.admins.map(admin => {
+                  const user = admin._doc
                   return (
                     <AdminItem
                       key={user.id}

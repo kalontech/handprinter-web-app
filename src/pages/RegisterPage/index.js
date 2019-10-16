@@ -39,6 +39,7 @@ import PageMetadata from 'components/PageMetadata'
 import OrganizationCreationSteps from 'components/OrganizationCreationSteps'
 import InputForPassword from 'components/InputForPassword'
 import * as apiUser from 'api/user'
+import * as apiOrganization from 'api/organization'
 
 export const BrandedBlockWrap = styled.div`
   position: relative;
@@ -283,10 +284,16 @@ class RegisterPage extends Component {
     })
   }
 
-  handleCodeSearch = async query => {
+  handleCodeSearch = async (query, searchByOrganization) => {
     try {
-      const response = await apiUser.search(query)
-      this.setState({ matchedUsersByCode: response.users })
+      const response = searchByOrganization
+        ? await apiOrganization.search(query)
+        : await apiUser.search(query)
+      this.setState({
+        matchedUsersByCode: searchByOrganization
+          ? response.organizations
+          : response.users,
+      })
     } catch (error) {
       console.error(error)
     }

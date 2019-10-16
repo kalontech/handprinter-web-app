@@ -41,7 +41,7 @@ type Props = {
 
 class SearchInfluencerInput extends React.Component<Props> {
   static defaultProps = {
-    dropdownList: ['Individual'],
+    dropdownList: ['Individual', 'Organization'],
     suggestions: [],
   }
 
@@ -95,9 +95,10 @@ class SearchInfluencerInput extends React.Component<Props> {
   }
 
   handleSearch = searchQuery => {
+    const searchByOrganization = this.state.selectedMenuIndex === 1
     this.setState({ searchQuery })
     const onSearch = this.props.onSearch
-    if (onSearch) onSearch(searchQuery)
+    if (onSearch) onSearch(searchQuery, searchByOrganization)
   }
 
   handleMouseEnterDropdown = index => {
@@ -196,7 +197,9 @@ class SearchInfluencerInput extends React.Component<Props> {
                         >
                           <SearchItemImg src={item.photo} alt={item.fullName} />
                           <SearchItemColumn>
-                            <SearchItemHeader>{item.fullName}</SearchItemHeader>
+                            <SearchItemHeader>
+                              {item.fullName || item.name}
+                            </SearchItemHeader>
                             <SearchItemText>
                               {item.invitationCode}
                             </SearchItemText>
