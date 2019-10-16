@@ -666,12 +666,12 @@ class DashboardPage extends Component {
       avatar = user.photo || getUserInitialAvatar(user.fullName)
     }
 
-    const footPrintReduction = Math.round(
-      YEAR - ratio.footprintDays[currentImpactCategory],
-    )
-    const externalHandprint = Math.round(
-      ratio.handprintDays[currentImpactCategory],
-    )
+    const footPrintReduction = ratio
+      ? Math.round(YEAR - ratio.footprintDays[currentImpactCategory])
+      : 0
+    const externalHandprint = ratio
+      ? Math.round(ratio.handprintDays[currentImpactCategory])
+      : 0
     return (
       <Fragment>
         <DashboardHeader>
@@ -1000,14 +1000,16 @@ class DashboardPage extends Component {
                   </WidgetTitle>
                 </WidgetHeader>
                 <WidgetContent useWidgetMinHeight>
-                  <GoodRatioWidget
-                    footprintDays={Math.round(
-                      ratio.footprintDays[currentImpactCategory],
-                    )}
-                    handprintDays={Math.round(
-                      ratio.handprintDays[currentImpactCategory],
-                    )}
-                  />
+                  {!!ratio && (
+                    <GoodRatioWidget
+                      footprintDays={Math.round(
+                        ratio.footprintDays[currentImpactCategory],
+                      )}
+                      handprintDays={Math.round(
+                        ratio.handprintDays[currentImpactCategory],
+                      )}
+                    />
+                  )}
                 </WidgetContent>
               </WidgetContainer>
             </GoodRatioCol>

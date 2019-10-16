@@ -325,7 +325,9 @@ class AddAdminsModalPage extends Component {
 
   handleDeleteAdmin = async adminId => {
     try {
-      await removeAdmin(adminId)
+      const { match } = this.props
+      const organizationId = match.params.organizationId
+      await removeAdmin(organizationId, adminId)
       this.setState({ popoverVisibleAdmin: null })
       this.fetchOrganization()
     } catch (error) {

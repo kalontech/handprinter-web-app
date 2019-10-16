@@ -19,8 +19,8 @@ export const addAdmins = data =>
     method: 'POST',
   })
 
-export const removeAdmin = adminId =>
-  fetchAPI(`/organizations/admins/${adminId}`, {
+export const removeAdmin = (organizationId, adminId) =>
+  fetchAPI(`/organizations/${organizationId}/admins/${adminId}`, {
     method: 'DELETE',
   })
 
