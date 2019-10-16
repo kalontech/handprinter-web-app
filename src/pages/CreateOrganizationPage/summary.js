@@ -226,10 +226,12 @@ class Summary extends React.Component {
               <FormattedMessage id="app.createOrganization.subdomain" />{' '}
               <Text>{organizationUrl}.handprinter.org</Text>
             </SummaryRow> */}
-            <SummaryRow>
-              <FormattedMessage id="app.forms.economicSector" />{' '}
-              <Text>{economicSector}</Text>
-            </SummaryRow>
+            {!!economicSector && economicSector.length > 0 && (
+              <SummaryRow>
+                <FormattedMessage id="app.forms.economicSector" />{' '}
+                <Text>{economicSector.join(' / ')}</Text>
+              </SummaryRow>
+            )}
             <SummaryRow>
               <FormattedMessage id="app.forms.annualRevenue" />{' '}
               <Text>{annualRevenue}</Text>
