@@ -702,5 +702,6 @@
     "footprintReduction": "My Footprint reduction",
     "externalHandprint": "External Handprint",
     "totalPositiveDays": "Total net Positive Days",
-    "app.actionCreatePage.submitSucceededLink": "hier"
+    "app.actionCreatePage.submitSucceededLink": "hier",
+    "app.errors.43": "Amount is invalid"
 }

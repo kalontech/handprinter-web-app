@@ -122,7 +122,17 @@ class Summary extends React.Component {
     payError: undefined,
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.organizationDetails !== this.props.organizationDetails) {
+      this.updatePayAmount()
+    }
+  }
+
   componentDidMount() {
+    this.updatePayAmount()
+  }
+
+  updatePayAmount() {
     if (this.props.organizationDetails) {
       const { type, annualRevenue } = this.props.organizationDetails
       const payAmountPerMonth = this.calculateAmountPM(type, annualRevenue)
