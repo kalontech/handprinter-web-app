@@ -52,7 +52,6 @@ const Name = styled.h4`
   color: ${colors.dark};
   margin-bottom: 4px;
   font-family: Noto Sans;
-  max-height: 52px;
   overflow-y: auto;
 `
 
