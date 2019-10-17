@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Select, AutoComplete, Icon } from 'antd'
+import { Select, AutoComplete, Icon, Dropdown } from 'antd'
 import { Input as InputAnt, TextMedium } from 'components/Styled'
 
 import media from 'utils/mediaQueryTemplate'
@@ -9,6 +9,8 @@ import colors from '../../config/colors'
 export const Row = styled.div`
   display: flex;
 `
+
+export const StyledDropdown = styled(Dropdown)``
 
 export const RelativeView = styled.div`
   position: relative;
