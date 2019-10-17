@@ -5,8 +5,8 @@ export default [
       {
         name: 'Farms',
         items: [
-          { name: 'Oilseed farming' },
-          { name: 'Grain farming' },
+          // { name: 'Oilseed farming' },
+          // { name: 'Grain farming' },
           { name: 'Vegetable and melon farming' },
           { name: 'Fruit and tree nut farming' },
           { name: 'Greenhouse, nursery, and floriculture production' },
@@ -16,7 +16,7 @@ export default [
               'Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming',
           },
           { name: 'Dairy cattle and milk production' },
-          { name: 'Animal production, except cattle and poultry and eggs' },
+          // { name: 'Animal production, except cattle and poultry and eggs' },
           { name: 'Poultry and egg production' },
         ],
       },
@@ -43,7 +43,7 @@ export default [
           { name: 'Coal mining' },
           { name: 'Iron, gold, silver, and other metal ore mining' },
           { name: 'Copper, nickel, lead, and zinc mining' },
-          { name: 'Stone mining and quarrying' },
+          // { name: 'Stone mining and quarrying' },
           { name: 'Other nonmetallic mineral mining and quarrying' },
         ],
       },
@@ -64,7 +64,7 @@ export default [
         items: [
           { name: 'Electric power generation, transmission, and distribution' },
           { name: 'Natural gas distribution' },
-          { name: 'Water, sewage and other systems' },
+          // { name: 'Water, sewage and other systems' },
         ],
       },
     ],
@@ -79,7 +79,7 @@ export default [
           { name: 'Residential maintenance and repair' },
           { name: 'Health care structures' },
           { name: 'Manufacturing structures' },
-          { name: 'Power and communication structures' },
+          // { name: 'Power and communication structures' },
           { name: 'Educational and vocational structures' },
           { name: 'Highways and streets' },
           { name: 'Commercial structures, including farm structures' },
@@ -97,12 +97,12 @@ export default [
       {
         name: 'Wood products',
         items: [
-          { name: 'Sawmills and wood preservation' },
+          // { name: 'Sawmills and wood preservation' },
           {
             name: 'Veneer, plywood, and engineered wood product manufacturing',
           },
-          { name: 'Millwork' },
-          { name: 'All other wood product manufacturing' },
+          // { name: 'Millwork' },
+          // { name: 'All other wood product manufacturing' },
         ],
       },
       {
@@ -128,19 +128,19 @@ export default [
           { name: 'Iron and steel mills and ferroalloy manufacturing' },
           { name: 'Steel product manufacturing from purchased steel' },
           { name: 'Alumina refining and primary aluminum production' },
-          { name: 'Secondary smelting and alloying of aluminum' },
+          // { name: 'Secondary smelting and alloying of aluminum' },
           { name: 'Aluminum product manufacturing from purchased aluminum' },
           { name: 'Primary smelting and refining of copper' },
           {
             name:
               'Primary smelting and refining of nonferrous metal (except copper and aluminum)',
           },
-          { name: 'Copper rolling, drawing, extruding and alloying' },
+          // { name: 'Copper rolling, drawing, extruding and alloying' },
           {
             name:
               'Nonferrous metal (except copper and aluminum) rolling, drawing, extruding and alloying',
           },
-          { name: 'Ferrous metal foundries' },
+          // { name: 'Ferrous metal foundries' },
           { name: 'Nonferrous metal foundries' },
         ],
       },
@@ -181,7 +181,7 @@ export default [
           { name: 'Lawn and garden equipment manufacturing' },
           { name: 'Construction machinery manufacturing' },
           { name: 'Mining and oil and gas field machinery manufacturing' },
-          { name: 'Other industrial machinery manufacturing' },
+          // { name: 'Other industrial machinery manufacturing' },
           { name: 'Plastics and rubber industry machinery manufacturing' },
           { name: 'Semiconductor machinery manufacturing' },
           {
@@ -212,15 +212,15 @@ export default [
               'Speed changer, industrial high-speed drive, and gear manufacturing',
           },
           { name: 'Mechanical power transmission equipment manufacturing' },
-          { name: 'Other engine equipment manufacturing' },
+          // { name: 'Other engine equipment manufacturing' },
           { name: 'Pump and pumping equipment manufacturing' },
           { name: 'Air and gas compressor manufacturing' },
           { name: 'Material handling equipment manufacturing' },
-          { name: 'Power-driven handtool manufacturing' },
+          // { name: 'Power-driven handtool manufacturing' },
           { name: 'Other general purpose machinery manufacturing' },
           { name: 'Packaging machinery manufacturing' },
           { name: 'Industrial process furnace and oven manufacturing' },
-          { name: 'Fluid power process machinery' },
+          // { name: 'Fluid power process machinery' },
         ],
       },
       {
@@ -234,10 +234,10 @@ export default [
           },
           { name: 'Telephone apparatus manufacturing' },
           { name: 'Broadcast and wireless communications equipment' },
-          { name: 'Other communications equipment manufacturing' },
+          // { name: 'Other communications equipment manufacturing' },
           { name: 'Audio and video equipment manufacturing' },
-          { name: 'Other electronic component manufacturing' },
-          { name: 'Semiconductor and related device manufacturing' },
+          // { name: 'Other electronic component manufacturing' },
+          // { name: 'Semiconductor and related device manufacturing' },
           {
             name:
               'Printed circuit assembly (electronic assembly) manufacturing',
@@ -259,7 +259,7 @@ export default [
             name:
               'Watch, clock, and other measuring and controlling device manufacturing',
           },
-          { name: 'Manufacturing and reproducing magnetic and optical media' },
+          // { name: 'Manufacturing and reproducing magnetic and optical media' },
         ],
       },
       {
@@ -358,7 +358,7 @@ export default [
               'Office furniture and custom architectural woodwork and millwork manufacturing',
           },
           { name: 'Showcase, partition, shelving, and locker manufacturing' },
-          { name: 'Other furniture related product manufacturing' },
+          // { name: 'Other furniture related product manufacturing' },
         ],
       },
       {
@@ -383,9 +383,9 @@ export default [
           { name: 'Dog and cat food manufacturing' },
           { name: 'Other animal food manufacturing' },
           { name: 'Flour milling and malt manufacturing' },
-          { name: 'Wet corn milling' },
+          // { name: 'Wet corn milling' },
           { name: 'Soybean and other oilseed processing' },
-          { name: 'Fats and oils refining and blending' },
+          // { name: 'Fats and oils refining and blending' },
           { name: 'Breakfast cereal manufacturing' },
           { name: 'Sugar and confectionery product manufacturing' },
           { name: 'Frozen food manufacturing' },
@@ -396,11 +396,11 @@ export default [
             name: 'Dry, condensed, and evaporated dairy product manufacturing',
           },
           { name: 'Ice cream and frozen dessert manufacturing' },
-          {
-            name:
-              'Animal (except poultry) slaughtering, rendering, and processing',
-          },
-          { name: 'Poultry processing' },
+          // {
+          //   name:
+          //     'Animal (except poultry) slaughtering, rendering, and processing',
+          // },
+          // { name: 'Poultry processing' },
           { name: 'Seafood product preparation and packaging' },
           { name: 'Bread and bakery product manufacturing' },
           { name: 'Cookie, cracker, pasta, and tortilla manufacturing' },
@@ -430,7 +430,7 @@ export default [
       {
         name: 'Apparel and leather and allied products',
         items: [
-          { name: 'Apparel manufacturing' },
+          // { name: 'Apparel manufacturing' },
           { name: 'Leather and allied product manufacturing' },
         ],
       },
@@ -467,7 +467,7 @@ export default [
         name: 'Chemical products',
         items: [
           { name: 'Petrochemical manufacturing' },
-          { name: 'Industrial gas manufacturing' },
+          // { name: 'Industrial gas manufacturing' },
           { name: 'Synthetic dye and pigment manufacturing' },
           { name: 'Other basic inorganic chemical manufacturing' },
           { name: 'Other basic organic chemical manufacturing' },
@@ -480,14 +480,14 @@ export default [
           { name: 'Pesticide and other agricultural chemical manufacturing' },
           { name: 'Medicinal and botanical manufacturing' },
           { name: 'Pharmaceutical preparation manufacturing' },
-          { name: 'In-vitro diagnostic substance manufacturing' },
+          // { name: 'In-vitro diagnostic substance manufacturing' },
           { name: 'Biological product (except diagnostic) manufacturing' },
           { name: 'Paint and coating manufacturing' },
           { name: 'Adhesive manufacturing' },
           { name: 'Soap and cleaning compound manufacturing' },
           { name: 'Toilet preparation manufacturing' },
           { name: 'Printing ink manufacturing' },
-          { name: 'All other chemical product and preparation manufacturing' },
+          // { name: 'All other chemical product and preparation manufacturing' },
         ],
       },
       {
@@ -588,7 +588,7 @@ export default [
           { name: 'Periodical Publishers' },
           { name: 'Book publishers' },
           { name: 'Directory, mailing list, and other publishers' },
-          { name: 'Software publishers' },
+          // { name: 'Software publishers' },
         ],
       },
       {
@@ -603,7 +603,7 @@ export default [
         items: [
           { name: 'Radio and television broadcasting' },
           { name: 'Cable and other subscription programming' },
-          { name: 'Wired telecommunications carriers' },
+          // { name: 'Wired telecommunications carriers' },
           { name: 'Wireless telecommunications carriers (except satellite)' },
           {
             name:
@@ -657,10 +657,10 @@ export default [
           { name: 'Insurance agencies, brokerages, and related activities' },
         ],
       },
-      {
-        name: 'Funds, trusts, and other financial vehicles',
-        items: [{ name: 'Funds, trusts, and other financial vehicles' }],
-      },
+      // {
+      //   name: 'Funds, trusts, and other financial vehicles',
+      //   items: [{ name: 'Funds, trusts, and other financial vehicles' }],
+      // },
       {
         name: 'Real estate',
         items: [{ name: 'Housing' }, { name: 'Other real estate' }],
@@ -715,10 +715,10 @@ export default [
           { name: 'Veterinary services' },
         ],
       },
-      {
-        name: 'Management of companies and enterprises',
-        items: [{ name: 'Management of companies and enterprises' }],
-      },
+      // {
+      //   name: 'Management of companies and enterprises',
+      //   items: [{ name: 'Management of companies and enterprises' }],
+      // },
       {
         name: 'Administrative and support services',
         items: [
@@ -757,11 +757,11 @@ export default [
         items: [
           { name: 'Offices of physicians' },
           { name: 'Offices of dentists' },
-          { name: 'Offices of other health practitioners' },
+          // { name: 'Offices of other health practitioners' },
           { name: 'Outpatient care centers' },
           { name: 'Medical and diagnostic laboratories' },
           { name: 'Home health care services' },
-          { name: 'Other ambulatory health care services' },
+          // { name: 'Other ambulatory health care services' },
         ],
       },
       { name: 'Hospitals', items: [{ name: 'Hospitals' }] },
@@ -796,7 +796,7 @@ export default [
           'Performing arts, spectator sports, museums, and related activities',
         items: [
           { name: 'Performing arts companies' },
-          { name: 'Spectator sports' },
+          // { name: 'Spectator sports' },
           {
             name:
               'Promoters of performing arts and sports and agents for public figures',
@@ -831,7 +831,7 @@ export default [
         name: 'Other services, except government',
         items: [
           { name: 'Automotive repair and maintenance' },
-          { name: 'Electronic and precision equipment repair and maintenance' },
+          // { name: 'Electronic and precision equipment repair and maintenance' },
           {
             name:
               'Commercial and industrial machinery and equipment repair and maintenance',
@@ -839,10 +839,10 @@ export default [
           { name: 'Personal and household goods repair and maintenance' },
           { name: 'Personal care services' },
           { name: 'Death care services' },
-          { name: 'Dry-cleaning and laundry services' },
-          { name: 'Other personal services' },
+          // { name: 'Dry-cleaning and laundry services' },
+          // { name: 'Other personal services' },
           { name: 'Religious organizations' },
-          { name: 'Grantmaking, giving, and social advocacy organizations' },
+          // { name: 'Grantmaking, giving, and social advocacy organizations' },
           { name: 'Civic, social, professional, and similar organizations' },
           { name: 'Private households' },
         ],
@@ -863,7 +863,7 @@ export default [
         name: 'Federal government enterprises',
         items: [
           { name: 'Postal service' },
-          { name: 'Federal electric utilities' },
+          // { name: 'Federal electric utilities' },
           { name: 'Other federal government enterprises' },
         ],
       },
@@ -874,29 +874,29 @@ export default [
       {
         name: 'State and local government enterprises',
         items: [
-          { name: 'State and local government passenger transit' },
-          { name: 'State and local government electric utilities' },
+          // { name: 'State and local government passenger transit' },
+          // { name: 'State and local government electric utilities' },
           { name: 'Other state and local government enterprises' },
         ],
       },
     ],
   },
-  {
-    name: 'Scrap, used and secondhand goods',
-    items: [
-      {
-        name: 'Scrap, used and secondhand goods',
-        items: [{ name: 'Scrap' }, { name: 'Used and secondhand goods' }],
-      },
-    ],
-  },
+  // {
+  //   name: 'Scrap, used and secondhand goods',
+  //   items: [
+  //     {
+  //       name: 'Scrap, used and secondhand goods',
+  //       items: [{ name: 'Scrap' }, { name: 'Used and secondhand goods' }],
+  //     },
+  //   ],
+  // },
   {
     name: 'Noncomparable imports and rest-of-the-world adjustment',
     items: [
       {
         name: 'Noncomparable imports and rest-of-the-world adjustment',
         items: [
-          { name: 'Noncomparable imports' },
+          // { name: 'Noncomparable imports' },
           { name: 'Rest of the world adjustment' },
         ],
       },
