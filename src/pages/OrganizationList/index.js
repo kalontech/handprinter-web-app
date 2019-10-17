@@ -149,7 +149,7 @@ class OrganizationsPage extends React.Component {
       <SearchWrap>
         <AutoCompleteStyled
           onSelect={id => {
-            history.push(`/organization/view/${id}`)
+            history.push(`/account/dashboard?organizationId=${id}`)
           }}
           onSearch={this.handleSearch}
           dataSource={searchList.map(item => (
