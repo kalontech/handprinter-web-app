@@ -961,9 +961,11 @@ class DashboardPage extends Component {
                   </WidgetTitle>
                 </WidgetHeader>
                 <WidgetContent useWidgetMinHeight>
-                  <CalendarWidget
-                    activeDays={calendar[currentImpactCategory]}
-                  />
+                  {!!calendar && (
+                    <CalendarWidget
+                      activeDays={calendar[currentImpactCategory]}
+                    />
+                  )}
                 </WidgetContent>
               </WidgetContainer>
             </Col>
