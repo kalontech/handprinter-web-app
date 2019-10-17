@@ -111,16 +111,26 @@ class CreateOrganizationSuccessPage extends React.PureComponent {
       const {
         location: { search },
       } = this.props
-      const organizationName = queryString.parse(search).organization
-      await addAdmins({ admins: this.state.admins, organizationName })
-      this.props.history.push('/pages/our-vision')
+      const organizationId = queryString.parse(search).organizationId
+      await addAdmins({ admins: this.state.admins, organizationId })
+      this.navigateToOrganization()
     } catch (error) {
       console.error(error)
     }
   }
 
   handleSkip = () => {
-    this.props.history.push('/pages/our-vision')
+    this.navigateToOrganization()
+  }
+
+  navigateToOrganization() {
+    const {
+      location: { search },
+    } = this.props
+    const organizationId = queryString.parse(search).organizationId
+    this.props.history.push(
+      `/account/dashboard?organizationId=${organizationId}`,
+    )
   }
 
   searchByUser = async query => {

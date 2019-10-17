@@ -150,8 +150,7 @@ class Summary extends React.Component {
   handlePay = async () => {
     try {
       const { payAmount, paymentTypeAnnual } = this.state
-      const organizationName = this.props.organizationDetails.organizationName
-      const successUrl = `${webAppBaseUrl}/account/create-organization/success?organization=${organizationName}`
+      const successUrl = `${webAppBaseUrl}/account/create-organization/success?organizationId=`
       const cancelUrl = `${webAppBaseUrl}/account/create-organization`
 
       const res = await paySubscription({
