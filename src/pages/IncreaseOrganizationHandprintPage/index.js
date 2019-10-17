@@ -493,11 +493,11 @@ class IncreaseOrganizationHandprintPage extends Component {
     if (!organizationId) return
     try {
       const res = await getOrganization(organizationId)
-      const adminsRes = await getAdmins(organizationId)
+      const admins = await getAdmins(organizationId)
       if (res.organization) {
         this.setState(
           {
-            organization: { ...res.organization, admins: adminsRes.admins },
+            organization: { ...res.organization, admins },
             inviterId: res.organization._id,
           },
           () => {

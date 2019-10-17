@@ -256,7 +256,7 @@ class AddAdminsModalPage extends Component {
     const organizationId = match.params.organizationId
     if (!organizationId) return
     try {
-      const adminsRes = await getAdmins(organizationId)
+      const admins = await getAdmins(organizationId)
       const res = await getOrganization(organizationId)
       let organizationOwner = null
       if (res && res.organization) {
@@ -264,14 +264,12 @@ class AddAdminsModalPage extends Component {
           userId: res.organization.owner,
         })
       }
-      if (adminsRes) {
+      if (admins) {
         // Add organization owner at start of list
         let existingAdmins = organizationOwner
           ? [{ ...organizationOwner.user, organizationOwner: true }]
           : []
-        existingAdmins = existingAdmins.concat(
-          adminsRes.admins.map(i => i._doc),
-        )
+        existingAdmins = existingAdmins.concat(admins)
         this.setState({
           existingAdmins,
           step: ModalPageSteps.ADD_ADMINS,

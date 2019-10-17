@@ -563,13 +563,13 @@ class DashboardPage extends Component {
     if (!organizationId) return
     try {
       const res = await getOrganization(organizationId)
-      const adminsRes = await getAdmins(organizationId)
+      const admins = await getAdmins(organizationId)
       if (res.organization) {
         const organizationOwner = await apiUser.getUser({
           userId: res.organization.owner,
         })
         this.setState({
-          organization: { ...res.organization, admins: adminsRes.admins },
+          organization: { ...res.organization, admins },
           organizationOwner: organizationOwner.user,
         })
       }
@@ -646,7 +646,7 @@ class DashboardPage extends Component {
     const organization = this.state.organization
     const user = this.props.user
     if (!organization || !user) return
-    const adminIds = organization.admins.map(i => i._doc._id)
+    const adminIds = organization.admins.map(i => i._id)
     if (!adminIds) return
     return organization.owner === user._id || adminIds.includes(user._id)
   }
@@ -820,8 +820,7 @@ class DashboardPage extends Component {
                     }
                   />
                 )}
-                {organization.admins.map(admin => {
-                  const user = admin._doc
+                {organization.admins.map(user => {
                   return (
                     <AdminItem
                       key={user.id}
