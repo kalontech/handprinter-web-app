@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { animateScroll } from 'react-scroll/modules'
+import queryString from 'query-string'
 
 import { Creators as AccountCreators } from 'redux/accountStore'
 import {
@@ -28,6 +29,7 @@ import PageMetadata from 'components/PageMetadata'
 import loginActionCardImage from 'assets/images/loginActionCard.jpg'
 import loginActionCardImageTablet from 'assets/images/loginActionCardTablet.jpg'
 import media from 'utils/mediaQueryTemplate'
+import OrganizationCreationSteps from 'components/OrganizationCreationSteps'
 
 const CatImgDesktop = styled.img`
   display: block;
@@ -43,9 +45,29 @@ const CatImgTablet = styled.img`
   `}
 `
 
+const StyledActionCardWrapper = styled(ActionCardWrapper)`
+  align-items: stretch;
+  height: 100%;
+  flex-grow: 1;
+  overflow-y: auto;
+  ${media.tablet`
+    padding: 0px;
+  `}
+`
+
 class LoginPage extends Component {
+  state = {
+    createOrganizationFlow: undefined,
+  }
+
   componentDidMount() {
     animateScroll.scrollToTop()
+    const {
+      location: { search },
+    } = this.props
+    if (queryString.parse(search).createOrganization) {
+      this.setState({ createOrganizationFlow: true })
+    }
   }
 
   componentDidUpdate = prevProps => {
@@ -58,10 +80,11 @@ class LoginPage extends Component {
       form: { validateFields },
       logInRequest,
     } = this.props
+    const createOrganizationFlow = this.state.createOrganizationFlow
     validateFields((err, values) => {
       if (!err) {
         const { email, password } = values
-        logInRequest(email, password)
+        logInRequest(email, password, createOrganizationFlow)
       }
     })
   }
@@ -72,16 +95,20 @@ class LoginPage extends Component {
       intl: { formatMessage },
       isLoggingIn,
     } = this.props
+    const createOrganizationFlow = this.state.createOrganizationFlow
     return (
       <Fragment>
         <PageMetadata pageName="loginPage" />
-        <ActionCardWrapper>
+        <StyledActionCardWrapper>
           <ActionCard>
             <ActionCardLeftHalf span={12} hideOnTablet>
               <CatImgTablet src={loginActionCardImageTablet} />
               <CatImgDesktop src={loginActionCardImage} />
             </ActionCardLeftHalf>
             <ActionCardRightHalf span={12}>
+              {createOrganizationFlow && (
+                <OrganizationCreationSteps steps={3} active={1} />
+              )}
               <ActionCardFormWrapper>
                 <ActionCardTitle>
                   <FormattedMessage id={'app.loginPage.title'} />
@@ -132,7 +159,7 @@ class LoginPage extends Component {
               </ActionCardFormWrapper>
             </ActionCardRightHalf>
           </ActionCard>
-        </ActionCardWrapper>
+        </StyledActionCardWrapper>
       </Fragment>
     )
   }
@@ -145,6 +172,9 @@ LoginPage.propTypes = {
   logInError: PropTypes.string,
   logInRequest: PropTypes.func.isRequired,
   overrides: PropTypes.object,
+  location: PropTypes.shape({
+    search: PropTypes.string,
+  }),
 }
 
 export default compose(

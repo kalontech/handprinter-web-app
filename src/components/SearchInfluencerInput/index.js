@@ -2,7 +2,6 @@
 
 import React from 'react'
 
-import OutsideClickHandler from 'react-outside-click-handler'
 import { injectIntl } from 'react-intl'
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 import arrowDownIcon from 'assets/icons/arrowDown.svg'
@@ -28,6 +27,7 @@ import {
   SearchItemColumn,
   SearchItemHeader,
   SearchItemText,
+  StyledDropdown,
 } from './styled'
 
 type Props = {
@@ -41,7 +41,7 @@ type Props = {
 
 class SearchInfluencerInput extends React.Component<Props> {
   static defaultProps = {
-    dropdownList: ['Individual'],
+    dropdownList: ['Individual', 'Organization'],
     suggestions: [],
   }
 
@@ -86,6 +86,7 @@ class SearchInfluencerInput extends React.Component<Props> {
       this.setState({ selectedValue: suggestion.invitationCode })
     }
     if (onSelect) onSelect(suggestion.invitationCode)
+    this.hideDropdown()
   }
 
   onChange = e => {
@@ -95,9 +96,10 @@ class SearchInfluencerInput extends React.Component<Props> {
   }
 
   handleSearch = searchQuery => {
+    const searchByOrganization = this.state.selectedMenuIndex === 1
     this.setState({ searchQuery })
     const onSearch = this.props.onSearch
-    if (onSearch) onSearch(searchQuery)
+    if (onSearch) onSearch(searchQuery, searchByOrganization)
   }
 
   handleMouseEnterDropdown = index => {
@@ -106,6 +108,10 @@ class SearchInfluencerInput extends React.Component<Props> {
 
   handleMouseLeaveDropdown = () => {
     this.setState({ hoveringDropdownIndex: undefined })
+  }
+
+  onVisibleChange = visible => {
+    this.setState({ dropdownOpened: visible })
   }
 
   render() {
@@ -122,9 +128,83 @@ class SearchInfluencerInput extends React.Component<Props> {
       hoveringDropdownIndex,
     } = this.state
 
+    const menu = (
+      <DropDownContainer>
+        {selectedMenuIndex === undefined ? (
+          <div>
+            <DropdownHeaderText>
+              {formatMessage({
+                id: 'app.search.influencer.searchForInfluencer',
+              })}
+            </DropdownHeaderText>
+            {dropdownList.map(i => (
+              <DropdownText
+                onMouseEnter={() => this.handleMouseEnterDropdown(i)}
+                onMouseLeave={this.handleMouseLeaveDropdown}
+                onClick={() => this.handleDropdownItemSelected(i)}
+                key={i}
+              >
+                {i}
+                {hoveringDropdownIndex === i && <img src={arrowRightIcon} />}
+              </DropdownText>
+            ))}
+          </div>
+        ) : (
+          <div>
+            <SearchHeader>
+              <BackIcon type={'left'} onClick={this.clearMenuIndex} />
+              <SearchHeaderText>
+                {dropdownList[selectedMenuIndex]}
+              </SearchHeaderText>
+            </SearchHeader>
+            <SearchWrap>
+              <AutoCompleteStyled
+                onSelect={this.handleSelect}
+                dropdownAlign={{
+                  points: ['bl', 'tl'], // align dropdown bottom-left to top-left of input element
+                }}
+                value={searchQuery}
+                onSearch={this.handleSearch}
+                dataSource={suggestions.map(item => (
+                  <SearchItem
+                    style={{
+                      padding: 0,
+                      flexDirection: 'row',
+                      display: 'flex',
+                    }}
+                    key={item._id}
+                  >
+                    <SearchItemImg src={item.photo} alt={item.fullName} />
+                    <SearchItemColumn>
+                      <SearchItemHeader>
+                        {item.fullName || item.name}
+                      </SearchItemHeader>
+                      <SearchItemText>{item.invitationCode}</SearchItemText>
+                    </SearchItemColumn>
+                  </SearchItem>
+                ))}
+              >
+                <Input
+                  placeholder={formatMessage({
+                    id: 'app.actionsPage.searchPlaceholder',
+                  })}
+                  value={searchQuery}
+                  suffix={<SearchIcon type="search" />}
+                />
+              </AutoCompleteStyled>
+            </SearchWrap>
+          </div>
+        )}
+      </DropDownContainer>
+    )
     return (
-      <OutsideClickHandler onOutsideClick={this.hideDropdown}>
-        <RelativeView>
+      <RelativeView>
+        <StyledDropdown
+          overlay={menu}
+          visible={dropdownOpened}
+          onVisibleChange={this.onVisibleChange}
+          trigger={['click']}
+        >
           <Input
             onClick={this.showDropdown}
             value={selectedValue}
@@ -147,78 +227,8 @@ class SearchInfluencerInput extends React.Component<Props> {
               </Row>
             }
           />
-          {dropdownOpened && (
-            <DropDownContainer>
-              {selectedMenuIndex === undefined ? (
-                <div>
-                  <DropdownHeaderText>
-                    {formatMessage({
-                      id: 'app.search.influencer.searchForInfluencer',
-                    })}
-                  </DropdownHeaderText>
-                  {dropdownList.map(i => (
-                    <DropdownText
-                      onMouseEnter={() => this.handleMouseEnterDropdown(i)}
-                      onMouseLeave={this.handleMouseLeaveDropdown}
-                      onClick={() => this.handleDropdownItemSelected(i)}
-                      key={i}
-                    >
-                      {i}
-                      {hoveringDropdownIndex === i && (
-                        <img src={arrowRightIcon} />
-                      )}
-                    </DropdownText>
-                  ))}
-                </div>
-              ) : (
-                <div>
-                  <SearchHeader>
-                    <BackIcon type={'left'} onClick={this.clearMenuIndex} />
-                    <SearchHeaderText>
-                      {dropdownList[selectedMenuIndex]}
-                    </SearchHeaderText>
-                  </SearchHeader>
-                  <SearchWrap>
-                    <AutoCompleteStyled
-                      onSelect={this.handleSelect}
-                      dropdownAlign={{
-                        points: ['bl', 'tl'], // align dropdown bottom-left to top-left of input element
-                      }}
-                      onSearch={this.handleSearch}
-                      dataSource={suggestions.map(item => (
-                        <SearchItem
-                          style={{
-                            padding: 0,
-                            flexDirection: 'row',
-                            display: 'flex',
-                          }}
-                          key={item._id}
-                        >
-                          <SearchItemImg src={item.photo} alt={item.fullName} />
-                          <SearchItemColumn>
-                            <SearchItemHeader>{item.fullName}</SearchItemHeader>
-                            <SearchItemText>
-                              {item.invitationCode}
-                            </SearchItemText>
-                          </SearchItemColumn>
-                        </SearchItem>
-                      ))}
-                    >
-                      <Input
-                        placeholder={formatMessage({
-                          id: 'app.actionsPage.searchPlaceholder',
-                        })}
-                        value={searchQuery}
-                        suffix={<SearchIcon type="search" />}
-                      />
-                    </AutoCompleteStyled>
-                  </SearchWrap>
-                </div>
-              )}
-            </DropDownContainer>
-          )}
-        </RelativeView>
-      </OutsideClickHandler>
+        </StyledDropdown>
+      </RelativeView>
     )
   }
 }

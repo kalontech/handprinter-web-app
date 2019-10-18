@@ -8,16 +8,20 @@ import * as apiAuth from 'api/auth'
 
 import { prepareUserProfile } from './helpers'
 
-function* logIn({ email, password }) {
+function* logIn({ email, password, createOrganizationFlow }) {
   try {
     const { token } = yield call(apiAuth.logIn, email, password)
     yield put(Creators.logInSuccess(token))
     yield call(prepareUserProfile)
     const brandedConfig = getBrandedConfig()
-    yield call(
-      history.push,
-      brandedConfig ? '/pages/home' : '/account/dashboard',
-    )
+    if (createOrganizationFlow) {
+      yield call(history.push, '/account/create-organization')
+    } else {
+      yield call(
+        history.push,
+        brandedConfig ? '/pages/home' : '/account/dashboard',
+      )
+    }
   } catch (error) {
     yield put(Creators.logInFailure(decodeError(error)))
   }
@@ -31,6 +35,7 @@ function* register({
   invitationCode,
   belongsToBrand,
   siloSecureCode,
+  createOrganizationFlow,
 }) {
   try {
     const { token } = yield call(
@@ -45,7 +50,11 @@ function* register({
     )
     yield put(Creators.registerSuccess(token))
     yield call(prepareUserProfile)
-    yield call(history.push, '/pages/our-vision')
+    if (createOrganizationFlow) {
+      yield call(history.push, '/account/create-organization')
+    } else {
+      yield call(history.push, '/pages/our-vision')
+    }
   } catch (error) {
     yield put(Creators.registerFailure(decodeError(error)))
   }

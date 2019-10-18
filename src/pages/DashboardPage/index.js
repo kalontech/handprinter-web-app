@@ -8,10 +8,14 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { animateScroll } from 'react-scroll/modules'
+import qs from 'qs'
+import { history } from 'appRouter'
 
 import colors from 'config/colors'
 import fingerprintImage from 'assets/dashboard/fingerprint.png'
 import treeImage from 'assets/dashboard/tree.png'
+import cameraImage from 'assets/dashboard/ic_camera.svg'
+import addAdmin from 'assets/dashboard/add_admin.svg'
 import media from 'utils/mediaQueryTemplate'
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 import { QUESTIONS_ANCHOR } from 'utils/constants'
@@ -19,10 +23,20 @@ import fetch from 'utils/fetch'
 import CalendarWidget from 'components/CalendarWidget'
 import GoodRatioWidget from 'components/GoodRatioWidget'
 import NetworkWidget from 'components/NetworkWidget'
-import { BlockContainer } from 'components/Styled'
+import { HiddenUploadPictureInput } from 'pages/ProfilePage'
+import { BlockContainer, DefaultButton } from 'components/Styled'
 import icons from 'components/ActionCardLabel/icons'
 import { getUserInitialAvatar } from 'api'
 import * as apiUser from 'api/user'
+import {
+  getOrganization,
+  updateOne,
+  getAdmins,
+  getDashboardData,
+} from 'api/organization'
+import { PROFILE_PHOTO_WEIGHT_LIMIT, ACCEPT_IMAGE_FORMATS } from 'config/files'
+
+import { convertBytesToMegabytes } from 'utils/file'
 
 const WidgetContainer = styled.div`
   background-color: ${colors.white};
@@ -99,11 +113,13 @@ const DashboardHeader = styled.div`
 
 const DashboardHeaderGreenLine = styled.div`
   background-color: ${colors.ocean};
+  background-image: ${props => props.image && `url(${props.image})`};
   height: 140px;
 `
 
 const DashboardHeaderWhiteLine = styled(Row)`
-  background-color: ${colors.white};
+  background-color: ${props =>
+    props.organization ? colors.lightGray : colors.white};
   display: flex;
   height: 120px;
   justify-content: center;
@@ -143,7 +159,7 @@ const DashboardHeaderUserRow = styled.div`
 const DashboardHeaderBackgrounds = styled.div``
 
 const HeaderFingerprintBackground = styled.div`
-  background-image: url(${fingerprintImage});
+  background-image: ${props => !props.hideImage && `url(${fingerprintImage})`};
   background-position: top 0px right;
   background-repeat: no-repeat, no-repeat;
   height: 140px;
@@ -187,12 +203,13 @@ const DashboardHeaderUserPictureBackground = styled.div`
 
 const DashboardHeaderUserPicture = styled.img`
   border: 4px solid ${colors.white};
-  border-radius: 50%;
+  border-radius: ${props => (props.organization ? '4px' : '50%')};
   box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
   height: 190px;
   margin-top: -88px;
   width: 190px;
   position: relative;
+  object-fit: cover;
 `
 
 const DashboardHeaderUserName = styled.div`
@@ -357,6 +374,69 @@ const StyledIcon = styled(Icon)`
   `}
 `
 
+const SelectBannerWrapper = styled.div`
+  height: 140px;
+  width: 100%;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+`
+const SelectBGImage = styled.img`
+  cursor: pointer;
+`
+const SelectBGLabel = styled.p`
+  font-weight: bold;
+  font-size: 10px;
+  color: ${colors.darkGray};
+  text-transform: uppercase;
+  font-family: Noto Sans;
+  cursor: pointer;
+`
+
+const HeaderOuterPlusButton = styled.div`
+  height: 42px;
+  width: 42px;
+  background-color: white;
+  border-radius: 50%;
+  border: 2px solid ${colors.green};
+  color: ${colors.green};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0px;
+  left: 150px;
+  z-index: 2;
+  cursor: pointer;
+`
+
+const AdminsSectionWraper = styled.div`
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 131px;
+  align-items: center;
+`
+
+const AdminsSectionList = styled.div``
+const AdminItem = styled.img`
+  height: 42px;
+  width: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: -15px;
+  border: 1px solid ${colors.white};
+`
+const AdminPlusButton = styled.img`
+  height: 37.5px;
+  width: 37.5px;
+  border-radius: 50%;
+  margin-left: -15px;
+  cursor: pointer;
+`
+
 const YEAR = 365
 const PERMISSION_DENIED_CODE = 33
 const stubs = {
@@ -402,7 +482,15 @@ const stubs = {
 
 async function fetchDashboardData(props) {
   const { personId } = props.match.params
-
+  const { location } = props
+  const query = qs.parse(location.search, { ignoreQueryPrefix: true })
+  const organizationId = query && query.organizationId
+  if (organizationId) {
+    const { calendar, network, ratio, stats } = await getDashboardData(
+      organizationId,
+    )
+    return { calendar, network, ratio, stats }
+  }
   if (personId) {
     const [{ calendar, ratio, stats }, { user }, error] = await Promise.all([
       apiUser.getDashboardData({
@@ -458,10 +546,36 @@ class DashboardPage extends Component {
 
   state = {
     currentImpactCategory: 'climate',
+    organization: undefined,
+    organizationOwner: undefined,
+    selectingLogo: false,
   }
 
   componentDidMount() {
     animateScroll.scrollToTop()
+    this.fetchOrganization()
+  }
+
+  fetchOrganization = async () => {
+    const { location } = this.props
+    const query = qs.parse(location.search, { ignoreQueryPrefix: true })
+    const organizationId = query && query.organizationId
+    if (!organizationId) return
+    try {
+      const res = await getOrganization(organizationId)
+      const admins = await getAdmins(organizationId)
+      if (res.organization) {
+        const organizationOwner = await apiUser.getUser({
+          userId: res.organization.owner,
+        })
+        this.setState({
+          organization: { ...res.organization, admins },
+          organizationOwner: organizationOwner.user,
+        })
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -470,34 +584,140 @@ class DashboardPage extends Component {
     if (prevProps.match.params.personId !== match.params.personId) {
       this.props.fetch()
     }
+    if (this.props !== prevProps) {
+      this.fetchOrganization()
+    }
   }
 
   handleImpactCategoryChange = category => {
     this.setState({ currentImpactCategory: category })
   }
 
+  handleUploadImage = async ({ target: { files } }) => {
+    const file = files[0]
+
+    if (!file) return
+
+    if (convertBytesToMegabytes(file.size, 0) > PROFILE_PHOTO_WEIGHT_LIMIT) {
+      this.setState({ uploadImageError: 'app.errors.image.wrongWeight' })
+      return
+    }
+
+    const body = new FormData()
+    const fileType = this.state.selectingLogo ? 'photo' : 'banner'
+    body.append(fileType, file)
+
+    try {
+      const res = await updateOne(body, this.state.organization._id)
+      if (res.organization) {
+        let organization = {
+          ...this.state.organization,
+          photo: res.organization.photo,
+          banner: res.organization.banner,
+        }
+        this.setState({ organization })
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  handleSelectImage = selectingLogo => {
+    this.setState({ selectingLogo }, () => {
+      this.uploadProfilePictureRef.click()
+    })
+  }
+
+  handleIncreaseOrganizationHP = () => {
+    history.push(
+      `/organizations/invite?organizationId=${this.state.organization._id}`,
+    )
+  }
+
+  handleAddAdmin = () => {
+    history.push(
+      `/account/dashboard/organizations/add-admins/${
+        this.state.organization._id
+      }`,
+    )
+  }
+
+  getIsOrgAdmin() {
+    const organization = this.state.organization
+    const user = this.props.user
+    if (!organization || !user) return
+    const adminIds = organization.admins.map(i => i._id)
+    if (!adminIds) return
+    return organization.owner === user._id || adminIds.includes(user._id)
+  }
+
   render() {
-    const { currentImpactCategory } = this.state
+    const {
+      currentImpactCategory,
+      organization,
+      organizationOwner,
+    } = this.state
     const { match, user, stats, ratio, network, calendar, error } = this.props
 
+    let avatar
+    if (organization) {
+      avatar = organization.photo || getUserInitialAvatar(organization.name)
+    } else {
+      avatar = user.photo || getUserInitialAvatar(user.fullName)
+    }
+
+    const footPrintReduction = ratio
+      ? Math.round(YEAR - ratio.footprintDays[currentImpactCategory])
+      : 0
+    const externalHandprint = ratio
+      ? Math.round(ratio.handprintDays[currentImpactCategory])
+      : 0
     return (
       <Fragment>
         <DashboardHeader>
-          <DashboardHeaderGreenLine>
+          <DashboardHeaderGreenLine image={organization && organization.banner}>
+            {organization && this.getIsOrgAdmin() && (
+              <SelectBannerWrapper>
+                <SelectBGImage
+                  onClick={() => this.handleSelectImage(false)}
+                  src={cameraImage}
+                />
+                <SelectBGLabel onClick={() => this.handleSelectImage(false)}>
+                  <FormattedMessage id={'app.dashboard.selectBackground'} />
+                </SelectBGLabel>
+
+                <HiddenUploadPictureInput
+                  type="file"
+                  accept={Object.values(ACCEPT_IMAGE_FORMATS).join()}
+                  ref={ref => (this.uploadProfilePictureRef = ref)}
+                  onChange={this.handleUploadImage}
+                />
+              </SelectBannerWrapper>
+            )}
             <DashboardHeaderBackgrounds>
-              <HeaderFingerprintBackground />
+              <HeaderFingerprintBackground hideImage={!!organization} />
             </DashboardHeaderBackgrounds>
             <BlockContainer style={{ zIndex: 1 }}>
               <DashboardHeaderUserPictureWrap>
-                <DashboardHeaderUserPictureTree src={treeImage} />
-                <DashboardHeaderUserPictureBackground />
-                <DashboardHeaderUserPicture
-                  src={user.photo || getUserInitialAvatar(user.fullName)}
+                <DashboardHeaderUserPictureTree
+                  src={!organization && treeImage}
                 />
+                {!organization && <DashboardHeaderUserPictureBackground />}
+                <DashboardHeaderUserPicture
+                  organization={organization}
+                  src={avatar}
+                />
+                {organization && this.getIsOrgAdmin() && (
+                  <HeaderOuterPlusButton
+                    onClick={() => this.handleSelectImage(true)}
+                  >
+                    <Icon type="plus" />
+                  </HeaderOuterPlusButton>
+                )}
               </DashboardHeaderUserPictureWrap>
             </BlockContainer>
           </DashboardHeaderGreenLine>
-          <DashboardHeaderWhiteLine>
+          <DashboardHeaderWhiteLine organization={organization}>
             <Col span={24}>
               <BlockContainer
                 style={{
@@ -509,11 +729,17 @@ class DashboardPage extends Component {
                 <DashboardHeaderUserRow>
                   <DashboardHeaderUserNameCol>
                     <DashboardHeaderUserName>
-                      {user.fullName}
+                      {organization ? organization.name : user.fullName}
                     </DashboardHeaderUserName>
                     <DashboardHeaderUserSince>
-                      <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
-                      {moment(user.createdAt).format('MMMM DD, YYYY')}
+                      {organization ? (
+                        <FormattedMessage id={'app.dahsboard.organization'} />
+                      ) : (
+                        <div>
+                          <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
+                          {moment(user.createdAt).format('MMMM DD, YYYY')}
+                        </div>
+                      )}
                     </DashboardHeaderUserSince>
                   </DashboardHeaderUserNameCol>
                   {stats && (
@@ -537,14 +763,7 @@ class DashboardPage extends Component {
                                   alignItems: 'center',
                                 }}
                               >
-                                {Math.round(
-                                  stats.personal.netPositiveDays[
-                                    currentImpactCategory
-                                  ],
-                                ) +
-                                  Math.round(
-                                    ratio.handprintDays[currentImpactCategory],
-                                  )}
+                                {footPrintReduction + externalHandprint}
                                 <InfoElementWrap>
                                   <InfoElement
                                     type={INFO_ELEMENT_TYPES.QUESTION}
@@ -555,37 +774,20 @@ class DashboardPage extends Component {
                                           <p>
                                             <FormattedMessage id="totalPositiveDays" />
                                             {`: `}
-                                            {Math.round(
-                                              stats.personal.netPositiveDays[
-                                                currentImpactCategory
-                                              ],
-                                            ) +
-                                              Math.round(
-                                                ratio.handprintDays[
-                                                  currentImpactCategory
-                                                ],
-                                              )}
+                                            {footPrintReduction +
+                                              externalHandprint}
                                           </p>
                                           <p>
                                             {` - `}
                                             <FormattedMessage id="footprintReduction" />
                                             {`: `}
-                                            {Math.round(
-                                              YEAR -
-                                                ratio.footprintDays[
-                                                  currentImpactCategory
-                                                ],
-                                            )}
+                                            {footPrintReduction}
                                           </p>
                                           <p>
                                             {` - `}
                                             <FormattedMessage id="externalHandprint" />
                                             {`: `}
-                                            {Math.round(
-                                              ratio.handprintDays[
-                                                currentImpactCategory
-                                              ],
-                                            )}
+                                            {externalHandprint}
                                           </p>
                                         </Fragment>
                                       ),
@@ -606,6 +808,44 @@ class DashboardPage extends Component {
               </BlockContainer>
             </Col>
           </DashboardHeaderWhiteLine>
+          {organization && (
+            <AdminsSectionWraper>
+              <AdminsSectionList>
+                {organizationOwner && (
+                  <AdminItem
+                    key={organizationOwner._id}
+                    src={
+                      organizationOwner.photo ||
+                      getUserInitialAvatar(organizationOwner.fullName)
+                    }
+                  />
+                )}
+                {organization.admins.map(user => {
+                  return (
+                    <AdminItem
+                      key={user.id}
+                      src={user.photo || getUserInitialAvatar(user.fullName)}
+                    />
+                  )
+                })}
+                {this.getIsOrgAdmin() && (
+                  <AdminPlusButton
+                    onClick={this.handleAddAdmin}
+                    src={addAdmin}
+                  />
+                )}
+              </AdminsSectionList>
+              {this.getIsOrgAdmin() && (
+                <DefaultButton
+                  type="primary"
+                  htmlType="submit"
+                  onClick={this.handleIncreaseOrganizationHP}
+                >
+                  <FormattedMessage id="app.dahsboard.organization.increaseHp" />
+                </DefaultButton>
+              )}
+            </AdminsSectionWraper>
+          )}
         </DashboardHeader>
         <WidgetBlockContainer
           blur={error && error.code === PERMISSION_DENIED_CODE}
@@ -721,9 +961,11 @@ class DashboardPage extends Component {
                   </WidgetTitle>
                 </WidgetHeader>
                 <WidgetContent useWidgetMinHeight>
-                  <CalendarWidget
-                    activeDays={calendar[currentImpactCategory]}
-                  />
+                  {!!calendar && (
+                    <CalendarWidget
+                      activeDays={calendar[currentImpactCategory]}
+                    />
+                  )}
                 </WidgetContent>
               </WidgetContainer>
             </Col>
@@ -759,14 +1001,16 @@ class DashboardPage extends Component {
                   </WidgetTitle>
                 </WidgetHeader>
                 <WidgetContent useWidgetMinHeight>
-                  <GoodRatioWidget
-                    footprintDays={Math.round(
-                      ratio.footprintDays[currentImpactCategory],
-                    )}
-                    handprintDays={Math.round(
-                      ratio.handprintDays[currentImpactCategory],
-                    )}
-                  />
+                  {!!ratio && (
+                    <GoodRatioWidget
+                      footprintDays={Math.round(
+                        ratio.footprintDays[currentImpactCategory],
+                      )}
+                      handprintDays={Math.round(
+                        ratio.handprintDays[currentImpactCategory],
+                      )}
+                    />
+                  )}
                 </WidgetContent>
               </WidgetContainer>
             </GoodRatioCol>

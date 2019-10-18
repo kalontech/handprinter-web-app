@@ -66,3 +66,8 @@ export const METRICS = {
   TONS: 'Metric tons',
   KG: 'kg CO2',
 }
+
+export const ORGANIZATION_SUBSETS = {
+  DISCOVER: 'discover',
+  MY: 'my',
+}

@@ -1,7 +1,6 @@
 definitions:
   anchors:
     install-and-configure-kubectl: &install-and-configure-kubectl |
-      mkdir ~/.kube
       curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $DO_ACCESS_TOKEN" "https://api.digitalocean.com/v2/kubernetes/clusters/$DO_K8S_CLUSTER_ID/kubeconfig" > ~/.kube/config
       kubectl config use-context $DO_K8S_CLUSTER_NAME
   services:

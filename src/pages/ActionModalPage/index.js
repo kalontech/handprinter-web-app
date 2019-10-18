@@ -26,7 +26,7 @@ import MultipleInput from 'components/MultipleInput'
 import CloseIcon from 'assets/icons/CloseIcon'
 import hexToRgba from 'utils/hexToRgba'
 import * as apiUser from 'api/user'
-import { getTakenActionAvailableFrom } from 'api/actions'
+import * as apiOrganization from 'api/organization'
 
 const Container = styled(Row)`
   align-items: center;
@@ -540,7 +540,7 @@ class ActionModalPage extends Component {
   checkAvailableTakeAction = async actionId => {
     if (!actionId) return
     try {
-      const res = await getTakenActionAvailableFrom({ actionId })
+      const res = await api.getTakenActionAvailableFrom({ actionId })
       this.setState({ availableFrom: res.availableFrom })
     } catch (error) {
       console.error(error)
@@ -891,10 +891,16 @@ class ActionModalPage extends Component {
     })
   }
 
-  handleCodeSearch = async query => {
+  handleCodeSearch = async (query, searchByOrganization) => {
     try {
-      const response = await apiUser.search(query)
-      this.setState({ matchedUsersByCode: response.users })
+      const response = searchByOrganization
+        ? await apiOrganization.search(query)
+        : await apiUser.search(query)
+      this.setState({
+        matchedUsersByCode: searchByOrganization
+          ? response.organizations
+          : response.users,
+      })
     } catch (error) {
       console.error(error)
     }

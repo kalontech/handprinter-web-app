@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { animateScroll } from 'react-scroll/modules'
+import queryString from 'query-string'
+
 import SearchableInput from 'components/SearchInfluencerInput'
 import registerFingerprintTop from 'assets/images/registerFingerprintTop.png'
 import registerFingerprintBot from 'assets/images/registerFingerprintBot.png'
@@ -34,8 +36,10 @@ import {
   Checkbox,
 } from 'components/Styled'
 import PageMetadata from 'components/PageMetadata'
+import OrganizationCreationSteps from 'components/OrganizationCreationSteps'
 import InputForPassword from 'components/InputForPassword'
 import * as apiUser from 'api/user'
+import * as apiOrganization from 'api/organization'
 
 export const BrandedBlockWrap = styled.div`
   position: relative;
@@ -156,6 +160,7 @@ const StyledActionCard = styled(ActionCard)`
 `
 
 const StyledActionCardWrapper = styled(ActionCardWrapper)`
+  align-items: stretch;
   height: 100%;
   flex-grow: 1;
   overflow-y: auto;
@@ -200,6 +205,7 @@ class RegisterPage extends Component {
   state = {
     referrer: null,
     getReferrerError: null,
+    createOrganizationFlow: undefined,
     matchedUsersByCode: undefined,
   }
 
@@ -208,7 +214,11 @@ class RegisterPage extends Component {
       match: {
         params: { invitationCode, eatonCode },
       },
+      location: { search },
     } = this.props
+    if (queryString.parse(search).createOrganization) {
+      this.setState({ createOrganizationFlow: true })
+    }
     animateScroll.scrollToTop()
 
     if (eatonCode) {
@@ -246,6 +256,7 @@ class RegisterPage extends Component {
       form: { validateFields },
       registerRequest,
     } = this.props
+    const createOrganizationFlow = this.state.createOrganizationFlow
 
     validateFields((err, values) => {
       if (!err) {
@@ -265,6 +276,7 @@ class RegisterPage extends Component {
           country,
           belongsToBrand: getBrandedHostnamePrefix(),
           siloSecureCode,
+          createOrganizationFlow,
         }
         if (invitationCode) data.invitationCode = invitationCode
         registerRequest(data)
@@ -272,10 +284,16 @@ class RegisterPage extends Component {
     })
   }
 
-  handleCodeSearch = async query => {
+  handleCodeSearch = async (query, searchByOrganization) => {
     try {
-      const response = await apiUser.search(query)
-      this.setState({ matchedUsersByCode: response.users })
+      const response = searchByOrganization
+        ? await apiOrganization.search(query)
+        : await apiUser.search(query)
+      this.setState({
+        matchedUsersByCode: searchByOrganization
+          ? response.organizations
+          : response.users,
+      })
     } catch (error) {
       console.error(error)
     }
@@ -296,7 +314,7 @@ class RegisterPage extends Component {
       isRegistering,
       overrides,
     } = this.props
-    const { referrer, matchedUsersByCode } = this.state
+    const { referrer, createOrganizationFlow, matchedUsersByCode } = this.state
 
     return (
       <Fragment>
@@ -350,6 +368,9 @@ class RegisterPage extends Component {
               )}
             </ActionCardLeftHalf>
             <ActionCardRightHalf span={12}>
+              {createOrganizationFlow && (
+                <OrganizationCreationSteps steps={3} active={1} />
+              )}
               <FormWrap>
                 <ActionCardTitle>
                   <FormattedMessage id={'app.registerPage.title'} />
@@ -514,6 +535,9 @@ RegisterPage.propTypes = {
   intl: PropTypes.object.isRequired,
   match: PropTypes.shape({
     params: PropTypes.object.isRequired,
+  }),
+  location: PropTypes.shape({
+    search: PropTypes.string,
   }),
   isRegistering: PropTypes.bool.isRequired,
   registerError: PropTypes.string,

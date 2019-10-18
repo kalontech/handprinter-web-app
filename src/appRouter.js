@@ -28,7 +28,13 @@ import SetNewPasswordPage from './pages/SetNewPasswordPage'
 import ProfilePage from './pages/ProfilePage'
 import IncreaseHandprintPage from './pages/IncreaseHandprintPage'
 import PrivacyPolicyTermsPages from './pages/PrivacyPolicyTermsPages'
+import CreateOrganizationPage from './pages/CreateOrganizationPage'
+import CreateOrganizationSuccessPage from './pages/CreateOrganizationSuccessPage'
+import ForOrganizationsPage from './pages/ForOrganizationsPage'
 import DonationPage from './pages/DonationPage'
+import OrganizationList from './pages/OrganizationList'
+import AddAdminsModalPage from './pages/AddAdminsModalPage'
+import IncreaseOrganizationHandprintPage from './pages/IncreaseOrganizationHandprintPage'
 
 const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = process.env
 
@@ -106,6 +112,14 @@ const AppRouter = () => {
             withoutCTA
             useAuthentication
           />
+          {!brandedConfig && (
+            <Route
+              path="/pages/for-organizations"
+              component={ForOrganizationsPage}
+              useAuthentication
+              withoutCTA
+            />
+          )}
           <Route
             path="/account/login"
             component={LoginPage}
@@ -188,9 +202,40 @@ const AppRouter = () => {
             withoutFooter
           />
           <Route
+            path="/account/create-organization/success"
+            component={CreateOrganizationSuccessPage}
+            headerType="minimal"
+            withoutHeaderContent
+            withoutCTA
+            withoutFooter
+            useAuthentication
+          />
+          <Route
+            path="/account/create-organization"
+            component={CreateOrganizationPage}
+            headerType="minimal"
+            withoutHeaderContent
+            withoutCTA
+            withoutFooter
+            useAuthentication
+          />
+          <Route
             path="/account/:personId"
             component={DashboardPage}
             useAuthentication
+            withoutCTA
+          />
+          <Route
+            path="/organizations/invite"
+            component={IncreaseOrganizationHandprintPage}
+            requireAuthentication
+            withoutCTA
+          />
+          <Route
+            path="/organizations/:subset"
+            component={OrganizationList}
+            useAuthentication
+            requireAuthentication
             withoutCTA
           />
           <Route component={NotFoundPage} useAuthentication withoutCTA />
@@ -231,6 +276,14 @@ const AppRouter = () => {
               `/groups/view/${params.id}/${params.subset}`
             }
             component={ActionModalPage}
+          />
+
+          <ModalRoute
+            path="/account/dashboard/organizations/add-admins/:organizationId"
+            parentPath={({ params }) =>
+              `/account/dashboard?organizationId=${params.organizationId}`
+            }
+            component={AddAdminsModalPage}
           />
         </Switch>
       </ErrorCatcher>
