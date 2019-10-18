@@ -2,8 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
-import { injectIntl } from 'react-intl'
-import { FormattedMessage } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import colors from 'config/colors'
 import { DefaultButton, PrimaryButton } from 'components/Styled'
 import { webAppBaseUrl } from 'api'
@@ -12,8 +11,6 @@ import decodeError from 'utils/decodeError'
 import media from 'utils/mediaQueryTemplate'
 
 import { CONTACT_DATA } from 'utils/constants'
-
-import { MOUNTHLY_SUBSCRIPTION_AMOUNT } from './CreateOrganizationFrom/utils'
 
 const Main = styled.div`
   display: flex;
@@ -114,31 +111,10 @@ const TextError = styled.p`
   font-size: 14px;
 `
 
-const YEAR = 12
 class Summary extends React.Component {
   state = {
     paymentTypeAnnual: true,
-    payAmount: undefined,
     payError: undefined,
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.organizationDetails !== this.props.organizationDetails) {
-      this.updatePayAmount()
-    }
-  }
-
-  componentDidMount() {
-    this.updatePayAmount()
-  }
-
-  updatePayAmount() {
-    if (this.props.organizationDetails) {
-      const { type, annualRevenue } = this.props.organizationDetails
-      const payAmountPerMonth = this.calculateAmountPM(type, annualRevenue)
-      const paidAnnualy = payAmountPerMonth * 0.9 * YEAR // 10% discount
-      this.setState({ payAmount: paidAnnualy })
-    }
   }
 
   handleContinue = () => {
@@ -149,16 +125,18 @@ class Summary extends React.Component {
 
   handlePay = async () => {
     try {
-      const { payAmount, paymentTypeAnnual } = this.state
+      const { paymentTypeAnnual } = this.state
+      const { paymentPlans } = this.props
+      const period = paymentTypeAnnual ? 'annual' : 'monthly'
+
       const successUrl = `${webAppBaseUrl}/account/create-organization/success?organizationId=`
       const cancelUrl = `${webAppBaseUrl}/account/create-organization`
 
       const res = await paySubscription({
-        amount: payAmount * 100, // in cents
-        isAnnual: paymentTypeAnnual,
+        organizationDetails: this.props.organizationDetails,
+        planId: paymentPlans[period].id,
         successUrl,
         cancelUrl,
-        organizationDetails: this.props.organizationDetails,
       })
       // eslint-disable-next-line no-undef
       const stripe = Stripe(process.env.REACT_APP_STRIPE_PUB_KEY)
@@ -173,22 +151,20 @@ class Summary extends React.Component {
     }
   }
 
-  calculateAmountPM = (type, annualRevenue) => {
-    return MOUNTHLY_SUBSCRIPTION_AMOUNT[type][annualRevenue] || ''
+  handlePaymentType = isAnnual => {
+    this.setState({ paymentTypeAnnual: isAnnual })
   }
 
-  handlePaymentType = (isAnnual, amount) => {
-    this.setState({ paymentTypeAnnual: isAnnual, payAmount: amount })
-  }
-
-  renderPaymentBlock(amount, isAnnual, active) {
-    const { intl } = this.props
+  renderPaymentBlock(isAnnual, active) {
+    const { intl, paymentPlans } = this.props
+    const period = isAnnual ? 'annual' : 'monthly'
+    const amount = paymentPlans[period].amount / 100 // in dollars
     const monthLabel = intl
       .formatMessage({ id: 'app.actions.timeValues.one.MTHS' })
       .toLowerCase()
     return (
       <PaymentWrapper
-        onClick={() => this.handlePaymentType(isAnnual, amount)}
+        onClick={() => this.handlePaymentType(isAnnual)}
         style={{ border: active && `1px solid ${colors.ocean}` }}
       >
         <PaymentType style={{ color: active && colors.ocean }}>
@@ -216,13 +192,10 @@ class Summary extends React.Component {
     const {
       organizationName,
       economicSector,
-      type,
       annualRevenue,
     } = this.props.organizationDetails
 
     const { paymentTypeAnnual, payError } = this.state
-    const payAmountPerMonth = this.calculateAmountPM(type, annualRevenue)
-    const paidAnnualy = payAmountPerMonth * 0.9 * YEAR // 10% discount
     return (
       <Main>
         <Flex>
@@ -250,12 +223,8 @@ class Summary extends React.Component {
             <FormattedMessage id="app.createOrganization.payment" />
           </PaymentTitle>
           <Row>
-            {this.renderPaymentBlock(
-              payAmountPerMonth,
-              false,
-              !paymentTypeAnnual,
-            )}
-            {this.renderPaymentBlock(paidAnnualy, true, paymentTypeAnnual)}
+            {this.renderPaymentBlock(false, !paymentTypeAnnual)}
+            {this.renderPaymentBlock(true, paymentTypeAnnual)}
           </Row>
         </Flex>
         {payError && (
@@ -291,6 +260,7 @@ Summary.propTypes = {
   handleBack: PropTypes.func,
   organizationDetails: PropTypes.object.isRequired,
   intl: PropTypes.object.isRequired,
+  paymentPlans: PropTypes.object.isRequired,
 }
 
 export default compose(injectIntl)(Summary)

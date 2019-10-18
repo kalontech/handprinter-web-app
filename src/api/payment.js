@@ -16,3 +16,9 @@ export const paySubscription = data =>
     body: { ...data },
     method: 'POST',
   })
+
+export const getPaymentPlans = organization =>
+  fetchAPI('/payment/payment-plans', {
+    body: { organization },
+    method: 'POST',
+  })

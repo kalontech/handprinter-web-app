@@ -31,6 +31,7 @@ import PageMetadata from 'components/PageMetadata'
 import OrganizationCreationSteps from 'components/OrganizationCreationSteps'
 
 import * as apiUser from 'api/user'
+import { getPaymentPlans } from 'api/payment'
 
 import CreateOrganizationFrom from './CreateOrganizationFrom'
 import ConfirmEmail from './confirmEmail'
@@ -229,6 +230,7 @@ class CreateOrganizationPage extends Component {
     getReferrerError: null,
     step: 1,
     organizationDetails: undefined,
+    paymentPlans: undefined,
   }
 
   componentDidMount() {
@@ -305,8 +307,9 @@ class CreateOrganizationPage extends Component {
     this.setState({ step: 2 })
   }
 
-  handleSubmitOrganizationDetails = organizationDetails => {
-    this.setState({ step: 3, organizationDetails })
+  handleSubmitOrganizationDetails = async organizationDetails => {
+    const paymentPlans = await getPaymentPlans(organizationDetails)
+    this.setState({ step: 3, organizationDetails, paymentPlans })
   }
 
   handleSubmitSummary = () => {
@@ -318,7 +321,7 @@ class CreateOrganizationPage extends Component {
   }
 
   renderForm() {
-    const { organizationDetails, step } = this.state
+    const { organizationDetails, step, paymentPlans } = this.state
     return (
       <>
         <Step1 step={step}>
@@ -349,6 +352,7 @@ class CreateOrganizationPage extends Component {
             handleSubmit={this.handleSubmitSummary}
             handleBack={this.previousStep}
             organizationDetails={organizationDetails}
+            paymentPlans={paymentPlans}
           />
         </Step3>
       </>
