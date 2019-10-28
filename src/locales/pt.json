@@ -704,5 +704,7 @@
     "totalPositiveDays": "Total net Positive Days",
     "app.actionCreatePage.submitSucceededLink": "hier",
     "app.errors.43": "Amount is invalid",
-    "app.dashboardPage.organization.netPositiveDays": "Our net-positive days"
+    "app.dashboardPage.organization.netPositiveDays": "Our net-positive days",
+    "app.dashboardPage.organizationNetPositiveDays": "Our Net Positive days",
+    "app.dashboardPage.organizationNetwork": "Our network"
 }

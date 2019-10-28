@@ -939,7 +939,13 @@ class DashboardPage extends Component {
               <WidgetContainer>
                 <WidgetHeader>
                   <WidgetTitle>
-                    <FormattedMessage id="app.dashboardPage.myNetPositiveDays" />
+                    <FormattedMessage
+                      id={
+                        organization
+                          ? 'app.dashboardPage.organizationNetPositiveDays'
+                          : 'app.dashboardPage.myNetPositiveDays'
+                      }
+                    />
                     <InfoElementWrap>
                       <InfoElement
                         type={INFO_ELEMENT_TYPES.QUESTION}
@@ -1030,7 +1036,13 @@ class DashboardPage extends Component {
                     <Row type="flex">
                       <Col span={16} sm={24} lg={11} xs={24}>
                         <WidgetTitle>
-                          <FormattedMessage id="app.dashboardPage.myNetwork" />
+                          <FormattedMessage
+                            id={
+                              organization
+                                ? 'app.dashboardPage.organizationNetwork'
+                                : 'app.dashboardPage.myNetwork'
+                            }
+                          />
                           <InfoElementWrap>
                             <InfoElement
                               type={INFO_ELEMENT_TYPES.QUESTION}
