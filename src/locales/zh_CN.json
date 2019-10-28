@@ -291,7 +291,7 @@
     "app.dashboardPage.head.description": "想要在全球范围内做好事吗？你不是一个人。通过Handprinter，让创造性的个人行动及其延伸产生涟漪效应，以触摸和治愈您的社区甚至全球。",
     "app.dashboardPage.usersInvited": "用户",
     "app.dashboardPage.actionsTaken": "所采取的行动",
-    "app.dashboardPage.netPositiveDays": "净积极效益的天数",
+    "app.dashboardPage.netPositiveDays": "My net-positive days",
     "app.dashboardPage.networkUsers": "网络用户",
     "app.dashboardPage.myNetPositiveDays": "我的净积极效益天数",
     "app.dashboardPage.goodRatio": "正面比例",
@@ -702,5 +702,7 @@
     "footprintReduction": "My Footprint reduction",
     "externalHandprint": "External Handprint",
     "totalPositiveDays": "Total net Positive Days",
-    "app.actionCreatePage.submitSucceededLink": "hier"
+    "app.actionCreatePage.submitSucceededLink": "hier",
+    "app.errors.43": "Amount is invalid",
+    "app.dashboardPage.organization.netPositiveDays": "Our net-positive days"
 }

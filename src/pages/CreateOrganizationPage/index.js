@@ -312,8 +312,8 @@ class CreateOrganizationPage extends Component {
     this.setState({ step: 3, organizationDetails, paymentPlans })
   }
 
-  handleSubmitSummary = () => {
-    this.props.history.push(`/account/create-organization/success`)
+  handleSubmitSummary = (route = '/account/create-organization/success') => {
+    this.props.history.push(route)
   }
 
   previousStep = () => {

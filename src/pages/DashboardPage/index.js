@@ -798,7 +798,13 @@ class DashboardPage extends Component {
                             </BlockContainer>
                           </DashboardHeaderUserInfoValue>
                           <DashboardHeaderUserSince>
-                            <FormattedMessage id="app.dashboardPage.netPositiveDays" />
+                            <FormattedMessage
+                              id={
+                                organization
+                                  ? 'app.dashboardPage.organization.netPositiveDays'
+                                  : 'app.dashboardPage.netPositiveDays'
+                              }
+                            />
                           </DashboardHeaderUserSince>
                         </HeaderUserInfoRowCol>
                       </DashboardHeaderUserInfoRow>
@@ -1056,6 +1062,12 @@ class DashboardPage extends Component {
                       </Col>
                       <MyNetworkCol span={8} sm={24} lg={13} xs={24}>
                         <Row>
+                          <HeaderUserInfoRowCol
+                            span={8}
+                            lg={8}
+                            sm={24}
+                            xs={24}
+                          />
                           <HeaderUserInfoRowCol span={8} lg={8} sm={24} xs={24}>
                             <DashboardHeaderUserName>
                               {stats.network.networkUsers}
@@ -1072,7 +1084,7 @@ class DashboardPage extends Component {
                               <FormattedMessage id="app.dashboardPage.actionsTaken" />
                             </DashboardHeaderUserSince>
                           </HeaderUserInfoRowCol>
-                          <HeaderUserInfoRowCol span={8} lg={8} sm={24} xs={24}>
+                          {/* <HeaderUserInfoRowCol span={8} lg={8} sm={24} xs={24}>
                             <DashboardHeaderUserName>
                               {Math.round(
                                 stats.network.netPositiveDays[
@@ -1081,9 +1093,15 @@ class DashboardPage extends Component {
                               )}
                             </DashboardHeaderUserName>
                             <DashboardHeaderUserSince>
-                              <FormattedMessage id="app.dashboardPage.netPositiveDays" />
+                              <FormattedMessage
+                                id={
+                                  organization
+                                    ? 'app.dashboardPage.organization.netPositiveDays'
+                                    : 'app.dashboardPage.netPositiveDays'
+                                }
+                              />
                             </DashboardHeaderUserSince>
-                          </HeaderUserInfoRowCol>
+                          </HeaderUserInfoRowCol> */}
                         </Row>
                       </MyNetworkCol>
                     </Row>

@@ -12,6 +12,8 @@ import media from 'utils/mediaQueryTemplate'
 
 import { CONTACT_DATA } from 'utils/constants'
 
+import { ORGANIZATION_TYPES } from './CreateOrganizationFrom/utils'
+
 const Main = styled.div`
   display: flex;
   height: 100%;
@@ -117,9 +119,9 @@ class Summary extends React.Component {
     payError: undefined,
   }
 
-  handleContinue = () => {
+  handleContinue = route => {
     if (this.props.handleSubmit) {
-      this.props.handleSubmit()
+      this.props.handleSubmit(route)
     }
   }
 
@@ -138,6 +140,17 @@ class Summary extends React.Component {
         successUrl,
         cancelUrl,
       })
+      if (
+        this.props.organizationDetails.type === ORGANIZATION_TYPES[1]._id &&
+        res.organizationId
+      ) {
+        this.handleContinue(
+          `/account/create-organization/success?organizationId=${
+            res.organizationId
+          }`,
+        )
+        return
+      }
       // eslint-disable-next-line no-undef
       const stripe = Stripe(process.env.REACT_APP_STRIPE_PUB_KEY)
       if (res.session) {
@@ -193,8 +206,9 @@ class Summary extends React.Component {
       organizationName,
       economicSector,
       annualRevenue,
+      type,
     } = this.props.organizationDetails
-
+    const freePlan = type === ORGANIZATION_TYPES[1]._id
     const { paymentTypeAnnual, payError } = this.state
     return (
       <Main>
@@ -219,13 +233,17 @@ class Summary extends React.Component {
               <Text>{annualRevenue}</Text>
             </SummaryRow>
           </SummaryTableWrapper>
-          <PaymentTitle>
-            <FormattedMessage id="app.createOrganization.payment" />
-          </PaymentTitle>
-          <Row>
-            {this.renderPaymentBlock(false, !paymentTypeAnnual)}
-            {this.renderPaymentBlock(true, paymentTypeAnnual)}
-          </Row>
+          {!freePlan && (
+            <PaymentTitle>
+              <FormattedMessage id="app.createOrganization.payment" />
+            </PaymentTitle>
+          )}
+          {!freePlan && (
+            <Row>
+              {this.renderPaymentBlock(false, !paymentTypeAnnual)}
+              {this.renderPaymentBlock(true, paymentTypeAnnual)}
+            </Row>
+          )}
         </Flex>
         {payError && (
           <TextError>
@@ -247,7 +265,11 @@ class Summary extends React.Component {
             onClick={this.handlePay}
             type="primary"
           >
-            <FormattedMessage id="app.createOrganization.pay" />
+            {freePlan ? (
+              <FormattedMessage id="app.createOrganization.create" />
+            ) : (
+              <FormattedMessage id="app.createOrganization.pay" />
+            )}
           </PrimaryButton>
         </ButtonsWrapper>
       </Main>

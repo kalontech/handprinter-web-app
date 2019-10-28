@@ -40,8 +40,8 @@ class GoodRatioWidget extends Component {
 
   static getDerivedStateFromProps(props, state) {
     return {
-      footprintDays: props.footprintDays || state.footprintDays,
-      handprintDays: props.handprintDays || state.handprintDays,
+      footprintDays: props.footprintDays,
+      handprintDays: props.handprintDays,
     }
   }
 
