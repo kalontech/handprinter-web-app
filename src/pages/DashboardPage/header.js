@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
-import { Col, Row, Icon } from 'antd'
+import { Col, Row } from 'antd'
 import moment from 'moment'
 import { FormattedMessage } from 'react-intl'
 
@@ -48,7 +48,7 @@ const DashboardHeaderUserPictureBackground = styled.div`
 
 const DashboardHeaderUserPicture = styled.img`
   border: 4px solid ${colors.white};
-  border-radius: ${props => (props.organization ? '4px' : '50%')};
+  border-radius: 50%;
   box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
   height: 110px;
   margin-top: -55px;
@@ -94,22 +94,6 @@ const DashboardHeaderUserInfoRow = styled.div`
     margin: 15px 0 18px 0;
 
   `}
-`
-const HeaderOuterPlusButton = styled.div`
-  height: 42px;
-  width: 42px;
-  background-color: white;
-  border-radius: 50%;
-  border: 2px solid ${colors.green};
-  color: ${colors.green};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom: 0px;
-  left: 150px;
-  z-index: 2;
-  cursor: pointer;
 `
 
 const DashboardHeaderUserName = styled.div`
@@ -186,7 +170,6 @@ const Header = props => {
   const {
     organization,
     avatar,
-    getIsOrgAdmin,
     handleSelectImage,
     user,
     stats,
@@ -198,12 +181,11 @@ const Header = props => {
     <DashboardHeaderWhiteLine organization={organization}>
       <DashboardHeaderUserPictureWrap>
         {!organization && <DashboardHeaderUserPictureBackground />}
-        <DashboardHeaderUserPicture organization={organization} src={avatar} />
-        {organization && getIsOrgAdmin() && (
-          <HeaderOuterPlusButton onClick={() => handleSelectImage(true)}>
-            <Icon type="plus" />
-          </HeaderOuterPlusButton>
-        )}
+        <DashboardHeaderUserPicture
+          onClick={() => organization && handleSelectImage(true)}
+          organization={organization}
+          src={avatar}
+        />
       </DashboardHeaderUserPictureWrap>
       <DashboardHeaderUserName>
         {organization ? organization.name : user.fullName}
@@ -218,20 +200,22 @@ const Header = props => {
           </div>
         )}
       </DashboardHeaderUserSince>
-      <Achievements>
-        {AchievementsMOCK.slice(0, 5).map(i => (
-          <Achievement specialShape={i.specialShape} key={i.id}>
-            <img alt={''} src={i.image} />
-          </Achievement>
-        ))}
-        {AchievementsMOCK.length > 5 && (
-          <Achievement onClick={handleMoreAchievesShow} other>
-            <OtherAchievementsText>
-              +{AchievementsMOCK.length - 5}
-            </OtherAchievementsText>
-          </Achievement>
-        )}
-      </Achievements>
+      {!organization && (
+        <Achievements>
+          {AchievementsMOCK.slice(0, 5).map(i => (
+            <Achievement specialShape={i.specialShape} key={i.id}>
+              <img alt={''} src={i.image} />
+            </Achievement>
+          ))}
+          {AchievementsMOCK.length > 5 && (
+            <Achievement onClick={handleMoreAchievesShow} other>
+              <OtherAchievementsText>
+                +{AchievementsMOCK.length - 5}
+              </OtherAchievementsText>
+            </Achievement>
+          )}
+        </Achievements>
+      )}
       {stats && (
         <DashboardHeaderUserInfoCol>
           <DashboardHeaderUserInfoRow>

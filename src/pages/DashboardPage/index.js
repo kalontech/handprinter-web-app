@@ -274,6 +274,7 @@ const SelectBGLabel = styled.p`
   text-transform: uppercase;
   font-family: Noto Sans;
   cursor: pointer;
+  margin-bottom: 20px;
 `
 
 const AdminsSectionWraper = styled.div`
@@ -509,7 +510,7 @@ class DashboardPage extends Component {
 
   handleMoreAchievesShow = () => {}
 
-  getIsOrgAdmin() {
+  getIsOrgAdmin = () => {
     const organization = this.state.organization
     const user = this.props.user
     if (!organization || !user) return
@@ -581,20 +582,19 @@ class DashboardPage extends Component {
             avatar={avatar}
             user={user}
             organization={organization}
-            getIsOrgAdmin={this.getIsOrgAdmin}
             handleSelectImage={this.handleSelectImage}
             handleMoreAchievesShow={this.handleMoreAchievesShow}
           />
           <TabsSecondary
             list={[
               {
-                to: `/account/dashboard`,
+                to: `${history.location.pathname}${history.location.search}`,
                 icon: DiscoverIconComponent,
                 text: formatMessage({ id: 'app.pages.groups.statistics' }),
                 active: true,
               },
               {
-                to: `/account/dashboard?view=activity`,
+                to: `${history.location.pathname}${history.location.search}`,
                 icon: FlagIconComponent,
                 text: formatMessage({ id: 'app.pages.groups.activity' }),
                 active: false,
