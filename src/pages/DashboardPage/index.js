@@ -415,6 +415,7 @@ class DashboardPage extends Component {
     organization: undefined,
     organizationOwner: undefined,
     selectingLogo: false,
+    moreAchievesVisible: false,
   }
 
   componentDidMount() {
@@ -508,7 +509,9 @@ class DashboardPage extends Component {
     )
   }
 
-  handleMoreAchievesShow = () => {}
+  setMoreAchievesVisible = visible => {
+    this.setState({ moreAchievesVisible: visible })
+  }
 
   getIsOrgAdmin = () => {
     const organization = this.state.organization
@@ -524,6 +527,7 @@ class DashboardPage extends Component {
       currentImpactCategory,
       organization,
       organizationOwner,
+      moreAchievesVisible,
     } = this.state
     const {
       match,
@@ -583,7 +587,8 @@ class DashboardPage extends Component {
             user={user}
             organization={organization}
             handleSelectImage={this.handleSelectImage}
-            handleMoreAchievesShow={this.handleMoreAchievesShow}
+            setMoreAchievesVisible={this.setMoreAchievesVisible}
+            moreAchievesVisible={moreAchievesVisible}
           />
           <TabsSecondary
             list={[

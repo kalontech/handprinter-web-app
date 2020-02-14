@@ -556,7 +556,14 @@ export const Modal = styled(Ant.Modal)`
 `
 
 export const GlobalStyle = createGlobalStyle`
-
+  .achievements-popover .ant-popover-inner {
+      background-color: ${colors.dark} !important;
+  } 
+ 
+  .achievements-popover .ant-popover-arrow {
+      border-color: ${colors.dark} !important;
+  } 
+ 
 
   body {
     -webkit-font-smoothing: antialiased;

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
-import { Col, Row } from 'antd'
+import { Col, Row, Popover } from 'antd'
 import moment from 'moment'
 import { FormattedMessage } from 'react-intl'
 
@@ -8,6 +8,7 @@ import media from 'utils/mediaQueryTemplate'
 import colors from 'config/colors'
 
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
+import { PrimaryButton, Modal, HeaderPopover } from 'components/Styled'
 
 import { InfoElementWrap } from '.'
 
@@ -142,6 +143,7 @@ const Achievement = styled.div`
   margin: 0 10px;
   justify-content: center;
   align-items: center;
+  align-self: center;
   display: flex;
   background-color: ${props => (props.other ? colors.ocean : colors.white)};
   overflow: hidden;
@@ -153,6 +155,91 @@ const OtherAchievementsText = styled.text`
   font-family: Noto Sans;
   font-size: 16px;
 `
+
+const ModalContent = styled.div`
+  width: 472px;
+  height: 413px;
+  margin: 0 60px 40px 60px;
+  border: 1px solid ${colors.lightGray};
+`
+
+const AchievementRow = styled(Row)``
+const AchievementCol = styled(Col)`
+  margin-top: 30px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+`
+
+const AchievementTitle = styled.text`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 28px;
+  line-height: 35px;
+  text-align: center;
+`
+
+const AchievementFooter = styled.div`
+  background-color: ${colors.lightGray};
+  height: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const AchievementModal = styled(Modal)`
+  .ant-modal-footer {
+    padding: 0px;
+    border: 0;
+  }
+
+  .ant-modal-title {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+
+  .ant-modal-header {
+    border: 0px;
+  }
+`
+
+const AchievementFooterButton = styled(PrimaryButton)`
+  width: 472px;
+  align-self: center;
+`
+
+const PopoverWrapper = styled.div`
+  background-color: ${colors.dark};
+  display: flex;
+  flex-direction: column;
+  .ant-popover-inner {
+    background-color: ${colors.green}; !important
+  }
+  .ant-popover-inner-content {
+    padding: 0;
+    background-color: ${colors.green}; !important
+  }
+`
+const PopoverTitle = styled.text`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  color: ${colors.white};
+`
+const PopoverText = styled.text`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: ${colors.darkGray};
+`
+
+const AchievementPopover = styled(Popover)``
 
 const AchievementsMOCK = [
   { id: 1, image: 'https://facebook.github.io/react-native/img/tiny_logo.png' },
@@ -175,8 +262,10 @@ const Header = props => {
     stats,
     footPrintReduction,
     externalHandprint,
-    handleMoreAchievesShow,
+    moreAchievesVisible,
+    setMoreAchievesVisible,
   } = props
+
   return (
     <DashboardHeaderWhiteLine organization={organization}>
       <DashboardHeaderUserPictureWrap>
@@ -208,7 +297,7 @@ const Header = props => {
             </Achievement>
           ))}
           {AchievementsMOCK.length > 5 && (
-            <Achievement onClick={handleMoreAchievesShow} other>
+            <Achievement onClick={() => setMoreAchievesVisible(true)} other>
               <OtherAchievementsText>
                 +{AchievementsMOCK.length - 5}
               </OtherAchievementsText>
@@ -281,6 +370,55 @@ const Header = props => {
           </DashboardHeaderUserInfoRow>
         </DashboardHeaderUserInfoCol>
       )}
+      <AchievementModal
+        width={592}
+        visible={moreAchievesVisible}
+        closable
+        onCancel={() => setMoreAchievesVisible(false)}
+        centered
+        destroyOnClose
+        title={
+          <AchievementTitle>
+            <FormattedMessage id={'app.dashboardPage.achievements'} />
+          </AchievementTitle>
+        }
+        footer={[
+          <AchievementFooter key="submit">
+            <AchievementFooterButton
+              type="primary"
+              onClick={() => {
+                setMoreAchievesVisible(false)
+              }}
+            >
+              OK
+            </AchievementFooterButton>
+          </AchievementFooter>,
+        ]}
+      >
+        <ModalContent>
+          <AchievementRow type="flex" justify="left">
+            {AchievementsMOCK.map(i => (
+              <AchievementCol key={i.id} span={6}>
+                <AchievementPopover
+                  overlayClassName={'achievements-popover'}
+                  content={
+                    <PopoverWrapper>
+                      <PopoverTitle>Christmas campaign</PopoverTitle>
+                      <PopoverText>
+                        3 of 6 actions accomplished 7 days left
+                      </PopoverText>
+                    </PopoverWrapper>
+                  }
+                >
+                  <Achievement specialShape={i.specialShape}>
+                    <img alt={''} src={i.image} />
+                  </Achievement>
+                </AchievementPopover>
+              </AchievementCol>
+            ))}
+          </AchievementRow>
+        </ModalContent>
+      </AchievementModal>
     </DashboardHeaderWhiteLine>
   )
 }
@@ -295,6 +433,8 @@ Header.propTypes = {
   stats: Object,
   footPrintReduction: Number,
   externalHandprint: Number,
+  moreAchievesVisible: Boolean,
+  setMoreAchievesVisible: Function,
 }
 
 export default Header
