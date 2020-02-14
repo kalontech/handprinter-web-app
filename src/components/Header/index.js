@@ -990,21 +990,11 @@ class Header extends Component {
                     selectedKeys={[this.selectedMenuItem]}
                     onClick={this.onClick}
                   >
-                    {/* <Menu.Item key="/account/dashboard">
-                      <Link to="/account/dashboard">
-                        <FormattedMessage id="app.header.menu.dashboard" />
-                      </Link>
-                    </Menu.Item> */}
                     <Menu.Item key="/actions">
                       <Link to="/actions">
                         <FormattedMessage id="app.header.menu.actions" />
                       </Link>
                     </Menu.Item>
-                    {/* <Menu.Item key="/account/news">
-                      <Link to="/account/news">
-                        <FormattedMessage id="app.header.menu.news" />
-                      </Link>
-                    </Menu.Item> */}
                     <Menu.Item key="/groups">
                       <Link to="/groups/discover">
                         <FormattedMessage id="app.pages.groups" />
@@ -1166,22 +1156,11 @@ class Header extends Component {
                         mode="horizontal"
                         selectedKeys={[this.selectedMenuItem]}
                       >
-                        {/* <Menu.Item key="/account/dashboard">
-                          <Link to="/account/dashboard">
-                            <FormattedMessage id="app.header.menu.dashboard" />
-                          </Link>
-                        </Menu.Item> */}
-
                         <Menu.Item key="/actions">
                           <Link to="/actions">
                             <FormattedMessage id="app.header.menu.actions" />
                           </Link>
                         </Menu.Item>
-                        {/* <Menu.Item key="/account/news">
-                          <Link to="/account/news">
-                            <FormattedMessage id="app.header.menu.news" />
-                          </Link>
-                        </Menu.Item> */}
 
                         <Menu.Item key="/groups">
                           <Link to="/groups/discover">
