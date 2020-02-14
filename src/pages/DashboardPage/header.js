@@ -8,7 +8,7 @@ import media from 'utils/mediaQueryTemplate'
 import colors from 'config/colors'
 
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
-import { PrimaryButton, Modal, HeaderPopover } from 'components/Styled'
+import { PrimaryButton, Modal } from 'components/Styled'
 
 import { InfoElementWrap } from '.'
 
