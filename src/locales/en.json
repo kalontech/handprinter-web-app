@@ -707,5 +707,8 @@
     "app.dashboardPage.organization.netPositiveDays": "Our net-positive days",
     "app.dashboardPage.organizationNetPositiveDays": "Our Net Positive days",
     "app.dashboardPage.organizationNetwork": "Our network",
-    "app.dashboardPage.achievements": "Achievements"
+    "app.dashboardPage.achievements": "Achievements",
+    "app.pages.challenges": "Challenges",
+    "app.actionsPage.tabs.campaigns": "Campaigns",
+    "app.actionsPage.tabs.competitions": "Competitions"
 }

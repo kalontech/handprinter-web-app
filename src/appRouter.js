@@ -11,6 +11,7 @@ import Route from './routeWrapper'
 import ActionModalPage from './pages/ActionModalPage'
 import ActionsPage from './pages/ActionsPage'
 import GroupsListPage from './pages/GroupsList'
+import ChallengesListPage from './pages/ChallengesList'
 import GroupViewPage from './pages/GroupView'
 import CheckYourEmailPage from './pages/CheckYourEmailPage'
 import DashboardPage from './pages/DashboardPage'
@@ -237,6 +238,13 @@ const AppRouter = () => {
             useAuthentication
             requireAuthentication
             withoutCTA
+          />
+          <Route
+            path="/challenges/:subset"
+            component={ChallengesListPage}
+            useAuthentication
+            withoutCTA
+            requireAuthentication
           />
           <Route component={NotFoundPage} useAuthentication withoutCTA />
         </Switch>

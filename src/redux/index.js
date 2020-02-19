@@ -15,6 +15,7 @@ import userStore from './userStore'
 import groupsStore from './groups'
 import actionsStore from './actions'
 import organizationsStore from './organizations'
+import campaignsStore from './campaigns'
 
 const composeEnhancers =
   process.env.NODE_ENV !== 'production' &&
@@ -37,6 +38,7 @@ const configureStore = () => {
     groups: groupsStore,
     actions: actionsStore,
     organizations: organizationsStore,
+    campaigns: campaignsStore,
   })
   const sagaMiddleware = createSagaMiddleware()
   const store = createStore(

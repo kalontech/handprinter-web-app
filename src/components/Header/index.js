@@ -559,6 +559,8 @@ class Header extends Component {
 
     if (location.pathname.includes('organizations')) return '/organizations'
 
+    if (location.pathname.includes('challenges')) return '/challenges'
+
     return location.pathname
   }
 
@@ -1165,6 +1167,11 @@ class Header extends Component {
                         <Menu.Item key="/groups">
                           <Link to="/groups/discover">
                             <FormattedMessage id="app.pages.groups" />
+                          </Link>
+                        </Menu.Item>
+                        <Menu.Item key="/challenges">
+                          <Link to="/challenges/campaigns">
+                            <FormattedMessage id="app.pages.challenges" />
                           </Link>
                         </Menu.Item>
                         {(!overrides || !overrides.brandName) && (
