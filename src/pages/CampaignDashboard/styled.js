@@ -169,7 +169,7 @@ export const DashboardHeaderUserName = styled.div`
   line-height: 35px;
   margin-top: 14px;
   display: flex;
-  margin-left: 118px;
+  margin-left: ${props => (props.statusLabel ? '118px' : '0px')};
   align-items: center;
   justify-content: center;
 `

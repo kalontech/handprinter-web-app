@@ -37,7 +37,7 @@ const Header = props => {
       <DashboardHeaderUserPictureWrap>
         <DashboardHeaderUserPicture src={campaign.logo.src} />
       </DashboardHeaderUserPictureWrap>
-      <DashboardHeaderUserName>
+      <DashboardHeaderUserName statusLabel={!!statusLabelId}>
         {name}
         {!!statusLabelId && (
           <CampaignStatusWrapper inactive={expired}>
