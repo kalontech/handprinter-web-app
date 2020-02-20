@@ -21,7 +21,6 @@ export default function useCampaignsList(props) {
           page: queries.page || 1,
           limit: 21,
         })
-        console.log('res', res)
         const docs = _.get(res, 'campaigns.docs', [])
         setCampaigns(docs)
         setPage(res.campaigns.page)

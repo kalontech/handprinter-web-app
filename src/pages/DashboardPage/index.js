@@ -107,7 +107,7 @@ const WidgetContent = styled.div`
   `}
 `
 
-const DashboardHeader = styled.div`
+export const DashboardHeader = styled.div`
   border-bottom: 1px solid ${colors.whiteSmoke};
   margin-bottom: 20px;
   ${media.phone`
@@ -115,7 +115,7 @@ const DashboardHeader = styled.div`
   `}
 `
 
-const DashboardHeaderGreenLine = styled.div`
+export const DashboardHeaderGreenLine = styled.div`
   background-color: ${colors.ocean};
   background-image: ${props => props.image && `url(${props.image})`};
   height: 140px;
@@ -123,7 +123,7 @@ const DashboardHeaderGreenLine = styled.div`
 
 const DashboardHeaderBackgrounds = styled.div``
 
-const HeaderFingerprintBackground = styled.div`
+export const HeaderFingerprintBackground = styled.div`
   background-image: ${props => !props.hideImage && `url(${fingerprintImage})`};
   background-position: top 0px center;
   background-repeat: no-repeat, no-repeat;

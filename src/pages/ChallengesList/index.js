@@ -24,9 +24,6 @@ export default function ChallengesList(props) {
   const [campaigns, page, totalPages, loading] = useCampaignsList(props)
   const [query, setQuery] = useState('')
   const { history, location } = props
-
-  console.log('artem', campaigns)
-
   return (
     <Block>
       <ChallengesListHeader />
@@ -65,7 +62,7 @@ export default function ChallengesList(props) {
             {campaigns.map(item => (
               <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
                 <CampaignCard
-                  to={`/account/dashboard?organizationId=${item._id}`}
+                  to={`/challenges/campaigns/dashboard?campaignId=${item._id}`}
                   name={item.name}
                   picture={item.logo.src}
                 />
@@ -100,4 +97,9 @@ export default function ChallengesList(props) {
       </Container>
     </Block>
   )
+}
+
+ChallengesList.propTypes = {
+  history: Object,
+  location: Object,
 }

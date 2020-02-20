@@ -710,5 +710,9 @@
     "app.dashboardPage.achievements": "Achievements",
     "app.pages.challenges": "Challenges",
     "app.actionsPage.tabs.campaigns": "Campaigns",
-    "app.actionsPage.tabs.competitions": "Competitions"
+    "app.actionsPage.tabs.competitions": "Competitions",
+    "app.campaignPage.progress.accomplished": "{accomplished} of {total} actions accomplished",
+    "app.campaignPage.progress.daysLeft": "{days} days Left",
+    "app.campaignPage.completed": "Completed",
+    "app.campaignPage.finished": "Finished"
 }

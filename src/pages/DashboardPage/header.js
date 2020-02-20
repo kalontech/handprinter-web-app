@@ -12,7 +12,7 @@ import { PrimaryButton, Modal } from 'components/Styled'
 
 import { InfoElementWrap } from '.'
 
-const DashboardHeaderWhiteLine = styled(Row)`
+export const DashboardHeaderWhiteLine = styled(Row)`
   background-color: ${props =>
     props.organization ? colors.lightGray : colors.white};
   display: flex;
@@ -27,7 +27,7 @@ const DashboardHeaderWhiteLine = styled(Row)`
   `}
 `
 
-const DashboardHeaderUserPictureWrap = styled.div`
+export const DashboardHeaderUserPictureWrap = styled.div`
   position: relative;
   ${media.desktop`
     display: flex;
@@ -47,7 +47,7 @@ const DashboardHeaderUserPictureBackground = styled.div`
   `}
 `
 
-const DashboardHeaderUserPicture = styled.img`
+export const DashboardHeaderUserPicture = styled.img`
   border: 4px solid ${colors.white};
   border-radius: 50%;
   box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -97,14 +97,14 @@ const DashboardHeaderUserInfoRow = styled.div`
   `}
 `
 
-const DashboardHeaderUserName = styled.div`
+export const DashboardHeaderUserName = styled.div`
   color: ${colors.dark};
   font-size: 28px;
   line-height: 35px;
   margin-top: 14px;
 `
 
-const DashboardHeaderUserSince = styled.div`
+export const DashboardHeaderUserSince = styled.div`
   color: ${colors.darkGray};
   font-size: 16px;
   line-height: 20px;
