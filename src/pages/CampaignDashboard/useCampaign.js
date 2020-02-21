@@ -13,14 +13,8 @@ export default function useCampaign(campaignId) {
         setLoading(true)
         const res = await getCampaign(campaignId)
         if (res) {
-          const participants = res.participants.map(participant => {
-            return {
-              user: participant._id,
-              accomplishedActions: participant.accomplishedActions,
-            }
-          })
           setCampaign(res.campaign)
-          setParticipants(participants)
+          setParticipants(res.participants)
         }
       } catch (error) {
         console.error(error)

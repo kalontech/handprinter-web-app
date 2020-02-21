@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { AutoComplete, Select, Col } from 'antd'
+import { AutoComplete, Select, Col, Menu } from 'antd'
 
 import { Pagination } from 'components/Styled'
 import colors from 'config/colors'
@@ -83,7 +83,10 @@ export const Container = styled.article`
 `
 
 export const Column = styled(Col)`
-  margin-bottom: 20px;
+  padding: 10px;
+  ${media.phone`
+    padding: 10px 10px;
+  `}
 `
 
 export const EmptyList = styled.p`
@@ -179,4 +182,46 @@ export const Banner = styled.img`
   background-color: ${colors.ocean};
   width: 100%;
   object-fit: cover;
+`
+
+export const Content = styled.div`
+  background-color: ${colors.lightGray};
+  padding: 20px 70px;
+
+  ${media.largeDesktop`
+    padding-left: 34px;
+    padding-right: 34px;
+  `}
+
+  ${media.phone`
+    padding-left: 15px;
+    padding-right: 15px;  
+  `}
+`
+
+export const MenuStyled = styled(Menu)`
+  height: 60px;
+  background-color: ${colors.white};
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ${({ font }) => font || '"Noto Sans", sans-serif'};
+  margin: 0 10px 20px 10px;
+
+  .ant-menu-item {
+    font-size: 16px;
+    height: 57px;
+    padding-top: 3px;
+    &:hover {
+      border-bottom: 3px solid transparent;
+    }
+  }
+
+  .ant-menu-item-selected {
+    border-bottom: 3px solid ${colors.green};
+    &:hover {
+      border-bottom: 3px solid ${colors.green};
+    }
+  }
 `

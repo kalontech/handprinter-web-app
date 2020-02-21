@@ -128,7 +128,7 @@ const LeftMenu = styled.div`
   }
 `
 
-const CenterMenu = styled(LeftMenu)`
+export const CenterMenu = styled(LeftMenu)`
   flex: 1;
   display: flex;
   justify-content: center;
