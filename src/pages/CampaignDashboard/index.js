@@ -90,7 +90,10 @@ function CampaignDashboard(props) {
   const view = query.view || 'actions'
   if (!campaignId) return null
   const [campaign, loading, participants] = useCampaign(campaignId)
-  const me = participants.find(i => i.user._id === props.user._id)
+  const sortedParticipants = participants.sort((a, b) =>
+    a.user._id === props.user._id ? -1 : 1,
+  )
+  const me = sortedParticipants && sortedParticipants[0]
   const accomplishedUserActions = me ? me.accomplishedActions : []
   if (loading || !campaign) return <Spinner />
   return (
