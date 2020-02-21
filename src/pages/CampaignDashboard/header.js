@@ -24,8 +24,10 @@ const Header = props => {
   const accomplished = accomplishedUserActions.length
   const expired = moment().isAfter(dateTo)
 
-  const total = campaign.actionsNumberToComplete || campaign.actions.length
-  const finished = accomplished >= total
+  const total = campaign.actions.length
+  const numberToComplete =
+    campaign.actionsNumberToComplete || campaign.actions.length
+  const finished = accomplished >= numberToComplete
   let statusLabelId
   if (expired) statusLabelId = 'app.campaignPage.finished'
   if (finished) statusLabelId = 'app.campaignPage.completed'
