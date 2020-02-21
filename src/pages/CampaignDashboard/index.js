@@ -4,10 +4,6 @@ import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
 
 import useCampaign from './useCampaign'
-import {
-  DashboardHeaderGreenLine,
-  HeaderFingerprintBackground,
-} from '../DashboardPage'
 import Header from './header'
 
 function CampaignDashboard(props) {
@@ -22,11 +18,8 @@ function CampaignDashboard(props) {
   if (loading || !campaign) return <Spinner />
   return (
     <Fragment>
-      <DashboardHeaderGreenLine>
-        <HeaderFingerprintBackground />
-      </DashboardHeaderGreenLine>
       <Header
-        participantsCount={28} // TODO
+        participantsCount={participants.length}
         campaign={campaign}
         accomplishedUserActions={accomplishedUserActions}
       />

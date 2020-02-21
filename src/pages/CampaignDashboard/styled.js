@@ -173,3 +173,10 @@ export const DashboardHeaderUserName = styled.div`
   align-items: center;
   justify-content: center;
 `
+
+export const Banner = styled.img`
+  height: 140px;
+  background-color: ${colors.ocean};
+  width: 100%;
+  object-fit: cover;
+`

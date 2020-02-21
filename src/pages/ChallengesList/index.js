@@ -30,7 +30,9 @@ export default function ChallengesList(props) {
       <Container>
         <SearchWrap>
           <AutoCompleteStyled
-            onSelect={id => {}}
+            onSelect={id => {
+              history.push(`/challenges/campaigns/dashboard?campaignId=${id}`)
+            }}
             value={query}
             onSearch={query => setQuery(query)}
             dataSource={campaigns

@@ -8,6 +8,7 @@ import {
   CampaignStatusWrapper,
   CampaignStatus,
   DashboardHeaderUserName,
+  Banner,
 } from './styled'
 import {
   DashboardHeaderWhiteLine,
@@ -34,6 +35,7 @@ const Header = props => {
   )
   return (
     <DashboardHeaderWhiteLine organization>
+      <Banner src={campaign.banner.src} />
       <DashboardHeaderUserPictureWrap>
         <DashboardHeaderUserPicture src={campaign.logo.src} />
       </DashboardHeaderUserPictureWrap>
