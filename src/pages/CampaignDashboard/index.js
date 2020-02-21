@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import qs from 'qs'
 import Spinner from 'components/Spinner'
+import { connect } from 'react-redux'
 
 import useCampaign from './useCampaign'
 import {
@@ -9,12 +10,15 @@ import {
 } from '../DashboardPage'
 import Header from './header'
 
-export default function CampaignDashboard(props) {
+function CampaignDashboard(props) {
   const { location } = props
   const query = qs.parse(location.search, { ignoreQueryPrefix: true })
   const campaignId = query && query.campaignId
   if (!campaignId) return null
-  const [campaign, loading] = useCampaign(campaignId)
+  const [campaign, loading, participants] = useCampaign(campaignId)
+  const me = participants.find(i => i.user._id === props.user._id)
+  const accomplishedUserActions = me ? me.accomplishedActions : []
+
   if (loading || !campaign) return <Spinner />
   return (
     <Fragment>
@@ -24,6 +28,7 @@ export default function CampaignDashboard(props) {
       <Header
         participantsCount={28} // TODO
         campaign={campaign}
+        accomplishedUserActions={accomplishedUserActions}
       />
     </Fragment>
   )
@@ -31,4 +36,11 @@ export default function CampaignDashboard(props) {
 
 CampaignDashboard.propTypes = {
   location: Object,
+  user: Object,
 }
+
+const mapStateToProps = state => ({
+  user: state.user.data,
+})
+
+export default connect(mapStateToProps)(CampaignDashboard)

@@ -18,9 +18,9 @@ import {
 import Progress from './progress'
 
 const Header = props => {
-  const { campaign, participantsCount } = props
+  const { campaign, participantsCount, accomplishedUserActions } = props
   const { name, description, dateTo } = campaign
-  const accomplished = 1
+  const accomplished = accomplishedUserActions.length
   const expired = moment().isAfter(dateTo)
 
   const total = campaign.actionsNumberToComplete || campaign.actions.length
@@ -63,6 +63,7 @@ Header.propTypes = {
   campaign: Object,
   participantsCount: Number,
   intl: Object,
+  accomplishedUserActions: Array,
 }
 
 export default compose(injectIntl)(Header)
