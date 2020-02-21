@@ -241,7 +241,7 @@ const AppRouter = () => {
             withoutCTA
           />
           <Route
-            path="/challenges/campaigns/dashboard"
+            path="/challenges/campaigns/dashboard/:campaignId"
             component={CampaignDashboardPage}
             useAuthentication
             withoutCTA

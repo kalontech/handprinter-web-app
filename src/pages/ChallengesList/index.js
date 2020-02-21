@@ -31,7 +31,7 @@ export default function ChallengesList(props) {
         <SearchWrap>
           <AutoCompleteStyled
             onSelect={id => {
-              history.push(`/challenges/campaigns/dashboard?campaignId=${id}`)
+              history.push(`/challenges/campaigns/dashboard/${id}`)
             }}
             value={query}
             onSearch={query => setQuery(query)}
@@ -64,7 +64,7 @@ export default function ChallengesList(props) {
             {campaigns.map(item => (
               <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
                 <CampaignCard
-                  to={`/challenges/campaigns/dashboard?campaignId=${item._id}`}
+                  to={`/challenges/campaigns/dashboard/${item._id}`}
                   name={item.name}
                   picture={item.logo.src}
                 />

@@ -714,5 +714,6 @@
     "app.campaignPage.progress.accomplished": "{accomplished} of {total} actions accomplished",
     "app.campaignPage.progress.daysLeft": "{days} days Left",
     "app.campaignPage.completed": "Completed",
-    "app.campaignPage.finished": "Finished"
+    "app.campaignPage.finished": "Finished",
+    "app.campaignPage.participants": "Participants"
 }
