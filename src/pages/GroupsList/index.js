@@ -76,7 +76,7 @@ const Column = styled(Col)`
   margin-bottom: 20px;
 `
 
-const EmptyList = styled.p`
+export const EmptyList = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;

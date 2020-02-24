@@ -715,5 +715,6 @@
     "app.campaignPage.progress.daysLeft": "{days} days Left",
     "app.campaignPage.completed": "Completed",
     "app.campaignPage.finished": "Finished",
-    "app.campaignPage.participants": "Participants"
+    "app.campaignPage.participants": "Participants",
+    "app.pages.groups.emptyParticipantsList": "No participants found"
 }

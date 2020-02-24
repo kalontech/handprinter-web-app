@@ -7,9 +7,13 @@ import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 
+import {
+  Achievements,
+  AchievementSmall,
+} from '../../pages/DashboardPage/header'
+
 const Block = styled(Link)`
   padding: 30px 20px 20px;
-  min-width: 380px;
   min-height: 236px;
   display: flex;
   flex-direction: column;
@@ -87,6 +91,7 @@ export default class MemberCard extends React.PureComponent {
     photo: PropTypes.string,
     impacts: PropTypes.object,
     counter: PropTypes.string,
+    achievements: Array,
   }
 
   static defaultProps = {
@@ -101,7 +106,7 @@ export default class MemberCard extends React.PureComponent {
   }
 
   render() {
-    const { to, photo, fullName, impacts, counter } = this.props
+    const { to, photo, fullName, impacts, counter, achievements } = this.props
 
     return (
       <Block to={to}>
@@ -114,6 +119,15 @@ export default class MemberCard extends React.PureComponent {
           <Info>
             <FullName>{fullName}</FullName>
             <Counter>{counter}</Counter>
+            {!!achievements && (
+              <Achievements>
+                {achievements.slice(0, 5).map(i => (
+                  <AchievementSmall specialShape={i.specialShape} key={i.id}>
+                    <img alt={''} src={i.image} />
+                  </AchievementSmall>
+                ))}
+              </Achievements>
+            )}
           </Info>
         </User>
 

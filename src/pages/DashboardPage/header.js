@@ -129,7 +129,7 @@ const HeaderUserInfoRowCol = styled(Col)`
   `}
 `
 
-const Achievements = styled.div`
+export const Achievements = styled.div`
   display: flex;
   margin-top: 20px;
 `
@@ -147,6 +147,15 @@ const Achievement = styled.div`
   display: flex;
   background-color: ${props => (props.other ? colors.ocean : colors.white)};
   overflow: hidden;
+`
+
+export const AchievementSmall = styled(Achievement)`
+  width: 40px;
+  height: 40px;
+  border-radius: ${props =>
+    props.specialShape ? '5px 5px 20px 20px' : '20px'};
+  border: ${props => (props.other ? '0px' : `2px solid ${colors.green}`)};
+  margin: 0 3px;
 `
 
 const OtherAchievementsText = styled.text`

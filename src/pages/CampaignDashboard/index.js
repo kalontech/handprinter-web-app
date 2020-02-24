@@ -16,15 +16,32 @@ import MemberCard from 'components/MemberCard'
 
 import useCampaign from './useCampaign'
 import Header from './header'
-import { Content, MenuStyled, Column } from './styled'
+import { Content, MenuStyled, Column, EmptyList } from './styled'
 import { getUserInitialAvatar } from '../../api'
 
+const AchievementsMOCK = [
+  { id: 1, image: 'https://facebook.github.io/react-native/img/tiny_logo.png' },
+  {
+    id: 2,
+    specialShape: true,
+    image: 'https://facebook.github.io/react-native/img/tiny_logo.png',
+  },
+  { id: 3, image: 'https://facebook.github.io/react-native/img/tiny_logo.png' },
+]
+
 function renderParticipants(props) {
-  const { loading, participants, intl } = props
+  const { loading, participants, intl, campaign } = props
   const selectedKey = _.get(props, 'location.search', '').includes('finished')
     ? 'finished'
     : 'participants'
-
+  const actionsNumberToComplete =
+    campaign.actionsNumberToComplete || campaign.actions.length
+  const participantsFiltered =
+    selectedKey === 'finished'
+      ? participants.filter(
+          i => i.accomplishedActions.length >= actionsNumberToComplete,
+        )
+      : participants
   return (
     <Fragment>
       <MenuStyled
@@ -48,7 +65,7 @@ function renderParticipants(props) {
         <Spinner />
       ) : (
         <Row style={{ flexGrow: '1' }}>
-          {participants.map(item => (
+          {participantsFiltered.map(item => (
             <Column key={item.user._id} xl={8} lg={12} md={12} xs={24}>
               <MemberCard
                 to={`/account/${item.user._id}`}
@@ -61,9 +78,17 @@ function renderParticipants(props) {
                   { count: item.userInfo.takenActionsCount },
                 )}
                 impacts={{ handprint: item.userInfo.impacts }}
+                achievements={AchievementsMOCK}
               />
             </Column>
           ))}
+          {participantsFiltered.length === 0 && (
+            <EmptyList>
+              {intl.formatMessage({
+                id: 'app.pages.groups.emptyParticipantsList',
+              })}
+            </EmptyList>
+          )}
         </Row>
       )}
     </Fragment>
@@ -150,6 +175,7 @@ renderParticipants.propTypes = {
   loading: Boolean,
   participants: Array,
   intl: Object,
+  campaign: Object,
 }
 
 const mapStateToProps = state => ({
