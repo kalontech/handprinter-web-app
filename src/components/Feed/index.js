@@ -1,5 +1,6 @@
 /* eslint-disable react/display-name */
 
+import _ from 'lodash'
 import React from 'react'
 import { connect } from 'react-redux'
 import {
@@ -37,11 +38,25 @@ const Feed = ({ readFrom = {}, user = {}, writeTo = {} }) => {
           return (
             <Activity
               {...props}
+              key={`root-${props.activity.id}`}
+              Content={
+                _.get(props, 'activity.object') !== '...' && props.Content
+              }
               Footer={() => {
-                return <ActivityFooter {...props} />
+                return (
+                  <ActivityFooter
+                    key={`footer-${props.activity.id}`}
+                    {...props}
+                  />
+                )
               }}
               Header={() => {
-                return <ActivityHeader {...props} />
+                return (
+                  <ActivityHeader
+                    key={`header-${props.activity.id}`}
+                    {...props}
+                  />
+                )
               }}
             />
           )

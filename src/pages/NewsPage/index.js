@@ -12,7 +12,6 @@ import media from 'utils/mediaQueryTemplate'
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 
 const NEWS_RANGES = {
-  ME: 'me',
   NETWORK: 'network',
   WORLD: 'world',
 }
@@ -98,9 +97,6 @@ class NewsPage extends Component {
             <Dropdown
               overlay={
                 <Menu onClick={this.handleRangeSelectorSelect}>
-                  <Menu.Item key={NEWS_RANGES.ME}>
-                    <FormattedMessage id="app.newsPage.ranges.me" />
-                  </Menu.Item>
                   <Menu.Item key={NEWS_RANGES.NETWORK}>
                     <FormattedMessage id="app.newsPage.ranges.network" />
                   </Menu.Item>
@@ -117,13 +113,6 @@ class NewsPage extends Component {
               </DropdownLink>
             </Dropdown>
           </NewsHeader>
-          {range === NEWS_RANGES.ME && (
-            <Feed
-              readFrom={{
-                feedGroup: 'user',
-              }}
-            />
-          )}
           {range === NEWS_RANGES.NETWORK && (
             <Feed
               readFrom={{
