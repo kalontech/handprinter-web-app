@@ -15,14 +15,20 @@ import Header from './header'
 import { Content } from './styled'
 import renderParticipants from './participants'
 import renderActions from './actions'
+import renderStatistics from './statistics'
+import { CAPMAIGN_TABS } from './constants'
 
 function renderContent(view, props) {
   switch (view) {
-    case 'actions':
+    case CAPMAIGN_TABS.actions:
       return renderActions(props)
-    case 'participants':
+    case CAPMAIGN_TABS.participants:
       return renderParticipants(props)
-
+    case CAPMAIGN_TABS.statistics:
+      return renderStatistics(props)
+    // TODO ADD ACTIVITY
+    case CAPMAIGN_TABS.activity:
+      return null
     default:
       return null
   }
@@ -35,7 +41,7 @@ function CampaignDashboard(props) {
   } = props
   const query = qs.parse(location.search, { ignoreQueryPrefix: true })
   const campaignId = match.params.campaignId
-  const view = query.view || 'actions'
+  const view = query.view || CAPMAIGN_TABS.actions
   if (!campaignId) return null
   const [campaign, loading, participants] = useCampaign(campaignId)
   const sortedParticipants = participants.sort((a, b) =>
@@ -54,28 +60,28 @@ function CampaignDashboard(props) {
       <TabsSecondary
         list={[
           {
-            to: `?view=actions`,
+            to: `?view=${CAPMAIGN_TABS.actions}`,
             icon: ActionsIconComponent,
             text: formatMessage({ id: 'app.header.menu.actions' }),
-            active: view === 'actions',
+            active: view === CAPMAIGN_TABS.actions,
           },
           {
-            to: `?view=statistics`,
+            to: `?view=${CAPMAIGN_TABS.statistics}`,
             icon: StatisticsIconComponent,
             text: formatMessage({ id: 'app.pages.groups.statistics' }),
-            active: view === 'statistics',
+            active: view === CAPMAIGN_TABS.statistics,
           },
           {
-            to: `?view=participants`,
+            to: `?view=${CAPMAIGN_TABS.participants}`,
             icon: SuggestedIconComponent,
             text: formatMessage({ id: 'app.campaignPage.participants' }),
-            active: view === 'participants',
+            active: view === CAPMAIGN_TABS.participants,
           },
           {
-            to: `?view=activity`,
+            to: `?view=${CAPMAIGN_TABS.activity}`,
             icon: FlagIconComponent,
             text: formatMessage({ id: 'app.pages.groups.activity' }),
-            active: view === 'activity',
+            active: view === CAPMAIGN_TABS.activity,
           },
         ]}
         justify={'center'}
