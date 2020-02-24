@@ -3,17 +3,10 @@ import styled, { css } from 'styled-components'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { Menu, Dropdown } from 'antd'
 import { animateScroll } from 'react-scroll/modules'
-import {
-  StreamApp,
-  StatusUpdateForm,
-  FlatFeed,
-  Activity,
-} from 'react-activity-feed'
 import { compose } from 'redux'
-import { connect } from 'react-redux'
 
 import { BlockContainer } from 'components/Styled'
-import { ActivityFooter, ActivityHeader } from 'components/GetStreamComponents'
+import Feed from 'components/Feed'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
@@ -90,29 +83,7 @@ class NewsPage extends Component {
   }
 
   render() {
-    const {
-      REACT_APP_GETSTREAM_API_KEY,
-      REACT_APP_GETSTREAM_APP_ID,
-    } = process.env
-    const { user } = this.props
     const { range } = this.state
-
-    const flatFeedOptions = {
-      Activity: props => {
-        return (
-          <Activity
-            {...props}
-            Footer={() => {
-              return <ActivityFooter {...props} />
-            }}
-            Header={() => {
-              return <ActivityHeader {...props} />
-            }}
-          />
-        )
-      },
-      notify: true,
-    }
 
     return (
       <PageContainer>
@@ -146,43 +117,32 @@ class NewsPage extends Component {
               </DropdownLink>
             </Dropdown>
           </NewsHeader>
-          <StreamApp
-            apiKey={REACT_APP_GETSTREAM_API_KEY}
-            appId={REACT_APP_GETSTREAM_APP_ID}
-            token={user.feedToken}
-          >
-            <StatusUpdateForm
-              feedGroup="user"
-              modifyActivityData={data => ({
-                ...data,
-                to: ['timeline:world'],
-              })}
+          {range === NEWS_RANGES.ME && (
+            <Feed
+              readFrom={{
+                feedGroup: 'user',
+              }}
             />
-            {range === NEWS_RANGES.ME && (
-              <FlatFeed {...flatFeedOptions} feedGroup="user" />
-            )}
-            {range === NEWS_RANGES.NETWORK && (
-              <FlatFeed {...flatFeedOptions} feedGroup="network" />
-            )}
-            {range === NEWS_RANGES.WORLD && (
-              <FlatFeed
-                {...flatFeedOptions}
-                feedGroup="timeline"
-                userId="world"
-              />
-            )}
-          </StreamApp>
+          )}
+          {range === NEWS_RANGES.NETWORK && (
+            <Feed
+              readFrom={{
+                feedGroup: 'network',
+              }}
+            />
+          )}
+          {range === NEWS_RANGES.WORLD && (
+            <Feed
+              readFrom={{
+                feedGroup: 'timeline',
+                userId: 'world',
+              }}
+            />
+          )}
         </BlockContainer>
       </PageContainer>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user.data,
-})
-
-export default compose(
-  connect(mapStateToProps),
-  injectIntl,
-)(NewsPage)
+export default compose(injectIntl)(NewsPage)
