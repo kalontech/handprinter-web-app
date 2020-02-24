@@ -716,5 +716,7 @@
     "app.campaignPage.completed": "Completed",
     "app.campaignPage.finished": "Finished",
     "app.campaignPage.participants": "Participants",
-    "app.pages.groups.emptyParticipantsList": "No participants found"
+    "app.pages.groups.emptyParticipantsList": "No participants found",
+    "app.campaignPage.todo": "To Do",
+    "app.campaignPage.accomplished": "Accomplished"
 }

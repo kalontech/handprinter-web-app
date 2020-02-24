@@ -1,102 +1,25 @@
 import React, { Fragment } from 'react'
 import qs from 'qs'
-import _ from 'lodash'
 import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
-import { injectIntl, FormattedMessage } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { compose } from 'redux'
 import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import ActionsIconComponent from 'assets/icons/HandIcon'
 import StatisticsIconComponent from 'assets/icons/StatisticsIcon'
 import TabsSecondary from 'components/TabsSecondary'
-import { Link } from 'react-router-dom'
-import { Menu, Row } from 'antd'
-import MemberCard from 'components/MemberCard'
 
 import useCampaign from './useCampaign'
 import Header from './header'
-import { Content, MenuStyled, Column, EmptyList } from './styled'
-import { getUserInitialAvatar } from '../../api'
-
-const AchievementsMOCK = [
-  { id: 1, image: 'https://facebook.github.io/react-native/img/tiny_logo.png' },
-  {
-    id: 2,
-    specialShape: true,
-    image: 'https://facebook.github.io/react-native/img/tiny_logo.png',
-  },
-  { id: 3, image: 'https://facebook.github.io/react-native/img/tiny_logo.png' },
-]
-
-function renderParticipants(props) {
-  const { loading, participants, intl, campaign } = props
-  const selectedKey = _.get(props, 'location.search', '').includes('finished')
-    ? 'finished'
-    : 'participants'
-  const actionsNumberToComplete =
-    campaign.actionsNumberToComplete || campaign.actions.length
-  const participantsFiltered =
-    selectedKey === 'finished'
-      ? participants.filter(
-          i => i.accomplishedActions.length >= actionsNumberToComplete,
-        )
-      : participants
-  return (
-    <Fragment>
-      <MenuStyled
-        mode="horizontal"
-        inlineIndent={0}
-        selectedKeys={[selectedKey]}
-      >
-        <Menu.Item key="participants">
-          <Link to="?view=participants">
-            <FormattedMessage id="app.campaignPage.participants" />
-          </Link>
-        </Menu.Item>
-        <Menu.Item key="finished">
-          <Link to="?view=participants&tab=finished">
-            <FormattedMessage id="app.campaignPage.finished" />
-          </Link>
-        </Menu.Item>
-      </MenuStyled>
-
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Row style={{ flexGrow: '1' }}>
-          {participantsFiltered.map(item => (
-            <Column key={item.user._id} xl={8} lg={12} md={12} xs={24}>
-              <MemberCard
-                to={`/account/${item.user._id}`}
-                fullName={item.user.fullName}
-                photo={
-                  item.user.photo || getUserInitialAvatar(item.user.fullName)
-                }
-                counter={intl.formatMessage(
-                  { id: 'app.pages.groups.actionsTaken' },
-                  { count: item.userInfo.takenActionsCount },
-                )}
-                impacts={{ handprint: item.userInfo.impacts }}
-                achievements={AchievementsMOCK}
-              />
-            </Column>
-          ))}
-          {participantsFiltered.length === 0 && (
-            <EmptyList>
-              {intl.formatMessage({
-                id: 'app.pages.groups.emptyParticipantsList',
-              })}
-            </EmptyList>
-          )}
-        </Row>
-      )}
-    </Fragment>
-  )
-}
+import { Content } from './styled'
+import renderParticipants from './participants'
+import renderActions from './actions'
 
 function renderContent(view, props) {
   switch (view) {
+    case 'actions':
+      return renderActions(props)
     case 'participants':
       return renderParticipants(props)
 
@@ -169,13 +92,6 @@ CampaignDashboard.propTypes = {
   match: Object,
   user: Object,
   intl: Object,
-}
-
-renderParticipants.propTypes = {
-  loading: Boolean,
-  participants: Array,
-  intl: Object,
-  campaign: Object,
 }
 
 const mapStateToProps = state => ({

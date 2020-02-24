@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 
 import { getCampaign } from '../../api/campaigns'
+import { getActions } from '../../api/actions'
 
 export default function useCampaign(campaignId) {
   const [campaign, setCampaign] = useState()
@@ -12,8 +13,17 @@ export default function useCampaign(campaignId) {
       try {
         setLoading(true)
         const res = await getCampaign(campaignId)
-        if (res) {
-          setCampaign(res.campaign)
+        const campaingActionsRes = await getActions({
+          _id: {
+            $in: res.campaign.actions.map(i => i._id),
+          },
+        })
+
+        if (res && campaingActionsRes) {
+          setCampaign({
+            ...res.campaign,
+            actions: campaingActionsRes.actions.docs,
+          })
           setParticipants(res.participants)
         }
       } catch (error) {
