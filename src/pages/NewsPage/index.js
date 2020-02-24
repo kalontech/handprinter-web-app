@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
-import { injectIntl, FormattedMessage, intlShape } from 'react-intl'
+import styled, { css } from 'styled-components'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import { Menu, Dropdown } from 'antd'
 import { animateScroll } from 'react-scroll/modules'
+import { compose } from 'redux'
 
-import Spinner from 'components/Spinner'
-import NewsList from 'components/NewsList'
-import { BlockContainer, DefaultButton } from 'components/Styled'
+import { BlockContainer } from 'components/Styled'
+import Feed from 'components/Feed'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
-import hexToRgba from 'utils/hexToRgba'
-import * as api from 'api/actions'
 
 const NEWS_RANGES = {
   NETWORK: 'network',
@@ -22,9 +20,11 @@ const PageContainer = styled.div`
   background-color: ${colors.lightGray};
   padding: 40px 0;
   flex: 1;
-  ${media.phone`
-    padding-bottom: 50px;
-  `}
+
+  ${media.phone &&
+    css`
+      padding-bottom: 50px;
+    `}
 `
 
 const NewsHeader = styled.div`
@@ -39,34 +39,21 @@ const NewsTitle = styled.h1`
   font-size: 28px;
   margin-bottom: 0;
   line-height: 35px;
-  ${media.phone`
-    display: none;
-  `}
+
+  ${media.phone &&
+    css`
+      display: none;
+    `}
 `
 
 const NewsTitleMob = styled(NewsTitle)`
    display: none;
-    ${media.phone`
-      display: block;
-  `}
-  }
-`
 
-const NewsContainer = styled.div`
-  background-color: ${colors.white};
-  padding: 17px 40px;
-  box-shadow: 0 0 10px ${hexToRgba(colors.dark, 0.08)};
-  border-radius: 4px;
-  ${media.desktop`
-    padding-left: 34px;
-    padding-right: 34px;
-  `}
-  ${media.phone`
-    margin-left: -15px;
-    margin-right: -15px;
-    padding-left: 15px;
-    padding-right: 15px;
-  `}
+    ${media.phone &&
+      css`
+        display: block;
+      `}
+  }
 `
 
 const DropdownLink = styled.a`
@@ -75,75 +62,28 @@ const DropdownLink = styled.a`
   color: ${colors.darkGray};
   display: flex;
   align-items: center;
+
   .anticon {
     color: ${colors.green};
   }
 `
 
-const NewsFooter = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-  ${media.phone`
-    margin-top: 30px;
-    .ant-btn {
-      width: 100%;
-    }
-  `}
-`
-
 class NewsPage extends Component {
   state = {
-    loadingNews: false,
-    news: [],
-    page: 1,
-    range: NEWS_RANGES.WORLD,
+    range: NEWS_RANGES.NETWORK,
   }
 
   componentDidMount() {
     animateScroll.scrollToTop()
-
-    api.sendLastTimeReadNewsAt(Date.now())
-    this.fetchNews()
-  }
-
-  fetchNews = async () => {
-    this.setState({ loadingNews: true })
-    const { news = [] } = await api.getNews({
-      page: this.state.page,
-      range: this.state.range,
-    })
-    this.setState({
-      loadingNews: false,
-      news: [
-        ...this.state.news,
-        ...news.filter(oneNews => {
-          return (
-            oneNews.type === 'USER_DID_ACTION' &&
-            Boolean(oneNews.arguments.user)
-          )
-        }),
-      ],
-    })
-  }
-
-  handleLoadMoreNews = () => {
-    this.setState({ page: this.state.page + 1 }, () => {
-      this.fetchNews()
-    })
   }
 
   handleRangeSelectorSelect = ({ key }) => {
-    this.setState({ news: [], page: 1, range: key }, () => {
-      this.fetchNews()
-    })
+    this.setState({ news: [], page: 1, range: key })
   }
 
   render() {
-    const {
-      intl: { locale },
-    } = this.props
-    const { news, range, loadingNews, page } = this.state
+    const { range } = this.state
+
     return (
       <PageContainer>
         <BlockContainer>
@@ -173,27 +113,25 @@ class NewsPage extends Component {
               </DropdownLink>
             </Dropdown>
           </NewsHeader>
-          <NewsContainer>
-            <NewsList news={news} locale={locale} />
-            {loadingNews && page === 1 && <Spinner />}
-          </NewsContainer>
-          <NewsFooter>
-            <DefaultButton
-              disabled={loadingNews}
-              loading={loadingNews && page > 1}
-              onClick={this.handleLoadMoreNews}
-            >
-              <FormattedMessage id="app.newsPage.loadMoreNews" />
-            </DefaultButton>
-          </NewsFooter>
+          {range === NEWS_RANGES.NETWORK && (
+            <Feed
+              readFrom={{
+                feedGroup: 'network',
+              }}
+            />
+          )}
+          {range === NEWS_RANGES.WORLD && (
+            <Feed
+              readFrom={{
+                feedGroup: 'timeline',
+                userId: 'world',
+              }}
+            />
+          )}
         </BlockContainer>
       </PageContainer>
     )
   }
 }
 
-NewsPage.propTypes = {
-  intl: intlShape.isRequired,
-}
-
-export default injectIntl(NewsPage)
+export default compose(injectIntl)(NewsPage)
