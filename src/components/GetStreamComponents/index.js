@@ -23,30 +23,59 @@ export const ActivityFooter = props => {
   const [isShowComments, setIsShowComments] = useState(false)
 
   return (
-    <Box
-      sx={{
-        p: 3,
-      }}
-    >
-      <Flex>
-        <LikeButton {...props} />
-        <Box p={2} />
-        <CommentButton
-          {...props}
-          filled={isShowComments}
-          onPress={() => {
-            setIsShowComments(value => !value)
-          }}
-        />
-      </Flex>
-      <Box sx={{ display: isShowComments ? 'block' : 'none' }}>
-        <CommentField
-          activity={props.activity}
-          onAddReaction={props.onAddReaction}
-        />
-        <CommentList activityId={props.activity.id} />
+    <>
+      {props.activity.mentions && (
+        <Box sx={{ p: 3 }}>
+          <Text sx={{ fontStyle: 'italic', mb: 1 }}>Mentions:</Text>
+          <Flex sx={{ alignItems: 'center' }}>
+            {props.activity.mentions.map(mention => {
+              return (
+                <Flex
+                  key={mention.foreignId}
+                  sx={{
+                    alignItems: 'center',
+                    borderRadius: '5px',
+                    bg: 'rgb(240, 240, 240)',
+                    mr: 2,
+                    p: 2,
+                  }}
+                >
+                  <Avatar
+                    src={mention.profileImage}
+                    sx={{ height: '30px', mr: 2, width: '30px' }}
+                  />
+                  <Text>{mention.name}</Text>
+                </Flex>
+              )
+            })}
+          </Flex>
+        </Box>
+      )}
+      <Box
+        sx={{
+          p: 3,
+        }}
+      >
+        <Flex>
+          <LikeButton {...props} />
+          <Box p={2} />
+          <CommentButton
+            {...props}
+            filled={isShowComments}
+            onPress={() => {
+              setIsShowComments(value => !value)
+            }}
+          />
+        </Flex>
+        <Box sx={{ display: isShowComments ? 'block' : 'none' }}>
+          <CommentField
+            activity={props.activity}
+            onAddReaction={props.onAddReaction}
+          />
+          <CommentList activityId={props.activity.id} />
+        </Box>
       </Box>
-    </Box>
+    </>
   )
 }
 
