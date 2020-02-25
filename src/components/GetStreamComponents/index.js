@@ -24,7 +24,7 @@ export const ActivityFooter = props => {
 
   return (
     <>
-      {props.activity.mentions && (
+      {props.activity.mentions && props.activity.mentions.length > 0 && (
         <Box sx={{ p: 3 }}>
           <Text sx={{ fontStyle: 'italic', mb: 1 }}>Mentions:</Text>
           <Flex sx={{ alignItems: 'center' }}>
@@ -117,7 +117,7 @@ export const ActivityHeader = props => {
               </Text>
             )}
           </Box>
-          <Box>{createdAt}</Box>
+          <Box sx={{ opacity: 0.5 }}>{createdAt}</Box>
         </Box>
       </Flex>
       <Box>

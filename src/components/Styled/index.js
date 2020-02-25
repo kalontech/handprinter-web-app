@@ -23,6 +23,26 @@ const slideDown = keyframes`
 
 // react-activity-feed
 const raf = css`
+  .raf-button {
+    background-color: #87bd24 !important;
+  }
+
+  .raf-activity {
+    font-family: Noto Sans, sans-serif;
+    font-size: 16px;
+  }
+
+  .raf-textarea {
+    border-radius: 5px 0 0 5px;
+  }
+
+  .raf-comment-field__group {
+    .raf-button {
+      border-radius: 0 5px 5px 0;
+      padding-left: 20px;
+    }
+  }
+
   .raf-panel-header {
     display: none;
   }
