@@ -8,7 +8,6 @@ import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import ActionsIconComponent from 'assets/icons/HandIcon'
 import StatisticsIconComponent from 'assets/icons/StatisticsIcon'
-import TabsSecondary from 'components/TabsSecondary'
 
 import useCampaign from './useCampaign'
 import Header from './header'
@@ -17,6 +16,7 @@ import renderParticipants from './participants'
 import renderActions from './actions'
 import renderStatistics from './statistics'
 import { CAPMAIGN_TABS } from './constants'
+import Tabs from './tabs'
 
 function renderContent(view, props) {
   switch (view) {
@@ -57,7 +57,7 @@ function CampaignDashboard(props) {
         campaign={campaign}
         accomplishedUserActions={accomplishedUserActions}
       />
-      <TabsSecondary
+      <Tabs
         list={[
           {
             to: `?view=${CAPMAIGN_TABS.actions}`,
@@ -84,7 +84,6 @@ function CampaignDashboard(props) {
             active: view === CAPMAIGN_TABS.activity,
           },
         ]}
-        justify={'center'}
       />
       <Content>
         {renderContent(view, { ...props, campaign, loading, participants })}

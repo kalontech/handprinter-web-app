@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { AutoComplete, Select, Col, Menu } from 'antd'
+import { Link } from 'react-router-dom'
 
 import { Pagination } from 'components/Styled'
 import colors from 'config/colors'
@@ -295,4 +296,29 @@ export const AccomplishedActionCount = styled.p`
   font-size: 14px;
   line-height: 20px;
   color: ${colors.dark};
+`
+
+export const TabsContainer = styled.div`
+  height: 50px;
+  width: 100%;
+  background-color: ${colors.dark};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const TabContainer = styled(Link)`
+  display: flex;
+  align-items: center;
+  margin: 0 20px;
+`
+
+export const TabsText = styled.p`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  color: ${props => (props.active ? colors.white : colors.darkGray)};
+  margin-left: 5px;
 `

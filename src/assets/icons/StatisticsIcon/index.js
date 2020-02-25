@@ -26,7 +26,13 @@ const Svg = () => (
       />
     </mask>
     <g mask="url(#mask0)">
-      <rect x="-9.75" y="-9.75" width="37.5" height="37.5" fill="#858F8E" />
+      <rect
+        x="-9.75"
+        y="-9.75"
+        width="37.5"
+        height="37.5"
+        fill="currentColor"
+      />
     </g>
   </svg>
 )
