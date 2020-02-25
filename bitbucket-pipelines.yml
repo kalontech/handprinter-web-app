@@ -12,7 +12,7 @@ definitions:
         name: Test
         script:
           - npm install
-          - npm test
+          # - npm test
     - deploy-docker-image: &deploy-docker-image
         name: Deploy Docker image
         script:
