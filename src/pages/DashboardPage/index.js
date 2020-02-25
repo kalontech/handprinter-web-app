@@ -532,7 +532,9 @@ class DashboardPage extends Component {
       moreAchievesVisible,
     } = this.state
     const {
-      match,
+      match: {
+        params: { personId, subset = 'statistics' },
+      },
       user,
       stats,
       ratio,
@@ -598,13 +600,13 @@ class DashboardPage extends Component {
                 to: '/account/dashboard/statistics',
                 icon: DiscoverIconComponent,
                 text: formatMessage({ id: 'app.pages.groups.statistics' }),
-                active: match.params.subset === 'statistics',
+                active: subset === 'statistics',
               },
               {
                 to: '/account/dashboard/activity',
                 icon: FlagIconComponent,
                 text: formatMessage({ id: 'app.pages.groups.activity' }),
-                active: match.params.subset === 'activity',
+                active: subset === 'activity',
               },
             ]}
             justify={'center'}
@@ -648,7 +650,7 @@ class DashboardPage extends Component {
             </AdminsSectionWraper>
           )}
         </DashboardHeader>
-        {match.params.subset === 'statistics' && (
+        {subset === 'statistics' && (
           <WidgetBlockContainer
             blur={error && error.code === PERMISSION_DENIED_CODE}
           >
@@ -824,7 +826,7 @@ class DashboardPage extends Component {
               </GoodRatioCol>
             </Row>
 
-            {!match.params.personId && stats.network && (
+            {!personId && stats.network && (
               <Row gutter={20} style={{ marginTop: '20px' }}>
                 <Col span={24}>
                   <WidgetContainer>
@@ -915,7 +917,7 @@ class DashboardPage extends Component {
             )}
           </WidgetBlockContainer>
         )}
-        {match.params.subset === 'activity' && <UserDashboardActivity />}
+        {subset === 'activity' && <UserDashboardActivity />}
       </Fragment>
     )
   }
