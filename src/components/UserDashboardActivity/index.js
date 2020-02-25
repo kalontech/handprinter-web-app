@@ -68,7 +68,7 @@ const DropdownLink = styled.a`
   }
 `
 
-class NewsPage extends Component {
+class UserDashboardActivity extends Component {
   state = {
     range: NEWS_RANGES.NETWORK,
   }
@@ -134,4 +134,4 @@ class NewsPage extends Component {
   }
 }
 
-export default compose(injectIntl)(NewsPage)
+export default compose(injectIntl)(UserDashboardActivity)

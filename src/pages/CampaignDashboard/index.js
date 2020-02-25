@@ -15,7 +15,7 @@ import Header from './header'
 import { Content } from './styled'
 import renderParticipants from './participants'
 import renderActions from './actions'
-import renderStatistics from './statistics'
+// import renderStatistics from './statistics'
 import { CAPMAIGN_TABS } from './constants'
 
 function renderContent(view, props) {
@@ -24,8 +24,8 @@ function renderContent(view, props) {
       return renderActions(props)
     case CAPMAIGN_TABS.participants:
       return renderParticipants(props)
-    case CAPMAIGN_TABS.statistics:
-      return renderStatistics(props)
+    // case CAPMAIGN_TABS.statistics:
+    //   return renderStatistics(props)
     // TODO ADD ACTIVITY
     case CAPMAIGN_TABS.activity:
       return null
