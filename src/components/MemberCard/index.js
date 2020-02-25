@@ -7,6 +7,8 @@ import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 
+import { Progress } from 'antd'
+
 import {
   Achievements,
   AchievementSmall,
@@ -22,6 +24,7 @@ const Block = styled(Link)`
   background-color: ${colors.white};
   box-shadow: 0 1px 10px rgba(52, 68, 66, 0.08);
   border-radius: 4px;
+  margin-bottom: 20px;
 
   ${media.phone`
     min-width: 290px;
@@ -82,6 +85,10 @@ const Counter = styled.span`
   color: ${colors.darkGray};
 `
 
+const ProgressStyled = styled(Progress)`
+  width: 330px;
+`
+
 export default class MemberCard extends React.PureComponent {
   static displayName = 'MemberCard'
 
@@ -91,7 +98,8 @@ export default class MemberCard extends React.PureComponent {
     photo: PropTypes.string,
     impacts: PropTypes.object,
     counter: PropTypes.string,
-    achievements: Array,
+    achievements: PropTypes.array,
+    progressBarPercent: PropTypes.number,
   }
 
   static defaultProps = {
@@ -106,7 +114,15 @@ export default class MemberCard extends React.PureComponent {
   }
 
   render() {
-    const { to, photo, fullName, impacts, counter, achievements } = this.props
+    const {
+      to,
+      photo,
+      fullName,
+      impacts,
+      counter,
+      achievements,
+      progressBarPercent,
+    } = this.props
 
     return (
       <Block to={to}>
@@ -127,6 +143,14 @@ export default class MemberCard extends React.PureComponent {
                   </AchievementSmall>
                 ))}
               </Achievements>
+            )}
+            {!!progressBarPercent && (
+              <ProgressStyled
+                percent={progressBarPercent}
+                showInfo={false}
+                strokeColor={colors.green}
+                strokeWidth={4}
+              />
             )}
           </Info>
         </User>

@@ -96,6 +96,7 @@ const Caption = styled.div`
 `
 const Value = styled.div`
   font-weight: 400;
+  font-size: 14px;
   color: ${colors.dark};
 `
 
