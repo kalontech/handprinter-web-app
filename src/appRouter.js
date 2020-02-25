@@ -20,7 +20,6 @@ import FaqPage from './pages/FaqPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import MeasurementUnitsPage from './pages/MeasurementUnitsPage'
-import NewsPage from './pages/NewsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import OurVisionPage from './pages/OurVisionPage'
 import RegisterPage from './pages/RegisterPage'
@@ -97,7 +96,7 @@ const AppRouter = () => {
             withoutHeaderContent
           />
           <Route
-            path="/account/dashboard"
+            path="/account/dashboard/:subset?"
             component={DashboardPage}
             requireAuthentication
             withoutCTA
@@ -140,12 +139,6 @@ const AppRouter = () => {
             path="/pages/privacy-policy"
             component={PrivacyPolicyTermsPages}
             useAuthentication
-            withoutCTA
-          />
-          <Route
-            path="/account/news"
-            component={NewsPage}
-            requireAuthentication
             withoutCTA
           />
           {!brandedConfig && (

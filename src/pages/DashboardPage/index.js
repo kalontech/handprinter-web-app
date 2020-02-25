@@ -40,6 +40,8 @@ import { PROFILE_PHOTO_WEIGHT_LIMIT, ACCEPT_IMAGE_FORMATS } from 'config/files'
 
 import { convertBytesToMegabytes } from 'utils/file'
 
+import UserDashboardActivity from 'components/UserDashboardActivity'
+
 import Header from './header'
 
 const WidgetContainer = styled.div`
@@ -530,7 +532,9 @@ class DashboardPage extends Component {
       moreAchievesVisible,
     } = this.state
     const {
-      match,
+      match: {
+        params: { personId, subset = 'statistics' },
+      },
       user,
       stats,
       ratio,
@@ -593,16 +597,16 @@ class DashboardPage extends Component {
           <TabsSecondary
             list={[
               {
-                to: `${history.location.pathname}${history.location.search}`,
+                to: '/account/dashboard/statistics',
                 icon: DiscoverIconComponent,
                 text: formatMessage({ id: 'app.pages.groups.statistics' }),
-                active: true,
+                active: subset === 'statistics',
               },
               {
-                to: `${history.location.pathname}${history.location.search}`,
+                to: '/account/dashboard/activity',
                 icon: FlagIconComponent,
                 text: formatMessage({ id: 'app.pages.groups.activity' }),
-                active: false,
+                active: subset === 'activity',
               },
             ]}
             justify={'center'}
@@ -646,261 +650,274 @@ class DashboardPage extends Component {
             </AdminsSectionWraper>
           )}
         </DashboardHeader>
-        <WidgetBlockContainer
-          blur={error && error.code === PERMISSION_DENIED_CODE}
-        >
-          <Row gutter={20}>
-            <Col span={24}>
-              <WidgetContainer noPaddings>
-                <WidgetContent>
-                  <ImpactCategorySelector
-                    defaultActiveKey={currentImpactCategory}
-                    onChange={this.handleImpactCategoryChange}
-                  >
-                    <Tabs.TabPane
-                      tab={
-                        <span>
-                          <StyledIcon
-                            component={() => icons['positive']['climate']}
-                          />
-                          <ImpactCategorySelectorName>
-                            <FormattedMessage id="app.impactCategories.climate" />
-                          </ImpactCategorySelectorName>
-                        </span>
-                      }
-                      key="climate"
-                    />
-                    <Tabs.TabPane
-                      tab={
-                        <span>
-                          <StyledIcon
-                            component={() => icons['positive']['waste']}
-                          />
-                          <ImpactCategorySelectorName>
-                            <FormattedMessage id="app.impactCategories.waste" />
-                          </ImpactCategorySelectorName>
-                        </span>
-                      }
-                      key="waste"
-                    />
-                    <Tabs.TabPane
-                      tab={
-                        <span>
-                          <StyledIcon
-                            component={() => icons['positive']['water']}
-                          />
-                          <ImpactCategorySelectorName>
-                            <FormattedMessage id="app.impactCategories.water" />
-                          </ImpactCategorySelectorName>
-                        </span>
-                      }
-                      key="water"
-                    />
-                    <Tabs.TabPane
-                      tab={
-                        <span>
-                          <StyledIcon
-                            component={() => icons['positive']['ecosystem']}
-                          />
-                          <ImpactCategorySelectorName>
-                            <FormattedMessage id="app.impactCategories.ecosystem" />
-                          </ImpactCategorySelectorName>
-                        </span>
-                      }
-                      key="ecosystem"
-                    />
-                    <Tabs.TabPane
-                      tab={
-                        <span>
-                          <StyledIcon
-                            component={() => icons['positive']['health']}
-                          />
-                          <ImpactCategorySelectorName>
-                            <FormattedMessage id="app.impactCategories.health" />
-                          </ImpactCategorySelectorName>
-                        </span>
-                      }
-                      key="health"
-                    />
-                  </ImpactCategorySelector>
-                </WidgetContent>
-              </WidgetContainer>
-            </Col>
-          </Row>
-          <Row gutter={20} style={{ marginTop: '20px' }}>
-            <Col span={12} sm={24} lg={12} xs={24}>
-              <WidgetContainer>
-                <WidgetHeader>
-                  <WidgetTitle>
-                    <FormattedMessage
-                      id={
-                        organization
-                          ? 'app.dashboardPage.organizationNetPositiveDays'
-                          : 'app.dashboardPage.myNetPositiveDays'
-                      }
-                    />
-                    <InfoElementWrap>
-                      <InfoElement
-                        type={INFO_ELEMENT_TYPES.QUESTION}
-                        tooltipProps={{
-                          placement: 'bottomLeft',
-                          title: (
-                            <Fragment>
-                              <p>
-                                <FormattedMessage id="app.dashboardPage.myNetPositiveDays.infoTooltip" />
-                              </p>
-                              <div>
-                                <InfoElementLink
-                                  to={`/pages/faq#${
-                                    QUESTIONS_ANCHOR.WHAT_CALENDAR_SHOWING
-                                  }`}
-                                >
-                                  <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
-                                </InfoElementLink>
-                              </div>
-                            </Fragment>
-                          ),
-                        }}
-                      />
-                    </InfoElementWrap>
-                  </WidgetTitle>
-                </WidgetHeader>
-                <WidgetContent useWidgetMinHeight>
-                  {!!calendar && (
-                    <CalendarWidget
-                      activeDays={calendar[currentImpactCategory]}
-                    />
-                  )}
-                </WidgetContent>
-              </WidgetContainer>
-            </Col>
-            <GoodRatioCol span={12} sm={24} lg={12} xs={24}>
-              <WidgetContainer>
-                <WidgetHeader>
-                  <WidgetTitle>
-                    <FormattedMessage id="app.dashboardPage.goodRatio" />
-                    <InfoElementWrap>
-                      <InfoElement
-                        type={INFO_ELEMENT_TYPES.QUESTION}
-                        tooltipProps={{
-                          placement: 'bottomLeft',
-                          title: (
-                            <Fragment>
-                              <p>
-                                <FormattedMessage id="app.dashboardPage.goodRatio.infoTooltip" />
-                              </p>
-                              <div>
-                                <InfoElementLink
-                                  to={`/pages/faq#${
-                                    QUESTIONS_ANCHOR.WHAT_SCALE_SHOWING
-                                  }`}
-                                >
-                                  <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
-                                </InfoElementLink>
-                              </div>
-                            </Fragment>
-                          ),
-                        }}
-                      />
-                    </InfoElementWrap>
-                  </WidgetTitle>
-                </WidgetHeader>
-                <WidgetContent useWidgetMinHeight>
-                  {!!ratio && (
-                    <GoodRatioWidget
-                      footprintDays={Math.round(
-                        ratio.footprintDays[currentImpactCategory],
-                      )}
-                      handprintDays={Math.round(
-                        ratio.handprintDays[currentImpactCategory],
-                      )}
-                    />
-                  )}
-                </WidgetContent>
-              </WidgetContainer>
-            </GoodRatioCol>
-          </Row>
-
-          {!match.params.personId && stats.network && (
-            <Row gutter={20} style={{ marginTop: '20px' }}>
+        {subset === 'statistics' && (
+          <WidgetBlockContainer
+            blur={error && error.code === PERMISSION_DENIED_CODE}
+          >
+            <Row gutter={20}>
               <Col span={24}>
-                <WidgetContainer>
-                  <WidgetHeader withBorder>
-                    <Row type="flex">
-                      <Col span={16} sm={24} lg={11} xs={24}>
-                        <WidgetTitle>
-                          <FormattedMessage
-                            id={
-                              organization
-                                ? 'app.dashboardPage.organizationNetwork'
-                                : 'app.dashboardPage.myNetwork'
-                            }
-                          />
-                          <InfoElementWrap>
-                            <InfoElement
-                              type={INFO_ELEMENT_TYPES.QUESTION}
-                              tooltipProps={{
-                                placement: 'bottomLeft',
-                                title: (
-                                  <Fragment>
-                                    <p>
-                                      <FormattedMessage id="app.dashboardPage.myNetwork.infoTooltip" />
-                                    </p>
-                                    <div>
-                                      <InfoElementLink
-                                        to={`/pages/faq#${
-                                          QUESTIONS_ANCHOR.WHAT_NETWORK_SHOWING
-                                        }`}
-                                      >
-                                        <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
-                                      </InfoElementLink>
-                                    </div>
-                                  </Fragment>
-                                ),
-                              }}
-                            />
-                          </InfoElementWrap>
-                        </WidgetTitle>
-                        <WidgetDescription>
-                          <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
-                        </WidgetDescription>
-                      </Col>
-                      <MyNetworkCol span={8} sm={24} lg={13} xs={24}>
-                        <Row>
-                          <HeaderUserInfoRowCol
-                            span={8}
-                            lg={8}
-                            sm={24}
-                            xs={24}
-                          />
-                          <HeaderUserInfoRowCol span={8} lg={8} sm={24} xs={24}>
-                            <DashboardHeaderUserName>
-                              {stats.network.networkUsers}
-                            </DashboardHeaderUserName>
-                            <DashboardHeaderUserSince>
-                              <FormattedMessage id="app.dashboardPage.usersInvited" />
-                            </DashboardHeaderUserSince>
-                          </HeaderUserInfoRowCol>
-                          <HeaderUserInfoRowCol span={8} lg={8} sm={24} xs={24}>
-                            <DashboardHeaderUserName>
-                              {stats.network.actionsTaken}
-                            </DashboardHeaderUserName>
-                            <DashboardHeaderUserSince>
-                              <FormattedMessage id="app.dashboardPage.actionsTaken" />
-                            </DashboardHeaderUserSince>
-                          </HeaderUserInfoRowCol>
-                        </Row>
-                      </MyNetworkCol>
-                    </Row>
-                  </WidgetHeader>
+                <WidgetContainer noPaddings>
                   <WidgetContent>
-                    <NetworkWidget data={{ ...network, expanded: true }} />
+                    <ImpactCategorySelector
+                      defaultActiveKey={currentImpactCategory}
+                      onChange={this.handleImpactCategoryChange}
+                    >
+                      <Tabs.TabPane
+                        tab={
+                          <span>
+                            <StyledIcon
+                              component={() => icons['positive']['climate']}
+                            />
+                            <ImpactCategorySelectorName>
+                              <FormattedMessage id="app.impactCategories.climate" />
+                            </ImpactCategorySelectorName>
+                          </span>
+                        }
+                        key="climate"
+                      />
+                      <Tabs.TabPane
+                        tab={
+                          <span>
+                            <StyledIcon
+                              component={() => icons['positive']['waste']}
+                            />
+                            <ImpactCategorySelectorName>
+                              <FormattedMessage id="app.impactCategories.waste" />
+                            </ImpactCategorySelectorName>
+                          </span>
+                        }
+                        key="waste"
+                      />
+                      <Tabs.TabPane
+                        tab={
+                          <span>
+                            <StyledIcon
+                              component={() => icons['positive']['water']}
+                            />
+                            <ImpactCategorySelectorName>
+                              <FormattedMessage id="app.impactCategories.water" />
+                            </ImpactCategorySelectorName>
+                          </span>
+                        }
+                        key="water"
+                      />
+                      <Tabs.TabPane
+                        tab={
+                          <span>
+                            <StyledIcon
+                              component={() => icons['positive']['ecosystem']}
+                            />
+                            <ImpactCategorySelectorName>
+                              <FormattedMessage id="app.impactCategories.ecosystem" />
+                            </ImpactCategorySelectorName>
+                          </span>
+                        }
+                        key="ecosystem"
+                      />
+                      <Tabs.TabPane
+                        tab={
+                          <span>
+                            <StyledIcon
+                              component={() => icons['positive']['health']}
+                            />
+                            <ImpactCategorySelectorName>
+                              <FormattedMessage id="app.impactCategories.health" />
+                            </ImpactCategorySelectorName>
+                          </span>
+                        }
+                        key="health"
+                      />
+                    </ImpactCategorySelector>
                   </WidgetContent>
                 </WidgetContainer>
               </Col>
             </Row>
-          )}
-        </WidgetBlockContainer>
+            <Row gutter={20} style={{ marginTop: '20px' }}>
+              <Col span={12} sm={24} lg={12} xs={24}>
+                <WidgetContainer>
+                  <WidgetHeader>
+                    <WidgetTitle>
+                      <FormattedMessage
+                        id={
+                          organization
+                            ? 'app.dashboardPage.organizationNetPositiveDays'
+                            : 'app.dashboardPage.myNetPositiveDays'
+                        }
+                      />
+                      <InfoElementWrap>
+                        <InfoElement
+                          type={INFO_ELEMENT_TYPES.QUESTION}
+                          tooltipProps={{
+                            placement: 'bottomLeft',
+                            title: (
+                              <Fragment>
+                                <p>
+                                  <FormattedMessage id="app.dashboardPage.myNetPositiveDays.infoTooltip" />
+                                </p>
+                                <div>
+                                  <InfoElementLink
+                                    to={`/pages/faq#${
+                                      QUESTIONS_ANCHOR.WHAT_CALENDAR_SHOWING
+                                    }`}
+                                  >
+                                    <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
+                                  </InfoElementLink>
+                                </div>
+                              </Fragment>
+                            ),
+                          }}
+                        />
+                      </InfoElementWrap>
+                    </WidgetTitle>
+                  </WidgetHeader>
+                  <WidgetContent useWidgetMinHeight>
+                    {!!calendar && (
+                      <CalendarWidget
+                        activeDays={calendar[currentImpactCategory]}
+                      />
+                    )}
+                  </WidgetContent>
+                </WidgetContainer>
+              </Col>
+              <GoodRatioCol span={12} sm={24} lg={12} xs={24}>
+                <WidgetContainer>
+                  <WidgetHeader>
+                    <WidgetTitle>
+                      <FormattedMessage id="app.dashboardPage.goodRatio" />
+                      <InfoElementWrap>
+                        <InfoElement
+                          type={INFO_ELEMENT_TYPES.QUESTION}
+                          tooltipProps={{
+                            placement: 'bottomLeft',
+                            title: (
+                              <Fragment>
+                                <p>
+                                  <FormattedMessage id="app.dashboardPage.goodRatio.infoTooltip" />
+                                </p>
+                                <div>
+                                  <InfoElementLink
+                                    to={`/pages/faq#${
+                                      QUESTIONS_ANCHOR.WHAT_SCALE_SHOWING
+                                    }`}
+                                  >
+                                    <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
+                                  </InfoElementLink>
+                                </div>
+                              </Fragment>
+                            ),
+                          }}
+                        />
+                      </InfoElementWrap>
+                    </WidgetTitle>
+                  </WidgetHeader>
+                  <WidgetContent useWidgetMinHeight>
+                    {!!ratio && (
+                      <GoodRatioWidget
+                        footprintDays={Math.round(
+                          ratio.footprintDays[currentImpactCategory],
+                        )}
+                        handprintDays={Math.round(
+                          ratio.handprintDays[currentImpactCategory],
+                        )}
+                      />
+                    )}
+                  </WidgetContent>
+                </WidgetContainer>
+              </GoodRatioCol>
+            </Row>
+
+            {!personId && stats.network && (
+              <Row gutter={20} style={{ marginTop: '20px' }}>
+                <Col span={24}>
+                  <WidgetContainer>
+                    <WidgetHeader withBorder>
+                      <Row type="flex">
+                        <Col span={16} sm={24} lg={11} xs={24}>
+                          <WidgetTitle>
+                            <FormattedMessage
+                              id={
+                                organization
+                                  ? 'app.dashboardPage.organizationNetwork'
+                                  : 'app.dashboardPage.myNetwork'
+                              }
+                            />
+                            <InfoElementWrap>
+                              <InfoElement
+                                type={INFO_ELEMENT_TYPES.QUESTION}
+                                tooltipProps={{
+                                  placement: 'bottomLeft',
+                                  title: (
+                                    <Fragment>
+                                      <p>
+                                        <FormattedMessage id="app.dashboardPage.myNetwork.infoTooltip" />
+                                      </p>
+                                      <div>
+                                        <InfoElementLink
+                                          to={`/pages/faq#${
+                                            QUESTIONS_ANCHOR.WHAT_NETWORK_SHOWING
+                                          }`}
+                                        >
+                                          <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
+                                        </InfoElementLink>
+                                      </div>
+                                    </Fragment>
+                                  ),
+                                }}
+                              />
+                            </InfoElementWrap>
+                          </WidgetTitle>
+                          <WidgetDescription>
+                            <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
+                          </WidgetDescription>
+                        </Col>
+                        <MyNetworkCol span={8} sm={24} lg={13} xs={24}>
+                          <Row>
+                            <HeaderUserInfoRowCol
+                              span={8}
+                              lg={8}
+                              sm={24}
+                              xs={24}
+                            />
+                            <HeaderUserInfoRowCol
+                              span={8}
+                              lg={8}
+                              sm={24}
+                              xs={24}
+                            >
+                              <DashboardHeaderUserName>
+                                {stats.network.networkUsers}
+                              </DashboardHeaderUserName>
+                              <DashboardHeaderUserSince>
+                                <FormattedMessage id="app.dashboardPage.usersInvited" />
+                              </DashboardHeaderUserSince>
+                            </HeaderUserInfoRowCol>
+                            <HeaderUserInfoRowCol
+                              span={8}
+                              lg={8}
+                              sm={24}
+                              xs={24}
+                            >
+                              <DashboardHeaderUserName>
+                                {stats.network.actionsTaken}
+                              </DashboardHeaderUserName>
+                              <DashboardHeaderUserSince>
+                                <FormattedMessage id="app.dashboardPage.actionsTaken" />
+                              </DashboardHeaderUserSince>
+                            </HeaderUserInfoRowCol>
+                          </Row>
+                        </MyNetworkCol>
+                      </Row>
+                    </WidgetHeader>
+                    <WidgetContent>
+                      <NetworkWidget data={{ ...network, expanded: true }} />
+                    </WidgetContent>
+                  </WidgetContainer>
+                </Col>
+              </Row>
+            )}
+          </WidgetBlockContainer>
+        )}
+        {subset === 'activity' && <UserDashboardActivity />}
       </Fragment>
     )
   }

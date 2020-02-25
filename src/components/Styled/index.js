@@ -1,5 +1,5 @@
 import * as Ant from 'antd'
-import styled, { createGlobalStyle, keyframes } from 'styled-components'
+import styled, { createGlobalStyle, keyframes, css } from 'styled-components'
 
 import hexToRgba from 'utils/hexToRgba'
 import arrowDownIcon from 'assets/icons/arrowDown.svg'
@@ -18,6 +18,47 @@ const slideDown = keyframes`
   }
   to {
     transform:translate3d(0,0,0);
+  }
+`
+
+// react-activity-feed
+const raf = css`
+  .raf-button {
+    background-color: #87bd24 !important;
+  }
+
+  .raf-activity {
+    font-family: Noto Sans, sans-serif;
+    font-size: 16px;
+  }
+
+  .raf-textarea {
+    border-radius: 5px 0 0 5px;
+  }
+
+  .raf-comment-field__group {
+    .raf-button {
+      border-radius: 0 5px 5px 0;
+      padding-left: 20px;
+    }
+  }
+
+  .raf-panel-header {
+    display: none;
+  }
+
+  .raf-panel-content {
+    padding: 16px;
+  }
+
+  .raf-panel-footer {
+    padding: 0 16px 16px 18px;
+  }
+
+  .status-update-form--expanded {
+    .raf-panel-footer {
+      margin-top: 83px;
+    }
   }
 `
 
@@ -865,6 +906,8 @@ export const GlobalStyle = createGlobalStyle`
       }
     }
   }
+
+  ${raf}
 `
 
 export const Input = styled(Ant.Input)`
