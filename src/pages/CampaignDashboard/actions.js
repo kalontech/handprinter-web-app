@@ -39,10 +39,10 @@ export default function renderActions(props) {
     history,
   } = props
   const selectedKey = _.get(props, 'location.search', '').includes(
-    ACTIONS_TABS.TODO,
+    ACTIONS_TABS.ACCOMPLISHED,
   )
-    ? ACTIONS_TABS.TODO
-    : ACTIONS_TABS.ACCOMPLISHED
+    ? ACTIONS_TABS.ACCOMPLISHED
+    : ACTIONS_TABS.TODO
 
   const filteredActions = getActions(props, selectedKey)
 
@@ -54,12 +54,12 @@ export default function renderActions(props) {
         selectedKeys={[selectedKey]}
       >
         <Menu.Item key={ACTIONS_TABS.TODO}>
-          <Link to={`?view=actions&tab=${ACTIONS_TABS.TODO}`}>
+          <Link to={`?view=actions`}>
             <FormattedMessage id="app.campaignPage.todo" />
           </Link>
         </Menu.Item>
         <Menu.Item key={ACTIONS_TABS.ACCOMPLISHED}>
-          <Link to={`?view=actions`}>
+          <Link to={`?view=actions&tab=${ACTIONS_TABS.ACCOMPLISHED}`}>
             <FormattedMessage id="app.campaignPage.accomplished" />
           </Link>
         </Menu.Item>

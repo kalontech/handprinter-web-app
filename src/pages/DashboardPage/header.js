@@ -301,9 +301,22 @@ const Header = props => {
       {!organization && (
         <Achievements>
           {AchievementsMOCK.slice(0, 5).map(i => (
-            <Achievement specialShape={i.specialShape} key={i.id}>
-              <img alt={''} src={i.image} />
-            </Achievement>
+            <AchievementPopover
+              key={i.id}
+              overlayClassName={'achievements-popover'}
+              content={
+                <PopoverWrapper>
+                  <PopoverTitle>Christmas campaign</PopoverTitle>
+                  <PopoverText>
+                    3 of 6 actions accomplished 7 days left
+                  </PopoverText>
+                </PopoverWrapper>
+              }
+            >
+              <Achievement specialShape={i.specialShape}>
+                <img alt={''} src={i.image} />
+              </Achievement>
+            </AchievementPopover>
           ))}
           {AchievementsMOCK.length > 5 && (
             <Achievement onClick={() => setMoreAchievesVisible(true)} other>

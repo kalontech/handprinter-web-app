@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { AutoComplete, Select, Col, Menu } from 'antd'
+import { AutoComplete, Select, Col, Menu, Breadcrumb } from 'antd'
 import { Link } from 'react-router-dom'
 
 import { Pagination } from 'components/Styled'
@@ -321,4 +321,24 @@ export const TabsText = styled.p`
   line-height: 28px;
   color: ${props => (props.active ? colors.white : colors.darkGray)};
   margin-left: 5px;
+`
+
+export const BreadcrumbStyled = styled(Breadcrumb)`
+  height: 50px;
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  margin-left: 130px;
+  .ant-breadcrumb-separator {
+    color: ${colors.green};
+  }
+`
+
+export const BreadcrumbItem = styled(Breadcrumb.Item)`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  color: ${colors.dark};
 `

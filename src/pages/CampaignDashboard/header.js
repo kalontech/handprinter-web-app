@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { compose } from 'redux'
+import colors from 'config/colors'
 
 import {
   HeaderCamapingDescription,
@@ -9,6 +10,8 @@ import {
   CampaignStatus,
   DashboardHeaderUserName,
   Banner,
+  BreadcrumbStyled,
+  BreadcrumbItem,
 } from './styled'
 import {
   DashboardHeaderWhiteLine,
@@ -37,6 +40,21 @@ const Header = props => {
   )
   return (
     <DashboardHeaderWhiteLine organization>
+      <BreadcrumbStyled separator=">">
+        <BreadcrumbItem
+          style={{ color: colors.green }}
+          href="/challenges/campaigns"
+        >
+          <FormattedMessage id="app.pages.challenges" />
+        </BreadcrumbItem>
+        <BreadcrumbItem
+          style={{ color: colors.green }}
+          href="/challenges/campaigns"
+        >
+          <FormattedMessage id="app.actionsPage.tabs.campaigns" />
+        </BreadcrumbItem>
+        <BreadcrumbItem>{name}</BreadcrumbItem>
+      </BreadcrumbStyled>
       <Banner src={campaign.banner.src} />
       <DashboardHeaderUserPictureWrap>
         <DashboardHeaderUserPicture src={campaign.logo.src} />
