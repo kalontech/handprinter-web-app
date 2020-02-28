@@ -81,7 +81,9 @@ const Feed = ({ readFrom = {}, user = {}, writeTo = {} }) => {
     >
       <div
         className={
-          isStatusUpdateFormExpanded ? 'status-update-form--expanded' : ''
+          isStatusUpdateFormExpanded || attachActionFormExpanded
+            ? 'status-update-form--expanded'
+            : ''
         }
       >
         <StatusUpdateForm
