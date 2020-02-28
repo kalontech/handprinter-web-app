@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Col, Row, Popover } from 'antd'
 import moment from 'moment'
 import { FormattedMessage } from 'react-intl'
-
+import _ from 'lodash'
 import media from 'utils/mediaQueryTemplate'
 import colors from 'config/colors'
 
@@ -250,18 +250,6 @@ const PopoverText = styled.text`
 
 const AchievementPopover = styled(Popover)``
 
-const AchievementsMOCK = [
-  { id: 1, image: 'https://facebook.github.io/react-native/img/tiny_logo.png' },
-  {
-    id: 2,
-    specialShape: true,
-    image: 'https://facebook.github.io/react-native/img/tiny_logo.png',
-  },
-  { id: 3, image: 'https://facebook.github.io/react-native/img/tiny_logo.png' },
-  { id: 4, image: 'https://facebook.github.io/react-native/img/tiny_logo.png' },
-  { id: 5, image: 'https://facebook.github.io/react-native/img/tiny_logo.png' },
-  { id: 6, image: 'https://facebook.github.io/react-native/img/tiny_logo.png' },
-]
 const Header = props => {
   const {
     organization,
@@ -273,8 +261,9 @@ const Header = props => {
     externalHandprint,
     moreAchievesVisible,
     setMoreAchievesVisible,
+    formatMessage,
   } = props
-
+  const finishedCampaigns = user.finishedCampaigns || []
   return (
     <DashboardHeaderWhiteLine organization={organization}>
       <DashboardHeaderUserPictureWrap>
@@ -300,28 +289,41 @@ const Header = props => {
       </DashboardHeaderUserSince>
       {!organization && (
         <Achievements>
-          {AchievementsMOCK.slice(0, 5).map(i => (
-            <AchievementPopover
-              key={i.id}
-              overlayClassName={'achievements-popover'}
-              content={
-                <PopoverWrapper>
-                  <PopoverTitle>Christmas campaign</PopoverTitle>
-                  <PopoverText>
-                    3 of 6 actions accomplished 7 days left
-                  </PopoverText>
-                </PopoverWrapper>
-              }
-            >
-              <Achievement specialShape={i.specialShape}>
-                <img alt={''} src={i.image} />
-              </Achievement>
-            </AchievementPopover>
-          ))}
-          {AchievementsMOCK.length > 5 && (
+          {finishedCampaigns.slice(0, 5).map(i => {
+            const campaign = i.campaign
+            if (!campaign) return null
+            const accomplished = i.accomplishedActions
+              ? i.accomplishedActions.length
+              : 0
+            const total = _.get(campaign, 'actions.length', 0)
+            const accomplishedLabel = formatMessage(
+              { id: 'app.campaignPage.progress.accomplished' },
+              {
+                accomplished: accomplished,
+                total,
+              },
+            )
+            return (
+              <AchievementPopover
+                key={i.id}
+                overlayClassName={'achievements-popover'}
+                content={
+                  <PopoverWrapper>
+                    <PopoverTitle>{_.get(i, 'campaign.name')}</PopoverTitle>
+                    <PopoverText>{accomplishedLabel}</PopoverText>
+                  </PopoverWrapper>
+                }
+              >
+                <Achievement specialShape={i.specialShape}>
+                  <img alt={''} src={_.get(i, 'campaign.logo.src')} />
+                </Achievement>
+              </AchievementPopover>
+            )
+          })}
+          {finishedCampaigns.length > 5 && (
             <Achievement onClick={() => setMoreAchievesVisible(true)} other>
               <OtherAchievementsText>
-                +{AchievementsMOCK.length - 5}
+                +{finishedCampaigns.length - 5}
               </OtherAchievementsText>
             </Achievement>
           )}
@@ -419,25 +421,40 @@ const Header = props => {
       >
         <ModalContent>
           <AchievementRow type="flex" justify="left">
-            {AchievementsMOCK.map(i => (
-              <AchievementCol key={i.id} span={6}>
-                <AchievementPopover
-                  overlayClassName={'achievements-popover'}
-                  content={
-                    <PopoverWrapper>
-                      <PopoverTitle>Christmas campaign</PopoverTitle>
-                      <PopoverText>
-                        3 of 6 actions accomplished 7 days left
-                      </PopoverText>
-                    </PopoverWrapper>
-                  }
-                >
-                  <Achievement specialShape={i.specialShape}>
-                    <img alt={''} src={i.image} />
-                  </Achievement>
-                </AchievementPopover>
-              </AchievementCol>
-            ))}
+            {finishedCampaigns.map(i => {
+              const campaign = i.campaign
+              if (!campaign) return null
+              const accomplished = i.accomplishedActions
+                ? i.accomplishedActions.length
+                : 0
+              const total = _.get(campaign, 'actions.length', 0)
+              const accomplishedLabel = formatMessage(
+                { id: 'app.campaignPage.progress.accomplished' },
+                {
+                  accomplished: accomplished,
+                  total,
+                },
+              )
+              return (
+                <AchievementCol key={i.id} span={6}>
+                  <AchievementPopover
+                    overlayClassName={'achievements-popover'}
+                    content={
+                      <PopoverWrapper>
+                        <PopoverTitle>
+                          {!!i.campaign && i.campaign.name}
+                        </PopoverTitle>
+                        <PopoverText>{accomplishedLabel}</PopoverText>
+                      </PopoverWrapper>
+                    }
+                  >
+                    <Achievement specialShape={i.specialShape}>
+                      <img alt={''} src={_.get(i, 'campaign.logo.src')} />
+                    </Achievement>
+                  </AchievementPopover>
+                </AchievementCol>
+              )
+            })}
           </AchievementRow>
         </ModalContent>
       </AchievementModal>
@@ -457,6 +474,7 @@ Header.propTypes = {
   externalHandprint: Number,
   moreAchievesVisible: Boolean,
   setMoreAchievesVisible: Function,
+  formatMessage: Function,
 }
 
 export default Header

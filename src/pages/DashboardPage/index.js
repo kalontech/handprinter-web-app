@@ -593,6 +593,7 @@ class DashboardPage extends Component {
             handleSelectImage={this.handleSelectImage}
             setMoreAchievesVisible={this.setMoreAchievesVisible}
             moreAchievesVisible={moreAchievesVisible}
+            formatMessage={formatMessage}
           />
           <TabsSecondary
             list={[

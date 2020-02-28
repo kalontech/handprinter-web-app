@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-
+import _ from 'lodash'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
@@ -139,7 +139,7 @@ export default class MemberCard extends React.PureComponent {
               <Achievements>
                 {achievements.slice(0, 5).map(i => (
                   <AchievementSmall specialShape={i.specialShape} key={i.id}>
-                    <img alt={''} src={i.image} />
+                    <img alt={''} src={_.get(i, 'campaign.logo.src')} />
                   </AchievementSmall>
                 ))}
               </Achievements>
