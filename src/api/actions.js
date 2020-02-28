@@ -63,3 +63,9 @@ export const fetchProposedAction = ({ body, ...params }) =>
     method: 'POST',
     ...params,
   })
+
+export const search = query =>
+  fetchAPI('/actions/search', {
+    body: { query },
+    method: 'POST',
+  })

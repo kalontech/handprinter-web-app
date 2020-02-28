@@ -13,14 +13,20 @@ import AsyncSelect from 'react-select/async'
 import { compose } from 'redux'
 
 import * as apiUser from 'api/user'
+import * as apiActions from 'api/actions'
 import { ActivityFooter, ActivityHeader } from 'components/GetStreamComponents'
 import Mention from 'components/GetStreamComponents/Mention.svg'
+import AttachAction from 'components/GetStreamComponents/AttachAction.svg'
 
 const Feed = ({ readFrom = {}, user = {}, writeTo = {} }) => {
   const [isStatusUpdateFormExpanded, setIsStatusUpdateFormExpanded] = useState(
     false,
   )
   const [mentions, setMentions] = useState([])
+  const [attachActionFormExpanded, setAttachActionFormExpanded] = useState(
+    false,
+  )
+  const [actions, setActions] = useState([])
 
   const {
     REACT_APP_GETSTREAM_API_KEY,
@@ -37,6 +43,26 @@ const Feed = ({ readFrom = {}, user = {}, writeTo = {} }) => {
                 label: user.fullName,
                 photo: user.photo,
                 value: user._id,
+              }
+            }),
+          )
+        })
+      } else {
+        resolve([])
+      }
+    })
+  }
+
+  const promiseActionOptions = inputValue => {
+    return new Promise(resolve => {
+      if (inputValue.length >= 3) {
+        apiActions.search(inputValue).then(({ actions }) => {
+          resolve(
+            actions.map(action => {
+              return {
+                label: action.name,
+                photo: action.picture,
+                value: action._id,
               }
             }),
           )
@@ -68,6 +94,15 @@ const Feed = ({ readFrom = {}, user = {}, writeTo = {} }) => {
                     foreignId: mention.value,
                     name: mention.label,
                     profileImage: mention.photo,
+                  }
+                })
+              : [],
+            attachedActions: attachActionFormExpanded
+              ? actions.map(action => {
+                  return {
+                    foreignId: action.value,
+                    name: action.label,
+                    profileImage: action.photo,
                   }
                 })
               : [],
@@ -110,6 +145,45 @@ const Feed = ({ readFrom = {}, user = {}, writeTo = {} }) => {
                       loadOptions={promiseOptions}
                       onChange={value => {
                         setMentions(value)
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+              <img
+                onClick={() => {
+                  setAttachActionFormExpanded(value => !value)
+                }}
+                src={AttachAction}
+                style={{
+                  cursor: 'pointer',
+                  height: '26px',
+                  marginLeft: '32px',
+                  marginTop: '-12px',
+                  width: '26px',
+                }}
+              />
+              {attachActionFormExpanded && (
+                <div
+                  style={{
+                    alignItems: 'center',
+                    backgroundColor: 'rgb(250, 250, 250)',
+                    bottom: '73px',
+                    display: 'flex',
+                    left: '0px',
+                    padding: '16px',
+                    position: 'absolute',
+                    width: '100%',
+                  }}
+                >
+                  <div style={{ width: '100%' }}>
+                    <AsyncSelect
+                      cacheOptions
+                      defaultOptions
+                      isMulti
+                      loadOptions={promiseActionOptions}
+                      onChange={value => {
+                        setActions(value)
                       }}
                     />
                   </div>

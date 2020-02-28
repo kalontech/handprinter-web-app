@@ -52,6 +52,34 @@ export const ActivityFooter = props => {
           </Flex>
         </Box>
       )}
+      {props.activity.attachedActions &&
+        props.activity.attachedActions.length > 0 && (
+          <Box sx={{ p: 3 }}>
+            <Text sx={{ fontStyle: 'italic', mb: 1 }}>Actions:</Text>
+            <Flex sx={{ alignItems: 'center' }}>
+              {props.activity.attachedActions.map(attachedAction => {
+                return (
+                  <Flex
+                    key={attachedAction.foreignId}
+                    sx={{
+                      alignItems: 'center',
+                      borderRadius: '5px',
+                      bg: 'rgb(240, 240, 240)',
+                      mr: 2,
+                      p: 2,
+                    }}
+                  >
+                    <Avatar
+                      src={attachedAction.profileImage}
+                      sx={{ height: '30px', mr: 2, width: '30px' }}
+                    />
+                    <Text>{attachedAction.name}</Text>
+                  </Flex>
+                )
+              })}
+            </Flex>
+          </Box>
+        )}
       <Box
         sx={{
           p: 3,
