@@ -31,7 +31,7 @@ const NewsHeader = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 20px;
 `
 
@@ -44,16 +44,6 @@ const NewsTitle = styled.h1`
     css`
       display: none;
     `}
-`
-
-const NewsTitleMob = styled(NewsTitle)`
-   display: none;
-
-    ${media.phone &&
-      css`
-        display: block;
-      `}
-  }
 `
 
 const DropdownLink = styled.a`
@@ -91,9 +81,6 @@ class UserDashboardActivity extends Component {
             <NewsTitle>
               <FormattedMessage id="app.newsPage.title" />
             </NewsTitle>
-            <NewsTitleMob>
-              <FormattedMessage id="app.newsPage.titleMobile" />
-            </NewsTitleMob>
             <Dropdown
               overlay={
                 <Menu onClick={this.handleRangeSelectorSelect}>
