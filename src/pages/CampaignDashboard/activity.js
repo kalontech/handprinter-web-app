@@ -8,15 +8,17 @@ export default function renderActivity(props) {
   const { campaign } = props
 
   return (
-    <Feed
-      readFrom={{
-        feedGroup: 'timeline',
-        userId: `campaign-${campaign._id}`,
-      }}
-      writeTo={{
-        feedGroup: 'timeline',
-        userId: `campaign-${campaign._id}`,
-      }}
-    />
+    <div style={{ paddingLeft: 130, paddingRight: 130 }}>
+      <Feed
+        readFrom={{
+          feedGroup: 'timeline',
+          userId: `campaign-${campaign._id}`,
+        }}
+        writeTo={{
+          feedGroup: 'timeline',
+          userId: `campaign-${campaign._id}`,
+        }}
+      />
+    </div>
   )
 }

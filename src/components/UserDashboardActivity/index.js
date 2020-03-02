@@ -18,7 +18,7 @@ const NEWS_RANGES = {
 
 const PageContainer = styled.div`
   background-color: ${colors.lightGray};
-  padding: 40px 0;
+  padding: 40px 200px;
   flex: 1;
 
   ${media.phone &&
