@@ -222,7 +222,7 @@ export default class TabsSecondary extends React.PureComponent {
         ))}
       </List>
     )
-    const activeItem = list.find(item => item.active)
+    const activeItem = list.find(item => item.active) || list[0]
 
     return (
       <React.Fragment>

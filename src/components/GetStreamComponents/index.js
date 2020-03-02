@@ -12,13 +12,32 @@ import {
   ReactionToggleIcon,
 } from 'react-activity-feed'
 import { Avatar, Box, Flex, jsx, Text } from 'theme-ui'
-
+import styled from 'styled-components'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
+import colors from 'config/colors'
 
 import CommentDefault from './CommentDefault.svg'
 import CommentFilled from './CommentFilled.svg'
 import LikeDefault from './LikeDefault.svg'
 import LikeFilled from './LikeFilled.svg'
+
+const UserName = styled.span`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  color: ${colors.dark};
+`
+
+const CreatedAtText = styled.span`
+  font-family: Noto Sans;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: ${colors.darkGray};
+`
 
 export const ActivityFooter = props => {
   const [isShowComments, setIsShowComments] = useState(false)
@@ -136,17 +155,17 @@ export const ActivityHeader = props => {
         />
         <Box>
           <Box>
-            <Text as="span">
+            <UserName>
               <strong>{userName}</strong>
-            </Text>
+            </UserName>
             {isDidAction && (
-              <Text as="span">
+              <UserName>
                 {' did action '}
                 <strong>{actionName}</strong>
-              </Text>
+              </UserName>
             )}
           </Box>
-          <Box sx={{ opacity: 0.5 }}>{createdAt}</Box>
+          <CreatedAtText>{createdAt}</CreatedAtText>
         </Box>
       </Flex>
       <Box>
