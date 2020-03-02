@@ -18,7 +18,13 @@ import { ActivityFooter, ActivityHeader } from 'components/GetStreamComponents'
 import Mention from 'components/GetStreamComponents/Mention.svg'
 import AttachAction from 'components/GetStreamComponents/AttachAction.svg'
 
-const Feed = ({ readFrom = {}, user = {}, writeTo = {} }) => {
+const Feed = ({
+  readFrom = {},
+  user = {},
+  writeTo = {},
+  hideFlatFeed = false,
+  onSuccess,
+}) => {
   const [isStatusUpdateFormExpanded, setIsStatusUpdateFormExpanded] = useState(
     false,
   )
@@ -87,6 +93,7 @@ const Feed = ({ readFrom = {}, user = {}, writeTo = {} }) => {
         }
       >
         <StatusUpdateForm
+          onSuccess={onSuccess}
           feedGroup={writeTo.feedGroup || 'user'}
           modifyActivityData={data => ({
             ...data,
@@ -122,7 +129,7 @@ const Feed = ({ readFrom = {}, user = {}, writeTo = {} }) => {
                   cursor: 'pointer',
                   height: '26px',
                   marginLeft: '32px',
-                  marginTop: '-12px',
+                  marginTop: hideFlatFeed ? '15px' : '-12px',
                   width: '26px',
                 }}
               />
@@ -161,7 +168,7 @@ const Feed = ({ readFrom = {}, user = {}, writeTo = {} }) => {
                   cursor: 'pointer',
                   height: '26px',
                   marginLeft: '32px',
-                  marginTop: '-12px',
+                  marginTop: hideFlatFeed ? '15px' : '-12px',
                   width: '26px',
                 }}
               />
@@ -195,38 +202,40 @@ const Feed = ({ readFrom = {}, user = {}, writeTo = {} }) => {
           }
         />
       </div>
-      <FlatFeed
-        Activity={props => {
-          return (
-            <Activity
-              {...props}
-              key={`root-${props.activity.id}`}
-              Content={
-                _.get(props, 'activity.object') !== '...' && props.Content
-              }
-              Footer={() => {
-                return (
-                  <ActivityFooter
-                    key={`footer-${props.activity.id}`}
-                    {...props}
-                  />
-                )
-              }}
-              Header={() => {
-                return (
-                  <ActivityHeader
-                    key={`header-${props.activity.id}`}
-                    {...props}
-                  />
-                )
-              }}
-            />
-          )
-        }}
-        feedGroup={readFrom.feedGroup || 'user'}
-        notify
-        userId={readFrom.userId}
-      />
+      {!hideFlatFeed && (
+        <FlatFeed
+          Activity={props => {
+            return (
+              <Activity
+                {...props}
+                key={`root-${props.activity.id}`}
+                Content={
+                  _.get(props, 'activity.object') !== '...' && props.Content
+                }
+                Footer={() => {
+                  return (
+                    <ActivityFooter
+                      key={`footer-${props.activity.id}`}
+                      {...props}
+                    />
+                  )
+                }}
+                Header={() => {
+                  return (
+                    <ActivityHeader
+                      key={`header-${props.activity.id}`}
+                      {...props}
+                    />
+                  )
+                }}
+              />
+            )
+          }}
+          feedGroup={readFrom.feedGroup || 'user'}
+          notify
+          userId={readFrom.userId}
+        />
+      )}
     </StreamApp>
   )
 }

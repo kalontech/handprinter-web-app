@@ -298,7 +298,7 @@
     "app.dashboardPage.myNetwork": "My network",
     "app.dashboardPage.myNetworkDescription": "People that are part of my handprint",
     "app.dashboardPage.memberSince": "Member since",
-    "app.actions.reduceFootprint": "Your reduced your footprint",
+    "app.actions.reduceFootprint": "You reduced your footprint",
     "app.aboutEatonPage.head.title": "Welcome to Handprinter!",
     "app.aboutEatonPage.head.keywords": "handprinter, nature, footprint, handprint",
     "app.aboutEatonPage.head.description": "Want to take doing good to a global scale? You’re not alone. Through Handprinter, creative individual actions and outreach generate ripple effects to touch and heal your community and the globe.",
@@ -718,5 +718,8 @@
     "app.campaignPage.participants": "Participants",
     "app.pages.groups.emptyParticipantsList": "No participants found",
     "app.campaignPage.todo": "To Do",
-    "app.campaignPage.accomplished": "Accomplished"
+    "app.campaignPage.accomplished": "Accomplished",
+    "app.actions.share.progress": "Thank you!",
+    "app.actions.share.progress.reduce.fp": "You reduced your footprint. Share your progress with the world!",
+    "app.actions.share.progress.skip": "Skip sharing"
 }
