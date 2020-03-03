@@ -24,6 +24,8 @@ const Feed = ({
   writeTo = {},
   hideFlatFeed = false,
   onSuccess,
+  verb,
+  context,
 }) => {
   const [isStatusUpdateFormExpanded, setIsStatusUpdateFormExpanded] = useState(
     false,
@@ -116,6 +118,8 @@ const Feed = ({
                 })
               : [],
             to: [...(writeTo.cc || []), 'timeline:world'],
+            verb,
+            context,
           })}
           userId={writeTo.userId}
           FooterItem={

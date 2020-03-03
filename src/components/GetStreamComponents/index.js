@@ -130,6 +130,7 @@ export const ActivityFooter = props => {
 export const ActivityHeader = props => {
   const activity = _.get(props, 'activity')
   const isDidAction = _.get(activity, 'verb') === 'do action'
+  const isCommentedAction = _.get(activity, 'verb') === 'comment action'
 
   const actionImpacts = _.get(activity, 'context.action.impacts')
   const actionName = _.get(activity, 'context.action.name', 'Unknown action')
@@ -161,6 +162,12 @@ export const ActivityHeader = props => {
             {isDidAction && (
               <UserName>
                 {' did action '}
+                <strong>{actionName}</strong>
+              </UserName>
+            )}
+            {isCommentedAction && (
+              <UserName>
+                {' commented on action '}
                 <strong>{actionName}</strong>
               </UserName>
             )}

@@ -59,6 +59,10 @@ const raf = css`
     .raf-panel-footer {
       margin-top: 83px;
     }
+
+    .raf-emoji-picker {
+      z-index: 1;
+    }
   }
 `
 

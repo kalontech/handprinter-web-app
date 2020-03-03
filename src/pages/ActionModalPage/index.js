@@ -720,7 +720,7 @@ class ActionModalPage extends Component {
 
     if (user)
       return this.renderInContainer({
-        children: <TakeActionShareProgress {...this.props} />,
+        children: <TakeActionShareProgress {...this.props} action={action} />,
         width: 'medium',
         height: 'auto',
       })

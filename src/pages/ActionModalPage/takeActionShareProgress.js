@@ -54,7 +54,7 @@ export const TakenActionAuthWrap = styled.div`
 `
 
 function takeActionShareProgress(props) {
-  const { history, closeModal } = props
+  const { history, closeModal, action } = props
   return (
     <Fragment>
       <TakenActionPanel>
@@ -72,6 +72,8 @@ function takeActionShareProgress(props) {
               feedGroup: 'timeline',
               userId: 'world',
             }}
+            verb="comment action"
+            context={{ action }}
             onSuccess={closeModal}
           />
         </PostWrapper>
@@ -95,6 +97,7 @@ function takeActionShareProgress(props) {
 
 takeActionShareProgress.propTypes = {
   history: Object,
+  action: Object,
   closeModal: Function,
 }
 
