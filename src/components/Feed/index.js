@@ -81,6 +81,10 @@ const Feed = ({
     })
   }
 
+  let modifiedDataProps = {}
+  if (verb) modifiedDataProps.verb = verb
+  if (context) modifiedDataProps.context = context
+
   return (
     <StreamApp
       apiKey={REACT_APP_GETSTREAM_API_KEY}
@@ -118,8 +122,7 @@ const Feed = ({
                 })
               : [],
             to: [...(writeTo.cc || []), 'timeline:world'],
-            verb,
-            context,
+            ...modifiedDataProps,
           })}
           userId={writeTo.userId}
           FooterItem={

@@ -10,11 +10,16 @@ import {
   CommentField,
   CommentList,
   ReactionToggleIcon,
+  CommentItem,
 } from 'react-activity-feed'
 import { Avatar, Box, Flex, jsx, Text } from 'theme-ui'
 import styled from 'styled-components'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import colors from 'config/colors'
+
+import { Popover, Icon } from 'antd'
+
+import { FormattedMessage } from 'react-intl'
 
 import CommentDefault from './CommentDefault.svg'
 import CommentFilled from './CommentFilled.svg'
@@ -37,6 +42,16 @@ const CreatedAtText = styled.span`
   font-size: 14px;
   line-height: 20px;
   color: ${colors.darkGray};
+`
+
+const DeletePostText = styled.span`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: ${colors.red};
+  cursor: pointer;
 `
 
 export const ActivityFooter = props => {
@@ -120,7 +135,15 @@ export const ActivityFooter = props => {
             activity={props.activity}
             onAddReaction={props.onAddReaction}
           />
-          <CommentList activityId={props.activity.id} />
+          <CommentList
+            activityId={props.activity.id}
+            CommentItem={itemProps => (
+              <React.Fragment>
+                <CommentItem {...itemProps} />
+                <LikeButton reaction={itemProps.comment} {...props} />
+              </React.Fragment>
+            )}
+          />
         </Box>
       </Box>
     </>
@@ -177,6 +200,17 @@ export const ActivityHeader = props => {
       </Flex>
       <Box>
         {actionImpacts && <ActionCardLabelSet impacts={actionImpacts} />}
+      </Box>
+      <Box>
+        <Popover
+          content={
+            <DeletePostText onClick={() => props.onRemoveActivity(activity.id)}>
+              <FormattedMessage id="app.actions.card.delete" />
+            </DeletePostText>
+          }
+        >
+          <Icon type="ellipsis" rotate={90} />
+        </Popover>
       </Box>
     </Flex>
   )
