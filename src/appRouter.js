@@ -13,6 +13,7 @@ import ActionsPage from './pages/ActionsPage'
 import GroupsListPage from './pages/GroupsList'
 import ChallengesListPage from './pages/ChallengesList'
 import CampaignDashboardPage from './pages/CampaignDashboard'
+import CompetitionDashboardPage from './pages/CompetitionDashboard'
 import GroupViewPage from './pages/GroupView'
 import CheckYourEmailPage from './pages/CheckYourEmailPage'
 import DashboardPage from './pages/DashboardPage'
@@ -236,6 +237,13 @@ const AppRouter = () => {
           <Route
             path="/challenges/campaigns/dashboard/:campaignId"
             component={CampaignDashboardPage}
+            useAuthentication
+            withoutCTA
+            requireAuthentication
+          />
+          <Route
+            path="/challenges/competitions/dashboard/:competitionId"
+            component={CompetitionDashboardPage}
             useAuthentication
             withoutCTA
             requireAuthentication
