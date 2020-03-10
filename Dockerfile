@@ -12,4 +12,4 @@ COPY build/ ./build
 COPY scripts/ ./scripts
 
 EXPOSE 5000
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "serve" ]
