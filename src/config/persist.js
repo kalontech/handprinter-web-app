@@ -1,7 +1,9 @@
 import { CookieStorage } from 'redux-persist-cookie-storage'
 import Cookies from 'cookies-js'
 
-Cookies.defaults.domain = process.env.REACT_APP_WEB_APP_COOKIES_DOMAIN
+import env from 'config/env'
+
+Cookies.defaults.domain = env.REACT_APP_WEB_APP_COOKIES_DOMAIN
 
 const persistConfig = {
   user: {

@@ -1,12 +1,13 @@
 import { put, select, call } from 'redux-saga/effects'
 import has from 'lodash/has'
 
+import env from 'config/env'
 import * as apiUsers from 'api/user'
 import { Creators as UserStoreCreators } from 'redux/userStore'
 import { logOut } from 'redux/accountStore'
 import { getBrandedHostnamePrefix } from 'config/branded'
 
-const { REACT_APP_WEB_APP_BASE_HOST: host } = process.env
+const { REACT_APP_WEB_APP_BASE_HOST: host } = env
 
 export function* prepareUserProfile() {
   const { account } = yield select()

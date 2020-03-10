@@ -12,6 +12,8 @@ import media from 'utils/mediaQueryTemplate'
 
 import { CONTACT_DATA } from 'utils/constants'
 
+import env from 'config/env'
+
 import { ORGANIZATION_TYPES } from './CreateOrganizationFrom/utils'
 
 const Main = styled.div`
@@ -152,7 +154,7 @@ class Summary extends React.Component {
         return
       }
       // eslint-disable-next-line no-undef
-      const stripe = Stripe(process.env.REACT_APP_STRIPE_PUB_KEY)
+      const stripe = Stripe(env.REACT_APP_STRIPE_PUB_KEY)
       if (res.session) {
         await stripe.redirectToCheckout({
           sessionId: res.session.id,
