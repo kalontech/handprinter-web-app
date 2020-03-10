@@ -1,3 +1,5 @@
+let env = {}
+
 if (process && process.env) {
   env = {
     ...env,
