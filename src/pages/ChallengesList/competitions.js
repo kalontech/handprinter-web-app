@@ -4,8 +4,10 @@ import colors from 'config/colors'
 import Spinner from 'components/Spinner'
 import Row from 'antd/lib/row'
 import Icon from 'antd/lib/icon'
-import { Input } from 'components/Styled'
+import { Input, DefaultButton } from 'components/Styled'
 import CampaignCard from 'components/CampaignCard'
+
+import { FormattedMessage } from 'react-intl'
 
 import {
   SearchWrap,
@@ -17,6 +19,8 @@ import {
   PaginationStyled,
 } from './styled'
 import useCompetitionsList from './useCompetitionsList'
+
+import { acceptInvitation } from '../../api/competitions'
 
 function competitions(props) {
   const [competitions, page, totalPages, loading] = useCompetitionsList(props)
@@ -63,6 +67,17 @@ function competitions(props) {
                 to={`/challenges/competitions/dashboard/${item._id}`}
                 name={item.name}
                 picture={item.logo.src}
+                button={() =>
+                  item.pendingInvitation ? (
+                    <DefaultButton
+                      onClick={() => {
+                        acceptInvitation(item._id)
+                      }}
+                    >
+                      <FormattedMessage id="app.competitions.invite.group.accept" />
+                    </DefaultButton>
+                  ) : null
+                }
               />
             </Column>
           ))}

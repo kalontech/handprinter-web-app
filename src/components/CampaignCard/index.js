@@ -66,7 +66,7 @@ const CounterMembers = styled.p`
 `
 
 export default function CampaignCard(props) {
-  const { to, name, picture, counter } = props
+  const { to, name, picture, counter, button } = props
   return (
     <Block to={to}>
       <PictureWrap>
@@ -75,6 +75,7 @@ export default function CampaignCard(props) {
       <Info>
         <Name>{name}</Name>
         <CounterMembers>{counter}</CounterMembers>
+        {!!button && button()}
       </Info>
     </Block>
   )
@@ -85,4 +86,5 @@ CampaignCard.propTypes = {
   name: PropTypes.string,
   counter: PropTypes.string,
   picture: PropTypes.string,
+  button: PropTypes.func,
 }

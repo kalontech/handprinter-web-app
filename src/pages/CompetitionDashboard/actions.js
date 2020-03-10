@@ -17,14 +17,14 @@ import { ImpactButton } from '../ActionsPage'
 function getActions(props, selectedKey) {
   const {
     participants,
-    campaign: { actions },
+    competition: { actions },
   } = props
-  if (participants.length === 0) return []
-  const myAccomplishedActionIds = participants[0].accomplishedActions.map(
-    i => i._id,
-  )
+
+  const myAccomplishedActionIds =
+    participants.length && participants[0].accomplishedActions.map(i => i._id)
   return actions.filter(action => {
-    const isAccomplished = myAccomplishedActionIds.includes(action._id)
+    const isAccomplished =
+      myAccomplishedActionIds && myAccomplishedActionIds.includes(action._id)
     return selectedKey === ACTIONS_TABS.ACCOMPLISHED
       ? isAccomplished
       : !isAccomplished
@@ -151,6 +151,6 @@ renderActions.propTypes = {
   loading: Boolean,
   participants: Array,
   intl: Object,
-  campaign: Object,
+  competition: Object,
   history: Object,
 }

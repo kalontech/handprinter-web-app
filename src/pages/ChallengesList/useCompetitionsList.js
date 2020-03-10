@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import _ from 'lodash'
 import qs from 'qs'
 
-import { fetchCompetitionsList } from '../../api/competitions'
+import { fetchCompetitionsList, getInvitations } from '../../api/competitions'
+import { INVITATION_STATUSES } from '../IncreaseHandprintPage'
 
 export default function useCompetitionsList(props) {
   const [competitions, setCompetitions] = useState([])
@@ -22,6 +23,19 @@ export default function useCompetitionsList(props) {
           limit: 21,
         })
         const docs = _.get(res, 'competitions.docs', [])
+
+        for (let i = 0; i < docs.length; i++) {
+          const competition = docs[i]
+          const invitationRes = await getInvitations(competition._id)
+          if (invitationRes && invitationRes.invitations) {
+            const pendingInvitation = invitationRes.invitations.find(
+              i => i.status === INVITATION_STATUSES.PENDING,
+            )
+            if (pendingInvitation) {
+              docs[i].pendingInvitation = pendingInvitation
+            }
+          }
+        }
         setCompetitions(docs)
         setPage(res.competitions.page)
         setTotalPages(res.competitions.totalPages)

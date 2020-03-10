@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import qs from 'qs'
 import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 import { injectIntl } from 'react-intl'
 import { compose } from 'redux'
 import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
@@ -10,17 +11,20 @@ import ActionsIconComponent from 'assets/icons/HandIcon'
 import StatisticsIconComponent from 'assets/icons/StatisticsIcon'
 
 import useCompetition from './useCompetition'
+import useOwnGroupsList from './useOwnGroupsList'
+import useInvitationsList from './useInvitationsList'
 import Header from './header'
 import { Content } from './styled'
 import renderParticipants from './participants'
 import renderActions from './actions'
 import renderActivity from './activity'
 import renderStatistics from './statistics'
+import renderGroups from './groups'
 import { COMPETITION_TABS } from './constants'
 import Tabs from './tabs'
+import { INVITATION_STATUSES } from '../IncreaseHandprintPage'
 
 function renderContent(view, props) {
-  return null
   switch (view) {
     case COMPETITION_TABS.actions:
       return renderActions(props)
@@ -30,6 +34,8 @@ function renderContent(view, props) {
       return renderStatistics(props)
     case COMPETITION_TABS.activity:
       return renderActivity(props)
+    case COMPETITION_TABS.groups:
+      return renderGroups(props)
     default:
       return null
   }
@@ -45,6 +51,9 @@ function CampaignDashboard(props) {
   const view = query.view || COMPETITION_TABS.actions
   if (!competitionId) return null
   const [competition, loading, participants] = useCompetition(competitionId)
+  const [ownGroupsList] = useOwnGroupsList() // groups where user is admin
+  const [invitations] = useInvitationsList(competitionId) // groups where user is admin
+
   const sortedParticipants = participants.sort((a, b) =>
     a.user._id === props.user._id ? -1 : 1,
   )
@@ -57,6 +66,10 @@ function CampaignDashboard(props) {
         participantsCount={participants.length}
         competition={competition}
         accomplishedUserActions={accomplishedUserActions}
+        ownGroupsList={ownGroupsList}
+        isMember={
+          !!invitations.find(i => i.status === INVITATION_STATUSES.ACCEPTED)
+        }
       />
       <Tabs
         list={[
@@ -78,8 +91,8 @@ function CampaignDashboard(props) {
             text: formatMessage({ id: 'app.campaignPage.participants' }),
             active: view === COMPETITION_TABS.participants,
           },
-          {
-            to: `?view=${COMPETITION_TABS.groups}`,
+          !_.isEmpty(invitations) && {
+            to: `?view=${COMPETITION_TABS.groups}&tabIndex=0`,
             icon: SuggestedIconComponent,
             text: formatMessage({ id: 'app.pages.groups.myGroups' }),
             active: view === COMPETITION_TABS.groups,
@@ -93,7 +106,13 @@ function CampaignDashboard(props) {
         ]}
       />
       <Content>
-        {renderContent(view, { ...props, competition, loading, participants })}
+        {renderContent(view, {
+          ...props,
+          competition,
+          loading,
+          participants,
+          invitations,
+        })}
       </Content>
     </Fragment>
   )

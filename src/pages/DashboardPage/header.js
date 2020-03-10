@@ -165,22 +165,22 @@ const OtherAchievementsText = styled.text`
   font-size: 16px;
 `
 
-const ModalContent = styled.div`
+export const ModalContent = styled.div`
   width: 472px;
   height: 413px;
   margin: 0 60px 40px 60px;
   border: 1px solid ${colors.lightGray};
 `
 
-const AchievementRow = styled(Row)``
-const AchievementCol = styled(Col)`
+export const AchievementRow = styled(Row)``
+export const AchievementCol = styled(Col)`
   margin-top: 30px;
   justify-content: center;
   align-items: center;
   display: flex;
 `
 
-const AchievementTitle = styled.text`
+export const AchievementTitle = styled.text`
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
@@ -189,7 +189,7 @@ const AchievementTitle = styled.text`
   text-align: center;
 `
 
-const AchievementFooter = styled.div`
+export const AchievementFooter = styled.div`
   background-color: ${colors.lightGray};
   height: 110px;
   display: flex;
@@ -197,7 +197,7 @@ const AchievementFooter = styled.div`
   align-items: center;
 `
 
-const AchievementModal = styled(Modal)`
+export const AchievementModal = styled(Modal)`
   .ant-modal-footer {
     padding: 0px;
     border: 0;
@@ -214,7 +214,7 @@ const AchievementModal = styled(Modal)`
   }
 `
 
-const AchievementFooterButton = styled(PrimaryButton)`
+export const AchievementFooterButton = styled(PrimaryButton)`
   width: 472px;
   align-self: center;
 `

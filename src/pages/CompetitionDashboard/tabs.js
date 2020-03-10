@@ -9,6 +9,7 @@ function Tabs(props) {
   return (
     <TabsContainer>
       {list.map(linkItem => {
+        if (!linkItem) return null
         return (
           <TabContainer key={linkItem.to} to={linkItem.to}>
             <linkItem.icon

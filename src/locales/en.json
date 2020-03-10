@@ -721,5 +721,8 @@
     "app.campaignPage.accomplished": "Accomplished",
     "app.actions.share.progress": "Thank you!",
     "app.actions.share.progress.reduce.fp": "You reduced your footprint. Share your progress with the world!",
-    "app.actions.share.progress.skip": "Skip sharing"
+    "app.actions.share.progress.skip": "Skip sharing",
+    "app.competitions.invite.group": "Invite group",
+    "app.competitions.invite.group.accept": "Accept invite",
+    "app.competitions.join": "Join {competition} with {group}"
 }
