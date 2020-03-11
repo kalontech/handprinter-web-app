@@ -14,6 +14,7 @@ import 'react-router-modal/css/react-router-modal.css'
 import './index.less'
 import App from './app'
 import * as serviceWorker from './serviceWorker'
+import env from 'config/env'
 
 const {
   NODE_ENV,
@@ -22,7 +23,7 @@ const {
   REACT_APP_ENVIRONMENT,
   REACT_APP_HOTJAR_HJID,
   REACT_APP_HOTJAR_HJSV,
-} = process.env
+} = env
 
 if (NODE_ENV === 'production') {
   Sentry.init({

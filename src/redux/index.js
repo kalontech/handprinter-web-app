@@ -6,6 +6,7 @@ import * as Sentry from '@sentry/browser'
 import createSentryMiddleware from 'redux-sentry-middleware'
 
 import persistConfig from 'config/persist'
+import env from 'config/env'
 import rootSaga from 'sagas'
 import locales from 'locales'
 
@@ -18,7 +19,7 @@ import organizationsStore from './organizations'
 import campaignsStore from './campaigns'
 
 const composeEnhancers =
-  process.env.NODE_ENV !== 'production' &&
+  env.NODE_ENV !== 'production' &&
   typeof window === 'object' &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})

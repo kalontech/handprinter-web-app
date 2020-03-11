@@ -1,19 +1,15 @@
-FROM node:alpine
+FROM node:lts-alpine
 
-# Create app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
+# Install serve (HTTP server).
+RUN npm install serve -g
 
-# Bundle app source
-COPY . ./
+# Copy app build and scripts.
+COPY build/ ./build
+COPY scripts/ ./scripts
 
 EXPOSE 5000
 CMD [ "npm", "run", "serve" ]

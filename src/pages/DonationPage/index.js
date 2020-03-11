@@ -26,6 +26,7 @@ import fingerPrintRight from 'assets/donation/fingerprint_right.png'
 import donorsImg from 'assets/donation/global_stat_finger.png'
 import { donate, getSponsors } from 'api/payment'
 import { webAppBaseUrl } from 'api'
+import env from 'config/env'
 
 const Hero = styled.section`
   height: 360px;
@@ -497,7 +498,7 @@ class DonationPage extends Component {
         showAmount: values.amount,
       })
       // eslint-disable-next-line no-undef
-      const stripe = Stripe(process.env.REACT_APP_STRIPE_PUB_KEY)
+      const stripe = Stripe(env.REACT_APP_STRIPE_PUB_KEY)
       if (res.session) {
         await stripe.redirectToCheckout({
           sessionId: res.session.id,

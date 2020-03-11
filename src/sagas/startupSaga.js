@@ -3,12 +3,13 @@ import { put, select, call } from 'redux-saga/effects'
 import { updateIntl } from 'react-intl-redux'
 
 import api from 'api'
+import env from 'config/env'
 import { Creators as AppStoreCreators } from 'redux/appStore'
 
 import { prepareUserProfile } from './helpers'
 
 function* startup(action) {
-  window.__CONFIG__ = encodeURIComponent(JSON.stringify(process.env))
+  window.__CONFIG__ = encodeURIComponent(JSON.stringify(env))
   // Zero-delay at the same beginning (this is workaround)
   yield call(delay, 0)
   // Retrieve state

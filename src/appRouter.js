@@ -6,6 +6,7 @@ import GoogleAnalytics from 'react-ga'
 
 import ErrorCatcher from './utils/errorCatcher'
 import { getBrandedConfig } from './config/branded'
+import env from 'config/env'
 import Route from './routeWrapper'
 
 import ActionModalPage from './pages/ActionModalPage'
@@ -38,7 +39,7 @@ import OrganizationList from './pages/OrganizationList'
 import AddAdminsModalPage from './pages/AddAdminsModalPage'
 import IncreaseOrganizationHandprintPage from './pages/IncreaseOrganizationHandprintPage'
 
-const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = process.env
+const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = env
 
 export const history = createBrowserHistory()
 

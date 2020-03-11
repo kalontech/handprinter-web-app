@@ -114,7 +114,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "npm run eslint && npm run stylelint && node scripts/test.js",
-    "serve": "npm run build && serve -s build",
+    "serve": "npm run inject-env && serve --single build/",
     "eslint": "eslint src/**/**/*.js",
     "eslint:fix": "npm run eslint --fix",
     "stylelint": "stylelint src/**/*.css",
@@ -122,7 +122,8 @@
     "lokalise:push": "lokalise --token $LOKALISE_TOKEN import $LOKALISE_PROJECT_ID --cleanup_mode 1 --convert_placeholders 0 --file src/locales/en.json --lang_iso en --replace 1 --replace_breaks 1",
     "lokalise:pull": "lokalise --token $LOKALISE_TOKEN export $LOKALISE_PROJECT_ID --bundle_structure locales/%LANG_ISO%.%FORMAT% --export_empty base --type json --unzip_to src/",
     "lokalise:sync": "npm run lokalise:push && npm run lokalise:pull",
-    "lokalise:all": "dotenv npm run lokalise:sync"
+    "lokalise:all": "dotenv npm run lokalise:sync",
+    "inject-env": "node scripts/inject_env.js"
   },
   "browserslist": [
     ">0.2%",
