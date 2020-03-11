@@ -355,3 +355,13 @@ export const HeaderCompetitionButtonContainer = styled.div`
 `
 
 export const HeaderCompetitionButton = styled(SecondaryButton)``
+
+export const StatisticsHeaderDropdown = styled.div`
+  width: 100%;
+  height: 106px;
+  display: flex;
+  align-items: center;
+  background-color: ${colors.white};
+  margin-bottom: 20px;
+  padding: 30px;
+`

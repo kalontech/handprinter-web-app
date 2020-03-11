@@ -10,12 +10,12 @@ import { MenuStyled, Column, EmptyList } from './styled'
 import { getUserInitialAvatar } from '../../api'
 
 export default function renderParticipants(props) {
-  const { loading, participants, intl, campaign, user } = props
+  const { loading, participants, intl, competition, user } = props
   const selectedKey = _.get(props, 'location.search', '').includes('finished')
     ? 'finished'
     : 'participants'
   const actionsNumberToComplete =
-    campaign.actionsNumberToComplete || campaign.actions.length
+    competition.actionsNumberToComplete || competition.actions.length
   const participantsFiltered =
     selectedKey === 'finished'
       ? participants.filter(
@@ -79,6 +79,6 @@ renderParticipants.propTypes = {
   loading: Boolean,
   participants: Array,
   intl: Object,
-  campaign: Object,
+  competition: Object,
   user: Object,
 }
