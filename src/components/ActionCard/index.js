@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { FormattedHTMLMessage } from 'react-intl'
-import { Icon } from 'antd'
+import { FormattedMessage } from 'react-intl'
+import { Icon, Popover } from 'antd'
 
 import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
@@ -146,6 +146,11 @@ const ButtonIcon = styled.button`
   }
 `
 
+const WildWrapper = styled.p`
+  width: 25%;
+  color: gray;
+`
+
 const ActionCard = props => {
   const {
     to,
@@ -161,8 +166,33 @@ const ActionCard = props => {
     styles,
     onClick,
     isHabit,
+    impactsInUnits,
+    isWild,
   } = props
 
+  if (!impactsInUnits || !impacts) return null
+  const footVal = Object.values(impactsInUnits.footprint)
+  const foot = footVal.find(i => i !== 0)
+  const handVal = Object.values(impactsInUnits.handprint)
+  const hand = handVal.find(i => i !== 0)
+  const popover = (
+    <Popover
+      placement="topLeft"
+      content={
+        <div>
+          <FormattedMessage id="app.actions.card.edit" />
+          <div>Popover content for wild card</div>
+          <div>Popover content for wild card</div>
+          <div>Popover content for wild card</div>
+        </div>
+      }
+    >
+      <WildWrapper>
+        Wild card <Icon type="info-circle" />
+      </WildWrapper>
+    </Popover>
+  )
+  const condition = isWild && Boolean(foot) && Boolean(hand)
   return (
     <Link to={to} onClick={onClick}>
       <CardWrap>
@@ -174,14 +204,14 @@ const ActionCard = props => {
               <IconsWrap>
                 <ButtonIcon onClick={onEdit}>
                   <span>
-                    <FormattedHTMLMessage id="app.actions.card.edit" />
+                    <FormattedMessage id="app.actions.card.edit" />
                   </span>
                   <EditIcon />
                 </ButtonIcon>
 
                 <ButtonIcon onClick={onDelete}>
                   <span>
-                    <FormattedHTMLMessage id="app.actions.card.delete" />
+                    <FormattedMessage id="app.actions.card.delete" />
                   </span>
                   <DeleteIcon />
                 </ButtonIcon>
@@ -191,8 +221,7 @@ const ActionCard = props => {
           <CardWrapper>
             <CardHeading style={props.font}>{name}</CardHeading>
             <ActionCardLabelSetWrapper>
-              {typeof impacts === 'function' && impacts()}
-
+              {condition ? popover : typeof impacts === 'function' && impacts()}
               {impacts && typeof impacts !== 'function' && (
                 <ActionCardLabelSet impacts={impacts} />
               )}
@@ -214,7 +243,7 @@ const ActionCard = props => {
               <SuggestedInfoInitiatorPhoto src={suggestedBy.photo} />
             )}
             {suggestedBy.fullName && (
-              <FormattedHTMLMessage
+              <FormattedMessage
                 id="app.actions.card.by"
                 values={{
                   username: suggestedBy.fullName,
@@ -222,7 +251,7 @@ const ActionCard = props => {
               />
             )}
             {suggestedBy.selfTaken && (
-              <FormattedHTMLMessage
+              <FormattedMessage
                 id={
                   isHabit
                     ? 'app.actions.card.iTookAction.habit'
@@ -257,6 +286,8 @@ ActionCard.propTypes = {
   suggestedBy: PropTypes.object,
   suggestedAt: PropTypes.string,
   isHabit: PropTypes.bool,
+  impactsInUnits: PropTypes.object,
+  isWild: PropTypes.bool,
 }
 
 export default ActionCard

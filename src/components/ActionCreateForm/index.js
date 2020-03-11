@@ -2,7 +2,7 @@ import React from 'react'
 import { compose } from 'redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Upload, Form, Icon } from 'antd'
+import { Upload, Form, Icon, Select } from 'antd'
 import { injectIntl, intlShape } from 'react-intl'
 
 import { FormItem, Input, PrimaryButton } from 'components/Styled'
@@ -13,6 +13,10 @@ import { required, fileSize } from 'config/validationRules'
 import media from 'utils/mediaQueryTemplate'
 import decodeError from 'utils/decodeError'
 import hexToRgba from 'utils/hexToRgba'
+
+import { categories } from '../../pages/ActionsPage/ActionFilter/filterData'
+
+const { Option } = Select
 
 const StyledForm = styled(Form)`
   margin: 10px 40px;
@@ -276,6 +280,7 @@ class ActionCreatePage extends React.PureComponent {
       this.setState({ isSubmitting: true })
 
       try {
+        console.log(values)
         this._submitPromise = onSubmit(values)
 
         await this._submitPromise
@@ -355,26 +360,26 @@ class ActionCreatePage extends React.PureComponent {
                     </PreviewButton>
                   </Preview>
                 ) : (
-                  <AddPhotoBlockWrap>
-                    <AddPhotoBlock>
-                      <ButtonAddPhoto type="button">
-                        <ButtonAddPhotoContent>
-                          <Icon type="camera" />
-                          <span>
-                            {formatMessage({
-                              id: 'app.actionCreatePage.addPhoto',
-                            })}
-                          </span>
-                        </ButtonAddPhotoContent>
-                      </ButtonAddPhoto>
-                      <AddPhotoBlockText>
-                        {formatMessage({
-                          id: 'app.actionCreatePage.uploadImageDescription',
-                        })}
-                      </AddPhotoBlockText>
-                    </AddPhotoBlock>
-                  </AddPhotoBlockWrap>
-                )}
+                    <AddPhotoBlockWrap>
+                      <AddPhotoBlock>
+                        <ButtonAddPhoto type="button">
+                          <ButtonAddPhotoContent>
+                            <Icon type="camera" />
+                            <span>
+                              {formatMessage({
+                                id: 'app.actionCreatePage.addPhoto',
+                              })}
+                            </span>
+                          </ButtonAddPhotoContent>
+                        </ButtonAddPhoto>
+                        <AddPhotoBlockText>
+                          {formatMessage({
+                            id: 'app.actionCreatePage.uploadImageDescription',
+                          })}
+                        </AddPhotoBlockText>
+                      </AddPhotoBlock>
+                    </AddPhotoBlockWrap>
+                  )}
               </UploadContent>
             </StyledUpload>,
           )}
@@ -400,6 +405,32 @@ class ActionCreatePage extends React.PureComponent {
                   type="text"
                   placeholder={formatMessage({ id: 'app.forms.actionName' })}
                 />,
+              )}
+            </FormItem>
+
+            <FormItem>
+              {getFieldDecorator('category', {
+                rules: [
+                  required(formatMessage({ id: 'app.errors.isRequired' })),
+                ],
+              })(
+                <Select
+                  placeholder={formatMessage({
+                    id: 'app.forms.actionCategory',
+                  })}
+                  mode="default"
+                  style={{ width: '100%' }}
+                  onChange={null}
+                  menuItemSelectedIcon={<Icon />}
+                >
+                  {categories.map(category => {
+                    return (
+                      <Option key={category.id} value={category.name}>
+                        {category.name}
+                      </Option>
+                    )
+                  })}
+                </Select>,
               )}
             </FormItem>
 
@@ -458,10 +489,11 @@ class ActionCreatePage extends React.PureComponent {
 export default compose(
   Form.create({
     mapPropsToFields({ initialValues = {} }) {
-      const { name, description, picture: fileUrl } = initialValues
+      const { name, description, category, picture: fileUrl } = initialValues
 
       return {
         name: Form.createFormField({ value: name }),
+        category: Form.createFormField({ value: category }),
         description: Form.createFormField({ value: description }),
         photo: Form.createFormField(
           fileUrl ? { value: { fileUrl } } : undefined,

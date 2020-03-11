@@ -99,6 +99,7 @@
     "app.forms.actionName": "Action name",
     "app.forms.updatePhoto": "Select another image",
     "app.forms.actionDescription": "Description",
+    "app.forms.actionCategory": "Category",
     "app.errors.createAction.imageDimensions": "the image must be bigger than {size} on the smaller side",
     "app.resetPasswordPage.head.title": "Welcome to Handprinter!",
     "app.resetPasswordPage.head.keywords": "handprinter, nature, footprint, handprint",
@@ -706,5 +707,6 @@
     "app.errors.43": "Amount is invalid",
     "app.dashboardPage.organization.netPositiveDays": "Our net-positive days",
     "app.dashboardPage.organizationNetPositiveDays": "Our Net Positive days",
-    "app.dashboardPage.organizationNetwork": "Our network"
+    "app.dashboardPage.organizationNetwork": "Our network",
+    "app.wildcard.popover.message": ""
 }

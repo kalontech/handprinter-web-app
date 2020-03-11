@@ -62,6 +62,7 @@ class CurrentActionPage extends React.PureComponent {
 
     body.append('description', values.description)
     body.append('name', values.name)
+    body.append('category', values.category)
 
     let request = apiActions.fetchProposedAction
 
