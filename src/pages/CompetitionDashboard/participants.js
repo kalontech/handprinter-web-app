@@ -4,24 +4,56 @@ import Spinner from 'components/Spinner'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 import { Menu, Row } from 'antd'
-import MemberCard from 'components/MemberCard'
+import GroupCard from 'components/GroupCard'
 
 import { MenuStyled, Column, EmptyList } from './styled'
 import { getUserInitialAvatar } from '../../api'
+import { INVITATION_STATUSES } from '../IncreaseHandprintPage'
+
+function getGroups(participants, invitations) {
+  let groups = {}
+  invitations
+    .filter(i => i.status === INVITATION_STATUSES.ACCEPTED)
+    .forEach(invitation => {
+      const participant = participants.find(
+        i => i.user._id.toString() === invitation.user.toString(),
+      )
+      if (!groups[invitation.group.name]) groups[invitation.group.name] = {}
+      if (!groups[invitation.group.name].participants)
+        groups[invitation.group.name].participants = []
+      groups[invitation.group.name] = {
+        group: invitation.group,
+        participants: groups[invitation.group.name].participants.concat(
+          participant,
+        ),
+      }
+    })
+  return groups
+}
 
 export default function renderParticipants(props) {
-  const { loading, participants, intl, competition, user } = props
+  const { loading, participants, intl, competition, invitations } = props
+
   const selectedKey = _.get(props, 'location.search', '').includes('finished')
     ? 'finished'
     : 'participants'
   const actionsNumberToComplete =
     competition.actionsNumberToComplete || competition.actions.length
-  const participantsFiltered =
+  const groups = getGroups(participants, invitations)
+  const filteredGroups =
     selectedKey === 'finished'
-      ? participants.filter(
-          i => i.accomplishedActions.length >= actionsNumberToComplete,
-        )
-      : participants
+      ? Object.values(groups).filter(i => {
+          const accomplishedActionsSum = i.participants.reduce(
+            (acc, curr) => acc + curr.accomplishedActions.length,
+            0,
+          )
+          return (
+            accomplishedActionsSum >=
+            actionsNumberToComplete * i.participants.length
+          )
+        })
+      : Object.values(groups)
+
   return (
     <Fragment>
       <MenuStyled
@@ -45,24 +77,22 @@ export default function renderParticipants(props) {
         <Spinner />
       ) : (
         <Row style={{ flexGrow: '1' }}>
-          {participantsFiltered.map(item => (
-            <Column key={item.user._id} xl={8} lg={12} md={12} xs={24}>
-              <MemberCard
-                to={`/account/${item.user._id}`}
-                fullName={item.user.fullName}
-                photo={
-                  item.user.photo || getUserInitialAvatar(item.user.fullName)
-                }
+          {filteredGroups.map(item => (
+            <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
+              <GroupCard
+                to={`/groups/view/${item.group._id}/statistics`}
+                name={item.group.name}
                 counter={intl.formatMessage(
-                  { id: 'app.pages.groups.actionsTaken' },
-                  { count: item.userInfo.takenActionsCount },
+                  { id: 'app.pages.groups.membersCount' },
+                  { count: item.group.info.membersCount },
                 )}
-                impacts={{ handprint: item.userInfo.impacts }}
-                achievements={user.finishedCampaigns}
+                picture={
+                  item.group.picture || getUserInitialAvatar(item.group.name)
+                }
               />
             </Column>
           ))}
-          {participantsFiltered.length === 0 && (
+          {filteredGroups.length === 0 && (
             <EmptyList>
               {intl.formatMessage({
                 id: 'app.pages.groups.emptyParticipantsList',
@@ -78,6 +108,7 @@ export default function renderParticipants(props) {
 renderParticipants.propTypes = {
   loading: Boolean,
   participants: Array,
+  invitations: Array,
   intl: Object,
   competition: Object,
   user: Object,

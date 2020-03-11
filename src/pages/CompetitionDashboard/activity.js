@@ -5,18 +5,18 @@ import React from 'react'
 import Feed from 'components/Feed'
 
 export default function renderActivity(props) {
-  const { campaign } = props
+  const { competition } = props
 
   return (
     <div style={{ paddingLeft: 130, paddingRight: 130 }}>
       <Feed
         readFrom={{
           feedGroup: 'timeline',
-          userId: `campaign-${campaign._id}`,
+          userId: `competition-${competition._id}`,
         }}
         writeTo={{
           feedGroup: 'timeline',
-          userId: `campaign-${campaign._id}`,
+          userId: `competition-${competition._id}`,
         }}
       />
     </div>
