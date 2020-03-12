@@ -207,8 +207,8 @@ const ActionCard = props => {
       overlayClassName={'actions-popover'}
       content={
         <PopoverWrapper>
-          <PopoverTitle></PopoverTitle>
-          <PopoverText></PopoverText>
+          <PopoverTitle />
+          <PopoverText />
         </PopoverWrapper>
       }
     >

@@ -359,26 +359,26 @@ class ActionCreatePage extends React.PureComponent {
                     </PreviewButton>
                   </Preview>
                 ) : (
-                    <AddPhotoBlockWrap>
-                      <AddPhotoBlock>
-                        <ButtonAddPhoto type="button">
-                          <ButtonAddPhotoContent>
-                            <Icon type="camera" />
-                            <span>
-                              {formatMessage({
-                                id: 'app.actionCreatePage.addPhoto',
-                              })}
-                            </span>
-                          </ButtonAddPhotoContent>
-                        </ButtonAddPhoto>
-                        <AddPhotoBlockText>
-                          {formatMessage({
-                            id: 'app.actionCreatePage.uploadImageDescription',
-                          })}
-                        </AddPhotoBlockText>
-                      </AddPhotoBlock>
-                    </AddPhotoBlockWrap>
-                  )}
+                  <AddPhotoBlockWrap>
+                    <AddPhotoBlock>
+                      <ButtonAddPhoto type="button">
+                        <ButtonAddPhotoContent>
+                          <Icon type="camera" />
+                          <span>
+                            {formatMessage({
+                              id: 'app.actionCreatePage.addPhoto',
+                            })}
+                          </span>
+                        </ButtonAddPhotoContent>
+                      </ButtonAddPhoto>
+                      <AddPhotoBlockText>
+                        {formatMessage({
+                          id: 'app.actionCreatePage.uploadImageDescription',
+                        })}
+                      </AddPhotoBlockText>
+                    </AddPhotoBlock>
+                  </AddPhotoBlockWrap>
+                )}
               </UploadContent>
             </StyledUpload>,
           )}

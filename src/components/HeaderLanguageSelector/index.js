@@ -49,8 +49,8 @@ const HeaderLanguageSelector = props => {
             intl.locale === 'zh' ? (
               <span>{message}</span>
             ) : (
-                <span>{message.substr(0, 3)}</span>
-              )
+              <span>{message.substr(0, 3)}</span>
+            )
           }
         </FormattedMessage>
         <Icon {...props} />
