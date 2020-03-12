@@ -169,7 +169,15 @@ export const ModalContent = styled.div`
   width: 472px;
   height: 218px;
   margin: 0 60px 40px 60px;
-  border: 1px solid ${colors.lightGray};
+  border: 1px solid ${colors.gray};
+  box-sizing: border-box;
+  border-radius: 4px;
+
+  ${media.phone`
+    width: 90%;
+    margin: 5%;
+    border-radius: 0;
+  `}
 `
 
 export const AchievementRow = styled(Row)``
@@ -188,10 +196,6 @@ export const AchievementTitle = styled.text`
   font-style: normal;
   font-weight: normal;
   font-size: 28px;
-  line-height: 35px;
-  width: 100%;
-  text-align: center;
-  margin-top: 200px;
 `
 
 export const AchievementFooter = styled.div`
@@ -200,9 +204,21 @@ export const AchievementFooter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 0px 0px 4px 4px;
+
+  ${media.phone`
+    border-radius: 0;
+    padding: 0 10px;
+  `}
 `
 
 export const AchievementModal = styled(Modal)`
+  .ant-modal-close-x {
+    color: white;
+    width: 50px;
+    height: 50px;
+  }
+
   .ant-modal-footer {
     padding: 0px;
     border: 0;
@@ -228,9 +244,17 @@ export const AchivmentLogo = styled.img`
   border-radius: 50%;
 `
 
-export const AchivmentBanner = styled.img`
-  height: 200px;
+export const AchivmentBanner = styled.div`
+  height: 140px;
   width: 100%;
+  background-color: #169080;
+  border-radius: 4px 4px 0px 0px;
+`
+
+export const FingerLogo = styled.img`
+  position: absolute;
+  top: 39.62px;
+  left: 127px;
 `
 
 export const AchievementFooterButton = styled(PrimaryButton)`
