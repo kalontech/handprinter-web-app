@@ -188,14 +188,23 @@ const NotFoundWrap = styled.div`
 const FilterWrap = styled.div`
   padding-right: 18px;
   margin-top: 38px;
-  ${media.phone`
-    margin: 0 auto;
+  ${media.tablet`
+    margin-top: 38px;
     padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 300px;
+    width: 100%;
+  `}
+  ${media.phone`
+    margin-top: 38px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   `}
 `
 
@@ -205,9 +214,9 @@ export const ImpactButton = styled(DefaultButton)`
   color: ${props => (props.isModelling ? colors.blue : colors.darkGray)};
   border: 1px solid
     ${props =>
-      props.isModelling
-        ? hexToRgba(colors.blue, 0.4)
-        : hexToRgba(colors.darkGray, 0.4)};
+    props.isModelling
+      ? hexToRgba(colors.blue, 0.4)
+      : hexToRgba(colors.darkGray, 0.4)};
   border-radius: 4px;
   font-weight: 400;
 
@@ -216,9 +225,9 @@ export const ImpactButton = styled(DefaultButton)`
     background-color: transparent;
     color: ${props => (props.isModelling ? colors.blue : colors.dark)};
     border-color: ${props =>
-      props.isModelling
-        ? hexToRgba(colors.blue, 0.6)
-        : hexToRgba(colors.dark, 0.6)};
+    props.isModelling
+      ? hexToRgba(colors.blue, 0.6)
+      : hexToRgba(colors.dark, 0.6)};
   }
 `
 
@@ -448,7 +457,6 @@ class ActionsPage extends React.PureComponent {
 
   handleOnAfterFiltersChange = debounce(({ data, activeFilterCount }) => {
     const { match, history } = this.props
-
     this.setState({ activeFiltersCount: activeFilterCount })
 
     if (Object.keys(data).length === 0) {
@@ -625,8 +633,8 @@ class ActionsPage extends React.PureComponent {
                               ) : !searchData.searching &&
                                 Number.isInteger(searchData.total) &&
                                 searchData.total === 0 ? (
-                                <FormattedMessage id="app.actionsPage.searchNotFound" />
-                              ) : null
+                                    <FormattedMessage id="app.actionsPage.searchNotFound" />
+                                  ) : null
                             }
                             showSearch
                             suffixIcon={<span />}
@@ -698,86 +706,88 @@ class ActionsPage extends React.PureComponent {
                   <Spinner />
                 </NotFoundWrap>
               ) : (
-                <Row gutter={{ md: 20 }}>
-                  {actions.map(action => (
-                    <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
-                      <ScrollAnimation>
-                        <ActionCard
-                          to={
-                            action.status === ACTION_STATES.PROPOSED
-                              ? `/account/actions/preview/${action.slug}`
-                              : `/actions/${match.params.subset}/${action.slug}`
-                          }
-                          picture={action.picture}
-                          canChange={action.status === ACTION_STATES.PROPOSED}
-                          onEdit={e => {
-                            e.preventDefault()
-
-                            history.push(`/account/actions/edit/${action.slug}`)
-                          }}
-                          onDelete={this.onActionDelete(action._id)}
-                          name={
-                            action.translatedName &&
-                            action.translatedName[locale]
-                              ? action.translatedName[locale]
-                              : action.name
-                          }
-                          impacts={() => {
-                            let tooltipTextId, buttonTextId
-                            switch (action.status) {
-                              case ACTION_STATES.MODELING:
-                                tooltipTextId =
-                                  'app.actions.card.waitModelingHint'
-                                buttonTextId = 'app.actions.card.waitModeling'
-                                break
-                              case ACTION_STATES.DENIED:
-                                tooltipTextId = 'app.actions.card.deniedHint'
-                                buttonTextId = 'app.actions.card.denied'
-                                break
-                              default:
-                                tooltipTextId = 'app.actions.card.waitAdminHint'
-                                buttonTextId = 'app.actions.card.waitAdmin'
+                  <Row gutter={{ md: 20 }}>
+                    {actions.map(action => (
+                      <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
+                        <ScrollAnimation>
+                          <ActionCard
+                            to={
+                              action.status === ACTION_STATES.PROPOSED
+                                ? `/account/actions/preview/${action.slug}`
+                                : `/actions/${match.params.subset}/${action.slug}`
                             }
-                            return action.status !== ACTION_STATES.PUBLISHED ? (
-                              <Tooltip
-                                placement="top"
-                                title={formatMessage({
-                                  id: tooltipTextId,
-                                })}
-                              >
-                                <ImpactButton
-                                  style={{ height: 35 }}
-                                  isModelling={
-                                    action.status === ACTION_STATES.MODELING
-                                  }
-                                >
-                                  {formatMessage({
-                                    id: buttonTextId,
-                                  })}
-                                </ImpactButton>
-                              </Tooltip>
-                            ) : (
-                              <ActionCardLabelSet impacts={action.impacts} />
-                            )
-                          }}
-                          suggestedBy={action.suggestedBy}
-                          suggestedAt={
-                            action.suggestedAt &&
-                            formatRelative(action.suggestedAt)
-                          }
-                          isHabit={action.isHabit}
-                        />
-                      </ScrollAnimation>
-                    </Col>
-                  ))}
+                            picture={action.picture}
+                            canChange={action.status === ACTION_STATES.PROPOSED}
+                            onEdit={e => {
+                              e.preventDefault()
 
-                  {actions.length === 0 && (
-                    <NotFoundWrap>
-                      <FormattedMessage id="app.actionsPage.actionsNotFound" />
-                    </NotFoundWrap>
-                  )}
-                </Row>
-              )}
+                              history.push(`/account/actions/edit/${action.slug}`)
+                            }}
+                            onDelete={this.onActionDelete(action._id)}
+                            name={
+                              action.translatedName &&
+                                action.translatedName[locale]
+                                ? action.translatedName[locale]
+                                : action.name
+                            }
+                            impacts={() => {
+                              let tooltipTextId, buttonTextId
+                              switch (action.status) {
+                                case ACTION_STATES.MODELING:
+                                  tooltipTextId =
+                                    'app.actions.card.waitModelingHint'
+                                  buttonTextId = 'app.actions.card.waitModeling'
+                                  break
+                                case ACTION_STATES.DENIED:
+                                  tooltipTextId = 'app.actions.card.deniedHint'
+                                  buttonTextId = 'app.actions.card.denied'
+                                  break
+                                default:
+                                  tooltipTextId = 'app.actions.card.waitAdminHint'
+                                  buttonTextId = 'app.actions.card.waitAdmin'
+                              }
+                              return action.status !== ACTION_STATES.PUBLISHED ? (
+                                <Tooltip
+                                  placement="top"
+                                  title={formatMessage({
+                                    id: tooltipTextId,
+                                  })}
+                                >
+                                  <ImpactButton
+                                    style={{ height: 35 }}
+                                    isModelling={
+                                      action.status === ACTION_STATES.MODELING
+                                    }
+                                  >
+                                    {formatMessage({
+                                      id: buttonTextId,
+                                    })}
+                                  </ImpactButton>
+                                </Tooltip>
+                              ) : (
+                                  <ActionCardLabelSet impacts={action.impacts} />
+                                )
+                            }}
+                            suggestedBy={action.suggestedBy}
+                            suggestedAt={
+                              action.suggestedAt &&
+                              formatRelative(action.suggestedAt)
+                            }
+                            isHabit={action.isHabit}
+                            impactsInUnits={action.impactsInUnits}
+                            isWild={action.isWild}
+                          />
+                        </ScrollAnimation>
+                      </Col>
+                    ))}
+
+                    {actions.length === 0 && (
+                      <NotFoundWrap>
+                        <FormattedMessage id="app.actionsPage.actionsNotFound" />
+                      </NotFoundWrap>
+                    )}
+                  </Row>
+                )}
 
               {!loading && total > limit && (
                 <Pagination

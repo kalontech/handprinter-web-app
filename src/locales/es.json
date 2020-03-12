@@ -733,5 +733,9 @@
     "app.competitions.invite.group.accept": "Accept invite",
     "app.competitions.join": "Join {competition} with {group}",
     "app.competitions.denied": "You declined {group} invitation to join {competition}",
-    "app.competitions.deniedDescription": "You are still member of this group"
+    "app.competitions.deniedDescription": "You are still member of this group",
+    "app.actions.type.wild": "Wild",
+    "app.actions.type.modeled": "Modeled",
+    "app.actions.behaviour.habbit": "Habbit",
+    "app.actions.behaviour.can become habbit": "Can become habbit"
 }
