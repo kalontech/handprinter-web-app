@@ -97,7 +97,8 @@ export default function renderStatistics(props) {
                     (acc, curr) => acc + curr.accomplishedActions.length,
                     0,
                   )
-                  let totalActions = total * i.participants.length
+                  const participantsCount = i.participants.length
+                  let totalActions = total * participantsCount
                   const percentAccomplished =
                     (accomplished / totalActions) * 100
                   return (
@@ -113,6 +114,9 @@ export default function renderStatistics(props) {
                         { accomplished, total: totalActions },
                       )}
                       progressBarPercent={percentAccomplished}
+                      actionsTakenPerMember={Number(
+                        accomplished / participantsCount,
+                      ).toFixed(1)}
                     />
                   )
                 })}

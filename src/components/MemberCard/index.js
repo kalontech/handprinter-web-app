@@ -100,6 +100,7 @@ export default class MemberCard extends React.PureComponent {
     counter: PropTypes.string,
     achievements: PropTypes.array,
     progressBarPercent: PropTypes.number,
+    actionsTakenPerMember: PropTypes.number,
     containerStyle: PropTypes.any,
   }
 
@@ -124,6 +125,7 @@ export default class MemberCard extends React.PureComponent {
       achievements,
       progressBarPercent,
       containerStyle,
+      actionsTakenPerMember,
     } = this.props
 
     return (
@@ -136,7 +138,20 @@ export default class MemberCard extends React.PureComponent {
 
           <Info>
             <FullName>{fullName}</FullName>
-            <Counter>{counter}</Counter>
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Counter>{counter}</Counter>
+              {!!actionsTakenPerMember && (
+                <Counter>ATPM = {actionsTakenPerMember}</Counter>
+              )}
+            </div>
+
             {!!achievements && (
               <Achievements>
                 {achievements.slice(0, 5).map(i => (
