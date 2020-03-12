@@ -280,7 +280,6 @@ class ActionCreatePage extends React.PureComponent {
       this.setState({ isSubmitting: true })
 
       try {
-        console.log(values)
         this._submitPromise = onSubmit(values)
 
         await this._submitPromise

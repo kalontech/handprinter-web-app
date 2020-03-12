@@ -151,6 +151,37 @@ const WildWrapper = styled.p`
   color: gray;
 `
 
+const ActionPopover = styled(Popover)``
+
+const PopoverWrapper = styled.div`
+  background-color: ${colors.dark};
+  display: flex;
+  flex-direction: column;
+  .ant-popover-inner {
+    background-color: ${colors.green}; !important
+  }
+  .ant-popover-inner-content {
+    padding: 0;
+    background-color: ${colors.green}; !important
+  }
+`
+const PopoverTitle = styled.text`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  color: ${colors.white};
+`
+const PopoverText = styled.text`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: ${colors.darkGray};
+`
+
 const ActionCard = props => {
   const {
     to,
@@ -176,21 +207,19 @@ const ActionCard = props => {
   const handVal = Object.values(impactsInUnits.handprint)
   const hand = handVal.find(i => i !== 0)
   const popover = (
-    <Popover
-      placement="topLeft"
+    <ActionPopover
+      overlayClassName={'actions-popover'}
       content={
-        <div>
-          <FormattedMessage id="app.actions.card.edit" />
-          <div>Popover content for wild card</div>
-          <div>Popover content for wild card</div>
-          <div>Popover content for wild card</div>
-        </div>
+        <PopoverWrapper>
+          <PopoverTitle>Hello</PopoverTitle>
+          <PopoverText>{}</PopoverText>
+        </PopoverWrapper>
       }
     >
       <WildWrapper>
         Wild card <Icon type="info-circle" />
       </WildWrapper>
-    </Popover>
+    </ActionPopover>
   )
   const condition = isWild && Boolean(foot) && Boolean(hand)
   return (
