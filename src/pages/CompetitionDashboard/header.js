@@ -7,7 +7,7 @@ import { getUserInitialAvatar } from 'api'
 
 import styled from 'styled-components'
 
-import { Checkbox } from 'antd'
+import { Checkbox } from '../../components/Styled'
 
 import {
   HeaderCamapingDescription,
@@ -17,6 +17,7 @@ import {
   BreadcrumbItem,
   HeaderCompetitionButton,
   HeaderCompetitionButtonContainer,
+  ModalMessage,
 } from './styled'
 import {
   DashboardHeaderWhiteLine,
@@ -25,7 +26,10 @@ import {
   DashboardHeaderUserSince,
   AchievementModal,
   AchievementTitle,
+  AchivmentLogo,
+  AchivmentBanner,
   AchievementFooterButton,
+  SkipFooterButton,
   AchievementFooter,
   ModalContent,
 } from '../DashboardPage/header'
@@ -94,9 +98,19 @@ const Header = props => {
         onCancel={() => setInviteModalVisible(false)}
         centered
         destroyOnClose
-        title={<AchievementTitle>{competition.name}</AchievementTitle>}
+        // title={<AchievementTitle>{competition.name}</AchievementTitle>}
         footer={[
           <AchievementFooter key="submit">
+            <SkipFooterButton
+              type="secondary"
+              disabled={!groupsToInvite.length}
+              onClick={() => {
+                setInviteModalVisible(false)
+                sendInvitations({ groupsToInvite }, competition._id)
+              }}
+            >
+              <FormattedMessage id="app.increaseHandprintPage.form.sendInvites" />
+            </SkipFooterButton>
             <AchievementFooterButton
               type="primary"
               disabled={!groupsToInvite.length}
@@ -110,6 +124,10 @@ const Header = props => {
           </AchievementFooter>,
         ]}
       >
+        <AchivmentBanner src={competition.logo.src} alt="" />
+        <AchivmentLogo src={competition.logo.src} alt="" />
+        <AchievementTitle>{competition.name}</AchievementTitle>
+        <ModalMessage>Select group you want to invite to participate in the competition</ModalMessage>
         <ModalContent>
           {ownGroupsList.map(group =>
             renderGroup(

@@ -8,7 +8,7 @@ import media from 'utils/mediaQueryTemplate'
 import colors from 'config/colors'
 
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
-import { PrimaryButton, Modal } from 'components/Styled'
+import { PrimaryButton, DefaultButton, Modal } from 'components/Styled'
 
 import { InfoElementWrap } from '.'
 
@@ -167,7 +167,7 @@ const OtherAchievementsText = styled.text`
 
 export const ModalContent = styled.div`
   width: 472px;
-  height: 413px;
+  height: 218px;
   margin: 0 60px 40px 60px;
   border: 1px solid ${colors.lightGray};
 `
@@ -181,12 +181,17 @@ export const AchievementCol = styled(Col)`
 `
 
 export const AchievementTitle = styled.text`
+  position: relative;
+  top: 45px;
+  left: 16%;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 28px;
   line-height: 35px;
+  width: 100%;
   text-align: center;
+  margin-top: 200px;
 `
 
 export const AchievementFooter = styled.div`
@@ -214,8 +219,29 @@ export const AchievementModal = styled(Modal)`
   }
 `
 
+export const AchivmentLogo = styled.img`
+  position: relative;
+  top: -55px;
+  left: 40%;
+  width: 110px;
+  height: 108.95px;
+  border-radius: 50%;
+`
+
+export const AchivmentBanner = styled.img`
+  height: 200px;
+  width: 100%;
+`
+
 export const AchievementFooterButton = styled(PrimaryButton)`
-  width: 472px;
+  width: 198px;
+  height: 50px;
+  align-self: center;
+`
+
+export const SkipFooterButton = styled(DefaultButton)`
+  width: 198px;
+  height: 50px;
   align-self: center;
 `
 
@@ -281,11 +307,11 @@ const Header = props => {
         {organization ? (
           <FormattedMessage id={'app.dahsboard.organization'} />
         ) : (
-          <div>
-            <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
-            {moment(user.createdAt).format('MMMM DD, YYYY')}
-          </div>
-        )}
+            <div>
+              <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
+              {moment(user.createdAt).format('MMMM DD, YYYY')}
+            </div>
+          )}
       </DashboardHeaderUserSince>
       {!organization && (
         <Achievements>

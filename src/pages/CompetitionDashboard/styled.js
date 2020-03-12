@@ -365,3 +365,11 @@ export const StatisticsHeaderDropdown = styled.div`
   margin-bottom: 20px;
   padding: 30px;
 `
+
+export const ModalMessage = styled.p`
+  width: 100%;
+  text-align: center;
+  margin-bottom: 29px;
+  margin-top: 27.44px;
+  color: #858F8E;
+`
