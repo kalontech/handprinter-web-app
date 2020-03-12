@@ -1,256 +1,161 @@
-import React, { Component, Fragment } from 'react'
-import styled from 'styled-components'
+import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
-import { FormattedMessage, intlShape } from 'react-intl'
-import isEqual from 'lodash/isEqual'
+import { Select, Icon } from 'antd'
+import { FormattedMessage } from 'react-intl'
 
-import CloseIcon from 'assets/icons/CloseIcon'
-import colors from 'config/colors'
-import { IMPACT_CATEGORIES } from 'utils/constants'
-import media from 'utils/mediaQueryTemplate'
-import icons from 'components/ActionCardLabel/icons'
-import { SecondaryButton } from 'components/Styled'
+import atom from '../../../assets/unit-icons/atom.svg'
+import clock from '../../../assets/unit-icons/clock.svg'
+import { Checkbox } from '../../../components/Styled'
+import { SelectWrapper, Block, UnitsBlock } from './styled'
+import { categories, behaviour, types } from './filterData'
 
-import ImpactSlider from './slider'
+const { Option } = Select
 
-const ClearAllIcon = styled(CloseIcon)`
-  width: 24px;
-  height: 24px;
-`
+function ActionsFilters(props) {
+  const [selectedCategories, setSelectedCategories] = useState([])
+  const [selectedType, setSelectedType] = useState([])
+  const [selectedBehaviour, setSelectedBehaviour] = useState([])
 
-const ClearAllButton = styled.button`
-  background: white;
-  cursor: pointer;
-  border: none;
-  outline: none;
-  display: flex;
-  align-items: center;
-`
-
-const ButtonsWrap = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  align-self: flex-end;
-  font-size: 14px;
-  color: ${colors.darkGray};
-  letter-spacing: 0.2px;
-
-  ${media.phone`
-    margin-bottom: 10px;
-  `}
-`
-
-const ButtonSubmit = styled(SecondaryButton)`
-  align-self: flex-end;
-  background-color: ${colors.green};
-  text-transform: capitalize;
-`
-
-class ActionsFilters extends Component {
-  constructor(props) {
-    super(props)
-    const timeValuesCount = Object.keys(props.timeValues).length - 1
-    let values = {
-      climate: [0, timeValuesCount],
-      health: [0, timeValuesCount],
-      ecosystem: [0, timeValuesCount],
-      water: [0, timeValuesCount],
-      waste: [0, timeValuesCount],
-    }
-
-    if (props.values) {
-      // convert values from query ([15, 52000])
-      // to values for filter (from 0 to time values count)
-      Object.keys(props.values).forEach(impactName => {
-        values[impactName][0] = props.timeValues.findIndex(
-          elem => elem.minutes === props.values[impactName][0],
-        )
-        values[impactName][1] = props.timeValues.findIndex(
-          elem => elem.minutes === props.values[impactName][1],
-        )
-      })
-    }
-
-    this.state = {
-      values,
-      prevStateValues: values,
-      timeValues: [],
-      timeValuesCount,
-      filterIsChanged: false,
-    }
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    return {
-      timeValues: props.timeValues || state.timeValues,
-    }
-  }
-
-  get queries() {
-    const { timeValues } = this.props
-    const { values, timeValuesCount, prevStateValues } = this.state
-    let data = {}
-    let activeFilterCount = 0
-
-    Object.keys(values).forEach(key => {
-      // impact value is changed
-      if (!isEqual(prevStateValues[key], values[key])) {
-        data[key] = {
-          from: timeValues[values[key][0]].minutes,
-          to: timeValues[values[key][1]].minutes,
-        }
+  const handleCategoryChange = value => {
+    let categories = selectedCategories.concat([])
+    if (!value) {
+      categories = []
+    } else {
+      if (categories.includes(value)) {
+        categories.splice(categories.indexOf(value), 1)
+      } else {
+        categories.push(value)
       }
-
-      // increase activeFilterCount if filter is changed
-      if (!isEqual(values[key], [0, timeValuesCount])) {
-        activeFilterCount++
-      }
-    })
-
-    return { data, activeFilterCount }
-  }
-
-  handleChange = (values, impactName) => {
-    this.setState(
-      {
-        prevStateValues: this.state.values,
-        values: {
-          ...this.state.values,
-          [impactName]: values,
-        },
-        filterIsChanged: true,
-      },
-      () => {
-        if (!this.props.inModal) {
-          this.props.onAfterChange(this.queries)
-        }
-      },
-    )
-  }
-
-  resetFilter = () => {
-    const { timeValuesCount } = this.state
-    const defaultValues = {
-      climate: [0, timeValuesCount],
-      health: [0, timeValuesCount],
-      ecosystem: [0, timeValuesCount],
-      water: [0, timeValuesCount],
-      waste: [0, timeValuesCount],
     }
-    this.setState(
-      {
-        values: defaultValues,
-        prevStateValues: defaultValues,
-        filterIsChanged: false,
-      },
-      () => {
-        this.props.onAfterChange(this.queries)
-      },
-    )
+    setSelectedCategories(categories)
+    props.onAfterChange({ data: { category: categories } })
   }
 
-  onSubmit = () => {
-    const { closeModal, onAfterChange } = this.props
-
-    onAfterChange(this.queries)
-    closeModal()
+  const handleTypeChange = value => {
+    let types = selectedType.concat([])
+    if (!value) {
+      types = []
+    } else {
+      if (selectedType.includes(value)) {
+        types.splice(types.indexOf(value), 1)
+      } else {
+        types.push(value)
+      }
+    }
+    setSelectedType(types)
+    props.onAfterChange({ data: { type: types } })
   }
 
-  render() {
-    const { values, filterIsChanged } = this.state
-    const { timeValues, showFilter, inModal } = this.props
-    return (
-      <Fragment>
-        {inModal && filterIsChanged && (
-          <ButtonsWrap>
-            <ClearAllButton
-              onClick={() => {
-                this.resetFilter()
-                this.props.onReset()
-              }}
-            >
-              <ClearAllIcon />
-            </ClearAllButton>
-            <FormattedMessage id="app.actionsPage.clearAllFilters" />
-          </ButtonsWrap>
-        )}
-
-        <ImpactSlider
-          showFilter={showFilter}
-          onChange={values =>
-            this.handleChange(values, IMPACT_CATEGORIES.CLIMATE)
-          }
-          value={values.climate}
-          timeValues={timeValues}
-          icon={icons.positive.climate}
-          impactCategory={IMPACT_CATEGORIES.CLIMATE}
-        />
-        <ImpactSlider
-          showFilter={showFilter}
-          onChange={values =>
-            this.handleChange(values, IMPACT_CATEGORIES.HEALTH)
-          }
-          value={values.health}
-          timeValues={timeValues}
-          icon={icons.positive.health}
-          impactCategory={IMPACT_CATEGORIES.HEALTH}
-        />
-        <ImpactSlider
-          showFilter={showFilter}
-          onChange={values =>
-            this.handleChange(values, IMPACT_CATEGORIES.ECOSYSTEM)
-          }
-          value={values.ecosystem}
-          timeValues={timeValues}
-          icon={icons.positive.ecosystem}
-          impactCategory={IMPACT_CATEGORIES.ECOSYSTEM}
-        />
-        <ImpactSlider
-          showFilter={showFilter}
-          onChange={values =>
-            this.handleChange(values, IMPACT_CATEGORIES.WATER)
-          }
-          value={values.water}
-          timeValues={timeValues}
-          icon={icons.positive.water}
-          impactCategory={IMPACT_CATEGORIES.WATER}
-        />
-        <ImpactSlider
-          showFilter={showFilter}
-          onChange={values =>
-            this.handleChange(values, IMPACT_CATEGORIES.WASTE)
-          }
-          value={values.waste}
-          timeValues={timeValues}
-          icon={icons.positive.waste}
-          impactCategory={IMPACT_CATEGORIES.WASTE}
-        />
-
-        <ButtonsWrap>
-          {!inModal && filterIsChanged && (
-            <Fragment>
-              <ClearAllButton
-                onClick={() => {
-                  this.resetFilter()
-                  this.props.onReset()
-                }}
-              >
-                <ClearAllIcon />
-              </ClearAllButton>
-              <FormattedMessage id="app.actionsPage.clearAllFilters" />
-            </Fragment>
-          )}
-        </ButtonsWrap>
-
-        {inModal && filterIsChanged && (
-          <ButtonSubmit onClick={this.onSubmit}>
-            <FormattedMessage id="app.form.submit" />
-          </ButtonSubmit>
-        )}
-      </Fragment>
-    )
+  const handleBehaviourChange = value => {
+    let behaviours = selectedBehaviour.concat([])
+    if (!value) {
+      behaviours = []
+    } else {
+      if (selectedBehaviour.includes(value)) {
+        behaviours.splice(behaviours.indexOf(value), 1)
+      } else {
+        behaviours.push(value)
+      }
+    }
+    setSelectedBehaviour(behaviours)
+    props.onAfterChange({ data: { behaviour: behaviours } })
   }
+
+  return (
+    <Fragment>
+      <SelectWrapper>
+        <Block>
+          <Select
+            allowClear={true}
+            mode="default"
+            style={{ width: '100%' }}
+            onChange={handleCategoryChange}
+            menuItemSelectedIcon={<Icon />}
+            value="Category"
+          >
+            {categories.map(category => {
+              return (
+                <Option key={category.id}>
+                  <Checkbox
+                    checked={selectedCategories.includes(category.name)}
+                    name={category.name}
+                  >
+                    {category.name}
+                  </Checkbox>
+                </Option>
+              )
+            })}
+          </Select>
+          <Select
+            allowClear={true}
+            value={<FormattedMessage id="app.actions.type" />}
+            mode="default"
+            style={{ width: '100%' }}
+            onChange={handleTypeChange}
+            menuItemSelectedIcon={<Icon />}
+          >
+            {types.map(type => {
+              return (
+                <Option key={type.id}>
+                  <Checkbox
+                    checked={selectedType.includes(type.name)}
+                    name={type.name}
+                  >
+                    <FormattedMessage id={`app.actions.type.${type.id}`} />
+                  </Checkbox>
+                </Option>
+              )
+            })}
+          </Select>
+          <Select
+            allowClear={true}
+            value={<FormattedMessage id="app.actions.behaviour" />}
+            mode="default"
+            style={{ width: '100%' }}
+            onChange={handleBehaviourChange}
+            menuItemSelectedIcon={<Icon />}
+          >
+            {behaviour.map(behaviour => {
+              return (
+                <Option key={behaviour.id}>
+                  <Checkbox
+                    checked={selectedBehaviour.includes(behaviour.name)}
+                    name={behaviour.name}
+                  >
+                    <FormattedMessage
+                      id={`app.actions.behaviour.${behaviour.id}`}
+                    />
+                  </Checkbox>
+                </Option>
+              )
+            })}
+          </Select>
+        </Block>
+        <UnitsBlock>
+          <Select
+            mode="default"
+            style={{ width: '100%' }}
+            onChange={null}
+            defaultValue="Time units"
+            menuItemSelectedIcon={<Icon />}
+          >
+            <Option key="Physical units">
+              <span role="img">
+                <img src={atom} style={{ marginRight: '10px' }} />
+                Physical units
+              </span>
+            </Option>
+            <Option key="Time units">
+              <span role="img">
+                <img src={clock} style={{ marginRight: '10px' }} />
+                Time units
+              </span>
+            </Option>
+          </Select>
+        </UnitsBlock>
+      </SelectWrapper>
+    </Fragment>
+  )
 }
 
 ActionsFilters.propTypes = {
@@ -261,7 +166,6 @@ ActionsFilters.propTypes = {
   values: PropTypes.object,
   showFilter: PropTypes.bool.isRequired,
   inModal: PropTypes.bool,
-  intl: intlShape,
 }
 
 export default ActionsFilters
