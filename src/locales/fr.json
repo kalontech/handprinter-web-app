@@ -709,9 +709,9 @@
     "app.dashboardPage.organizationNetwork": "Our network",
     "app.forms.actionCategory": "Category",
     "app.actions.type": "Type",
-    "app.actions.type.Wild": "Wild",
-    "app.actions.type.Modeled": "Modeled",
     "app.actions.behaviour": "Behaviour",
-    "app.actions.behaviour.Habbit": "Habbit",
-    "app.actions.behaviour.Can become habbit": "Can become habbit"
+    "app.actions.type.wild": "Wild",
+    "app.actions.type.modeled": "Modeled",
+    "app.actions.behaviour.habbit": "Habbit",
+    "app.actions.behaviour.can become habbit": "Can become habbit"
 }

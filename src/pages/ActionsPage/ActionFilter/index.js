@@ -101,7 +101,7 @@ function ActionsFilters(props) {
                     checked={selectedType.includes(type.name)}
                     name={type.name}
                   >
-                    <FormattedMessage id={`app.actions.type.${type.name}`} />
+                    <FormattedMessage id={`app.actions.type.${type.id}`} />
                   </Checkbox>
                 </Option>
               )
@@ -123,7 +123,7 @@ function ActionsFilters(props) {
                     name={behaviour.name}
                   >
                     <FormattedMessage
-                      id={`app.actions.behaviour.${behaviour.name}`}
+                      id={`app.actions.behaviour.${behaviour.id}`}
                     />
                   </Checkbox>
                 </Option>
