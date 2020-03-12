@@ -81,7 +81,7 @@ const Header = props => {
             <FormattedMessage id="app.pages.groups.youAreMember" />
           </HeaderCompetitionButton>
         )}
-        {!isMember && ownGroupsList.length && (
+        {!isMember && !!ownGroupsList.length && (
           <HeaderCompetitionButton onClick={() => setInviteModalVisible(true)}>
             <FormattedMessage id="app.competitions.invite.group" />
           </HeaderCompetitionButton>
@@ -167,6 +167,7 @@ Header.propTypes = {
   intl: Object,
   accomplishedUserActions: Array,
   ownGroupsList: Array,
+  isMember: Boolean,
 }
 
 export default compose(injectIntl)(Header)

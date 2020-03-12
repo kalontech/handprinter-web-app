@@ -100,6 +100,7 @@ export default class MemberCard extends React.PureComponent {
     counter: PropTypes.string,
     achievements: PropTypes.array,
     progressBarPercent: PropTypes.number,
+    containerStyle: PropTypes.any,
   }
 
   static defaultProps = {
@@ -122,10 +123,11 @@ export default class MemberCard extends React.PureComponent {
       counter,
       achievements,
       progressBarPercent,
+      containerStyle,
     } = this.props
 
     return (
-      <Block to={to}>
+      <Block style={containerStyle} to={to}>
         <User>
           <ImgPlaceholder>
             {this.fullNamePlaceholder}

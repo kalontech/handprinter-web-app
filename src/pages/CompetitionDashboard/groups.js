@@ -4,12 +4,15 @@ import qs from 'qs'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 import { Menu } from 'antd'
+import MemberCard from 'components/MemberCard'
 
 import { PrimaryButton, DefaultButton } from 'components/Styled'
 
 import styled from 'styled-components'
 
 import colors from 'config/colors'
+
+import { getUserInitialAvatar } from '../../api'
 
 import { MenuStyled } from './styled'
 import { INVITATION_STATUSES } from '../IncreaseHandprintPage'
@@ -23,6 +26,12 @@ const Main = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`
+
+const ParticipantsMain = styled(Main)`
+  justify-content: flex-start;
+  align-items: center;
+  padding: 30px;
 `
 
 const Text = styled.span`
@@ -47,13 +56,31 @@ const Description = styled.span`
   color: ${colors.darkGray};
 `
 
+// Returns group members which are accepted competition invitation
+function getGroupParticipants(props, invitation) {
+  const { ownGroupsList, participants } = props
+  const selectedGroup = ownGroupsList.find(i => i._id === invitation.group._id)
+
+  if (selectedGroup) {
+    const groupMembers = selectedGroup.members
+    if (groupMembers) {
+      return participants.filter(
+        participant =>
+          !!groupMembers.map(i => i.user._id).includes(participant.user._id),
+      )
+    }
+    return []
+  }
+  return []
+}
+
 export default function renderGroups(props) {
-  const { invitations } = props
+  const { invitations, competition, intl } = props
   if (!invitations || invitations.length === 0) return null
   const search = _.get(props, 'location.search', '')
   const { tabIndex } = qs.parse(search, { ignoreQueryPrefix: true })
   const invitation = invitations[tabIndex]
-  const { competition, intl } = props
+  let groupParticipants = getGroupParticipants(props, invitation)
 
   const joinCompetition = intl.formatMessage(
     { id: 'app.competitions.join' },
@@ -116,6 +143,36 @@ export default function renderGroups(props) {
             <FormattedMessage id="app.competitions.deniedDescription" />
           </Description>
         </Main>
+      )}
+      {invitation.status === INVITATION_STATUSES.ACCEPTED && (
+        <ParticipantsMain>
+          {groupParticipants.map(participant => {
+            const accomplished = participant.accomplishedActions.length
+            const total = competition.actions.length
+            const percent = (accomplished / total) * 100
+            return (
+              <MemberCard
+                containerStyle={{ width: '100%' }}
+                key={participant.user._id}
+                to={`/account/${participant.user._id}`}
+                fullName={participant.user.fullName}
+                photo={
+                  participant.user.photo ||
+                  getUserInitialAvatar(participant.user.fullName)
+                }
+                counter={intl.formatMessage(
+                  { id: 'app.campaignPage.progress.accomplished' },
+                  {
+                    accomplished,
+                    total,
+                  },
+                )}
+                impacts={{ handprint: participant.userInfo.impacts }}
+                progressBarPercent={percent}
+              />
+            )
+          })}
+        </ParticipantsMain>
       )}
     </Fragment>
   )

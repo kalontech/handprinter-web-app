@@ -10,7 +10,9 @@ import { MenuStyled, Column, EmptyList } from './styled'
 import { getUserInitialAvatar } from '../../api'
 import { INVITATION_STATUSES } from '../IncreaseHandprintPage'
 
+// TODO fix invitation
 export function getGroups(participants, invitations) {
+  if (_.isEmpty(participants)) return {}
   let groups = {}
   invitations
     .filter(i => i.status === INVITATION_STATUSES.ACCEPTED)

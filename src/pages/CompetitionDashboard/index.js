@@ -52,7 +52,7 @@ function CampaignDashboard(props) {
   if (!competitionId) return null
   const [competition, loading, participants] = useCompetition(competitionId)
   const [ownGroupsList] = useOwnGroupsList() // groups where user is admin
-  const [invitations] = useInvitationsList(competitionId) // groups where user is admin
+  const [invitations] = useInvitationsList(competitionId)
 
   const sortedParticipants = participants.sort((a, b) =>
     a.user._id === props.user._id ? -1 : 1,
@@ -112,6 +112,7 @@ function CampaignDashboard(props) {
           loading,
           participants,
           invitations,
+          ownGroupsList,
         })}
       </Content>
     </Fragment>
