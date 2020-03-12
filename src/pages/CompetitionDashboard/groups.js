@@ -33,6 +33,18 @@ const Text = styled.span`
   font-size: 28px;
   line-height: 35px;
   color: ${colors.dark};
+  width: 450px;
+  text-align: center;
+`
+
+const Description = styled.span`
+  margin-bottom: 60px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: ${colors.darkGray};
 `
 
 export default function renderGroups(props) {
@@ -45,6 +57,14 @@ export default function renderGroups(props) {
 
   const joinCompetition = intl.formatMessage(
     { id: 'app.competitions.join' },
+    {
+      group: invitation.group.name,
+      competition: competition.name,
+    },
+  )
+
+  const dinedInvitation = intl.formatMessage(
+    { id: 'app.competitions.denied' },
     {
       group: invitation.group.name,
       competition: competition.name,
@@ -70,6 +90,7 @@ export default function renderGroups(props) {
               style={{ width: 200, margin: 5 }}
               onClick={() => {
                 denyInvitation(invitation.competition)
+                window.location.reload()
               }}
             >
               <FormattedMessage id="app.pages.groups.deny" />
@@ -79,12 +100,21 @@ export default function renderGroups(props) {
               style={{ width: 200, margin: 5 }}
               onClick={() => {
                 acceptInvitation(invitation.competition)
+                window.location.reload()
               }}
               type="primary"
             >
               <FormattedMessage id="app.pages.groups.join" />
             </PrimaryButton>
           </div>
+        </Main>
+      )}
+      {invitation.status === INVITATION_STATUSES.DENIED && (
+        <Main>
+          <Text>{dinedInvitation}</Text>
+          <Description>
+            <FormattedMessage id="app.competitions.deniedDescription" />
+          </Description>
         </Main>
       )}
     </Fragment>

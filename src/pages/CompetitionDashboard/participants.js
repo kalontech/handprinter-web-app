@@ -10,7 +10,7 @@ import { MenuStyled, Column, EmptyList } from './styled'
 import { getUserInitialAvatar } from '../../api'
 import { INVITATION_STATUSES } from '../IncreaseHandprintPage'
 
-function getGroups(participants, invitations) {
+export function getGroups(participants, invitations) {
   let groups = {}
   invitations
     .filter(i => i.status === INVITATION_STATUSES.ACCEPTED)

@@ -1,22 +1,18 @@
 import React, { Fragment } from 'react'
 import Spinner from 'components/Spinner'
 import { FormattedMessage } from 'react-intl'
-import arrowDownIcon from 'assets/icons/arrowDown.svg'
 import MemberCard from 'components/MemberCard'
-
-import { Select } from 'antd'
 
 import {
   StatisticsScroll,
   StatisticsContainer,
   StatisticsMain,
   StatisticsScrollTitle,
-  StatisticsHeaderDropdown,
 } from './styled'
 
 import { getUserInitialAvatar } from '../../api'
 import AccomplishedAction from './accomplishedAction'
-import { INVITATION_STATUSES } from '../IncreaseHandprintPage'
+import { getGroups } from './participants'
 
 function getSortedActions({ participants }) {
   // Group by slug
@@ -37,12 +33,17 @@ function getSortedActions({ participants }) {
     .sort((a, b) => b.count - a.count)
 }
 
-function getSortedParticipants(props) {
-  return props.participants.sort((a, b) => {
-    if (
-      a.user._id === props.user._id ||
-      a.accomplishedActions.length > b.accomplishedActions.length
-    ) {
+function getSortedGroups(groups) {
+  return groups.sort((a, b) => {
+    const accomplishedCurr = a.participants.reduce(
+      (acc, curr) => acc + curr.accomplishedActions.length,
+      0,
+    )
+    const accomplishedNext = b.participants.reduce(
+      (acc, curr) => acc + curr.accomplishedActions.length,
+      0,
+    )
+    if (accomplishedCurr > accomplishedNext) {
       return -1
     }
     return 1
@@ -50,22 +51,22 @@ function getSortedParticipants(props) {
 }
 
 export default function renderStatistics(props) {
-  const { loading, intl, competition, invitations } = props
+  const { loading, intl, competition, invitations, participants } = props
+  const total = competition.actions.length
 
-  const sortedParticipants = getSortedParticipants(props)
   const sortedActions = getSortedActions(props)
 
-  const total = competition.actions.length
-  const myGroups = invitations.filter(
-    i => i.status === INVITATION_STATUSES.ACCEPTED,
-  )
+  const groups = getGroups(participants, invitations)
+  const sortedGroups = getSortedGroups(Object.values(groups))
+
   return (
     <Fragment>
       {loading ? (
         <Spinner />
       ) : (
         <Fragment>
-          <StatisticsHeaderDropdown>
+          {/* Can be uncommented */}
+          {/* <StatisticsHeaderDropdown>
             <Select
               defaultValue={myGroups[0] && myGroups[0].group.name}
               style={{ width: '100%' }}
@@ -83,7 +84,7 @@ export default function renderStatistics(props) {
                 </Select.Option>
               ))}
             </Select>
-          </StatisticsHeaderDropdown>
+          </StatisticsHeaderDropdown> */}
 
           <StatisticsMain>
             <StatisticsContainer>
@@ -91,23 +92,26 @@ export default function renderStatistics(props) {
                 <FormattedMessage id="app.campaignPage.participants" />
               </StatisticsScrollTitle>
               <StatisticsScroll>
-                {sortedParticipants.map(participant => {
-                  const accomplished = participant.accomplishedActions.length
-                  const percentAccomplished = (accomplished / total) * 100
+                {sortedGroups.map(i => {
+                  const accomplished = i.participants.reduce(
+                    (acc, curr) => acc + curr.accomplishedActions.length,
+                    0,
+                  )
+                  let totalActions = total * i.participants.length
+                  const percentAccomplished =
+                    (accomplished / totalActions) * 100
                   return (
                     <MemberCard
-                      key={participant.user._id}
-                      to={`/account/${participant.user._id}`}
-                      fullName={participant.user.fullName}
+                      key={i.group._id}
+                      to={`/groups/view/${i.group._id}/statistics`}
+                      fullName={i.group.name}
                       photo={
-                        participant.user.photo ||
-                        getUserInitialAvatar(participant.user.fullName)
+                        i.group.picture || getUserInitialAvatar(i.group.name)
                       }
                       counter={intl.formatMessage(
                         { id: 'app.campaignPage.progress.accomplished' },
-                        { accomplished, total },
+                        { accomplished, total: totalActions },
                       )}
-                      impacts={{ handprint: participant.userInfo.impacts }}
                       progressBarPercent={percentAccomplished}
                     />
                   )
