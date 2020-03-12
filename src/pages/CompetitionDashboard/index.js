@@ -13,6 +13,7 @@ import StatisticsIconComponent from 'assets/icons/StatisticsIcon'
 import useCompetition from './useCompetition'
 import useOwnGroupsList from './useOwnGroupsList'
 import useInvitationsList from './useInvitationsList'
+import useAllInvitationsList from './useAllInvitationsList'
 import Header from './header'
 import { Content } from './styled'
 import renderParticipants from './participants'
@@ -53,6 +54,7 @@ function CampaignDashboard(props) {
   const [competition, loading, participants] = useCompetition(competitionId)
   const [ownGroupsList] = useOwnGroupsList() // groups where user is admin
   const [invitations] = useInvitationsList(competitionId)
+  const [allInvitations] = useAllInvitationsList(competitionId)
 
   const sortedParticipants = participants.sort((a, b) =>
     a.user._id === props.user._id ? -1 : 1,
@@ -112,6 +114,7 @@ function CampaignDashboard(props) {
           loading,
           participants,
           invitations,
+          allInvitations,
           ownGroupsList,
         })}
       </Content>

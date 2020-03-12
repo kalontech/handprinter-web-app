@@ -13,6 +13,9 @@ export const sendInvitations = (body, id) =>
 export const getInvitations = id =>
   fetchAPI(`/competitions/${id}/invite`, { method: 'GET' })
 
+export const getAllInvitations = id =>
+  fetchAPI(`/competitions/${id}/invite/all`, { method: 'GET' })
+
 export const acceptInvitation = id =>
   fetchAPI(`/competitions/${id}/invite/accept`, { method: 'GET' })
 

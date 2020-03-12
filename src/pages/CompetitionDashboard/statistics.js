@@ -51,12 +51,12 @@ function getSortedGroups(groups) {
 }
 
 export default function renderStatistics(props) {
-  const { loading, intl, competition, invitations, participants } = props
+  const { loading, intl, competition, participants, allInvitations } = props
   const total = competition.actions.length
 
   const sortedActions = getSortedActions(props)
 
-  const groups = getGroups(participants, invitations)
+  const groups = getGroups(participants, allInvitations)
   const sortedGroups = getSortedGroups(Object.values(groups))
 
   return (
@@ -141,7 +141,7 @@ export default function renderStatistics(props) {
 renderStatistics.propTypes = {
   loading: Boolean,
   participants: Array,
-  invitations: Array,
+  allInvitations: Array,
   intl: Object,
   competition: Object,
   history: Object,
