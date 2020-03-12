@@ -706,5 +706,12 @@
     "app.errors.43": "Amount is invalid",
     "app.dashboardPage.organization.netPositiveDays": "Our net-positive days",
     "app.dashboardPage.organizationNetPositiveDays": "Our Net Positive days",
-    "app.dashboardPage.organizationNetwork": "Our network"
+    "app.dashboardPage.organizationNetwork": "Our network",
+    "app.forms.actionCategory": "Category",
+    "app.actions.type": "Type",
+    "app.actions.type.Wild": "Wild",
+    "app.actions.type.Modeled": "Modeled",
+    "app.actions.behaviour": "Behaviour",
+    "app.actions.behaviour.Habbit": "Habbit",
+    "app.actions.behaviour.Can become habbit": "Can become habbit"
 }

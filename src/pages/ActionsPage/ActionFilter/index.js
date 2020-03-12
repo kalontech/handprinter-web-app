@@ -1,15 +1,13 @@
 import React, { Fragment, useState } from 'react'
-
 import PropTypes from 'prop-types'
-// import { FormattedMessage, intlShape } from 'react-intl'
 import { Select, Icon } from 'antd'
+import { FormattedMessage } from 'react-intl'
 
 import atom from '../../../assets/unit-icons/atom.svg'
 import clock from '../../../assets/unit-icons/clock.svg'
-
 import { Checkbox } from '../../../components/Styled'
 import { SelectWrapper, Block, UnitsBlock } from './styled'
-import { categories, fakeBehaviourData, fakeTypesData } from './filterData'
+import { categories, behaviour, types } from './filterData'
 
 const { Option } = Select
 
@@ -90,20 +88,20 @@ function ActionsFilters(props) {
           </Select>
           <Select
             allowClear={true}
-            value="Type"
+            value={<FormattedMessage id="app.actions.type" />}
             mode="default"
             style={{ width: '100%' }}
             onChange={handleTypeChange}
             menuItemSelectedIcon={<Icon />}
           >
-            {fakeTypesData.map(type => {
+            {types.map(type => {
               return (
                 <Option key={type.id}>
                   <Checkbox
                     checked={selectedType.includes(type.name)}
                     name={type.name}
                   >
-                    {type.name}
+                    <FormattedMessage id={`app.actions.type.${type.name}`} />
                   </Checkbox>
                 </Option>
               )
@@ -111,20 +109,22 @@ function ActionsFilters(props) {
           </Select>
           <Select
             allowClear={true}
-            value="Behaviour"
+            value={<FormattedMessage id="app.actions.behaviour" />}
             mode="default"
             style={{ width: '100%' }}
             onChange={handleBehaviourChange}
             menuItemSelectedIcon={<Icon />}
           >
-            {fakeBehaviourData.map(behaviour => {
+            {behaviour.map(behaviour => {
               return (
                 <Option key={behaviour.id}>
                   <Checkbox
                     checked={selectedBehaviour.includes(behaviour.name)}
                     name={behaviour.name}
                   >
-                    {behaviour.name}
+                    <FormattedMessage
+                      id={`app.actions.behaviour.${behaviour.name}`}
+                    />
                   </Checkbox>
                 </Option>
               )

@@ -165,6 +165,7 @@ const PopoverWrapper = styled.div`
     background-color: ${colors.green}; !important
   }
 `
+
 const PopoverTitle = styled.text`
   font-family: Noto Sans;
   font-style: normal;
@@ -173,6 +174,7 @@ const PopoverTitle = styled.text`
   line-height: 28px;
   color: ${colors.white};
 `
+
 const PopoverText = styled.text`
   font-family: Noto Sans;
   font-style: normal;
@@ -197,22 +199,16 @@ const ActionCard = props => {
     styles,
     onClick,
     isHabit,
-    impactsInUnits,
     isWild,
   } = props
 
-  if (!impactsInUnits || !impacts) return null
-  const footVal = Object.values(impactsInUnits.footprint)
-  const foot = footVal.find(i => i !== 0)
-  const handVal = Object.values(impactsInUnits.handprint)
-  const hand = handVal.find(i => i !== 0)
   const popover = (
     <ActionPopover
       overlayClassName={'actions-popover'}
       content={
         <PopoverWrapper>
-          <PopoverTitle>Hello</PopoverTitle>
-          <PopoverText>{}</PopoverText>
+          <PopoverTitle></PopoverTitle>
+          <PopoverText></PopoverText>
         </PopoverWrapper>
       }
     >
@@ -221,7 +217,7 @@ const ActionCard = props => {
       </WildWrapper>
     </ActionPopover>
   )
-  const condition = isWild && Boolean(foot) && Boolean(hand)
+
   return (
     <Link to={to} onClick={onClick}>
       <CardWrap>
@@ -250,7 +246,7 @@ const ActionCard = props => {
           <CardWrapper>
             <CardHeading style={props.font}>{name}</CardHeading>
             <ActionCardLabelSetWrapper>
-              {condition ? popover : typeof impacts === 'function' && impacts()}
+              {isWild ? popover : typeof impacts === 'function' && impacts()}
               {impacts && typeof impacts !== 'function' && (
                 <ActionCardLabelSet impacts={impacts} />
               )}

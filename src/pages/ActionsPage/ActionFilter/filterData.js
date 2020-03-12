@@ -14,7 +14,7 @@ export const categories = [
   { id: 'At Work', name: 'At Work' },
 ]
 
-export const fakeTypesData = [
+export const types = [
   { id: 'Wild', name: 'Wild' },
   {
     id: 'Modeled',
@@ -22,7 +22,7 @@ export const fakeTypesData = [
   },
 ]
 
-export const fakeBehaviourData = [
+export const behaviour = [
   { id: 'Habbit', name: 'Habbit' },
   {
     id: 'Can become habbit',
