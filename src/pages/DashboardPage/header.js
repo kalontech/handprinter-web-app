@@ -190,7 +190,7 @@ export const AchievementCol = styled(Col)`
 
 export const AchievementTitle = styled.text`
   position: relative;
-  top: 45px;
+  top: 50px;
   left: 16%;
   font-family: Noto Sans;
   font-style: normal;
