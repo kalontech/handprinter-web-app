@@ -6,8 +6,9 @@ import _ from 'lodash'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
+import { FormattedMessage } from 'react-intl'
 
-import { Progress, Popover, Icon } from 'antd'
+import { Progress, Popover } from 'antd'
 
 import {
   Achievements,
@@ -153,9 +154,6 @@ export default class MemberCard extends React.PureComponent {
       containerStyle,
       actionsTakenPerMember,
     } = this.props
-    const popoverText = `Action taken per member - to make the rate of Groups 
-    more accurate we take into account the average number 
-    of actions that are taken per one member.`
 
     return (
       <Block style={containerStyle} to={to}>
@@ -181,12 +179,14 @@ export default class MemberCard extends React.PureComponent {
                   <ParticipantPopover
                     overlayClassName={'achievements-popover'}
                     overlayStyle={{
-                      height: '110px',
+                      height: '120px',
                       width: '294px',
                     }}
                     content={
                       <PopoverWrapper>
-                        <PopoverText>{popoverText}</PopoverText>
+                        <PopoverText>
+                          <FormattedMessage id="app.competitions.statistics.popover.message" />
+                        </PopoverText>
                       </PopoverWrapper>
                     }
                   >
@@ -215,7 +215,6 @@ export default class MemberCard extends React.PureComponent {
             )}
           </Info>
         </User>
-
         {impacts && <ActionCardLabelSet impacts={impacts} />}
       </Block>
     )
