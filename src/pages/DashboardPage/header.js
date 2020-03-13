@@ -188,14 +188,13 @@ export const AchievementCol = styled(Col)`
   display: flex;
 `
 
-export const AchievementTitle = styled.text`
-  position: relative;
-  top: 50px;
-  left: 16%;
+export const AchievementTitle = styled.p`
+  text-align: center;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 28px;
+  width: 100%;
 `
 
 export const AchievementFooter = styled.div`
@@ -238,7 +237,7 @@ export const AchievementModal = styled(Modal)`
 export const AchivmentLogo = styled.img`
   position: relative;
   top: -55px;
-  left: 40%;
+  left: 41.5%;
   width: 110px;
   height: 108.95px;
   border-radius: 50%;
@@ -254,7 +253,7 @@ export const AchivmentBanner = styled.div`
 export const FingerLogo = styled.img`
   position: absolute;
   top: 39.62px;
-  left: 127px;
+  left: 130px;
 `
 
 export const AchievementFooterButton = styled(PrimaryButton)`
