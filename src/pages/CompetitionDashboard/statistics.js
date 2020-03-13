@@ -117,6 +117,7 @@ export default function renderStatistics(props) {
                       actionsTakenPerMember={Number(
                         accomplished / participantsCount,
                       ).toFixed(1)}
+                      impacts={{ handprint: i.group.impacts }}
                     />
                   )
                 })}
