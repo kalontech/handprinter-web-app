@@ -299,6 +299,29 @@ const PopoverText = styled.text`
 
 const AchievementPopover = styled(Popover)``
 
+function getAchievements(user) {
+  let achievements = []
+  const finishedCampaigns = user.finishedCampaigns || []
+  const finishedCompetitions = user.finishedCompetitions || []
+  finishedCampaigns.forEach(c => {
+    achievements.push({
+      _id: c._id,
+      achievement: c.campaign,
+      accomplishedActions: c.accomplishedActions,
+    })
+  })
+  finishedCompetitions.forEach(c => {
+    achievements.push({
+      _id: c._id,
+      achievement: c.competition,
+      specialShape: true,
+      accomplishedActions: c.accomplishedActions,
+    })
+  })
+
+  return achievements
+}
+
 const Header = props => {
   const {
     organization,
@@ -312,7 +335,7 @@ const Header = props => {
     setMoreAchievesVisible,
     formatMessage,
   } = props
-  const finishedCampaigns = user.finishedCampaigns || []
+  const achievements = getAchievements(user)
   return (
     <DashboardHeaderWhiteLine organization={organization}>
       <DashboardHeaderUserPictureWrap>
@@ -338,13 +361,13 @@ const Header = props => {
       </DashboardHeaderUserSince>
       {!organization && (
         <Achievements>
-          {finishedCampaigns.slice(0, 5).map(i => {
-            const campaign = i.campaign
-            if (!campaign) return null
+          {achievements.slice(0, 5).map(i => {
+            const achievement = i.achievement
+            if (!achievement) return null
             const accomplished = i.accomplishedActions
               ? i.accomplishedActions.length
               : 0
-            const total = _.get(campaign, 'actions.length', 0)
+            const total = _.get(achievement, 'actions.length', 0)
             const accomplishedLabel = formatMessage(
               { id: 'app.campaignPage.progress.accomplished' },
               {
@@ -358,21 +381,21 @@ const Header = props => {
                 overlayClassName={'achievements-popover'}
                 content={
                   <PopoverWrapper>
-                    <PopoverTitle>{_.get(i, 'campaign.name')}</PopoverTitle>
+                    <PopoverTitle>{_.get(i, 'achievement.name')}</PopoverTitle>
                     <PopoverText>{accomplishedLabel}</PopoverText>
                   </PopoverWrapper>
                 }
               >
                 <Achievement specialShape={i.specialShape}>
-                  <img alt={''} src={_.get(i, 'campaign.logo.src')} />
+                  <img alt={''} src={_.get(i, 'achievement.logo.src')} />
                 </Achievement>
               </AchievementPopover>
             )
           })}
-          {finishedCampaigns.length > 5 && (
+          {achievements.length > 5 && (
             <Achievement onClick={() => setMoreAchievesVisible(true)} other>
               <OtherAchievementsText>
-                +{finishedCampaigns.length - 5}
+                +{achievements.length - 5}
               </OtherAchievementsText>
             </Achievement>
           )}
@@ -470,13 +493,13 @@ const Header = props => {
       >
         <ModalContent>
           <AchievementRow type="flex" justify="left">
-            {finishedCampaigns.map(i => {
-              const campaign = i.campaign
-              if (!campaign) return null
+            {achievements.map(i => {
+              const achievement = i.achievement
+              if (!achievement) return null
               const accomplished = i.accomplishedActions
                 ? i.accomplishedActions.length
                 : 0
-              const total = _.get(campaign, 'actions.length', 0)
+              const total = _.get(achievement, 'actions.length', 0)
               const accomplishedLabel = formatMessage(
                 { id: 'app.campaignPage.progress.accomplished' },
                 {
@@ -491,14 +514,14 @@ const Header = props => {
                     content={
                       <PopoverWrapper>
                         <PopoverTitle>
-                          {!!i.campaign && i.campaign.name}
+                          {!!i.achievement && i.achievement.name}
                         </PopoverTitle>
                         <PopoverText>{accomplishedLabel}</PopoverText>
                       </PopoverWrapper>
                     }
                   >
                     <Achievement specialShape={i.specialShape}>
-                      <img alt={''} src={_.get(i, 'campaign.logo.src')} />
+                      <img alt={''} src={_.get(i, 'achievement.logo.src')} />
                     </Achievement>
                   </AchievementPopover>
                 </AchievementCol>
