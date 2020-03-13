@@ -104,7 +104,6 @@ const Header = props => {
           <AchievementFooter key="submit">
             <SkipFooterButton
               type="secondary"
-              disabled={!groupsToInvite.length}
               onClick={() => {
                 setInviteModalVisible(false)
                 sendInvitations({ groupsToInvite }, competition._id)

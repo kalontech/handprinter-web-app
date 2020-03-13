@@ -246,7 +246,7 @@ export const AchivmentLogo = styled.img`
 export const AchivmentBanner = styled.div`
   height: 140px;
   width: 100%;
-  background-color: #169080;
+  background-color: ${colors.ocean};
   border-radius: 4px 4px 0px 0px;
 `
 
