@@ -8,7 +8,7 @@ import media from 'utils/mediaQueryTemplate'
 import colors from 'config/colors'
 
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
-import { PrimaryButton, Modal } from 'components/Styled'
+import { PrimaryButton, DefaultButton, Modal } from 'components/Styled'
 
 import { InfoElementWrap } from '.'
 
@@ -167,9 +167,17 @@ const OtherAchievementsText = styled.text`
 
 export const ModalContent = styled.div`
   width: 472px;
-  height: 413px;
+  height: 218px;
   margin: 0 60px 40px 60px;
-  border: 1px solid ${colors.lightGray};
+  border: 1px solid ${colors.gray};
+  box-sizing: border-box;
+  border-radius: 4px;
+
+  ${media.phone`
+    width: 90%;
+    margin: 5%;
+    border-radius: 0;
+  `}
 `
 
 export const AchievementRow = styled(Row)``
@@ -180,13 +188,13 @@ export const AchievementCol = styled(Col)`
   display: flex;
 `
 
-export const AchievementTitle = styled.text`
+export const AchievementTitle = styled.p`
+  text-align: center;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 28px;
-  line-height: 35px;
-  text-align: center;
+  width: 100%;
 `
 
 export const AchievementFooter = styled.div`
@@ -195,9 +203,21 @@ export const AchievementFooter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 0px 0px 4px 4px;
+
+  ${media.phone`
+    border-radius: 0;
+    padding: 0 10px;
+  `}
 `
 
 export const AchievementModal = styled(Modal)`
+  .ant-modal-close-x {
+    color: white;
+    width: 50px;
+    height: 50px;
+  }
+
   .ant-modal-footer {
     padding: 0px;
     border: 0;
@@ -214,8 +234,37 @@ export const AchievementModal = styled(Modal)`
   }
 `
 
+export const AchivmentLogo = styled.img`
+  position: relative;
+  top: -55px;
+  left: 41.5%;
+  width: 110px;
+  height: 108.95px;
+  border-radius: 50%;
+`
+
+export const AchivmentBanner = styled.div`
+  height: 140px;
+  width: 100%;
+  background-color: ${colors.ocean};
+  border-radius: 4px 4px 0px 0px;
+`
+
+export const FingerLogo = styled.img`
+  position: absolute;
+  top: 39.62px;
+  left: 130px;
+`
+
 export const AchievementFooterButton = styled(PrimaryButton)`
-  width: 472px;
+  width: 198px;
+  height: 50px;
+  align-self: center;
+`
+
+export const SkipFooterButton = styled(DefaultButton)`
+  width: 198px;
+  height: 50px;
   align-self: center;
 `
 
@@ -281,11 +330,11 @@ const Header = props => {
         {organization ? (
           <FormattedMessage id={'app.dahsboard.organization'} />
         ) : (
-          <div>
-            <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
-            {moment(user.createdAt).format('MMMM DD, YYYY')}
-          </div>
-        )}
+            <div>
+              <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
+              {moment(user.createdAt).format('MMMM DD, YYYY')}
+            </div>
+          )}
       </DashboardHeaderUserSince>
       {!organization && (
         <Achievements>

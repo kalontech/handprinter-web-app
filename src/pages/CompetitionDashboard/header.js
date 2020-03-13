@@ -7,7 +7,8 @@ import { getUserInitialAvatar } from 'api'
 
 import styled from 'styled-components'
 
-import { Checkbox } from 'antd'
+import { Checkbox } from '../../components/Styled'
+import fingerPrintSVG from '../../assets/icons/fingerprint-part.svg'
 
 import {
   HeaderCamapingDescription,
@@ -17,6 +18,7 @@ import {
   BreadcrumbItem,
   HeaderCompetitionButton,
   HeaderCompetitionButtonContainer,
+  ModalMessage,
 } from './styled'
 import {
   DashboardHeaderWhiteLine,
@@ -25,9 +27,13 @@ import {
   DashboardHeaderUserSince,
   AchievementModal,
   AchievementTitle,
+  AchivmentLogo,
+  AchivmentBanner,
   AchievementFooterButton,
+  SkipFooterButton,
   AchievementFooter,
   ModalContent,
+  FingerLogo,
 } from '../DashboardPage/header'
 import { sendInvitations } from '../../api/competitions'
 
@@ -94,9 +100,17 @@ const Header = props => {
         onCancel={() => setInviteModalVisible(false)}
         centered
         destroyOnClose
-        title={<AchievementTitle>{competition.name}</AchievementTitle>}
         footer={[
           <AchievementFooter key="submit">
+            <SkipFooterButton
+              type="secondary"
+              onClick={() => {
+                setInviteModalVisible(false)
+                sendInvitations({ groupsToInvite }, competition._id)
+              }}
+            >
+              <FormattedMessage id="app.increaseHandprintPage.form.sendInvites" />
+            </SkipFooterButton>
             <AchievementFooterButton
               type="primary"
               disabled={!groupsToInvite.length}
@@ -110,6 +124,14 @@ const Header = props => {
           </AchievementFooter>,
         ]}
       >
+        <AchivmentBanner>
+          <FingerLogo src={fingerPrintSVG} />
+        </AchivmentBanner>
+        <AchivmentLogo src={competition.logo.src} alt="" />
+        <AchievementTitle>{competition.name}</AchievementTitle>
+        <ModalMessage>
+          Select group you want to invite to participate in the competition
+        </ModalMessage>
         <ModalContent>
           {ownGroupsList.map(group =>
             renderGroup(
@@ -128,7 +150,7 @@ function renderGroup(group, onCheckboxChange, checked) {
   const Group = styled.div`
     width: 100%;
     height: 60px;
-    padding: 15px;
+    padding: 22px 15px 15px 15px;
     cursor: pointer;
     display: flex;
     align-items: center;
