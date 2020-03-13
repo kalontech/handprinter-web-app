@@ -43,7 +43,7 @@ const ImgPlaceholder = styled.div`
   position: relative;
   background: ${colors.lightGray};
   border: 1px solid ${colors.gray};
-  width: 106px;
+  min-width: 106px;
   height: 106px;
   overflow: hidden;
   border-radius: 50%;
@@ -72,6 +72,7 @@ const Info = styled.div`
   justify-content: center;
   align-items: baseline;
   margin-left: 24px;
+  width: 100%;
 `
 
 const FullName = styled.span`
@@ -87,7 +88,7 @@ const Counter = styled.span`
 `
 
 const ProgressStyled = styled(Progress)`
-  width: 330px;
+  width: 100%;
 `
 
 const ParticipantPopover = styled(Popover)`

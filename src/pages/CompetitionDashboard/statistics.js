@@ -85,7 +85,6 @@ export default function renderStatistics(props) {
               ))}
             </Select>
           </StatisticsHeaderDropdown> */}
-
             <StatisticsMain>
               <StatisticsContainer>
                 <StatisticsScrollTitle>
@@ -122,6 +121,7 @@ export default function renderStatistics(props) {
                         actionsTakenPerMember={Number(
                           accomplished / participantsCount,
                         ).toFixed(1)}
+                        impacts={{ handprint: i.group.impacts }}
                       />
                     )
                   })}
