@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Select, Icon } from 'antd'
-import { FormattedMessage } from 'react-intl'
+import { injectIntl } from 'react-intl'
 
 import atom from '../../../assets/unit-icons/atom.svg'
 import clock from '../../../assets/unit-icons/clock.svg'
@@ -11,7 +11,7 @@ import { categories, behaviour, types } from './filterData'
 
 const { Option } = Select
 
-function ActionsFilters(props) {
+function ActionsFilters({ intl: { formatMessage }, ...props }) {
   const [selectedCategories, setSelectedCategories] = useState([])
   const [selectedType, setSelectedType] = useState([])
   const [selectedBehaviour, setSelectedBehaviour] = useState([])
@@ -88,7 +88,9 @@ function ActionsFilters(props) {
           </Select>
           <Select
             allowClear={true}
-            value={<FormattedMessage id="app.actions.type" />}
+            value={formatMessage({
+              id: 'app.actions.type',
+            })}
             mode="default"
             style={{ width: '100%' }}
             onChange={handleTypeChange}
@@ -101,7 +103,9 @@ function ActionsFilters(props) {
                     checked={selectedType.includes(type.name)}
                     name={type.name}
                   >
-                    <FormattedMessage id={`app.actions.type.${type.id}`} />
+                    {formatMessage({
+                      id: `app.actions.type.${type.id.toLowerCase()}`,
+                    })}
                   </Checkbox>
                 </Option>
               )
@@ -109,7 +113,9 @@ function ActionsFilters(props) {
           </Select>
           <Select
             allowClear={true}
-            value={<FormattedMessage id="app.actions.behaviour" />}
+            value={formatMessage({
+              id: 'app.actions.behaviour',
+            })}
             mode="default"
             style={{ width: '100%' }}
             onChange={handleBehaviourChange}
@@ -122,9 +128,9 @@ function ActionsFilters(props) {
                     checked={selectedBehaviour.includes(behaviour.name)}
                     name={behaviour.name}
                   >
-                    <FormattedMessage
-                      id={`app.actions.behaviour.${behaviour.id}`}
-                    />
+                    {formatMessage({
+                      id: `app.actions.behaviour.${behaviour.id.toLowerCase()}`,
+                    })}
                   </Checkbox>
                 </Option>
               )
@@ -132,7 +138,7 @@ function ActionsFilters(props) {
           </Select>
         </Block>
         <UnitsBlock>
-          <Select
+          {/* <Select
             mode="default"
             style={{ width: '100%' }}
             onChange={null}
@@ -151,7 +157,7 @@ function ActionsFilters(props) {
                 Time units
               </span>
             </Option>
-          </Select>
+          </Select> */}
         </UnitsBlock>
       </SelectWrapper>
     </Fragment>
@@ -166,6 +172,7 @@ ActionsFilters.propTypes = {
   values: PropTypes.object,
   showFilter: PropTypes.bool.isRequired,
   inModal: PropTypes.bool,
+  intl: PropTypes.object,
 }
 
-export default ActionsFilters
+export default injectIntl(ActionsFilters)
