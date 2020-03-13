@@ -15,17 +15,17 @@ export const categories = [
 ]
 
 export const types = [
-  { id: 'wild', name: 'Wild' },
+  { id: 'Wild', name: 'Wild' },
   {
-    id: 'modeled',
+    id: 'Modeled',
     name: 'Modeled',
   },
 ]
 
 export const behaviour = [
-  { id: 'habbit', name: 'Habbit' },
+  { id: 'Habbit', name: 'Habbit' },
   {
-    id: 'can become habbit',
+    id: 'Can become habbit',
     name: 'Can become habbit',
   },
 ]
