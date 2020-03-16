@@ -98,7 +98,7 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
           >
             {types.map(type => {
               return (
-                <Option key={type.id}>
+                <Option key={type.name}>
                   <Checkbox
                     checked={selectedType.includes(type.name)}
                     name={type.name}
@@ -123,7 +123,7 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
           >
             {behaviour.map(behaviour => {
               return (
-                <Option key={behaviour.id}>
+                <Option key={behaviour.name}>
                   <Checkbox
                     checked={selectedBehaviour.includes(behaviour.name)}
                     name={behaviour.name}
