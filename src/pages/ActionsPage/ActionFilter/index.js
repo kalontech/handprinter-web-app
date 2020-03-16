@@ -129,7 +129,7 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
                     name={behaviour.name}
                   >
                     {formatMessage({
-                      id: `app.actions.behaviour.${behaviour.id.toLowerCase()}`,
+                      id: `app.actions.behaviour.${behaviour.id}`,
                     })}
                   </Checkbox>
                 </Option>
