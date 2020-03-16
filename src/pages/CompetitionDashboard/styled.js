@@ -237,7 +237,7 @@ export const StatisticsMain = styled.div`
 export const StatisticsContainer = styled.div`
   background-color: ${colors.white};
   width: 49%;
-  min-height: 40px;
+  max-height: 815px;
   padding: 0px 30px;
 `
 
@@ -247,13 +247,13 @@ export const StatisticsScrollTitle = styled.p`
   font-weight: normal;
   font-size: 22px;
   line-height: 30px;
-  color: ${colors.darkGray};
+  color: ${colors.dark};
   margin: 20px 0px;
 `
 
 export const StatisticsScroll = styled.div`
   overflow: scroll;
-  min-height: 0px;
+  max-height: 705px;
   padding: 3px;
 `
 
