@@ -169,6 +169,7 @@ export const OtherAchievementsText = styled.text`
 export const ModalContent = styled.div`
   width: 472px;
   height: 218px;
+  overflow: scroll;
   margin: 0 60px 40px 60px;
   border: 1px solid ${colors.gray};
   box-sizing: border-box;
@@ -195,6 +196,7 @@ export const AchievementTitle = styled.p`
   font-style: normal;
   font-weight: normal;
   font-size: 28px;
+  margin-top: -30px;
   width: 100%;
 `
 
@@ -238,7 +240,7 @@ export const AchievementModal = styled(Modal)`
 export const AchivmentLogo = styled.img`
   position: relative;
   top: -55px;
-  left: 41.5%;
+  left: 41%;
   width: 110px;
   height: 108.95px;
   border-radius: 50%;
@@ -274,11 +276,11 @@ export const PopoverWrapper = styled.div`
   display: flex;
   flex-direction: column;
   .ant-popover-inner {
-    background-color: ${colors.green}; !important
+    background-color: ${colors.green} !important;
   }
   .ant-popover-inner-content {
     padding: 0;
-    background-color: ${colors.green}; !important
+    background-color: ${colors.green} !important;
   }
 `
 export const PopoverTitle = styled.text`
@@ -363,11 +365,11 @@ const Header = props => {
         {organization ? (
           <FormattedMessage id={'app.dahsboard.organization'} />
         ) : (
-          <div>
-            <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
-            {moment(user.createdAt).format('MMMM DD, YYYY')}
-          </div>
-        )}
+            <div>
+              <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
+              {moment(user.createdAt).format('MMMM DD, YYYY')}
+            </div>
+          )}
       </DashboardHeaderUserSince>
       {!organization && (
         <Achievements>

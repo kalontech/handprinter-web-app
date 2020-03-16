@@ -64,9 +64,9 @@ export default function renderStatistics(props) {
       {loading ? (
         <Spinner />
       ) : (
-        <Fragment>
-          {/* Can be uncommented */}
-          {/* <StatisticsHeaderDropdown>
+          <Fragment>
+            {/* Can be uncommented */}
+            {/* <StatisticsHeaderDropdown>
             <Select
               defaultValue={myGroups[0] && myGroups[0].group.name}
               style={{ width: '100%' }}
@@ -85,60 +85,68 @@ export default function renderStatistics(props) {
               ))}
             </Select>
           </StatisticsHeaderDropdown> */}
-
-          <StatisticsMain>
-            <StatisticsContainer>
-              <StatisticsScrollTitle>
-                <FormattedMessage id="app.campaignPage.participants" />
-              </StatisticsScrollTitle>
-              <StatisticsScroll>
-                {sortedGroups.map(i => {
-                  const accomplished = i.participants.reduce(
-                    (acc, curr) => acc + curr.accomplishedActions.length,
-                    0,
-                  )
-                  const participantsCount = i.participants.length
-                  let totalActions = total * participantsCount
-                  const percentAccomplished =
-                    (accomplished / totalActions) * 100
-                  return (
-                    <MemberCard
-                      key={i.group._id}
-                      to={`/groups/view/${i.group._id}/statistics`}
-                      fullName={i.group.name}
-                      photo={
-                        i.group.picture || getUserInitialAvatar(i.group.name)
-                      }
-                      counter={intl.formatMessage(
-                        { id: 'app.campaignPage.progress.accomplished' },
-                        { accomplished, total: totalActions },
-                      )}
-                      progressBarPercent={percentAccomplished}
-                      actionsTakenPerMember={Number(
-                        accomplished / participantsCount,
-                      ).toFixed(1)}
-                      impacts={{ handprint: i.group.impacts }}
+            <StatisticsMain>
+              <StatisticsContainer>
+                <StatisticsScrollTitle>
+                  {sortedGroups.length !== 0 ? (
+                    <FormattedMessage id="app.campaignPage.participants" />
+                  ) : (
+                      <FormattedMessage id="app.campaignPage.noparticipants" />
+                    )
+                  }
+                </StatisticsScrollTitle>
+                <StatisticsScroll>
+                  {sortedGroups.map(i => {
+                    const accomplished = i.participants.reduce(
+                      (acc, curr) => acc + curr.accomplishedActions.length,
+                      0,
+                    )
+                    const participantsCount = i.participants.length
+                    let totalActions = total * participantsCount
+                    const percentAccomplished =
+                      (accomplished / totalActions) * 100
+                    return (
+                      <MemberCard
+                        key={i.group._id}
+                        to={`/groups/view/${i.group._id}/statistics`}
+                        fullName={i.group.name}
+                        photo={
+                          i.group.picture || getUserInitialAvatar(i.group.name)
+                        }
+                        counter={intl.formatMessage(
+                          { id: 'app.campaignPage.progress.accomplished' },
+                          { accomplished, total: totalActions },
+                        )}
+                        progressBarPercent={percentAccomplished}
+                        actionsTakenPerMember={Number(
+                          accomplished / participantsCount,
+                        ).toFixed(1)}
+                        impacts={{ handprint: i.group.impacts }}
+                      />
+                    )
+                  })}
+                </StatisticsScroll>
+              </StatisticsContainer>
+              <StatisticsContainer>
+                <StatisticsScrollTitle>
+                  {sortedActions.length !== 0 ? (
+                    <FormattedMessage id="app.header.menu.actions" />
+                  ) : (
+                      <FormattedMessage id="app.header.menu.noactions" />
+                    )}
+                </StatisticsScrollTitle>
+                <StatisticsScroll>
+                  {sortedActions.map(accomplished => (
+                    <AccomplishedAction
+                      key={accomplished.action._id}
+                      accomplished={accomplished}
                     />
-                  )
-                })}
-              </StatisticsScroll>
-            </StatisticsContainer>
-            <StatisticsContainer>
-              <StatisticsScrollTitle>
-                <FormattedMessage id="app.header.menu.actions" />
-              </StatisticsScrollTitle>
-              <StatisticsScroll>
-                {sortedActions.map(accomplished => (
-                  <AccomplishedAction
-                    key={accomplished.action._id}
-                    accomplished={accomplished}
-                  />
-                ))}
-              </StatisticsScroll>
-            </StatisticsContainer>
-          </StatisticsMain>
-        </Fragment>
-      )}
+                  ))}
+                </StatisticsScroll>
+              </StatisticsContainer>
+            </StatisticsMain>
+          </Fragment>
+        )}
     </Fragment>
   )
 }

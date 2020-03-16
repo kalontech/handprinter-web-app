@@ -237,7 +237,7 @@ export const StatisticsMain = styled.div`
 export const StatisticsContainer = styled.div`
   background-color: ${colors.white};
   width: 49%;
-  height: 815px;
+  max-height: 815px;
   padding: 0px 30px;
 `
 
@@ -248,12 +248,12 @@ export const StatisticsScrollTitle = styled.p`
   font-size: 22px;
   line-height: 30px;
   color: ${colors.dark};
-  margin: 40px 0px;
+  margin: 20px 0px;
 `
 
 export const StatisticsScroll = styled.div`
   overflow: scroll;
-  height: 705px;
+  max-height: 705px;
   padding: 3px;
 `
 
@@ -368,6 +368,7 @@ export const StatisticsHeaderDropdown = styled.div`
 
 export const ModalMessage = styled.p`
   width: 100%;
+  height: 19px;
   text-align: center;
   margin-bottom: 29px;
   margin-top: 27.44px;

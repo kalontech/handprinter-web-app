@@ -709,9 +709,13 @@
     "app.dashboardPage.organizationNetwork": "Our network",
     "app.forms.actionCategory": "Category",
     "app.actions.type": "Type",
+    "app.actions.behaviour": "Behaviour",
+    "app.actions.type.wild": "Wild",
+    "app.actions.type.modeled": "Modeled",
+    "app.actions.behaviour.habbit": "Habbit",
+    "app.actions.behaviour.can become habbit": "Can become habbit",
     "app.actions.type.Wild": "Wild",
     "app.actions.type.Modeled": "Modeled",
-    "app.actions.behaviour": "Behaviour",
     "app.actions.behaviour.Habbit": "Habbit",
     "app.actions.behaviour.Can become habbit": "Can become habbit",
     "app.dashboardPage.achievements": "Achievements",
@@ -734,8 +738,8 @@
     "app.competitions.join": "Join {competition} with {group}",
     "app.competitions.denied": "You declined {group} invitation to join {competition}",
     "app.competitions.deniedDescription": "You are still member of this group",
-    "app.actions.type.wild": "Wild",
-    "app.actions.type.modeled": "Modeled",
-    "app.actions.behaviour.habbit": "Habbit",
-    "app.actions.behaviour.can become habbit": "Can become habbit"
+    "app.competitions.statistics.popover.message": "Action taken per member - to make the rate of Groups more accurate we take into account the average number of actions that are taken per one member.",
+    "app.header.menu.noactions": "Actions not found",
+    "app.campaignPage.noparticipants": "Participants not found",
+    "app.increaseHandprintPage.form.selectGroupToInvite": "Select group you want to invite to participate in the competition."
 }

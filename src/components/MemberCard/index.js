@@ -6,8 +6,9 @@ import _ from 'lodash'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
+import { FormattedMessage } from 'react-intl'
 
-import { Progress } from 'antd'
+import { Progress, Popover } from 'antd'
 
 import {
   Achievements,
@@ -90,6 +91,32 @@ const ProgressStyled = styled(Progress)`
   width: 100%;
 `
 
+const ParticipantPopover = styled(Popover)`
+  width: 200px;
+`
+
+const PopoverWrapper = styled.div`
+  background-color: ${colors.dark};
+  display: flex;
+  flex-direction: column;
+  .ant-popover-inner {
+    background-color: ${colors.green} !important;
+  }
+  .ant-popover-inner-content {
+    padding: 0;
+    background-color: ${colors.green} !important;
+  }
+`
+
+const PopoverText = styled.text`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: ${colors.darkGray};
+`
+
 export default class MemberCard extends React.PureComponent {
   static displayName = 'MemberCard'
 
@@ -149,7 +176,24 @@ export default class MemberCard extends React.PureComponent {
             >
               <Counter>{counter}</Counter>
               {!!actionsTakenPerMember && (
-                <Counter>ATPM = {actionsTakenPerMember}</Counter>
+                <Counter>
+                  <ParticipantPopover
+                    overlayClassName={'achievements-popover'}
+                    overlayStyle={{
+                      height: '120px',
+                      width: '294px',
+                    }}
+                    content={
+                      <PopoverWrapper>
+                        <PopoverText>
+                          <FormattedMessage id="app.competitions.statistics.popover.message" />
+                        </PopoverText>
+                      </PopoverWrapper>
+                    }
+                  >
+                    ATPM={actionsTakenPerMember}
+                  </ParticipantPopover>
+                </Counter>
               )}
             </div>
 
@@ -172,7 +216,6 @@ export default class MemberCard extends React.PureComponent {
             )}
           </Info>
         </User>
-
         {impacts && <ActionCardLabelSet impacts={impacts} />}
       </Block>
     )
