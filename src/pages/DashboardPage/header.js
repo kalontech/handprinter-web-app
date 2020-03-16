@@ -168,6 +168,7 @@ const OtherAchievementsText = styled.text`
 export const ModalContent = styled.div`
   width: 472px;
   height: 218px;
+  overflow: scroll;
   margin: 0 60px 40px 60px;
   border: 1px solid ${colors.gray};
   box-sizing: border-box;
@@ -330,11 +331,11 @@ const Header = props => {
         {organization ? (
           <FormattedMessage id={'app.dahsboard.organization'} />
         ) : (
-          <div>
-            <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
-            {moment(user.createdAt).format('MMMM DD, YYYY')}
-          </div>
-        )}
+            <div>
+              <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
+              {moment(user.createdAt).format('MMMM DD, YYYY')}
+            </div>
+          )}
       </DashboardHeaderUserSince>
       {!organization && (
         <Achievements>
