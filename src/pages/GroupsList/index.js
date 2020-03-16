@@ -423,95 +423,95 @@ class GroupsPage extends React.PureComponent {
           {loading ? (
             <Spinner />
           ) : (
-              <Row gutter={{ md: 20 }} style={{ flexGrow: '1' }}>
-                {(groups.docs || []).map(item => (
-                  <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
-                    <GroupCard
-                      to={`/groups/view/${item._id}/statistics`}
-                      name={item.name}
-                      counter={intl.formatMessage(
-                        { id: 'app.pages.groups.membersCount' },
-                        { count: item.info.membersCount },
-                      )}
-                      picture={item.picture || getUserInitialAvatar(item.name)}
-                      featured={
-                        match.params.subset !== GROUPS_SUBSETS.MY && {
-                          added: item.info.isFeatured,
-                          onClick: this.toggleFeatured(item),
-                        }
+            <Row gutter={{ md: 20 }} style={{ flexGrow: '1' }}>
+              {(groups.docs || []).map(item => (
+                <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
+                  <GroupCard
+                    to={`/groups/view/${item._id}/statistics`}
+                    name={item.name}
+                    counter={intl.formatMessage(
+                      { id: 'app.pages.groups.membersCount' },
+                      { count: item.info.membersCount },
+                    )}
+                    picture={item.picture || getUserInitialAvatar(item.name)}
+                    featured={
+                      match.params.subset !== GROUPS_SUBSETS.MY && {
+                        added: item.info.isFeatured,
+                        onClick: this.toggleFeatured(item),
                       }
-                      buttons={() => {
-                        if (item.status === GROUPS_STATUSES.DELETED) {
-                          return (
-                            <ButtonDeleted>
-                              {intl.formatMessage({ id: 'app.groups.delete' })}
-                            </ButtonDeleted>
-                          )
-                        }
-
-                        let type
-
-                        if (
-                          item.info.memberStatus === USER_GROUP_STATUSES.INVITED
-                        ) {
-                          type = BUTTON_TYPES.invited
-                        } else if (
-                          item.info.memberStatus ===
-                          USER_GROUP_STATUSES.REQUESTING
-                        ) {
-                          type = BUTTON_TYPES.request
-                        } else if (item.info.isMember) {
-                          type = BUTTON_TYPES.leave
-                        } else if (item.private) {
-                          type = BUTTON_TYPES.request
-                        } else {
-                          type = BUTTON_TYPES.join
-                        }
-
-                        const buttonProps = {
-                          [BUTTON_TYPES.leave]: {
-                            onClick: this.toggleMembership(item),
-                            disabled:
-                              item.info.memberRole === MEMBER_GROUP_ROLES.OWNER,
-                          },
-                          [BUTTON_TYPES.join]: {
-                            onClick: this.toggleMembership(item),
-                          },
-                          [BUTTON_TYPES.invited]: {
-                            onClick: {
-                              onAccept: this.acceptInvitation(item._id),
-                              onDeny: this.denyInvitation(item),
-                            },
-                          },
-                          [BUTTON_TYPES.request]: {
-                            onClick: this.requestInvite(item),
-                            disabled:
-                              item.info.memberStatus ===
-                              USER_GROUP_STATUSES.REQUESTING,
-                          },
-                        }
-
+                    }
+                    buttons={() => {
+                      if (item.status === GROUPS_STATUSES.DELETED) {
                         return (
-                          <GroupButton
-                            type={type}
-                            {...buttonProps[type]}
-                            loading={loadingButtonsList.includes(item._id)}
-                          />
+                          <ButtonDeleted>
+                            {intl.formatMessage({ id: 'app.groups.delete' })}
+                          </ButtonDeleted>
                         )
-                      }}
-                    />
-                  </Column>
-                ))}
+                      }
 
-                {(!groups.docs || groups.docs.length === 0) && (
-                  <EmptyList>
-                    {intl.formatMessage({
-                      id: 'app.pages.groups.emptyGroupsList',
-                    })}
-                  </EmptyList>
-                )}
-              </Row>
-            )}
+                      let type
+
+                      if (
+                        item.info.memberStatus === USER_GROUP_STATUSES.INVITED
+                      ) {
+                        type = BUTTON_TYPES.invited
+                      } else if (
+                        item.info.memberStatus ===
+                        USER_GROUP_STATUSES.REQUESTING
+                      ) {
+                        type = BUTTON_TYPES.request
+                      } else if (item.info.isMember) {
+                        type = BUTTON_TYPES.leave
+                      } else if (item.private) {
+                        type = BUTTON_TYPES.request
+                      } else {
+                        type = BUTTON_TYPES.join
+                      }
+
+                      const buttonProps = {
+                        [BUTTON_TYPES.leave]: {
+                          onClick: this.toggleMembership(item),
+                          disabled:
+                            item.info.memberRole === MEMBER_GROUP_ROLES.OWNER,
+                        },
+                        [BUTTON_TYPES.join]: {
+                          onClick: this.toggleMembership(item),
+                        },
+                        [BUTTON_TYPES.invited]: {
+                          onClick: {
+                            onAccept: this.acceptInvitation(item._id),
+                            onDeny: this.denyInvitation(item),
+                          },
+                        },
+                        [BUTTON_TYPES.request]: {
+                          onClick: this.requestInvite(item),
+                          disabled:
+                            item.info.memberStatus ===
+                            USER_GROUP_STATUSES.REQUESTING,
+                        },
+                      }
+
+                      return (
+                        <GroupButton
+                          type={type}
+                          {...buttonProps[type]}
+                          loading={loadingButtonsList.includes(item._id)}
+                        />
+                      )
+                    }}
+                  />
+                </Column>
+              ))}
+
+              {(!groups.docs || groups.docs.length === 0) && (
+                <EmptyList>
+                  {intl.formatMessage({
+                    id: 'app.pages.groups.emptyGroupsList',
+                  })}
+                </EmptyList>
+              )}
+            </Row>
+          )}
 
           {!loading && groups.totalPages > 1 && (
             <PaginationStyled

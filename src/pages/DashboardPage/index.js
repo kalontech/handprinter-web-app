@@ -514,7 +514,7 @@ class DashboardPage extends Component {
   handleAddAdmin = () => {
     history.push(
       `/account/dashboard/organizations/add-admins/${
-      this.state.organization._id
+        this.state.organization._id
       }`,
     )
   }
@@ -769,7 +769,7 @@ class DashboardPage extends Component {
                                   <InfoElementLink
                                     to={`/pages/faq#${
                                       QUESTIONS_ANCHOR.WHAT_CALENDAR_SHOWING
-                                      }`}
+                                    }`}
                                   >
                                     <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
                                   </InfoElementLink>
@@ -809,7 +809,7 @@ class DashboardPage extends Component {
                                   <InfoElementLink
                                     to={`/pages/faq#${
                                       QUESTIONS_ANCHOR.WHAT_SCALE_SHOWING
-                                      }`}
+                                    }`}
                                   >
                                     <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
                                   </InfoElementLink>
@@ -866,7 +866,7 @@ class DashboardPage extends Component {
                                         <InfoElementLink
                                           to={`/pages/faq#${
                                             QUESTIONS_ANCHOR.WHAT_NETWORK_SHOWING
-                                            }`}
+                                          }`}
                                         >
                                           <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
                                         </InfoElementLink>

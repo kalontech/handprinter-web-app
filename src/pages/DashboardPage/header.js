@@ -365,11 +365,11 @@ const Header = props => {
         {organization ? (
           <FormattedMessage id={'app.dahsboard.organization'} />
         ) : (
-            <div>
-              <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
-              {moment(user.createdAt).format('MMMM DD, YYYY')}
-            </div>
-          )}
+          <div>
+            <FormattedMessage id="app.dashboardPage.memberSince" />{' '}
+            {moment(user.createdAt).format('MMMM DD, YYYY')}
+          </div>
+        )}
       </DashboardHeaderUserSince>
       {!organization && (
         <Achievements>
