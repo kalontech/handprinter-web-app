@@ -109,7 +109,7 @@ const Header = props => {
                 sendInvitations({ groupsToInvite }, competition._id)
               }}
             >
-              <FormattedMessage id="app.increaseHandprintPage.form.sendInvites" />
+              <FormattedMessage id="app.pages.groups.skipForNow" />
             </SkipFooterButton>
             <AchievementFooterButton
               type="primary"
@@ -130,7 +130,7 @@ const Header = props => {
         <AchivmentLogo src={competition.logo.src} alt="" />
         <AchievementTitle>{competition.name}</AchievementTitle>
         <ModalMessage>
-          Select group you want to invite to participate in the competition
+          <FormattedMessage id="app.increaseHandprintPage.form.selectGroupToInvite" />
         </ModalMessage>
         <ModalContent>
           {ownGroupsList.map(group =>
@@ -150,7 +150,10 @@ function renderGroup(group, onCheckboxChange, checked) {
   const Group = styled.div`
     width: 100%;
     height: 60px;
-    padding: 22px 15px 15px 15px;
+    margin: 7px 0px 10px 0px;
+    box-sizing: border-box;
+    padding-right: 40px;
+    padding-left: 15px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -161,6 +164,7 @@ function renderGroup(group, onCheckboxChange, checked) {
     height: 44px;
     border-radius: 4px;
     object-fit: cover;
+    box-sizing: border-box;
   `
 
   const GroupText = styled.span`

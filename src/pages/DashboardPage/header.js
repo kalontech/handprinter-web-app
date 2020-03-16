@@ -195,6 +195,7 @@ export const AchievementTitle = styled.p`
   font-style: normal;
   font-weight: normal;
   font-size: 28px;
+  margin-top: -30px;
   width: 100%;
 `
 
@@ -238,7 +239,7 @@ export const AchievementModal = styled(Modal)`
 export const AchivmentLogo = styled.img`
   position: relative;
   top: -55px;
-  left: 41.5%;
+  left: 41%;
   width: 110px;
   height: 108.95px;
   border-radius: 50%;
@@ -274,11 +275,11 @@ const PopoverWrapper = styled.div`
   display: flex;
   flex-direction: column;
   .ant-popover-inner {
-    background-color: ${colors.green}; !important
+    background-color: ${colors.green} !important;
   }
   .ant-popover-inner-content {
     padding: 0;
-    background-color: ${colors.green}; !important
+    background-color: ${colors.green} !important;
   }
 `
 const PopoverTitle = styled.text`

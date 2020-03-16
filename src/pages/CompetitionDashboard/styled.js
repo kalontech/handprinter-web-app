@@ -368,6 +368,7 @@ export const StatisticsHeaderDropdown = styled.div`
 
 export const ModalMessage = styled.p`
   width: 100%;
+  height: 19px;
   text-align: center;
   margin-bottom: 29px;
   margin-top: 27.44px;
