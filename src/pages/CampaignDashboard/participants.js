@@ -58,7 +58,7 @@ export default function renderParticipants(props) {
                   { count: item.userInfo.takenActionsCount },
                 )}
                 impacts={{ handprint: item.userInfo.impacts }}
-                achievements={user.finishedCampaigns}
+                achievements={user.achievements}
               />
             </Column>
           ))}

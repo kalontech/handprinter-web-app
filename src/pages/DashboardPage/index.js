@@ -9,14 +9,14 @@ import { Link } from 'react-router-dom'
 import { animateScroll } from 'react-scroll/modules'
 import qs from 'qs'
 import { history } from 'appRouter'
-
+import _ from 'lodash'
 import colors from 'config/colors'
 import fingerprintImage from 'assets/dashboard/print.svg'
 import cameraImage from 'assets/dashboard/ic_camera.svg'
 import addAdmin from 'assets/dashboard/add_admin.svg'
 import media from 'utils/mediaQueryTemplate'
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
-import { QUESTIONS_ANCHOR } from 'utils/constants'
+import { QUESTIONS_ANCHOR, GROUPS_SUBSETS } from 'utils/constants'
 import fetch from 'utils/fetch'
 import CalendarWidget from 'components/CalendarWidget'
 import GoodRatioWidget from 'components/GoodRatioWidget'
@@ -30,6 +30,7 @@ import FlagIconComponent from 'assets/icons/FlagIcon'
 import icons from 'components/ActionCardLabel/icons'
 import { getUserInitialAvatar } from 'api'
 import * as apiUser from 'api/user'
+import { fetchGroupsList } from 'api/groups'
 import {
   getOrganization,
   updateOne,
@@ -394,7 +395,13 @@ async function fetchDashboardData(props) {
 
   const { calendar, network, ratio, stats } = await apiUser.getDashboardData()
 
-  return { calendar, network, ratio, stats }
+  const resMyGroups = await fetchGroupsList({
+    subset: GROUPS_SUBSETS.MY,
+  })
+
+  const myGroups = _.get(resMyGroups, 'groups.docs', [])
+
+  return { calendar, network, ratio, stats, myGroups }
 }
 
 class DashboardPage extends Component {
@@ -410,6 +417,7 @@ class DashboardPage extends Component {
     network: PropTypes.object.isRequired,
     calendar: PropTypes.object.isRequired,
     intl: PropTypes.object.isRequired,
+    myGroups: PropTypes.array,
   }
 
   state = {
@@ -542,6 +550,7 @@ class DashboardPage extends Component {
       calendar,
       error,
       intl: { formatMessage },
+      myGroups,
     } = this.props
 
     let avatar
@@ -594,6 +603,7 @@ class DashboardPage extends Component {
             setMoreAchievesVisible={this.setMoreAchievesVisible}
             moreAchievesVisible={moreAchievesVisible}
             formatMessage={formatMessage}
+            myGroups={myGroups}
           />
           <TabsSecondary
             list={[

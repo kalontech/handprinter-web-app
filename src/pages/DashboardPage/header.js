@@ -132,9 +132,10 @@ const HeaderUserInfoRowCol = styled(Col)`
 export const Achievements = styled.div`
   display: flex;
   margin-top: 20px;
+  justify-content: center;
 `
 
-const Achievement = styled.div`
+export const Achievement = styled.div`
   width: 60px;
   height: 60px;
   border-radius: ${props =>
@@ -158,7 +159,7 @@ export const AchievementSmall = styled(Achievement)`
   margin: 0 3px;
 `
 
-const OtherAchievementsText = styled.text`
+export const OtherAchievementsText = styled.text`
   color: white;
   text-align: center;
   font-family: Noto Sans;
@@ -268,7 +269,7 @@ export const SkipFooterButton = styled(DefaultButton)`
   align-self: center;
 `
 
-const PopoverWrapper = styled.div`
+export const PopoverWrapper = styled.div`
   background-color: ${colors.dark};
   display: flex;
   flex-direction: column;
@@ -280,7 +281,7 @@ const PopoverWrapper = styled.div`
     background-color: ${colors.green}; !important
   }
 `
-const PopoverTitle = styled.text`
+export const PopoverTitle = styled.text`
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
@@ -288,7 +289,7 @@ const PopoverTitle = styled.text`
   line-height: 28px;
   color: ${colors.white};
 `
-const PopoverText = styled.text`
+export const PopoverText = styled.text`
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
@@ -297,28 +298,36 @@ const PopoverText = styled.text`
   color: ${colors.darkGray};
 `
 
-const AchievementPopover = styled(Popover)``
+export const AchievementPopover = styled(Popover)``
 
-function getAchievements(user) {
+function getAchievements(user, myGroups = []) {
   let achievements = []
-  const finishedCampaigns = user.finishedCampaigns || []
-  const finishedCompetitions = user.finishedCompetitions || []
+  const finishedCampaigns = user.achievements || []
   finishedCampaigns.forEach(c => {
     achievements.push({
       _id: c._id,
       achievement: c.campaign,
       accomplishedActions: c.accomplishedActions,
+      totalActions: c.campaign.actions.length,
     })
   })
-  finishedCompetitions.forEach(c => {
-    achievements.push({
-      _id: c._id,
-      achievement: c.competition,
-      specialShape: true,
-      accomplishedActions: c.accomplishedActions,
-    })
-  })
+  myGroups
+    .filter(i => !_.isEmpty(i.achievements))
+    .forEach(group => {
+      const finishedCompetitions = group.achievements || []
 
+      finishedCompetitions.forEach(c => {
+        achievements.push({
+          _id: c._id,
+          achievement: c.competition,
+          accomplishedActions: c.accomplishedActions,
+          specialShape: true,
+          totalActions:
+            _.get(c.competition, 'actions.length', 0) *
+            _.get(c, 'participantsCount', 0),
+        })
+      })
+    })
   return achievements
 }
 
@@ -334,8 +343,9 @@ const Header = props => {
     moreAchievesVisible,
     setMoreAchievesVisible,
     formatMessage,
+    myGroups,
   } = props
-  const achievements = getAchievements(user)
+  const achievements = getAchievements(user, myGroups)
   return (
     <DashboardHeaderWhiteLine organization={organization}>
       <DashboardHeaderUserPictureWrap>
@@ -367,7 +377,7 @@ const Header = props => {
             const accomplished = i.accomplishedActions
               ? i.accomplishedActions.length
               : 0
-            const total = _.get(achievement, 'actions.length', 0)
+            const total = _.get(i, 'totalActions', 0)
             const accomplishedLabel = formatMessage(
               { id: 'app.campaignPage.progress.accomplished' },
               {
@@ -499,7 +509,7 @@ const Header = props => {
               const accomplished = i.accomplishedActions
                 ? i.accomplishedActions.length
                 : 0
-              const total = _.get(achievement, 'actions.length', 0)
+              const total = _.get(i, 'totalActions', 0)
               const accomplishedLabel = formatMessage(
                 { id: 'app.campaignPage.progress.accomplished' },
                 {
@@ -547,6 +557,7 @@ Header.propTypes = {
   moreAchievesVisible: Boolean,
   setMoreAchievesVisible: Function,
   formatMessage: Function,
+  myGroups: Array,
 }
 
 export default Header

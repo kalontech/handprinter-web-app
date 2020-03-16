@@ -33,14 +33,14 @@ export function getGroups(participants, invitations) {
 }
 
 export default function renderParticipants(props) {
-  const { loading, participants, intl, competition, invitations } = props
+  const { loading, participants, intl, competition, allInvitations } = props
 
   const selectedKey = _.get(props, 'location.search', '').includes('finished')
     ? 'finished'
     : 'participants'
   const actionsNumberToComplete =
     competition.actionsNumberToComplete || competition.actions.length
-  const groups = getGroups(participants, invitations)
+  const groups = getGroups(participants, allInvitations)
   const filteredGroups =
     selectedKey === 'finished'
       ? Object.values(groups).filter(i => {
@@ -109,7 +109,7 @@ export default function renderParticipants(props) {
 renderParticipants.propTypes = {
   loading: Boolean,
   participants: Array,
-  invitations: Array,
+  allInvitations: Array,
   intl: Object,
   competition: Object,
   user: Object,
