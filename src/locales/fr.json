@@ -713,5 +713,5 @@
     "app.actions.type.wild": "Wild",
     "app.actions.type.modeled": "Modeled",
     "app.actions.behaviour.habbit": "Habbit",
-    "app.actions.behaviour.can become habbit": "Can become habbit"
+    "app.actions.behaviour.singleAction": "Single action"
 }
