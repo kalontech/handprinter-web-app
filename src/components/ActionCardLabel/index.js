@@ -36,7 +36,12 @@ const LabelContainer = styled.div`
   border-color: ${({ variant, unit }) =>
     unit === TimeValueAbbreviations.DAYS && variant === 'positive'
       ? hexToRgba(`${colors.blue}`, 0.3)
-      : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
+      : unit === TimeValueAbbreviations.HOURS ||
+        unit === 'climate' ||
+        unit === 'health' ||
+        unit === 'ecosystem' ||
+        unit === 'water' ||
+        (unit === 'waste' && variant === 'positive')
       ? hexToRgba(`${colors.ocean}`, 0.3)
       : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
       ? hexToRgba(`${colors.green}`, 0.3)
@@ -58,7 +63,12 @@ const Category = styled.div`
   background-color: ${({ unit, variant }) =>
     unit === TimeValueAbbreviations.DAYS && variant === 'positive'
       ? hexToRgba(`${colors.blue}`, 0.1)
-      : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
+      : unit === TimeValueAbbreviations.HOURS ||
+        unit === 'climate' ||
+        unit === 'health' ||
+        unit === 'ecosystem' ||
+        unit === 'water' ||
+        (unit === 'waste' && variant === 'positive')
       ? hexToRgba(`${colors.ocean}`, 0.1)
       : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
       ? hexToRgba(`${colors.green}`, 0.1)
@@ -72,7 +82,12 @@ const Category = styled.div`
     color: ${({ unit, variant }) =>
       unit === TimeValueAbbreviations.DAYS && variant === 'positive'
         ? `${colors.blue}`
-        : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
+        : unit === TimeValueAbbreviations.HOURS ||
+          unit === 'climate' ||
+          unit === 'health' ||
+          unit === 'ecosystem' ||
+          unit === 'water' ||
+          (unit === 'waste' && variant === 'positive')
         ? `${colors.ocean}`
         : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
         ? `${colors.green}`
@@ -85,7 +100,12 @@ const Caption = styled.div`
   color: ${({ unit, variant }) =>
     unit === TimeValueAbbreviations.DAYS && variant === 'positive'
       ? `${colors.blue}`
-      : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
+      : unit === TimeValueAbbreviations.HOURS ||
+        unit === 'climate' ||
+        unit === 'health' ||
+        unit === 'ecosystem' ||
+        unit === 'water' ||
+        (unit === 'waste' && variant === 'positive')
       ? `${colors.ocean}`
       : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
       ? `${colors.green}`
@@ -180,6 +200,7 @@ ActionCardLabel.propTypes = {
   unit: PropTypes.oneOf(Object.values(TimeValueAbbreviations)).isRequired,
   variant: PropTypes.oneOf(['positive', 'negative']).isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  powInd: PropTypes.number,
 }
 
 export default injectIntl(ActionCardLabel)

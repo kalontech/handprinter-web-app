@@ -715,5 +715,15 @@
     "app.actions.behaviour.habbit": "Habbit",
     "app.actions.behaviour.singleAction": "Single action",
     "app.actions.wildCard.popup.content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
-    "app.actions.wildCard.label": "Wild card"
+    "app.actions.wildCard.label": "Wild card",
+    "app.actions.timeValues.one.climate": "DALYs",
+    "app.actions.timeValues.other.climate": "DALYs",
+    "app.actions.timeValues.one.health": "kgCO2e",
+    "app.actions.timeValues.other.health": "kgCO2e",
+    "app.actions.timeValues.one.ecosystem": "SP*YR",
+    "app.actions.timeValues.other.ecosystem": "SP*YR",
+    "app.actions.timeValues.one.water": "M3",
+    "app.actions.timeValues.other.water": "M3",
+    "app.actions.timeValues.one.waste": "KG",
+    "app.actions.timeValues.other.waste": "KG"
 }

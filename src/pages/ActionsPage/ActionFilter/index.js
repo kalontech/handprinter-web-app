@@ -138,26 +138,26 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
           </Select>
         </Block>
         <UnitsBlock>
-          {/* <Select
+          <Select
             mode="default"
             style={{ width: '100%' }}
             onChange={null}
             defaultValue="Time units"
             menuItemSelectedIcon={<Icon />}
           >
-            <Option key="Physical units">
+            <Option key="Physical units" onClick={e => props.toggleUnits(e)}>
               <span role="img">
                 <img src={atom} style={{ marginRight: '10px' }} />
                 Physical units
               </span>
             </Option>
-            <Option key="Time units">
+            <Option key="Time units" onClick={e => props.toggleUnits(e)}>
               <span role="img">
                 <img src={clock} style={{ marginRight: '10px' }} />
                 Time units
               </span>
             </Option>
-          </Select> */}
+          </Select>
         </UnitsBlock>
       </SelectWrapper>
     </Fragment>
