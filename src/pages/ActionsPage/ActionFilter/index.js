@@ -122,7 +122,6 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
             menuItemSelectedIcon={<Icon />}
           >
             {behaviour.map(behaviour => {
-              console.log(`app.actions.behaviour.${behaviour.id}`)
               return (
                 <Option key={behaviour.name}>
                   <Checkbox
