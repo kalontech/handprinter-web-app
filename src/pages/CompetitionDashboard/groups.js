@@ -186,8 +186,10 @@ function renderGroup(props, groupParticipants) {
   const total = competition.actions.length
   const groups = getGroups(groupParticipants, allInvitations)
   const cg = groups && Object.values(groups)[0] // competition group
+  if (!cg || _.isEmpty(cg.participants)) return null
   const accomplished = cg.participants.reduce(
-    (acc, curr) => acc + curr.accomplishedActions.length,
+    (acc, curr) =>
+      acc + curr.accomplishedActions ? curr.accomplishedActions.length : 0,
     0,
   )
   const participantsCount = cg.participants.length
