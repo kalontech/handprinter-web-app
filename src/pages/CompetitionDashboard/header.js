@@ -106,7 +106,6 @@ const Header = props => {
               type="secondary"
               onClick={() => {
                 setInviteModalVisible(false)
-                sendInvitations({ groupsToInvite }, competition._id)
               }}
             >
               <FormattedMessage id="app.pages.groups.skipForNow" />
@@ -117,6 +116,7 @@ const Header = props => {
               onClick={() => {
                 setInviteModalVisible(false)
                 sendInvitations({ groupsToInvite }, competition._id)
+                window.location.reload()
               }}
             >
               <FormattedMessage id="app.increaseHandprintPage.form.sendInvites" />
