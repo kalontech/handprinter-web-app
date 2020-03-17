@@ -37,10 +37,10 @@ const LabelContainer = styled.div`
     unit === TimeValueAbbreviations.DAYS && variant === 'positive'
       ? hexToRgba(`${colors.blue}`, 0.3)
       : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
-        ? hexToRgba(`${colors.ocean}`, 0.3)
-        : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-          ? hexToRgba(`${colors.green}`, 0.3)
-          : hexToRgba(`${colors.darkGray}`, 0.3)};
+      ? hexToRgba(`${colors.ocean}`, 0.3)
+      : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
+      ? hexToRgba(`${colors.green}`, 0.3)
+      : hexToRgba(`${colors.darkGray}`, 0.3)};
   border-radius: 4px;
   overflow: hidden;
   cursor: pointer;
@@ -59,10 +59,10 @@ const Category = styled.div`
     unit === TimeValueAbbreviations.DAYS && variant === 'positive'
       ? hexToRgba(`${colors.blue}`, 0.1)
       : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
-        ? hexToRgba(`${colors.ocean}`, 0.1)
-        : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-          ? hexToRgba(`${colors.green}`, 0.1)
-          : hexToRgba(`${colors.darkGray}`, 0.1)};
+      ? hexToRgba(`${colors.ocean}`, 0.1)
+      : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
+      ? hexToRgba(`${colors.green}`, 0.1)
+      : hexToRgba(`${colors.darkGray}`, 0.1)};
 
   ${media.phone`
     width: 20px;
@@ -70,13 +70,13 @@ const Category = styled.div`
 
   .anticon {
     color: ${({ unit, variant }) =>
-    unit === TimeValueAbbreviations.DAYS && variant === 'positive'
-      ? `${colors.blue}`
-      : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
+      unit === TimeValueAbbreviations.DAYS && variant === 'positive'
+        ? `${colors.blue}`
+        : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
         ? `${colors.ocean}`
         : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-          ? `${colors.green}`
-          : `${colors.darkGray}`};
+        ? `${colors.green}`
+        : `${colors.darkGray}`};
   }
 `
 
@@ -86,10 +86,10 @@ const Caption = styled.div`
     unit === TimeValueAbbreviations.DAYS && variant === 'positive'
       ? `${colors.blue}`
       : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
-        ? `${colors.ocean}`
-        : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-          ? `${colors.green}`
-          : `${colors.darkGray}`};
+      ? `${colors.ocean}`
+      : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
+      ? `${colors.green}`
+      : `${colors.darkGray}`};
   font-size: 10px;
   font-weight: bold;
   line-height: 1.4;
