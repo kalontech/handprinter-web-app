@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
-import { Icon, Popover } from 'antd'
-
+import { Icon } from 'antd'
+import Tooltip from 'components/Tooltip'
 import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
 import media from 'utils/mediaQueryTemplate'
@@ -12,6 +12,12 @@ import EditIcon from 'assets/icons/EditIcon'
 import DeleteIcon from 'assets/icons/DeleteIcon'
 
 import ActionCardLabelSet from '../ActionCardLabelSet'
+
+const TooltipContainer = styled.div`
+  line-height: 20px;
+  text-align: center;
+  color: ${colors.white};
+`
 
 const CardWrap = styled.div`
   width: 100%;
@@ -151,39 +157,6 @@ const WildWrapper = styled.p`
   color: gray;
 `
 
-const ActionPopover = styled(Popover)``
-
-const PopoverWrapper = styled.div`
-  background-color: ${colors.dark};
-  display: flex;
-  flex-direction: column;
-  .ant-popover-inner {
-    background-color: ${colors.green}; !important
-  }
-  .ant-popover-inner-content {
-    padding: 0;
-    background-color: ${colors.green}; !important
-  }
-`
-
-const PopoverTitle = styled.text`
-  font-family: Noto Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 28px;
-  color: ${colors.white};
-`
-
-const PopoverText = styled.text`
-  font-family: Noto Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 20px;
-  color: ${colors.darkGray};
-`
-
 const ActionCard = props => {
   const {
     to,
@@ -203,19 +176,19 @@ const ActionCard = props => {
   } = props
 
   const popover = (
-    <ActionPopover
-      overlayClassName={'actions-popover'}
-      content={
-        <PopoverWrapper>
-          <PopoverTitle />
-          <PopoverText />
-        </PopoverWrapper>
-      }
+    <Tooltip
+      title={() => (
+        <TooltipContainer>
+          <FormattedMessage id="app.actions.wildCard.popup.content" />
+        </TooltipContainer>
+      )}
+      mouseEnterDelay={1}
     >
       <WildWrapper>
-        Wild card <Icon type="info-circle" />
+        <FormattedMessage id="app.actions.wildCard.label" />
+        <Icon type="info-circle" style={{ marginLeft: '5px' }} />
       </WildWrapper>
-    </ActionPopover>
+    </Tooltip>
   )
 
   return (

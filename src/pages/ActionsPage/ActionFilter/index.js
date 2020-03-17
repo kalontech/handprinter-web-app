@@ -98,13 +98,13 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
           >
             {types.map(type => {
               return (
-                <Option key={type.id}>
+                <Option key={type.name}>
                   <Checkbox
                     checked={selectedType.includes(type.name)}
                     name={type.name}
                   >
                     {formatMessage({
-                      id: `app.actions.type.${type.id.toLowerCase()}`,
+                      id: `app.actions.type.${type.id}`,
                     })}
                   </Checkbox>
                 </Option>
@@ -123,13 +123,13 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
           >
             {behaviour.map(behaviour => {
               return (
-                <Option key={behaviour.id}>
+                <Option key={behaviour.name}>
                   <Checkbox
                     checked={selectedBehaviour.includes(behaviour.name)}
                     name={behaviour.name}
                   >
                     {formatMessage({
-                      id: `app.actions.behaviour.${behaviour.id.toLowerCase()}`,
+                      id: `app.actions.behaviour.${behaviour.id}`,
                     })}
                   </Checkbox>
                 </Option>

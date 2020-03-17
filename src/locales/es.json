@@ -741,5 +741,8 @@
     "app.competitions.statistics.popover.message": "Action taken per member - to make the rate of Groups more accurate we take into account the average number of actions that are taken per one member.",
     "app.header.menu.noactions": "Actions not found",
     "app.campaignPage.noparticipants": "Participants not found",
-    "app.increaseHandprintPage.form.selectGroupToInvite": "Select group you want to invite to participate in the competition."
+    "app.increaseHandprintPage.form.selectGroupToInvite": "Select group you want to invite to participate in the competition.",
+    "app.actions.behaviour.singleAction": "Single action",
+    "app.actions.wildCard.popup.content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    "app.actions.wildCard.label": "Wild card"
 }
