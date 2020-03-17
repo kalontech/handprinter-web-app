@@ -713,7 +713,7 @@
     "app.actions.type.wild": "Wild",
     "app.actions.type.modeled": "Modeled",
     "app.actions.behaviour.habbit": "Habbit",
-    "app.actions.wildCard.lable": "Wild card",
-    "app.actions.wildCard.popup.content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa."
-    "app.actions.behaviour.singleAction": "Single action"
+    "app.actions.behaviour.singleAction": "Single action",
+    "app.actions.wildCard.popup.content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    "app.actions.wildCard.label": "Wild card"
 }
