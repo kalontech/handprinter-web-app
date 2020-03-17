@@ -189,7 +189,8 @@ function renderGroup(props, groupParticipants) {
   if (!cg || _.isEmpty(cg.participants)) return null
   const accomplished = cg.participants.reduce(
     (acc, curr) =>
-      acc + curr.accomplishedActions ? curr.accomplishedActions.length : 0,
+      acc +
+      (curr && curr.accomplishedActions ? curr.accomplishedActions.length : 0),
     0,
   )
   const participantsCount = cg.participants.length
