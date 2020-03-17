@@ -185,7 +185,7 @@ const ActionCard = props => {
       mouseEnterDelay={1}
     >
       <WildWrapper>
-        <FormattedMessage id="app.actions.wildCard.lable" />
+        <FormattedMessage id="app.actions.wildCard.label" />
         <Icon type="info-circle" style={{ marginLeft: '5px' }} />
       </WildWrapper>
     </Tooltip>
