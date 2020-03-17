@@ -741,5 +741,7 @@
     "app.competitions.statistics.popover.message": "Action taken per member - to make the rate of Groups more accurate we take into account the average number of actions that are taken per one member.",
     "app.header.menu.noactions": "Actions not found",
     "app.campaignPage.noparticipants": "Participants not found",
-    "app.increaseHandprintPage.form.selectGroupToInvite": "Select group you want to invite to participate in the competition."
+    "app.increaseHandprintPage.form.selectGroupToInvite": "Select group you want to invite to participate in the competition.",
+    "app.competitions.you.reached.challenge": "You reached the minimum number of actions to finish Challenge. You can continue taking actions to improve your score.",
+    "app.competitions.you.need.take": "You need to take at least {numberToComplete} actions for finish challenge"
 }

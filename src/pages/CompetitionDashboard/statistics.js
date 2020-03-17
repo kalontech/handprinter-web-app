@@ -39,11 +39,17 @@ function getSortedGroups(groups) {
       (acc, curr) => acc + curr.accomplishedActions.length,
       0,
     )
+    const actionsTakenPerMemberCurr = accomplishedCurr / a.participants.length
+
     const accomplishedNext = b.participants.reduce(
       (acc, curr) => acc + curr.accomplishedActions.length,
       0,
     )
-    if (accomplishedCurr > accomplishedNext) {
+    const actionsTakenPerMemberNext = accomplishedNext / b.participants.length
+    if (a.group.info.isMember && !b.group.info.isMember) {
+      return -1
+    }
+    if (actionsTakenPerMemberCurr > actionsTakenPerMemberNext) {
       return -1
     }
     return 1

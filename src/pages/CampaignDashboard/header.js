@@ -38,6 +38,18 @@ const Header = props => {
     { id: 'app.pages.groups.membersCount' },
     { count: participantsCount },
   )
+
+  const tooltipText =
+    accomplished >= numberToComplete
+      ? props.intl.formatMessage({
+          id: 'app.competitions.you.reached.challenge',
+        })
+      : props.intl.formatMessage(
+          { id: 'app.competitions.you.need.take' },
+          {
+            numberToComplete: numberToComplete - accomplished,
+          },
+        )
   return (
     <DashboardHeaderWhiteLine organization>
       <BreadcrumbStyled separator=">">
@@ -73,9 +85,11 @@ const Header = props => {
       <HeaderCamapingDescription>{description}</HeaderCamapingDescription>
       <Progress
         total={total}
+        successCount={numberToComplete}
         accomplished={accomplished}
         endDate={dateTo}
         expired={expired}
+        tooltipText={tooltipText}
       />
     </DashboardHeaderWhiteLine>
   )

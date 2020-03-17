@@ -12,6 +12,8 @@ import styled from 'styled-components'
 
 import colors from 'config/colors'
 
+import { getGroups } from './participants'
+
 import { getUserInitialAvatar } from '../../api'
 
 import { MenuStyled } from './styled'
@@ -146,13 +148,14 @@ export default function renderGroups(props) {
       )}
       {invitation.status === INVITATION_STATUSES.ACCEPTED && (
         <ParticipantsMain>
+          {renderGroup(props, groupParticipants)}
           {groupParticipants.map(participant => {
             const accomplished = participant.accomplishedActions.length
             const total = competition.actions.length
             const percent = (accomplished / total) * 100
             return (
               <MemberCard
-                containerStyle={{ width: '100%' }}
+                containerStyle={{ width: '95%' }}
                 key={participant.user._id}
                 to={`/account/${participant.user._id}`}
                 fullName={participant.user.fullName}
@@ -178,8 +181,46 @@ export default function renderGroups(props) {
   )
 }
 
+function renderGroup(props, groupParticipants) {
+  const { competition, intl, allInvitations } = props
+  const total = competition.actions.length
+  const groups = getGroups(groupParticipants, allInvitations)
+  const cg = groups && Object.values(groups)[0] // competition group
+  const accomplished = cg.participants.reduce(
+    (acc, curr) => acc + curr.accomplishedActions.length,
+    0,
+  )
+  const participantsCount = cg.participants.length
+  let totalActions = total * participantsCount
+  const percentAccomplished = (accomplished / totalActions) * 100
+  return (
+    <MemberCard
+      key={cg.group._id}
+      to={`/groups/view/${cg.group._id}/statistics`}
+      fullName={cg.group.name}
+      photo={cg.group.picture || getUserInitialAvatar(cg.group.name)}
+      counter={intl.formatMessage(
+        { id: 'app.campaignPage.progress.accomplished' },
+        { accomplished, total: totalActions },
+      )}
+      progressBarPercent={percentAccomplished}
+      actionsTakenPerMember={Number(accomplished / participantsCount).toFixed(
+        1,
+      )}
+      impacts={{ handprint: cg.group.impacts }}
+      containerStyle={{ width: '100%' }}
+    />
+  )
+}
+
 renderGroups.propTypes = {
   invitations: Array,
   competition: Object,
   intl: Object,
+}
+
+renderGroup.propTypes = {
+  competition: Object,
+  intl: Object,
+  allInvitations: Array,
 }

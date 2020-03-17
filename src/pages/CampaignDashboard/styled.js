@@ -129,6 +129,14 @@ export const ProgressWrapper = styled.div`
     padding-left: 15px;
     padding-right: 15px;  
   `}
+
+  .ant-progress-success-bg {
+    background-color: ${colors.green};
+  }
+
+  .ant-progress-bg {
+    background-color: ${colors.ocean};
+  }
 `
 export const ProgressTextWrapper = styled.div`
   width: 100%;

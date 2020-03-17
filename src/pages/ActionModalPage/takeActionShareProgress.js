@@ -74,7 +74,9 @@ function takeActionShareProgress(props) {
             }}
             verb="comment action"
             context={{ action }}
-            onSuccess={closeModal}
+            onSuccess={() => {
+              history.length > 1 ? history.goBack() : closeModal()
+            }}
           />
         </PostWrapper>
         <TakenActionAuthWrap>

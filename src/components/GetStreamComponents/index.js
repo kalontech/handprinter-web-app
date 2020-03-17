@@ -198,19 +198,28 @@ export const ActivityHeader = props => {
           <CreatedAtText>{createdAt}</CreatedAtText>
         </Box>
       </Flex>
+
       <Box>
-        {actionImpacts && <ActionCardLabelSet impacts={actionImpacts} />}
-      </Box>
-      <Box>
-        <Popover
-          content={
-            <DeletePostText onClick={() => props.onRemoveActivity(activity.id)}>
-              <FormattedMessage id="app.actions.card.delete" />
-            </DeletePostText>
-          }
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
         >
-          <Icon type="ellipsis" rotate={90} />
-        </Popover>
+          {actionImpacts && <ActionCardLabelSet impacts={actionImpacts} />}
+          <Popover
+            content={
+              <DeletePostText
+                onClick={() => props.onRemoveActivity(activity.id)}
+              >
+                <FormattedMessage id="app.actions.card.delete" />
+              </DeletePostText>
+            }
+          >
+            <Icon type="ellipsis" rotate={90} />
+          </Popover>
+        </div>
       </Box>
     </Flex>
   )
