@@ -716,9 +716,9 @@
     "app.actions.behaviour.singleAction": "Single action",
     "app.actions.wildCard.popup.content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
     "app.actions.wildCard.label": "Wild card",
-    "app.actions.physicalValues.one.climate": "<p>DALYs<\/p>",
-    "app.actions.physicalValues.one.health": "<p>kgCO2e<\/p>",
-    "app.actions.physicalValues.one.ecosystem": "<p>SP*YR<\/p>",
-    "app.actions.physicalValues.one.water": "<p>M<sup>3<\/sup><\/p>",
-    "app.actions.physicalValues.one.waste": "<p>KG<\/p>"
+    "app.actions.physicalValues.one.climate": "DALYs",
+    "app.actions.physicalValues.one.health": "kgCO2e",
+    "app.actions.physicalValues.one.ecosystem": "SP*YR",
+    "app.actions.physicalValues.one.water": "M<sup>3<\/sup>",
+    "app.actions.physicalValues.one.waste": "KG"
 }

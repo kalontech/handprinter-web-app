@@ -34,15 +34,19 @@ const ActionCardLabelSet = props => {
       }
       // if incoming val is not bigger then 1 we should do while loop and return array
       // with rounded result with 1 number after dot and i as count of numbers after dot
+      // 0.0001 -> [1.0, 4]
+      // 0.12345 -> [1.2, 1]
       return [(Math.round(val * 100) / 100).toFixed(1), i]
     } else {
       // if incoming val greater then 100 we don't want to show numbers after dot
       // if val greater then 100 we return val as it comes if val smaller then 100 we fixed it to 1 number after dot
+      // 1.23 -> [1.2, null]
+      // 1231.10 -> [1231, null]
       return val > 100 ? [val, null] : [val.toFixed(1), null]
     }
   }
 
-  if (showPhysicalValues === true) {
+  if (showPhysicalValues) {
     return (
       <CardLabelWrap mobileFixedWidth={mobileFixedWidth}>
         {impactsInUnits.footprint &&
