@@ -26,6 +26,7 @@ import * as apiUser from 'api/user'
 export const INVITATION_STATUSES = {
   ACCEPTED: 'ACCEPTED',
   PENDING: 'PENDING',
+  DENIED: 'DENIED',
 }
 
 export const Wrapper = styled.div`

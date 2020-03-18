@@ -8,6 +8,7 @@ import { hotjar } from 'react-hotjar'
 
 import 'intersection-observer'
 
+import 'react-activity-feed/dist/index.es.css'
 import 'react-router-modal/css/react-router-modal.css'
 
 import './index.less'

@@ -5,6 +5,8 @@ import { fetchAPI } from './index' // eslint-disable-line unicorn/import-index
 export const fetchGroupsList = (query = {}) =>
   fetchAPI(`/groups?${qs.stringify(query)}`)
 
+export const fetchOwnGroupsList = () => fetchAPI(`/groups/own`)
+
 export const fetchFeaturedGroup = (id, type = 'star') =>
   fetchAPI(`/groups/${id}/${type}`, { method: 'POST' })
 

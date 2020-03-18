@@ -12,6 +12,9 @@ import Route from './routeWrapper'
 import ActionModalPage from './pages/ActionModalPage'
 import ActionsPage from './pages/ActionsPage'
 import GroupsListPage from './pages/GroupsList'
+import ChallengesListPage from './pages/ChallengesList'
+import CampaignDashboardPage from './pages/CampaignDashboard'
+import CompetitionDashboardPage from './pages/CompetitionDashboard'
 import GroupViewPage from './pages/GroupView'
 import CheckYourEmailPage from './pages/CheckYourEmailPage'
 import DashboardPage from './pages/DashboardPage'
@@ -19,7 +22,6 @@ import FaqPage from './pages/FaqPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import MeasurementUnitsPage from './pages/MeasurementUnitsPage'
-import NewsPage from './pages/NewsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import OurVisionPage from './pages/OurVisionPage'
 import RegisterPage from './pages/RegisterPage'
@@ -96,7 +98,7 @@ const AppRouter = () => {
             withoutHeaderContent
           />
           <Route
-            path="/account/dashboard"
+            path="/account/dashboard/:subset?"
             component={DashboardPage}
             requireAuthentication
             withoutCTA
@@ -139,12 +141,6 @@ const AppRouter = () => {
             path="/pages/privacy-policy"
             component={PrivacyPolicyTermsPages}
             useAuthentication
-            withoutCTA
-          />
-          <Route
-            path="/account/news"
-            component={NewsPage}
-            requireAuthentication
             withoutCTA
           />
           {!brandedConfig && (
@@ -238,6 +234,27 @@ const AppRouter = () => {
             useAuthentication
             requireAuthentication
             withoutCTA
+          />
+          <Route
+            path="/challenges/campaigns/dashboard/:campaignId"
+            component={CampaignDashboardPage}
+            useAuthentication
+            withoutCTA
+            requireAuthentication
+          />
+          <Route
+            path="/challenges/competitions/dashboard/:competitionId"
+            component={CompetitionDashboardPage}
+            useAuthentication
+            withoutCTA
+            requireAuthentication
+          />
+          <Route
+            path="/challenges/:subset"
+            component={ChallengesListPage}
+            useAuthentication
+            withoutCTA
+            requireAuthentication
           />
           <Route component={NotFoundPage} useAuthentication withoutCTA />
         </Switch>

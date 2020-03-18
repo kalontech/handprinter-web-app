@@ -28,6 +28,8 @@ import hexToRgba from 'utils/hexToRgba'
 import * as apiUser from 'api/user'
 import * as apiOrganization from 'api/organization'
 
+import TakeActionShareProgress from './takeActionShareProgress'
+
 const Container = styled(Row)`
   align-items: center;
   border-radius: 4px;
@@ -204,7 +206,7 @@ const BottomPanel = styled.div`
   `}
 `
 
-const TakenActionPanel = styled.div`
+export const TakenActionPanel = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -218,13 +220,13 @@ const TakenActionPanel = styled.div`
   }
 `
 
-const TakenActionTitle = styled.h1`
+export const TakenActionTitle = styled.h1`
   font-family: 'Noto Serif', serif;
   font-size: 37px;
   line-height: 46px;
 `
 
-const TakenActionDescription = styled.p`
+export const TakenActionDescription = styled.p`
   font-size: 16px;
   line-height: 22px;
   margin: -10px 30px 25px 30px;
@@ -356,7 +358,7 @@ const ActionViewButtonsWrapper = styled.div`
   }
 `
 
-const TakenActionAuthWrap = styled.div`
+export const TakenActionAuthWrap = styled.div`
   width: 100%;
   text-align: center;
   background: ${colors.lightGray};
@@ -369,7 +371,7 @@ const TakenActionAuthTitle = styled.div`
   margin-bottom: 15px;
 `
 
-const TakenActionAuthContent = styled.div`
+export const TakenActionAuthContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -715,6 +717,13 @@ class ActionModalPage extends Component {
         tooltipTextId = 'app.actions.card.waitAdminHint'
         buttonTextId = 'app.actions.card.waitAdmin'
     }
+
+    if (user)
+      return this.renderInContainer({
+        children: <TakeActionShareProgress {...this.props} action={action} />,
+        width: 'medium',
+        height: 'auto',
+      })
     return this.renderInContainer({
       children: (
         <Fragment>

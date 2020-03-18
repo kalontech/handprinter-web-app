@@ -208,7 +208,7 @@ const FilterWrap = styled.div`
   `}
 `
 
-const ImpactButton = styled(DefaultButton)`
+export const ImpactButton = styled(DefaultButton)`
   min-width: 100%;
   background-color: transparent;
   color: ${props => (props.isModelling ? colors.blue : colors.darkGray)};

@@ -409,8 +409,8 @@ class AddAdminsModalPage extends Component {
                   placeholder={
                     admins.length === 0
                       ? formatMessage({
-                        id: 'app.createOrganization.inviteAdminsSearch',
-                      })
+                          id: 'app.createOrganization.inviteAdminsSearch',
+                        })
                       : ''
                   }
                 />

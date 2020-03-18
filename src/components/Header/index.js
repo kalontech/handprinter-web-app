@@ -128,7 +128,7 @@ const LeftMenu = styled.div`
   }
 `
 
-const CenterMenu = styled(LeftMenu)`
+export const CenterMenu = styled(LeftMenu)`
   flex: 1;
   display: flex;
   justify-content: center;
@@ -558,6 +558,8 @@ class Header extends Component {
       return '/pages/for-organizations'
 
     if (location.pathname.includes('organizations')) return '/organizations'
+
+    if (location.pathname.includes('challenges')) return '/challenges'
 
     return location.pathname
   }
@@ -990,19 +992,9 @@ class Header extends Component {
                     selectedKeys={[this.selectedMenuItem]}
                     onClick={this.onClick}
                   >
-                    <Menu.Item key="/account/dashboard">
-                      <Link to="/account/dashboard">
-                        <FormattedMessage id="app.header.menu.dashboard" />
-                      </Link>
-                    </Menu.Item>
                     <Menu.Item key="/actions">
                       <Link to="/actions">
                         <FormattedMessage id="app.header.menu.actions" />
-                      </Link>
-                    </Menu.Item>
-                    <Menu.Item key="/account/news">
-                      <Link to="/account/news">
-                        <FormattedMessage id="app.header.menu.news" />
                       </Link>
                     </Menu.Item>
                     <Menu.Item key="/groups">
@@ -1100,6 +1092,11 @@ class Header extends Component {
                         </CollapseSubmenuTitle>
                       }
                     >
+                      <Menu.Item key="/account/dashboard">
+                        <Link to="/account/dashboard">
+                          <FormattedMessage id="app.header.menu.dashboard" />
+                        </Link>
+                      </Menu.Item>
                       <Menu.Item key="/account/profile">
                         <Link to="/account/profile">
                           <FormattedMessage id="app.header.menu.profileSettings" />
@@ -1161,26 +1158,20 @@ class Header extends Component {
                         mode="horizontal"
                         selectedKeys={[this.selectedMenuItem]}
                       >
-                        <Menu.Item key="/account/dashboard">
-                          <Link to="/account/dashboard">
-                            <FormattedMessage id="app.header.menu.dashboard" />
-                          </Link>
-                        </Menu.Item>
-
                         <Menu.Item key="/actions">
                           <Link to="/actions">
                             <FormattedMessage id="app.header.menu.actions" />
-                          </Link>
-                        </Menu.Item>
-                        <Menu.Item key="/account/news">
-                          <Link to="/account/news">
-                            <FormattedMessage id="app.header.menu.news" />
                           </Link>
                         </Menu.Item>
 
                         <Menu.Item key="/groups">
                           <Link to="/groups/discover">
                             <FormattedMessage id="app.pages.groups" />
+                          </Link>
+                        </Menu.Item>
+                        <Menu.Item key="/challenges">
+                          <Link to="/challenges/campaigns">
+                            <FormattedMessage id="app.pages.challenges" />
                           </Link>
                         </Menu.Item>
                         {(!overrides || !overrides.brandName) && (
@@ -1270,6 +1261,9 @@ class Header extends Component {
                             <Name>{(user && user.fullName) || ''}</Name>
                             <Email>{(user && user.email) || ''}</Email>
                             <Links>
+                              <Link to="/account/dashboard">
+                                <FormattedMessage id="app.header.menu.dashboard" />
+                              </Link>
                               <Link to="/account/profile">
                                 <FormattedMessage id="app.header.menu.profileSettings" />
                               </Link>

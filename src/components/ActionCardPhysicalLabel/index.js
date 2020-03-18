@@ -3,12 +3,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Icon } from 'antd'
 import PropTypes from 'prop-types'
-import {
-  injectIntl,
-  FormattedPlural,
-  FormattedMessage,
-  FormattedHTMLMessage,
-} from 'react-intl'
+import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 
 import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
