@@ -374,3 +374,10 @@ export const ModalMessage = styled.p`
   margin-top: 27.44px;
   color: ${colors.darkGray};
 `
+
+export const UnitsBlock = styled.div`
+  position: absolute;
+  right: 90px;
+  padding-bottom: 6px;
+  width: 200px;
+`

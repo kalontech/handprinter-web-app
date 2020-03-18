@@ -181,6 +181,7 @@ ActionCardLabel.propTypes = {
   unit: PropTypes.oneOf(Object.values(TimeValueAbbreviations)).isRequired,
   variant: PropTypes.oneOf(['positive', 'negative']).isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  powInd: PropTypes.number,
 }
 
 export default injectIntl(ActionCardLabel)

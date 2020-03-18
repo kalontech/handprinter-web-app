@@ -173,6 +173,7 @@ const ActionCard = props => {
     onClick,
     isHabit,
     isWild,
+    showPhysicalValues,
   } = props
 
   const popover = (
@@ -221,7 +222,10 @@ const ActionCard = props => {
             <ActionCardLabelSetWrapper>
               {isWild ? popover : typeof impacts === 'function' && impacts()}
               {impacts && typeof impacts !== 'function' && (
-                <ActionCardLabelSet impacts={impacts} />
+                <ActionCardLabelSet
+                  impacts={impacts}
+                  showPhysicalValues={showPhysicalValues}
+                />
               )}
             </ActionCardLabelSetWrapper>
           </CardWrapper>
@@ -286,6 +290,7 @@ ActionCard.propTypes = {
   isHabit: PropTypes.bool,
   impactsInUnits: PropTypes.object,
   isWild: PropTypes.bool,
+  showPhysicalValues: PropTypes.bool,
 }
 
 export default ActionCard

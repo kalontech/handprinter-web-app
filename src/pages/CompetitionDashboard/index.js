@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import qs from 'qs'
 import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
@@ -42,6 +42,7 @@ function renderContent(view, props) {
   }
 }
 function CampaignDashboard(props) {
+  let [showPhysicalValues, setShowPhysicalValues] = useState(false)
   const {
     location,
     intl: { formatMessage },
@@ -61,6 +62,15 @@ function CampaignDashboard(props) {
   )
   const me = sortedParticipants && sortedParticipants[0]
   const accomplishedUserActions = me ? me.accomplishedActions : []
+
+  const toggleUnits = evt => {
+    if (evt.key === 'PhysicalUnits') {
+      setShowPhysicalValues(true)
+    } else if (evt.key === 'TimeUnits') {
+      setShowPhysicalValues(false)
+    }
+  }
+
   if (loading || !competition) return <Spinner />
   return (
     <Fragment>
@@ -116,6 +126,8 @@ function CampaignDashboard(props) {
           invitations,
           allInvitations,
           ownGroupsList,
+          toggleUnits,
+          showPhysicalValues,
         })}
       </Content>
     </Fragment>

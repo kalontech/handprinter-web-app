@@ -713,6 +713,14 @@
     "app.actions.type.wild": "Wild",
     "app.actions.type.modeled": "Modeled",
     "app.actions.behaviour.habbit": "Habbit",
+    "app.actions.behaviour.singleAction": "Single action",
+    "app.actions.wildCard.popup.content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    "app.actions.wildCard.label": "Wild card",
+    "app.actions.physicalValues.one.climate": "DALYs",
+    "app.actions.physicalValues.one.health": "kgCO2e",
+    "app.actions.physicalValues.one.ecosystem": "SP*YR",
+    "app.actions.physicalValues.one.water": "M<sup>3<\/sup>",
+    "app.actions.physicalValues.one.waste": "KG",
     "app.actions.behaviour.can become habbit": "Can become habbit",
     "app.actions.type.Wild": "Wild",
     "app.actions.type.Modeled": "Modeled",
@@ -744,7 +752,6 @@
     "app.increaseHandprintPage.form.selectGroupToInvite": "Select group you want to invite to participate in the competition.",
     "app.competitions.you.reached.challenge": "You reached the minimum number of actions to finish Challenge. You can continue taking actions to improve your score.",
     "app.competitions.you.need.take": "You need to take at least {numberToComplete} actions for finish challenge",
-    "app.actions.behaviour.singleAction": "Single action",
-    "app.actions.wildCard.popup.content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
-    "app.actions.wildCard.label": "Wild card"
+    "app.actions.units.select.PhysicalUnits": "Physical Units",
+    "app.actions.units.select.TimeUnits": "Time Units"
 }

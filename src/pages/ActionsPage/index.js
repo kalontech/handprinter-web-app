@@ -356,6 +356,7 @@ class ActionsPage extends React.PureComponent {
         ? TABS_TYPES.select
         : TABS_TYPES.default,
     modalVisible: false,
+    showPhysicalValues: false,
   }
 
   $search = React.createRef()
@@ -521,6 +522,18 @@ class ActionsPage extends React.PureComponent {
     })
   }
 
+  toggleUnits = evt => {
+    if (evt.key === 'PhysicalUnits') {
+      this.setState({
+        showPhysicalValues: true,
+      })
+    } else if (evt.key === 'TimeUnits') {
+      this.setState({
+        showPhysicalValues: false,
+      })
+    }
+  }
+
   render() {
     const {
       intl: { formatMessage, formatRelative, locale },
@@ -543,6 +556,7 @@ class ActionsPage extends React.PureComponent {
       visibleTabs,
       listType,
       modalVisible,
+      showPhysicalValues,
     } = this.state
 
     return (
@@ -693,6 +707,7 @@ class ActionsPage extends React.PureComponent {
                             values={filterValuesFromQuery}
                             onReset={this.handleFilterReset}
                             onAfterChange={this.handleOnAfterFiltersChange}
+                            toggleUnits={this.toggleUnits}
                           />
                         </FilterWrap>
                       </Animate>
@@ -765,7 +780,11 @@ class ActionsPage extends React.PureComponent {
                                 </ImpactButton>
                               </Tooltip>
                             ) : (
-                              <ActionCardLabelSet impacts={action.impacts} />
+                              <ActionCardLabelSet
+                                impacts={action.impacts}
+                                impactsInUnits={action.impactsInUnits}
+                                showPhysicalValues={showPhysicalValues}
+                              />
                             )
                           }}
                           suggestedBy={action.suggestedBy}
