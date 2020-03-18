@@ -80,7 +80,6 @@ const Value = styled.div`
 
   sup {
     font-size: 8px;
-    line-height: 20px;
   }
 `
 
