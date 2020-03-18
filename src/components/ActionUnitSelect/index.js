@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Select, Icon } from 'antd'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 
 import atom from '../../assets/unit-icons/atom.svg'
 import clock from '../../assets/unit-icons/clock.svg'
@@ -9,18 +9,13 @@ import clock from '../../assets/unit-icons/clock.svg'
 const { Option } = Select
 
 function ActionUnitSelect(props) {
-  const {
-    toggleUnits,
-    intl: { formatMessage },
-  } = props
+  const { toggleUnits } = props
   return (
     <Select
       mode="default"
       style={{ width: '100%' }}
       onChange={null}
-      defaultValue={formatMessage({
-        id: 'app.actions.units.select.PhysicalUnits',
-      })}
+      defaultValue="PhysicalUnits"
       menuItemSelectedIcon={<Icon />}
     >
       <Option key="PhysicalUnits" onClick={e => toggleUnits(e)}>
@@ -44,4 +39,4 @@ ActionUnitSelect.propTypes = {
   intl: PropTypes.object.isRequired,
 }
 
-export default injectIntl(ActionUnitSelect)
+export default ActionUnitSelect
