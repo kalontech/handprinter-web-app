@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import { Select, Icon } from 'antd'
 import { injectIntl } from 'react-intl'
 
-import atom from '../../../assets/unit-icons/atom.svg'
-import clock from '../../../assets/unit-icons/clock.svg'
 import { Checkbox } from '../../../components/Styled'
+import ActionUnitSelect from '../../../components/ActionUnitSelect'
 import { SelectWrapper, Block, UnitsBlock } from './styled'
 import { categories, behaviour, types } from './filterData'
 
@@ -138,26 +137,7 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
           </Select>
         </Block>
         <UnitsBlock>
-          <Select
-            mode="default"
-            style={{ width: '100%' }}
-            onChange={null}
-            defaultValue="Time units"
-            menuItemSelectedIcon={<Icon />}
-          >
-            <Option key="PhysicalUnits" onClick={e => props.toggleUnits(e)}>
-              <span role="img">
-                <img src={atom} style={{ marginRight: '10px' }} />
-                Physical units
-              </span>
-            </Option>
-            <Option key="TimeUnits" onClick={e => props.toggleUnits(e)}>
-              <span role="img">
-                <img src={clock} style={{ marginRight: '10px' }} />
-                Time units
-              </span>
-            </Option>
-          </Select>
+          <ActionUnitSelect toggleUnits={e => props.toggleUnits(e)} />
         </UnitsBlock>
       </SelectWrapper>
     </Fragment>
