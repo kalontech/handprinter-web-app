@@ -3,16 +3,20 @@ import _ from 'lodash'
 import Spinner from 'components/Spinner'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
-import { Menu, Row } from 'antd'
+import { Menu, Row, Select, Icon } from 'antd'
 import ActionCard from 'components/ActionCard'
 import ScrollAnimation from 'components/ScrollAnimation'
 import { ACTION_STATES } from 'utils/constants'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Tooltip from 'components/Tooltip'
 
-import { MenuStyled, Column, EmptyList } from './styled'
+import atom from '../../assets/unit-icons/atom.svg'
+import clock from '../../assets/unit-icons/clock.svg'
+import { MenuStyled, Column, EmptyList, UnitsBlock } from './styled'
 import { ACTIONS_TABS } from './constants'
 import { ImpactButton } from '../ActionsPage'
+
+const { Option } = Select
 
 function getActions(props, selectedKey) {
   const {
@@ -37,6 +41,8 @@ export default function renderActions(props) {
     intl: { formatMessage, formatRelative, locale },
     intl,
     history,
+    toggleUnits,
+    showPhysicalValues,
   } = props
   const selectedKey = _.get(props, 'location.search', '').includes(
     ACTIONS_TABS.ACCOMPLISHED,
@@ -63,6 +69,28 @@ export default function renderActions(props) {
             <FormattedMessage id="app.campaignPage.accomplished" />
           </Link>
         </Menu.Item>
+        <UnitsBlock>
+          <Select
+            mode="default"
+            style={{ width: '200px' }}
+            onChange={null}
+            defaultValue="Time units"
+            menuItemSelectedIcon={<Icon />}
+          >
+            <Option key="PhysicalUnits" onClick={e => toggleUnits(e)}>
+              <span role="img">
+                <img src={atom} style={{ marginRight: '10px' }} />
+                Physical units
+              </span>
+            </Option>
+            <Option key="TimeUnits" onClick={e => toggleUnits(e)}>
+              <span role="img">
+                <img src={clock} style={{ marginRight: '10px' }} />
+                Time units
+              </span>
+            </Option>
+          </Select>
+        </UnitsBlock>
       </MenuStyled>
 
       {loading ? (
@@ -122,7 +150,11 @@ export default function renderActions(props) {
                         </ImpactButton>
                       </Tooltip>
                     ) : (
-                      <ActionCardLabelSet impacts={action.impacts} />
+                      <ActionCardLabelSet
+                        impacts={action.impacts}
+                        impactsInUnits={action.impactsInUnits}
+                        showPhysicalValues={showPhysicalValues}
+                      />
                     )
                   }}
                   suggestedBy={action.suggestedBy}
@@ -153,4 +185,6 @@ renderActions.propTypes = {
   intl: Object,
   campaign: Object,
   history: Object,
+  showPhysicalValues: Boolean,
+  toggleUnits: Function,
 }

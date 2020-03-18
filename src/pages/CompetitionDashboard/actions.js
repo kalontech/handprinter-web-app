@@ -186,4 +186,6 @@ renderActions.propTypes = {
   intl: Object,
   competition: Object,
   history: Object,
+  showPhysicalValues: Boolean,
+  toggleUnits: Function,
 }

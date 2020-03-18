@@ -350,3 +350,10 @@ export const BreadcrumbItem = styled(Breadcrumb.Item)`
   line-height: 28px;
   color: ${colors.dark};
 `
+
+export const UnitsBlock = styled.div`
+  position: absolute;
+  right: 90px;
+  padding-bottom: 6px;
+  width: 200px;
+`
