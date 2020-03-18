@@ -515,7 +515,6 @@ class IncreaseOrganizationHandprintPage extends Component {
     const organization = this.state.organization
     if (!organization) return
     const { invitations } = await getInvitationsList(organization._id)
-    console.log('invitations', invitations)
     this.setState({ invitationsList: invitations })
   }
 
@@ -681,7 +680,6 @@ class IncreaseOrganizationHandprintPage extends Component {
       form: { getFieldDecorator, getFieldValue },
       updateMeInfoError,
     } = this.props
-    console.log(organization)
     return (
       <Fragment>
         <PageMetadata pageName="increaseHandprintPage" />

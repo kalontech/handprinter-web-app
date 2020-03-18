@@ -33,6 +33,11 @@ export const GROUPS_SUBSETS = {
   FEATURED: 'featured',
 }
 
+export const CHALLENGES_SUBSETS = {
+  CAMPAIGNS: 'campaigns',
+  COMPETITIONS: 'competitions',
+}
+
 export const USER_GROUP_STATUSES = {
   INVITED: 'INVITED',
   REQUESTING: 'REQUESTING',

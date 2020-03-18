@@ -34,10 +34,9 @@ export const fetchAPI = async (url, options) => {
     credentials: 'include',
   }
 
-  const { data, error, success } = await fetch(
-    `/api${url}`,
-    transformedOptions,
-  ).then(response => response.json())
+  const { data, error } = await fetch(`/api${url}`, transformedOptions).then(
+    response => response.json(),
+  )
 
   Sentry.addBreadcrumb({
     category: 'fetch',
@@ -51,7 +50,7 @@ export const fetchAPI = async (url, options) => {
     },
   })
 
-  if (success) {
+  if (data) {
     return data
   }
 
