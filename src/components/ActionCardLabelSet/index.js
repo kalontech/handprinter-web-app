@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import ActionCardLabel from 'components/ActionCardLabel'
+import ActionCardPhysicalLabel from 'components/ActionCardPhysicalLabel'
 import media from 'utils/mediaQueryTemplate'
 
 const CardLabelWrap = styled.div`
@@ -24,12 +25,16 @@ const ActionCardLabelSet = props => {
   if (!impacts) return null
 
   const processedUnitValue = val => {
-    let i = 0
-    while (val < 1) {
-      val *= 10
-      i = i + 1
+    if (val < 1) {
+      let i = 0
+      while (val < 1) {
+        val *= 10
+        i = i + 1
+      }
+      return [(Math.round(val * 100) / 100).toFixed(1), i]
+    } else {
+      return val > 100 ? [val, null] : [val.toFixed(1), null]
     }
-    return Math.round(val * 100) / 100
   }
 
   if (showPhysicalValues === true) {
@@ -39,7 +44,7 @@ const ActionCardLabelSet = props => {
           Object.entries(impactsInUnits.footprint)
             .filter(([category, value]) => value > 0)
             .map(([category, value], index) => (
-              <ActionCardLabel
+              <ActionCardPhysicalLabel
                 hideTooltip={hideTooltip}
                 key={index}
                 category={category}
@@ -52,7 +57,7 @@ const ActionCardLabelSet = props => {
           Object.entries(impactsInUnits.handprint)
             .filter(([category, value]) => value > 0)
             .map(([category, value], index) => (
-              <ActionCardLabel
+              <ActionCardPhysicalLabel
                 key={index}
                 category={category}
                 unit={category}

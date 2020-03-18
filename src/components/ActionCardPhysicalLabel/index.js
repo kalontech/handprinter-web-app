@@ -8,7 +8,7 @@ import { injectIntl, FormattedPlural, FormattedMessage } from 'react-intl'
 import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
 import media from 'utils/mediaQueryTemplate'
-import { IMPACT_CATEGORIES, TimeValueAbbreviations } from 'utils/constants'
+import { IMPACT_CATEGORIES } from 'utils/constants'
 import Tooltip from 'components/Tooltip'
 
 import icons from './icons'
@@ -34,12 +34,8 @@ const LabelContainer = styled.div`
   border: 1px solid transparent;
   margin-right: 6px;
   border-color: ${({ variant, unit }) =>
-    unit === TimeValueAbbreviations.DAYS && variant === 'positive'
-      ? hexToRgba(`${colors.blue}`, 0.3)
-      : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
+    variant === 'positive'
       ? hexToRgba(`${colors.ocean}`, 0.3)
-      : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-      ? hexToRgba(`${colors.green}`, 0.3)
       : hexToRgba(`${colors.darkGray}`, 0.3)};
   border-radius: 4px;
   overflow: hidden;
@@ -56,12 +52,8 @@ const Category = styled.div`
   justify-content: center;
   width: 26px;
   background-color: ${({ unit, variant }) =>
-    unit === TimeValueAbbreviations.DAYS && variant === 'positive'
-      ? hexToRgba(`${colors.blue}`, 0.1)
-      : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
+    variant === 'positive'
       ? hexToRgba(`${colors.ocean}`, 0.1)
-      : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-      ? hexToRgba(`${colors.green}`, 0.1)
       : hexToRgba(`${colors.darkGray}`, 0.1)};
 
   ${media.phone`
@@ -70,26 +62,14 @@ const Category = styled.div`
 
   .anticon {
     color: ${({ unit, variant }) =>
-      unit === TimeValueAbbreviations.DAYS && variant === 'positive'
-        ? `${colors.blue}`
-        : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
-        ? `${colors.ocean}`
-        : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-        ? `${colors.green}`
-        : `${colors.darkGray}`};
+      variant === 'positive' ? `${colors.ocean}` : `${colors.darkGray}`};
   }
 `
 
 const Caption = styled.div`
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   color: ${({ unit, variant }) =>
-    unit === TimeValueAbbreviations.DAYS && variant === 'positive'
-      ? `${colors.blue}`
-      : unit === TimeValueAbbreviations.HOURS && variant === 'positive'
-      ? `${colors.ocean}`
-      : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
-      ? `${colors.green}`
-      : `${colors.darkGray}`};
+    variant === 'positive' ? `${colors.ocean}` : `${colors.darkGray}`};
   font-size: 10px;
   font-weight: bold;
   line-height: 1.4;
@@ -97,6 +77,11 @@ const Caption = styled.div`
 const Value = styled.div`
   font-weight: 400;
   color: ${colors.dark};
+
+  sup {
+    font-size: 8px;
+    line-height: 20px;
+  }
 `
 
 const Impact = styled.div`
@@ -108,7 +93,7 @@ const Impact = styled.div`
   line-height: 1;
 `
 
-const ActionCardLabel = ({
+const ActionCardPhysicalLabel = ({
   category,
   value,
   variant,
@@ -119,6 +104,7 @@ const ActionCardLabel = ({
 }) => {
   const tooltipProps = {}
   if (hideTooltip) tooltipProps.visible = false
+  const [num, power] = value
 
   return (
     <Tooltip
@@ -133,10 +119,10 @@ const ActionCardLabel = ({
                 <FormattedPlural
                   value={value}
                   one={formatMessage({
-                    id: `app.actions.timeValues.one.${unit}`,
+                    id: `app.actions.physicalValues.one.${unit}`,
                   })}
                   other={formatMessage({
-                    id: `app.actions.timeValues.other.${unit}`,
+                    id: `app.actions.physicalValues.other.${unit}`,
                   })}
                 />
               ),
@@ -160,27 +146,50 @@ const ActionCardLabel = ({
           <Caption unit={unit} variant={variant}>
             <FormattedPlural
               value={value}
-              one={formatMessage({
-                id: `app.actions.timeValues.one.${unit}`,
-              })}
-              other={formatMessage({
-                id: `app.actions.timeValues.other.${unit}`,
-              })}
+              one={
+                `${formatMessage({
+                  id: `app.actions.physicalValues.other.${unit}`,
+                })}` === 'M' ? (
+                  <p>
+                    M<sup>3</sup>
+                  </p>
+                ) : (
+                  formatMessage({
+                    id: `app.actions.physicalValues.other.${unit}`,
+                  })
+                )
+              }
+              other={
+                `${formatMessage({
+                  id: `app.actions.physicalValues.other.${unit}`,
+                })}` === 'M' ? (
+                  <p>
+                    M<sup>3</sup>
+                  </p>
+                ) : (
+                  formatMessage({
+                    id: `app.actions.physicalValues.other.${unit}`,
+                  })
+                )
+              }
             />
           </Caption>
-          <Value>{value}</Value>
+          <Value>
+            {num}
+            {power > 3 ? <sup>-{power}</sup> : null}
+          </Value>
         </Impact>
       </LabelContainer>
     </Tooltip>
   )
 }
 
-ActionCardLabel.propTypes = {
+ActionCardPhysicalLabel.propTypes = {
   category: PropTypes.oneOf(Object.values(IMPACT_CATEGORIES)).isRequired,
-  unit: PropTypes.oneOf(Object.values(TimeValueAbbreviations)).isRequired,
+  unit: PropTypes.string.isRequired,
   variant: PropTypes.oneOf(['positive', 'negative']).isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.array.isRequired,
   powInd: PropTypes.number,
 }
 
-export default injectIntl(ActionCardLabel)
+export default injectIntl(ActionCardPhysicalLabel)
