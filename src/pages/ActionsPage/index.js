@@ -523,11 +523,11 @@ class ActionsPage extends React.PureComponent {
   }
 
   toggleUnits = evt => {
-    if (evt.key === 'Physical units') {
+    if (evt.key === 'PhysicalUnits') {
       this.setState({
         showPhysicalValues: true,
       })
-    } else if (evt.key === 'Time units') {
+    } else if (evt.key === 'TimeUnits') {
       this.setState({
         showPhysicalValues: false,
       })

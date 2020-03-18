@@ -145,13 +145,13 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
             defaultValue="Time units"
             menuItemSelectedIcon={<Icon />}
           >
-            <Option key="Physical units" onClick={e => props.toggleUnits(e)}>
+            <Option key="PhysicalUnits" onClick={e => props.toggleUnits(e)}>
               <span role="img">
                 <img src={atom} style={{ marginRight: '10px' }} />
                 Physical units
               </span>
             </Option>
-            <Option key="Time units" onClick={e => props.toggleUnits(e)}>
+            <Option key="TimeUnits" onClick={e => props.toggleUnits(e)}>
               <span role="img">
                 <img src={clock} style={{ marginRight: '10px' }} />
                 Time units
@@ -166,6 +166,7 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
 
 ActionsFilters.propTypes = {
   onAfterChange: PropTypes.func.isRequired,
+  toggleUnits: PropTypes.func.isRequired,
   timeValues: PropTypes.array,
   onReset: PropTypes.func,
   closeModal: PropTypes.func,
