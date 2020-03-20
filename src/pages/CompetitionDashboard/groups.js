@@ -22,7 +22,7 @@ import { acceptInvitation, denyInvitation } from '../../api/competitions'
 
 const Main = styled.div`
   width: 100%;
-  height: 600px;
+  min-height: 600px;
   background-color: white;
   display: flex;
   justify-content: center;
