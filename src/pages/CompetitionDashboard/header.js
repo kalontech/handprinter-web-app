@@ -19,20 +19,20 @@ import {
   HeaderCompetitionButton,
   HeaderCompetitionButtonContainer,
   ModalMessage,
+  AchievementModal,
+  AchievementTitle,
+  AchivmentLogo,
+  AchivmentBanner,
+  AchievementFooterButton,
+  ModalContent,
+  AchievementFooter,
+  SkipFooterButton,
 } from './styled'
 import {
   DashboardHeaderWhiteLine,
   DashboardHeaderUserPictureWrap,
   DashboardHeaderUserPicture,
   DashboardHeaderUserSince,
-  AchievementModal,
-  AchievementTitle,
-  AchivmentLogo,
-  AchivmentBanner,
-  AchievementFooterButton,
-  SkipFooterButton,
-  AchievementFooter,
-  ModalContent,
   FingerLogo,
 } from '../DashboardPage/header'
 import { sendInvitations } from '../../api/competitions'
