@@ -15,7 +15,7 @@ function ActionUnitSelect(props) {
       mode="default"
       style={{ width: '100%' }}
       onChange={null}
-      defaultValue="PhysicalUnits"
+      defaultValue="TimeUnits"
       menuItemSelectedIcon={<Icon />}
     >
       <Option key="PhysicalUnits" onClick={e => toggleUnits(e)}>
