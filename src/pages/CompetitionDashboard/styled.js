@@ -393,7 +393,7 @@ export const AchivmentLogo = styled.img`
   top: -55px;
   left: 41%;
   width: 110px;
-  height: 108.95px;
+  height: 110px;
   border-radius: 50%;
 `
 

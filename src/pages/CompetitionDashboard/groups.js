@@ -18,7 +18,7 @@ import { acceptInvitation, denyInvitation } from '../../api/competitions'
 
 const Main = styled.div`
   width: 100%;
-  max-height: 650px;
+  max-height: 600px;
   overflow: scroll;
   background-color: white;
   display: flex;
