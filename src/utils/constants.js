@@ -76,3 +76,8 @@ export const ORGANIZATION_SUBSETS = {
   DISCOVER: 'discover',
   MY: 'my',
 }
+
+export const UNITS = {
+  timeUnits: 'TimeUnits',
+  physicalUnits: 'PhysicalUnits',
+}

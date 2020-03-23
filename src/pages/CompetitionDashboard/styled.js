@@ -377,7 +377,7 @@ export const ModalMessage = styled.p`
   height: 19px;
   text-align: center;
   margin-bottom: 29px;
-  margin-top: 27.44px;
+  margin-top: 15px;
   color: ${colors.darkGray};
 `
 
@@ -410,7 +410,6 @@ export const AchievementTitle = styled.p`
   font-style: normal;
   font-weight: normal;
   font-size: 28px;
-  margin-top: -30px;
   width: 100%;
 `
 

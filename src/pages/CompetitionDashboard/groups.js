@@ -18,7 +18,8 @@ import { acceptInvitation, denyInvitation } from '../../api/competitions'
 
 const Main = styled.div`
   width: 100%;
-  min-height: 600px;
+  max-height: 650px;
+  overflow: scroll;
   background-color: white;
   display: flex;
   justify-content: center;
@@ -79,8 +80,7 @@ export default function renderGroups(props) {
   const expired = moment().isAfter(competition.dateTo)
 
   const total = competition.actions.length
-  const numberToComplete =
-    competition.actionsNumberToComplete || competition.actions.length
+  const numberToComplete = competition.actionsNumberToComplete || total
 
   const tooltipText =
     accomplished >= numberToComplete
@@ -201,6 +201,60 @@ export default function renderGroups(props) {
               />
             )
           })}
+          {groupParticipants.map(participant => {
+            const accomplished = participant.accomplishedActions.length
+            const total = competition.actions.length
+            const percent = (accomplished / total) * 100
+            return (
+              <MemberCard
+                containerStyle={{ width: '95%' }}
+                key={participant.user._id}
+                to={`/account/${participant.user._id}`}
+                fullName={participant.user.fullName}
+                photo={
+                  participant.user.photo ||
+                  getUserInitialAvatar(participant.user.fullName)
+                }
+                counter={intl.formatMessage(
+                  { id: 'app.campaignPage.progress.accomplished' },
+                  {
+                    accomplished,
+                    total,
+                  },
+                )}
+                impacts={{ handprint: participant.userInfo.impacts }}
+                progressBarPercent={percent}
+                {...progressProps}
+              />
+            )
+          })}
+          {groupParticipants.map(participant => {
+            const accomplished = participant.accomplishedActions.length
+            const total = competition.actions.length
+            const percent = (accomplished / total) * 100
+            return (
+              <MemberCard
+                containerStyle={{ width: '95%' }}
+                key={participant.user._id}
+                to={`/account/${participant.user._id}`}
+                fullName={participant.user.fullName}
+                photo={
+                  participant.user.photo ||
+                  getUserInitialAvatar(participant.user.fullName)
+                }
+                counter={intl.formatMessage(
+                  { id: 'app.campaignPage.progress.accomplished' },
+                  {
+                    accomplished,
+                    total,
+                  },
+                )}
+                impacts={{ handprint: participant.userInfo.impacts }}
+                progressBarPercent={percent}
+                {...progressProps}
+              />
+            )
+          })}
         </ParticipantsMain>
       )}
     </Fragment>
@@ -208,17 +262,18 @@ export default function renderGroups(props) {
 }
 
 function renderGroup(props, groupParticipants) {
-  const { competition, intl, allInvitations } = props
-  const total = competition.actions.length
+  const {
+    intl,
+    allInvitations,
+    total,
+    accomplished,
+    endDate,
+    expired,
+    tooltipText,
+  } = props
   const groups = getGroups(groupParticipants, allInvitations)
   const cg = groups && Object.values(groups)[0] // competition group
   if (!cg || _.isEmpty(cg.participants)) return null
-  const accomplished = cg.participants.reduce(
-    (acc, curr) =>
-      acc +
-      (curr && curr.accomplishedActions ? curr.accomplishedActions.length : 0),
-    0,
-  )
   const participantsCount = cg.participants.length
   let totalActions = total * participantsCount
   const percentAccomplished = (accomplished / totalActions) * 100
@@ -239,10 +294,10 @@ function renderGroup(props, groupParticipants) {
       impacts={{ handprint: cg.group.impacts }}
       containerStyle={{ width: '100%' }}
       total={props.total}
-      accomplished={props.accomplished}
-      endDate={props.endDate}
-      expired={props.expired}
-      tooltipText={props.tooltipText}
+      accomplished={accomplished}
+      endDate={endDate}
+      expired={expired}
+      tooltipText={tooltipText}
     />
   )
 }

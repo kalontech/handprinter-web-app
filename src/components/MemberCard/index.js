@@ -17,7 +17,6 @@ import {
 
 const Block = styled(Link)`
   padding: 30px 20px 20px;
-  min-height: 236px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
