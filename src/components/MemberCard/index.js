@@ -7,9 +7,9 @@ import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import { FormattedMessage } from 'react-intl'
+import { Popover } from 'antd'
 
-import { Progress, Popover } from 'antd'
-
+import Progress from '../../pages/CampaignDashboard/progress'
 import {
   Achievements,
   AchievementSmall,
@@ -35,6 +35,7 @@ const Block = styled(Link)`
 const User = styled.div`
   display: flex;
   justify-content: flex-start;
+  margin-bottom: 15px;
   padding-bottom: 26px;
   border-bottom: 1px solid ${colors.gray};
 `
@@ -87,10 +88,6 @@ const Counter = styled.span`
   color: ${colors.darkGray};
 `
 
-const ProgressStyled = styled(Progress)`
-  width: 100%;
-`
-
 const ParticipantPopover = styled(Popover)`
   width: 200px;
 `
@@ -130,6 +127,13 @@ export default class MemberCard extends React.PureComponent {
     progressBarPercent: PropTypes.number,
     actionsTakenPerMember: PropTypes.number,
     containerStyle: PropTypes.any,
+    total: PropTypes.number,
+    successCount: PropTypes.number,
+    numberToComplete: PropTypes.number,
+    accomplished: PropTypes.bool,
+    dateTo: PropTypes.Date,
+    expired: PropTypes.bool,
+    tooltipText: PropTypes.string,
   }
 
   static defaultProps = {
@@ -154,6 +158,12 @@ export default class MemberCard extends React.PureComponent {
       progressBarPercent,
       containerStyle,
       actionsTakenPerMember,
+      total,
+      numberToComplete,
+      accomplished,
+      dateTo,
+      expired,
+      tooltipText,
     } = this.props
 
     return (
@@ -207,11 +217,14 @@ export default class MemberCard extends React.PureComponent {
               </Achievements>
             )}
             {!!progressBarPercent && (
-              <ProgressStyled
-                percent={progressBarPercent}
-                showInfo={false}
-                strokeColor={colors.green}
-                strokeWidth={4}
+              <Progress
+                styles={{ height: '70px' }}
+                total={total}
+                successCount={numberToComplete}
+                accomplished={accomplished}
+                endDate={dateTo}
+                expired={expired}
+                tooltipText={tooltipText}
               />
             )}
           </Info>
