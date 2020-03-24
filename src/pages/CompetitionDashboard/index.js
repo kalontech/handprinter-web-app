@@ -128,6 +128,7 @@ function CampaignDashboard(props) {
           ownGroupsList,
           toggleUnits,
           showPhysicalValues,
+          accomplishedUserActions,
         })}
       </Content>
     </Fragment>

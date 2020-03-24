@@ -2,7 +2,13 @@ import styled from 'styled-components'
 import { AutoComplete, Select, Col, Menu, Breadcrumb } from 'antd'
 import { Link } from 'react-router-dom'
 
-import { Pagination, SecondaryButton } from 'components/Styled'
+import {
+  Pagination,
+  SecondaryButton,
+  PrimaryButton,
+  DefaultButton,
+  Modal,
+} from 'components/Styled'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 
@@ -371,7 +377,7 @@ export const ModalMessage = styled.p`
   height: 19px;
   text-align: center;
   margin-bottom: 29px;
-  margin-top: 27.44px;
+  margin-top: 15px;
   color: ${colors.darkGray};
 `
 
@@ -380,4 +386,98 @@ export const UnitsBlock = styled.div`
   right: 90px;
   padding-bottom: 6px;
   width: 200px;
+`
+
+export const AchivmentLogo = styled.img`
+  position: relative;
+  top: -55px;
+  left: 41%;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+`
+
+export const AchivmentBanner = styled.div`
+  height: 140px;
+  width: 100%;
+  background-color: ${colors.ocean};
+  border-radius: 4px 4px 0px 0px;
+`
+
+export const AchievementTitle = styled.p`
+  text-align: center;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 28px;
+  width: 100%;
+`
+
+export const AchievementFooterButton = styled(PrimaryButton)`
+  width: 198px;
+  height: 50px;
+  align-self: center;
+`
+
+export const SkipFooterButton = styled(DefaultButton)`
+  width: 198px;
+  height: 50px;
+  align-self: center;
+`
+
+export const AchievementModal = styled(Modal)`
+  .ant-modal-close-x {
+    color: white;
+    width: 50px;
+    height: 50px;
+  }
+
+  .ant-modal-footer {
+    padding: 0px;
+    border: 0;
+  }
+
+  .ant-modal-body {
+    height: 600px;
+  }
+
+  .ant-modal-title {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+
+  .ant-modal-header {
+    border: 0px;
+  }
+`
+
+export const ModalContent = styled.div`
+  width: 472px;
+  max-height: 218px;
+  overflow: scroll;
+  margin: 0 60px 40px 60px;
+  border: 1px solid ${colors.gray};
+  box-sizing: border-box;
+  border-radius: 4px;
+
+  ${media.phone`
+    width: 90%;
+    margin: 5%;
+    border-radius: 0;
+  `}
+`
+
+export const AchievementFooter = styled.div`
+  background-color: ${colors.lightGray};
+  height: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0px 0px 4px 4px;
+
+  ${media.phone`
+    border-radius: 0;
+    padding: 0 10px;
+  `}
 `
