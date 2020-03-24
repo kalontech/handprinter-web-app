@@ -17,6 +17,7 @@ import * as apiActions from 'api/actions'
 import { ActivityFooter, ActivityHeader } from 'components/GetStreamComponents'
 import Mention from 'components/GetStreamComponents/Mention.svg'
 import AttachAction from 'components/GetStreamComponents/AttachAction.svg'
+import env from 'config/env'
 
 const Feed = ({
   readFrom = {},
@@ -36,10 +37,7 @@ const Feed = ({
   )
   const [actions, setActions] = useState([])
 
-  const {
-    REACT_APP_GETSTREAM_API_KEY,
-    REACT_APP_GETSTREAM_APP_ID,
-  } = process.env
+  const { REACT_APP_GETSTREAM_API_KEY, REACT_APP_GETSTREAM_APP_ID } = env
 
   const promiseOptions = inputValue => {
     return new Promise(resolve => {
