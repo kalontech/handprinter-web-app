@@ -753,5 +753,9 @@
     "app.competitions.you.reached.challenge": "You reached the minimum number of actions to finish Challenge. You can continue taking actions to improve your score.",
     "app.competitions.you.need.take": "You need to take at least {numberToComplete} actions for finish challenge",
     "app.actions.units.select.PhysicalUnits": "Physical Units",
-    "app.actions.units.select.TimeUnits": "Time Units"
+    "app.actions.units.select.TimeUnits": "Time Units",
+    "app.humanscaleCta.text": "The answer to reversing global warming starts with you.Your actions can have a positive impact on the planet.",
+    "app.humanscaleCta.link": "learn more",
+    "app.aboutIHumanscalePage.hero.title": "Help us create handprints, and be part of a positive change in the world",
+    "app.aboutHumanscalePage.join.link": "join"
 }
