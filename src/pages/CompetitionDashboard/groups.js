@@ -201,60 +201,6 @@ export default function renderGroups(props) {
               />
             )
           })}
-          {groupParticipants.map(participant => {
-            const accomplished = participant.accomplishedActions.length
-            const total = competition.actions.length
-            const percent = (accomplished / total) * 100
-            return (
-              <MemberCard
-                containerStyle={{ width: '95%' }}
-                key={participant.user._id}
-                to={`/account/${participant.user._id}`}
-                fullName={participant.user.fullName}
-                photo={
-                  participant.user.photo ||
-                  getUserInitialAvatar(participant.user.fullName)
-                }
-                counter={intl.formatMessage(
-                  { id: 'app.campaignPage.progress.accomplished' },
-                  {
-                    accomplished,
-                    total,
-                  },
-                )}
-                impacts={{ handprint: participant.userInfo.impacts }}
-                progressBarPercent={percent}
-                {...progressProps}
-              />
-            )
-          })}
-          {groupParticipants.map(participant => {
-            const accomplished = participant.accomplishedActions.length
-            const total = competition.actions.length
-            const percent = (accomplished / total) * 100
-            return (
-              <MemberCard
-                containerStyle={{ width: '95%' }}
-                key={participant.user._id}
-                to={`/account/${participant.user._id}`}
-                fullName={participant.user.fullName}
-                photo={
-                  participant.user.photo ||
-                  getUserInitialAvatar(participant.user.fullName)
-                }
-                counter={intl.formatMessage(
-                  { id: 'app.campaignPage.progress.accomplished' },
-                  {
-                    accomplished,
-                    total,
-                  },
-                )}
-                impacts={{ handprint: participant.userInfo.impacts }}
-                progressBarPercent={percent}
-                {...progressProps}
-              />
-            )
-          })}
         </ParticipantsMain>
       )}
     </Fragment>
