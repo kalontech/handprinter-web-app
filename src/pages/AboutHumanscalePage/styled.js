@@ -121,6 +121,24 @@ export const WhiteButton = styled(Button)`
   }
 `
 
+export const GreenButton = styled(Button)`
+  margin: 0 auto;
+  border: 1px solid ${colors.humanscaleHeaderText};
+  background: ${colors.humanscaleHeaderText};
+  font-family: Helvetica Neue;
+  font-weight: 400;
+  font-size: 16px;
+  height: 50px;
+  width: 170px;
+  color: ${colors.white};
+  &&:hover,
+  &&:focus {
+    background: transparent;
+    border-color: ${colors.humanscaleHeaderText};
+    color: ${colors.black};
+  }
+`
+
 // what is footprint
 export const WhatIsFootprint = styled.section`
   height: 91vh;
@@ -181,7 +199,7 @@ export const WhatIsHandprint = styled.section`
   align-items: center;
   height: 91vh;
   background: ${colors.white};
-  padding: 30px 30px 30px 100px;
+  padding: 10px 10px 10px 100px;
 `
 
 export const HandprintWrapper = styled.div`
@@ -193,19 +211,47 @@ export const HandprintWrapper = styled.div`
   background: ${colors.white};
 `
 
+export const HandprintImagesWrapper = styled.div`
+  position: absolute;
+  left: 7vw;
+  top: 102vw;
+  ${media.largeDesktop`
+    top: 123vw;
+  `}
+`
+
 export const HandprintMainImage = styled.img`
-  height: 85%;
+  height: 100%;
   width: auto;
   margin-right: 40px;
 `
 
+export const HandprintLeapImage = styled.img`
+  height: 120px;
+  width: 90;
+  position: relative;
+  top: -30vh;
+  left: -710px;
+`
+export const HandprintFingerImage = styled.img`
+  height: 100px;
+  width: 90;
+  position: relative;
+  top: -32vh;
+  left: -780px;
+`
+
 export const HandprintInfo = styled.div`
   width: 500px;
+  position: relative;
+  left: 37vw;
+  top: -10vh;
+  margin-left: 200px;
 `
 
 // Take action
 export const TakeActionWrapper = styled.section`
-  height: 240vh;
+  height: 300vh;
   background: ${colors.humanscaleIvy};
 `
 
@@ -227,14 +273,144 @@ export const TakeActionHeader = styled.div`
   }
 `
 
-export const TakeAction = styled.section``
+export const TakeAction = styled.section`
+  height: 91vh;
+`
 
-export const TakeActionDoIt = styled.section``
+export const TakeActionItemHeader = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 150px 0 150px;
 
-export const TakeActionShareTo = styled.section``
+  p {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 30px;
+    text-transform: uppercase;
+    color: ${colors.white};
+  }
+
+  span {
+    flex: 1;
+    border-top: 1px solid ${colors.white};
+    margin-left: 40px;
+  }
+`
+
+export const TakeActionItemInfo = styled.div`
+  display: flex;
+  justify-content: flex-start;
+
+  p {
+    font-size: 16px;
+    line-height: 28px;
+    color: ${colors.white};
+    padding: 25px 150px 0 150px;
+    width: 50vw;
+  }
+`
+
+export const TakeActionMainImageWraper = styled.div`
+  margin-top: 30px;
+  position: absolute;
+  left: 50vw;
+  width: 30vw;
+`
+
+export const TakeActionMainImage = styled.img`
+  width: 30vw;
+`
+
+export const TakeActionLeap = styled.img`
+  width: 100px;
+  position: relative;
+  top: -60vh;
+  left: 23vw;
+`
+
+export const TakeActionLeap2 = styled.img`
+  width: 120px;
+  position: relative;
+  top: -57vh;
+  left: 20vw;
+`
+
+export const TakeActionFingerprint = styled.img`
+  width: 20vw;
+  position: relative;
+  top: -30vh;
+  left: -5vw;
+`
+
+export const TakeActionDoIt = styled.section`
+  height: 91vh;
+`
+
+export const TakeActionDoItImageWrapper = styled.section`
+  margin-top: 30px;
+  position: absolute;
+  left: 50vw;
+  width: 30vw;
+`
+
+export const TakeActionDoItMainImage = styled.img`
+  width: 30vw;
+`
+
+export const TakeActionDoItHandprint = styled.img`
+  position: relative;
+  top: -150px;
+  left: -50px;
+  ${media.largeDesktop`
+    width: 300px;
+    top: -10px;
+    left: -80px;
+  `}
+`
+
+export const TakeActionShareTo = styled.section`
+  height: 91vh;
+`
+
+export const SharedToImageWrapper = styled.div`
+  margin-top: 30px;
+  margin-right: 150px;
+  position: absolute;
+  left: 50vw;
+  width: 50vw;
+`
+
+export const TakeActionSharedToImage = styled.img`
+  width: 45vw;
+`
+
+export const SmallCircle = styled.div`
+  position: relative;
+  top: -37vh;
+  left: 13vw;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 1px solid ${colors.gray};
+`
+
+export const BigCircle = styled.div`
+  position: relative;
+  top: -87vh;
+  left: 3vw;
+  width: 530px;
+  height: 530px;
+  border-radius: 50%;
+  border: 1px solid ${colors.gray};
+`
 
 // Wrapper for campaigns
 export const CampaignsMainWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   height: 91vh;
   background: ${colors.white};
 
@@ -245,7 +421,7 @@ export const CampaignsMainWrapper = styled.section`
 `
 
 export const CampaignsHeader = styled.div`
-  width: 800px;
+  width: 100%;
   font-size: 52px;
   line-height: 71px;
   text-align: center;
@@ -253,12 +429,66 @@ export const CampaignsHeader = styled.div`
 `
 
 export const CampaignsBlock = styled.div`
-  width: 80vw;
-  height: 300px;
+  position: absolute;
+  bottom: 80vh;
+  left: 7vw;
+  width: 93vw;
+  height: 40vh;
   background: ${colors.humanscaleBlueAsh};
 `
 
-export const CampaignsInfo = styled.div``
+export const CampaignsFinger = styled.img`
+  position: relative;
+  top: 10vh;
+  left: -5vw;
+  width: 30vw;
+  height: 30vh;
+`
+
+export const CampaignsCards = styled.div`
+  position: absolute;
+  height: 20vh;
+  left: 7vw;
+  bottom: 30vh;
+`
+
+export const CampaignsCard = styled.img`
+  width: 50vh;
+  height: 15vw;
+`
+
+export const CampaignsInfo = styled.div`
+  padding-top: 50px;
+  position: relative;
+  div {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    width: 100%;
+  }
+`
+
+export const CampaignButtons = styled.div`
+  position: relative;
+  bottom: 4vh;
+  left: -55vw;
+  width: 140vw;
+  display: flex;
+  justify-content: space-around;
+`
+
+export const CampaignLeftArrowButton = styled.img`
+  width: 40px;
+  height: 40px;
+  background: ${colors.white};
+  margin-right: 20px;
+`
+
+export const CampaignRightArrowButton = styled.img`
+  width: 40px;
+  height: 40px;
+  background: ${colors.white};
+`
 
 // Join handprinter
 export const JoinHandprinterWrapper = styled.section`
