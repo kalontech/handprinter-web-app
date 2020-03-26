@@ -8,9 +8,6 @@ import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import { BlockContainer, BlockSubTitle } from 'components/Styled'
 
-// import bg from './assets/bg.png'
-// import ctaImg from './assets/'
-
 const CtaButton = styled(Button)`
   font-size: 16px;
   font-weight: normal;

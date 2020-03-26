@@ -10,9 +10,6 @@ import { BlockContainer } from 'components/Styled'
 import media from 'utils/mediaQueryTemplate'
 import { CONTACT_DATA } from 'utils/constants'
 
-// import footerLogo from './assets/'
-// import footerLogoSmall from './assets/'
-
 const FooterWrap = styled(Layout.Footer)`
   padding: 0;
   margin: 50px 20px 20px;

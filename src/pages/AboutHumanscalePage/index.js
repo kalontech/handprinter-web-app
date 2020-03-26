@@ -96,7 +96,7 @@ class AboutHumanscalePage extends Component {
         <Hero>
           <HeroInfo>
             <HeroTitle>
-              <FormattedMessage id="app.aboutIHumanscalePage.hero.title" />
+              <FormattedMessage id="app.aboutHumanscalePage.hero.title" />
             </HeroTitle>
             <Link to="/pages/our-vision">
               <WhiteButton type="ghost" size="large">
