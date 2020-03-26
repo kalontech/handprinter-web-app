@@ -1,14 +1,8 @@
 import React, { Component, Fragment } from 'react'
-import {
-  FormattedMessage,
-  FormattedHTMLMessage,
-  injectIntl,
-  intlShape,
-} from 'react-intl'
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import { Link } from 'react-router-dom'
 import { animateScroll } from 'react-scroll/modules'
 import PageMetadata from 'components/PageMetadata'
-import * as api from 'api/actions'
 
 import {
   Hero,
@@ -85,30 +79,17 @@ import campaignsFinger from './assets/Actions-fingerprint.svg'
 import campaignCard from './assets/Campaign card.png'
 import leftArrow from './assets/ic_arrow_drop_down_left.png'
 import rightArrow from './assets/ic_arrow_drop_down_right.png'
+import smallOval from './assets/smallOval.svg'
+import bigOval from './assets/bigOval.svg'
 
 import earth from './assets/earth.svg'
 
-// import foot from './assets/foot.png'
-
 class AboutHumanscalePage extends Component {
-  state = {
-    actions: [],
-  }
-
   componentDidMount = async () => {
     animateScroll.scrollToTop()
-
-    const {
-      actions: { docs: actions },
-    } = await api.getActions()
-    this.setState({ actions })
   }
 
   render() {
-    const {
-      intl: { locale, formatRelative },
-    } = this.props
-    const { actions } = this.state
     return (
       <Fragment>
         <PageMetadata pageName="aboutInterfacePage" />
@@ -126,12 +107,11 @@ class AboutHumanscalePage extends Component {
         </Hero>
         <WhatIsFootprint>
           <FootprintWrapper>
-            <Title>What is footprint?</Title>
+            <Title>
+              <FormattedMessage id="app.aboutHumanscalePage.footprint.title" />
+            </Title>
             <Text>
-              Footprint - the sum of all the negative impacts on the planet we
-              share, of all the activities it takes to provide each of us with
-              the products and services we buy and use in a year, including the
-              impacts from using and disposing of them
+              <FormattedMessage id="app.aboutHumanscalePage.footprint.text" />
             </Text>
             <FootprintImagesBlock>
               <FootprintMainImage src={footprintImage} alt="" />
@@ -149,24 +129,19 @@ class AboutHumanscalePage extends Component {
               <HandprintFingerImage src={earth} alt="" />
             </HandprintImagesWrapper>
             <HandprintInfo>
-              <Title>What is handprint?</Title>
+              <Title>
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.title" />
+              </Title>
               <Text>
-                Footprint - the sum of all the negative impacts on the planet we
-                share, of all the activities it takes to provide each of us with
-                the products and services we buy and use in a year, including
-                the impacts from using and disposing of them
+                {`We've all heard about our footprints: negative impacts of the
+                things we buy and use. We need to reduce them, but footprints
+                are only part of the story.`}
               </Text>
               <Text>
-                Footprint - the sum of all the negative impacts on the planet we
-                share, of all the activities it takes to provide each of us with
-                the products and services we buy and use in a year, including
-                the impacts from using and disposing of them
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.text1" />
               </Text>
               <Text>
-                Footprint - the sum of all the negative impacts on the planet we
-                share, of all the activities it takes to provide each of us with
-                the products and services we buy and use in a year, including
-                the impacts from using and disposing of them
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.text2" />
               </Text>
             </HandprintInfo>
           </HandprintWrapper>
@@ -177,15 +152,14 @@ class AboutHumanscalePage extends Component {
           </TakeActionHeader>
           <TakeAction>
             <TakeActionItemHeader>
-              <p>1. TAKE ACTION</p>
+              <p>
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.takeAction" />
+              </p>
               <span />
             </TakeActionItemHeader>
             <TakeActionItemInfo>
               <p>
-                Be sure you tried it out yourself first, and share ideas about
-                how to make it work. Another part of idea creation is modeling
-                the impacts of an action idea so that we can all understand what
-                impacts it has in the world.
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionINFO" />
               </p>
               <TakeActionMainImageWraper>
                 <TakeActionMainImage src={takeActionMainImage} alt="" />
@@ -197,15 +171,14 @@ class AboutHumanscalePage extends Component {
           </TakeAction>
           <TakeActionDoIt>
             <TakeActionItemHeader>
-              <p>1. TAKE ACTION</p>
+              <p>
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionDoIt" />
+              </p>
               <span />
             </TakeActionItemHeader>
             <TakeActionItemInfo>
               <p>
-                Be sure you tried it out yourself first, and share ideas about
-                how to make it work. Another part of idea creation is modeling
-                the impacts of an action idea so that we can all understand what
-                impacts it has in the world.
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionDoItInfo" />
               </p>
               <TakeActionDoItImageWrapper>
                 <TakeActionDoItMainImage src={doItMainImage} alt="" />
@@ -215,33 +188,34 @@ class AboutHumanscalePage extends Component {
           </TakeActionDoIt>
           <TakeActionShareTo>
             <TakeActionItemHeader>
-              <p>1. TAKE ACTION</p>
+              <p>
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionShare" />
+              </p>
               <span />
             </TakeActionItemHeader>
             <TakeActionItemInfo>
               <p>
-                Be sure you tried it out yourself first, and share ideas about
-                how to make it work. Another part of idea creation is modeling
-                the impacts of an action idea so that we can all understand what
-                impacts it has in the world.
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionShareInfo" />
               </p>
               <SharedToImageWrapper>
                 <TakeActionSharedToImage src={sharedToImage} alt="" />
-                <SmallCircle />
-                <BigCircle />
+                <SmallCircle src={smallOval} alt="" />
+                <BigCircle src={bigOval} alt="" />
               </SharedToImageWrapper>
             </TakeActionItemInfo>
           </TakeActionShareTo>
         </TakeActionWrapper>
         <CampaignsMainWrapper>
           <CampaignsInfo>
-            <CampaignsHeader>Yes shrink your footprint.</CampaignsHeader>
-            <CampaignsHeader>But also grow your handprint!</CampaignsHeader>
+            <CampaignsHeader>
+              <FormattedMessage id="app.aboutHumanscalePage.handprint.campaignsHeader1" />
+            </CampaignsHeader>
+            <CampaignsHeader>
+              <FormattedMessage id="app.aboutHumanscalePage.handprint.campaignsHeader2" />
+            </CampaignsHeader>
             <div>
               <p>
-                Just take one of the actions from the Challenges! There are so
-                many ways to shrink your footprint. Hundreds of people are using
-                these ideas to reduce their footprints.
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.campaignsInfo" />
               </p>
             </div>
           </CampaignsInfo>
@@ -254,7 +228,9 @@ class AboutHumanscalePage extends Component {
               <CampaignsCard src={campaignCard} alt="" />
             </CampaignsCards>
             <CampaignButtons>
-              <GreenButton>view more</GreenButton>
+              <GreenButton>
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.viewMoreBtn" />
+              </GreenButton>
               <div styles={{ width: '250px' }}>
                 <CampaignLeftArrowButton src={leftArrow} alt="" />
                 <CampaignRightArrowButton src={rightArrow} alt="" />
@@ -265,7 +241,9 @@ class AboutHumanscalePage extends Component {
         <JoinHandprinterWrapper>
           <JoinHandprinterContentBlock>
             <JoinHandprinterContent>
-              <p>Join Handprinter Save the Planet</p>
+              <p>
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.joinToHandleprinter" />
+              </p>
               <Link to="/pages/our-vision">
                 <WhiteButton type="ghost" size="large">
                   <FormattedMessage id="app.aboutHumanscalePage.join.link" />

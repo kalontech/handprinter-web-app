@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
-import hexToRgba from 'utils/hexToRgba'
 import { Button } from 'antd'
 
 import bg from '../../assets/about-humanscale/bg.png'
@@ -383,27 +382,21 @@ export const SharedToImageWrapper = styled.div`
 `
 
 export const TakeActionSharedToImage = styled.img`
-  width: 45vw;
+  position: relative;
+  top: 0;
+  left: 0;
 `
 
-export const SmallCircle = styled.div`
+export const SmallCircle = styled.img`
   position: relative;
-  top: -37vh;
-  left: 13vw;
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  border: 1px solid ${colors.gray};
+  top: -50vh;
+  left: 26vh;
 `
 
-export const BigCircle = styled.div`
+export const BigCircle = styled.img`
   position: relative;
-  top: -87vh;
-  left: 3vw;
-  width: 530px;
-  height: 530px;
-  border-radius: 50%;
-  border: 1px solid ${colors.gray};
+  top: -50vh;
+  left: -16vh;
 `
 
 // Wrapper for campaigns
