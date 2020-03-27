@@ -9,7 +9,7 @@ import {
   HeroInfo,
   HeroTitle,
   WhiteButton,
-  GreenButton,
+  // GreenButton,
   WhatIsFootprint,
   FootprintWrapper,
   Title,
@@ -28,10 +28,10 @@ import {
   TakeAction,
   TakeActionDoIt,
   TakeActionShareTo,
-  CampaignsMainWrapper,
-  CampaignsInfo,
-  CampaignsHeader,
-  CampaignsBlock,
+  // CampaignsMainWrapper,
+  // CampaignsInfo,
+  // CampaignsHeader,
+  // CampaignsBlock,
   JoinHandprinterWrapper,
   JoinHandprinterContentBlock,
   JoinHandprinterContent,
@@ -52,12 +52,12 @@ import {
   SmallCircle,
   BigCircle,
   SharedToImageWrapper,
-  CampaignsFinger,
-  CampaignsCards,
-  CampaignsCard,
-  CampaignButtons,
-  CampaignLeftArrowButton,
-  CampaignRightArrowButton,
+  // CampaignsFinger,
+  // CampaignsCards,
+  // CampaignsCard,
+  // CampaignButtons,
+  // CampaignLeftArrowButton,
+  // CampaignRightArrowButton,
   TakeActionDivider,
 } from './styled'
 
@@ -76,10 +76,10 @@ import takeActionMainImage from './assets/takeActionMainImage.png'
 import doItMainImage from './assets/doItMainImage.png'
 import doItHandprint from './assets/doItHandprint.svg'
 import sharedToImage from './assets/shareToImage.svg'
-import campaignsFinger from './assets/Actions-fingerprint.svg'
-import campaignCard from './assets/Campaign card.png'
-import leftArrow from './assets/ic_arrow_drop_down_left.png'
-import rightArrow from './assets/ic_arrow_drop_down_right.png'
+// import campaignsFinger from './assets/Actions-fingerprint.svg'
+// import campaignCard from './assets/Campaign card.png'
+// import leftArrow from './assets/ic_arrow_drop_down_left.png'
+// import rightArrow from './assets/ic_arrow_drop_down_right.png'
 import smallOval from './assets/smallOval.svg'
 import bigOval from './assets/bigOval.svg'
 
