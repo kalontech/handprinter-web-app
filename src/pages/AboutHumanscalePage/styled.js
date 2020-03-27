@@ -198,40 +198,41 @@ export const WhatIsHandprint = styled.section`
 `
 
 export const HandprintWrapper = styled.div`
-  height: 100%;
+  position: absolute;
+  left: 0px;
+  top: 182vh;
+  width: 100%;
+  height: 91vh;
   background: ${colors.white};
 `
 
-export const HandprintImagesWrapper = styled.div`
-  position: absolute;
-  left: 150px;
-  top: 1470px;
-`
+export const HandprintImagesWrapper = styled.div``
 
 export const HandprintMainImage = styled.img`
+  position: absolute;
+  left: 150px;
+  top: 10vh;
   margin-right: 40px;
 `
 
 export const HandprintLeapImage = styled.img`
-  height: 120px;
   width: 90;
   position: relative;
-  top: -30vh;
-  left: -710px;
+  top: 50px;
+  left: 80px;
 `
 export const HandprintFingerImage = styled.img`
-  height: 100px;
   width: 90;
   position: relative;
-  top: -32vh;
-  left: -780px;
+  top: 40px;
+  left: 0px;
 `
 
 export const HandprintInfo = styled.div`
   width: 500px;
   position: absolute;
   left: 630px;
-  top: 1550px;
+  top: 26vh;
   margin-left: 200px;
 `
 
