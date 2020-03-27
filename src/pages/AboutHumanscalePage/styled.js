@@ -192,36 +192,23 @@ export const FootprintFootImage = styled.img`
 `
 // What is handprint
 export const WhatIsHandprint = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   height: 91vh;
   background: ${colors.white};
   padding: 10px 10px 10px 100px;
 `
 
 export const HandprintWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
   height: 100%;
-  width: 100%;
   background: ${colors.white};
 `
 
 export const HandprintImagesWrapper = styled.div`
   position: absolute;
-  left: 7vw;
-  top: 102vw;
-  ${media.largeDesktop`
-    top: 123vw;
-  `}
+  left: 150px;
+  top: 1470px;
 `
 
 export const HandprintMainImage = styled.img`
-  height: 100%;
-  width: auto;
   margin-right: 40px;
 `
 
@@ -242,9 +229,9 @@ export const HandprintFingerImage = styled.img`
 
 export const HandprintInfo = styled.div`
   width: 500px;
-  position: relative;
-  left: 37vw;
-  top: -10vh;
+  position: absolute;
+  left: 630px;
+  top: 1550px;
   margin-left: 200px;
 `
 
