@@ -103,6 +103,7 @@ export const HeroTitle = styled.div`
 `
 
 export const WhiteButton = styled(Button)`
+  text-transform: uppercase;
   margin: 0 auto;
   border: 1px solid ${colors.humanscaleLinkBg};
   background: ${colors.humanscaleLinkBg};
@@ -121,6 +122,7 @@ export const WhiteButton = styled(Button)`
 `
 
 export const GreenButton = styled(Button)`
+  text-transform: uppercase;
   margin: 0 auto;
   border: 1px solid ${colors.humanscaleHeaderText};
   background: ${colors.humanscaleHeaderText};
@@ -152,7 +154,7 @@ export const FootprintWrapper = styled.div`
   width: 93%;
   height: 70%;
   background: ${colors.white};
-  padding: 150px 0 150px 100px;
+  padding: 100px 0 150px 100px;
 `
 
 export const FootprintImagesBlock = styled.div`
@@ -163,7 +165,6 @@ export const FootprintImagesBlock = styled.div`
 
 export const FootprintMainImage = styled.img`
   height: 80vh;
-  width: 552px;
   position: absolute;
 `
 
@@ -171,24 +172,23 @@ export const FootprintLeapImage = styled.img`
   height: 71px;
   width: 66px;
   position: relative;
-  top: -140px;
+  top: -120px;
   left: -20px;
 `
 
 export const FootprintFingerImage = styled.img`
   height: 320px;
-  width: 90;
   position: relative;
-  top: 52vh;
-  left: -180px;
+  top: 49vh;
+  left: -160px;
 `
 
 export const FootprintFootImage = styled.img`
   height: 250px;
   width: 100px;
   position: relative;
-  top: 37vh;
-  left: 180px;
+  top: 30vh;
+  left: 3vw;
 `
 // What is handprint
 export const WhatIsHandprint = styled.section`
@@ -290,12 +290,12 @@ export const TakeActionItemHeader = styled.div`
     text-transform: uppercase;
     color: ${colors.white};
   }
+`
 
-  span {
-    flex: 1;
-    border-top: 1px solid ${colors.white};
-    margin-left: 40px;
-  }
+export const TakeActionDivider = styled.span`
+  flex: 1;
+  border-top: 1px solid ${colors.white};
+  margin-left: 40px;
 `
 
 export const TakeActionItemInfo = styled.div`
@@ -306,7 +306,7 @@ export const TakeActionItemInfo = styled.div`
     font-size: 16px;
     line-height: 28px;
     color: ${colors.white};
-    padding: 25px 150px 0 150px;
+    padding: 45px 150px 0 150px;
     width: 50vw;
   }
 `
@@ -319,28 +319,32 @@ export const TakeActionMainImageWraper = styled.div`
 `
 
 export const TakeActionMainImage = styled.img`
-  width: 30vw;
+  position: absolute;
+  z-index: 1;
 `
 
 export const TakeActionLeap = styled.img`
   width: 100px;
-  position: relative;
-  top: -60vh;
-  left: 23vw;
+  position: absolute;
+  top: -30px;
+  left: 380px;
+  z-index: 2;
 `
 
 export const TakeActionLeap2 = styled.img`
   width: 120px;
-  position: relative;
-  top: -57vh;
-  left: 20vw;
+  position: absolute;
+  top: -30px;
+  left: 440px;
+  z-index: 3;
 `
 
 export const TakeActionFingerprint = styled.img`
-  width: 20vw;
-  position: relative;
-  top: -30vh;
-  left: -5vw;
+  width: 350px;
+  position: absolute;
+  top: 350px;
+  left: -80px;
+  z-index: 0;
 `
 
 export const TakeActionDoIt = styled.section`
@@ -351,22 +355,14 @@ export const TakeActionDoItImageWrapper = styled.section`
   margin-top: 30px;
   position: absolute;
   left: 50vw;
-  width: 30vw;
 `
 
-export const TakeActionDoItMainImage = styled.img`
-  width: 30vw;
-`
+export const TakeActionDoItMainImage = styled.img``
 
 export const TakeActionDoItHandprint = styled.img`
   position: relative;
-  top: -150px;
-  left: -50px;
-  ${media.largeDesktop`
-    width: 300px;
-    top: -10px;
-    left: -80px;
-  `}
+  top: 150px;
+  left: -570px;
 `
 
 export const TakeActionShareTo = styled.section`
@@ -382,21 +378,21 @@ export const SharedToImageWrapper = styled.div`
 `
 
 export const TakeActionSharedToImage = styled.img`
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
 `
 
 export const SmallCircle = styled.img`
   position: relative;
-  top: -50vh;
-  left: 26vh;
+  top: 0px;
+  left: 200px;
 `
 
 export const BigCircle = styled.img`
   position: relative;
-  top: -50vh;
-  left: -16vh;
+  top: 0px;
+  left: -120px;
 `
 
 // Wrapper for campaigns

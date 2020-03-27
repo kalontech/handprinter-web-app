@@ -58,6 +58,7 @@ import {
   CampaignButtons,
   CampaignLeftArrowButton,
   CampaignRightArrowButton,
+  TakeActionDivider,
 } from './styled'
 
 import footprintFinger from './assets/footprintFinger.svg'
@@ -98,7 +99,7 @@ class AboutHumanscalePage extends Component {
             <HeroTitle>
               <FormattedMessage id="app.aboutHumanscalePage.hero.title" />
             </HeroTitle>
-            <Link to="/pages/our-vision">
+            <Link to="/account/login">
               <WhiteButton type="ghost" size="large">
                 <FormattedMessage id="app.aboutHumanscalePage.join.link" />
               </WhiteButton>
@@ -155,7 +156,7 @@ class AboutHumanscalePage extends Component {
               <p>
                 <FormattedMessage id="app.aboutHumanscalePage.handprint.takeAction" />
               </p>
-              <span />
+              <TakeActionDivider />
             </TakeActionItemHeader>
             <TakeActionItemInfo>
               <p>
@@ -174,7 +175,7 @@ class AboutHumanscalePage extends Component {
               <p>
                 <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionDoIt" />
               </p>
-              <span />
+              <TakeActionDivider />
             </TakeActionItemHeader>
             <TakeActionItemInfo>
               <p>
@@ -191,7 +192,7 @@ class AboutHumanscalePage extends Component {
               <p>
                 <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionShare" />
               </p>
-              <span />
+              <TakeActionDivider />
             </TakeActionItemHeader>
             <TakeActionItemInfo>
               <p>
@@ -205,7 +206,7 @@ class AboutHumanscalePage extends Component {
             </TakeActionItemInfo>
           </TakeActionShareTo>
         </TakeActionWrapper>
-        <CampaignsMainWrapper>
+        {/* <CampaignsMainWrapper>
           <CampaignsInfo>
             <CampaignsHeader>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.campaignsHeader1" />
@@ -219,7 +220,6 @@ class AboutHumanscalePage extends Component {
               </p>
             </div>
           </CampaignsInfo>
-
           <CampaignsBlock>
             <CampaignsFinger src={campaignsFinger} alt="" />
             <CampaignsCards>
@@ -237,14 +237,14 @@ class AboutHumanscalePage extends Component {
               </div>
             </CampaignButtons>
           </CampaignsBlock>
-        </CampaignsMainWrapper>
+        </CampaignsMainWrapper> */}
         <JoinHandprinterWrapper>
           <JoinHandprinterContentBlock>
             <JoinHandprinterContent>
               <p>
                 <FormattedMessage id="app.aboutHumanscalePage.handprint.joinToHandleprinter" />
               </p>
-              <Link to="/pages/our-vision">
+              <Link to="/account/login">
                 <WhiteButton type="ghost" size="large">
                   <FormattedMessage id="app.aboutHumanscalePage.join.link" />
                 </WhiteButton>
