@@ -159,7 +159,7 @@ class AboutHumanscalePage extends Component {
             </TakeActionItemHeader>
             <TakeActionItemInfo>
               <p>
-                <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionINFO" />
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionInfo" />
               </p>
               <TakeActionMainImageWraper>
                 <TakeActionMainImage src={takeActionMainImage} alt="" />
