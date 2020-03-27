@@ -157,6 +157,7 @@ const RightMenu = styled.div`
 
 const Logo = styled.div`
   margin-right: 40px;
+  margin-bottom: 20px;
 `
 
 const LogoSmall = styled.div`
