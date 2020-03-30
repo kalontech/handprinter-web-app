@@ -20,6 +20,20 @@ export const brandedConfig = {
     },
     homePageComponent: require('./../pages/AboutInterfacePage').default,
   },
+  humanscale: {
+    brandName: 'Humanscale',
+    ctaComponent: require('./../components/HumanscaleCta').default,
+    headerOverrides: {
+      fullLogo: require('./../assets/branded/logos/humanscaleLogo.png'),
+      partialLogo: require('./../assets/branded/logos/humanscaleLogo.png'),
+      inLinkLogo: require('./../assets/branded/logos/humanscaleLogo.png'),
+      logInOnly: true,
+      brandColor: colors.green,
+      fontNames: '"Helvetica Neue", sans-serif',
+      fontColor: colors.interfaceColor,
+    },
+    homePageComponent: require('./../pages/AboutHumanscalePage').default,
+  },
 }
 
 export const getBrandedHostnamePrefix = () => {
