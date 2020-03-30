@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import Spinner from 'components/Spinner'
 import { FormattedMessage } from 'react-intl'
 import MemberCard from 'components/MemberCard'
+import moment from 'moment'
 
 import {
   StatisticsScroll,
@@ -57,13 +58,45 @@ function getSortedGroups(groups) {
 }
 
 export default function renderStatistics(props) {
-  const { loading, intl, competition, participants, allInvitations } = props
+  const {
+    loading,
+    intl,
+    competition,
+    participants,
+    allInvitations,
+    accomplishedUserActions,
+  } = props
   const total = competition.actions.length
+  const accomplished = accomplishedUserActions.length
+  const expired = moment().isAfter(competition.dateTo)
+
+  const numberToComplete = competition.actionsNumberToComplete || total
 
   const sortedActions = getSortedActions(props)
 
   const groups = getGroups(participants, allInvitations)
   const sortedGroups = getSortedGroups(Object.values(groups))
+
+  const tooltipText =
+    accomplished >= numberToComplete
+      ? props.intl.formatMessage({
+          id: 'app.competitions.you.reached.challenge',
+        })
+      : props.intl.formatMessage(
+          { id: 'app.competitions.you.need.take' },
+          {
+            numberToComplete: numberToComplete - accomplished,
+          },
+        )
+
+  const progressProps = {
+    total,
+    successCount: numberToComplete,
+    accomplished,
+    endDate: competition.dateTo,
+    expired,
+    tooltipText,
+  }
 
   return (
     <Fragment>
@@ -127,6 +160,7 @@ export default function renderStatistics(props) {
                         accomplished / participantsCount,
                       ).toFixed(1)}
                       impacts={{ handprint: i.group.impacts }}
+                      {...progressProps}
                     />
                   )
                 })}
@@ -164,4 +198,5 @@ renderStatistics.propTypes = {
   competition: Object,
   history: Object,
   user: Object,
+  accomplishedUserActions: Array,
 }

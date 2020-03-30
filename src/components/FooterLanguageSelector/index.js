@@ -45,9 +45,11 @@ const FooterDropdownItem = styled(Ant.Menu.Item)`
   border-radius: 4px;
   font-size: 16px;
   color: ${({ color }) => color || `${hexToRgba(colors.white, 0.6)}`};
+  background-color: ${colors.footerDropdownBg};
+
   &.ant-dropdown-menu-item-selected,
   &:hover {
-    background-color: ${colors.footerDropdownBg};
+    background-color: ${colors.black};
     color: ${colors.white};
   }
 `

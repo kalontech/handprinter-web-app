@@ -135,6 +135,11 @@ export const ProgressWrapper = styled.div`
     padding-left: 15px;
     padding-right: 15px;  
   `}
+
+  ${media.largeDesktop`
+    padding-left: 15px;
+    padding-right: 15px;  
+  `}
 `
 export const ProgressTextWrapper = styled.div`
   width: 100%;
