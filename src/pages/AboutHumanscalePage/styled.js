@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
+import hexToRgba from 'utils/hexToRgba'
 import { Button } from 'antd'
+
+import sliderArrow from 'assets/about-humanscale/arrow.svg'
 
 import bg from '../../assets/about-humanscale/bg.png'
 
@@ -434,14 +437,48 @@ export const CampaignsFinger = styled.img`
 
 export const CampaignsCards = styled.div`
   position: absolute;
-  height: 20vh;
-  left: 7vw;
-  bottom: 30vh;
+  left: 4vw;
+  bottom: 21vh;
 `
 
-export const CampaignsCard = styled.img`
-  width: 50vh;
-  height: 15vw;
+export const CampaignsCard = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: ${colors.white};
+  width: 400px;
+  height: 200px;
+  margin-right: 40px;
+  box-shadow: 0px 1px 16px ${hexToRgba(colors.dark, 0.3)};
+  img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 4px solid ${colors.green};
+  }
+
+  div {
+    width: 200px;
+    div {
+      font-family: Noto Serif;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 19px;
+      line-height: 26px;
+      color: #344442;
+      text-align: left;
+    }
+
+    span {
+      font-family: Noto Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 20px;
+      color: #858f8e;
+      text-align: left;
+    }
+  }
 `
 
 export const CampaignsInfo = styled.div`
@@ -458,23 +495,7 @@ export const CampaignsInfo = styled.div`
 export const CampaignButtons = styled.div`
   position: relative;
   bottom: 4vh;
-  left: -55vw;
-  width: 140vw;
-  display: flex;
-  justify-content: space-around;
-`
-
-export const CampaignLeftArrowButton = styled.img`
-  width: 40px;
-  height: 40px;
-  background: ${colors.white};
-  margin-right: 20px;
-`
-
-export const CampaignRightArrowButton = styled.img`
-  width: 40px;
-  height: 40px;
-  background: ${colors.white};
+  left: -37vw;
 `
 
 // Join handprinter
@@ -511,3 +532,47 @@ export const JoinHandprinterContent = styled.div`
     color: ${colors.white};
   }
 `
+
+export const Slider = styled.div`
+  .slick-arrow {
+    z-index: 1;
+    width: 51px;
+    height: 51px;
+    position: absolute;
+    top: 380px;
+    left: 1200px;
+    transform: translateY(-50%);
+    background: ${colors.white} url(${sliderArrow}) no-repeat center / 50%;
+    &:hover,
+    &:focus {
+      background: ${colors.white} url(${sliderArrow}) no-repeat center / 50%;
+    }
+    ${media.phone`
+      width: 30px;
+      height: 30px;
+     `}
+    &.slick-prev {
+      position: absolute;
+      top: 37.57vh;
+      left: 70vw;
+      transform: rotate(180deg);
+      ${media.desktop`
+        visibility: visible;
+      `}
+      ${media.phone`
+        left: 15px;
+        transform: translateY(-50%) rotate(180deg);
+      `}
+    }
+    &.slick-next {
+      position: absolute;
+      top: 41vh;
+      left: 75vw;
+      margin-left: 15px;
+      ${media.phone`
+        right: 15px;
+      `}
+    }
+  }
+`
+export const Slide = styled.div``

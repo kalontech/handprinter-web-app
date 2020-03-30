@@ -28,7 +28,7 @@ export const brandedConfig = {
       partialLogo: require('./../assets/branded/logos/humanscaleLogo.png'),
       inLinkLogo: require('./../assets/branded/logos/humanscaleLogo.png'),
       logInOnly: true,
-      brandColor: colors.interfaceFooterColor2,
+      brandColor: colors.green,
       fontNames: '"Helvetica Neue", sans-serif',
       fontColor: colors.interfaceColor,
     },

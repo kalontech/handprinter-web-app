@@ -349,7 +349,7 @@ const CollapseContent = styled.div`
         height: auto;
         margin-top: 25px;
         line-height: normal;
-        color: ${colors.dark};
+        color: ${colors.green};
         a {
           padding-left: 105px;
           line-height: normal;
@@ -954,7 +954,7 @@ class Header extends Component {
                               </CenterAlign>
                             </Link>
                           </Menu.Item>
-                          {overrides.brandName === 'Humanscale' && (
+                          {overrides && overrides.brandName === 'Humanscale' && (
                             <Menu.Item>
                               <Link to="/account/login">
                                 <GreenButton>
