@@ -477,6 +477,9 @@ class ActionModalPage extends Component {
   }
 
   handleTakeAction = async () => {
+    if (!this.props.user) {
+      this.props.history.push('/account/login')
+    }
     if (this.state.action.slug === INVITE_ACTION_SLUG) {
       this.props.history.push('/account/code')
       return
@@ -540,7 +543,7 @@ class ActionModalPage extends Component {
   }
 
   checkAvailableTakeAction = async actionId => {
-    if (!actionId) return
+    if (!actionId || !this.props.user) return
     try {
       const res = await api.getTakenActionAvailableFrom({ actionId })
       this.setState({ availableFrom: res.availableFrom })
