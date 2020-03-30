@@ -160,7 +160,6 @@ const RightMenu = styled.div`
 
 const Logo = styled.div`
   margin-right: 40px;
-  margin-bottom: 20px;
 `
 
 const LogoSmall = styled.div`
@@ -848,7 +847,12 @@ class Header extends Component {
               font={fontNames}
               fontColor={fontColor}
             >
-              <Logo>
+              <Logo
+                style={{
+                  marginBottom:
+                    overrides.brandName === 'Humanscale' ? '20px' : '0px',
+                }}
+              >
                 <Link to="/">
                   {(!isMobile && (
                     <img
