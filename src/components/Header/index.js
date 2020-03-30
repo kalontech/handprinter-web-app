@@ -23,6 +23,7 @@ import {
   HeaderPopover,
   PopoverTitle,
 } from 'components/Styled'
+
 import colors from 'config/colors'
 import { getBrandedConfig } from 'config/branded'
 import media, { sizes } from 'utils/mediaQueryTemplate'
@@ -31,6 +32,8 @@ import { logOut } from 'redux/accountStore'
 import { getUserInitialAvatar } from 'api'
 import * as apiActions from 'api/actions'
 import { Creators as UserStoreCreators } from 'redux/userStore'
+
+import { GreenButton } from '../../pages/AboutHumanscalePage/styled'
 
 import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
@@ -436,9 +439,9 @@ const BlueBorderedButton = styled(Button)`
     border-color: ${colors.darkBlue};
     background: ${colors.darkBlue};
     color: ${colors.white};
-    }
   }
 `
+
 const GrayBorderedButton = styled(Button)`
   border: 1px solid ${colors.interfaceFooterColor2};
   background: transparent;
@@ -449,7 +452,6 @@ const GrayBorderedButton = styled(Button)`
     border-color: ${colors.interfaceFooterColor2};
     background: ${colors.interfaceFooterColor2};
     color: ${colors.white};
-    }
   }
 `
 
@@ -773,6 +775,10 @@ class Header extends Component {
                       <GrayBorderedButton>
                         <FormattedMessage id="app.header.menu.login" />
                       </GrayBorderedButton>
+                    ) : overrides && overrides.brandName === 'Humanscale' ? (
+                      <GrayBorderedButton>
+                        <FormattedMessage id="app.header.menu.login1" />
+                      </GrayBorderedButton>
                     ) : (
                       <DefaultButton type="primary" size="large">
                         <FormattedMessage id="app.header.menu.login" />
@@ -874,7 +880,9 @@ class Header extends Component {
                               <FormattedMessage id="app.header.menu.actions" />
                             </Link>
                           </Menu.Item>
-                          {(!overrides || !overrides.brandName) && (
+                          {(!overrides ||
+                            !overrides.brandName ||
+                            overrides.brandName === 'Humanscale') && (
                             <Menu.Item key="/pages/for-organizations">
                               <Link to="/pages/for-organizations">
                                 <FormattedMessage id="app.header.menu.forOrganizations" />
@@ -946,6 +954,15 @@ class Header extends Component {
                               </CenterAlign>
                             </Link>
                           </Menu.Item>
+                          {overrides.brandName === 'Humanscale' && (
+                            <Menu.Item>
+                              <Link to="/account/login">
+                                <GreenButton>
+                                  <FormattedMessage id="app.aboutHumanscalePage.join.link" />
+                                </GreenButton>
+                              </Link>
+                            </Menu.Item>
+                          )}
                         </Menu>
                         {((overrides && !overrides.logInOnly) ||
                           !overrides) && (

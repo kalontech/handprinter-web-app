@@ -104,39 +104,49 @@ export const HeroTitle = styled.div`
 
 export const WhiteButton = styled(Button)`
   text-transform: uppercase;
+  width: 170px;
+  height: 50px;
   margin: 0 auto;
   border: 1px solid ${colors.humanscaleLinkBg};
-  background: ${colors.humanscaleLinkBg};
-  font-family: Helvetica Neue;
-  font-weight: 400;
-  font-size: 16px;
-  height: 50px;
-  width: 170px;
-  color: ${colors.humanscaleFooterColor2};
+  border-radius: 0;
+  background: ${colors.white};
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  color: ${colors.humanscaleHeaderText};
   &&:hover,
   &&:focus {
-    background: transparent;
+    background: ${colors.lightGray};
     border-color: ${colors.white};
-    color: ${colors.white};
+    color: ${colors.humanscaleHeaderText};
   }
 `
 
 export const GreenButton = styled(Button)`
   text-transform: uppercase;
   margin: 0 auto;
-  border: 1px solid ${colors.humanscaleHeaderText};
-  background: ${colors.humanscaleHeaderText};
-  font-family: Helvetica Neue;
-  font-weight: 400;
-  font-size: 16px;
+  border: 1px solid ${colors.ocean};
+  border-radius: 0;
+  background: ${colors.ocean};
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
   height: 50px;
   width: 170px;
   color: ${colors.white};
   &&:hover,
   &&:focus {
-    background: transparent;
-    border-color: ${colors.humanscaleHeaderText};
-    color: ${colors.black};
+    background: ${colors.btnSecondaryHover};
+    border-color: ${colors.btnSecondaryHover};
+    color: ${colors.white};
   }
 `
 
