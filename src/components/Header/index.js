@@ -850,7 +850,9 @@ class Header extends Component {
               <Logo
                 style={{
                   marginBottom:
-                    overrides.brandName === 'Humanscale' ? '20px' : '0px',
+                    overrides && overrides.brandName === 'Humanscale'
+                      ? '20px'
+                      : '0px',
                 }}
               >
                 <Link to="/">
