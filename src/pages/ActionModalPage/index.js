@@ -540,7 +540,7 @@ class ActionModalPage extends Component {
   }
 
   checkAvailableTakeAction = async actionId => {
-    if (!actionId) return
+    if (!actionId || !this.props.user) return
     try {
       const res = await api.getTakenActionAvailableFrom({ actionId })
       this.setState({ availableFrom: res.availableFrom })

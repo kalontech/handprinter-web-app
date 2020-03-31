@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Row, Col, Select, Spin, Icon } from 'antd'
 import qs from 'qs'
 import styled from 'styled-components'
@@ -43,6 +43,7 @@ import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
 import * as api from 'api/actions'
 
 import ActionsFilters from './ActionFilter'
+import { UiContextSettings } from '../../context/uiSettingsContext'
 
 const Wrapper = styled.div`
   background-color: ${colors.lightGray};
@@ -314,8 +315,9 @@ async function getActionsList(props) {
   return result
 }
 
-class ActionsPage extends React.PureComponent {
-  static propTypes = {
+function ActionsPage(props) {
+  const uiContextData = useContext(UiContextSettings)
+  ActionsPage.propTypes = {
     intl: intlShape.isRequired,
     user: PropTypes.object,
     location: PropTypes.object,
@@ -330,60 +332,50 @@ class ActionsPage extends React.PureComponent {
     timeValues: PropTypes.array,
   }
 
-  static defaultProps = {
+  ActionsPage.defaultProps = {
     actions: [],
   }
 
-  state = {
-    searchData: {
-      searchedActions: [],
-      total: null,
-      searching: false,
-      isFetched: false,
-      // this value must be "undefined", cause
-      // Ant Select plugin don't show placeholder
-      // if value will be defined
-      searchFieldValue: undefined,
-    },
-    showFilter:
-      window.innerWidth > sizes.phone &&
-      Boolean(configParamsForFilter(this.props)),
-    filterValuesFromQuery: configParamsForFilter(this.props) || null,
-    activeFiltersCount: (configParamsForFilter(this.props) || '').length,
-    visibleTabs: false,
-    listType:
-      window.screen.availWidth <= sizes.tablet
-        ? TABS_TYPES.select
-        : TABS_TYPES.default,
-    modalVisible: false,
-    showPhysicalValues: false,
-  }
+  // use state
+  const [searchData, setSearchData] = useState({
+    searchedActions: [],
+    total: null,
+    searching: false,
+    isFetched: false,
+    // this value must be "undefined", cause
+    // Ant Select plugin don't show placeholder
+    // if value will be defined
+    searchFieldValue: undefined,
+  })
+  const [showFilter, setShowFilter] = useState(
+    window.innerWidth > sizes.phone && Boolean(configParamsForFilter(props)),
+  )
+  const [filterValuesFromQuery, setFilterValuesFromQuery] = useState(
+    configParamsForFilter(props) || null,
+  )
+  const [activeFiltersCount, setActiveFiltersCount] = useState(
+    (configParamsForFilter(props) || '').length,
+  )
+  const [visibleTabs, setVisibleTabs] = useState(false)
+  const [listType, setListType] = useState(
+    window.screen.availWidth <= sizes.tablet
+      ? TABS_TYPES.select
+      : TABS_TYPES.default,
+  )
+  const [modalVisible, setModalVisible] = useState(false)
 
-  $search = React.createRef()
+  const $search = React.createRef()
 
-  componentDidMount() {
+  useEffect(() => {
     animateScroll.scrollToTop()
-    window.addEventListener('orientationchange', this.changeTabsType)
-  }
+    window.addEventListener('orientationchange', changeTabsType)
+    return () => {
+      window.removeEventListener('orientationchange', changeTabsType)
+    }
+  }, [props.location, props.match])
 
-  componentDidUpdate(prevProps) {
-    const { location: oldLocation, match: oldMatch } = prevProps
-    const { location, match } = this.props
-
-    if (
-      (oldMatch.params.subset !== match.params.subset ||
-        oldLocation.search !== location.search) &&
-      (!match.params.slug && !oldMatch.params.slug)
-    )
-      this.props.fetch()
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('orientationchange', this.changeTabsType)
-  }
-
-  changeTabsType = () => {
-    this.setState({
+  const changeTabsType = () => {
+    setListType({
       listType:
         window.screen.availWidth <= sizes.tablet
           ? TABS_TYPES.select
@@ -392,8 +384,8 @@ class ActionsPage extends React.PureComponent {
     })
   }
 
-  searchActions = debounce(async query => {
-    this.setState(state => ({
+  const searchActions = debounce(async query => {
+    setSearchData(state => ({
       searchData: {
         ...state.searchData,
         searching: true,
@@ -404,81 +396,73 @@ class ActionsPage extends React.PureComponent {
       actions: { docs: actions, totalDocs: total },
     } = await api.getActions(query)
 
-    this.setState({
-      searchData: {
-        ...this.state.searchData,
-        searching: false,
-        searchedActions: actions,
-        total,
-      },
+    setSearchData({
+      ...searchData,
+      searching: false,
+      searchedActions: actions,
+      total,
     })
   }, 600)
 
-  handleSearchFieldChange = (searchFieldValue, option) => {
+  const handleSearchFieldChange = (searchFieldValue, option) => {
     if (option) {
-      this.resetSearchData()
+      resetSearchData()
       return
     }
 
-    this.setState({
-      searchData: {
-        ...this.state.searchData,
-        searchFieldValue,
-        searchedActions: [],
-        searching: false,
-      },
+    setSearchData({
+      ...searchData,
+      searchFieldValue,
+      searchedActions: [],
+      searching: false,
     })
   }
 
-  handleOpenActionCard = ({ slug }) => () => {
-    const { match, history } = this.props
+  const handleOpenActionCard = ({ slug }) => () => {
+    const { match, history } = props
 
     history.push(`/actions/${match.params.subset}/${slug}`)
   }
 
-  resetSearchData = () => {
-    this.setState({
-      searchData: {
-        ...this.state.searchData,
-        searchedActions: [],
-        searching: false,
-        searchFieldValue: undefined,
-        total: null,
-      },
+  const resetSearchData = () => {
+    setSearchData({
+      ...searchData,
+      searchedActions: [],
+      searching: false,
+      searchFieldValue: undefined,
+      total: null,
     })
   }
 
-  handleDropdownVisibleChange = open => {
-    !open && this.resetSearchData()
+  const handleDropdownVisibleChange = open => {
+    !open && resetSearchData()
   }
 
-  handleFilterReset = () => {
-    this.setState({ filterValuesFromQuery: null })
+  const handleFilterReset = () => {
+    setFilterValuesFromQuery(null)
   }
 
-  handleOnAfterFiltersChange = debounce(({ data, activeFilterCount }) => {
-    const { match, history } = this.props
-    this.setState({ activeFiltersCount: activeFilterCount })
+  const handleOnAfterFiltersChange = debounce(({ data, activeFilterCount }) => {
+    const { match, history } = props
+    setActiveFiltersCount(activeFilterCount)
 
     if (Object.keys(data).length === 0) {
       history.push(`/actions/${match.params.subset}`)
     } else {
-      this.updateQueries({ ...data, page: 1 })
+      updateQueries({ ...data, page: 1 })
     }
   }, 600)
 
-  toggleFilter = () => {
+  const toggleFilter = () => {
     if (window.innerWidth < sizes.phone) {
-      this.setState({
-        modalVisible: !this.state.modalVisible,
-      })
+      setModalVisible(!modalVisible)
     } else {
-      this.setState({ showFilter: !this.state.showFilter })
+      setShowFilter(!showFilter)
     }
   }
 
-  updateQueries = query => {
-    const { location, match, history } = this.props
+  const updateQueries = query => {
+    const { location, match, history } = props
 
     history.push(
       `/actions/${match.params.subset}?${qs.stringify(
@@ -493,10 +477,10 @@ class ActionsPage extends React.PureComponent {
     )
   }
 
-  onActionDelete = id => e => {
+  const onActionDelete = id => e => {
     const {
       intl: { formatMessage },
-    } = this.props
+    } = props
 
     e.preventDefault()
 
@@ -517,358 +501,327 @@ class ActionsPage extends React.PureComponent {
       className: 'ant-modal-confirm_profile-page',
       centered: true,
       onOk: () => {
-        return api.fetchAction({ id, method: 'DELETE' }).then(this.props.fetch)
+        return api.fetchAction({ id, method: 'DELETE' }).then(props.fetch)
       },
     })
   }
 
-  toggleUnits = evt => {
+  const toggleUnits = evt => {
     if (evt.key === 'PhysicalUnits') {
-      this.setState({
-        showPhysicalValues: true,
-      })
+      uiContextData.setShowPhysicalValues(true)
     } else if (evt.key === 'TimeUnits') {
-      this.setState({
-        showPhysicalValues: false,
-      })
+      uiContextData.setShowPhysicalValues(false)
     }
   }
 
-  render() {
-    const {
-      intl: { formatMessage, formatRelative, locale },
-      user,
-      loading,
-      actions,
-      limit,
-      page,
-      total,
-      timeValues = [],
-      match,
-      history,
-    } = this.props
+  const {
+    intl: { formatMessage, formatRelative, locale },
+    user,
+    loading,
+    actions,
+    limit,
+    page,
+    total,
+    timeValues = [],
+    match,
+    history,
+  } = props
 
-    const {
-      searchData,
-      showFilter,
-      activeFiltersCount,
-      filterValuesFromQuery,
-      visibleTabs,
-      listType,
-      modalVisible,
-      showPhysicalValues,
-    } = this.state
+  return (
+    <React.Fragment>
+      <PageMetadata pageName="actionsPage" />
 
-    return (
-      <React.Fragment>
-        <PageMetadata pageName="actionsPage" />
+      <Wrapper>
+        {user && (
+          <TabsSecondary
+            list={[
+              {
+                to: `/actions/${ACTIONS_SUBSETS.DISCOVER}`,
+                icon: DiscoverIconComponent,
+                text: formatMessage({ id: 'app.actionsPage.tabs.discover' }),
+                active: match.params.subset === ACTIONS_SUBSETS.DISCOVER,
+              },
+              {
+                to: `/actions/${ACTIONS_SUBSETS.SUGGESTED}`,
+                icon: SuggestedIconComponent,
+                text: formatMessage({ id: 'app.actionsPage.tabs.suggested' }),
+                active: match.params.subset === ACTIONS_SUBSETS.SUGGESTED,
+              },
+              {
+                to: `/actions/${ACTIONS_SUBSETS.MY_IDEAS}`,
+                icon: FlagIconComponent,
+                text: formatMessage({ id: 'app.actionsPage.tabs.my-ideas' }),
+                active: match.params.subset === ACTIONS_SUBSETS.MY_IDEAS,
+              },
+              {
+                to: `/actions/${ACTIONS_SUBSETS.TAKEN}`,
+                icon: HistoryIconComponent,
+                text: formatMessage({ id: 'app.actionsPage.tabs.history' }),
+                active: match.params.subset === ACTIONS_SUBSETS.TAKEN,
+              },
+              {
+                to: `/actions/${ACTIONS_SUBSETS.MODELING}`,
+                icon: HistoryIconComponent,
+                text: formatMessage({ id: 'app.actionsPage.tabs.modeling' }),
+                active: match.params.subset === ACTIONS_SUBSETS.MODELING,
+              },
+            ]}
+            isOpen={visibleTabs}
+            listType={listType}
+            toggleVisible={visible => setVisibleTabs(visible)}
+            button={{
+              text: formatMessage({ id: 'app.headerActions.addAction' }),
+              onClick: () => {
+                history.push('/account/actions/create')
+              },
+            }}
+          />
+        )}
 
-        <Wrapper>
-          {user && (
-            <TabsSecondary
-              list={[
-                {
-                  to: `/actions/${ACTIONS_SUBSETS.DISCOVER}`,
-                  icon: DiscoverIconComponent,
-                  text: formatMessage({ id: 'app.actionsPage.tabs.discover' }),
-                  active: match.params.subset === ACTIONS_SUBSETS.DISCOVER,
-                },
-                {
-                  to: `/actions/${ACTIONS_SUBSETS.SUGGESTED}`,
-                  icon: SuggestedIconComponent,
-                  text: formatMessage({ id: 'app.actionsPage.tabs.suggested' }),
-                  active: match.params.subset === ACTIONS_SUBSETS.SUGGESTED,
-                },
-                {
-                  to: `/actions/${ACTIONS_SUBSETS.MY_IDEAS}`,
-                  icon: FlagIconComponent,
-                  text: formatMessage({ id: 'app.actionsPage.tabs.my-ideas' }),
-                  active: match.params.subset === ACTIONS_SUBSETS.MY_IDEAS,
-                },
-                {
-                  to: `/actions/${ACTIONS_SUBSETS.TAKEN}`,
-                  icon: HistoryIconComponent,
-                  text: formatMessage({ id: 'app.actionsPage.tabs.history' }),
-                  active: match.params.subset === ACTIONS_SUBSETS.TAKEN,
-                },
-                {
-                  to: `/actions/${ACTIONS_SUBSETS.MODELING}`,
-                  icon: HistoryIconComponent,
-                  text: formatMessage({ id: 'app.actionsPage.tabs.modeling' }),
-                  active: match.params.subset === ACTIONS_SUBSETS.MODELING,
-                },
-              ]}
-              isOpen={visibleTabs}
-              listType={listType}
-              toggleVisible={visible => {
-                this.setState({ visibleTabs: visible })
-              }}
-              button={{
-                text: formatMessage({ id: 'app.headerActions.addAction' }),
-                onClick: () => {
-                  history.push('/account/actions/create')
-                },
-              }}
-            />
-          )}
-
-          <BlockContainer>
-            <InnerContainer>
-              <Row span={8} xl={8} lg={12} md={12} xs={24}>
-                <Col>
-                  {match.params.subset === ACTIONS_SUBSETS.DISCOVER && (
-                    <SearchBlockWrapper>
-                      <SearchWrap>
-                        <ToggleFilterButton onClick={this.toggleFilter}>
-                          <img
-                            src={
-                              showFilter
-                                ? filterToggleActiveImg
-                                : filterToggleImg
-                            }
-                            alt="toggle filters"
-                          />
-                          {activeFiltersCount > 0 && (
-                            <ToggleFilterActiveIcon>
-                              {activeFiltersCount}
-                            </ToggleFilterActiveIcon>
-                          )}
-                        </ToggleFilterButton>
-
-                        <SearchFieldWrap ref={this.$search}>
-                          <SearchField
-                            placeholder={formatMessage({
-                              id: 'app.actionsPage.searchPlaceholder',
-                            })}
-                            value={searchData.searchFieldValue}
-                            notFoundContent={
-                              searchData.searching ? (
-                                <Spin size="small" />
-                              ) : !searchData.searching &&
-                                Number.isInteger(searchData.total) &&
-                                searchData.total === 0 ? (
-                                <FormattedMessage id="app.actionsPage.searchNotFound" />
-                              ) : null
-                            }
-                            showSearch
-                            suffixIcon={<span />}
-                            /*
-                             * Filter by match searched value and option value.
-                             *
-                             * How it works:
-                             * Search option has 2 values: [ picture, name ].
-                             * We filter option value (option.props.children[1]) with
-                             * search value (value from search input)
-                             *
-                             * Why we use it:
-                             * We need filter data from search response and
-                             * show to user matched data
-                             */
-                            filterOption={(input, option) =>
-                              (option.props.children.props.children[1] &&
-                                option.props.children.props.children[1]
-                                  .toLowerCase()
-                                  .indexOf(input.toLowerCase()) >= 0) ||
-                              /\S/.test(input)
-                            }
-                            onSearch={value =>
-                              value.length > 0 &&
-                              this.searchActions({ name: value })
-                            }
-                            onChange={this.handleSearchFieldChange}
-                            onDropdownVisibleChange={
-                              this.handleDropdownVisibleChange
-                            }
-                            getPopupContainer={() => this.$search.current}
-                          >
-                            {searchData.searchedActions.map(action => (
-                              <Select.Option
-                                key={action.picture}
-                                onClick={this.handleOpenActionCard(action)}
-                              >
-                                <ActionSearchDropdownOptionContent>
-                                  <ActionSearchDropdownPicture
-                                    src={action.picture}
-                                    alt=""
-                                  />
-                                  {action.name}
-                                </ActionSearchDropdownOptionContent>
-                              </Select.Option>
-                            ))}
-                          </SearchField>
-                        </SearchFieldWrap>
-                        <StyledSearchIcon type="search" />
-                      </SearchWrap>
-                      <Animate show={timeValues.length > 0 && showFilter}>
-                        <FilterWrap>
-                          <ActionsFilters
-                            showFilter={showFilter}
-                            timeValues={timeValues}
-                            values={filterValuesFromQuery}
-                            onReset={this.handleFilterReset}
-                            onAfterChange={this.handleOnAfterFiltersChange}
-                            toggleUnits={this.toggleUnits}
-                          />
-                        </FilterWrap>
-                      </Animate>
-                    </SearchBlockWrapper>
-                  )}
-                </Col>
-              </Row>
-
-              {loading ? (
-                <NotFoundWrap>
-                  <Spinner />
-                </NotFoundWrap>
-              ) : (
-                <Row gutter={{ md: 20 }}>
-                  {actions.map(action => (
-                    <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
-                      <ScrollAnimation>
-                        <ActionCard
-                          to={
-                            action.status === ACTION_STATES.PROPOSED
-                              ? `/account/actions/preview/${action.slug}`
-                              : `/actions/${match.params.subset}/${action.slug}`
+        <BlockContainer>
+          <InnerContainer>
+            <Row span={8} xl={8} lg={12} md={12} xs={24}>
+              <Col>
+                {match.params.subset === ACTIONS_SUBSETS.DISCOVER && (
+                  <SearchBlockWrapper>
+                    <SearchWrap>
+                      <ToggleFilterButton onClick={toggleFilter}>
+                        <img
+                          src={
+                            showFilter ? filterToggleActiveImg : filterToggleImg
                           }
-                          picture={action.picture}
-                          canChange={action.status === ACTION_STATES.PROPOSED}
-                          onEdit={e => {
-                            e.preventDefault()
-
-                            history.push(`/account/actions/edit/${action.slug}`)
-                          }}
-                          onDelete={this.onActionDelete(action._id)}
-                          name={
-                            action.translatedName &&
-                            action.translatedName[locale]
-                              ? action.translatedName[locale]
-                              : action.name
-                          }
-                          impacts={() => {
-                            let tooltipTextId, buttonTextId
-                            switch (action.status) {
-                              case ACTION_STATES.MODELING:
-                                tooltipTextId =
-                                  'app.actions.card.waitModelingHint'
-                                buttonTextId = 'app.actions.card.waitModeling'
-                                break
-                              case ACTION_STATES.DENIED:
-                                tooltipTextId = 'app.actions.card.deniedHint'
-                                buttonTextId = 'app.actions.card.denied'
-                                break
-                              default:
-                                tooltipTextId = 'app.actions.card.waitAdminHint'
-                                buttonTextId = 'app.actions.card.waitAdmin'
-                            }
-                            return action.status !== ACTION_STATES.PUBLISHED ? (
-                              <Tooltip
-                                placement="top"
-                                title={formatMessage({
-                                  id: tooltipTextId,
-                                })}
-                              >
-                                <ImpactButton
-                                  style={{ height: 35 }}
-                                  isModelling={
-                                    action.status === ACTION_STATES.MODELING
-                                  }
-                                >
-                                  {formatMessage({
-                                    id: buttonTextId,
-                                  })}
-                                </ImpactButton>
-                              </Tooltip>
-                            ) : (
-                              <ActionCardLabelSet
-                                impacts={action.impacts}
-                                impactsInUnits={action.impactsInUnits}
-                                showPhysicalValues={showPhysicalValues}
-                              />
-                            )
-                          }}
-                          suggestedBy={action.suggestedBy}
-                          suggestedAt={
-                            action.suggestedAt &&
-                            formatRelative(action.suggestedAt)
-                          }
-                          isHabit={action.isHabit}
-                          impactsInUnits={action.impactsInUnits}
-                          isWild={action.isWild}
+                          alt="toggle filters"
                         />
-                      </ScrollAnimation>
-                    </Col>
-                  ))}
+                        {activeFiltersCount > 0 && (
+                          <ToggleFilterActiveIcon>
+                            {activeFiltersCount}
+                          </ToggleFilterActiveIcon>
+                        )}
+                      </ToggleFilterButton>
 
-                  {actions.length === 0 && (
-                    <NotFoundWrap>
-                      <FormattedMessage id="app.actionsPage.actionsNotFound" />
-                    </NotFoundWrap>
-                  )}
-                </Row>
-              )}
-
-              {!loading && total > limit && (
-                <Pagination
-                  current={page}
-                  pageSize={limit}
-                  total={total}
-                  itemRender={(current, type, originalElement) => {
-                    if (type === 'page') {
-                      return (
-                        <button
-                          onClick={() => {
-                            this.updateQueries({ page: current })
-                          }}
+                      <SearchFieldWrap ref={$search}>
+                        <SearchField
+                          placeholder={formatMessage({
+                            id: 'app.actionsPage.searchPlaceholder',
+                          })}
+                          value={searchData.searchFieldValue}
+                          notFoundContent={
+                            searchData.searching ? (
+                              <Spin size="small" />
+                            ) : !searchData.searching &&
+                              Number.isInteger(searchData.total) &&
+                              searchData.total === 0 ? (
+                              <FormattedMessage id="app.actionsPage.searchNotFound" />
+                            ) : null
+                          }
+                          showSearch
+                          suffixIcon={<span />}
+                          /*
+                           * Filter by match searched value and option value.
+                           *
+                           * How it works:
+                           * Search option has 2 values: [ picture, name ].
+                           * We filter option value (option.props.children[1]) with
+                           * search value (value from search input)
+                           *
+                           * Why we use it:
+                           * We need filter data from search response and
+                           * show to user matched data
+                           */
+                          filterOption={(input, option) =>
+                            (option.props.children.props.children[1] &&
+                              option.props.children.props.children[1]
+                                .toLowerCase()
+                                .indexOf(input.toLowerCase()) >= 0) ||
+                            /\S/.test(input)
+                          }
+                          onSearch={value =>
+                            value.length > 0 && searchActions({ name: value })
+                          }
+                          onChange={handleSearchFieldChange}
+                          onDropdownVisibleChange={handleDropdownVisibleChange}
+                          getPopupContainer={() => $search.current}
                         >
-                          {originalElement}
-                        </button>
-                      )
-                    }
-                    if (type === 'prev' || type === 'next') {
-                      return null
-                    }
-                    return originalElement
-                  }}
-                />
-              )}
-            </InnerContainer>
-          </BlockContainer>
-        </Wrapper>
+                          {searchData.searchedActions.map(action => (
+                            <Select.Option
+                              key={action.picture}
+                              onClick={handleOpenActionCard(action)}
+                            >
+                              <ActionSearchDropdownOptionContent>
+                                <ActionSearchDropdownPicture
+                                  src={action.picture}
+                                  alt=""
+                                />
+                                {action.name}
+                              </ActionSearchDropdownOptionContent>
+                            </Select.Option>
+                          ))}
+                        </SearchField>
+                      </SearchFieldWrap>
+                      <StyledSearchIcon type="search" />
+                    </SearchWrap>
+                    <Animate show={timeValues.length > 0 && showFilter}>
+                      <FilterWrap>
+                        <ActionsFilters
+                          showFilter={showFilter}
+                          timeValues={timeValues}
+                          values={filterValuesFromQuery}
+                          onReset={handleFilterReset}
+                          onAfterChange={handleOnAfterFiltersChange}
+                          toggleUnits={toggleUnits}
+                        />
+                      </FilterWrap>
+                    </Animate>
+                  </SearchBlockWrapper>
+                )}
+              </Col>
+            </Row>
 
-        <Modal
-          title={formatMessage({
-            id: 'app.actionsPage.filterModalTitle',
-          })}
-          visible={modalVisible}
-          onCancel={() =>
-            this.setState({
-              modalVisible: false,
-            })
-          }
-          getContainer={() => this.$search.current}
-          centered
-          destroyOnClose
-        >
-          <FilterWrap>
-            <ActionsFilters
-              showFilter={showFilter}
-              timeValues={timeValues}
-              values={filterValuesFromQuery}
-              onReset={this.handleFilterReset}
-              onAfterChange={this.handleOnAfterFiltersChange}
-              closeModal={() => {
-                this.setState({
-                  modalVisible: false,
-                })
-              }}
-              inModal
-            />
-          </FilterWrap>
-        </Modal>
-      </React.Fragment>
-    )
-  }
+            {loading ? (
+              <NotFoundWrap>
+                <Spinner />
+              </NotFoundWrap>
+            ) : (
+              <Row gutter={{ md: 20 }}>
+                {actions.map(action => (
+                  <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
+                    <ScrollAnimation>
+                      <ActionCard
+                        to={
+                          action.status === ACTION_STATES.PROPOSED
+                            ? `/account/actions/preview/${action.slug}`
+                            : `/actions/${match.params.subset}/${action.slug}`
+                        }
+                        picture={action.picture}
+                        canChange={action.status === ACTION_STATES.PROPOSED}
+                        onEdit={e => {
+                          e.preventDefault()
+
+                          history.push(`/account/actions/edit/${action.slug}`)
+                        }}
+                        onDelete={onActionDelete(action._id)}
+                        name={
+                          action.translatedName && action.translatedName[locale]
+                            ? action.translatedName[locale]
+                            : action.name
+                        }
+                        impacts={() => {
+                          let tooltipTextId, buttonTextId
+                          switch (action.status) {
+                            case ACTION_STATES.MODELING:
+                              tooltipTextId =
+                                'app.actions.card.waitModelingHint'
+                              buttonTextId = 'app.actions.card.waitModeling'
+                              break
+                            case ACTION_STATES.DENIED:
+                              tooltipTextId = 'app.actions.card.deniedHint'
+                              buttonTextId = 'app.actions.card.denied'
+                              break
+                            default:
+                              tooltipTextId = 'app.actions.card.waitAdminHint'
+                              buttonTextId = 'app.actions.card.waitAdmin'
+                          }
+                          return action.status !== ACTION_STATES.PUBLISHED ? (
+                            <Tooltip
+                              placement="top"
+                              title={formatMessage({
+                                id: tooltipTextId,
+                              })}
+                            >
+                              <ImpactButton
+                                style={{ height: 35 }}
+                                isModelling={
+                                  action.status === ACTION_STATES.MODELING
+                                }
+                              >
+                                {formatMessage({
+                                  id: buttonTextId,
+                                })}
+                              </ImpactButton>
+                            </Tooltip>
+                          ) : (
+                            <ActionCardLabelSet
+                              impacts={action.impacts}
+                              impactsInUnits={action.impactsInUnits}
+                              showPhysicalValues={
+                                uiContextData.showPhysicalValues
+                              }
+                            />
+                          )
+                        }}
+                        suggestedBy={action.suggestedBy}
+                        suggestedAt={
+                          action.suggestedAt &&
+                          formatRelative(action.suggestedAt)
+                        }
+                        isHabit={action.isHabit}
+                        impactsInUnits={action.impactsInUnits}
+                        isWild={action.isWild}
+                      />
+                    </ScrollAnimation>
+                  </Col>
+                ))}
+
+                {actions.length === 0 && (
+                  <NotFoundWrap>
+                    <FormattedMessage id="app.actionsPage.actionsNotFound" />
+                  </NotFoundWrap>
+                )}
+              </Row>
+            )}
+
+            {!loading && total > limit && (
+              <Pagination
+                current={page}
+                pageSize={limit}
+                total={total}
+                itemRender={(current, type, originalElement) => {
+                  if (type === 'page') {
+                    return (
+                      <button
+                        onClick={() => {
+                          updateQueries({ page: current })
+                        }}
+                      >
+                        {originalElement}
+                      </button>
+                    )
+                  }
+                  if (type === 'prev' || type === 'next') {
+                    return null
+                  }
+                  return originalElement
+                }}
+              />
+            )}
+          </InnerContainer>
+        </BlockContainer>
+      </Wrapper>
+
+      <Modal
+        title={formatMessage({
+          id: 'app.actionsPage.filterModalTitle',
+        })}
+        visible={modalVisible}
+        onCancel={() => setModalVisible(false)}
+        getContainer={() => $search.current}
+        centered
+        destroyOnClose
+      >
+        <FilterWrap>
+          <ActionsFilters
+            showFilter={showFilter}
+            timeValues={timeValues}
+            values={filterValuesFromQuery}
+            onReset={handleFilterReset}
+            onAfterChange={handleOnAfterFiltersChange}
+            closeModal={() => setModalVisible(false)}
+            inModal
+          />
+        </FilterWrap>
+      </Modal>
+    </React.Fragment>
+  )
 }
 
 export default compose(

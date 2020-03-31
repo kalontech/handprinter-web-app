@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Select, Icon } from 'antd'
 import { FormattedMessage } from 'react-intl'
@@ -6,17 +6,21 @@ import { FormattedMessage } from 'react-intl'
 import atom from '../../assets/unit-icons/atom.svg'
 import clock from '../../assets/unit-icons/clock.svg'
 import { UNITS } from '../../utils/constants'
+import { UiContextSettings } from '../../context/uiSettingsContext'
 
 const { Option } = Select
 
 function ActionUnitSelect(props) {
+  const uiContextData = useContext(UiContextSettings)
   const { toggleUnits } = props
   return (
     <Select
       mode="default"
       style={{ width: '100%' }}
       onChange={null}
-      defaultValue={UNITS.timeUnits}
+      defaultValue={
+        uiContextData.showPhysicalValues ? UNITS.physicalUnits : UNITS.timeUnits
+      }
       menuItemSelectedIcon={<Icon />}
     >
       <Option key={UNITS.physicalUnits} onClick={e => toggleUnits(e)}>

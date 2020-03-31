@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useContext } from 'react'
 import qs from 'qs'
 import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
@@ -24,6 +24,7 @@ import renderGroups from './groups'
 import { COMPETITION_TABS } from './constants'
 import Tabs from './tabs'
 import { INVITATION_STATUSES } from '../IncreaseHandprintPage'
+import { UiContextSettings } from '../../context/uiSettingsContext'
 
 function renderContent(view, props) {
   switch (view) {
@@ -42,7 +43,7 @@ function renderContent(view, props) {
   }
 }
 function CampaignDashboard(props) {
-  let [showPhysicalValues, setShowPhysicalValues] = useState(false)
+  const uiContextData = useContext(UiContextSettings)
   const {
     location,
     intl: { formatMessage },
@@ -65,9 +66,9 @@ function CampaignDashboard(props) {
 
   const toggleUnits = evt => {
     if (evt.key === 'PhysicalUnits') {
-      setShowPhysicalValues(true)
+      uiContextData.setShowPhysicalValues(true)
     } else if (evt.key === 'TimeUnits') {
-      setShowPhysicalValues(false)
+      uiContextData.setShowPhysicalValues(false)
     }
   }
 
@@ -127,7 +128,7 @@ function CampaignDashboard(props) {
           allInvitations,
           ownGroupsList,
           toggleUnits,
-          showPhysicalValues,
+          showPhysicalValues: uiContextData.showPhysicalValues,
           accomplishedUserActions,
         })}
       </Content>
