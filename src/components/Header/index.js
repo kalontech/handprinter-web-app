@@ -847,14 +847,7 @@ class Header extends Component {
               font={fontNames}
               fontColor={fontColor}
             >
-              <Logo
-                style={{
-                  marginBottom:
-                    overrides && overrides.brandName === 'Humanscale'
-                      ? '20px'
-                      : '0px',
-                }}
-              >
+              <Logo>
                 <Link to="/">
                   {(!isMobile && (
                     <img
