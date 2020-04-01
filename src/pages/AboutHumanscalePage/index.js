@@ -84,8 +84,6 @@ import bigOval from './assets/bigOval.svg'
 
 import earth from './assets/earth.svg'
 
-// import useCampaign from '../CampaignDashboard/useCampaign'
-
 function AboutHumanscalePage() {
   const [campaigns, setCampaigns] = useState([])
 
@@ -100,6 +98,21 @@ function AboutHumanscalePage() {
     animateScroll.scrollToTop()
     getCampaigns().then(data => setCampaigns(data))
   }, [])
+
+  const token = window.localStorage.getItem('accessToken')
+
+  const renderSlides = () => {
+    return campaigns.map(camp => {
+      return (
+        <Slide key={camp.id}>
+          <CampaignsCard>
+            <img src={camp.logo.src} alt="" />
+            <div>{camp.name}</div>
+          </CampaignsCard>
+        </Slide>
+      )
+    })
+  }
 
   return (
     <Fragment>
@@ -235,28 +248,16 @@ function AboutHumanscalePage() {
           <CampaignsCards>
             <Slider>
               <Carousel dots={false} arrows={true} variableWidth={true}>
-                {campaigns.map(camp => {
-                  // const campaign = useCampaign()
-                  // console.log(campaign)
-                  return (
-                    <Slide key={camp.id}>
-                      <CampaignsCard>
-                        <img src={camp.logo.src} alt="" />
-                        <div>
-                          <div>{camp.name}</div>
-                          <span>{''} members</span>
-                        </div>
-                      </CampaignsCard>
-                    </Slide>
-                  )
-                })}
+                {renderSlides()}
               </Carousel>
             </Slider>
           </CampaignsCards>
           <CampaignButtons>
-            <GreenButton>
-              <FormattedMessage id="app.aboutHumanscalePage.handprint.viewMoreBtn" />
-            </GreenButton>
+            <Link to={token ? '/challenges/campaigns' : '/account/login'}>
+              <GreenButton>
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.viewMoreBtn" />
+              </GreenButton>
+            </Link>
           </CampaignButtons>
         </CampaignsBlock>
       </CampaignsMainWrapper>
