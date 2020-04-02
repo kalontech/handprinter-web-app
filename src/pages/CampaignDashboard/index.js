@@ -35,7 +35,7 @@ function renderContent(view, props) {
   }
 }
 function CampaignDashboard(props) {
-  const uiContextData = useContext(UIContextSettings)
+  const UIContextData = useContext(UIContextSettings)
   const {
     location,
     intl: { formatMessage },
@@ -54,9 +54,9 @@ function CampaignDashboard(props) {
 
   const toggleUnits = evt => {
     if (evt.key === 'PhysicalUnits') {
-      uiContextData.setShowPhysicalValues(true)
+      UIContextData.setShowPhysicalValues(true)
     } else if (evt.key === 'TimeUnits') {
-      uiContextData.setShowPhysicalValues(false)
+      UIContextData.setShowPhysicalValues(false)
     }
   }
 
@@ -103,7 +103,7 @@ function CampaignDashboard(props) {
           loading,
           participants,
           toggleUnits,
-          showPhysicalValues: uiContextData.showPhysicalValues,
+          showPhysicalValues: UIContextData.showPhysicalValues,
         })}
       </Content>
     </Fragment>

@@ -11,7 +11,7 @@ import { UIContextSettings } from '../../context/uiSettingsContext'
 const { Option } = Select
 
 function ActionUnitSelect(props) {
-  const uiContextData = useContext(UIContextSettings)
+  const UIContextData = useContext(UIContextSettings)
   const { toggleUnits } = props
   return (
     <Select
@@ -19,7 +19,7 @@ function ActionUnitSelect(props) {
       style={{ width: '100%' }}
       onChange={null}
       defaultValue={
-        uiContextData.showPhysicalValues ? UNITS.physicalUnits : UNITS.timeUnits
+        UIContextData.showPhysicalValues ? UNITS.physicalUnits : UNITS.timeUnits
       }
       menuItemSelectedIcon={<Icon />}
     >

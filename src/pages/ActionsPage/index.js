@@ -316,7 +316,7 @@ async function getActionsList(props) {
 }
 
 function ActionsPage(props) {
-  const uiContextData = useContext(UIContextSettings)
+  const UIContextData = useContext(UIContextSettings)
   ActionsPage.propTypes = {
     intl: intlShape.isRequired,
     user: PropTypes.object,
@@ -367,13 +367,16 @@ function ActionsPage(props) {
   const $search = React.createRef()
 
   useEffect(() => {
+    props.fetch()
+  }, [props.location, props.match])
+
+  useEffect(() => {
     animateScroll.scrollToTop()
     window.addEventListener('orientationchange', changeTabsType)
-    props.fetch()
     return () => {
       window.removeEventListener('orientationchange', changeTabsType)
     }
-  }, [props.location, props.match])
+  }, [])
 
   const changeTabsType = () => {
     setListType({
@@ -507,9 +510,9 @@ function ActionsPage(props) {
 
   const toggleUnits = evt => {
     if (evt.key === 'PhysicalUnits') {
-      uiContextData.setShowPhysicalValues(true)
+      UIContextData.setShowPhysicalValues(true)
     } else if (evt.key === 'TimeUnits') {
-      uiContextData.setShowPhysicalValues(false)
+      UIContextData.setShowPhysicalValues(false)
     }
   }
 
@@ -743,7 +746,7 @@ function ActionsPage(props) {
                               impacts={action.impacts}
                               impactsInUnits={action.impactsInUnits}
                               showPhysicalValues={
-                                uiContextData.showPhysicalValues
+                                UIContextData.showPhysicalValues
                               }
                             />
                           )
