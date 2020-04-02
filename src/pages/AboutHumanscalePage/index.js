@@ -84,8 +84,6 @@ import bigOval from './assets/bigOval.svg'
 
 import earth from './assets/earth.svg'
 
-// import useCampaign from '../CampaignDashboard/useCampaign'
-
 function AboutHumanscalePage() {
   const [campaigns, setCampaigns] = useState([])
 
@@ -100,6 +98,8 @@ function AboutHumanscalePage() {
     animateScroll.scrollToTop()
     getCampaigns().then(data => setCampaigns(data))
   }, [])
+
+  const token = window.localStorage.getItem('accessToken')
 
   return (
     <Fragment>
@@ -252,9 +252,11 @@ function AboutHumanscalePage() {
             </Slider>
           </CampaignsCards>
           <CampaignButtons>
-            <GreenButton>
-              <FormattedMessage id="app.aboutHumanscalePage.handprint.viewMoreBtn" />
-            </GreenButton>
+            <Link to={token ? '/challenges/campaigns' : '/account/login'}>
+              <GreenButton>
+                <FormattedMessage id="app.aboutHumanscalePage.handprint.viewMoreBtn" />
+              </GreenButton>
+            </Link>
           </CampaignButtons>
         </CampaignsBlock>
       </CampaignsMainWrapper>

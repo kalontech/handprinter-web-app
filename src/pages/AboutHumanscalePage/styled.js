@@ -420,7 +420,7 @@ export const CampaignsHeader = styled.div`
 
 export const CampaignsBlock = styled.div`
   position: absolute;
-  bottom: 80vh;
+  bottom: 75vh;
   left: 7vw;
   width: 93vw;
   height: 40vh;
@@ -459,15 +459,13 @@ export const CampaignsCard = styled.div`
 
   div {
     width: 200px;
-    div {
-      font-family: Noto Serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 19px;
-      line-height: 26px;
-      color: #344442;
-      text-align: left;
-    }
+    font-family: Noto Serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 19px;
+    line-height: 26px;
+    color: #344442;
+    text-align: left;
 
     span {
       font-family: Noto Sans;
@@ -553,7 +551,7 @@ export const Slider = styled.div`
      `}
     &.slick-prev {
       position: absolute;
-      top: 37.57vh;
+      top: 34.57vh;
       left: 70vw;
       transform: rotate(180deg);
       ${media.desktop`
@@ -566,7 +564,7 @@ export const Slider = styled.div`
     }
     &.slick-next {
       position: absolute;
-      top: 41vh;
+      top: 38vh;
       left: 75vw;
       margin-left: 15px;
       ${media.phone`
