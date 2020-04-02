@@ -100,6 +100,14 @@ export default function renderGroups(props) {
   const invitation = invitations[tabIndex]
   let groupParticipants = getGroupParticipants(props, invitation)
 
+  const accomplishedInGroup = groupParticipants
+    .map(item => {
+      return item.accomplishedActions.length
+    })
+    .reduce((sum, curr) => {
+      return sum + curr
+    })
+
   const joinCompetition = intl.formatMessage(
     { id: 'app.competitions.join' },
     {
@@ -115,6 +123,15 @@ export default function renderGroups(props) {
       competition: competition.name,
     },
   )
+
+  const progressGroupProps = {
+    total,
+    successCount: numberToComplete,
+    accomplished: accomplishedInGroup,
+    endDate: competition.dateTo,
+    expired,
+    tooltipText,
+  }
 
   const progressProps = {
     total,
@@ -173,7 +190,7 @@ export default function renderGroups(props) {
       )}
       {invitation.status === INVITATION_STATUSES.ACCEPTED && (
         <ParticipantsMain>
-          {renderGroup({ ...props, ...progressProps }, groupParticipants)}
+          {renderGroup({ ...props, ...progressGroupProps }, groupParticipants)}
           {groupParticipants.map(participant => {
             const accomplished = participant.accomplishedActions.length
             const total = competition.actions.length

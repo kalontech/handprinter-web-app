@@ -236,8 +236,6 @@ function AboutHumanscalePage() {
             <Slider>
               <Carousel dots={false} arrows={true} variableWidth={true}>
                 {campaigns.map(camp => {
-                  // const campaign = useCampaign()
-                  // console.log(campaign)
                   return (
                     <Slide key={camp.id}>
                       <CampaignsCard>

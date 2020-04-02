@@ -24,7 +24,7 @@ import renderGroups from './groups'
 import { COMPETITION_TABS } from './constants'
 import Tabs from './tabs'
 import { INVITATION_STATUSES } from '../IncreaseHandprintPage'
-import { UiContextSettings } from '../../context/uiSettingsContext'
+import { UIContextSettings } from '../../context/uiSettingsContext'
 
 function renderContent(view, props) {
   switch (view) {
@@ -43,7 +43,7 @@ function renderContent(view, props) {
   }
 }
 function CampaignDashboard(props) {
-  const uiContextData = useContext(UiContextSettings)
+  const uiContextData = useContext(UIContextSettings)
   const {
     location,
     intl: { formatMessage },

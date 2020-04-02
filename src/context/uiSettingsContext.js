@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-export const UiContextSettings = React.createContext({})
+export const UIContextSettings = React.createContext({})
 
-const UiContextSettingsProvider = ({ children }) => {
+const UIContextSettingsProvider = ({ children }) => {
   const [showPhysicalValues, setPhysicalValues] = useState(false)
 
   const setShowPhysicalValues = showPhysicalValues => {
@@ -11,19 +11,19 @@ const UiContextSettingsProvider = ({ children }) => {
   }
 
   return (
-    <UiContextSettings.Provider
+    <UIContextSettings.Provider
       value={{
         showPhysicalValues,
         setShowPhysicalValues,
       }}
     >
       {children}
-    </UiContextSettings.Provider>
+    </UIContextSettings.Provider>
   )
 }
 
-UiContextSettingsProvider.propTypes = {
+UIContextSettingsProvider.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default UiContextSettingsProvider
+export default UIContextSettingsProvider

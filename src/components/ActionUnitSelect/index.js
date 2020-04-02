@@ -6,12 +6,12 @@ import { FormattedMessage } from 'react-intl'
 import atom from '../../assets/unit-icons/atom.svg'
 import clock from '../../assets/unit-icons/clock.svg'
 import { UNITS } from '../../utils/constants'
-import { UiContextSettings } from '../../context/uiSettingsContext'
+import { UIContextSettings } from '../../context/uiSettingsContext'
 
 const { Option } = Select
 
 function ActionUnitSelect(props) {
-  const uiContextData = useContext(UiContextSettings)
+  const uiContextData = useContext(UIContextSettings)
   const { toggleUnits } = props
   return (
     <Select

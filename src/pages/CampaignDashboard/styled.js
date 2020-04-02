@@ -119,12 +119,12 @@ export const ProgressWrapper = styled.div`
   height: 90px;
   width: 100%;
   background: white;
-  padding-right: 130px;
+  padding-right: 50px;
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
-  padding-left: 130px;
+  padding-left: 50px;
   ${media.phone`
     padding-left: 15px;
     padding-right: 15px;  

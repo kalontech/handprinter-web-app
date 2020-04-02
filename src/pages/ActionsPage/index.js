@@ -43,7 +43,7 @@ import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
 import * as api from 'api/actions'
 
 import ActionsFilters from './ActionFilter'
-import { UiContextSettings } from '../../context/uiSettingsContext'
+import { UIContextSettings } from '../../context/uiSettingsContext'
 
 const Wrapper = styled.div`
   background-color: ${colors.lightGray};
@@ -316,7 +316,7 @@ async function getActionsList(props) {
 }
 
 function ActionsPage(props) {
-  const uiContextData = useContext(UiContextSettings)
+  const uiContextData = useContext(UIContextSettings)
   ActionsPage.propTypes = {
     intl: intlShape.isRequired,
     user: PropTypes.object,
@@ -369,6 +369,7 @@ function ActionsPage(props) {
   useEffect(() => {
     animateScroll.scrollToTop()
     window.addEventListener('orientationchange', changeTabsType)
+    props.fetch()
     return () => {
       window.removeEventListener('orientationchange', changeTabsType)
     }
@@ -385,12 +386,10 @@ function ActionsPage(props) {
   }
 
   const searchActions = debounce(async query => {
-    setSearchData(state => ({
-      searchData: {
-        ...state.searchData,
-        searching: true,
-      },
-    }))
+    setSearchData({
+      ...searchData,
+      searching: true,
+    })
 
     const {
       actions: { docs: actions, totalDocs: total },

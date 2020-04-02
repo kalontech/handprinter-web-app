@@ -18,7 +18,7 @@ import renderActivity from './activity'
 import renderStatistics from './statistics'
 import { CAPMAIGN_TABS } from './constants'
 import Tabs from './tabs'
-import { UiContextSettings } from '../../context/uiSettingsContext'
+import { UIContextSettings } from '../../context/uiSettingsContext'
 
 function renderContent(view, props) {
   switch (view) {
@@ -35,7 +35,7 @@ function renderContent(view, props) {
   }
 }
 function CampaignDashboard(props) {
-  const uiContextData = useContext(UiContextSettings)
+  const uiContextData = useContext(UIContextSettings)
   const {
     location,
     intl: { formatMessage },

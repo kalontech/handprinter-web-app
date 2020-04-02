@@ -13,10 +13,6 @@ import { ProgressWrapper, ProgressTextWrapper, ProgressText } from './styled'
 function CampaignProgress(props) {
   const { total, accomplished, endDate, expired } = props
   const percent = (accomplished / total) * 100
-  const accomplishedLabel = props.intl.formatMessage(
-    { id: 'app.campaignPage.progress.accomplished' },
-    { accomplished, total },
-  )
   const daysLeft = props.intl.formatMessage(
     { id: 'app.campaignPage.progress.daysLeft' },
     {
@@ -25,8 +21,7 @@ function CampaignProgress(props) {
   )
   return (
     <ProgressWrapper>
-      <ProgressTextWrapper>
-        <ProgressText>{accomplishedLabel}</ProgressText>
+      <ProgressTextWrapper style={{ justifyContent: 'flex-end' }}>
         <ProgressText>{daysLeft}</ProgressText>
       </ProgressTextWrapper>
       <Progress
