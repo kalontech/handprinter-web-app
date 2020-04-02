@@ -9,7 +9,7 @@ import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import { FormattedMessage } from 'react-intl'
 import { Popover } from 'antd'
 
-import Progress from '../../pages/CampaignDashboard/progress'
+import Progress from '../../pages/CompetitionDashboard/progress'
 import {
   Achievements,
   AchievementSmall,

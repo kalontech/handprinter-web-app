@@ -101,19 +101,6 @@ function AboutHumanscalePage() {
 
   const token = window.localStorage.getItem('accessToken')
 
-  const renderSlides = () => {
-    return campaigns.map(camp => {
-      return (
-        <Slide key={camp.id}>
-          <CampaignsCard>
-            <img src={camp.logo.src} alt="" />
-            <div>{camp.name}</div>
-          </CampaignsCard>
-        </Slide>
-      )
-    })
-  }
-
   return (
     <Fragment>
       <PageMetadata pageName="aboutInterfacePage" />
@@ -248,7 +235,19 @@ function AboutHumanscalePage() {
           <CampaignsCards>
             <Slider>
               <Carousel dots={false} arrows={true} variableWidth={true}>
-                {renderSlides()}
+                {campaigns.map(camp => {
+                  return (
+                    <Slide key={camp.id}>
+                      <CampaignsCard>
+                        <img src={camp.logo.src} alt="" />
+                        <div>
+                          <div>{camp.name}</div>
+                          <span>{''} members</span>
+                        </div>
+                      </CampaignsCard>
+                    </Slide>
+                  )
+                })}
               </Carousel>
             </Slider>
           </CampaignsCards>
