@@ -130,14 +130,14 @@ export const ProgressWrapper = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  padding-left: 20px;
+  padding-left: 0px;
   ${media.phone`
-    padding-left: 15px;
+    padding-left: 0px;
     padding-right: 15px;  
   `}
 
   ${media.largeDesktop`
-    padding-left: 15px;
+    padding-left: 0px;
     padding-right: 15px;  
   `}
 `
