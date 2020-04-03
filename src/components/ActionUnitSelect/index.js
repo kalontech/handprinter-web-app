@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { Select, Icon } from 'antd'
 import { FormattedMessage } from 'react-intl'
 
-import atom from '../../assets/unit-icons/atom.svg'
-import clock from '../../assets/unit-icons/clock.svg'
+import atom from '../../assets/unit-icons/atom.png'
+import clock from '../../assets/unit-icons/clock.png'
 import { UNITS } from '../../utils/constants'
 import { UIContextSettings } from '../../context/uiSettingsContext'
 
