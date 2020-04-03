@@ -712,7 +712,7 @@
     "app.actions.behaviour": "Comportamiento",
     "app.actions.type.wild": "Wild",
     "app.actions.type.modeled": "Modeled",
-    "app.actions.behaviour.habbit": "Behavior change",
+    "app.actions.behaviour.habbit": "Behaviour change",
     "app.actions.behaviour.singleAction": "Acción unica",
     "app.actions.wildCard.popup.content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
     "app.actions.wildCard.label": "Wild card",

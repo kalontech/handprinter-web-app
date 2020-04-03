@@ -712,7 +712,7 @@
     "app.actions.behaviour": "行为",
     "app.actions.type.wild": "野生",
     "app.actions.type.modeled": "仿照",
-    "app.actions.behaviour.habbit": "Behavior change",
+    "app.actions.behaviour.habbit": "Behaviour change",
     "app.actions.behaviour.singleAction": "单动",
     "app.actions.wildCard.popup.content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
     "app.actions.wildCard.label": "通配符",
