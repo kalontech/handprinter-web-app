@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 import { CONTACT_DATA } from 'utils/constants'
 
 import FooterUnitsSelector from '../FooterUnitsSelector'
-import ActionUnitSelect from '../../components/ActionUnitSelect'
 import footerLogo from './assets/footer_image.png'
 
 import {
