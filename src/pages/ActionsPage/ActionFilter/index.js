@@ -78,9 +78,9 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
                   <Checkbox
                     checked={selectedCategories.includes(category.name)}
                     name={category.name}
-                  >
-                    {category.name}
-                  </Checkbox>
+                    style={{ marginRight: '10px' }}
+                  />
+                  {category.name}
                 </Option>
               )
             })}
@@ -101,11 +101,12 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
                   <Checkbox
                     checked={selectedType.includes(type.name)}
                     name={type.name}
-                  >
-                    {formatMessage({
-                      id: `app.actions.type.${type.id}`,
-                    })}
-                  </Checkbox>
+                    value="value"
+                    style={{ marginRight: '10px' }}
+                  />
+                  {formatMessage({
+                    id: `app.actions.type.${type.id}`,
+                  })}
                 </Option>
               )
             })}
@@ -126,11 +127,11 @@ function ActionsFilters({ intl: { formatMessage }, ...props }) {
                   <Checkbox
                     checked={selectedBehaviour.includes(behaviour.name)}
                     name={behaviour.name}
-                  >
-                    {formatMessage({
-                      id: `app.actions.behaviour.${behaviour.id}`,
-                    })}
-                  </Checkbox>
+                    style={{ marginRight: '10px' }}
+                  />
+                  {formatMessage({
+                    id: `app.actions.behaviour.${behaviour.id}`,
+                  })}
                 </Option>
               )
             })}
