@@ -17,7 +17,7 @@ import {
 
 const FooterLanguageSelector = props => {
   const { intl, setLocale, className } = props
-  console.log('LANDS', props)
+
   return (
     <FooterDropdown
       className={className}

@@ -81,7 +81,7 @@ const isSafariMobile = window.navigator.userAgent.match(/iPhone/i)
 export const INVITE_ACTION_SLUG = 'invite-people-to-join-handprinter'
 
 function ActionModalPage(props) {
-  console.log(props)
+  const { history, closeModal } = props
   const UIContextData = useContext(UIContextSettings)
 
   const [action, setAction] = useState(null)
@@ -97,7 +97,6 @@ function ActionModalPage(props) {
   const [initiatorId, setInitiatorId] = useState('')
   const [isHabit, setIsHabit] = useState(false)
   const [availableFrom, setAvailableFrom] = useState(moment())
-  // const [radioChoice, setRadioChoice] = useState('')
   const [matchedUsersByCode, setMatchedUserByCode] = useState(null)
 
   useEffect(() => {
@@ -171,10 +170,6 @@ function ActionModalPage(props) {
   const handleRecruitingEmailsInputChange = initiatorId => {
     setInitiatorId(initiatorId)
   }
-
-  // const handleRadioChange = e => {
-  //   setRadioChoice(e.target.value)
-  // }
 
   const checkAvailableTakeAction = async actionId => {
     if (!actionId || !props.user) return
@@ -508,15 +503,20 @@ function ActionModalPage(props) {
   }
 
   const renderInContainer = ({ children, width, height, closeBtnColor }) => {
+    renderInContainer.propTypes = {
+      children: PropTypes.node,
+      width: PropTypes.number,
+      height: PropTypes.number,
+      closeBtnColor: PropTypes.string,
+    }
+
     return (
       <Container width={width} height={height}>
         {children}
         <CloseButton
           style={{ color: closeBtnColor }}
           onClick={() => {
-            props.history.length > 1
-              ? props.history.goBack()
-              : props.closeModal()
+            history.length > 1 ? history.goBack() : closeModal()
           }}
         >
           <CloseIcon />
@@ -544,13 +544,6 @@ function ActionModalPage(props) {
       console.error(error)
     }
   }
-
-  // const handleCodeSelect = code => {
-  //   const {
-  //     form: { setFieldsValue },
-  //   } = props
-  //   setFieldsValue({ invitationCode: code })
-  // }
 
   const handleHabitCheckbox = e => {
     setIsHabit(e.target.checked)
