@@ -8,7 +8,7 @@ import Feed from 'components/Feed'
 
 import pigImage from 'assets/actions/pig.png'
 
-import { TakenActionPanel, TakenActionAuthContent } from '.'
+import { TakenActionPanel, TakenActionAuthContent } from './styled'
 
 const TakenActionTitle = styled.text`
   font-family: Noto Serif;

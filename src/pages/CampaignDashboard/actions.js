@@ -48,7 +48,7 @@ export default function renderActions(props) {
     : ACTIONS_TABS.TODO
 
   const filteredActions = getActions(props, selectedKey)
-
+  console.log(showPhysicalValues)
   return (
     <Fragment>
       <MenuStyled

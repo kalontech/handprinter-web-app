@@ -23,7 +23,7 @@ export const types = [
 ]
 
 export const behaviour = [
-  { id: 'habbit', name: 'Habbit' },
+  { id: 'habbit', name: 'Behavior change' },
   {
     id: 'singleAction',
     name: 'Single action',
