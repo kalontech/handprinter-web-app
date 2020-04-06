@@ -4,66 +4,20 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { updateIntl } from 'react-intl-redux'
 import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
-import * as Ant from 'antd'
-
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
-import colors from 'config/colors'
-import hexToRgba from 'utils/hexToRgba'
 
-const FooterDropdown = styled(Ant.Dropdown)`
-  margin-top: -2px;
-  max-width: 148px;
-  width: 100%;
-  cursor: pointer;
-`
-
-const LangTitle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 34px;
-  border-radius: 4px;
-  padding: 0 10px;
-  background-color: ${colors.footerDropdownBg};
-  color: ${hexToRgba(colors.white, 0.6)};
-  > div {
-    display: flex;
-    align-items: center;
-  }
-`
-
-const FooterDropdownMenu = styled(Ant.Menu)`
-  background: ${({ bg }) => bg || colors.dark};
-  padding: 5px 0;
-`
-
-const FooterDropdownItem = styled(Ant.Menu.Item)`
-  line-height: 40px;
-  margin: 0 5px;
-  padding: 0;
-  border-radius: 4px;
-  font-size: 16px;
-  color: ${({ color }) => color || `${hexToRgba(colors.white, 0.6)}`};
-  background-color: ${colors.footerDropdownBg};
-
-  &.ant-dropdown-menu-item-selected,
-  &:hover {
-    background-color: ${colors.black};
-    color: ${colors.white};
-  }
-`
-
-const Wrapper = styled.div`
-  padding: 0 4px;
-`
-
-const Image = styled.img`
-  margin-right: 6px;
-`
+import {
+  FooterDropdownMenu,
+  FooterDropdownItem,
+  FooterDropdown,
+  Wrapper,
+  Image,
+  LangTitle,
+} from './styled'
 
 const FooterLanguageSelector = props => {
   const { intl, setLocale, className } = props
+
   return (
     <FooterDropdown
       className={className}
