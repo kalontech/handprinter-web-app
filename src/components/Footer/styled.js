@@ -18,7 +18,6 @@ export const FooterContent = styled.section`
 
 export const Wrap = styled(BlockContainer)`
   padding: 80px 0 60px;
-  margin-top: -1px;
   overflow: hidden;
   ${media.phone`
    padding-top: 40px;

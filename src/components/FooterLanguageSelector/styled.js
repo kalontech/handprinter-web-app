@@ -5,7 +5,6 @@ import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
 
 export const FooterDropdown = styled(Dropdown)`
-  margin-top: -2px;
   max-width: 158px;
   width: 100%;
   cursor: pointer;
