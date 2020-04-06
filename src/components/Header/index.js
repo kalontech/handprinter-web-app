@@ -679,6 +679,7 @@ class Header extends Component {
 
   render() {
     const { type, user, withoutHeaderContent, location, overrides } = this.props
+    const token = window.localStorage.getItem('accessToken')
     const {
       notification,
       unreadCount,
@@ -940,24 +941,26 @@ class Header extends Component {
                           mode="horizontal"
                           selectedKeys={[location.pathname]}
                         >
-                          <Menu.Item key="/account/login">
-                            <Link to="/account/login">
-                              <CenterAlign>
-                                {overrides &&
-                                  overrides.brandName === 'Interface' && (
-                                    <LogoImg src={loginIcon} alt="icon" />
-                                  )}
-                                <FormattedMessage
-                                  id={'app.header.menu.login'}
-                                />
-                              </CenterAlign>
-                            </Link>
-                          </Menu.Item>
+                          {!token && (
+                            <Menu.Item key="/account/login">
+                              <Link to="/account/login">
+                                <FormattedMessage id="app.aboutHumanscalePage.join.link" />
+                              </Link>
+                            </Menu.Item>
+                          )}
                           {overrides && overrides.brandName === 'Humanscale' && (
                             <Menu.Item>
                               <Link to="/account/login">
                                 <GreenButton>
-                                  <FormattedMessage id="app.aboutHumanscalePage.join.link" />
+                                  <CenterAlign>
+                                    {overrides &&
+                                      overrides.brandName === 'Interface' && (
+                                        <LogoImg src={loginIcon} alt="icon" />
+                                      )}
+                                    <FormattedMessage
+                                      id={'app.header.menu.login'}
+                                    />
+                                  </CenterAlign>
                                 </GreenButton>
                               </Link>
                             </Menu.Item>
