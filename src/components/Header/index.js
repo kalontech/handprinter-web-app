@@ -678,8 +678,15 @@ class Header extends Component {
   }
 
   render() {
-    const { type, user, withoutHeaderContent, location, overrides } = this.props
-    const token = window.localStorage.getItem('accessToken')
+    const {
+      type,
+      user,
+      withoutHeaderContent,
+      location,
+      overrides,
+      token,
+    } = this.props
+    const temporaryToken = window.localStorage.getItem('temporaryToken')
     const {
       notification,
       unreadCount,
@@ -1178,29 +1185,30 @@ class Header extends Component {
                         mode="horizontal"
                         selectedKeys={[this.selectedMenuItem]}
                       >
-                        <Menu.Item key="/actions">
-                          <Link to="/actions">
-                            <FormattedMessage id="app.header.menu.actions" />
-                          </Link>
-                        </Menu.Item>
-
-                        <Menu.Item key="/groups">
-                          <Link to="/groups/discover">
-                            <FormattedMessage id="app.pages.groups" />
-                          </Link>
-                        </Menu.Item>
                         <Menu.Item key="/challenges">
                           <Link to="/challenges/campaigns">
                             <FormattedMessage id="app.pages.challenges" />
                           </Link>
                         </Menu.Item>
-                        {(!overrides || !overrides.brandName) && (
-                          <Menu.Item key="/organizations">
-                            <Link to="/organizations/discover">
-                              <FormattedMessage id="app.header.menu.organizations" />
-                            </Link>
-                          </Menu.Item>
-                        )}
+                        <Menu.Item key="/actions">
+                          <Link to="/actions">
+                            <FormattedMessage id="app.header.menu.actions" />
+                          </Link>
+                        </Menu.Item>
+                        <Menu.Item key="/groups">
+                          <Link to="/groups/discover">
+                            <FormattedMessage id="app.pages.groups" />
+                          </Link>
+                        </Menu.Item>
+                        {(!overrides || !overrides.brandName) &&
+                          temporaryToken &&
+                          user.belongsToBrand !== 'Humanscale' && (
+                            <Menu.Item key="/organizations">
+                              <Link to="/organizations/discover">
+                                <FormattedMessage id="app.header.menu.organizations" />
+                              </Link>
+                            </Menu.Item>
+                          )}
                         {overrides &&
                         overrides.inLinkLogo &&
                         overrides.brandName === 'Eaton' ? (
