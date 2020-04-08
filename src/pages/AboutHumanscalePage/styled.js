@@ -551,12 +551,9 @@ export const Slider = styled.div`
      `}
     &.slick-prev {
       position: absolute;
-      top: 34.57vh;
+      top: 29.3vh;
       left: 70vw;
       transform: rotate(180deg);
-      ${media.desktop`
-        visibility: visible;
-      `}
       ${media.phone`
         left: 15px;
         transform: translateY(-50%) rotate(180deg);
@@ -564,8 +561,8 @@ export const Slider = styled.div`
     }
     &.slick-next {
       position: absolute;
-      top: 38vh;
-      left: 75vw;
+      top: 32vh;
+      left: 74vw;
       margin-left: 15px;
       ${media.phone`
         right: 15px;
