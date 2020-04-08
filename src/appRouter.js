@@ -4,9 +4,11 @@ import { ModalRoute } from 'react-router-modal'
 import createBrowserHistory from 'history/createBrowserHistory'
 import GoogleAnalytics from 'react-ga'
 
+import env from 'config/env'
+
 import ErrorCatcher from './utils/errorCatcher'
 import { getBrandedConfig } from './config/branded'
-import env from 'config/env'
+
 import Route from './routeWrapper'
 
 import ActionModalPage from './pages/ActionModalPage'
@@ -250,7 +252,7 @@ const AppRouter = () => {
             requireAuthentication
           />
           <Route
-            path="/challenges/:subset"
+            path="/challenges"
             component={ChallengesListPage}
             useAuthentication
             withoutCTA

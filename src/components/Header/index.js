@@ -1187,7 +1187,7 @@ class Header extends Component {
                           </Link>
                         </Menu.Item>
                         <Menu.Item key="/challenges">
-                          <Link to="/challenges/campaigns">
+                          <Link to="/challenges">
                             <FormattedMessage id="app.pages.challenges" />
                           </Link>
                         </Menu.Item>
