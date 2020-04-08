@@ -680,11 +680,11 @@ class Header extends Component {
   render() {
     const { type, user, withoutHeaderContent, location, overrides } = this.props
     const {
-      notification,
-      unreadCount,
+      // notification,
+      // unreadCount,
       width,
       collapsed,
-      isFetchingNews,
+      // isFetchingNews,
     } = this.state
     const isTablet = width < sizes.largeDesktop
     const isMobile = width < sizes.tablet
@@ -1155,7 +1155,7 @@ class Header extends Component {
                   />
                 </Link>
               </LogoSmall>
-              {isTablet &&
+              {/* {isTablet &&
                 !isMobile &&
                 this.getNotificationsPopover(
                   fontColor,
@@ -1163,7 +1163,7 @@ class Header extends Component {
                   notification,
                   unreadCount,
                   isFetchingNews,
-                )}
+                )} */}
               <Fragment>
                 {!isTablet && (
                   <Fragment>
@@ -1263,13 +1263,13 @@ class Header extends Component {
                       </Popover>
                     </CenterMenu>
                     <RightAlign>
-                      {this.getNotificationsPopover(
+                      {/* {this.getNotificationsPopover(
                         fontColor,
                         fontNames,
                         notification,
                         unreadCount,
                         isFetchingNews,
-                      )}
+                      )} */}
                       <ProfileSettingsPopover
                         placement="bottomRight"
                         overlayStyle={{ paddingTop: '10px' }}
