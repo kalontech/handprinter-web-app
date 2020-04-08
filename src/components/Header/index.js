@@ -578,20 +578,20 @@ class Header extends Component {
     window.addEventListener('resize', this.handleWindowSizeChange)
 
     if (this.props.type === 'private') {
-      this.fetchNews()
-      this.fetchNewsIntervalId = setInterval(() => this.fetchNews(true), 10000)
+      // this.fetchNews()
+      // this.fetchNewsIntervalId = setInterval(() => this.fetchNews(true), 10000)
     }
   }
 
   componentDidUpdate() {
-    if (this.fetchNewsIntervalId && !this.props.token) {
-      clearInterval(this.fetchNewsIntervalId)
-    }
+    // if (this.fetchNewsIntervalId && !this.props.token) {
+    //   clearInterval(this.fetchNewsIntervalId)
+    // }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange)
-    if (this.fetchNewsIntervalId) clearInterval(this.fetchNewsIntervalId)
+    // if (this.fetchNewsIntervalId) clearInterval(this.fetchNewsIntervalId)
   }
 
   handleWindowSizeChange = () => {
@@ -630,7 +630,7 @@ class Header extends Component {
     if (!shouldReset) return
     const date = Date.now()
     await apiActions.sendLastTimeReadNewsAt(date)
-    await this.fetchNews()
+    // await this.fetchNews()
     this.props.setUser({
       ...this.props.user,
       lastTimeReadNewsAt: date,
