@@ -313,7 +313,7 @@ export const HandprintInfo = styled.div`
 
 // Take action
 export const TakeActionWrapper = styled.section`
-  height: 2460px;
+  height: 2560px;
   background: ${colors.humanscaleIvy};
 `
 
@@ -336,7 +336,7 @@ export const TakeActionHeader = styled.div`
 `
 
 export const TakeAction = styled.section`
-  height: 899px;
+  height: 820px;
 `
 
 export const TakeActionItemHeader = styled.div`
@@ -369,20 +369,22 @@ export const TakeActionItemInfo = styled.div`
     font-size: 16px;
     line-height: 28px;
     color: ${colors.white};
-    padding: 45px 150px 0 150px;
-    width: 50vw;
+    padding-left: 150px;
+    padding-top: 45px;
+    width: 470px;
   }
 `
 
 export const TakeActionMainImageWraper = styled.div`
   margin-top: 30px;
   position: absolute;
-  left: 50vw;
-  width: 30vw;
+  right: 638px;
 `
 
 export const TakeActionMainImage = styled.img`
   position: absolute;
+  width: 495px;
+  height: 477px;
   z-index: 1;
 `
 
@@ -403,33 +405,38 @@ export const TakeActionLeap2 = styled.img`
 `
 
 export const TakeActionFingerprint = styled.img`
-  width: 350px;
+  width: 495px;
+  height: 340px;
   position: absolute;
-  top: 350px;
-  left: -80px;
+  top: 230px;
+  left: -130px;
   z-index: 0;
 `
 
 export const TakeActionDoIt = styled.section`
-  height: 899px;
+  height: 820px;
 `
 
 export const TakeActionDoItImageWrapper = styled.section`
-  margin-top: 30px;
   position: absolute;
-  left: 50vw;
+  right: 485px;
+  margin-top: 30px;
 `
 
-export const TakeActionDoItMainImage = styled.img``
+export const TakeActionDoItMainImage = styled.img`
+  position: absolute;
+  width: 500px;
+  height: 442px;
+`
 
 export const TakeActionDoItHandprint = styled.img`
   position: relative;
-  top: 150px;
-  left: -570px;
+  top: 290px;
+  left: -50px;
 `
 
 export const TakeActionShareTo = styled.section`
-  height: 899px;
+  height: 820px;
 `
 
 export const SharedToImageWrapper = styled.div`
@@ -442,20 +449,26 @@ export const SharedToImageWrapper = styled.div`
 
 export const TakeActionSharedToImage = styled.img`
   position: absolute;
+  width: 591px;
+  height: 422px;
   top: 0;
-  left: 0;
+  left: -100px;
 `
 
 export const SmallCircle = styled.img`
   position: relative;
-  top: 0px;
-  left: 200px;
+  width: 212px;
+  height: 212px;
+  top: 25px;
+  left: 80px;
 `
 
 export const BigCircle = styled.img`
   position: relative;
-  top: 0px;
-  left: -120px;
+  width: 422px;
+  height: 422px;
+  top: 22px;
+  left: -235px;
 `
 
 // Wrapper for campaigns

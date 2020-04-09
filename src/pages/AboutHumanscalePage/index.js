@@ -157,7 +157,7 @@ function AboutHumanscalePage() {
           </HandprintInfo>
         </HandprintWrapper>
       </WhatIsHandprint>
-      {/* <TakeActionWrapper>
+      <TakeActionWrapper>
         <TakeActionHeader>
           <p>{"It's easy!"}</p>
         </TakeActionHeader>
@@ -216,7 +216,7 @@ function AboutHumanscalePage() {
           </TakeActionItemInfo>
         </TakeActionShareTo>
       </TakeActionWrapper>
-      <CampaignsMainWrapper>
+      {/*  <CampaignsMainWrapper>
         <CampaignsInfo>
           <CampaignsHeader>
             <FormattedMessage id="app.aboutHumanscalePage.handprint.campaignsHeader1" />
