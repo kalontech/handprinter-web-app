@@ -258,7 +258,7 @@ function AboutHumanscalePage() {
           </CampaignButtons>
         </CampaignsBlock>
       </CampaignsMainWrapper>
-      {/*  <JoinHandprinterWrapper>
+      <JoinHandprinterWrapper>
         <JoinHandprinterContentBlock>
           <JoinHandprinterContent>
             <p>
@@ -271,7 +271,7 @@ function AboutHumanscalePage() {
             </Link>
           </JoinHandprinterContent>
         </JoinHandprinterContentBlock>
-      </JoinHandprinterWrapper> */}
+      </JoinHandprinterWrapper>
     </Fragment>
   )
 }

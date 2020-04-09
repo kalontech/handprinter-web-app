@@ -73,6 +73,7 @@ export const HandprintTitle = styled.h2`
     letter-spacing: 0px;
   `}
 `
+
 export const HandprintText = styled.p`
   position: absolute;
   width: 400px;
@@ -265,6 +266,7 @@ export const FootprintFootImage = styled.img`
   top: 355px;
   right: -170px;
 `
+
 // What is handprint
 export const WhatIsHandprint = styled.section`
   position: relative;
@@ -283,7 +285,9 @@ export const HandprintWrapper = styled.div`
   background: ${colors.white};
 `
 
-export const HandprintImagesWrapper = styled.div``
+export const HandprintImagesWrapper = styled.div`
+  width: 1200px;
+`
 
 export const HandprintMainImage = styled.img`
   position: absolute;
@@ -475,6 +479,9 @@ export const BigCircle = styled.img`
 
 // Wrapper for campaigns
 export const CampaignsMainWrapper = styled.section`
+  position: relative;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -533,7 +540,7 @@ export const CampaignsFinger = styled.img`
 export const CampaignsCards = styled.div`
   position: absolute;
   left: 40px;
-  bottom: 200px;
+  top: -30px;
 `
 
 export const CampaignsCard = styled.div`
@@ -593,16 +600,20 @@ export const CampaignButtons = styled.div`
   width: 170px;
   height: 50px;
   left: 40px;
-  bottom: 100px;
+  bottom: 98px;
 `
 
 // Join handprinter
 export const JoinHandprinterWrapper = styled.section`
+  position: relative;
+  left: 0;
+  top: 0;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  height: 603px;
   background: ${colors.humanscaleIvy};
 `
 
@@ -611,8 +622,8 @@ export const JoinHandprinterContentBlock = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80vw;
-  height: 65%;
+  width: 1134px;
+  height: 352px;
   border: 1px solid ${colors.white};
 `
 
@@ -621,13 +632,13 @@ export const JoinHandprinterContent = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 70%;
   p {
     width: 500px;
     font-size: 52px;
     line-height: 71px;
     text-align: center;
     color: ${colors.white};
+    margin-bottom: 26px;
   }
 `
 
