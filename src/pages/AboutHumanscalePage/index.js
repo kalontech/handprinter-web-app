@@ -149,9 +149,7 @@ function AboutHumanscalePage() {
               {`We've all heard about our footprints: negative impacts of the
                 things we buy and use. We need to reduce them, but footprints
                 are only part of the story.`}
-
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text1" />
-
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text2" />
             </HandprintText>
           </HandprintInfo>
@@ -236,13 +234,16 @@ function AboutHumanscalePage() {
                 {campaigns.map(camp => {
                   return (
                     <Slide key={camp.id}>
-                      <CampaignsCard>
-                        <img src={camp.logo.src} alt="" />
-                        <div>
-                          <div>{camp.name}</div>
-                          <span>{''} members</span>
-                        </div>
-                      </CampaignsCard>
+                      <Link
+                        to={token ? `campaign/${camp.id}` : '/account/login'}
+                      >
+                        <CampaignsCard>
+                          <img src={camp.logo.src} alt="" />
+                          <div>
+                            <div>{camp.name}</div>
+                          </div>
+                        </CampaignsCard>
+                      </Link>
                     </Slide>
                   )
                 })}

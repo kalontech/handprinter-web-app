@@ -552,10 +552,12 @@ export const CampaignsCard = styled.div`
   height: 190px;
   margin-right: 40px;
   box-shadow: 0px 1px 16px ${hexToRgba(colors.dark, 0.3)};
+  cursor: pointer;
   img {
     width: 130px;
     height: 130px;
     border-radius: 50%;
+    margin-left: 25px;
     border: 4px solid ${colors.green};
   }
 
