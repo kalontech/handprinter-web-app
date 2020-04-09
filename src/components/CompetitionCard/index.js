@@ -65,7 +65,7 @@ const CounterMembers = styled.p`
   margin-bottom: 10px;
 `
 
-export default function CampaignCard(props) {
+export default function CompetitionCard(props) {
   const { to, name, picture, counter, button } = props
   return (
     <Block to={to}>
@@ -81,7 +81,7 @@ export default function CampaignCard(props) {
   )
 }
 
-CampaignCard.propTypes = {
+CompetitionCard.propTypes = {
   to: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   name: PropTypes.string,
   counter: PropTypes.string,

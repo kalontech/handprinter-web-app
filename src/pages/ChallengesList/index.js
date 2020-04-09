@@ -5,7 +5,7 @@ import ChallengesListHeader from 'components/ChallengesListHeader'
 import Spinner from 'components/Spinner'
 import Row from 'antd/lib/row'
 
-import CampaignCard from 'components/CampaignCard'
+import CompetitionCard from 'components/CompetitionCard'
 
 import { DefaultButton } from 'components/Styled'
 
@@ -59,7 +59,7 @@ export default function ChallengesList(props) {
                 : `/challenges/competitions/dashboard/${item._id}`
               return (
                 <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
-                  <CampaignCard
+                  <CompetitionCard
                     to={to}
                     name={item.name}
                     picture={item.logo.src}
