@@ -166,7 +166,7 @@ function AboutHumanscalePage() {
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.takeAction" />
             </p>
-            <TakeActionDivider />
+            <TakeActionDivider style={{ right: '137px' }} />
           </TakeActionItemHeader>
           <TakeActionItemInfo>
             <p>
@@ -185,7 +185,7 @@ function AboutHumanscalePage() {
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionDoIt" />
             </p>
-            <TakeActionDivider />
+            <TakeActionDivider style={{ right: '79px' }} />
           </TakeActionItemHeader>
           <TakeActionItemInfo>
             <p>
@@ -202,7 +202,7 @@ function AboutHumanscalePage() {
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionShare" />
             </p>
-            <TakeActionDivider />
+            <TakeActionDivider style={{ right: '45px' }} />
           </TakeActionItemHeader>
           <TakeActionItemInfo>
             <p>
@@ -216,12 +216,10 @@ function AboutHumanscalePage() {
           </TakeActionItemInfo>
         </TakeActionShareTo>
       </TakeActionWrapper>
-      {/*  <CampaignsMainWrapper>
+      <CampaignsMainWrapper>
         <CampaignsInfo>
           <CampaignsHeader>
             <FormattedMessage id="app.aboutHumanscalePage.handprint.campaignsHeader1" />
-          </CampaignsHeader>
-          <CampaignsHeader>
             <FormattedMessage id="app.aboutHumanscalePage.handprint.campaignsHeader2" />
           </CampaignsHeader>
           <div>
@@ -260,7 +258,7 @@ function AboutHumanscalePage() {
           </CampaignButtons>
         </CampaignsBlock>
       </CampaignsMainWrapper>
-      <JoinHandprinterWrapper>
+      {/*  <JoinHandprinterWrapper>
         <JoinHandprinterContentBlock>
           <JoinHandprinterContent>
             <p>

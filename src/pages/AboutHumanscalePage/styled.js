@@ -352,13 +352,15 @@ export const TakeActionItemHeader = styled.div`
     line-height: 30px;
     text-transform: uppercase;
     color: ${colors.white};
+    margin-top: 5px;
   }
 `
 
 export const TakeActionDivider = styled.span`
+  position: absolute;
   flex: 1;
+  width: 73vw;
   border-top: 1px solid ${colors.white};
-  margin-left: 40px;
 `
 
 export const TakeActionItemInfo = styled.div`
@@ -476,17 +478,35 @@ export const CampaignsMainWrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 91vh;
+  height: 899px;
   background: ${colors.white};
 
   p {
-    width: 800px;
+    width: 629px;
+    height: 56.14px;
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 28px;
+
+    display: flex;
+    align-items: center;
     text-align: center;
   }
 `
 
 export const CampaignsHeader = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  width: 731px;
+  height: 142px;
+  margin-top: 100px;
+  margin-bottom: 8px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
   font-size: 52px;
   line-height: 71px;
   text-align: center;
@@ -495,25 +515,25 @@ export const CampaignsHeader = styled.div`
 
 export const CampaignsBlock = styled.div`
   position: absolute;
-  bottom: 75vh;
-  left: 7vw;
-  width: 93vw;
-  height: 899px;
+  bottom: 100px;
+  right: 0;
+  width: 1300px;
+  height: 354px;
   background: ${colors.humanscaleBlueAsh};
 `
 
 export const CampaignsFinger = styled.img`
   position: relative;
-  top: 10vh;
-  left: -5vw;
-  width: 30vw;
-  height: 30vh;
+  left: 0;
+  bottom: -50px;
+  width: 330px;
+  height: 360px;
 `
 
 export const CampaignsCards = styled.div`
   position: absolute;
-  left: 4vw;
-  bottom: 21vh;
+  left: 40px;
+  bottom: 200px;
 `
 
 export const CampaignsCard = styled.div`
@@ -521,8 +541,8 @@ export const CampaignsCard = styled.div`
   justify-content: space-around;
   align-items: center;
   background: ${colors.white};
-  width: 400px;
-  height: 200px;
+  width: 380px;
+  height: 190px;
   margin-right: 40px;
   box-shadow: 0px 1px 16px ${hexToRgba(colors.dark, 0.3)};
   img {
@@ -557,6 +577,9 @@ export const CampaignsCard = styled.div`
 export const CampaignsInfo = styled.div`
   padding-top: 50px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   div {
     display: flex;
     justify-content: space-around;
@@ -566,9 +589,11 @@ export const CampaignsInfo = styled.div`
 `
 
 export const CampaignButtons = styled.div`
-  position: relative;
-  bottom: 4vh;
-  left: -37vw;
+  position: absolute;
+  width: 170px;
+  height: 50px;
+  left: 40px;
+  bottom: 100px;
 `
 
 // Join handprinter
@@ -612,8 +637,6 @@ export const Slider = styled.div`
     width: 51px;
     height: 51px;
     position: absolute;
-    top: 380px;
-    left: 1200px;
     transform: translateY(-50%);
     background: ${colors.white} url(${sliderArrow}) no-repeat center / 50%;
     &:hover,
@@ -626,8 +649,8 @@ export const Slider = styled.div`
      `}
     &.slick-prev {
       position: absolute;
-      top: 29.3vh;
-      left: 70vw;
+      top: 248px;
+      left: 930px;
       transform: rotate(180deg);
       ${media.phone`
         left: 15px;
@@ -636,8 +659,8 @@ export const Slider = styled.div`
     }
     &.slick-next {
       position: absolute;
-      top: 32vh;
-      left: 74vw;
+      top: 273.5px;
+      left: 1000px;
       margin-left: 15px;
       ${media.phone`
         right: 15px;
