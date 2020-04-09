@@ -14,8 +14,10 @@ import {
   GreenButton,
   WhatIsFootprint,
   FootprintWrapper,
-  Title,
-  Text,
+  FootprintTitle,
+  FootprintText,
+  HandprintTitle,
+  HandprintText,
   FootprintMainImage,
   FootprintLeapImage,
   FootprintFingerImage,
@@ -118,12 +120,12 @@ function AboutHumanscalePage() {
       </Hero>
       <WhatIsFootprint>
         <FootprintWrapper>
-          <Title>
+          <FootprintTitle>
             <FormattedMessage id="app.aboutHumanscalePage.footprint.title" />
-          </Title>
-          <Text>
+          </FootprintTitle>
+          <FootprintText>
             <FormattedMessage id="app.aboutHumanscalePage.footprint.text" />
-          </Text>
+          </FootprintText>
           <FootprintImagesBlock>
             <FootprintMainImage src={footprintImage} alt="" />
             <FootprintLeapImage src={footprintLeap} alt="" />
@@ -140,24 +142,22 @@ function AboutHumanscalePage() {
             <HandprintFingerImage src={earth} alt="" />
           </HandprintImagesWrapper>
           <HandprintInfo>
-            <Title>
+            <HandprintTitle>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.title" />
-            </Title>
-            <Text>
+            </HandprintTitle>
+            <HandprintText>
               {`We've all heard about our footprints: negative impacts of the
                 things we buy and use. We need to reduce them, but footprints
                 are only part of the story.`}
-            </Text>
-            <Text>
+
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text1" />
-            </Text>
-            <Text>
+
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text2" />
-            </Text>
+            </HandprintText>
           </HandprintInfo>
         </HandprintWrapper>
       </WhatIsHandprint>
-      <TakeActionWrapper>
+      {/* <TakeActionWrapper>
         <TakeActionHeader>
           <p>{"It's easy!"}</p>
         </TakeActionHeader>
@@ -273,7 +273,7 @@ function AboutHumanscalePage() {
             </Link>
           </JoinHandprinterContent>
         </JoinHandprinterContentBlock>
-      </JoinHandprinterWrapper>
+      </JoinHandprinterWrapper> */}
     </Fragment>
   )
 }

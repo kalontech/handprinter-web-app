@@ -8,13 +8,64 @@ import sliderArrow from 'assets/about-humanscale/arrow.svg'
 
 import bg from '../../assets/about-humanscale/bg.png'
 
-export const Title = styled.h2`
-  font-family: Helvetica Neue;
+export const FootprintTitle = styled.h2`
+  position: absolute;
+  width: 500px;
+  height: 71px;
+  left: 98px;
+  top: 117px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
   font-size: 52px;
   line-height: 71px;
-  font-weight: 300;
   letter-spacing: -0.4px;
   margin-bottom: 0;
+  color: ${colors.humanscaleHeaderText};
+
+  ${media.phone`
+    line-height: 31px;
+    font-size: 22px;
+    letter-spacing: 0px;
+  `}
+`
+
+export const FootprintText = styled.p`
+  position: absolute;
+  width: 400px;
+  height: 252px;
+  left: 98px;
+  top: 187px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  color: ${colors.interfaceFooterColor2};
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+  ${media.phone`
+    margin-bottom: 0;
+    text-align: center;
+  `}
+`
+
+export const HandprintTitle = styled.h2`
+  position: absolute;
+  width: 503px;
+  height: 77px;
+  left: 0px;
+  top: -70px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 52px;
+  line-height: 71px;
+
   color: ${colors.humanscaleHeaderText};
   ${media.phone`
     line-height: 31px;
@@ -22,14 +73,22 @@ export const Title = styled.h2`
     letter-spacing: 0px;
   `}
 `
-export const Text = styled.p`
-  margin-bottom: 30px;
-  font-family: Helvetica Neue;
-  line-height: 26px;
-  font-size: 16px;
+export const HandprintText = styled.p`
+  position: absolute;
   width: 400px;
-  margin-top: 20px;
+  height: 255px;
+  top: 50px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   color: ${colors.interfaceFooterColor2};
+
   &:last-of-type {
     margin-bottom: 0;
   }
@@ -40,8 +99,7 @@ export const Text = styled.p`
 `
 
 export const Hero = styled.section`
-  height: 91vh;
-  position: relative;
+  height: 899px;
   background: url(${bg}) no-repeat center;
   background-size: cover;
   display: flex;
@@ -77,7 +135,8 @@ export const HeroInfo = styled.div`
   justify-content: flex-start;
   align-items: baseline;
   padding-left: 100px;
-  width: 700px;
+  width: 733px;
+  height: 246px;
 `
 
 export const HeroTitle = styled.div`
@@ -155,7 +214,7 @@ export const GreenButton = styled(Button)`
 
 // what is footprint
 export const WhatIsFootprint = styled.section`
-  height: 91vh;
+  height: 1000px;
   background: ${colors.humanscaleFootPrintBg};
   display: flex;
   flex-direction: column;
@@ -164,21 +223,24 @@ export const WhatIsFootprint = styled.section`
 `
 
 export const FootprintWrapper = styled.div`
-  width: 93%;
-  height: 70%;
+  position: absolute;
+  height: 641px;
+  right: 0;
+  left: 141px;
+  top: 1080px;
   background: ${colors.white};
-  padding: 100px 0 150px 100px;
 `
 
 export const FootprintImagesBlock = styled.div`
   position: absolute;
-  left: 57vw;
-  top: 96vh;
+  left: 652px;
+  top: -127px;
 `
 
 export const FootprintMainImage = styled.img`
-  height: 80vh;
   position: absolute;
+  width: 552px;
+  height: 825px;
 `
 
 export const FootprintLeapImage = styled.img`
@@ -192,30 +254,32 @@ export const FootprintLeapImage = styled.img`
 export const FootprintFingerImage = styled.img`
   height: 320px;
   position: relative;
-  top: 49vh;
-  left: -160px;
+  top: 531px;
+  right: 170px;
 `
 
 export const FootprintFootImage = styled.img`
   height: 250px;
   width: 100px;
   position: relative;
-  top: 30vh;
-  left: 3vw;
+  top: 355px;
+  right: -170px;
 `
 // What is handprint
 export const WhatIsHandprint = styled.section`
-  height: 91vh;
+  position: relative;
+  height: 1000px;
+  left: 0px;
+  top: 0px;
   background: ${colors.white};
-  padding: 10px 10px 10px 100px;
 `
 
 export const HandprintWrapper = styled.div`
   position: absolute;
   left: 0px;
-  top: 182vh;
+  top: 230px;
+  height: 641px;
   width: 100%;
-  height: 91vh;
   background: ${colors.white};
 `
 
@@ -224,20 +288,19 @@ export const HandprintImagesWrapper = styled.div``
 export const HandprintMainImage = styled.img`
   position: absolute;
   left: 150px;
-  top: 10vh;
   margin-right: 40px;
 `
 
 export const HandprintLeapImage = styled.img`
   width: 90;
   position: relative;
-  top: 50px;
+  top: -30px;
   left: 80px;
 `
 export const HandprintFingerImage = styled.img`
-  width: 90;
+  width: 90px;
   position: relative;
-  top: 40px;
+  top: -50px;
   left: 0px;
 `
 
@@ -245,13 +308,12 @@ export const HandprintInfo = styled.div`
   width: 500px;
   position: absolute;
   left: 630px;
-  top: 26vh;
   margin-left: 200px;
 `
 
 // Take action
 export const TakeActionWrapper = styled.section`
-  height: 300vh;
+  height: 2460px;
   background: ${colors.humanscaleIvy};
 `
 
@@ -274,7 +336,7 @@ export const TakeActionHeader = styled.div`
 `
 
 export const TakeAction = styled.section`
-  height: 91vh;
+  height: 899px;
 `
 
 export const TakeActionItemHeader = styled.div`
@@ -349,7 +411,7 @@ export const TakeActionFingerprint = styled.img`
 `
 
 export const TakeActionDoIt = styled.section`
-  height: 91vh;
+  height: 899px;
 `
 
 export const TakeActionDoItImageWrapper = styled.section`
@@ -367,7 +429,7 @@ export const TakeActionDoItHandprint = styled.img`
 `
 
 export const TakeActionShareTo = styled.section`
-  height: 91vh;
+  height: 899px;
 `
 
 export const SharedToImageWrapper = styled.div`
@@ -423,7 +485,7 @@ export const CampaignsBlock = styled.div`
   bottom: 75vh;
   left: 7vw;
   width: 93vw;
-  height: 40vh;
+  height: 899px;
   background: ${colors.humanscaleBlueAsh};
 `
 
