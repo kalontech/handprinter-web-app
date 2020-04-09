@@ -40,33 +40,31 @@ function getChallengies(campaigns, competitions) {
 }
 
 export default function ChallengesList(props) {
-  const [campaigns, loading] = useCampaignsList(props)
-  const [competitions, compLoading] = useCompetitionsList(props)
+  const [campaigns, loadingCampaigns] = useCampaignsList(props)
+  const [competitions, loadingCompetitions] = useCompetitionsList(props)
   const challenges = getChallengies(campaigns, competitions)
 
   return (
     <Block>
       <ChallengesListHeader />
       <Container>
-        {loading || compLoading ? (
+        {loadingCampaigns || loadingCompetitions ? (
           <Spinner />
         ) : (
           <Row gutter={{ md: 20 }} style={{ flexGrow: '1' }}>
-            {challenges.map(item => (
-              <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
-                {item.type === CHALLENGIES.CAMPAIGNS ? (
+            {challenges.map(item => {
+              const isCampaign = item.type === CHALLENGIES.CAMPAIGNS
+              const to = isCampaign
+                ? `/challenges/campaigns/dashboard/${item._id}`
+                : `/challenges/competitions/dashboard/${item._id}`
+              return (
+                <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
                   <CampaignCard
-                    to={`/challenges/campaigns/dashboard/${item._id}`}
-                    name={item.name}
-                    picture={item.logo.src}
-                  />
-                ) : (
-                  <CampaignCard
-                    to={`/challenges/competitions/dashboard/${item._id}`}
+                    to={to}
                     name={item.name}
                     picture={item.logo.src}
                     button={() =>
-                      item.pendingInvitation ? (
+                      isCampaign ? null : item.pendingInvitation ? (
                         <DefaultButton
                           onClick={() => {
                             acceptInvitation(item._id)
@@ -77,9 +75,9 @@ export default function ChallengesList(props) {
                       ) : null
                     }
                   />
-                )}
-              </Column>
-            ))}
+                </Column>
+              )
+            })}
           </Row>
         )}
       </Container>
