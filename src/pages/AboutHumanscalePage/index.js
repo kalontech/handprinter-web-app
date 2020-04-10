@@ -146,9 +146,7 @@ function AboutHumanscalePage() {
               <FormattedMessage id="app.aboutHumanscalePage.handprint.title" />
             </HandprintTitle>
             <HandprintText>
-              {`We've all heard about our footprints: negative impacts of the
-                things we buy and use. We need to reduce them, but footprints
-                are only part of the story.`}
+              <FormattedMessage id="app.aboutHumanscalePage.handprint.text" />
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text1" />
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text2" />
             </HandprintText>

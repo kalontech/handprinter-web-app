@@ -753,14 +753,14 @@
     "app.actions.units.select.TimeUnits": "Unidades de tiempo",
     "app.humanscaleCta.text": "La respuesta para revertir el calentamiento global comienza con usted. Sus acciones pueden tener un impacto positivo en el planeta.",
     "app.humanscaleCta.link": "aprende más",
-    "app.aboutHumanscalePage.hero.title": "Ayúdanos a crear huellas de manos y sé parte de un cambio positivo en el mundo.",
-    "app.aboutHumanscalePage.join.link": "join",
+    "app.aboutHumanscalePage.hero.title": "Help us create handprints, and be part of a positive change in the world",
+    "app.aboutHumanscalePage.join.link": "unirse",
     "app.aboutHumanscalePage.footprint.title": "What is footprint?",
     "app.aboutHumanscalePage.handprint.title": "What is handprint?",
     "app.aboutHumanscalePage.footprint.text": "Footprint - the sum of all the negative impacts on the planet we share, of all the activities it takes to provide each of us with the products and services we buy and use in a year, including the impacts from using and disposing of them",
-    "app.aboutHumanscalePage.handprint.text1": "También podemos tener huellas de manos: impactos positivos en el mundo, incluidas las formas en que ayudamos a otros a reducir sus huellas. Handprinter le permite trabajar con personas en su vecindario y en todo el mundo para aumentar su huella de mano y también reducir su huella. ¡Empiece hoy!",
+    "app.aboutHumanscalePage.handprint.text1": "We can also have handprints: positive impacts in the world, including ways we help others to reduce their footprints. Handprinter lets you work with people in your neighborhood and around the world to grow your handprint — and reduce your footprint too. Get started today!",
     "app.aboutHumanscalePage.handprint.text2": "¡Con suficientes huellas de manos, podemos sanar el planeta!",
-    "app.aboutHumanscalePage.handprint.takeAction": "1. TOMA ACCIÓN",
+    "app.aboutHumanscalePage.handprint.takeAction": "1. TAKE ACTION",
     "app.aboutHumanscalePage.handprint.takeActionInfo": "Be sure you tried it out yourself first, and share ideas about how to make it work. Another part of idea creation is modeling the impacts of an action idea so that we can all understand what impacts it has in the world.",
     "app.aboutHumanscalePage.handprint.takeActionDoIt": "2. DON'T SIT. DO IT",
     "app.aboutHumanscalePage.handprint.takeActionDoItInfo": "Be sure you tried it out yourself first, and share ideas about how to make it work. Another part of idea creation is modeling the impacts of an action idea so that we can all understand what impacts it has in the world.",
@@ -770,5 +770,6 @@
     "app.aboutHumanscalePage.handprint.campaignsHeader2": "¡Pero también haz crecer tu huella!",
     "app.aboutHumanscalePage.handprint.campaignsInfo": "¡Solo toma una de las acciones de los desafíos! Hay muchas maneras de reducir su huella. Cientos de personas están utilizando estas ideas para reducir sus huellas.",
     "app.aboutHumanscalePage.handprint.viewMoreBtn": "ver más",
-    "app.aboutHumanscalePage.handprint.joinToHandleprinter": "Join Handprinter Save the Planet"
+    "app.aboutHumanscalePage.handprint.joinToHandleprinter": "Únase a Handprinter Save the Planet",
+    "app.aboutHumanscalePage.handprint.text": "We've all heard about our footprints: negative impacts of the things we buy and use. We need to reduce them, but footprints are only part of the story"
 }
