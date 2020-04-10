@@ -606,7 +606,6 @@ function ActionsPage(props) {
                           )
                         })}
                       </Select>
-
                       <SearchFieldWrap ref={$search}>
                         <SearchField
                           placeholder={formatMessage({

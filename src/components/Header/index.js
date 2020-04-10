@@ -39,6 +39,11 @@ import fullLogoImg from './assets/fullLogo.jpg'
 import partialLogoImg from './assets/partialLogo.png'
 import loginIcon from './assets/login.svg'
 import newsBellIcon from './assets/newsBellIcon.svg'
+import { ReactComponent as Atom } from '../../assets/unit-icons/atom.svg'
+import { ReactComponent as Clock } from '../../assets/unit-icons/clock.svg'
+
+// import { UIContextSettings } from '../../context/uiSettingsContext'
+// const UIContextData = useContext(UIContextSettings)
 
 const SubMenu = Menu.SubMenu
 
@@ -50,6 +55,7 @@ const RightAlign = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  align-items: center;
   flex: 1;
 `
 const CenterAlign = styled.div`
@@ -519,6 +525,35 @@ const TakeActionButton = styled(PrimaryButton)`
   `}
 `
 
+const UnitsBlock = styled.div`
+  position: absolute;
+  top: 34px;
+  right: 176px;
+  width: 44px;
+  height: 22px;
+  border-radius: 50px;
+  background-color: lightgray;
+  margin-right: 31px;
+`
+
+const SVGAtomWrap = styled.div`
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  path {
+    fill: ${props => props.color};
+  }
+`
+
+const SVGClockWrap = styled.div`
+  position: absolute;
+  top: 2px;
+  right: 20px;
+  path {
+    fill: ${props => props.color};
+  }
+`
+
 const isIE =
   navigator.userAgent.indexOf('MSIE') !== -1 ||
   navigator.appVersion.indexOf('Trident/') > -1
@@ -546,6 +581,8 @@ class Header extends Component {
     notification: [],
     unreadCount: 0,
     isFetchingNews: false,
+    isPhysicalUnit: false,
+    isTimeUnit: true,
   }
   fetchNewsIntervalId = null
 
@@ -637,6 +674,20 @@ class Header extends Component {
     })
   }
 
+  toggleTimeUnits = () => {
+    this.setState({
+      isPhysicalUnit: false,
+      isTimeUnit: true,
+    })
+  }
+
+  togglePhysicalUnits = () => {
+    this.setState({
+      isPhysicalUnit: true,
+      isTimeUnit: false,
+    })
+  }
+
   getNotificationsPopover = (
     fontColor,
     fontNames,
@@ -685,6 +736,8 @@ class Header extends Component {
       width,
       collapsed,
       // isFetchingNews,
+      isPhysicalUnit,
+      isTimeUnit,
     } = this.state
     const isTablet = width < sizes.largeDesktop
     const isMobile = width < sizes.tablet
@@ -1270,6 +1323,32 @@ class Header extends Component {
                         unreadCount,
                         isFetchingNews,
                       )} */}
+                      <UnitsBlock>
+                        <SVGAtomWrap color={isPhysicalUnit ? 'green' : 'gray'}>
+                          <Atom
+                            style={{
+                              position: 'absolute',
+                              top: '0',
+                              left: '0',
+                              width: '18px',
+                              height: '18px',
+                            }}
+                            onClick={this.togglePhysicalUnits}
+                          />
+                        </SVGAtomWrap>
+                        <SVGClockWrap color={isTimeUnit ? 'green' : 'gray'}>
+                          <Clock
+                            style={{
+                              position: 'absolute',
+                              top: '0',
+                              left: '0',
+                              width: '18px',
+                              height: '18px',
+                            }}
+                            onClick={this.toggleTimeUnits}
+                          />
+                        </SVGClockWrap>
+                      </UnitsBlock>
                       <ProfileSettingsPopover
                         placement="bottomRight"
                         overlayStyle={{ paddingTop: '10px' }}
