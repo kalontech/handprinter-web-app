@@ -8,10 +8,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { animateScroll } from 'react-scroll/modules'
-import { Animate } from 'react-animate-mount'
 
-import filterToggleImg from 'assets/actions-page/ic_filter_list.png'
-import filterToggleActiveImg from 'assets/actions-page/ic_filter_list_active.png'
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import DiscoverIconComponent from 'assets/icons/DiscoverIcon'
 import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
@@ -29,11 +26,7 @@ import colors from 'config/colors'
 import PageMetadata from 'components/PageMetadata'
 import media, { sizes } from 'utils/mediaQueryTemplate'
 import hexToRgba from 'utils/hexToRgba'
-import {
-  IMPACT_CATEGORIES,
-  ACTIONS_SUBSETS,
-  ACTION_STATES,
-} from 'utils/constants'
+import { ACTIONS_SUBSETS, ACTION_STATES } from 'utils/constants'
 import fetch from 'utils/fetch'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Tooltip from 'components/Tooltip'
@@ -42,8 +35,11 @@ import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
 
 import * as api from 'api/actions'
 
-import ActionsFilters from './ActionFilter'
+import { categories, behaviour, types } from './filterData'
+import { Checkbox } from '../../components/Styled'
 import { UIContextSettings } from '../../context/uiSettingsContext'
+
+const { Option } = Select
 
 const Wrapper = styled.div`
   background-color: ${colors.lightGray};
@@ -149,34 +145,6 @@ const SearchWrap = styled.div`
   align-items: center;
 `
 
-const ToggleFilterButton = styled.button`
-  cursor: pointer !important;
-  padding: 10px;
-  margin-right: 15px;
-  border: none;
-  position: relative;
-  background: transparent;
-
-  &:focus,
-  &:hover {
-    outline: none;
-  }
-`
-
-const ToggleFilterActiveIcon = styled.span`
-  border-radius: 50%;
-  background: ${colors.orange};
-  color: ${colors.white};
-  font-size: 10px;
-  display: block;
-  height: 15px;
-  width: 15px;
-  margin: 0 auto;
-  position: absolute;
-  top: 5px;
-  right: 2px;
-`
-
 const NotFoundWrap = styled.div`
   display: flex;
   justify-content: center;
@@ -184,29 +152,6 @@ const NotFoundWrap = styled.div`
   height: 500px;
   font-size: 24px;
   color: ${colors.darkGray};
-`
-
-const FilterWrap = styled.div`
-  padding-right: 18px;
-  margin-top: 38px;
-  ${media.tablet`
-    margin-top: 38px;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  `}
-  ${media.phone`
-    margin-top: 38px;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  `}
 `
 
 export const ImpactButton = styled(DefaultButton)`
@@ -252,24 +197,6 @@ const SearchFieldWrap = styled.div`
     display: none;
   }
 `
-
-function configParamsForFilter({ location: { search } }) {
-  const queries = qs.parse(search, { ignoreQueryPrefix: true })
-  const params = {}
-
-  Object.keys(queries).map(paramName => {
-    if (Object.values(IMPACT_CATEGORIES).includes(paramName)) {
-      params[paramName] = [
-        Number(queries[paramName].from),
-        Number(queries[paramName].to),
-      ]
-    }
-  })
-
-  if (Object.values(params).length > 0) {
-    return params
-  }
-}
 
 async function getActionsList(props) {
   const { location, match, timeValues } = props
@@ -347,22 +274,15 @@ function ActionsPage(props) {
     // if value will be defined
     searchFieldValue: undefined,
   })
-  const [showFilter, setShowFilter] = useState(
-    window.innerWidth > sizes.phone && Boolean(configParamsForFilter(props)),
-  )
-  const [filterValuesFromQuery, setFilterValuesFromQuery] = useState(
-    configParamsForFilter(props) || null,
-  )
-  const [activeFiltersCount, setActiveFiltersCount] = useState(
-    (configParamsForFilter(props) || '').length,
-  )
   const [visibleTabs, setVisibleTabs] = useState(false)
   const [listType, setListType] = useState(
     window.screen.availWidth <= sizes.tablet
       ? TABS_TYPES.select
       : TABS_TYPES.default,
   )
-  const [modalVisible, setModalVisible] = useState(false)
+  const [selectedCategories, setSelectedCategories] = useState([])
+  const [selectedType, setSelectedType] = useState([])
+  const [selectedBehaviour, setSelectedBehaviour] = useState([])
 
   const $search = React.createRef()
 
@@ -440,13 +360,8 @@ function ActionsPage(props) {
     !open && resetSearchData()
   }
 
-  const handleFilterReset = () => {
-    setFilterValuesFromQuery(null)
-  }
-
   const handleOnAfterFiltersChange = debounce(({ data, activeFilterCount }) => {
     const { match, history } = props
-    setActiveFiltersCount(activeFilterCount)
 
     if (Object.keys(data).length === 0) {
       history.push(`/actions/${match.params.subset}`)
@@ -454,14 +369,6 @@ function ActionsPage(props) {
       updateQueries({ ...data, page: 1 })
     }
   }, 600)
-
-  const toggleFilter = () => {
-    if (window.innerWidth < sizes.phone) {
-      setModalVisible(!modalVisible)
-    } else {
-      setShowFilter(!showFilter)
-    }
-  }
 
   const updateQueries = query => {
     const { location, match, history } = props
@@ -508,12 +415,49 @@ function ActionsPage(props) {
     })
   }
 
-  const toggleUnits = evt => {
-    if (evt.key === 'PhysicalUnits') {
-      UIContextData.setShowPhysicalValues(true)
-    } else if (evt.key === 'TimeUnits') {
-      UIContextData.setShowPhysicalValues(false)
+  const handleCategoryChange = value => {
+    let categories = selectedCategories.concat([])
+    if (!value) {
+      categories = []
+    } else {
+      if (categories.includes(value)) {
+        categories.splice(categories.indexOf(value), 1)
+      } else {
+        categories.push(value)
+      }
     }
+    setSelectedCategories(categories)
+    handleOnAfterFiltersChange({ data: { category: categories } })
+  }
+
+  const handleTypeChange = value => {
+    let types = selectedType.concat([])
+    if (!value) {
+      types = []
+    } else {
+      if (selectedType.includes(value)) {
+        types.splice(types.indexOf(value), 1)
+      } else {
+        types.push(value)
+      }
+    }
+    setSelectedType(types)
+    handleOnAfterFiltersChange({ data: { type: types } })
+  }
+
+  const handleBehaviourChange = value => {
+    let behaviours = selectedBehaviour.concat([])
+    if (!value) {
+      behaviours = []
+    } else {
+      if (selectedBehaviour.includes(value)) {
+        behaviours.splice(behaviours.indexOf(value), 1)
+      } else {
+        behaviours.push(value)
+      }
+    }
+    setSelectedBehaviour(behaviours)
+    handleOnAfterFiltersChange({ data: { behaviour: behaviours } })
   }
 
   const {
@@ -524,7 +468,6 @@ function ActionsPage(props) {
     limit,
     page,
     total,
-    timeValues = [],
     match,
     history,
   } = props
@@ -587,19 +530,82 @@ function ActionsPage(props) {
                 {match.params.subset === ACTIONS_SUBSETS.DISCOVER && (
                   <SearchBlockWrapper>
                     <SearchWrap>
-                      <ToggleFilterButton onClick={toggleFilter}>
-                        <img
-                          src={
-                            showFilter ? filterToggleActiveImg : filterToggleImg
-                          }
-                          alt="toggle filters"
-                        />
-                        {activeFiltersCount > 0 && (
-                          <ToggleFilterActiveIcon>
-                            {activeFiltersCount}
-                          </ToggleFilterActiveIcon>
-                        )}
-                      </ToggleFilterButton>
+                      <Select
+                        allowClear={true}
+                        mode="default"
+                        style={{ width: '100%' }}
+                        onChange={handleCategoryChange}
+                        menuItemSelectedIcon={<Icon />}
+                        value="Category"
+                      >
+                        {categories.map(category => {
+                          return (
+                            <Option key={category.id}>
+                              <Checkbox
+                                checked={selectedCategories.includes(
+                                  category.name,
+                                )}
+                                name={category.name}
+                                style={{ marginRight: '10px' }}
+                              />
+                              {category.name}
+                            </Option>
+                          )
+                        })}
+                      </Select>
+                      <Select
+                        allowClear={true}
+                        value={formatMessage({
+                          id: 'app.actions.type',
+                        })}
+                        mode="default"
+                        style={{ width: '100%' }}
+                        onChange={handleTypeChange}
+                        menuItemSelectedIcon={<Icon />}
+                      >
+                        {types.map(type => {
+                          return (
+                            <Option key={type.name}>
+                              <Checkbox
+                                checked={selectedType.includes(type.name)}
+                                name={type.name}
+                                value="value"
+                                style={{ marginRight: '10px' }}
+                              />
+                              {formatMessage({
+                                id: `app.actions.type.${type.id}`,
+                              })}
+                            </Option>
+                          )
+                        })}
+                      </Select>
+                      <Select
+                        allowClear={true}
+                        value={formatMessage({
+                          id: 'app.actions.behaviour',
+                        })}
+                        mode="default"
+                        style={{ width: '100%' }}
+                        onChange={handleBehaviourChange}
+                        menuItemSelectedIcon={<Icon />}
+                      >
+                        {behaviour.map(behaviour => {
+                          return (
+                            <Option key={behaviour.name}>
+                              <Checkbox
+                                checked={selectedBehaviour.includes(
+                                  behaviour.name,
+                                )}
+                                name={behaviour.name}
+                                style={{ marginRight: '10px' }}
+                              />
+                              {formatMessage({
+                                id: `app.actions.behaviour.${behaviour.id}`,
+                              })}
+                            </Option>
+                          )
+                        })}
+                      </Select>
 
                       <SearchFieldWrap ref={$search}>
                         <SearchField
@@ -662,18 +668,6 @@ function ActionsPage(props) {
                       </SearchFieldWrap>
                       <StyledSearchIcon type="search" />
                     </SearchWrap>
-                    <Animate show={timeValues.length > 0 && showFilter}>
-                      <FilterWrap>
-                        <ActionsFilters
-                          showFilter={showFilter}
-                          timeValues={timeValues}
-                          values={filterValuesFromQuery}
-                          onReset={handleFilterReset}
-                          onAfterChange={handleOnAfterFiltersChange}
-                          toggleUnits={toggleUnits}
-                        />
-                      </FilterWrap>
-                    </Animate>
                   </SearchBlockWrapper>
                 )}
               </Col>
@@ -799,29 +793,6 @@ function ActionsPage(props) {
           </InnerContainer>
         </BlockContainer>
       </Wrapper>
-
-      <Modal
-        title={formatMessage({
-          id: 'app.actionsPage.filterModalTitle',
-        })}
-        visible={modalVisible}
-        onCancel={() => setModalVisible(false)}
-        getContainer={() => $search.current}
-        centered
-        destroyOnClose
-      >
-        <FilterWrap>
-          <ActionsFilters
-            showFilter={showFilter}
-            timeValues={timeValues}
-            values={filterValuesFromQuery}
-            onReset={handleFilterReset}
-            onAfterChange={handleOnAfterFiltersChange}
-            closeModal={() => setModalVisible(false)}
-            inModal
-          />
-        </FilterWrap>
-      </Modal>
     </React.Fragment>
   )
 }

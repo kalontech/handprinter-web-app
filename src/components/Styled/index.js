@@ -657,9 +657,9 @@ export const GlobalStyle = createGlobalStyle`
   .ant-select-selection-selected-value {
     width: 100%;
     padding-top: 7px;
-    display: flex,
-    align-items: center,
-    justify-content: flex-start,
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   .ant-select-selection-selected-value span img {
