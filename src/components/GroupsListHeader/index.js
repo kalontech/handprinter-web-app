@@ -166,7 +166,17 @@ class GroupsListHeader extends React.PureComponent {
     const { visibleTabs, tabsType, modalVisible, modalType } = this.state
     const { intl, match, user } = this.props
 
-    let list = [
+    let list = []
+    if (user.belongsToBrand) {
+      list = list.concat({
+        to: `/groups/${GROUPS_SUBSETS.TEAMS}`,
+        icon: DiscoverIconComponent,
+        text: intl.formatMessage({ id: 'app.actionsPage.tabs.teams' }),
+        active: match.params.subset === GROUPS_SUBSETS.TEAMS,
+      })
+    }
+
+    list = list.concat([
       {
         to: `/groups/${GROUPS_SUBSETS.DISCOVER}`,
         icon: DiscoverIconComponent,
@@ -185,15 +195,7 @@ class GroupsListHeader extends React.PureComponent {
         text: intl.formatMessage({ id: 'app.pages.groups.featured' }),
         active: match.params.subset === GROUPS_SUBSETS.FEATURED,
       },
-    ]
-    if (user.belongsToBrand) {
-      list = list.concat({
-        to: `/groups/${GROUPS_SUBSETS.TEAMS}`,
-        icon: DiscoverIconComponent,
-        text: intl.formatMessage({ id: 'app.actionsPage.tabs.teams' }),
-        active: match.params.subset === GROUPS_SUBSETS.TEAMS,
-      })
-    }
+    ])
 
     return (
       <React.Fragment>
