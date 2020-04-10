@@ -5,10 +5,8 @@ import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
-import CampaignIconComponent from 'assets/icons/CampaignIcon'
-import CompetitionIconComponent from 'assets/icons/CompetitionIcon'
+import DiscoverIcon from 'assets/icons/DiscoverIcon'
 import { Creators } from 'redux/groups'
-import { CHALLENGES_SUBSETS } from 'utils/constants'
 import { sizes } from 'utils/mediaQueryTemplate'
 import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
 
@@ -49,26 +47,18 @@ class ChallengesListHeader extends React.PureComponent {
 
   render() {
     const { visibleTabs, tabsType } = this.state
-    const { intl, match } = this.props
+    const { intl } = this.props
     return (
       <React.Fragment>
         <TabsSecondary
           list={[
             {
-              to: `/challenges/${CHALLENGES_SUBSETS.CAMPAIGNS}`,
-              icon: CampaignIconComponent,
+              to: `/challenges`,
+              icon: DiscoverIcon,
               text: intl.formatMessage({
-                id: 'app.actionsPage.tabs.campaigns',
+                id: 'app.actionsPage.tabs.discover',
               }),
-              active: match.params.subset === 'campaigns',
-            },
-            {
-              to: `/challenges/${CHALLENGES_SUBSETS.COMPETITIONS}`,
-              icon: CompetitionIconComponent,
-              text: intl.formatMessage({
-                id: 'app.actionsPage.tabs.competitions',
-              }),
-              active: match.params.subset === CHALLENGES_SUBSETS.COMPETITIONS,
+              active: true,
             },
           ]}
           isOpen={visibleTabs}

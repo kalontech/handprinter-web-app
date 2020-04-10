@@ -252,7 +252,7 @@ function AboutHumanscalePage() {
             </Slider>
           </CampaignsCards>
           <CampaignButtons>
-            <Link to={token ? '/challenges/campaigns' : '/account/login'}>
+            <Link to={token ? '/challenges' : '/account/login'}>
               <GreenButton>
                 <FormattedMessage id="app.aboutHumanscalePage.handprint.viewMoreBtn" />
               </GreenButton>

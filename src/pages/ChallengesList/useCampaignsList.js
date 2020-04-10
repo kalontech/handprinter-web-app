@@ -19,7 +19,7 @@ export default function useCampaignsList(props) {
         setLoading(true)
         const res = await fetchCampaignsList({
           page: queries.page || 1,
-          limit: 21,
+          limit: 50,
         })
         const docs = _.get(res, 'campaigns.docs', [])
         setCampaigns(docs)
@@ -35,5 +35,5 @@ export default function useCampaignsList(props) {
     fetchList()
   }, [campaigns.length, location])
 
-  return [campaigns, page, totalPages, loading]
+  return [campaigns, loading, page, totalPages]
 }
