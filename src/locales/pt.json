@@ -770,6 +770,9 @@
     "app.aboutHumanscalePage.handprint.campaignsHeader2": "Mas também aumente sua impressão das mãos!",
     "app.aboutHumanscalePage.handprint.campaignsInfo": "Basta tomar uma das ações dos Desafios! Existem muitas maneiras de reduzir sua pegada. Centenas de pessoas estão usando essas idéias para reduzir suas pegadas.",
     "app.aboutHumanscalePage.handprint.viewMoreBtn": "Veja mais",
+    "app.actionsPage.tabs.teams": "Teams",
+    "app.timeUnits.switch.text": "Time Units On",
+    "app.physicalUnits.switch.text": "Physical Units On",
     "app.aboutHumanscalePage.handprint.joinToHandleprinter": "Obtenha a impressão das mãos hoje!",
     "app.aboutHumanscalePage.handprint.text": ""
 }

@@ -14,7 +14,7 @@ import media from 'utils/mediaQueryTemplate'
 import decodeError from 'utils/decodeError'
 import hexToRgba from 'utils/hexToRgba'
 
-import { categories } from '../../pages/ActionsPage/ActionFilter/filterData'
+import { categories } from '../../pages/ActionsPage/filterData'
 
 const { Option } = Select
 
