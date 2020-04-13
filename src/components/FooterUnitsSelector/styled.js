@@ -48,7 +48,7 @@ export const FooterDropdownItem = styled(Menu.Item)`
 `
 
 export const Wrapper = styled.div`
-  padding: 0 4px;
+  padding: 0 10px;
 `
 
 export const Image = styled.img`

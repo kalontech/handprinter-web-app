@@ -14,8 +14,10 @@ import {
   GreenButton,
   WhatIsFootprint,
   FootprintWrapper,
-  Title,
-  Text,
+  FootprintTitle,
+  FootprintText,
+  HandprintTitle,
+  HandprintText,
   FootprintMainImage,
   FootprintLeapImage,
   FootprintFingerImage,
@@ -118,12 +120,12 @@ function AboutHumanscalePage() {
       </Hero>
       <WhatIsFootprint>
         <FootprintWrapper>
-          <Title>
+          <FootprintTitle>
             <FormattedMessage id="app.aboutHumanscalePage.footprint.title" />
-          </Title>
-          <Text>
+          </FootprintTitle>
+          <FootprintText>
             <FormattedMessage id="app.aboutHumanscalePage.footprint.text" />
-          </Text>
+          </FootprintText>
           <FootprintImagesBlock>
             <FootprintMainImage src={footprintImage} alt="" />
             <FootprintLeapImage src={footprintLeap} alt="" />
@@ -140,20 +142,14 @@ function AboutHumanscalePage() {
             <HandprintFingerImage src={earth} alt="" />
           </HandprintImagesWrapper>
           <HandprintInfo>
-            <Title>
+            <HandprintTitle>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.title" />
-            </Title>
-            <Text>
-              {`We've all heard about our footprints: negative impacts of the
-                things we buy and use. We need to reduce them, but footprints
-                are only part of the story.`}
-            </Text>
-            <Text>
+            </HandprintTitle>
+            <HandprintText>
+              <FormattedMessage id="app.aboutHumanscalePage.handprint.text" />
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text1" />
-            </Text>
-            <Text>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text2" />
-            </Text>
+            </HandprintText>
           </HandprintInfo>
         </HandprintWrapper>
       </WhatIsHandprint>
@@ -166,7 +162,7 @@ function AboutHumanscalePage() {
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.takeAction" />
             </p>
-            <TakeActionDivider />
+            <TakeActionDivider style={{ right: '137px' }} />
           </TakeActionItemHeader>
           <TakeActionItemInfo>
             <p>
@@ -185,7 +181,7 @@ function AboutHumanscalePage() {
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionDoIt" />
             </p>
-            <TakeActionDivider />
+            <TakeActionDivider style={{ right: '79px' }} />
           </TakeActionItemHeader>
           <TakeActionItemInfo>
             <p>
@@ -202,7 +198,7 @@ function AboutHumanscalePage() {
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionShare" />
             </p>
-            <TakeActionDivider />
+            <TakeActionDivider style={{ right: '45px' }} />
           </TakeActionItemHeader>
           <TakeActionItemInfo>
             <p>
@@ -220,8 +216,6 @@ function AboutHumanscalePage() {
         <CampaignsInfo>
           <CampaignsHeader>
             <FormattedMessage id="app.aboutHumanscalePage.handprint.campaignsHeader1" />
-          </CampaignsHeader>
-          <CampaignsHeader>
             <FormattedMessage id="app.aboutHumanscalePage.handprint.campaignsHeader2" />
           </CampaignsHeader>
           <div>
@@ -238,13 +232,16 @@ function AboutHumanscalePage() {
                 {campaigns.map(camp => {
                   return (
                     <Slide key={camp.id}>
-                      <CampaignsCard>
-                        <img src={camp.logo.src} alt="" />
-                        <div>
-                          <div>{camp.name}</div>
-                          <span>{''} members</span>
-                        </div>
-                      </CampaignsCard>
+                      <Link
+                        to={token ? `campaign/${camp.id}` : '/account/login'}
+                      >
+                        <CampaignsCard>
+                          <img src={camp.logo.src} alt="" />
+                          <div>
+                            <div>{camp.name}</div>
+                          </div>
+                        </CampaignsCard>
+                      </Link>
                     </Slide>
                   )
                 })}

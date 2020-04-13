@@ -881,7 +881,7 @@ class Header extends Component {
                           </Menu.Item>
                           {(!overrides ||
                             !overrides.brandName ||
-                            overrides.brandName === 'Humanscale') && (
+                            overrides.brandName !== 'Humanscale') && (
                             <Menu.Item key="/pages/for-organizations">
                               <Link to="/pages/for-organizations">
                                 <FormattedMessage id="app.header.menu.forOrganizations" />

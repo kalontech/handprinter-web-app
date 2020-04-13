@@ -8,13 +8,64 @@ import sliderArrow from 'assets/about-humanscale/arrow.svg'
 
 import bg from '../../assets/about-humanscale/bg.png'
 
-export const Title = styled.h2`
-  font-family: Helvetica Neue;
+export const FootprintTitle = styled.h2`
+  position: absolute;
+  width: 500px;
+  height: 71px;
+  left: 98px;
+  top: 117px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
   font-size: 52px;
   line-height: 71px;
-  font-weight: 300;
   letter-spacing: -0.4px;
   margin-bottom: 0;
+  color: ${colors.humanscaleHeaderText};
+
+  ${media.phone`
+    line-height: 31px;
+    font-size: 22px;
+    letter-spacing: 0px;
+  `}
+`
+
+export const FootprintText = styled.p`
+  position: absolute;
+  width: 400px;
+  height: 252px;
+  left: 98px;
+  top: 187px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  color: ${colors.interfaceFooterColor2};
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+  ${media.phone`
+    margin-bottom: 0;
+    text-align: center;
+  `}
+`
+
+export const HandprintTitle = styled.h2`
+  position: absolute;
+  width: 503px;
+  height: 77px;
+  left: 0px;
+  top: -70px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 52px;
+  line-height: 71px;
+
   color: ${colors.humanscaleHeaderText};
   ${media.phone`
     line-height: 31px;
@@ -22,14 +73,23 @@ export const Title = styled.h2`
     letter-spacing: 0px;
   `}
 `
-export const Text = styled.p`
-  margin-bottom: 30px;
-  font-family: Helvetica Neue;
-  line-height: 26px;
-  font-size: 16px;
+
+export const HandprintText = styled.p`
+  position: absolute;
   width: 400px;
-  margin-top: 20px;
+  height: 255px;
+  top: 50px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   color: ${colors.interfaceFooterColor2};
+
   &:last-of-type {
     margin-bottom: 0;
   }
@@ -40,8 +100,7 @@ export const Text = styled.p`
 `
 
 export const Hero = styled.section`
-  height: 91vh;
-  position: relative;
+  height: 899px;
   background: url(${bg}) no-repeat center;
   background-size: cover;
   display: flex;
@@ -77,7 +136,8 @@ export const HeroInfo = styled.div`
   justify-content: flex-start;
   align-items: baseline;
   padding-left: 100px;
-  width: 700px;
+  width: 733px;
+  height: 246px;
 `
 
 export const HeroTitle = styled.div`
@@ -155,7 +215,7 @@ export const GreenButton = styled(Button)`
 
 // what is footprint
 export const WhatIsFootprint = styled.section`
-  height: 91vh;
+  height: 1000px;
   background: ${colors.humanscaleFootPrintBg};
   display: flex;
   flex-direction: column;
@@ -164,21 +224,24 @@ export const WhatIsFootprint = styled.section`
 `
 
 export const FootprintWrapper = styled.div`
-  width: 93%;
-  height: 70%;
+  position: absolute;
+  height: 641px;
+  right: 0;
+  left: 141px;
+  top: 1080px;
   background: ${colors.white};
-  padding: 100px 0 150px 100px;
 `
 
 export const FootprintImagesBlock = styled.div`
   position: absolute;
-  left: 57vw;
-  top: 96vh;
+  left: 652px;
+  top: -127px;
 `
 
 export const FootprintMainImage = styled.img`
-  height: 80vh;
   position: absolute;
+  width: 552px;
+  height: 825px;
 `
 
 export const FootprintLeapImage = styled.img`
@@ -192,52 +255,56 @@ export const FootprintLeapImage = styled.img`
 export const FootprintFingerImage = styled.img`
   height: 320px;
   position: relative;
-  top: 49vh;
-  left: -160px;
+  top: 531px;
+  right: 170px;
 `
 
 export const FootprintFootImage = styled.img`
   height: 250px;
   width: 100px;
   position: relative;
-  top: 30vh;
-  left: 3vw;
+  top: 355px;
+  right: -170px;
 `
+
 // What is handprint
 export const WhatIsHandprint = styled.section`
-  height: 91vh;
+  position: relative;
+  height: 1000px;
+  left: 0px;
+  top: 0px;
   background: ${colors.white};
-  padding: 10px 10px 10px 100px;
 `
 
 export const HandprintWrapper = styled.div`
   position: absolute;
   left: 0px;
-  top: 182vh;
+  top: 230px;
+  height: 641px;
   width: 100%;
-  height: 91vh;
   background: ${colors.white};
 `
 
-export const HandprintImagesWrapper = styled.div``
+export const HandprintImagesWrapper = styled.div`
+  width: 1200px;
+`
 
 export const HandprintMainImage = styled.img`
   position: absolute;
   left: 150px;
-  top: 10vh;
   margin-right: 40px;
 `
 
 export const HandprintLeapImage = styled.img`
   width: 90;
   position: relative;
-  top: 50px;
+  top: -30px;
   left: 80px;
 `
 export const HandprintFingerImage = styled.img`
-  width: 90;
+  width: 90px;
   position: relative;
-  top: 40px;
+  top: -50px;
   left: 0px;
 `
 
@@ -245,13 +312,12 @@ export const HandprintInfo = styled.div`
   width: 500px;
   position: absolute;
   left: 630px;
-  top: 26vh;
   margin-left: 200px;
 `
 
 // Take action
 export const TakeActionWrapper = styled.section`
-  height: 300vh;
+  height: 2560px;
   background: ${colors.humanscaleIvy};
 `
 
@@ -274,7 +340,7 @@ export const TakeActionHeader = styled.div`
 `
 
 export const TakeAction = styled.section`
-  height: 91vh;
+  height: 820px;
 `
 
 export const TakeActionItemHeader = styled.div`
@@ -290,13 +356,15 @@ export const TakeActionItemHeader = styled.div`
     line-height: 30px;
     text-transform: uppercase;
     color: ${colors.white};
+    margin-top: 5px;
   }
 `
 
 export const TakeActionDivider = styled.span`
+  position: absolute;
   flex: 1;
+  width: 73vw;
   border-top: 1px solid ${colors.white};
-  margin-left: 40px;
 `
 
 export const TakeActionItemInfo = styled.div`
@@ -307,20 +375,22 @@ export const TakeActionItemInfo = styled.div`
     font-size: 16px;
     line-height: 28px;
     color: ${colors.white};
-    padding: 45px 150px 0 150px;
-    width: 50vw;
+    padding-left: 150px;
+    padding-top: 45px;
+    width: 470px;
   }
 `
 
 export const TakeActionMainImageWraper = styled.div`
   margin-top: 30px;
   position: absolute;
-  left: 50vw;
-  width: 30vw;
+  right: 638px;
 `
 
 export const TakeActionMainImage = styled.img`
   position: absolute;
+  width: 495px;
+  height: 477px;
   z-index: 1;
 `
 
@@ -341,33 +411,38 @@ export const TakeActionLeap2 = styled.img`
 `
 
 export const TakeActionFingerprint = styled.img`
-  width: 350px;
+  width: 495px;
+  height: 340px;
   position: absolute;
-  top: 350px;
-  left: -80px;
+  top: 230px;
+  left: -130px;
   z-index: 0;
 `
 
 export const TakeActionDoIt = styled.section`
-  height: 91vh;
+  height: 820px;
 `
 
 export const TakeActionDoItImageWrapper = styled.section`
-  margin-top: 30px;
   position: absolute;
-  left: 50vw;
+  right: 485px;
+  margin-top: 30px;
 `
 
-export const TakeActionDoItMainImage = styled.img``
+export const TakeActionDoItMainImage = styled.img`
+  position: absolute;
+  width: 500px;
+  height: 442px;
+`
 
 export const TakeActionDoItHandprint = styled.img`
   position: relative;
-  top: 150px;
-  left: -570px;
+  top: 290px;
+  left: -50px;
 `
 
 export const TakeActionShareTo = styled.section`
-  height: 91vh;
+  height: 820px;
 `
 
 export const SharedToImageWrapper = styled.div`
@@ -380,38 +455,65 @@ export const SharedToImageWrapper = styled.div`
 
 export const TakeActionSharedToImage = styled.img`
   position: absolute;
+  width: 591px;
+  height: 422px;
   top: 0;
-  left: 0;
+  left: -100px;
 `
 
 export const SmallCircle = styled.img`
   position: relative;
-  top: 0px;
-  left: 200px;
+  width: 212px;
+  height: 212px;
+  top: 25px;
+  left: 80px;
 `
 
 export const BigCircle = styled.img`
   position: relative;
-  top: 0px;
-  left: -120px;
+  width: 422px;
+  height: 422px;
+  top: 22px;
+  left: -235px;
 `
 
 // Wrapper for campaigns
 export const CampaignsMainWrapper = styled.section`
+  position: relative;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 91vh;
+  height: 899px;
   background: ${colors.white};
 
   p {
-    width: 800px;
+    width: 629px;
+    height: 56.14px;
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 28px;
+
+    display: flex;
+    align-items: center;
     text-align: center;
   }
 `
 
 export const CampaignsHeader = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  width: 731px;
+  height: 142px;
+  margin-top: 100px;
+  margin-bottom: 8px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
   font-size: 52px;
   line-height: 71px;
   text-align: center;
@@ -420,25 +522,25 @@ export const CampaignsHeader = styled.div`
 
 export const CampaignsBlock = styled.div`
   position: absolute;
-  bottom: 75vh;
-  left: 7vw;
-  width: 93vw;
-  height: 40vh;
+  bottom: 100px;
+  right: 0;
+  width: 1300px;
+  height: 354px;
   background: ${colors.humanscaleBlueAsh};
 `
 
 export const CampaignsFinger = styled.img`
   position: relative;
-  top: 10vh;
-  left: -5vw;
-  width: 30vw;
-  height: 30vh;
+  left: 0;
+  bottom: -50px;
+  width: 330px;
+  height: 360px;
 `
 
 export const CampaignsCards = styled.div`
   position: absolute;
-  left: 4vw;
-  bottom: 21vh;
+  left: 40px;
+  top: -30px;
 `
 
 export const CampaignsCard = styled.div`
@@ -446,14 +548,16 @@ export const CampaignsCard = styled.div`
   justify-content: space-around;
   align-items: center;
   background: ${colors.white};
-  width: 400px;
-  height: 200px;
+  width: 380px;
+  height: 190px;
   margin-right: 40px;
   box-shadow: 0px 1px 16px ${hexToRgba(colors.dark, 0.3)};
+  cursor: pointer;
   img {
     width: 130px;
     height: 130px;
     border-radius: 50%;
+    margin-left: 25px;
     border: 4px solid ${colors.green};
   }
 
@@ -482,6 +586,9 @@ export const CampaignsCard = styled.div`
 export const CampaignsInfo = styled.div`
   padding-top: 50px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   div {
     display: flex;
     justify-content: space-around;
@@ -491,18 +598,24 @@ export const CampaignsInfo = styled.div`
 `
 
 export const CampaignButtons = styled.div`
-  position: relative;
-  bottom: 4vh;
-  left: -37vw;
+  position: absolute;
+  width: 170px;
+  height: 50px;
+  left: 40px;
+  bottom: 98px;
 `
 
 // Join handprinter
 export const JoinHandprinterWrapper = styled.section`
+  position: relative;
+  left: 0;
+  top: 0;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  height: 603px;
   background: ${colors.humanscaleIvy};
 `
 
@@ -511,8 +624,8 @@ export const JoinHandprinterContentBlock = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80vw;
-  height: 65%;
+  width: 1134px;
+  height: 352px;
   border: 1px solid ${colors.white};
 `
 
@@ -521,13 +634,13 @@ export const JoinHandprinterContent = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 70%;
   p {
     width: 500px;
     font-size: 52px;
     line-height: 71px;
     text-align: center;
     color: ${colors.white};
+    margin-bottom: 26px;
   }
 `
 
@@ -537,8 +650,6 @@ export const Slider = styled.div`
     width: 51px;
     height: 51px;
     position: absolute;
-    top: 380px;
-    left: 1200px;
     transform: translateY(-50%);
     background: ${colors.white} url(${sliderArrow}) no-repeat center / 50%;
     &:hover,
@@ -551,12 +662,9 @@ export const Slider = styled.div`
      `}
     &.slick-prev {
       position: absolute;
-      top: 34.57vh;
-      left: 70vw;
+      top: 248px;
+      left: 930px;
       transform: rotate(180deg);
-      ${media.desktop`
-        visibility: visible;
-      `}
       ${media.phone`
         left: 15px;
         transform: translateY(-50%) rotate(180deg);
@@ -564,8 +672,8 @@ export const Slider = styled.div`
     }
     &.slick-next {
       position: absolute;
-      top: 38vh;
-      left: 75vw;
+      top: 273.5px;
+      left: 1000px;
       margin-left: 15px;
       ${media.phone`
         right: 15px;
