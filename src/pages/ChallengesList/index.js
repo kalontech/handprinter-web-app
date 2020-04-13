@@ -48,7 +48,7 @@ export default function ChallengesList(props) {
     <Block>
       <ChallengesListHeader />
       <Container>
-        {loadingCampaigns || loadingCompetitions ? (
+        {loadingCampaigns && loadingCompetitions ? (
           <Spinner />
         ) : (
           <Row gutter={{ md: 20 }} style={{ flexGrow: '1' }}>
