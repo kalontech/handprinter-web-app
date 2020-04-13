@@ -40,7 +40,9 @@ import loginIcon from './assets/login.svg'
 // import newsBellIcon from './assets/newsBellIcon.svg'
 import { ReactComponent as Atom } from '../../assets/unit-icons/atom.svg'
 import { ReactComponent as Clock } from '../../assets/unit-icons/clock2.svg'
-import { ReactComponent as ClockBack } from '../../assets/unit-icons/clock3.svg'
+import { ReactComponent as ClockBack } from '../../assets/unit-icons/clockBack.svg'
+import { ReactComponent as AtomBack } from '../../assets/unit-icons/physicalBack.svg'
+import { ReactComponent as AtomCenter } from '../../assets/unit-icons/physicalCenter.svg'
 
 import {
   LeftAlignPublic,
@@ -842,10 +844,33 @@ function Header(props) {
                       <SVGAtomWrap
                         color={
                           isPhysicalUnit
-                            ? `${colors.green}`
+                            ? `${colors.white}`
                             : `${colors.darkGray}`
                         }
+                        backColor={
+                          isPhysicalUnit
+                            ? `${colors.darkGreen}`
+                            : `${colors.switchUnitsBackground}`
+                        }
                       >
+                        <AtomCenter
+                          style={{
+                            position: 'absolute',
+                            top: '7px',
+                            left: '7px',
+                            zIndex: '10',
+                          }}
+                        />
+                        <AtomBack
+                          style={{
+                            position: 'absolute',
+                            top: '-1px',
+                            left: '-1px',
+                            width: '20px',
+                            height: '20px',
+                            zIndex: '1',
+                          }}
+                        />
                         <Atom
                           style={{
                             position: 'absolute',

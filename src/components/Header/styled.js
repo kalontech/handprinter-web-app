@@ -506,6 +506,9 @@ export const SVGAtomWrap = styled.div`
   path {
     fill: ${props => props.color};
   }
+  circle {
+    fill: ${props => props.backColor};
+  }
 `
 
 export const SVGClockWrap = styled.div`
