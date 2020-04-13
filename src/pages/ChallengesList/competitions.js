@@ -5,7 +5,7 @@ import Spinner from 'components/Spinner'
 import Row from 'antd/lib/row'
 import Icon from 'antd/lib/icon'
 import { Input, DefaultButton } from 'components/Styled'
-import CampaignCard from 'components/CampaignCard'
+import CampaignCard from 'components/CompetitionCard'
 
 import { FormattedMessage } from 'react-intl'
 

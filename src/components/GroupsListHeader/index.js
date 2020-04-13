@@ -77,6 +77,7 @@ class GroupsListHeader extends React.PureComponent {
     intl: intlShape.isRequired,
     groups: PropTypes.object,
     match: PropTypes.object,
+    user: PropTypes.object,
     setGroupsList: PropTypes.func,
   }
 
@@ -163,31 +164,43 @@ class GroupsListHeader extends React.PureComponent {
 
   render() {
     const { visibleTabs, tabsType, modalVisible, modalType } = this.state
-    const { intl, match } = this.props
+    const { intl, match, user } = this.props
+
+    let list = []
+    if (user.belongsToBrand) {
+      list = list.concat({
+        to: `/groups/${GROUPS_SUBSETS.TEAMS}`,
+        icon: DiscoverIconComponent,
+        text: intl.formatMessage({ id: 'app.actionsPage.tabs.teams' }),
+        active: match.params.subset === GROUPS_SUBSETS.TEAMS,
+      })
+    }
+
+    list = list.concat([
+      {
+        to: `/groups/${GROUPS_SUBSETS.DISCOVER}`,
+        icon: DiscoverIconComponent,
+        text: intl.formatMessage({ id: 'app.actionsPage.tabs.discover' }),
+        active: match.params.subset === GROUPS_SUBSETS.DISCOVER,
+      },
+      {
+        to: `/groups/${GROUPS_SUBSETS.MY}`,
+        icon: FlagIconComponent,
+        text: intl.formatMessage({ id: 'app.pages.groups.myGroups' }),
+        active: match.params.subset === GROUPS_SUBSETS.MY,
+      },
+      {
+        to: `/groups/${GROUPS_SUBSETS.FEATURED}`,
+        icon: StarIconComponent,
+        text: intl.formatMessage({ id: 'app.pages.groups.featured' }),
+        active: match.params.subset === GROUPS_SUBSETS.FEATURED,
+      },
+    ])
 
     return (
       <React.Fragment>
         <TabsSecondary
-          list={[
-            {
-              to: `/groups/${GROUPS_SUBSETS.DISCOVER}`,
-              icon: DiscoverIconComponent,
-              text: intl.formatMessage({ id: 'app.actionsPage.tabs.discover' }),
-              active: match.params.subset === GROUPS_SUBSETS.DISCOVER,
-            },
-            {
-              to: `/groups/${GROUPS_SUBSETS.MY}`,
-              icon: FlagIconComponent,
-              text: intl.formatMessage({ id: 'app.pages.groups.myGroups' }),
-              active: match.params.subset === GROUPS_SUBSETS.MY,
-            },
-            {
-              to: `/groups/${GROUPS_SUBSETS.FEATURED}`,
-              icon: StarIconComponent,
-              text: intl.formatMessage({ id: 'app.pages.groups.featured' }),
-              active: match.params.subset === GROUPS_SUBSETS.FEATURED,
-            },
-          ]}
+          list={list}
           isOpen={visibleTabs}
           listType={tabsType}
           toggleVisible={visible => {
