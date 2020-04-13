@@ -460,6 +460,15 @@ function ActionsPage(props) {
     handleOnAfterFiltersChange({ data: { behaviour: behaviours } })
   }
 
+  const selectedItems = (arr, lable) => {
+    return arr.join('').length > 20
+      ? `${lable}|${arr
+          .map(i => ` ${i}`)
+          .join(', ')
+          .slice(0, 20)}...`
+      : `${lable}|${arr.map(i => ` ${i}`)}`
+  }
+
   const {
     intl: { formatMessage, formatRelative, locale },
     user,
@@ -536,9 +545,7 @@ function ActionsPage(props) {
                         style={{ width: '100%' }}
                         onChange={handleCategoryChange}
                         menuItemSelectedIcon={<Icon />}
-                        value={`Category|${selectedCategories.map(
-                          i => ` ${i}`,
-                        )}`}
+                        value={selectedItems(selectedCategories, 'Category')}
                       >
                         {categories.map(category => {
                           return (
@@ -556,9 +563,12 @@ function ActionsPage(props) {
                       </Select>
                       <Select
                         allowClear={true}
-                        value={`${formatMessage({
-                          id: 'app.actions.type',
-                        })}|${selectedType.map(i => ` ${i}`)}`}
+                        value={selectedItems(
+                          selectedType,
+                          formatMessage({
+                            id: 'app.actions.type',
+                          }),
+                        )}
                         mode="default"
                         style={{ width: '100%' }}
                         onChange={handleTypeChange}
@@ -580,9 +590,12 @@ function ActionsPage(props) {
                       </Select>
                       <Select
                         allowClear={true}
-                        value={`${formatMessage({
-                          id: 'app.actions.behaviour',
-                        })}|${selectedBehaviour.map(i => ` ${i}`)}`}
+                        value={selectedItems(
+                          selectedBehaviour,
+                          formatMessage({
+                            id: 'app.actions.behaviour',
+                          }),
+                        )}
                         mode="default"
                         style={{ width: '100%' }}
                         onChange={handleBehaviourChange}
