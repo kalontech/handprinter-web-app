@@ -493,8 +493,10 @@ export const UnitsBlock = styled.div`
   width: 44px;
   height: 22px;
   border-radius: 50px;
-  background-color: lightgray;
+  background-color: ${colors.switchUnitsBackground};
   margin-right: 31px;
+  cursor: pointer;
+  z-index: 0.1;
 `
 
 export const SVGAtomWrap = styled.div`
@@ -510,7 +512,7 @@ export const SVGClockWrap = styled.div`
   position: absolute;
   top: 2px;
   right: 20px;
-  path {
+  circle {
     fill: ${props => props.color};
   }
 `
