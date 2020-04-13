@@ -8,6 +8,11 @@ import { connect } from 'react-redux'
 import { Animate } from 'react-animate-mount'
 // import moment from 'moment'
 
+/* TODO
+ **  All commented code is belonges to notifications
+ **  and news which was commented for future
+ */
+
 import { sizes } from 'utils/mediaQueryTemplate'
 
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
@@ -160,6 +165,7 @@ function Header(props) {
   }, [])
 
   // component did update
+
   // useEffect(() => {
   //   if (fetchNewsIntervalId && !props.token) {
   //     clearInterval(this.fetchNewsIntervalId)
