@@ -500,6 +500,7 @@ export const UnitsBlock = styled.div`
 `
 
 export const SVGAtomWrap = styled.div`
+  cursor: pointer;
   position: absolute;
   top: 2px;
   left: 2px;
@@ -512,6 +513,7 @@ export const SVGAtomWrap = styled.div`
 `
 
 export const SVGClockWrap = styled.div`
+  cursor: pointer;
   position: absolute;
   top: 2px;
   right: 20px;
@@ -521,4 +523,30 @@ export const SVGClockWrap = styled.div`
   circle {
     fill: ${props => props.backColor};
   }
+`
+
+export const UnitsPopover = styled(Popover)``
+
+export const PopoverWrapper = styled.div`
+  background-color: ${colors.lightBlack};
+  display: flex;
+  flex-direction: column;
+  .ant-popover-inner {
+    background-color: ${colors.lightBlack} !important;
+  }
+  .ant-popover-inner-content {
+    padding: 0;
+    background-color: ${colors.lightBlack} !important;
+  }
+`
+
+export const PopoverText = styled.text`
+  width: 100%;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: ${colors.white};
 `

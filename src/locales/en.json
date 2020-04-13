@@ -169,7 +169,6 @@
     "app.actionsPage.head.keywords": "handprinter, nature, footprint, handprint",
     "app.actionsPage.head.description": "Want to take doing good to a global scale? You’re not alone. Through Handprinter, creative individual actions and outreach generate ripple effects to touch and heal your community and the globe.",
     "app.actionsPage.tabs.discover": "Discover",
-    "app.actionsPage.tabs.teams": "Teams",
     "app.actionsPage.tabs.suggested": "Suggested",
     "app.actionsPage.searchPlaceholder": "Search",
     "app.actionsPage.searchNotFound": "Not found",
@@ -771,5 +770,8 @@
     "app.aboutHumanscalePage.handprint.campaignsHeader2": "But also grow your handprint!",
     "app.aboutHumanscalePage.handprint.campaignsInfo": "Just take one of the actions from the Challenges! There are so many ways to shrink your footprint. Hundreds of people are using these ideas to reduce their footprints.",
     "app.aboutHumanscalePage.handprint.viewMoreBtn": "view more",
-    "app.aboutHumanscalePage.handprint.joinToHandleprinter": "Join Handprinter Save the Planet"
+    "app.aboutHumanscalePage.handprint.joinToHandleprinter": "Join Handprinter Save the Planet",
+    "app.actionsPage.tabs.teams": "Teams",
+    "app.timeUnits.switch.text": "Time Units On",
+    "app.physicalUnits.switch.text": "Physical Units On"
 }

@@ -80,6 +80,9 @@ import {
   UnitsBlock,
   SVGClockWrap,
   SVGAtomWrap,
+  UnitsPopover,
+  PopoverWrapper,
+  PopoverText,
 } from './styled'
 
 import { UIContextSettings } from '../../context/uiSettingsContext'
@@ -292,6 +295,101 @@ function Header(props) {
     textAlign: 'center',
     alignSelf: 'center',
     marginTop: 13,
+  }
+
+  const renderUnitsSwitch = () => {
+    return (
+      <UnitsPopover
+        overlayClassName={'achievements-popover'}
+        overlayStyle={{
+          height: '36px',
+          width: '160px',
+        }}
+        placement="bottom"
+        content={
+          <PopoverWrapper>
+            <PopoverText>
+              <FormattedMessage
+                id={`app.${
+                  isPhysicalUnit ? 'physicalUnits' : 'timeUnits'
+                }.switch.text`}
+              />
+            </PopoverText>
+          </PopoverWrapper>
+        }
+      >
+        <UnitsBlock>
+          <SVGAtomWrap
+            color={isPhysicalUnit ? `${colors.white}` : `${colors.darkGray}`}
+            backColor={
+              isPhysicalUnit
+                ? `${colors.darkGreen}`
+                : `${colors.switchUnitsBackground}`
+            }
+          >
+            <AtomCenter
+              style={{
+                position: 'absolute',
+                top: '7px',
+                left: '7px',
+                zIndex: '10',
+              }}
+            />
+            <AtomBack
+              style={{
+                position: 'absolute',
+                top: '-1px',
+                left: '-1px',
+                width: '20px',
+                height: '20px',
+                zIndex: '1',
+              }}
+            />
+            <Atom
+              style={{
+                position: 'absolute',
+                top: '1px',
+                left: '2px',
+                width: '14px',
+                height: '16px',
+                zIndex: '100',
+              }}
+              onClick={togglePhysicalUnits}
+            />
+          </SVGAtomWrap>
+
+          <SVGClockWrap
+            color={isTimeUnit ? `${colors.white}` : `${colors.gray}`}
+            backColor={
+              isTimeUnit ? `${colors.darkGreen}` : `${colors.darkGray}`
+            }
+          >
+            <ClockBack
+              style={{
+                position: 'absolute',
+                top: '-1px',
+                left: '-1px',
+                width: '20px',
+                height: '20px',
+                zIndex: '1',
+              }}
+            />
+            <Clock
+              style={{
+                position: 'absolute',
+                top: '1px',
+                left: '1px',
+                width: '16px',
+                height: '16px',
+                borderRadius: '50%',
+                zIndex: '100',
+              }}
+              onClick={toggleTimeUnits}
+            />
+          </SVGClockWrap>
+        </UnitsBlock>
+      </UnitsPopover>
+    )
   }
 
   return (
@@ -840,83 +938,7 @@ function Header(props) {
                         unreadCount,
                         isFetchingNews,
                       )} */}
-                    <UnitsBlock>
-                      <SVGAtomWrap
-                        color={
-                          isPhysicalUnit
-                            ? `${colors.white}`
-                            : `${colors.darkGray}`
-                        }
-                        backColor={
-                          isPhysicalUnit
-                            ? `${colors.darkGreen}`
-                            : `${colors.switchUnitsBackground}`
-                        }
-                      >
-                        <AtomCenter
-                          style={{
-                            position: 'absolute',
-                            top: '7px',
-                            left: '7px',
-                            zIndex: '10',
-                          }}
-                        />
-                        <AtomBack
-                          style={{
-                            position: 'absolute',
-                            top: '-1px',
-                            left: '-1px',
-                            width: '20px',
-                            height: '20px',
-                            zIndex: '1',
-                          }}
-                        />
-                        <Atom
-                          style={{
-                            position: 'absolute',
-                            top: '1px',
-                            left: '2px',
-                            width: '14px',
-                            height: '16px',
-                            zIndex: '100',
-                          }}
-                          onClick={togglePhysicalUnits}
-                        />
-                      </SVGAtomWrap>
-                      <SVGClockWrap
-                        color={
-                          isTimeUnit ? `${colors.white}` : `${colors.gray}`
-                        }
-                        backColor={
-                          isTimeUnit
-                            ? `${colors.darkGreen}`
-                            : `${colors.darkGray}`
-                        }
-                      >
-                        <ClockBack
-                          style={{
-                            position: 'absolute',
-                            top: '-1px',
-                            left: '-1px',
-                            width: '20px',
-                            height: '20px',
-                            zIndex: '1',
-                          }}
-                        />
-                        <Clock
-                          style={{
-                            position: 'absolute',
-                            top: '1px',
-                            left: '1px',
-                            width: '16px',
-                            height: '16px',
-                            borderRadius: '50%',
-                            zIndex: '100',
-                          }}
-                          onClick={toggleTimeUnits}
-                        />
-                      </SVGClockWrap>
-                    </UnitsBlock>
+                    {renderUnitsSwitch()}
                     <ProfileSettingsPopover
                       placement="bottomRight"
                       overlayStyle={{ paddingTop: '10px' }}
