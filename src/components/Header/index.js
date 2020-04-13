@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment } from 'react'
+import React, { useState, useEffect, useContext, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { compose, bindActionCreators } from 'redux'
@@ -142,29 +142,28 @@ function Header(props) {
     )
   }
 
-  // componentDidMount() {
-  //   window.addEventListener('resize', this.handleWindowSizeChange)
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange)
+    //   if (this.props.type === 'private') {
+    //     // this.fetchNews()
+    //     // this.fetchNewsIntervalId = setInterval(() => this.fetchNews(true), 10000)
+    //   }
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+      // if (this.fetchNewsIntervalId) clearInterval(this.fetchNewsIntervalId)
+    }
+  }, [])
 
-  //   if (this.props.type === 'private') {
-  //     // this.fetchNews()
-  //     // this.fetchNewsIntervalId = setInterval(() => this.fetchNews(true), 10000)
+  // component did update
+  // useEffect(() => {
+  //   if (fetchNewsIntervalId && !props.token) {
+  //     clearInterval(this.fetchNewsIntervalId)
   //   }
-  // }
+  // }, [fetchNewsIntervalId, props.token])
 
-  // componentDidUpdate() {
-  //   // if (this.fetchNewsIntervalId && !this.props.token) {
-  //   //   clearInterval(this.fetchNewsIntervalId)
-  //   // }
-  // }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener('resize', this.handleWindowSizeChange)
-  //   // if (this.fetchNewsIntervalId) clearInterval(this.fetchNewsIntervalId)
-  // }
-
-  // const handleWindowSizeChange = () => {
-  //   setWidth(window.innerWidth)
-  // }
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth)
+  }
 
   // const fetchNews = async (counterOnly = false) => {
   //   setIsFetchingNews(true)
