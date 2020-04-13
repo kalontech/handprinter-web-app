@@ -660,6 +660,7 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    color: ${colors.darkGray};
   }
 
   .ant-select-selection-selected-value span img {

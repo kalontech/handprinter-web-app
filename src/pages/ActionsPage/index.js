@@ -536,7 +536,9 @@ function ActionsPage(props) {
                         style={{ width: '100%' }}
                         onChange={handleCategoryChange}
                         menuItemSelectedIcon={<Icon />}
-                        value="Category"
+                        value={`Category|${selectedCategories.map(
+                          i => ` ${i}`,
+                        )}`}
                       >
                         {categories.map(category => {
                           return (
@@ -545,7 +547,6 @@ function ActionsPage(props) {
                                 checked={selectedCategories.includes(
                                   category.name,
                                 )}
-                                name={category.name}
                                 style={{ marginRight: '10px' }}
                               />
                               {category.name}
@@ -555,9 +556,9 @@ function ActionsPage(props) {
                       </Select>
                       <Select
                         allowClear={true}
-                        value={formatMessage({
+                        value={`${formatMessage({
                           id: 'app.actions.type',
-                        })}
+                        })}|${selectedType.map(i => ` ${i}`)}`}
                         mode="default"
                         style={{ width: '100%' }}
                         onChange={handleTypeChange}
@@ -568,8 +569,6 @@ function ActionsPage(props) {
                             <Option key={type.name}>
                               <Checkbox
                                 checked={selectedType.includes(type.name)}
-                                name={type.name}
-                                value="value"
                                 style={{ marginRight: '10px' }}
                               />
                               {formatMessage({
@@ -581,9 +580,9 @@ function ActionsPage(props) {
                       </Select>
                       <Select
                         allowClear={true}
-                        value={formatMessage({
+                        value={`${formatMessage({
                           id: 'app.actions.behaviour',
-                        })}
+                        })}|${selectedBehaviour.map(i => ` ${i}`)}`}
                         mode="default"
                         style={{ width: '100%' }}
                         onChange={handleBehaviourChange}
@@ -596,7 +595,6 @@ function ActionsPage(props) {
                                 checked={selectedBehaviour.includes(
                                   behaviour.name,
                                 )}
-                                name={behaviour.name}
                                 style={{ marginRight: '10px' }}
                               />
                               {formatMessage({

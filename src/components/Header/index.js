@@ -851,7 +851,12 @@ function Header(props) {
                       </SVGAtomWrap>
                       <SVGClockWrap
                         color={
-                          isTimeUnit ? `${colors.green}` : `${colors.darkGray}`
+                          isTimeUnit ? `${colors.white}` : `${colors.gray}`
+                        }
+                        backColor={
+                          isTimeUnit
+                            ? `${colors.darkGreen}`
+                            : `${colors.darkGray}`
                         }
                       >
                         <ClockBack

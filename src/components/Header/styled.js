@@ -512,7 +512,10 @@ export const SVGClockWrap = styled.div`
   position: absolute;
   top: 2px;
   right: 20px;
-  circle {
+  path {
     fill: ${props => props.color};
+  }
+  circle {
+    fill: ${props => props.backColor};
   }
 `
