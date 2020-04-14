@@ -20,7 +20,7 @@ export default function useCompetitionsList(props) {
         setLoading(true)
         const res = await fetchCompetitionsList({
           page: queries.page || 1,
-          limit: 21,
+          limit: 50,
         })
         const docs = _.get(res, 'competitions.docs', [])
 
@@ -49,5 +49,5 @@ export default function useCompetitionsList(props) {
     fetchList()
   }, [competitions.length, location])
 
-  return [competitions, page, totalPages, loading]
+  return [competitions, loading, page, totalPages]
 }

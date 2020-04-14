@@ -29,6 +29,7 @@ export const GROUPS_STATUSES = {
 
 export const GROUPS_SUBSETS = {
   DISCOVER: 'discover',
+  TEAMS: 'teams',
   MY: 'my',
   FEATURED: 'featured',
 }

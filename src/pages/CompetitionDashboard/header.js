@@ -60,17 +60,8 @@ const Header = props => {
   return (
     <DashboardHeaderWhiteLine organization>
       <BreadcrumbStyled separator=">">
-        <BreadcrumbItem
-          style={{ color: colors.green }}
-          href="/challenges/campaigns"
-        >
+        <BreadcrumbItem style={{ color: colors.green }} href="/challenges">
           <FormattedMessage id="app.pages.challenges" />
-        </BreadcrumbItem>
-        <BreadcrumbItem
-          style={{ color: colors.green }}
-          href="/challenges/competitions"
-        >
-          <FormattedMessage id="app.actionsPage.tabs.competitions" />
         </BreadcrumbItem>
         <BreadcrumbItem>{name}</BreadcrumbItem>
       </BreadcrumbStyled>
