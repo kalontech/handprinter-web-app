@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Layout } from 'antd'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { ModalContainer } from 'react-router-modal'
+
+import * as api from './api/user'
 
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -35,6 +37,13 @@ const RouteWrapper = ({
   ...rest
 }) => {
   const brandedConfig = getBrandedConfig()
+
+  useEffect(() => {
+    if (user && user.firstLogin) {
+      api.updateMe({ firstLogin: false }).then(user => user)
+    }
+  })
+
   return (
     <Route
       {...rest}
@@ -45,7 +54,13 @@ const RouteWrapper = ({
           } else if (unauthorizedOnly && token) {
             return (
               <Redirect
-                to={brandedConfig ? '/pages/home' : '/account/dashboard'}
+                to={
+                  brandedConfig
+                    ? user.firstShow
+                      ? '/pages/home'
+                      : '/challenges'
+                    : '/account/dashboard'
+                }
               />
             )
           } else {

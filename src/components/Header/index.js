@@ -553,7 +553,7 @@ function Header(props) {
                             <FormattedMessage id="app.header.menu.actions" />
                           </Link>
                         </Menu.Item>
-                        {(!overrides ||
+                        {/* {(!overrides ||
                           !overrides.brandName ||
                           overrides.brandName === 'Humanscale') && (
                           <Menu.Item key="/pages/for-organizations">
@@ -561,17 +561,21 @@ function Header(props) {
                               <FormattedMessage id="app.header.menu.forOrganizations" />
                             </Link>
                           </Menu.Item>
+                        )} */}
+                        {token && (
+                          <Menu.Item key="/groups">
+                            <Link to="/groups/discover">
+                              <FormattedMessage id="app.pages.groups" />
+                            </Link>
+                          </Menu.Item>
                         )}
-                        <Menu.Item key="/groups">
-                          <Link to="/groups/discover">
-                            <FormattedMessage id="app.pages.groups" />
-                          </Link>
-                        </Menu.Item>
-                        <Menu.Item key="/challenges">
-                          <Link to="/challenges">
-                            <FormattedMessage id="app.pages.challenges" />
-                          </Link>
-                        </Menu.Item>
+                        {token && (
+                          <Menu.Item key="/challenges">
+                            <Link to="/challenges">
+                              <FormattedMessage id="app.pages.challenges" />
+                            </Link>
+                          </Menu.Item>
+                        )}
                       </Menu>
                       <Popover
                         placement="bottomLeft"
