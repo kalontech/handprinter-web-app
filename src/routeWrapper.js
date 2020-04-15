@@ -56,7 +56,7 @@ const RouteWrapper = ({
               <Redirect
                 to={
                   brandedConfig
-                    ? user.firstShow
+                    ? user && user.firstShow
                       ? '/pages/home'
                       : '/challenges'
                     : '/account/dashboard'
@@ -93,6 +93,7 @@ const RouteWrapper = ({
                 <Layout.Content>
                   <Component
                     {...props}
+                    user={user}
                     overrides={
                       brandedConfig && {
                         brandName: brandedConfig.brandName,

@@ -21,6 +21,7 @@ export default function useCompetitionsList(props) {
         const res = await fetchCompetitionsList({
           page: queries.page || 1,
           limit: 50,
+          userId: props.user._id,
         })
         const docs = _.get(res, 'competitions.docs', [])
 
