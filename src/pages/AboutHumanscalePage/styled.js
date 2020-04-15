@@ -56,10 +56,10 @@ export const FootprintText = styled.p`
 
 export const HandprintTitle = styled.h2`
   position: absolute;
-  width: 503px;
+  width: 603px;
   height: 77px;
   left: 0px;
-  top: -70px;
+  top: 0px;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
@@ -77,8 +77,7 @@ export const HandprintTitle = styled.h2`
 export const HandprintText = styled.p`
   position: absolute;
   width: 400px;
-  height: 255px;
-  top: 50px;
+  height: 230px;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;

@@ -272,7 +272,7 @@ function Header(props) {
   //   )
   // }
 
-  const { type, user, withoutHeaderContent, location, overrides } = props
+  const { type, user, withoutHeaderContent, location, overrides, token } = props
 
   const isTablet = width < sizes.largeDesktop
   const isMobile = width < sizes.tablet
@@ -624,22 +624,26 @@ function Header(props) {
                         mode="horizontal"
                         selectedKeys={[location.pathname]}
                       >
-                        <Menu.Item key="/account/login">
-                          <Link to="/account/login">
-                            <CenterAlign>
-                              {overrides &&
-                                overrides.brandName === 'Interface' && (
-                                  <LogoImg src={loginIcon} alt="icon" />
-                                )}
-                              <FormattedMessage id={'app.header.menu.login'} />
-                            </CenterAlign>
-                          </Link>
-                        </Menu.Item>
+                        {!token && (
+                          <Menu.Item key="/account/login">
+                            <Link to="/account/login">
+                              <CenterAlign>
+                                {overrides &&
+                                  overrides.brandName === 'Interface' && (
+                                    <LogoImg src={loginIcon} alt="icon" />
+                                  )}
+                                <FormattedMessage id="app.aboutHumanscalePage.join.link" />
+                              </CenterAlign>
+                            </Link>
+                          </Menu.Item>
+                        )}
                         {overrides && overrides.brandName === 'Humanscale' && (
                           <Menu.Item>
                             <Link to="/account/login">
                               <GreenButton>
-                                <FormattedMessage id="app.aboutHumanscalePage.join.link" />
+                                <FormattedMessage
+                                  id={'app.header.menu.login'}
+                                />
                               </GreenButton>
                             </Link>
                           </Menu.Item>

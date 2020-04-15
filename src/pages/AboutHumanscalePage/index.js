@@ -145,8 +145,7 @@ function AboutHumanscalePage() {
             <HandprintTitle>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.title" />
             </HandprintTitle>
-            <HandprintText>
-              <FormattedMessage id="app.aboutHumanscalePage.handprint.text" />
+            <HandprintText style={{ top: '90px' }}>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text1" />
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text2" />
             </HandprintText>
