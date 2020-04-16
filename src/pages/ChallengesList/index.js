@@ -65,6 +65,7 @@ export default function ChallengesList(props) {
                     picture={item.logo.src}
                     isCampaign={isCampaign}
                     dateTo={item.dateTo}
+                    status={item.status}
                     button={() =>
                       isCampaign ? null : item.pendingInvitation ? (
                         <DefaultButton

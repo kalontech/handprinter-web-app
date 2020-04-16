@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import moment from 'moment'
 
 import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
@@ -112,33 +111,12 @@ const ChallengeLabel = styled.div`
 
 const SWGWrap = styled.div``
 
-// status -
-// avaliable --- date active,
-// in progress --- если пользователь участвует в челлендже и
-// взял хотябы 1 действие из него или присоединился с группой
-// completed --- date not active, challenge ends
-
 export default function CompetitionCard(props) {
-  const {
-    to,
-    name,
-    picture,
-    counter,
-    button,
-    isCampaign,
-    dateTo,
-    actions,
-  } = props
-
-  const expired = moment().isAfter(dateTo)
-
-  const avaliable = !expired ? 'avaliable' : null
-  const completed = expired ? 'completed' : null
-  // const inProgress = actions.length > 0 ? 'in progress' : null
+  const { to, name, picture, counter, button, isCampaign, status } = props
 
   const leapStyles = {
     position: 'absolute',
-    left: '10px',
+    left: '8px',
     top: '4px',
   }
   const leap2Styles = {
@@ -150,8 +128,8 @@ export default function CompetitionCard(props) {
     position: 'absolute',
     height: '8.5px',
     width: '5.5px',
-    left: '9px',
-    top: '6px',
+    left: '10px',
+    top: '7px',
   }
   const circleArrowStyles = {
     position: 'absolute',
@@ -173,31 +151,36 @@ export default function CompetitionCard(props) {
         <Name>{name}</Name>
         <CounterMembers>{counter}</CounterMembers>
         <ChallengeLabel
-          color1={avaliable && isCampaign ? 'green' : undefined}
-          color2={completed ? 'dark' : undefined}
-          color3={avaliable && !isCampaign ? 'ocean' : null}
-          color4={true ? 'blue' : null}
+          color1={status === 'avaliable' && isCampaign ? 'green' : undefined}
+          color2={
+            status === 'completed' || status === 'expired' ? 'dark' : undefined
+          }
+          color3={status === 'avaliable' && !isCampaign ? 'ocean' : null}
+          color4={status === 'in_progress' ? 'blue' : null}
         >
-          {avaliable && (
+          {status === 'avaliable' && (
             <SWGWrap>
               <Leap style={leapStyles} />
             </SWGWrap>
           )}
-          {expired && (
+          {(status === 'completed' || status === 'expired') && (
             <SWGWrap>
               <Leap2 style={leap2Styles} />
               <Circle style={circleArrowStyles} />
             </SWGWrap>
           )}
-          {/* {!expired && (
+          {status === 'in_progress' && (
             <SWGWrap>
               <Leap2 style={leap3Styles} />
               <Circle2 style={circleStyles} />
             </SWGWrap>
-          )} */}
+          )}
           <p>
-            {avaliable}
-            {completed}|{isCampaign ? 'campaign' : 'competition'}
+            {status === 'avaliable' && 'avaliable'}
+            {status === 'completed' && 'completed'}
+            {status === 'in_progress' && 'in progress'}
+            {status === 'expired' && 'completed'}|
+            {isCampaign ? 'campaign' : 'competition'}
           </p>
         </ChallengeLabel>
         {!!button && button()}
@@ -214,5 +197,5 @@ CompetitionCard.propTypes = {
   button: PropTypes.func,
   isCampaign: PropTypes.bool,
   dateTo: PropTypes.date,
-  actions: PropTypes.array,
+  status: PropTypes.string,
 }

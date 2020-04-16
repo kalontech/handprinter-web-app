@@ -56,7 +56,7 @@ const RouteWrapper = ({
               <Redirect
                 to={
                   brandedConfig
-                    ? user && user.firstShow
+                    ? user && user.firstLogin
                       ? '/pages/home'
                       : '/challenges'
                     : '/account/dashboard'
