@@ -513,12 +513,6 @@ function ActionsPage(props) {
                 text: formatMessage({ id: 'app.actionsPage.tabs.history' }),
                 active: match.params.subset === ACTIONS_SUBSETS.TAKEN,
               },
-              {
-                to: `/actions/${ACTIONS_SUBSETS.MODELING}`,
-                icon: HistoryIconComponent,
-                text: formatMessage({ id: 'app.actionsPage.tabs.modeling' }),
-                active: match.params.subset === ACTIONS_SUBSETS.MODELING,
-              },
             ]}
             isOpen={visibleTabs}
             listType={listType}
