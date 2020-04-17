@@ -563,7 +563,13 @@ function Header(props) {
                           </Menu.Item>
                         )}
                         <Menu.Item key="/groups">
-                          <Link to="/groups/discover">
+                          <Link
+                            to={
+                              overrides && overrides.brandName === 'Humanscale'
+                                ? '/groups/teams'
+                                : '/groups/discover'
+                            }
+                          >
                             <FormattedMessage id="app.pages.groups" />
                           </Link>
                         </Menu.Item>
@@ -696,7 +702,13 @@ function Header(props) {
                     </Link>
                   </Menu.Item>
                   <Menu.Item key="/groups">
-                    <Link to="/groups/discover">
+                    <Link
+                      to={
+                        overrides && overrides.brandName === 'Humanscale'
+                          ? '/groups/teams'
+                          : '/groups/discover'
+                      }
+                    >
                       <FormattedMessage id="app.pages.groups" />
                     </Link>
                   </Menu.Item>
@@ -856,7 +868,13 @@ function Header(props) {
                       </Menu.Item>
 
                       <Menu.Item key="/groups">
-                        <Link to="/groups/discover">
+                        <Link
+                          to={
+                            overrides && overrides.brandName === 'Humanscale'
+                              ? '/groups/teams'
+                              : '/groups/discover'
+                          }
+                        >
                           <FormattedMessage id="app.pages.groups" />
                         </Link>
                       </Menu.Item>

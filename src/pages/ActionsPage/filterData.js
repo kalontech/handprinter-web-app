@@ -20,6 +20,10 @@ export const types = [
     id: 'modeled',
     name: 'Modeled',
   },
+  {
+    id: 'modeling',
+    name: 'Modeling',
+  },
 ]
 
 export const behaviour = [
