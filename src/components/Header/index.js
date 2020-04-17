@@ -628,19 +628,21 @@ function Header(props) {
                         mode="horizontal"
                         selectedKeys={[location.pathname]}
                       >
-                        {!token && overrides.brandName === 'Humanscale' && (
-                          <Menu.Item key="/account/register">
-                            <Link to="/account/register">
-                              <CenterAlign>
-                                {overrides &&
-                                  overrides.brandName === 'Interface' && (
-                                    <LogoImg src={loginIcon} alt="icon" />
-                                  )}
-                                <FormattedMessage id="app.aboutHumanscalePage.join.link" />
-                              </CenterAlign>
-                            </Link>
-                          </Menu.Item>
-                        )}
+                        {!token &&
+                          overrides &&
+                          overrides.brandName === 'Humanscale' && (
+                            <Menu.Item key="/account/register">
+                              <Link to="/account/register">
+                                <CenterAlign>
+                                  {overrides &&
+                                    overrides.brandName === 'Interface' && (
+                                      <LogoImg src={loginIcon} alt="icon" />
+                                    )}
+                                  <FormattedMessage id="app.aboutHumanscalePage.join.link" />
+                                </CenterAlign>
+                              </Link>
+                            </Menu.Item>
+                          )}
                         {overrides && overrides.brandName === 'Humanscale' && (
                           <Menu.Item>
                             <Link to="/account/login">
