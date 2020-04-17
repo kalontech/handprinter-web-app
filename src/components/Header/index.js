@@ -628,7 +628,7 @@ function Header(props) {
                         mode="horizontal"
                         selectedKeys={[location.pathname]}
                       >
-                        {!token && (
+                        {!token && overrides.brandName === 'Humanscale' && (
                           <Menu.Item key="/account/register">
                             <Link to="/account/register">
                               <CenterAlign>
@@ -642,6 +642,17 @@ function Header(props) {
                           </Menu.Item>
                         )}
                         {overrides && overrides.brandName === 'Humanscale' && (
+                          <Menu.Item>
+                            <Link to="/account/login">
+                              <GreenButton>
+                                <FormattedMessage
+                                  id={'app.header.menu.login'}
+                                />
+                              </GreenButton>
+                            </Link>
+                          </Menu.Item>
+                        )}
+                        {!overrides && (
                           <Menu.Item>
                             <Link to="/account/login">
                               <GreenButton>
