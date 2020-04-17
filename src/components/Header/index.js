@@ -657,11 +657,11 @@ function Header(props) {
                         {!overrides && (
                           <Menu.Item>
                             <Link to="/account/login">
-                              <GreenButton>
+                              <CenterAlign>
                                 <FormattedMessage
                                   id={'app.header.menu.login'}
                                 />
-                              </GreenButton>
+                              </CenterAlign>
                             </Link>
                           </Menu.Item>
                         )}
