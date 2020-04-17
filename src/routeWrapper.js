@@ -48,7 +48,6 @@ const RouteWrapper = ({
     <Route
       {...rest}
       render={props => {
-        console.log(brandedConfig)
         if (ready) {
           if (requireAuthentication && !token) {
             return <Redirect to="/account/login" />

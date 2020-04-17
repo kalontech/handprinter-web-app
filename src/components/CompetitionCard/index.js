@@ -7,10 +7,10 @@ import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
 import media from 'utils/mediaQueryTemplate'
 
-import { ReactComponent as Leap } from './assets/challengeLeap1.svg'
-import { ReactComponent as Leap2 } from './assets/challengeLeap2.svg'
-import { ReactComponent as Circle } from './assets/circleArrow.svg'
-import { ReactComponent as Circle2 } from './assets/circle3.svg'
+import { ReactComponent as BigLeap } from './assets/challengeLeap1.svg'
+import { ReactComponent as SmallLeap } from './assets/challengeLeap2.svg'
+import { ReactComponent as ArrowCircle } from './assets/circleArrow.svg'
+import { ReactComponent as DottedCircle } from './assets/circle3.svg'
 
 const Block = styled(Link)`
   padding: 40px 40px 40px 30px;
@@ -77,15 +77,7 @@ const ChallengeLabel = styled.div`
   right: 8px;
   top: 8px;
   background: ${props => {
-    if (props.color1) {
-      return colors[`${props.color1}`]
-    } else if (props.color2) {
-      return colors[`${props.color2}`]
-    } else if (props.color3) {
-      return colors[`${props.color3}`]
-    } else if (props.color4) {
-      return colors[`${props.color4}`]
-    }
+    return colors[`${props.color}`]
   }};
   opacity: 0.9;
   border-radius: 4px;
@@ -114,12 +106,19 @@ const SWGWrap = styled.div``
 export default function CompetitionCard(props) {
   const { to, name, picture, counter, button, isCampaign, status } = props
 
-  const leapStyles = {
+  const challengeStatuses = {
+    avaliable: 'avaliable',
+    in_progress: 'in progress',
+    completed: 'completed',
+    expired: 'completed',
+  }
+  // styles
+  const bigLeapStyles = {
     position: 'absolute',
     left: '8px',
     top: '4px',
   }
-  const leap2Styles = {
+  const smallLeapStyles = {
     position: 'absolute',
     left: '9px',
     top: '6px',
@@ -131,16 +130,17 @@ export default function CompetitionCard(props) {
     left: '10px',
     top: '7px',
   }
-  const circleArrowStyles = {
+  const arrowCircleStyles = {
     position: 'absolute',
     left: '6px',
     top: '4px',
   }
-  const circleStyles = {
+  const dottedCircleStyles = {
     position: 'absolute',
     left: '5px',
     top: '4px',
   }
+  const laybelDesc = isCampaign ? 'campaign' : 'competition'
 
   return (
     <Block to={to}>
@@ -150,39 +150,44 @@ export default function CompetitionCard(props) {
       <Info>
         <Name>{name}</Name>
         <CounterMembers>{counter}</CounterMembers>
-        <ChallengeLabel
-          color1={status === 'avaliable' && isCampaign ? 'green' : undefined}
-          color2={
-            status === 'completed' || status === 'expired' ? 'dark' : undefined
-          }
-          color3={status === 'avaliable' && !isCampaign ? 'ocean' : null}
-          color4={status === 'in_progress' ? 'blue' : null}
-        >
-          {status === 'avaliable' && (
-            <SWGWrap>
-              <Leap style={leapStyles} />
-            </SWGWrap>
-          )}
-          {(status === 'completed' || status === 'expired') && (
-            <SWGWrap>
-              <Leap2 style={leap2Styles} />
-              <Circle style={circleArrowStyles} />
-            </SWGWrap>
-          )}
-          {status === 'in_progress' && (
-            <SWGWrap>
-              <Leap2 style={leap3Styles} />
-              <Circle2 style={circleStyles} />
-            </SWGWrap>
-          )}
-          <p>
-            {status === 'avaliable' && 'avaliable'}
-            {status === 'completed' && 'completed'}
-            {status === 'in_progress' && 'in progress'}
-            {status === 'expired' && 'completed'}|
-            {isCampaign ? 'campaign' : 'competition'}
-          </p>
-        </ChallengeLabel>
+        {status === 'avaliable' && (
+          <ChallengeLabel color={isCampaign ? 'green' : 'ocean'}>
+            {status === 'avaliable' && (
+              <SWGWrap>
+                <BigLeap style={bigLeapStyles} />
+              </SWGWrap>
+            )}
+            <p>
+              {challengeStatuses[status]}|{laybelDesc}
+            </p>
+          </ChallengeLabel>
+        )}
+        {(status === 'expired' || status === 'completed') && (
+          <ChallengeLabel color="dark">
+            {
+              <SWGWrap>
+                <SmallLeap style={smallLeapStyles} />
+                <ArrowCircle style={arrowCircleStyles} />
+              </SWGWrap>
+            }
+            <p>
+              {challengeStatuses[status]}|{laybelDesc}
+            </p>
+          </ChallengeLabel>
+        )}
+        {status === 'in_progress' && (
+          <ChallengeLabel color="blue">
+            {status === 'in_progress' && (
+              <SWGWrap>
+                <SmallLeap style={leap3Styles} />
+                <DottedCircle style={dottedCircleStyles} />
+              </SWGWrap>
+            )}
+            <p>
+              {challengeStatuses[status]}|{laybelDesc}
+            </p>
+          </ChallengeLabel>
+        )}
         {!!button && button()}
       </Info>
     </Block>

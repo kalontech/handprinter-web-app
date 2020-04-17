@@ -569,7 +569,7 @@ function Header(props) {
                             </Link>
                           </Menu.Item>
                         )} */}
-                        {token && (
+                        {user && (
                           <Menu.Item key="/groups">
                             <Link to="/groups/discover">
                               <FormattedMessage id="app.pages.groups" />
@@ -628,7 +628,7 @@ function Header(props) {
                         mode="horizontal"
                         selectedKeys={[location.pathname]}
                       >
-                        {!token &&
+                        {!user &&
                           overrides &&
                           overrides.brandName === 'Humanscale' && (
                             <Menu.Item key="/account/register">
