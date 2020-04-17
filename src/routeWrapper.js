@@ -42,7 +42,7 @@ const RouteWrapper = ({
     if (user && user.firstLogin) {
       api.updateMe({ firstLogin: false }).then(user => user)
     }
-  })
+  }, [])
 
   return (
     <Route
@@ -55,7 +55,7 @@ const RouteWrapper = ({
             return (
               <Redirect
                 to={
-                  brandedConfig && brandedConfig.brandName === 'humanscale'
+                  brandedConfig && brandedConfig.brandName === 'Humanscale'
                     ? user && user.firstLogin
                       ? '/pages/home'
                       : '/challenges'

@@ -6,6 +6,8 @@ import { animateScroll } from 'react-scroll/modules'
 import PageMetadata from 'components/PageMetadata'
 import * as api from 'api/campaigns'
 
+import { object } from 'prop-types'
+
 import {
   Hero,
   HeroInfo,
@@ -86,7 +88,7 @@ import bigOval from './assets/bigOval.svg'
 
 import earth from './assets/earth.svg'
 
-function AboutHumanscalePage() {
+function AboutHumanscalePage(props) {
   const [campaigns, setCampaigns] = useState([])
 
   const getCampaigns = async () => {
@@ -111,7 +113,7 @@ function AboutHumanscalePage() {
           <HeroTitle>
             <FormattedMessage id="app.aboutHumanscalePage.hero.title" />
           </HeroTitle>
-          {!token && (
+          {!props.user && (
             <Link to="/account/register">
               <WhiteButton type="ghost" size="large">
                 <FormattedMessage id="app.aboutHumanscalePage.join.link" />
@@ -278,6 +280,7 @@ function AboutHumanscalePage() {
 
 AboutHumanscalePage.propTypes = {
   intl: intlShape.isRequired,
+  user: object,
 }
 
 export default injectIntl(AboutHumanscalePage)

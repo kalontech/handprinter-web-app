@@ -272,7 +272,7 @@ function Header(props) {
   //   )
   // }
 
-  const { type, user, withoutHeaderContent, location, overrides, token } = props
+  const { type, user, withoutHeaderContent, location, overrides } = props
 
   const isTablet = width < sizes.largeDesktop
   const isMobile = width < sizes.tablet
@@ -547,7 +547,7 @@ function Header(props) {
                 {(!isTablet && (
                   <MenuWrap borderColor="transparent">
                     <LeftMenu>
-                      {token && (
+                      {user && (
                         <Menu.Item key="/challenges">
                           <Link to="/challenges">
                             <FormattedMessage id="app.pages.challenges" />
@@ -870,20 +870,19 @@ function Header(props) {
                     borderColor={brandColor}
                   >
                     <Menu mode="horizontal" selectedKeys={[selectedMenuItem]}>
+                      <Menu.Item key="/challenges">
+                        <Link to="/challenges/campaigns">
+                          <FormattedMessage id="app.pages.challenges" />
+                        </Link>
+                      </Menu.Item>
                       <Menu.Item key="/actions">
                         <Link to="/actions">
                           <FormattedMessage id="app.header.menu.actions" />
                         </Link>
                       </Menu.Item>
-
                       <Menu.Item key="/groups">
                         <Link to="/groups/discover">
                           <FormattedMessage id="app.pages.groups" />
-                        </Link>
-                      </Menu.Item>
-                      <Menu.Item key="/challenges">
-                        <Link to="/challenges/campaigns">
-                          <FormattedMessage id="app.pages.challenges" />
                         </Link>
                       </Menu.Item>
                       {(!overrides || !overrides.brandName) && (
