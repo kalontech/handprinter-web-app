@@ -774,5 +774,6 @@
     "app.actionsPage.tabs.teams": "Teams",
     "app.timeUnits.switch.text": "Time Units On",
     "app.physicalUnits.switch.text": "Physical Units On",
-    "app.aboutHumanscalePage.handprint.text": ""
+    "app.aboutHumanscalePage.handprint.text": "",
+    "app.actions.type.modeling": "In modeling"
 }
