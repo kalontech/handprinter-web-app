@@ -164,15 +164,14 @@ export const ActionAssumptions = styled(ActionDescription)`
 `
 
 export const BottomPanel = styled.div`
-  background-color: ${colors.white};
-  position: ${({ isIphone }) => (isIphone ? 'static' : 'fixed')};
+  position: absolute;
   backface-visibility: hidden;
   bottom: 32px;
   width: 100%;
   max-width: calc(339px + 30px);
 
   @media screen and (max-width: ${sizes.tablet}px) and (orientation: landscape) {
-    position: static;
+    position: absolute;
   }
 
   ${media.tablet`
@@ -310,6 +309,7 @@ export const ProposeViewContentInputWrap = styled.div`
 `
 
 export const ActionViewButtonsWrapper = styled.div`
+  background: ${colors.white};
   padding: 18px ${({ isIphone }) => (isIphone ? '0' : '15px')};
   display: flex;
   justify-content: space-between;

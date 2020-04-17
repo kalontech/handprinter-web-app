@@ -19,7 +19,6 @@ import arrowDownIcon from 'assets/icons/arrowDown.svg'
 
 import { Creators as AccountCreators } from 'redux/accountStore'
 import getValidationRules from 'config/validationRules'
-import { getBrandedHostnamePrefix } from 'config/branded'
 import handleFormError from 'utils/handleFormError'
 import decodeError from 'utils/decodeError'
 import colors from 'config/colors'
@@ -259,6 +258,7 @@ class RegisterPage extends Component {
     const createOrganizationFlow = this.state.createOrganizationFlow
 
     validateFields((err, values) => {
+      let isBrand = values.email.endsWith('@humanscale.com')
       if (!err) {
         delete values.formError
         const {
@@ -274,7 +274,7 @@ class RegisterPage extends Component {
           password,
           fullName,
           country,
-          belongsToBrand: getBrandedHostnamePrefix(),
+          belongsToBrand: isBrand ? 'humanscale' : null,
           siloSecureCode,
           createOrganizationFlow,
         }

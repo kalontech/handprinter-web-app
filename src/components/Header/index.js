@@ -547,18 +547,32 @@ function Header(props) {
                 {(!isTablet && (
                   <MenuWrap borderColor="transparent">
                     <LeftMenu>
+                      {user && (
+                        <Menu.Item key="/challenges">
+                          <Link to="/challenges">
+                            <FormattedMessage id="app.pages.challenges" />
+                          </Link>
+                        </Menu.Item>
+                      )}
                       <Menu mode="horizontal" selectedKeys={[selectedMenuItem]}>
                         <Menu.Item key="/actions">
                           <Link to="/actions">
                             <FormattedMessage id="app.header.menu.actions" />
                           </Link>
                         </Menu.Item>
-                        {(!overrides ||
+                        {/* {(!overrides ||
                           !overrides.brandName ||
                           overrides.brandName === 'Humanscale') && (
                           <Menu.Item key="/pages/for-organizations">
                             <Link to="/pages/for-organizations">
                               <FormattedMessage id="app.header.menu.forOrganizations" />
+                            </Link>
+                          </Menu.Item>
+                        )} */}
+                        {user && (
+                          <Menu.Item key="/groups">
+                            <Link to="/groups/discover">
+                              <FormattedMessage id="app.pages.groups" />
                             </Link>
                           </Menu.Item>
                         )}
@@ -630,23 +644,40 @@ function Header(props) {
                         mode="horizontal"
                         selectedKeys={[location.pathname]}
                       >
-                        <Menu.Item key="/account/login">
-                          <Link to="/account/login">
-                            <CenterAlign>
-                              {overrides &&
-                                overrides.brandName === 'Interface' && (
-                                  <LogoImg src={loginIcon} alt="icon" />
-                                )}
-                              <FormattedMessage id={'app.header.menu.login'} />
-                            </CenterAlign>
-                          </Link>
-                        </Menu.Item>
+                        {!user &&
+                          overrides &&
+                          overrides.brandName === 'Humanscale' && (
+                            <Menu.Item key="/account/register">
+                              <Link to="/account/register">
+                                <CenterAlign>
+                                  {overrides &&
+                                    overrides.brandName === 'Interface' && (
+                                      <LogoImg src={loginIcon} alt="icon" />
+                                    )}
+                                  <FormattedMessage id="app.aboutHumanscalePage.join.link" />
+                                </CenterAlign>
+                              </Link>
+                            </Menu.Item>
+                          )}
                         {overrides && overrides.brandName === 'Humanscale' && (
                           <Menu.Item>
                             <Link to="/account/login">
                               <GreenButton>
-                                <FormattedMessage id="app.aboutHumanscalePage.join.link" />
+                                <FormattedMessage
+                                  id={'app.header.menu.login'}
+                                />
                               </GreenButton>
+                            </Link>
+                          </Menu.Item>
+                        )}
+                        {!overrides && (
+                          <Menu.Item>
+                            <Link to="/account/login">
+                              <CenterAlign>
+                                <FormattedMessage
+                                  id={'app.header.menu.login'}
+                                />
+                              </CenterAlign>
                             </Link>
                           </Menu.Item>
                         )}
@@ -861,12 +892,16 @@ function Header(props) {
                     borderColor={brandColor}
                   >
                     <Menu mode="horizontal" selectedKeys={[selectedMenuItem]}>
+                      <Menu.Item key="/challenges">
+                        <Link to="/challenges/campaigns">
+                          <FormattedMessage id="app.pages.challenges" />
+                        </Link>
+                      </Menu.Item>
                       <Menu.Item key="/actions">
                         <Link to="/actions">
                           <FormattedMessage id="app.header.menu.actions" />
                         </Link>
                       </Menu.Item>
-
                       <Menu.Item key="/groups">
                         <Link
                           to={
@@ -876,11 +911,6 @@ function Header(props) {
                           }
                         >
                           <FormattedMessage id="app.pages.groups" />
-                        </Link>
-                      </Menu.Item>
-                      <Menu.Item key="/challenges">
-                        <Link to="/challenges/campaigns">
-                          <FormattedMessage id="app.pages.challenges" />
                         </Link>
                       </Menu.Item>
                       {(!overrides || !overrides.brandName) && (

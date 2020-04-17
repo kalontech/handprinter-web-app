@@ -7,6 +7,11 @@ import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
 import media from 'utils/mediaQueryTemplate'
 
+import { ReactComponent as BigLeap } from './assets/challengeLeap1.svg'
+import { ReactComponent as SmallLeap } from './assets/challengeLeap2.svg'
+import { ReactComponent as ArrowCircle } from './assets/circleArrow.svg'
+import { ReactComponent as DottedCircle } from './assets/circle3.svg'
+
 const Block = styled(Link)`
   padding: 40px 40px 40px 30px;
   height: 190px;
@@ -65,8 +70,78 @@ const CounterMembers = styled.p`
   margin-bottom: 10px;
 `
 
+const ChallengeLabel = styled.div`
+  position: absolute;
+  min-width: 118px;
+  height: 23px;
+  right: 8px;
+  top: 8px;
+  background: ${props => {
+    return colors[`${props.color}`]
+  }};
+  opacity: 0.9;
+  border-radius: 4px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 4px 8px;
+
+  p {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 8px;
+    line-height: 12px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+    color: ${colors.white};
+    margin-left: 17px;
+  }
+`
+
+const SWGWrap = styled.div``
+
 export default function CompetitionCard(props) {
-  const { to, name, picture, counter, button } = props
+  const { to, name, picture, counter, button, isCampaign, status } = props
+
+  const challengeStatuses = {
+    avaliable: 'avaliable',
+    in_progress: 'in progress',
+    completed: 'completed',
+    expired: 'completed',
+  }
+  // styles
+  const bigLeapStyles = {
+    position: 'absolute',
+    left: '8px',
+    top: '4px',
+  }
+  const smallLeapStyles = {
+    position: 'absolute',
+    left: '9px',
+    top: '6px',
+  }
+  const leap3Styles = {
+    position: 'absolute',
+    height: '8.5px',
+    width: '5.5px',
+    left: '10px',
+    top: '7px',
+  }
+  const arrowCircleStyles = {
+    position: 'absolute',
+    left: '6px',
+    top: '4px',
+  }
+  const dottedCircleStyles = {
+    position: 'absolute',
+    left: '5px',
+    top: '4px',
+  }
+  const laybelDesc = isCampaign ? 'campaign' : 'competition'
+
   return (
     <Block to={to}>
       <PictureWrap>
@@ -75,6 +150,44 @@ export default function CompetitionCard(props) {
       <Info>
         <Name>{name}</Name>
         <CounterMembers>{counter}</CounterMembers>
+        {status === 'avaliable' && (
+          <ChallengeLabel color={isCampaign ? 'green' : 'ocean'}>
+            {status === 'avaliable' && (
+              <SWGWrap>
+                <BigLeap style={bigLeapStyles} />
+              </SWGWrap>
+            )}
+            <p>
+              {challengeStatuses[status]}|{laybelDesc}
+            </p>
+          </ChallengeLabel>
+        )}
+        {(status === 'expired' || status === 'completed') && (
+          <ChallengeLabel color="dark">
+            {
+              <SWGWrap>
+                <SmallLeap style={smallLeapStyles} />
+                <ArrowCircle style={arrowCircleStyles} />
+              </SWGWrap>
+            }
+            <p>
+              {challengeStatuses[status]}|{laybelDesc}
+            </p>
+          </ChallengeLabel>
+        )}
+        {status === 'in_progress' && (
+          <ChallengeLabel color="blue">
+            {status === 'in_progress' && (
+              <SWGWrap>
+                <SmallLeap style={leap3Styles} />
+                <DottedCircle style={dottedCircleStyles} />
+              </SWGWrap>
+            )}
+            <p>
+              {challengeStatuses[status]}|{laybelDesc}
+            </p>
+          </ChallengeLabel>
+        )}
         {!!button && button()}
       </Info>
     </Block>
@@ -87,4 +200,7 @@ CompetitionCard.propTypes = {
   counter: PropTypes.string,
   picture: PropTypes.string,
   button: PropTypes.func,
+  isCampaign: PropTypes.bool,
+  dateTo: PropTypes.date,
+  status: PropTypes.string,
 }
