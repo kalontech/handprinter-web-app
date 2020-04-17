@@ -111,7 +111,7 @@ function AboutHumanscalePage() {
           <HeroTitle>
             <FormattedMessage id="app.aboutHumanscalePage.hero.title" />
           </HeroTitle>
-          <Link to="/account/login">
+          <Link to="/account/register">
             <WhiteButton type="ghost" size="large">
               <FormattedMessage id="app.aboutHumanscalePage.join.link" />
             </WhiteButton>
@@ -262,7 +262,7 @@ function AboutHumanscalePage() {
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.joinToHandleprinter" />
             </p>
-            <Link to="/account/login">
+            <Link to="/account/register">
               <WhiteButton type="ghost" size="large">
                 <FormattedMessage id="app.aboutHumanscalePage.join.link" />
               </WhiteButton>

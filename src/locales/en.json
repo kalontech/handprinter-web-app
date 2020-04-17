@@ -702,7 +702,7 @@
     "footprintReduction": "My Footprint reduction",
     "externalHandprint": "External Handprint",
     "totalPositiveDays": "Total net Positive Days",
-    "app.actionCreatePage.submitSucceededLink": "hier",
+    "app.actionCreatePage.submitSucceededLink": "here",
     "app.errors.43": "Amount is invalid",
     "app.dashboardPage.organization.netPositiveDays": "Our net-positive days",
     "app.dashboardPage.organizationNetPositiveDays": "Our Net Positive days",
@@ -770,9 +770,9 @@
     "app.aboutHumanscalePage.handprint.campaignsHeader2": "But also grow your handprint!",
     "app.aboutHumanscalePage.handprint.campaignsInfo": "Just take one of the actions from the Challenges! There are so many ways to shrink your footprint. Hundreds of people are using these ideas to reduce their footprints.",
     "app.aboutHumanscalePage.handprint.viewMoreBtn": "view more",
+    "app.aboutHumanscalePage.handprint.joinToHandleprinter": "Get Handprinting Today!",
     "app.actionsPage.tabs.teams": "Teams",
     "app.timeUnits.switch.text": "Time Units On",
     "app.physicalUnits.switch.text": "Physical Units On",
-    "app.aboutHumanscalePage.handprint.joinToHandleprinter": "Get Handprinting Today!",
     "app.aboutHumanscalePage.handprint.text": ""
 }

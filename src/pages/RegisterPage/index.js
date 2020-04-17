@@ -259,6 +259,7 @@ class RegisterPage extends Component {
     const createOrganizationFlow = this.state.createOrganizationFlow
 
     validateFields((err, values) => {
+      let str = values.email.substring(values.email.length - 15)
       if (!err) {
         delete values.formError
         const {
@@ -274,7 +275,8 @@ class RegisterPage extends Component {
           password,
           fullName,
           country,
-          belongsToBrand: getBrandedHostnamePrefix(),
+          belongsToBrand:
+            str === '@humanscale.com' ? getBrandedHostnamePrefix() : null,
           siloSecureCode,
           createOrganizationFlow,
         }

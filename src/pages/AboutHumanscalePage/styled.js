@@ -10,14 +10,14 @@ import bg from '../../assets/about-humanscale/bg.png'
 
 export const FootprintTitle = styled.h2`
   position: absolute;
-  width: 500px;
+  width: 550px;
   height: 71px;
-  left: 98px;
+  left: 93px;
   top: 117px;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 52px;
+  font-size: 42px;
   line-height: 71px;
   letter-spacing: -0.4px;
   margin-bottom: 0;
@@ -35,7 +35,7 @@ export const FootprintText = styled.p`
   width: 400px;
   height: 252px;
   left: 98px;
-  top: 187px;
+  top: 207px;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
@@ -59,11 +59,12 @@ export const HandprintTitle = styled.h2`
   width: 603px;
   height: 77px;
   left: 0px;
-  top: 0px;
+  top: -50px;
+  word-break: normal;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 52px;
+  font-size: 42px;
   line-height: 71px;
 
   color: ${colors.humanscaleHeaderText};

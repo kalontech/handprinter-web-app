@@ -629,8 +629,8 @@ function Header(props) {
                         selectedKeys={[location.pathname]}
                       >
                         {!token && (
-                          <Menu.Item key="/account/login">
-                            <Link to="/account/login">
+                          <Menu.Item key="/account/register">
+                            <Link to="/account/register">
                               <CenterAlign>
                                 {overrides &&
                                   overrides.brandName === 'Interface' && (
