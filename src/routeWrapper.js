@@ -48,6 +48,7 @@ const RouteWrapper = ({
     <Route
       {...rest}
       render={props => {
+        console.log(brandedConfig)
         if (ready) {
           if (requireAuthentication && !token) {
             return <Redirect to="/account/login" />
@@ -55,7 +56,7 @@ const RouteWrapper = ({
             return (
               <Redirect
                 to={
-                  brandedConfig
+                  brandedConfig && brandedConfig.brandName === 'humanscale'
                     ? user && user.firstLogin
                       ? '/pages/home'
                       : '/challenges'

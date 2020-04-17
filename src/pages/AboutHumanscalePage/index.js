@@ -111,11 +111,13 @@ function AboutHumanscalePage() {
           <HeroTitle>
             <FormattedMessage id="app.aboutHumanscalePage.hero.title" />
           </HeroTitle>
-          <Link to="/account/register">
-            <WhiteButton type="ghost" size="large">
-              <FormattedMessage id="app.aboutHumanscalePage.join.link" />
-            </WhiteButton>
-          </Link>
+          {!token && (
+            <Link to="/account/register">
+              <WhiteButton type="ghost" size="large">
+                <FormattedMessage id="app.aboutHumanscalePage.join.link" />
+              </WhiteButton>
+            </Link>
+          )}
         </HeroInfo>
       </Hero>
       <WhatIsFootprint>

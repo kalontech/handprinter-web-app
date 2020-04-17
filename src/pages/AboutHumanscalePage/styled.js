@@ -10,10 +10,10 @@ import bg from '../../assets/about-humanscale/bg.png'
 
 export const FootprintTitle = styled.h2`
   position: absolute;
-  width: 550px;
+  width: 600px;
   height: 71px;
-  left: 93px;
-  top: 117px;
+  left: 83px;
+  top: 147px;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
@@ -34,8 +34,8 @@ export const FootprintText = styled.p`
   position: absolute;
   width: 400px;
   height: 252px;
-  left: 98px;
-  top: 207px;
+  left: 88px;
+  top: 230px;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;

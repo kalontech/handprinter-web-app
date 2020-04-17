@@ -547,6 +547,13 @@ function Header(props) {
                 {(!isTablet && (
                   <MenuWrap borderColor="transparent">
                     <LeftMenu>
+                      {token && (
+                        <Menu.Item key="/challenges">
+                          <Link to="/challenges">
+                            <FormattedMessage id="app.pages.challenges" />
+                          </Link>
+                        </Menu.Item>
+                      )}
                       <Menu mode="horizontal" selectedKeys={[selectedMenuItem]}>
                         <Menu.Item key="/actions">
                           <Link to="/actions">
@@ -566,13 +573,6 @@ function Header(props) {
                           <Menu.Item key="/groups">
                             <Link to="/groups/discover">
                               <FormattedMessage id="app.pages.groups" />
-                            </Link>
-                          </Menu.Item>
-                        )}
-                        {token && (
-                          <Menu.Item key="/challenges">
-                            <Link to="/challenges">
-                              <FormattedMessage id="app.pages.challenges" />
                             </Link>
                           </Menu.Item>
                         )}
