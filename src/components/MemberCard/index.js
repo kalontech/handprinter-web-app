@@ -25,6 +25,7 @@ const Block = styled(Link)`
   box-shadow: 0 1px 10px rgba(52, 68, 66, 0.08);
   border-radius: 4px;
   margin-bottom: 20px;
+  height: 250px;
 
   ${media.phone`
     min-width: 290px;
