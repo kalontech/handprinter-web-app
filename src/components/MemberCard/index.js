@@ -133,6 +133,8 @@ export default class MemberCard extends React.PureComponent {
     dateTo: PropTypes.Date,
     expired: PropTypes.bool,
     tooltipText: PropTypes.string,
+    impactsInUnits: PropTypes.object,
+    showPhysicalValues: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -152,6 +154,7 @@ export default class MemberCard extends React.PureComponent {
       photo,
       fullName,
       impacts,
+      impactsInUnits,
       counter,
       achievements,
       progressBarPercent,
@@ -163,7 +166,10 @@ export default class MemberCard extends React.PureComponent {
       dateTo,
       expired,
       tooltipText,
+      showPhysicalValues,
     } = this.props
+
+    console.log('impactsInUnits', impactsInUnits)
 
     return (
       <Block style={containerStyle} to={to}>
@@ -228,7 +234,13 @@ export default class MemberCard extends React.PureComponent {
             )}
           </Info>
         </User>
-        {impacts && <ActionCardLabelSet impacts={impacts} />}
+        {impacts && (
+          <ActionCardLabelSet
+            impacts={impacts}
+            impactsInUnits={impactsInUnits}
+            showPhysicalValues={showPhysicalValues}
+          />
+        )}
       </Block>
     )
   }
