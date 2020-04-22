@@ -173,7 +173,6 @@ export default class MemberCard extends React.PureComponent {
     return (
       <Block style={containerStyle} to={to}>
         <User>
-          {/* {photo && <Photo src={photo} alt="photo" />} */}
           <ImgPlaceholder>
             {!photo && this.fullNamePlaceholder}
             {photo && <Photo src={photo} alt="photo" />}
