@@ -4,6 +4,7 @@ import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { ModalContainer } from 'react-router-modal'
+import Helmet from 'react-helmet'
 
 import * as api from './api/user'
 
@@ -45,67 +46,67 @@ const RouteWrapper = ({
   }, [])
 
   return (
-    <Route
-      {...rest}
-      render={props => {
-        if (ready) {
-          if (requireAuthentication && !token) {
-            return <Redirect to="/account/login" />
-          } else if (unauthorizedOnly && token) {
-            return (
-              <Redirect
-                to={
-                  brandedConfig && brandedConfig.brandName === 'Humanscale'
-                    ? user && user.firstLogin
-                      ? '/pages/home'
-                      : '/challenges'
-                    : '/account/dashboard'
-                }
-              />
-            )
-          } else {
-            if (requireAuthentication && !user) {
-              return renderLoader(props)
-            }
-            return (
-              <Layout>
-                {!withoutHeader && (
-                  <Header
-                    location={props.location}
-                    withoutHeaderContent={withoutHeaderContent}
-                    type={
-                      headerType || useAuthentication
-                        ? token
+    <>
+      <Helmet>
+        <meta property="og:type" content="article" />
+        <meta
+          property="og:title"
+          content="Handprinter | With enough handprints we can heal the planet!"
+        />
+        <meta
+          property="og:description"
+          content="Want to take doing good to a global scale? You’re not alone."
+        />
+        <meta
+          property="og:image"
+          content="https://handprinter.org/static/media/hero-image.762828d0.png"
+        />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="505" />
+        <meta property="og:image:height" content="439" />
+        <meta
+          property="og:image:alt"
+          content="With enough handprints we can heal the planet!"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
+      <Route
+        {...rest}
+        render={props => {
+          if (ready) {
+            if (requireAuthentication && !token) {
+              return <Redirect to="/account/login" />
+            } else if (unauthorizedOnly && token) {
+              return (
+                <Redirect
+                  to={
+                    brandedConfig && brandedConfig.brandName === 'Humanscale'
+                      ? user && user.firstLogin
+                        ? '/pages/home'
+                        : '/challenges'
+                      : '/account/dashboard'
+                  }
+                />
+              )
+            } else {
+              if (requireAuthentication && !user) {
+                return renderLoader(props)
+              }
+              return (
+                <Layout>
+                  {!withoutHeader && (
+                    <Header
+                      location={props.location}
+                      withoutHeaderContent={withoutHeaderContent}
+                      type={
+                        headerType || useAuthentication
+                          ? token
+                            ? 'private'
+                            : 'public'
+                          : requireAuthentication
                           ? 'private'
                           : 'public'
-                        : requireAuthentication
-                        ? 'private'
-                        : 'public'
-                    }
-                    overrides={
-                      brandedConfig && {
-                        brandName: brandedConfig.brandName,
-                        ...brandedConfig.headerOverrides,
                       }
-                    }
-                  />
-                )}
-                <Layout.Content>
-                  <Component
-                    {...props}
-                    user={user}
-                    overrides={
-                      brandedConfig && {
-                        brandName: brandedConfig.brandName,
-                        ...brandedConfig.headerOverrides,
-                      }
-                    }
-                  />
-                </Layout.Content>
-                {!withoutCTA &&
-                  !user &&
-                  ((brandedConfig && brandedConfig.ctaComponent) || (
-                    <Cta
                       overrides={
                         brandedConfig && {
                           brandName: brandedConfig.brandName,
@@ -113,20 +114,45 @@ const RouteWrapper = ({
                         }
                       }
                     />
-                  ))}
-                {!withoutFooter &&
-                  ((brandedConfig && brandedConfig.footerComponent) || (
-                    <Footer brandedConfig={brandedConfig} />
-                  ))}
-                <ModalContainer />
-              </Layout>
-            )
+                  )}
+                  <Layout.Content>
+                    <Component
+                      {...props}
+                      user={user}
+                      overrides={
+                        brandedConfig && {
+                          brandName: brandedConfig.brandName,
+                          ...brandedConfig.headerOverrides,
+                        }
+                      }
+                    />
+                  </Layout.Content>
+                  {!withoutCTA &&
+                    !user &&
+                    ((brandedConfig && brandedConfig.ctaComponent) || (
+                      <Cta
+                        overrides={
+                          brandedConfig && {
+                            brandName: brandedConfig.brandName,
+                            ...brandedConfig.headerOverrides,
+                          }
+                        }
+                      />
+                    ))}
+                  {!withoutFooter &&
+                    ((brandedConfig && brandedConfig.footerComponent) || (
+                      <Footer brandedConfig={brandedConfig} />
+                    ))}
+                  <ModalContainer />
+                </Layout>
+              )
+            }
+          } else {
+            return renderLoader(props)
           }
-        } else {
-          return renderLoader(props)
-        }
-      }}
-    />
+        }}
+      />
+    </>
   )
 }
 
