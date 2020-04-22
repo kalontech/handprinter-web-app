@@ -499,6 +499,8 @@ class GroupsPage extends React.PureComponent {
                         />
                       )
                     }}
+                    subset={match.params.subset}
+                    isMember={item.info.isMember}
                   />
                 </Column>
               ))}
