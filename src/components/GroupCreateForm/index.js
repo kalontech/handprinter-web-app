@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { compose } from 'redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -151,6 +150,7 @@ class GroupCreateForm extends React.PureComponent {
     onSubmit: PropTypes.func.isRequired,
     form: PropTypes.object.isRequired,
     intl: intlShape.isRequired,
+    history: PropTypes.object,
   }
 
   state = {
@@ -161,7 +161,7 @@ class GroupCreateForm extends React.PureComponent {
   handleSubmit = e => {
     e.preventDefault()
 
-    const { form, onSubmit, intl } = this.props
+    const { form, onSubmit, intl, history } = this.props
 
     form.validateFields((errors, values) => {
       if (errors) return
@@ -180,6 +180,7 @@ class GroupCreateForm extends React.PureComponent {
             })
           })
       })
+      history.push('/groups/discover')
     })
   }
 
@@ -300,11 +301,9 @@ class GroupCreateForm extends React.PureComponent {
           htmlType="submit"
           loading={this.state.isSubmitting}
         >
-          <Link to="/groups/discovery">
-            {intl.formatMessage({
-              id: 'app.form.submit',
-            })}
-          </Link>
+          {intl.formatMessage({
+            id: 'app.form.submit',
+          })}
         </ButtonSubmit>
 
         {(fileError || submitError) && (
