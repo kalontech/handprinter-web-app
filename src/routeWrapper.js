@@ -48,7 +48,7 @@ const RouteWrapper = ({
   return (
     <>
       <Helmet>
-        {/* <meta property="og:type" content="article" />
+        <meta property="og:type" content="article" />
         <meta
           property="og:title"
           content="Handprinter | With enough handprints we can heal the planet!"
@@ -68,7 +68,7 @@ const RouteWrapper = ({
           property="og:image:alt"
           content="With enough handprints we can heal the planet!"
         />
-        <meta name="twitter:card" content="summary_large_image" /> */}
+        <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
       <Route
         {...rest}

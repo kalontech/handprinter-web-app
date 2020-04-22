@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { compose } from 'redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -299,9 +300,11 @@ class GroupCreateForm extends React.PureComponent {
           htmlType="submit"
           loading={this.state.isSubmitting}
         >
-          {intl.formatMessage({
-            id: 'app.form.submit',
-          })}
+          <Link to="/groups/discovery">
+            {intl.formatMessage({
+              id: 'app.form.submit',
+            })}
+          </Link>
         </ButtonSubmit>
 
         {(fileError || submitError) && (
