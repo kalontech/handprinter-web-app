@@ -170,8 +170,6 @@ export default class MemberCard extends React.PureComponent {
       showPhysicalValues,
     } = this.props
 
-    console.log('impactsInUnits', impactsInUnits)
-
     return (
       <Block style={containerStyle} to={to}>
         <User>
