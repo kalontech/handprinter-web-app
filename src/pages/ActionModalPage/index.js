@@ -92,7 +92,7 @@ function ActionModalPage(props) {
   const [engageError, setEngageError] = useState(null)
   const [sendingEngage, setSendingEngage] = useState(false)
   const [successEngageSent, setSuccessEngageSent] = useState(false)
-  const [engageEmails] = useState([])
+  const [engageEmails, setEngageEmails] = useState([])
   const [engageInputIsTyping, setEngageInputIsTyping] = useState(false)
   const [initiatorId, setInitiatorId] = useState('')
   const [isHabit, setIsHabit] = useState(false)
@@ -452,7 +452,7 @@ function ActionModalPage(props) {
   }
 
   const handleEngageEmailsInputChange = (emails, isTyping) => {
-    setEngageError(emails)
+    setEngageEmails(emails)
     setEngageInputIsTyping(isTyping)
   }
 
