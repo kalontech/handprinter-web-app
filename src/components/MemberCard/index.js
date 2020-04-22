@@ -175,13 +175,16 @@ export default class MemberCard extends React.PureComponent {
     return (
       <Block style={containerStyle} to={to}>
         <User>
+          {/* {photo && <Photo src={photo} alt="photo" />} */}
           <ImgPlaceholder>
-            {this.fullNamePlaceholder}
+            {!photo && this.fullNamePlaceholder}
             {photo && <Photo src={photo} alt="photo" />}
           </ImgPlaceholder>
 
           <Info>
-            <FullName>{fullName}</FullName>
+            <FullName>
+              {fullName.length > 25 ? fullName.slice(0, 25) + '...' : fullName}
+            </FullName>
             <div
               style={{
                 display: 'flex',
