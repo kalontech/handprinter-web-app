@@ -54,7 +54,7 @@ export const fetchAPI = async (url, options) => {
     return data
   }
 
-  errorHandler(error)
+  error && errorHandler(error)
 }
 
 const getCountries = () => fetchAPI('/countries')
