@@ -179,8 +179,7 @@ class GroupCreateForm extends React.PureComponent {
               }),
             })
           })
-      })
-      history.push('/groups/discover')
+      }).then(() => history.push('/groups/discover'))
     })
   }
 
