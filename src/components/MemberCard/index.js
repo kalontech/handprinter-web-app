@@ -183,7 +183,9 @@ export default class MemberCard extends React.PureComponent {
 
           <Info>
             <FullName>
-              {fullName.length > 25 ? fullName.slice(0, 25) + '...' : fullName}
+              {fullName && fullName.length > 25
+                ? fullName.slice(0, 25) + '...'
+                : fullName}
             </FullName>
             <div
               style={{
