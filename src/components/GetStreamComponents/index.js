@@ -5,7 +5,7 @@
 
 import _ from 'lodash'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   CommentField,
   CommentList,
@@ -25,6 +25,7 @@ import CommentDefault from './CommentDefault.svg'
 import CommentFilled from './CommentFilled.svg'
 import LikeDefault from './LikeDefault.svg'
 import LikeFilled from './LikeFilled.svg'
+import { UIContextSettings } from '../../context/uiSettingsContext'
 
 const UserName = styled.span`
   font-family: Noto Sans;
@@ -151,11 +152,16 @@ export const ActivityFooter = props => {
 }
 
 export const ActivityHeader = props => {
+  const UIContextData = useContext(UIContextSettings)
+
+  console.log(UIContextData)
+
   const activity = _.get(props, 'activity')
   const isDidAction = _.get(activity, 'verb') === 'do action'
   const isCommentedAction = _.get(activity, 'verb') === 'comment action'
 
   const actionImpacts = _.get(activity, 'context.action.impacts')
+  const actionImpactsInUnits = _.get(activity, 'context.action.impactsInUnits')
   const actionName = _.get(activity, 'context.action.name', 'Unknown action')
   const createdAt = moment(activity.time).fromNow()
   const userName = _.get(activity, 'actor.data.name', 'Unknown user')
@@ -207,7 +213,13 @@ export const ActivityHeader = props => {
             alignItems: 'center',
           }}
         >
-          {actionImpacts && <ActionCardLabelSet impacts={actionImpacts} />}
+          {actionImpacts && (
+            <ActionCardLabelSet
+              impacts={actionImpacts}
+              impactsInUnits={actionImpactsInUnits}
+              showPhysicalValues={UIContextData.showPhysicalValues}
+            />
+          )}
           <Popover
             content={
               <DeletePostText
