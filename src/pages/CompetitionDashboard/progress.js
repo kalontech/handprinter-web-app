@@ -1,5 +1,5 @@
 import React from 'react'
-import { Progress } from 'antd'
+import { Progress, Tooltip } from 'antd'
 import { injectIntl } from 'react-intl'
 import { compose } from 'redux'
 
@@ -11,7 +11,7 @@ import moment from 'moment'
 import { ProgressWrapper, ProgressTextWrapper, ProgressText } from './styled'
 
 function CampaignProgress(props) {
-  const { total, accomplished, endDate, expired } = props
+  const { total, accomplished, endDate, expired, tooltipText } = props
   const percent = (accomplished / total) * 100
   const daysLeft = props.intl.formatMessage(
     { id: 'app.campaignPage.progress.daysLeft' },
@@ -19,17 +19,20 @@ function CampaignProgress(props) {
       days: expired ? 0 : moment(endDate).diff(moment(), 'days'),
     },
   )
+
   return (
     <ProgressWrapper>
       <ProgressTextWrapper style={{ justifyContent: 'flex-end' }}>
         <ProgressText>{daysLeft}</ProgressText>
       </ProgressTextWrapper>
-      <Progress
-        percent={percent}
-        showInfo={false}
-        strokeColor={expired ? colors.darkGray : colors.green}
-        strokeWidth={4}
-      />
+      <Tooltip title={tooltipText}>
+        <Progress
+          percent={percent}
+          showInfo={false}
+          strokeColor={expired ? colors.darkGray : colors.green}
+          strokeWidth={4}
+        />
+      </Tooltip>
     </ProgressWrapper>
   )
 }
@@ -40,6 +43,7 @@ CampaignProgress.propTypes = {
   endDate: Date,
   intl: Object,
   expired: Boolean,
+  tooltipText: String,
 }
 
 export default compose(injectIntl)(CampaignProgress)

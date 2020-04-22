@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import Spinner from 'components/Spinner'
 import { FormattedMessage } from 'react-intl'
+import moment from 'moment'
 import MemberCard from 'components/MemberCard'
 
 import {
@@ -11,6 +12,8 @@ import {
 } from './styled'
 import { getUserInitialAvatar } from '../../api'
 import AccomplishedAction from './accomplishedAction'
+
+import { UIContextSettings } from '../../context/uiSettingsContext'
 
 function getSortedActions({ participants }) {
   // Group by slug
@@ -44,10 +47,16 @@ function getSortedParticipants(props) {
 }
 
 export default function renderStatistics(props) {
+  const UIContextData = useContext(UIContextSettings)
+
   const { loading, intl, campaign } = props
   const sortedParticipants = getSortedParticipants(props)
   const sortedActions = getSortedActions(props)
   const total = campaign.actions.length
+  const dateTo = campaign.dateTo
+  const numberToComplete = campaign.actionsNumberToComplete
+  const expired = moment().isAfter(dateTo)
+
   return (
     <Fragment>
       {loading ? (
@@ -76,7 +85,33 @@ export default function renderStatistics(props) {
                       { accomplished, total },
                     )}
                     impacts={{ handprint: participant.userInfo.impacts }}
+                    impactsInUnits={{
+                      handprint:
+                        participant.accomplishedActions[0].impactsInUnits
+                          .handprint,
+                      footprint:
+                        participant.accomplishedActions[0].impactsInUnits
+                          .footprint,
+                    }}
                     progressBarPercent={percentAccomplished}
+                    total={total}
+                    numberToComplete={numberToComplete}
+                    dateTo={dateTo}
+                    expired={expired}
+                    tooltipText={
+                      accomplished >= numberToComplete
+                        ? props.intl.formatMessage({
+                            id: 'app.competitions.you.reached.challenge',
+                          })
+                        : props.intl.formatMessage(
+                            { id: 'app.competitions.you.need.take' },
+                            {
+                              numberToComplete: numberToComplete - accomplished,
+                            },
+                          )
+                    }
+                    accomplished={accomplished}
+                    showPhysicalValues={UIContextData.showPhysicalValues}
                   />
                 )
               })}
