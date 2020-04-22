@@ -262,7 +262,7 @@
     "app.measurementPage.CommonBasis.Text1": "Wanneer we met iedereen spreken, worden de effecten van acties uitgedrukt in verhouding tot de voetafdruk van een gemiddelde wereldburger. Vervolgens berekent handprinter voor u persoonlijk de impact van uw acties in relatie tot uw eigen voetafdruk. Als uw voetafdruk tweemaal zo groot is als de voetafdruk van de gemiddelde wereldburger, dan zal het nemen van een actie met \"2 dagen\" aan wereldwijde watervoordelen uw watervoetafdruk met 1 dag verminderen.",
     "app.measurementPage.CommonBasis.Text2": "Het leuke is dat <strong> hoe kleiner je footprint wordt, hoe krachtiger elke actie wordt <\/strong> wanneer handprinter het effect van de actie op je footprint berekent.",
     "app.measurementPage.Animation.Title": "Maak je handafdruk groter dan je voetafdruk. Word <strong> Net Positief <\/strong>",
-    "app.actions.card.by": "door <span class=\"name\"> {username} <\/span>",
+    "app.actions.card.by": "door {username}",
     "app.actions.engage": "Delen",
     "app.actions.takeAction": "Actie ondernemen",
     "app.actions.congratulations": "Gefeliciteerd",

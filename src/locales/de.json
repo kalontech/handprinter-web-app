@@ -262,7 +262,7 @@
     "app.measurementPage.CommonBasis.Text1": "Wenn wir mit allen sprechen, werden die Auswirkungen der Aktionen in Relation zum Fußabdruck eines durchschnittlichen Weltbürgers ausgedrückt. Dann berechnet der Handprinter für dich persönlich die Auswirkungen deiner Handlungen in Bezug auf deinen eigenen Fußabdruck. Wenn dein Fußabdruck doppelt so groß ist wie der Fußabdruck eines durchschnittlichen Weltbürgers, wird der Wasserfußabdruck um 1 Tag verringert, wenn du die Aktion „2 Tage“ mit den Wasservorteilen der globalen Bürger durchführen.",
     "app.measurementPage.CommonBasis.Text2": "Die coole Sache ist, dass <strong> je kleiner der Fußabdruck wird, desto bedeutender wird jede Aktion werden<\/strong>, wenn der Handprinter den Effekt der Aktion auf deinen Fußabdruck berechnet.",
     "app.measurementPage.Animation.Title": "Mach deinen Handabdruck größer als deinen Fußabdruck. Werde<strong> netto positiv <\/strong>",
-    "app.actions.card.by": "von <span class=\"name\"> {username} <\/span>",
+    "app.actions.card.by": "von {username}",
     "app.actions.engage": "Teilen",
     "app.actions.takeAction": "Führe eine Handlung aus",
     "app.actions.congratulations": "Herzliche Glückwünsche",

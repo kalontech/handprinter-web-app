@@ -262,7 +262,7 @@
     "app.measurementPage.CommonBasis.Text1": "Quando falamos com todos, os impactos da ação são expressos em relação à pegada média de um cidadão global. Então, para o seu pessoal, a impressora manual calcula e mostra os impactos de suas ações em relação à sua própria pegada. Se a sua pegada for duas vezes maior do que a pegada média do cidadão global, tomar uma ação com ″ 2 dias ″ dos benefícios globais da água do cidadão reduzirá sua pegada hídrica em 1 dia.",
     "app.measurementPage.CommonBasis.Text2": "O legal é que <strong> menor sua pegada fica, mais poderoso cada ação se tornará <\/strong> quando handprinter calcula o efeito da ação de sua pegada.",
     "app.measurementPage.Animation.Title": "Faça seu handprint maior do que sua pegada. Torne-se <strong> positivo líquido <\/strong>",
-    "app.actions.card.by": "por <span class=\"name\"> {username} <\/span>",
+    "app.actions.card.by": "por {username}",
     "app.actions.engage": "Compartilhar",
     "app.actions.takeAction": "Tome uma atitude",
     "app.actions.congratulations": "Parabéns",

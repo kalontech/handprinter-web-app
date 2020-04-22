@@ -262,7 +262,7 @@
     "app.measurementPage.CommonBasis.Text1": "When we speak with everyone, action impacts are expressed in relation to an average global citizen's footprint. Then for your personally, handprinter calculates and shows you the impacts of your actions in relation to your own footprint. If your footprint is twice as large as the average global citizen's footprint, then taking an action with &Prime;2 days&Prime; of global citizen water benefits will reduce your water footprint by 1 day.",
     "app.measurementPage.CommonBasis.Text2": "The cool thing is that <strong> the smaller your footprint gets, the more powerful each action will become <\/strong> when handprinter calculates the action’s effect on your footprint.",
     "app.measurementPage.Animation.Title": "Make your handprint bigger than your footprint. Become <strong>Net Positive<\/strong>",
-    "app.actions.card.by": "by <span class=\"name\">{username}<\/span>",
+    "app.actions.card.by": "by {username}",
     "app.actions.engage": "Share",
     "app.actions.takeAction": "Take action",
     "app.actions.congratulations": "Congratulations",

@@ -262,7 +262,7 @@
     "app.measurementPage.CommonBasis.Text1": "Cuando hablamos con todos, los impactos de acción se expresan en relación con la huella de un ciudadano global promedio. Luego, para usted personalmente, handprinter calcula y le muestra los impactos de sus acciones en relación con su propia huella. Si su huella es dos veces más grande que la huella de un ciudadano global promedio, entonces tomar una acción con ″ 2 días ″ de beneficios de agua para el ciudadano global reducirá su huella de agua en 1 día.",
     "app.measurementPage.CommonBasis.Text2": "Lo interesante es que <strong> más pequeña sea su huella, más poderosa será cada acción <\/strong> cuando la impresora manual calcule el efecto de la acción en su huella.",
     "app.measurementPage.Animation.Title": "Haz tu huella de la mano más grande que tu huella. Conviértete en <strong> Red Positivo <\/strong>",
-    "app.actions.card.by": "por <span class=\"name\"> {username} <\/span>",
+    "app.actions.card.by": "por {username}",
     "app.actions.engage": "Compartir",
     "app.actions.takeAction": "Tomar acción",
     "app.actions.congratulations": "Felicidades",

@@ -191,7 +191,7 @@ const ActionCard = props => {
       </WildWrapper>
     </Tooltip>
   )
-
+  console.log(suggestedBy)
   return (
     <Link to={to} onClick={onClick}>
       <CardWrap>
