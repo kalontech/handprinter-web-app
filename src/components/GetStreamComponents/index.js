@@ -165,7 +165,6 @@ export const ActivityHeader = props => {
   const actionName = _.get(activity, 'context.action.name', 'Unknown action')
   const createdAt = moment(activity.time).fromNow()
   const userName = _.get(activity, 'actor.data.name', 'Unknown user')
-  console.log('activity', actionImpactsInUnits)
 
   return (
     <Flex
