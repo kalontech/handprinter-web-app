@@ -95,6 +95,8 @@ export default class GroupCard extends React.PureComponent {
       added: PropTypes.bool,
       onClick: PropTypes.func,
     }),
+    subset: PropTypes.string,
+    isMember: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -102,7 +104,7 @@ export default class GroupCard extends React.PureComponent {
   }
 
   render() {
-    const { to, name, picture, counter, buttons, featured } = this.props
+    const { to, name, picture, counter, buttons, featured, subset } = this.props
 
     return (
       <Block to={to}>
@@ -123,7 +125,7 @@ export default class GroupCard extends React.PureComponent {
           <Name>{name}</Name>
           <CounterMembers>{counter}</CounterMembers>
 
-          {typeof buttons === 'function' && buttons()}
+          {typeof buttons === 'function' && subset !== 'teams' && buttons()}
         </Info>
       </Block>
     )

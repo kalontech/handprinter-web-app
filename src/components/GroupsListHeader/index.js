@@ -79,6 +79,7 @@ class GroupsListHeader extends React.PureComponent {
     match: PropTypes.object,
     user: PropTypes.object,
     setGroupsList: PropTypes.func,
+    history: PropTypes.object,
   }
 
   state = {
@@ -164,7 +165,7 @@ class GroupsListHeader extends React.PureComponent {
 
   render() {
     const { visibleTabs, tabsType, modalVisible, modalType } = this.state
-    const { intl, match, user } = this.props
+    const { intl, match, history, user } = this.props
 
     let list = []
     if (user.belongsToBrand) {
@@ -233,7 +234,10 @@ class GroupsListHeader extends React.PureComponent {
             {
               {
                 [MODAL_TYPES.create]: (
-                  <GroupCreateForm onSubmit={this.createGroup} />
+                  <GroupCreateForm
+                    onSubmit={this.createGroup}
+                    history={history}
+                  />
                 ),
                 [MODAL_TYPES.sendInvites]: this.createdGroup && (
                   <React.Fragment>

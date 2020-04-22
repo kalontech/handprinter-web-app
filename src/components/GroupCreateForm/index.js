@@ -150,6 +150,7 @@ class GroupCreateForm extends React.PureComponent {
     onSubmit: PropTypes.func.isRequired,
     form: PropTypes.object.isRequired,
     intl: intlShape.isRequired,
+    history: PropTypes.object,
   }
 
   state = {
@@ -160,7 +161,7 @@ class GroupCreateForm extends React.PureComponent {
   handleSubmit = e => {
     e.preventDefault()
 
-    const { form, onSubmit, intl } = this.props
+    const { form, onSubmit, intl, history } = this.props
 
     form.validateFields((errors, values) => {
       if (errors) return
@@ -178,7 +179,7 @@ class GroupCreateForm extends React.PureComponent {
               }),
             })
           })
-      })
+      }).then(() => history.push('/groups/discover'))
     })
   }
 
