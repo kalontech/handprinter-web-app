@@ -97,7 +97,7 @@ function ActionModalPage(props) {
   const [initiatorId, setInitiatorId] = useState('')
   const [isHabit, setIsHabit] = useState(false)
   const [availableFrom, setAvailableFrom] = useState(moment())
-  const [matchedUsersByCode, setMatchedUserByCode] = useState(null)
+  const [matchedUsersByCode, setMatchedUserByCode] = useState([])
 
   useEffect(() => {
     const { match } = props
