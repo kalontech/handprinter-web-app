@@ -4,7 +4,6 @@ import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { ModalContainer } from 'react-router-modal'
-import Helmet from 'react-helmet'
 
 import * as api from './api/user'
 
@@ -47,29 +46,6 @@ const RouteWrapper = ({
 
   return (
     <>
-      <Helmet>
-        <meta property="og:type" content="article" />
-        <meta
-          property="og:title"
-          content="Handprinter | With enough handprints we can heal the planet!"
-        />
-        <meta
-          property="og:description"
-          content="Want to take doing good to a global scale? You’re not alone."
-        />
-        <meta
-          property="og:image"
-          content="https://handprinter.org/static/media/hero-image.762828d0.png"
-        />
-        <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:image:width" content="505" />
-        <meta property="og:image:height" content="439" />
-        <meta
-          property="og:image:alt"
-          content="With enough handprints we can heal the planet!"
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Helmet>
       <Route
         {...rest}
         render={props => {
