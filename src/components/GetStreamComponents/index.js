@@ -154,8 +154,6 @@ export const ActivityFooter = props => {
 export const ActivityHeader = props => {
   const UIContextData = useContext(UIContextSettings)
 
-  console.log(UIContextData)
-
   const activity = _.get(props, 'activity')
   const isDidAction = _.get(activity, 'verb') === 'do action'
   const isCommentedAction = _.get(activity, 'verb') === 'comment action'
