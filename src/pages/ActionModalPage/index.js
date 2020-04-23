@@ -96,9 +96,10 @@ function ActionModalPage(props) {
   const [engageInputIsTyping, setEngageInputIsTyping] = useState(false)
   const [initiatorId, setInitiatorId] = useState('')
   const [isHabit, setIsHabit] = useState(false)
-  const [availableFrom, setAvailableFrom] = useState(moment())
+  const [availableFrom, setAvailableFrom] = useState(
+    moment().subtract(1, 'days'),
+  )
   const [matchedUsersByCode, setMatchedUserByCode] = useState([])
-
   useEffect(() => {
     const { match } = props
     api.fetchAction({ slug: match.params.slug }).then(({ action }) => {

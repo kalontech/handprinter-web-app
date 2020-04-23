@@ -179,7 +179,11 @@ export default class MemberCard extends React.PureComponent {
           </ImgPlaceholder>
 
           <Info>
-            <FullName>{fullName}</FullName>
+            <FullName>
+              {fullName && fullName.length > 25
+                ? fullName.slice(0, 25) + '...'
+                : fullName}
+            </FullName>
             <div
               style={{
                 display: 'flex',
