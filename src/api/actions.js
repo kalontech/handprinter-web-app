@@ -38,8 +38,10 @@ export const takeAction = (actionId, isHabit, initiatorId) =>
     method: 'POST',
   })
 
-export const getNews = ({ page, range, groupId } = {}) =>
-  fetchAPI(`/actions/news?${qs.stringify({ page, range, groupId })}`)
+export const getNews = ({ page, range, groupId, belongsToBrand } = {}) =>
+  fetchAPI(
+    `/actions/news?${qs.stringify({ page, range, groupId, belongsToBrand })}`,
+  )
 
 export const sendLastTimeReadNewsAt = at =>
   fetchAPI(`/actions/news/read_all`, {
