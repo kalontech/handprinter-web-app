@@ -4,7 +4,7 @@
 /** @jsx jsx */
 
 import _ from 'lodash'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import React, { useState, useContext } from 'react'
 import {
   CommentField,
@@ -154,8 +154,6 @@ export const ActivityFooter = props => {
 export const ActivityHeader = props => {
   const UIContextData = useContext(UIContextSettings)
 
-  console.log(UIContextData)
-
   const activity = _.get(props, 'activity')
   const isDidAction = _.get(activity, 'verb') === 'do action'
   const isCommentedAction = _.get(activity, 'verb') === 'comment action'
@@ -163,7 +161,7 @@ export const ActivityHeader = props => {
   const actionImpacts = _.get(activity, 'context.action.impacts')
   const actionImpactsInUnits = _.get(activity, 'context.action.impactsInUnits')
   const actionName = _.get(activity, 'context.action.name', 'Unknown action')
-  const createdAt = moment(activity.time).fromNow()
+  const createdAt = moment.tz(activity.time, 'UTC').fromNow()
   const userName = _.get(activity, 'actor.data.name', 'Unknown user')
 
   return (

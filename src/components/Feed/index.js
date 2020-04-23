@@ -210,6 +210,14 @@ const Feed = ({
       {!hideFlatFeed && (
         <FlatFeed
           Activity={props => {
+            const userName = _.get(
+              props,
+              'activity.actor.data.name',
+              'Unknown user',
+            )
+            if (userName === 'Unknown user') {
+              return null
+            }
             return (
               <Activity
                 {...props}
