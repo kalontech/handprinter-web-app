@@ -920,7 +920,7 @@ function Header(props) {
                           </Link>
                         </Menu.Item>
                       )}
-                      {(overrides || overrides.brandName) && (
+                      {overrides && overrides.brandName && (
                         <Menu.Item key="/brandDashboard">
                           <Link to="/brand/dashboard/statistics">
                             {overrides.brandName}
