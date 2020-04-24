@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import Spinner from 'components/Spinner'
 import { FormattedMessage } from 'react-intl'
 import MemberCard from 'components/MemberCard'
@@ -14,6 +14,8 @@ import {
 import { getUserInitialAvatar } from '../../api'
 import AccomplishedAction from './accomplishedAction'
 import { getGroups } from './participants'
+import { calcImpactsCompetitionStatistic } from '../../utils/calcImpactsInUnits'
+import { UIContextSettings } from '../../context/uiSettingsContext'
 
 function getSortedActions({ participants }) {
   // Group by slug
@@ -58,6 +60,7 @@ function getSortedGroups(groups) {
 }
 
 export default function renderStatistics(props) {
+  const UIContextData = useContext(UIContextSettings)
   const {
     loading,
     intl,
@@ -160,6 +163,10 @@ export default function renderStatistics(props) {
                         accomplished / participantsCount,
                       ).toFixed(1)}
                       impacts={{ handprint: i.group.impacts }}
+                      impactsInUnits={calcImpactsCompetitionStatistic(
+                        i.participants,
+                      )}
+                      showPhysicalValues={UIContextData.showPhysicalValues}
                       {...progressProps}
                     />
                   )
