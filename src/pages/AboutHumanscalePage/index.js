@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { animateScroll } from 'react-scroll/modules'
 import PageMetadata from 'components/PageMetadata'
 import * as api from 'api/campaigns'
-
+import { sizes } from 'utils/mediaQueryTemplate'
 import { object } from 'prop-types'
 
 import {
@@ -42,7 +42,7 @@ import {
   JoinHandprinterContentBlock,
   JoinHandprinterContent,
   HandprintImagesWrapper,
-  HandprintFingerImage,
+  HandprintEarthImage,
   HandprintLeapImage,
   TakeActionItemHeader,
   TakeActionItemInfo,
@@ -68,10 +68,12 @@ import {
 } from './styled'
 
 import footprintFinger from './assets/footprintFinger.svg'
+import footprintFingerMobile from './assets/footprintFingerMobile.svg'
 import footprintFinger2 from './assets/footprintFinger2.svg'
 import footprintLeap from './assets/footprintLeap.png'
 import footprintImage from './assets/footprintImage.png'
 import handprintImage from './assets/handprintImage.png'
+import handprintImageLeapMobile from './assets/handprintImageLeapMobile.svg'
 import handprintLeap from './assets/handprintLeap.png'
 
 import takeActionFingerprint from './assets/takeActionFingerprint.svg'
@@ -90,6 +92,19 @@ import earth from './assets/earth.svg'
 
 function AboutHumanscalePage(props) {
   const [campaigns, setCampaigns] = useState([])
+  const [width, setWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    animateScroll.scrollToTop()
+    getCampaigns().then(data => setCampaigns(data))
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange)
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+    }
+  }, [])
 
   const getCampaigns = async () => {
     const {
@@ -98,16 +113,19 @@ function AboutHumanscalePage(props) {
     return docs
   }
 
-  useEffect(() => {
-    animateScroll.scrollToTop()
-    getCampaigns().then(data => setCampaigns(data))
-  }, [])
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth)
+  }
+
+  const isTablet = width < sizes.largeDesktop
+  const isMobile = width < sizes.tablet
 
   const token = window.localStorage.getItem('accessToken')
 
   return (
     <Fragment>
       <PageMetadata pageName="aboutInterfacePage" />
+
       <Hero>
         <HeroInfo>
           <HeroTitle>
@@ -122,6 +140,39 @@ function AboutHumanscalePage(props) {
           )}
         </HeroInfo>
       </Hero>
+
+      {/* {!isTablet && !isMobile && (
+        <Hero>
+          <HeroInfo>
+            <HeroTitle>
+              <FormattedMessage id="app.aboutHumanscalePage.hero.title" />
+            </HeroTitle>
+            {!props.user && (
+              <Link to="/account/register">
+                <WhiteButton type="ghost" size="large">
+                  <FormattedMessage id="app.aboutHumanscalePage.join.link" />
+                </WhiteButton>
+              </Link>
+            )}
+          </HeroInfo>
+        </Hero>
+      )}
+      {!isTablet && !isMobile && (
+        <Hero>
+          <HeroInfo>
+            <HeroTitle>
+              <FormattedMessage id="app.aboutHumanscalePage.hero.title" />
+            </HeroTitle>
+            {!props.user && (
+              <Link to="/account/register">
+                <WhiteButton type="ghost" size="large">
+                  <FormattedMessage id="app.aboutHumanscalePage.join.link" />
+                </WhiteButton>
+              </Link>
+            )}
+          </HeroInfo>
+        </Hero>
+      )} */}
       <WhatIsFootprint>
         <FootprintWrapper>
           <FootprintTitle>
@@ -133,7 +184,12 @@ function AboutHumanscalePage(props) {
           <FootprintImagesBlock>
             <FootprintMainImage src={footprintImage} alt="" />
             <FootprintLeapImage src={footprintLeap} alt="" />
-            <FootprintFingerImage src={footprintFinger} alt="" />
+            {!isMobile && !isTablet && (
+              <FootprintFingerImage src={footprintFinger} alt="" />
+            )}
+            {isMobile && (
+              <FootprintFingerImage src={footprintFingerMobile} alt="" />
+            )}
             <FootprintFootImage src={footprintFinger2} alt="" />
           </FootprintImagesBlock>
         </FootprintWrapper>
@@ -142,14 +198,19 @@ function AboutHumanscalePage(props) {
         <HandprintWrapper>
           <HandprintImagesWrapper>
             <HandprintMainImage src={handprintImage} alt="" />
-            <HandprintLeapImage src={handprintLeap} alt="" />
-            <HandprintFingerImage src={earth} alt="" />
+            {!isMobile && !isTablet && (
+              <HandprintLeapImage src={handprintLeap} alt="" />
+            )}
+            {isMobile && (
+              <HandprintLeapImage src={handprintImageLeapMobile} alt="" />
+            )}
+            <HandprintEarthImage src={earth} alt="" />
           </HandprintImagesWrapper>
           <HandprintInfo>
             <HandprintTitle>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.title" />
             </HandprintTitle>
-            <HandprintText style={{ top: '90px' }}>
+            <HandprintText style={{ top: `${isMobile ? '50px' : '90px'}` }}>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text1" />
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text2" />
             </HandprintText>

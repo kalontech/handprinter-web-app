@@ -24,9 +24,20 @@ export const FootprintTitle = styled.h2`
   color: ${colors.humanscaleHeaderText};
 
   ${media.phone`
-    line-height: 31px;
-    font-size: 22px;
-    letter-spacing: 0px;
+    width: 289px;
+    height: 34px;
+    left: 0px;
+    top: 0px;
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 34px;
+    text-align: center;
+    flex: none;
+    order: 0;
+    align-self: flex-start;
+    margin-top: 24px;
   `}
 `
 
@@ -48,9 +59,25 @@ export const FootprintText = styled.p`
   &:last-of-type {
     margin-bottom: 0;
   }
+
   ${media.phone`
-    margin-bottom: 0;
+    width: 250px;
+    height: 288px;
+    left: 19.5px;
+    top: 54px;
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
     text-align: center;
+    color: #5E6264;
+    flex: none;
+    order: 1;
+    align-self: center;
+    margin-top: 20px;
   `}
 `
 
@@ -66,12 +93,23 @@ export const HandprintTitle = styled.h2`
   font-weight: normal;
   font-size: 42px;
   line-height: 71px;
-
   color: ${colors.humanscaleHeaderText};
+
   ${media.phone`
-    line-height: 31px;
-    font-size: 22px;
-    letter-spacing: 0px;
+    width: 250px;
+    height: 34px;
+    left: 0px;
+    top: 0px;
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 34px;
+    text-align: center;
+    flex: none;
+    order: 0;
+    align-self: center;
+    margin: 0px 20px;
   `}
 `
 
@@ -93,9 +131,23 @@ export const HandprintText = styled.p`
   &:last-of-type {
     margin-bottom: 0;
   }
+
   ${media.phone`
-    margin-bottom: 0;
+    width: 250px;
+    height: 265px;
+    left: 0px;
+    top: 54px;
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 24px;
     text-align: center;
+    color: #5E6264;
+    flex: none;
+    order: 1;
+    align-self: center;
+    margin: 0px 20px;
   `}
 `
 
@@ -122,10 +174,17 @@ export const Hero = styled.section`
       `}
   }
 
+  ${media.tablet`
+      flex-direction: column;
+      justify-content: flex-end;
+      height: 450px;
+      background-position: center;
+  `}
+
   ${media.phone`
       flex-direction: column;
-    justify-content: flex-end;
-      height: 450px;
+      justify-content: center;
+      height: 516px;
       background-position: center;
   `}
 `
@@ -138,6 +197,17 @@ export const HeroInfo = styled.div`
   padding-left: 100px;
   width: 733px;
   height: 246px;
+
+  ${media.tablet`
+  `}
+
+  ${media.phone`
+    width: 270px;
+    min-height: 145px;
+    padding-left: 0px;
+    margin: -150px 35px 0px 35px;
+    align-items: center;
+  `}
 `
 
 export const HeroTitle = styled.div`
@@ -157,11 +227,23 @@ export const HeroTitle = styled.div`
     letter-spacing: -0.4px;
   `}
   ${media.phone`
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 34px;
+    text-align: center;
+    color: ${colors.white};
     margin-bottom: 8px;
     line-height: 36px;
     font-size: 28px;
     letter-spacing: 0px;
     margin-bottom: 15px;
+    width: 270px;
+    min-height: 145px;
+    text-align: center;
+    margin-bottom: 65px;
+    /* humanscaleOlive */
   `}
 `
 
@@ -215,7 +297,7 @@ export const GreenButton = styled(Button)`
 
 // what is footprint
 export const WhatIsFootprint = styled.section`
-  height: 1000px;
+  height: 820px;
   background: ${colors.humanscaleFootPrintBg};
   display: flex;
   flex-direction: column;
@@ -230,18 +312,35 @@ export const FootprintWrapper = styled.div`
   left: 141px;
   top: 1080px;
   background: ${colors.white};
+
+  ${media.phone`
+    height: 675px;
+    width: 290px;
+    left: 15px;
+    top: 580px;
+  `}
 `
 
 export const FootprintImagesBlock = styled.div`
   position: absolute;
   left: 652px;
   top: -127px;
+
+  ${media.phone`
+    left: calc(50% - 204px/2 + 12.1px);
+    top: 402px;
+  `}
 `
 
 export const FootprintMainImage = styled.img`
   position: absolute;
   width: 552px;
   height: 825px;
+
+  ${media.phone`
+    height: 305px;
+    width: 204px;
+  `}
 `
 
 export const FootprintLeapImage = styled.img`
@@ -250,6 +349,13 @@ export const FootprintLeapImage = styled.img`
   position: relative;
   top: -120px;
   left: -20px;
+
+  ${media.phone`
+    height: 36px;
+    width: 33px;
+    top: -40px;
+    left: -8px;
+  `}
 `
 
 export const FootprintFingerImage = styled.img`
@@ -257,6 +363,13 @@ export const FootprintFingerImage = styled.img`
   position: relative;
   top: 531px;
   right: 170px;
+
+  ${media.phone`
+    height: 129px;
+    width: 135px;
+    top: 185px;
+    right: 94px;
+  `}
 `
 
 export const FootprintFootImage = styled.img`
@@ -265,6 +378,13 @@ export const FootprintFootImage = styled.img`
   position: relative;
   top: 355px;
   right: -170px;
+
+  ${media.phone`
+    height: 40px;
+    width: 36px;
+    top: 145px;
+    left: 8px;
+  `}
 `
 
 // What is handprint
@@ -274,6 +394,10 @@ export const WhatIsHandprint = styled.section`
   left: 0px;
   top: 0px;
   background: ${colors.white};
+
+  ${media.phone`
+    height: 697px;
+  `}
 `
 
 export const HandprintWrapper = styled.div`
@@ -283,29 +407,59 @@ export const HandprintWrapper = styled.div`
   height: 641px;
   width: 100%;
   background: ${colors.white};
+
+  ${media.phone`
+    top: 0px;
+    height: 697px;
+  `}
 `
 
 export const HandprintImagesWrapper = styled.div`
   width: 1200px;
+  ${media.phone`
+    width: 258px;
+    width: 100vw;
+    margin-right: 20px;
+  `}
 `
 
 export const HandprintMainImage = styled.img`
   position: absolute;
   left: 150px;
   margin-right: 40px;
+
+  ${media.phone`
+    left: calc(50% - 258px/2);
+    bottom: 50px;
+    width: 258px;
+    height: 224px;
+  `}
 `
 
 export const HandprintLeapImage = styled.img`
-  width: 90;
   position: relative;
   top: -30px;
   left: 80px;
+
+  ${media.phone`
+    width: 44.51px;
+    height: 54.59px;
+    left: 50px;
+    top: 390px;
+  `}
 `
-export const HandprintFingerImage = styled.img`
+export const HandprintEarthImage = styled.img`
   width: 90px;
   position: relative;
   top: -50px;
   left: 0px;
+
+  ${media.phone`
+    width: 46.23px;
+    height: 45.41px;
+    top: 390px;
+    left: -12px;
+    bottom: 0px;`}
 `
 
 export const HandprintInfo = styled.div`
@@ -313,6 +467,11 @@ export const HandprintInfo = styled.div`
   position: absolute;
   left: 630px;
   margin-left: 200px;
+
+  ${media.phone`
+    left: calc(50% - 288px/2);
+    top: 50px;
+    margin-left: 0px;`}
 `
 
 // Take action

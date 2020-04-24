@@ -25,7 +25,7 @@ export const brandedConfig = {
     ctaComponent: require('./../components/HumanscaleCta').default,
     headerOverrides: {
       fullLogo: require('./../assets/branded/logos/humanscaleLogo.png'),
-      partialLogo: require('./../assets/branded/logos/humanscaleLogo.png'),
+      partialLogo: require('./../assets/branded/logos/humnascaleLogoMobile.png'),
       inLinkLogo: require('./../assets/branded/logos/humanscaleLogo.png'),
       logInOnly: true,
       brandColor: colors.green,
