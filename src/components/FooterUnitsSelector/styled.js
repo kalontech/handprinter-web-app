@@ -1,14 +1,20 @@
 import styled from 'styled-components'
 import { Dropdown, Menu } from 'antd'
+import media from 'utils/mediaQueryTemplate'
 
 import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
 
 export const FooterDropdown = styled(Dropdown)`
-  margin-top: -2px;
+  margin-top: 20px;
   max-width: 158px;
   width: 100%;
   cursor: pointer;
+
+  ${media.phone`
+    max-width: 100%;
+    margin-top: 0px;
+  `}
 `
 
 export const LangTitle = styled.div`

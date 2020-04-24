@@ -24,7 +24,7 @@ export const FootprintTitle = styled.h2`
   color: ${colors.humanscaleHeaderText};
 
   ${media.phone`
-    width: 289px;
+    width: 100%;
     height: 34px;
     left: 0px;
     top: 0px;
@@ -61,9 +61,10 @@ export const FootprintText = styled.p`
   }
 
   ${media.phone`
-    width: 250px;
+    width: 87.5%;
     height: 288px;
     left: 19.5px;
+    right: 20px;
     top: 54px;
     font-family: Noto Sans;
     font-style: normal;
@@ -315,8 +316,8 @@ export const FootprintWrapper = styled.div`
 
   ${media.phone`
     height: 675px;
-    width: 290px;
     left: 15px;
+    right: 15px
     top: 580px;
   `}
 `
@@ -418,7 +419,6 @@ export const HandprintImagesWrapper = styled.div`
   width: 1200px;
   ${media.phone`
     width: 258px;
-    width: 100vw;
     margin-right: 20px;
   `}
 `
@@ -478,6 +478,10 @@ export const HandprintInfo = styled.div`
 export const TakeActionWrapper = styled.section`
   height: 2560px;
   background: ${colors.humanscaleIvy};
+
+  ${media.phone`
+    height: 1840px;
+  `}
 `
 
 export const TakeActionHeader = styled.div`
@@ -496,16 +500,31 @@ export const TakeActionHeader = styled.div`
     line-height: 71px;
     color: ${colors.white};
   }
+
+  ${media.phone`
+    width: 100%;
+    height: 33.96px;
+    margin-top: 50px;
+
+    p {
+      font-size: 25px;
+      line-height: 34px;
+    }
+  `}
 `
 
 export const TakeAction = styled.section`
   height: 820px;
+
+  ${media.phone`
+    height: 581px;
+  `}
 `
 
 export const TakeActionItemHeader = styled.div`
   display: flex;
   justify-content: flex-start;
-  padding: 0 150px 0 150px;
+  padding-left: 15px;
 
   p {
     font-family: Noto Sans;
@@ -517,6 +536,26 @@ export const TakeActionItemHeader = styled.div`
     color: ${colors.white};
     margin-top: 5px;
   }
+
+  ${media.phone`
+  flex-direction: column;
+    width: 171px;
+    height: 25px;
+
+    p {
+      width: 171px;
+      height: 25px;
+      font-size: 18px;
+      line-height: 25px;
+      margin-top: 40px;
+
+      span {
+        width: 171px;
+        height: 25px;
+      }
+    }
+
+  `}
 `
 
 export const TakeActionDivider = styled.span`
@@ -524,6 +563,13 @@ export const TakeActionDivider = styled.span`
   flex: 1;
   width: 73vw;
   border-top: 1px solid ${colors.white};
+  right: 137px !important;
+
+  ${media.phone`
+    width: 135px;
+    margin-top: 30px;
+    right: 0 !important;
+  `}
 `
 
 export const TakeActionItemInfo = styled.div`
@@ -531,6 +577,9 @@ export const TakeActionItemInfo = styled.div`
   justify-content: flex-start;
 
   p {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
     font-size: 16px;
     line-height: 28px;
     color: ${colors.white};
@@ -538,12 +587,38 @@ export const TakeActionItemInfo = styled.div`
     padding-top: 45px;
     width: 470px;
   }
+
+  ${media.phone`
+    p {
+      width: 98vw;
+      height: 288px;
+      left: 0px;
+      top: 37px;
+      font-size: 14px;
+      line-height: 24px;
+      flex: none;
+      order: 1;
+      align-self: center;
+      margin-left: 15px;
+      margin-right: 15px;
+      padding-left: 0px;
+      padding-right: 15px;
+      padding-top: 57px;
+    }
+  `}
 `
 
 export const TakeActionMainImageWraper = styled.div`
   margin-top: 30px;
   position: absolute;
   right: 638px;
+
+  ${media.phone`
+    width: 209px;
+    height: 201.77px;
+    left: calc(50% - 209px/2 + 16.2px);
+    border-radius: 4px;
+  `}
 `
 
 export const TakeActionMainImage = styled.img`
@@ -551,6 +626,13 @@ export const TakeActionMainImage = styled.img`
   width: 495px;
   height: 477px;
   z-index: 1;
+
+  ${media.phone`
+    top: 360px;
+    width: 209px;
+    height: 201.77px;
+    border-radius: 4px;
+  `}
 `
 
 export const TakeActionLeap = styled.img`
@@ -559,6 +641,13 @@ export const TakeActionLeap = styled.img`
   top: -30px;
   left: 380px;
   z-index: 2;
+
+  ${media.phone`
+    width: 24.82px;
+    height: 30.46px;
+    left: calc(50% - 24.82px/2 + 76.51px);
+    top: 350px;
+  `}
 `
 
 export const TakeActionLeap2 = styled.img`
@@ -576,32 +665,139 @@ export const TakeActionFingerprint = styled.img`
   top: 230px;
   left: -130px;
   z-index: 0;
+
+  ${media.phone`
+    width: 208.96px;
+    height: 143.69px;
+    left: calc(50% - 208.96px/2 - 35.13px);
+    top: 470px;
+  `}
 `
 
 export const TakeActionDoIt = styled.section`
   height: 820px;
+
+  ${media.phone`
+    height: 640px;
+    padding-top: 80px;
+  `}
 `
 
 export const TakeActionDoItImageWrapper = styled.section`
   position: absolute;
   right: 485px;
   margin-top: 30px;
+
+  ${media.phone`
+    width: 228.81px;
+    height: 202.04px;
+    left: calc(50% - 228.81px/2 + 10.54px);
+    margin-top: 300px;
+  `}
+`
+
+export const TakeActionDoItItemInfo = styled.div`
+  display: flex;
+  justify-content: flex-start;
+
+  p {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 28px;
+    color: ${colors.white};
+    padding-left: 150px;
+    padding-top: 45px;
+    width: 470px;
+  }
+
+  ${media.phone`
+    p {
+      width: 98vw;
+      height: 288px;
+      left: 0px;
+      top: 37px;
+      font-size: 14px;
+      line-height: 24px;
+      flex: none;
+      order: 1;
+      align-self: center;
+      margin-left: 15px;
+      margin-right: 15px;
+      padding-left: 0px;
+      padding-right: 15px;
+      padding-top: 85px;
+    }
+  `}
 `
 
 export const TakeActionDoItMainImage = styled.img`
   position: absolute;
   width: 500px;
   height: 442px;
+
+  ${media.phone`
+    width: 228.81px;
+    height: 202.04px;
+  `}
 `
 
 export const TakeActionDoItHandprint = styled.img`
   position: relative;
   top: 290px;
   left: -50px;
+
+  ${media.phone`
+    width: 101.6px;
+    height: 143px;
+    left: calc(50% - 101.6px/2 - 95px);
+    top: 100px;
+  `}
 `
 
 export const TakeActionShareTo = styled.section`
   height: 820px;
+
+  ${media.phone`
+    height: 440px;
+  `}
+`
+
+export const TakeActionSharedToItemInfo = styled.div`
+  display: flex;
+  justify-content: flex-start;
+
+  p {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 28px;
+    color: ${colors.white};
+    padding-left: 150px;
+    padding-top: 45px;
+    width: 470px;
+  }
+
+  ${media.phone`
+    p {
+      width: 98vw;
+      height: 288px;
+      left: 0px;
+      top: 37px;
+      font-size: 14px;
+      line-height: 24px;
+      flex: none;
+      order: 1;
+      align-self: center;
+      margin-left: 15px;
+      margin-right: 15px;
+      padding-left: 0px;
+      padding-right: 15px;
+      padding-top: 107px;
+    }
+  `}
 `
 
 export const SharedToImageWrapper = styled.div`
@@ -610,6 +806,12 @@ export const SharedToImageWrapper = styled.div`
   position: absolute;
   left: 50vw;
   width: 50vw;
+
+  ${media.phone`
+    width: 50vw;
+    left: 0;
+    padding-top: 100px;
+  `}
 `
 
 export const TakeActionSharedToImage = styled.img`
@@ -618,6 +820,15 @@ export const TakeActionSharedToImage = styled.img`
   height: 422px;
   top: 0;
   left: -100px;
+
+  ${media.phone`
+    left: 0;
+    right: 0;
+    width: 95vw;
+    height: auto;
+    padding-top: 220px;
+    padding-left: 10px;
+  `}
 `
 
 export const SmallCircle = styled.img`
@@ -626,6 +837,13 @@ export const SmallCircle = styled.img`
   height: 212px;
   top: 25px;
   left: 80px;
+
+  ${media.phone`
+    width: 101.71px;
+    height: 101.59px;
+    left: 100px;
+    top: 173px;
+  `}
 `
 
 export const BigCircle = styled.img`
@@ -634,6 +852,12 @@ export const BigCircle = styled.img`
   height: 422px;
   top: 22px;
   left: -235px;
+
+  ${media.phone`
+    width: 202px;
+    height: 201.77px;
+    left: 51px;
+  `}
 `
 
 // Wrapper for campaigns
@@ -660,12 +884,15 @@ export const CampaignsMainWrapper = styled.section`
     align-items: center;
     text-align: center;
   }
+
+  ${media.phone`
+    height: 674px;
+  `}
 `
 
 export const CampaignsHeader = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
   width: 731px;
   height: 142px;
   margin-top: 100px;
@@ -677,6 +904,16 @@ export const CampaignsHeader = styled.div`
   line-height: 71px;
   text-align: center;
   color: ${colors.humanscaleHeaderText};
+
+  ${media.phone`
+    width: 290px;
+    height: 137px;
+    left: 0px;
+    top: 0px;
+    font-size: 25px;
+    line-height: 34px;
+    margin: 0px 20px;
+  `}
 `
 
 export const CampaignsBlock = styled.div`
@@ -686,6 +923,13 @@ export const CampaignsBlock = styled.div`
   width: 1300px;
   height: 354px;
   background: ${colors.humanscaleBlueAsh};
+
+  ${media.phone`
+    height: 219px;
+    top: 420px;
+    left: 0;
+    right: 0;
+  `}
 `
 
 export const CampaignsFinger = styled.img`
@@ -694,6 +938,12 @@ export const CampaignsFinger = styled.img`
   bottom: -50px;
   width: 330px;
   height: 360px;
+
+  ${media.phone`
+    width: 125.96px;
+    height: 140.72px;
+    top: 80px;
+  `}
 `
 
 export const CampaignsCards = styled.div`
@@ -712,6 +962,7 @@ export const CampaignsCard = styled.div`
   margin-right: 40px;
   box-shadow: 0px 1px 16px ${hexToRgba(colors.dark, 0.3)};
   cursor: pointer;
+
   img {
     width: 130px;
     height: 130px;
@@ -731,19 +982,32 @@ export const CampaignsCard = styled.div`
     text-align: left;
 
     span {
-      font-family: Noto Sans;
-      font-style: normal;
-      font-weight: normal;
       font-size: 14px;
       line-height: 20px;
       color: #858f8e;
-      text-align: left;
     }
   }
+
+  ${media.phone`
+    width: 240px;
+    height: 124px;
+    border-radius: 4px;
+
+    img {
+      width: 72px;
+      height: 72px;
+      margin-left: 0px;
+    }
+
+    div {
+      width: 90px;
+      height: 44px;
+    }
+  `}
 `
 
 export const CampaignsInfo = styled.div`
-  padding-top: 50px;
+  margin-top: 50px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -754,6 +1018,14 @@ export const CampaignsInfo = styled.div`
     text-align: center;
     width: 100%;
   }
+
+  ${media.phone`
+  margin-top: 0px;
+    div {
+      width: 290px;
+      margin-top: 70px;
+    }
+  `}
 `
 
 export const CampaignButtons = styled.div`
@@ -762,6 +1034,14 @@ export const CampaignButtons = styled.div`
   height: 50px;
   left: 40px;
   bottom: 98px;
+
+  ${media.phone`
+      width: 100vw;
+      display: flex;
+      justify-content: space-around;
+      left: 0px;
+      bottom: 40px;
+  `}
 `
 
 // Join handprinter
@@ -776,6 +1056,12 @@ export const JoinHandprinterWrapper = styled.section`
   align-items: center;
   height: 603px;
   background: ${colors.humanscaleIvy};
+
+  ${media.phone`
+    height: 419px;
+    left: 0;
+    top: 0;
+  `}
 `
 
 export const JoinHandprinterContentBlock = styled.div`
@@ -786,6 +1072,11 @@ export const JoinHandprinterContentBlock = styled.div`
   width: 1134px;
   height: 352px;
   border: 1px solid ${colors.white};
+
+  ${media.phone`
+    width: 290px;
+    height: 319px;
+  `}
 `
 
 export const JoinHandprinterContent = styled.div`
@@ -793,14 +1084,33 @@ export const JoinHandprinterContent = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+
   p {
     width: 500px;
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
     font-size: 52px;
     line-height: 71px;
     text-align: center;
     color: ${colors.white};
     margin-bottom: 26px;
   }
+
+  ${media.phone`
+    p {
+      width: 228px;
+      height: 69px;
+      left: 0px;
+      top: 0px;
+      font-size: 25px;
+      line-height: 34px;
+      flex: none;
+      order: 0;
+      align-self: center;
+      margin: 0px 40px 40px 40px;
+    }
+  `}
 `
 
 export const Slider = styled.div`

@@ -671,6 +671,12 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
 
+  .ant-dropdown-trigger {
+    ${media.phone`
+      width: 100%;
+    `}
+  }
+
   .ant-select {
     width: 200px;
     margin-right: 10px;

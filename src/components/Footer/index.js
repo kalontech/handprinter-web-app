@@ -120,7 +120,7 @@ const Footer = ({ brandedConfig }) => (
                     <Col xs={{ span: 24 }}>
                       <Langs />
                     </Col>
-                    <Col xs={{ span: 24 }} style={{ marginTop: '10px' }}>
+                    <Col xs={{ span: 24 }}>
                       <FooterUnitsSelector />
                     </Col>
                   </Row>

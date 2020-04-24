@@ -28,6 +28,7 @@ export const Wrap = styled(BlockContainer)`
 export const FooterMenu = styled.ul`
   list-style: none;
   padding-left: 0;
+
   a {
     text-decoration: none;
     line-height: 36px;
@@ -38,6 +39,10 @@ export const FooterMenu = styled.ul`
       color: ${colors.white};
     }
   }
+
+  ${media.phone`
+    margin-right: 10px;
+  `}
 `
 
 export const FooterImage = styled.div`

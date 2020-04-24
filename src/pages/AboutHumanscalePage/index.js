@@ -33,7 +33,9 @@ import {
   TakeActionHeader,
   TakeAction,
   TakeActionDoIt,
+  TakeActionDoItItemInfo,
   TakeActionShareTo,
+  TakeActionSharedToItemInfo,
   CampaignsMainWrapper,
   CampaignsInfo,
   CampaignsHeader,
@@ -140,39 +142,6 @@ function AboutHumanscalePage(props) {
           )}
         </HeroInfo>
       </Hero>
-
-      {/* {!isTablet && !isMobile && (
-        <Hero>
-          <HeroInfo>
-            <HeroTitle>
-              <FormattedMessage id="app.aboutHumanscalePage.hero.title" />
-            </HeroTitle>
-            {!props.user && (
-              <Link to="/account/register">
-                <WhiteButton type="ghost" size="large">
-                  <FormattedMessage id="app.aboutHumanscalePage.join.link" />
-                </WhiteButton>
-              </Link>
-            )}
-          </HeroInfo>
-        </Hero>
-      )}
-      {!isTablet && !isMobile && (
-        <Hero>
-          <HeroInfo>
-            <HeroTitle>
-              <FormattedMessage id="app.aboutHumanscalePage.hero.title" />
-            </HeroTitle>
-            {!props.user && (
-              <Link to="/account/register">
-                <WhiteButton type="ghost" size="large">
-                  <FormattedMessage id="app.aboutHumanscalePage.join.link" />
-                </WhiteButton>
-              </Link>
-            )}
-          </HeroInfo>
-        </Hero>
-      )} */}
       <WhatIsFootprint>
         <FootprintWrapper>
           <FootprintTitle>
@@ -226,7 +195,7 @@ function AboutHumanscalePage(props) {
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.takeAction" />
             </p>
-            <TakeActionDivider style={{ right: '137px' }} />
+            <TakeActionDivider />
           </TakeActionItemHeader>
           <TakeActionItemInfo>
             <p>
@@ -247,7 +216,7 @@ function AboutHumanscalePage(props) {
             </p>
             <TakeActionDivider style={{ right: '79px' }} />
           </TakeActionItemHeader>
-          <TakeActionItemInfo>
+          <TakeActionDoItItemInfo>
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionDoItInfo" />
             </p>
@@ -255,7 +224,7 @@ function AboutHumanscalePage(props) {
               <TakeActionDoItMainImage src={doItMainImage} alt="" />
               <TakeActionDoItHandprint src={doItHandprint} alt="" />
             </TakeActionDoItImageWrapper>
-          </TakeActionItemInfo>
+          </TakeActionDoItItemInfo>
         </TakeActionDoIt>
         <TakeActionShareTo>
           <TakeActionItemHeader>
@@ -264,7 +233,7 @@ function AboutHumanscalePage(props) {
             </p>
             <TakeActionDivider style={{ right: '45px' }} />
           </TakeActionItemHeader>
-          <TakeActionItemInfo>
+          <TakeActionSharedToItemInfo>
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionShareInfo" />
             </p>
@@ -273,7 +242,7 @@ function AboutHumanscalePage(props) {
               <SmallCircle src={smallOval} alt="" />
               <BigCircle src={bigOval} alt="" />
             </SharedToImageWrapper>
-          </TakeActionItemInfo>
+          </TakeActionSharedToItemInfo>
         </TakeActionShareTo>
       </TakeActionWrapper>
       <CampaignsMainWrapper>
