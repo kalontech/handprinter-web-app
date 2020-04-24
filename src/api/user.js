@@ -27,11 +27,16 @@ export const getUser = body =>
 
 export const getInvitationsList = () => fetchAPI('/users/invitations')
 
-export const getDashboardData = ({ userId, groupId, subset = 'me' } = {}) => {
+export const getDashboardData = ({
+  userId,
+  groupId,
+  subset = 'me',
+  belongsToBrand,
+} = {}) => {
   const url =
     userId || groupId
       ? `/users/dashboard_data/${userId || groupId}?for=${subset}`
-      : `/users/dashboard_data?for=${subset}`
+      : `/users/dashboard_data?for=${subset}&belongsToBrand=${belongsToBrand}`
   return fetchAPI(url)
 }
 
