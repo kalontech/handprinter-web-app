@@ -1000,7 +1000,9 @@ class GroupViewPage extends PureComponent {
                   </Fragment>
                 )}
 
-                <GroupButton {...this.buttonProps} />
+                {group.belongsToBrand !== 'humanscale' && (
+                  <GroupButton {...this.buttonProps} />
+                )}
               </Container>
             </WhiteBlock>
 

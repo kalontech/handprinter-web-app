@@ -472,7 +472,8 @@ class GroupsPage extends React.PureComponent {
                         [BUTTON_TYPES.leave]: {
                           onClick: this.toggleMembership(item),
                           disabled:
-                            item.info.memberRole === MEMBER_GROUP_ROLES.OWNER,
+                            item.info.memberRole === MEMBER_GROUP_ROLES.OWNER ||
+                            match.params.subset === GROUPS_SUBSETS.TEAMS,
                         },
                         [BUTTON_TYPES.join]: {
                           onClick: this.toggleMembership(item),
@@ -490,7 +491,12 @@ class GroupsPage extends React.PureComponent {
                             USER_GROUP_STATUSES.REQUESTING,
                         },
                       }
-
+                      if (
+                        match.params.subset === GROUPS_SUBSETS.TEAMS &&
+                        type === BUTTON_TYPES.join
+                      ) {
+                        return null
+                      }
                       return (
                         <GroupButton
                           type={type}
