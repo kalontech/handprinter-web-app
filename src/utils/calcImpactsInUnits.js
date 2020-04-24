@@ -14,13 +14,13 @@ export const calcImpactsInUnits = actions => {
   const sum = (prev, next) => prev + next
 
   return {
-    handprint: {
-      climate: actions.map(climateHandprint).reduce(sum),
-      ecosystem: actions.map(ecosystemHandprint).reduce(sum),
-      health: actions.map(healthHandprint).reduce(sum),
-      waste: actions.map(wasteHandprint).reduce(sum),
-      water: actions.map(waterHandprint).reduce(sum),
-    },
+    // handprint: {
+    //   climate: actions.map(climateHandprint).reduce(sum),
+    //   ecosystem: actions.map(ecosystemHandprint).reduce(sum),
+    //   health: actions.map(healthHandprint).reduce(sum),
+    //   waste: actions.map(wasteHandprint).reduce(sum),
+    //   water: actions.map(waterHandprint).reduce(sum),
+    // },
     footprint: {
       climate: actions.map(climateFootprint).reduce(sum),
       ecosystem: actions.map(ecosystemFootprint).reduce(sum),
