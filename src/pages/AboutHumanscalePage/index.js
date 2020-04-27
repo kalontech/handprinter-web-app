@@ -153,10 +153,8 @@ function AboutHumanscalePage(props) {
           <FootprintImagesBlock>
             <FootprintMainImage src={footprintImage} alt="" />
             <FootprintLeapImage src={footprintLeap} alt="" />
-            {!isMobile && !isTablet && (
-              <FootprintFingerImage src={footprintFinger} alt="" />
-            )}
-            {isMobile && (
+            {!isTablet && <FootprintFingerImage src={footprintFinger} alt="" />}
+            {(isMobile || isTablet) && (
               <FootprintFingerImage src={footprintFingerMobile} alt="" />
             )}
             <FootprintFootImage src={footprintFinger2} alt="" />
@@ -261,7 +259,13 @@ function AboutHumanscalePage(props) {
           <CampaignsFinger src={campaignsFinger} alt="" />
           <CampaignsCards>
             <Slider>
-              <Carousel dots={false} arrows={true} variableWidth={true}>
+              <Carousel
+                dots={false}
+                arrows={!isMobile}
+                variableWidth={true}
+                swipeToSlide={true}
+                swipe={true}
+              >
                 {campaigns.map(camp => {
                   return (
                     <Slide key={camp.id}>

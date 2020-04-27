@@ -17,26 +17,30 @@ export const FootprintTitle = styled.h2`
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
+  text-align: center;
   font-size: 42px;
   line-height: 71px;
   letter-spacing: -0.4px;
   margin-bottom: 0;
   color: ${colors.humanscaleHeaderText};
 
+  ${media.largeDesktop`
+    width: 100%;
+    height: 34px;
+    left: 0px;
+    top: 0px;
+    font-size: 25px;
+    line-height: 34px;
+    margin-top: 24px;
+  `}
+
   ${media.phone`
     width: 100%;
     height: 34px;
     left: 0px;
     top: 0px;
-    font-family: Noto Sans;
-    font-style: normal;
-    font-weight: normal;
     font-size: 25px;
     line-height: 34px;
-    text-align: center;
-    flex: none;
-    order: 0;
-    align-self: flex-start;
     margin-top: 24px;
   `}
 `
@@ -54,11 +58,24 @@ export const FootprintText = styled.p`
   line-height: 28px;
   display: flex;
   align-items: center;
+  text-align: center;
   color: ${colors.interfaceFooterColor2};
 
   &:last-of-type {
     margin-bottom: 0;
   }
+
+  ${media.largeDesktop`
+    width: 95%;
+    height: 288px;
+    left: 19.5px;
+    right: 20px;
+    top: 54px;
+    font-size: 14px;
+    line-height: 24px;
+    color: ${colors.dark};
+    margin-top: 20px;
+  `}
 
   ${media.phone`
     width: 87.5%;
@@ -66,18 +83,9 @@ export const FootprintText = styled.p`
     left: 19.5px;
     right: 20px;
     top: 54px;
-    font-family: Noto Sans;
-    font-style: normal;
-    font-weight: normal;
     font-size: 14px;
     line-height: 24px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #5E6264;
-    flex: none;
-    order: 1;
-    align-self: center;
+    color: ${colors.dark};
     margin-top: 20px;
   `}
 `
@@ -92,24 +100,28 @@ export const HandprintTitle = styled.h2`
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
+  text-align: center;
   font-size: 42px;
   line-height: 71px;
   color: ${colors.humanscaleHeaderText};
+
+  ${media.largeDesktop`
+    width: 250px;
+    height: 34px;
+    left: 0px;
+    top: 0px;
+    font-size: 25px;
+    line-height: 34px;
+    margin: 0px 20px;
+  `}
 
   ${media.phone`
     width: 250px;
     height: 34px;
     left: 0px;
     top: 0px;
-    font-family: Noto Sans;
-    font-style: normal;
-    font-weight: normal;
     font-size: 25px;
     line-height: 34px;
-    text-align: center;
-    flex: none;
-    order: 0;
-    align-self: center;
     margin: 0px 20px;
   `}
 `
@@ -121,6 +133,7 @@ export const HandprintText = styled.p`
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
+  text-align: center;
   font-size: 16px;
   line-height: 28px;
   display: flex;
@@ -133,21 +146,26 @@ export const HandprintText = styled.p`
     margin-bottom: 0;
   }
 
+  ${media.largeDesktop`
+    width: 250px;
+    height: 265px;
+    left: 0px;
+    top: 54px;
+    font-size: 14px;
+    line-height: 24px;
+    color: ${colors.dark};
+    margin: 0px 20px;
+  `}
+
   ${media.phone`
     width: 250px;
     height: 265px;
     left: 0px;
     top: 54px;
-    font-family: Noto Sans;
-    font-style: normal;
-    font-weight: normal;
     font-size: 14px;
     line-height: 24px;
     text-align: center;
-    color: #5E6264;
-    flex: none;
-    order: 1;
-    align-self: center;
+    color: ${colors.dark};
     margin: 0px 20px;
   `}
 `
@@ -175,10 +193,19 @@ export const Hero = styled.section`
       `}
   }
 
-  ${media.tablet`
+  ${media.largeDesktop`
       flex-direction: column;
-      justify-content: flex-end;
-      height: 450px;
+      justify-content: center;
+      align-items: center;
+      height: 942px;
+      background-position: center;
+  `}
+
+  ${media.desktop`
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 942px;
       background-position: center;
   `}
 
@@ -200,6 +227,21 @@ export const HeroInfo = styled.div`
   height: 246px;
 
   ${media.tablet`
+    width: 573px;
+    height: 170px;
+    left: 0px;
+    top: 0px;
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 54px;
+    text-align: center;
+    color: ${colors.white};
+    flex: none;
+    order: 0;
+    align-self: center;
+    margin: 0px 60px;
   `}
 
   ${media.phone`
@@ -244,7 +286,6 @@ export const HeroTitle = styled.div`
     min-height: 145px;
     text-align: center;
     margin-bottom: 65px;
-    /* humanscaleOlive */
   `}
 `
 
@@ -298,12 +339,20 @@ export const GreenButton = styled(Button)`
 
 // what is footprint
 export const WhatIsFootprint = styled.section`
-  height: 820px;
+  height: 1020px;
   background: ${colors.humanscaleFootPrintBg};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
+
+  ${media.largeDesktop`
+    height: 1000px;
+  `}
+
+  ${media.phone`
+    height: 830px;
+  `}
 `
 
 export const FootprintWrapper = styled.div`
@@ -313,6 +362,13 @@ export const FootprintWrapper = styled.div`
   left: 141px;
   top: 1080px;
   background: ${colors.white};
+
+  ${media.largeDesktop`
+    left: 34px;
+    right: 34px;
+    top: 1000px;
+    height: 761.82px;
+  `}
 
   ${media.phone`
     height: 675px;
@@ -327,6 +383,11 @@ export const FootprintImagesBlock = styled.div`
   left: 652px;
   top: -127px;
 
+  ${media.largeDesktop`
+    left: calc(50% - 304px/2 + 12.1px);
+    top: 357px;
+  `}
+
   ${media.phone`
     left: calc(50% - 204px/2 + 12.1px);
     top: 402px;
@@ -337,6 +398,11 @@ export const FootprintMainImage = styled.img`
   position: absolute;
   width: 552px;
   height: 825px;
+
+  ${media.largeDesktop`
+    width: 298px;
+    height: 445px;
+  `}
 
   ${media.phone`
     height: 305px;
@@ -350,6 +416,10 @@ export const FootprintLeapImage = styled.img`
   position: relative;
   top: -120px;
   left: -20px;
+
+  ${media.largeDesktop`
+    top: -60px;
+  `}
 
   ${media.phone`
     height: 36px;
@@ -365,11 +435,17 @@ export const FootprintFingerImage = styled.img`
   top: 531px;
   right: 170px;
 
+  ${media.largeDesktop`
+    height: 200px;
+    top: 270px;
+    left: -130px;
+  `}
+
   ${media.phone`
     height: 129px;
     width: 135px;
     top: 185px;
-    right: 94px;
+    left: -94px;
   `}
 `
 
@@ -380,11 +456,18 @@ export const FootprintFootImage = styled.img`
   top: 355px;
   right: -170px;
 
+  ${media.largeDesktop`
+    width: 58.96px;
+    height: 86.04px;
+    top: 235px;
+    left: 80px;
+  `}
+
   ${media.phone`
     height: 40px;
     width: 36px;
-    top: 145px;
-    left: 8px;
+    top: 135px;
+    left: 18px;
   `}
 `
 
@@ -417,6 +500,7 @@ export const HandprintWrapper = styled.div`
 
 export const HandprintImagesWrapper = styled.div`
   width: 1200px;
+
   ${media.phone`
     width: 258px;
     margin-right: 20px;
@@ -427,6 +511,13 @@ export const HandprintMainImage = styled.img`
   position: absolute;
   left: 150px;
   margin-right: 40px;
+
+  ${media.largeDesktop`
+    left: calc(50% - 400px/2);
+    bottom: 0px;
+    width: 416px;
+    height: 361.6px;
+  `}
 
   ${media.phone`
     left: calc(50% - 258px/2);
@@ -448,11 +539,22 @@ export const HandprintLeapImage = styled.img`
     top: 390px;
   `}
 `
+
 export const HandprintEarthImage = styled.img`
   width: 90px;
   position: relative;
   top: -50px;
   left: 0px;
+
+  ${media.largeDesktop`
+    top: 250px;
+    left: calc(50% - 570px/2);
+  `}
+
+  ${media.desktop`
+    top: 250px;
+    left: calc(50% - 830px/2);
+  `}
 
   ${media.phone`
     width: 46.23px;
@@ -468,6 +570,11 @@ export const HandprintInfo = styled.div`
   left: 630px;
   margin-left: 200px;
 
+  ${media.largeDesktop`
+    left: calc(50% - 258px/2);
+    top: -150px;
+    margin-left: 0px;`}
+
   ${media.phone`
     left: calc(50% - 288px/2);
     top: 50px;
@@ -478,6 +585,10 @@ export const HandprintInfo = styled.div`
 export const TakeActionWrapper = styled.section`
   height: 2560px;
   background: ${colors.humanscaleIvy};
+
+  ${media.largeDesktop`
+    height: 2140px;
+  `}
 
   ${media.phone`
     height: 1840px;
@@ -516,6 +627,10 @@ export const TakeActionHeader = styled.div`
 export const TakeAction = styled.section`
   height: 820px;
 
+  ${media.largeDesktop`
+    height: 600px;
+  `}
+
   ${media.phone`
     height: 581px;
   `}
@@ -537,8 +652,12 @@ export const TakeActionItemHeader = styled.div`
     margin-top: 5px;
   }
 
+  ${media.largeDesktop`
+    margin-left: 20px;
+  `}
+
   ${media.phone`
-  flex-direction: column;
+    flex-direction: column;
     width: 171px;
     height: 25px;
 
@@ -588,6 +707,17 @@ export const TakeActionItemInfo = styled.div`
     width: 470px;
   }
 
+  ${media.largeDesktop`
+    width: 340px;
+    height: 309px;
+
+    p { 
+      padding-left: 0px;
+      margin-left: 35px;
+    }
+
+  `}
+
   ${media.phone`
     p {
       width: 98vw;
@@ -613,6 +743,17 @@ export const TakeActionMainImageWraper = styled.div`
   position: absolute;
   right: 638px;
 
+  ${media.largeDesktop`
+    width: 264.41px;
+    height: 255.01px;
+    left: 600px;
+    margin-top: 100px;
+  `}
+
+  ${media.desktop`
+    left: 450px;
+  `}
+
   ${media.phone`
     width: 209px;
     height: 201.77px;
@@ -627,8 +768,13 @@ export const TakeActionMainImage = styled.img`
   height: 477px;
   z-index: 1;
 
+  ${media.largeDesktop`
+    width: 264.41px;
+    height: 255.01px;
+  `}
+
   ${media.phone`
-    top: 360px;
+    top: 300px;
     width: 209px;
     height: 201.77px;
     border-radius: 4px;
@@ -642,11 +788,15 @@ export const TakeActionLeap = styled.img`
   left: 380px;
   z-index: 2;
 
+  ${media.largeDesktop`
+    left: 190px;
+  `}
+
   ${media.phone`
     width: 24.82px;
     height: 30.46px;
     left: calc(50% - 24.82px/2 + 76.51px);
-    top: 350px;
+    top: 285px;
   `}
 `
 
@@ -656,6 +806,18 @@ export const TakeActionLeap2 = styled.img`
   top: -30px;
   left: 440px;
   z-index: 3;
+
+  ${media.largeDesktop`
+    width: 40px;
+    top: -15px;
+    left: 180px;
+  `}
+
+  ${media.phone`
+    width: 40px;
+    top: 280px;
+    left: 180px;
+  `}
 `
 
 export const TakeActionFingerprint = styled.img`
@@ -666,16 +828,27 @@ export const TakeActionFingerprint = styled.img`
   left: -130px;
   z-index: 0;
 
+  ${media.largeDesktop`
+    left: -50px;
+    top: 130px;
+    width: 264.2px;
+    height: 181.88px;
+  `}
+
   ${media.phone`
     width: 208.96px;
     height: 143.69px;
     left: calc(50% - 208.96px/2 - 35.13px);
-    top: 470px;
+    top: 410px;
   `}
 `
 
 export const TakeActionDoIt = styled.section`
   height: 820px;
+
+  ${media.largeDesktop`
+    height: 600px;
+  `}
 
   ${media.phone`
     height: 640px;
@@ -687,6 +860,17 @@ export const TakeActionDoItImageWrapper = styled.section`
   position: absolute;
   right: 485px;
   margin-top: 30px;
+
+  ${media.largeDesktop`
+    width: 312.5px;
+    height: 276.25px;
+    left: 600px;
+    margin-top: 100px;
+  `}
+
+  ${media.desktop`
+    left: 400px;
+  `}
 
   ${media.phone`
     width: 228.81px;
@@ -711,6 +895,17 @@ export const TakeActionDoItItemInfo = styled.div`
     padding-top: 45px;
     width: 470px;
   }
+
+  ${media.largeDesktop`
+    width: 340px;
+    height: 309px;
+
+    p { 
+      padding-left: 0px;
+      margin-left: 35px;
+    }
+
+  `}
 
   ${media.phone`
     p {
@@ -737,6 +932,11 @@ export const TakeActionDoItMainImage = styled.img`
   width: 500px;
   height: 442px;
 
+  ${media.largeDesktop`
+    width: 312.5px;
+    height: 276.25px;
+  `}
+
   ${media.phone`
     width: 228.81px;
     height: 202.04px;
@@ -748,6 +948,12 @@ export const TakeActionDoItHandprint = styled.img`
   top: 290px;
   left: -50px;
 
+  ${media.largeDesktop`
+    top: 140px;
+    width: 138.76px;
+    height: 195.53px;
+  `}
+
   ${media.phone`
     width: 101.6px;
     height: 143px;
@@ -758,6 +964,10 @@ export const TakeActionDoItHandprint = styled.img`
 
 export const TakeActionShareTo = styled.section`
   height: 820px;
+
+  ${media.largeDesktop`
+    height: 600px;
+  `}
 
   ${media.phone`
     height: 440px;
@@ -779,6 +989,17 @@ export const TakeActionSharedToItemInfo = styled.div`
     padding-top: 45px;
     width: 470px;
   }
+
+  ${media.largeDesktop`
+    width: 340px;
+    height: 309px;
+
+    p { 
+      padding-left: 0px;
+      margin-left: 35px;
+    }
+
+  `}
 
   ${media.phone`
     p {
@@ -821,12 +1042,17 @@ export const TakeActionSharedToImage = styled.img`
   top: 0;
   left: -100px;
 
+  ${media.desktop`
+    top: 90px;
+    left: -220px;
+  `}
+
   ${media.phone`
     left: 0;
     right: 0;
     width: 95vw;
     height: auto;
-    padding-top: 220px;
+    padding-top: 170px;
     padding-left: 10px;
   `}
 `
@@ -838,11 +1064,20 @@ export const SmallCircle = styled.img`
   top: 25px;
   left: 80px;
 
+  ${media.largeDesktop`
+    top: 125px;
+  `}
+
+  ${media.desktop`
+    top: 210px;
+    left: -30px;
+  `}
+
   ${media.phone`
     width: 101.71px;
     height: 101.59px;
     left: 100px;
-    top: 173px;
+    top: 207px;
   `}
 `
 
@@ -853,10 +1088,21 @@ export const BigCircle = styled.img`
   top: 22px;
   left: -235px;
 
+  ${media.largeDesktop`
+    top: -195px;
+    left: -23px;
+  `}
+
+  ${media.desktop`
+    top: -115px;
+    left: -135px;
+  `}
+
   ${media.phone`
     width: 202px;
     height: 201.77px;
     left: 51px;
+    top: 50px;
   `}
 `
 
@@ -884,6 +1130,14 @@ export const CampaignsMainWrapper = styled.section`
     align-items: center;
     text-align: center;
   }
+
+  ${media.desktop`
+    height: 806px;      
+  `}
+
+  ${media.tablet`
+    height: 806px;      
+  `}
 
   ${media.phone`
     height: 674px;
@@ -923,6 +1177,16 @@ export const CampaignsBlock = styled.div`
   width: 1300px;
   height: 354px;
   background: ${colors.humanscaleBlueAsh};
+
+  ${media.largeDesktop`
+    width: 960px;
+    height: 308px;
+  `}
+
+  ${media.desktop`
+    width: 734px;
+    height: 308px;
+  `}
 
   ${media.phone`
     height: 219px;
@@ -978,13 +1242,13 @@ export const CampaignsCard = styled.div`
     font-weight: normal;
     font-size: 19px;
     line-height: 26px;
-    color: #344442;
+    color: ${colors.dark};
     text-align: left;
 
     span {
       font-size: 14px;
       line-height: 20px;
-      color: #858f8e;
+      color: ${colors.darkGray};
     }
   }
 
@@ -1020,7 +1284,7 @@ export const CampaignsInfo = styled.div`
   }
 
   ${media.phone`
-  margin-top: 0px;
+    margin-top: 0px;
     div {
       width: 290px;
       margin-top: 70px;
@@ -1033,7 +1297,7 @@ export const CampaignButtons = styled.div`
   width: 170px;
   height: 50px;
   left: 40px;
-  bottom: 98px;
+  bottom: 48px;
 
   ${media.phone`
       width: 100vw;
@@ -1072,6 +1336,16 @@ export const JoinHandprinterContentBlock = styled.div`
   width: 1134px;
   height: 352px;
   border: 1px solid ${colors.white};
+
+  ${media.largeDesktop`
+    width: 700px;
+    height: 352px;
+  `}
+
+  ${media.tablet`
+    width: 700px;
+    height: 352px;
+  `}
 
   ${media.phone`
     width: 290px;
@@ -1134,6 +1408,19 @@ export const Slider = styled.div`
       top: 248px;
       left: 930px;
       transform: rotate(180deg);
+
+      ${media.largeDesktop`
+        left: 700px;
+        top: 271px;
+        transform: translateY(-50%) rotate(180deg);
+      `}
+
+      ${media.desktop`
+        left: 520px;
+        top: 271px;
+        transform: translateY(-50%) rotate(180deg);
+      `}
+
       ${media.phone`
         left: 15px;
         transform: translateY(-50%) rotate(180deg);
@@ -1144,10 +1431,22 @@ export const Slider = styled.div`
       top: 273.5px;
       left: 1000px;
       margin-left: 15px;
+
+      ${media.largeDesktop`
+        left: 770px;
+        top: 271.5px;
+      `}
+
+      ${media.desktop`
+        left: 580px;
+        top: 272px;
+      `}
+
       ${media.phone`
         right: 15px;
       `}
     }
   }
 `
+
 export const Slide = styled.div``

@@ -88,6 +88,8 @@ import {
   UnitsPopover,
   PopoverWrapper,
   PopoverText,
+  ResponsiveLoginWrap,
+  UnitsSwitch,
 } from './styled'
 
 import { UIContextSettings } from '../../context/uiSettingsContext'
@@ -448,6 +450,19 @@ function Header(props) {
                     </PrimaryButton>
                   </Link>
                 )}
+                {!user && (
+                  <Link
+                    to="/account/register"
+                    style={{
+                      marginRight: '0px',
+                      width: isTablet ? '250px' : '100%',
+                    }}
+                  >
+                    <GreenButton>
+                      <FormattedMessage id="app.aboutHumanscalePage.join.link" />
+                    </GreenButton>
+                  </Link>
+                )}
                 <Link to="/account/login" onClick={onClick}>
                   {overrides && overrides.brandName === 'Eaton' ? (
                     <BlueBorderedButton>
@@ -457,10 +472,12 @@ function Header(props) {
                     <GrayBorderedButton>
                       <FormattedMessage id="app.header.menu.login" />
                     </GrayBorderedButton>
-                  ) : overrides && overrides.brandName === 'Humanscale' ? (
-                    <GrayBorderedButton>
-                      <FormattedMessage id="app.header.menu.login1" />
-                    </GrayBorderedButton>
+                  ) : !user &&
+                    overrides &&
+                    overrides.brandName === 'Humanscale' ? (
+                    <ResponsiveLoginWrap>
+                      <FormattedMessage id="app.header.menu.login" />
+                    </ResponsiveLoginWrap>
                   ) : (
                     <DefaultButton type="primary" size="large">
                       <FormattedMessage id="app.header.menu.login" />
@@ -475,6 +492,11 @@ function Header(props) {
                   selectedKeys={[selectedMenuItem]}
                   onClick={onClick}
                 >
+                  <Menu.Item key="/challenges">
+                    <Link to="/challenges">
+                      <FormattedMessage id="app.pages.challenges" />
+                    </Link>
+                  </Menu.Item>
                   <Menu.Item key="/actions">
                     <Link to="/actions">
                       <FormattedMessage id="app.header.menu.actions" />
@@ -519,8 +541,20 @@ function Header(props) {
                       </Menu.Item>
                     )}
                   </SubMenu>
+                  <Menu.Item>
+                    <CollapseLanguageSelector iconColor={brandColor} />
+                  </Menu.Item>
+                  <Menu.Item>
+                    <UnitsSwitch>
+                      <p>
+                        {UIContextData.showPhysicalValues
+                          ? 'Physical Units On'
+                          : 'Time Units On'}
+                      </p>
+                      {isMobile && renderUnitsSwitch()}
+                    </UnitsSwitch>
+                  </Menu.Item>
                 </Menu>
-                <CollapseLanguageSelector iconColor={brandColor} />
               </CollapseContent>
             </CollapseMenu>
           </Animate>
@@ -727,20 +761,14 @@ function Header(props) {
                   selectedKeys={[selectedMenuItem]}
                   onClick={onClick}
                 >
+                  <Menu.Item key="/challenges">
+                    <Link to="/challenges">
+                      <FormattedMessage id="app.pages.challenges" />
+                    </Link>
+                  </Menu.Item>
                   <Menu.Item key="/actions">
                     <Link to="/actions">
                       <FormattedMessage id="app.header.menu.actions" />
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item key="/groups">
-                    <Link
-                      to={
-                        overrides && overrides.brandName === 'Humanscale'
-                          ? '/groups/teams'
-                          : '/groups/discover'
-                      }
-                    >
-                      <FormattedMessage id="app.pages.groups" />
                     </Link>
                   </Menu.Item>
                   {(!overrides || !overrides.brandName) && (
@@ -854,19 +882,25 @@ function Header(props) {
                       </a>
                     </Menu.Item>
                   </SubMenu>
+                  <Menu.Item>
+                    <CollapseLanguageSelector iconColor={brandColor} />
+                  </Menu.Item>
+                  <Menu.Item>
+                    <UnitsSwitch>
+                      <p>
+                        {UIContextData.showPhysicalValues
+                          ? 'Physical Units On'
+                          : 'Time Units On'}
+                      </p>
+                      {isMobile && renderUnitsSwitch()}
+                    </UnitsSwitch>
+                  </Menu.Item>
                 </Menu>
-                <CollapseLanguageSelector color={brandColor} />
               </CollapseContent>
             </CollapseMenu>
           </Animate>
 
           <HeaderWrap isLoggedIn={user} font={fontNames} fontColor={fontColor}>
-            {isTablet && (
-              <Hamburger onClick={onClick}>
-                {collapsed && <MenuIcon />}
-                {!collapsed && <CloseIcon />}
-              </Hamburger>
-            )}
             <LogoSmall>
               <Link style={overrides && headerLogoLinkStyle} to="/">
                 <img
@@ -875,6 +909,12 @@ function Header(props) {
                 />
               </Link>
             </LogoSmall>
+            {(isTablet || isMobile) && (
+              <Hamburger onClick={onClick}>
+                {collapsed && <MenuIcon />}
+                {!collapsed && <CloseIcon />}
+              </Hamburger>
+            )}
             {/* {isTablet &&
                 !isMobile &&
                 this.getNotificationsPopover(

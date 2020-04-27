@@ -20,7 +20,7 @@ export const Wrap = styled(BlockContainer)`
   padding: 80px 0 60px;
   overflow: hidden;
   ${media.phone`
-   padding-top: 40px;
+    padding-top: 40px;
     padding-bottom: 40px;
   `};
 `
@@ -39,6 +39,10 @@ export const FooterMenu = styled.ul`
       color: ${colors.white};
     }
   }
+
+  ${media.tablet`
+    margin-left: 10px;
+  `}
 
   ${media.phone`
     margin-right: 10px;
@@ -66,11 +70,11 @@ export const FooterImage = styled.div`
         `}
 
   ${media.largeDesktop`
-   margin-top: 0;
+    margin-top: 0;
     margin-bottom: 40px;
   `};
   ${media.phone`
-   margin-bottom: -20px;
+    margin-bottom: -20px;
   `};
 `
 
@@ -161,7 +165,7 @@ export const UnitsWrap = styled(Col)`
 
 export const Langs = styled(FooterLanguageSelector)`
   ${media.phone`
-   max-width: 100%;
+    max-width: 100%;
     margin-bottom: 20px;
   `};
 `
