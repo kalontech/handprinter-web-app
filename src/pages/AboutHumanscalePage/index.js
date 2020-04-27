@@ -124,6 +124,16 @@ function AboutHumanscalePage(props) {
 
   const token = window.localStorage.getItem('accessToken')
 
+  const settings = {
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    swipeToSlide: true,
+    swipe: true,
+    arrows: false,
+    variableWidth: true,
+  }
+
   return (
     <Fragment>
       <PageMetadata pageName="aboutInterfacePage" />
@@ -259,13 +269,7 @@ function AboutHumanscalePage(props) {
           <CampaignsFinger src={campaignsFinger} alt="" />
           <CampaignsCards>
             <Slider>
-              <Carousel
-                dots={false}
-                arrows={!isMobile}
-                variableWidth={true}
-                swipeToSlide={true}
-                swipe={true}
-              >
+              <Carousel {...settings}>
                 {campaigns.map(camp => {
                   return (
                     <Slide key={camp.id}>
