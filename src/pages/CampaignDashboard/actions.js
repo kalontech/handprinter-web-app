@@ -25,13 +25,17 @@ function getActions(props, selectedKey) {
     p => p.user._id === props.user._id,
   )
   const me = sortedParticipants && sortedParticipants[0]
-  const myAccomplishedActionIds = me.accomplishedActions.map(i => i._id)
-  return actions.filter(action => {
-    const isAccomplished = myAccomplishedActionIds.includes(action._id)
-    return selectedKey === ACTIONS_TABS.ACCOMPLISHED
-      ? isAccomplished
-      : !isAccomplished
-  })
+  if (me) {
+    const myAccomplishedActionIds = me.accomplishedActions.map(i => i._id)
+    return actions.filter(action => {
+      const isAccomplished = myAccomplishedActionIds.includes(action._id)
+      return selectedKey === ACTIONS_TABS.ACCOMPLISHED
+        ? isAccomplished
+        : !isAccomplished
+    })
+  } else {
+    return []
+  }
 }
 
 export default function renderActions(props) {
