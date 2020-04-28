@@ -30,7 +30,6 @@ export default function renderParticipants(props) {
           i => i.accomplishedActions.length >= actionsNumberToComplete,
         )
       : participants
-
   return (
     <Fragment>
       <MenuStyled

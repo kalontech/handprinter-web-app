@@ -21,9 +21,11 @@ function getActions(props, selectedKey) {
     campaign: { actions },
   } = props
   if (participants.length === 0) return []
-  const myAccomplishedActionIds = participants[0].accomplishedActions.map(
-    i => i._id,
+  const sortedParticipants = participants.filter(
+    p => p.user._id === props.user._id,
   )
+  const me = sortedParticipants && sortedParticipants[0]
+  const myAccomplishedActionIds = me.accomplishedActions.map(i => i._id)
   return actions.filter(action => {
     const isAccomplished = myAccomplishedActionIds.includes(action._id)
     return selectedKey === ACTIONS_TABS.ACCOMPLISHED
@@ -48,7 +50,6 @@ export default function renderActions(props) {
     : ACTIONS_TABS.TODO
 
   const filteredActions = getActions(props, selectedKey)
-
   return (
     <Fragment>
       <MenuStyled

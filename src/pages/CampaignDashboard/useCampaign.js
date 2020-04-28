@@ -17,6 +17,7 @@ export default function useCampaign(campaignId) {
           _id: {
             $in: res.campaign.actions.map(i => i._id),
           },
+          limit: 50,
         })
 
         if (res && campaingActionsRes) {
