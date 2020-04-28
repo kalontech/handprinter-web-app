@@ -8,6 +8,7 @@ import { sizes } from 'utils/mediaQueryTemplate'
 import { object } from 'prop-types'
 
 import CampaignsCarousel from 'components/CampaignsCarousel'
+import ScrollAnimation from 'components/ScrollAnimation'
 
 import {
   Hero,
@@ -254,33 +255,13 @@ function AboutHumanscalePage(props) {
         </CampaignsInfo>
         <CampaignsBlock>
           <CampaignsFinger src={campaignsFinger} alt="" />
-          {/* <CampaignsCards> */}
-          <CampaignsCarousel
-            campaigns={campaigns}
-            token={token}
-            hideControls={!!isMobile}
-          />
-          {/* <Slider>
-              <Carousel {...settings}>
-                {campaigns.map(camp => {
-                  return (
-                    <Slide key={camp.id}>
-                      <Link
-                        to={token ? `campaign/${camp.id}` : '/account/login'}
-                      >
-                        <CampaignsCard>
-                          <img src={camp.logo.src} alt="" />
-                          <div>
-                            <div>{camp.name}</div>
-                          </div>
-                        </CampaignsCard>
-                      </Link>
-                    </Slide>
-                  )
-                })}
-              </Carousel> 
-            </Slider> */}
-          {/* </CampaignsCards> */}
+          <ScrollAnimation>
+            <CampaignsCarousel
+              campaigns={campaigns}
+              token={token}
+              hideControls={!!isMobile}
+            />
+          </ScrollAnimation>
           <CampaignButtons>
             <Link to={token ? '/challenges' : '/account/login'}>
               <GreenButton>

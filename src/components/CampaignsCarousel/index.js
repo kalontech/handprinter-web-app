@@ -7,7 +7,7 @@ import { injectIntl } from 'react-intl'
 
 import { ArrowButton } from 'components/Styled'
 import colors from 'config/colors'
-import media, { sizes } from 'utils/mediaQueryTemplate'
+import media from 'utils/mediaQueryTemplate'
 
 import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 
@@ -135,13 +135,6 @@ const SliderButton = styled(ArrowButton)`
 `
 
 class ActionsCarousel extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      disableRightArrow: true,
-      disableLeftArrow: false,
-    }
-  }
   next = () => {
     this.carousel.next()
   }
@@ -149,18 +142,10 @@ class ActionsCarousel extends React.Component {
     this.carousel.prev()
   }
 
-  disableArrows = (item, index) => {
-    const { campaigns } = this.props
-    const disableLeftArrow = index !== 0
-    const disableRightArrow = index !== campaigns.length - 3
-    this.setState({ disableRightArrow, disableLeftArrow })
-  }
-
   render() {
     const { hideControls } = this.props
     const responsive = [
       {
-        breakpoint: sizes.phone,
         settings: {
           slidesToShow: 1,
           variableWidth: false,
@@ -176,9 +161,8 @@ class ActionsCarousel extends React.Component {
             ref={node => (this.carousel = node)}
             {...this.props}
             dots={true}
-            infinite={false}
+            infinite={true}
             variableWidth={true}
-            beforeChange={(item, index) => this.disableArrows(item, index)}
             responsive={responsive}
           >
             {this.props.campaigns.map((camp, index) => {
@@ -205,18 +189,10 @@ class ActionsCarousel extends React.Component {
           {!hideControls && (
             <SliderControls>
               <SliderArrows>
-                <SliderButton
-                  direction="left"
-                  onClick={this.previous}
-                  disabled={!this.state.disableLeftArrow}
-                >
+                <SliderButton direction="left" onClick={this.previous}>
                   <ExpandMoreIcon id="CarouselIconLeft" />
                 </SliderButton>
-                <SliderButton
-                  direction="right"
-                  onClick={this.next}
-                  disabled={!this.state.disableRightArrow}
-                >
+                <SliderButton direction="right" onClick={this.next}>
                   <ExpandMoreIcon id="CarouselIconRight" />
                 </SliderButton>
               </SliderArrows>
