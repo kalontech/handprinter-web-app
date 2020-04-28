@@ -1,12 +1,13 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
-import { Carousel } from 'antd'
 import { Link } from 'react-router-dom'
 import { animateScroll } from 'react-scroll/modules'
 import PageMetadata from 'components/PageMetadata'
 import * as api from 'api/campaigns'
 import { sizes } from 'utils/mediaQueryTemplate'
 import { object } from 'prop-types'
+
+import CampaignsCarousel from 'components/CampaignsCarousel'
 
 import {
   Hero,
@@ -61,12 +62,8 @@ import {
   BigCircle,
   SharedToImageWrapper,
   CampaignsFinger,
-  CampaignsCards,
-  CampaignsCard,
   CampaignButtons,
   TakeActionDivider,
-  Slider,
-  Slide,
 } from './styled'
 
 import footprintFinger from './assets/footprintFinger.svg'
@@ -123,16 +120,6 @@ function AboutHumanscalePage(props) {
   const isMobile = width < sizes.tablet
 
   const token = window.localStorage.getItem('accessToken')
-
-  const settings = {
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    swipeToSlide: true,
-    swipe: true,
-    arrows: false,
-    variableWidth: true,
-  }
 
   return (
     <Fragment>
@@ -267,8 +254,13 @@ function AboutHumanscalePage(props) {
         </CampaignsInfo>
         <CampaignsBlock>
           <CampaignsFinger src={campaignsFinger} alt="" />
-          <CampaignsCards>
-            <Slider>
+          {/* <CampaignsCards> */}
+          <CampaignsCarousel
+            campaigns={campaigns}
+            token={token}
+            hideControls={!!isMobile}
+          />
+          {/* <Slider>
               <Carousel {...settings}>
                 {campaigns.map(camp => {
                   return (
@@ -286,9 +278,9 @@ function AboutHumanscalePage(props) {
                     </Slide>
                   )
                 })}
-              </Carousel>
-            </Slider>
-          </CampaignsCards>
+              </Carousel> 
+            </Slider> */}
+          {/* </CampaignsCards> */}
           <CampaignButtons>
             <Link to={token ? '/challenges' : '/account/login'}>
               <GreenButton>

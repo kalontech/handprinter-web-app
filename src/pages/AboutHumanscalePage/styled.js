@@ -4,8 +4,6 @@ import media from 'utils/mediaQueryTemplate'
 import hexToRgba from 'utils/hexToRgba'
 import { Button } from 'antd'
 
-import sliderArrow from 'assets/about-humanscale/arrow.svg'
-
 import bg from '../../assets/about-humanscale/bg.png'
 
 export const FootprintTitle = styled.h2`
@@ -1210,12 +1208,6 @@ export const CampaignsFinger = styled.img`
   `}
 `
 
-export const CampaignsCards = styled.div`
-  position: absolute;
-  left: 40px;
-  top: -30px;
-`
-
 export const CampaignsCard = styled.div`
   display: flex;
   justify-content: space-around;
@@ -1385,68 +1377,6 @@ export const JoinHandprinterContent = styled.div`
       margin: 0px 40px 40px 40px;
     }
   `}
-`
-
-export const Slider = styled.div`
-  .slick-arrow {
-    z-index: 1;
-    width: 51px;
-    height: 51px;
-    position: absolute;
-    transform: translateY(-50%);
-    background: ${colors.white} url(${sliderArrow}) no-repeat center / 50%;
-    &:hover,
-    &:focus {
-      background: ${colors.white} url(${sliderArrow}) no-repeat center / 50%;
-    }
-    ${media.phone`
-      width: 30px;
-      height: 30px;
-     `}
-    &.slick-prev {
-      position: absolute;
-      top: 248px;
-      left: 930px;
-      transform: rotate(180deg);
-
-      ${media.largeDesktop`
-        left: 700px;
-        top: 271px;
-        transform: translateY(-50%) rotate(180deg);
-      `}
-
-      ${media.desktop`
-        left: 520px;
-        top: 271px;
-        transform: translateY(-50%) rotate(180deg);
-      `}
-
-      ${media.phone`
-        left: 15px;
-        transform: translateY(-50%) rotate(180deg);
-      `}
-    }
-    &.slick-next {
-      position: absolute;
-      top: 273.5px;
-      left: 1000px;
-      margin-left: 15px;
-
-      ${media.largeDesktop`
-        left: 770px;
-        top: 271.5px;
-      `}
-
-      ${media.desktop`
-        left: 580px;
-        top: 272px;
-      `}
-
-      ${media.phone`
-        right: 15px;
-      `}
-    }
-  }
 `
 
 export const Slide = styled.div``
