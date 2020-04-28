@@ -34,7 +34,7 @@ function getActions(props, selectedKey) {
         : !isAccomplished
     })
   } else {
-    return []
+    return actions
   }
 }
 
