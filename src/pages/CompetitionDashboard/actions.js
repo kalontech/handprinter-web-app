@@ -9,10 +9,9 @@ import ActionCard from 'components/ActionCard'
 import ScrollAnimation from 'components/ScrollAnimation'
 import { ACTION_STATES } from 'utils/constants'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
-import ActionUnitSelect from 'components/ActionUnitSelect'
 import Tooltip from 'components/Tooltip'
 
-import { MenuStyled, Column, EmptyList, UnitsBlock } from './styled'
+import { MenuStyled, Column, EmptyList } from './styled'
 import { ACTIONS_TABS } from './constants'
 import { ImpactButton } from '../ActionsPage'
 
@@ -39,7 +38,6 @@ export default function renderActions(props) {
     intl: { formatMessage, formatRelative, locale },
     intl,
     history,
-    toggleUnits,
     showPhysicalValues,
   } = props
   const selectedKey = _.get(props, 'location.search', '').includes(
@@ -67,9 +65,6 @@ export default function renderActions(props) {
             <FormattedMessage id="app.campaignPage.accomplished" />
           </Link>
         </Menu.Item>
-        <UnitsBlock>
-          <ActionUnitSelect toggleUnits={toggleUnits} />
-        </UnitsBlock>
       </MenuStyled>
 
       {loading ? (

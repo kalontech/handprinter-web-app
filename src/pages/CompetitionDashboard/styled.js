@@ -386,13 +386,6 @@ export const ModalMessage = styled.p`
   color: ${colors.darkGray};
 `
 
-export const UnitsBlock = styled.div`
-  position: absolute;
-  right: 90px;
-  padding-bottom: 6px;
-  width: 200px;
-`
-
 export const AchivmentLogo = styled.img`
   position: relative;
   top: -55px;

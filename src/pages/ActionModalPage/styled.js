@@ -394,4 +394,5 @@ export const ProposeView = styled.div`
   display: flex;
   flex-direction: column;
   padding: 30px 0px;
+  width: 472px;
 `
