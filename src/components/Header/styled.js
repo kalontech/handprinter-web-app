@@ -500,6 +500,16 @@ export const UnitsBlock = styled.div`
   cursor: pointer;
   z-index: 0.1;
 
+  ${media.largeDesktop`
+    top: 30px;
+    right: 13px;
+  `}
+
+  ${media.desktop`
+    top: 30px;
+    right: 12px;
+  `}
+
   ${media.phone`
     top: 30px;
     right: -22px;
@@ -568,5 +578,16 @@ export const UnitsSwitch = styled.div`
   align-items: center;
   width: 100%;
   height: 80px;
-  padding-left: 14px;
+
+  ${media.largeDesktop`
+    padding-left: 44px;
+  `}
+
+  ${media.desktop`
+    padding-left: 44px;
+  `}
+
+  ${media.phone`
+    padding-left: 14px;
+  `}
 `
