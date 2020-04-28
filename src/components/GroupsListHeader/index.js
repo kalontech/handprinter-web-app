@@ -136,7 +136,10 @@ class GroupsListHeader extends React.PureComponent {
     this.setState({ modalType: MODAL_TYPES.sendInvites }, () => {
       const { groups, match } = this.props
 
-      if (match.params.subset !== GROUPS_SUBSETS.FEATURED) {
+      if (
+        match.params.subset !== GROUPS_SUBSETS.FEATURED &&
+        match.params.subset !== GROUPS_SUBSETS.TEAMS
+      ) {
         this.props.setGroupsList({
           ...groups,
           docs: [response.group, ...groups.docs],

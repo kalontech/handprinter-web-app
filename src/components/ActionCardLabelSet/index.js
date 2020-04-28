@@ -42,7 +42,9 @@ const ActionCardLabelSet = props => {
       // if val greater then 100 we return val as it comes if val smaller then 100 we fixed it to 1 number after dot
       // 1.23 -> [1.2, null]
       // 1231.10 -> [1231, null]
-      return val > 100 ? [val, null] : [val.toFixed(1), null]
+      return val > 100
+        ? [Math.round(val * 100) / 100, null]
+        : [val.toFixed(1), null]
     }
   }
 

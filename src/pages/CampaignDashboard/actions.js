@@ -8,10 +8,9 @@ import ActionCard from 'components/ActionCard'
 import ScrollAnimation from 'components/ScrollAnimation'
 import { ACTION_STATES } from 'utils/constants'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
-import ActionUnitSelect from 'components/ActionUnitSelect'
 import Tooltip from 'components/Tooltip'
 
-import { MenuStyled, Column, EmptyList, UnitsBlock } from './styled'
+import { MenuStyled, Column, EmptyList } from './styled'
 import { ACTIONS_TABS } from './constants'
 import { ImpactButton } from '../ActionsPage'
 
@@ -21,15 +20,21 @@ function getActions(props, selectedKey) {
     campaign: { actions },
   } = props
   if (participants.length === 0) return []
-  const myAccomplishedActionIds = participants[0].accomplishedActions.map(
-    i => i._id,
+  const sortedParticipants = participants.filter(
+    p => p.user._id === props.user._id,
   )
-  return actions.filter(action => {
-    const isAccomplished = myAccomplishedActionIds.includes(action._id)
-    return selectedKey === ACTIONS_TABS.ACCOMPLISHED
-      ? isAccomplished
-      : !isAccomplished
-  })
+  const me = sortedParticipants && sortedParticipants[0]
+  if (me) {
+    const myAccomplishedActionIds = me.accomplishedActions.map(i => i._id)
+    return actions.filter(action => {
+      const isAccomplished = myAccomplishedActionIds.includes(action._id)
+      return selectedKey === ACTIONS_TABS.ACCOMPLISHED
+        ? isAccomplished
+        : !isAccomplished
+    })
+  } else {
+    return actions
+  }
 }
 
 export default function renderActions(props) {
@@ -38,7 +43,6 @@ export default function renderActions(props) {
     intl: { formatMessage, formatRelative, locale },
     intl,
     history,
-    toggleUnits,
     showPhysicalValues,
   } = props
   const selectedKey = _.get(props, 'location.search', '').includes(
@@ -48,7 +52,6 @@ export default function renderActions(props) {
     : ACTIONS_TABS.TODO
 
   const filteredActions = getActions(props, selectedKey)
-
   return (
     <Fragment>
       <MenuStyled
@@ -66,9 +69,6 @@ export default function renderActions(props) {
             <FormattedMessage id="app.campaignPage.accomplished" />
           </Link>
         </Menu.Item>
-        <UnitsBlock>
-          <ActionUnitSelect toggleUnits={toggleUnits} />
-        </UnitsBlock>
       </MenuStyled>
 
       {loading ? (

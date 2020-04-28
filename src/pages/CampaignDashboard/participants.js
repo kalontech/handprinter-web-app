@@ -8,9 +8,17 @@ import MemberCard from 'components/MemberCard'
 
 import { MenuStyled, Column, EmptyList } from './styled'
 import { getUserInitialAvatar } from '../../api'
+import { calcImpactsInUnits } from '../../utils/calcImpactsInUnits'
 
 export default function renderParticipants(props) {
-  const { loading, participants, intl, campaign, user } = props
+  const {
+    loading,
+    participants,
+    intl,
+    campaign,
+    user,
+    showPhysicalValues,
+  } = props
   const selectedKey = _.get(props, 'location.search', '').includes('finished')
     ? 'finished'
     : 'participants'
@@ -59,6 +67,8 @@ export default function renderParticipants(props) {
                 )}
                 impacts={{ handprint: item.userInfo.impacts }}
                 achievements={user.achievements}
+                showPhysicalValues={showPhysicalValues}
+                impactsInUnits={calcImpactsInUnits(item.accomplishedActions)}
               />
             </Column>
           ))}
@@ -81,4 +91,6 @@ renderParticipants.propTypes = {
   intl: Object,
   campaign: Object,
   user: Object,
+  toggleUnits: Function,
+  showPhysicalValues: Boolean,
 }

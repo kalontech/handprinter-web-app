@@ -19,7 +19,6 @@ import SuggestedIcon from 'assets/icons/SuggestedIcon'
 
 import colors from 'config/colors'
 import {
-  GROUPS_SUBSETS,
   QUESTIONS_ANCHOR,
   MEMBER_GROUP_ROLES,
   USER_GROUP_STATUSES,
@@ -34,7 +33,6 @@ import GoodRatioWidget from 'components/GoodRatioWidget'
 import Spinner from 'components/Spinner'
 import NewsList from 'components/NewsList'
 import GroupDetailedForm from 'components/GroupDetailedForm'
-import GroupButton, { BUTTON_TYPES } from 'components/GroupButton'
 import GroupManage from 'components/GroupManage'
 import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
 import MemberCard from 'components/MemberCard'
@@ -46,13 +44,8 @@ import * as apiUser from 'api/user'
 import * as apiActions from 'api/actions'
 import {
   fetchUpdateGroup,
-  fetchGroupById,
-  fetchGroupMembers,
-  fetchLeaveGroup,
-  fetchJoinGroup,
-  fetchDeleteGroup,
-  fetchDenyGroupByInvite,
-  fetchJoinGroupByInvite,
+  getBrandGroup,
+  getBrandGroupMembers,
 } from 'api/groups'
 
 import {
@@ -414,37 +407,32 @@ const GROUP_TABS = {
 }
 
 async function getGroupData(props) {
-  const { match, location, group: fetchedGroup } = props
+  const { match, location, overrides } = props
   const queries = qs.parse(location.search, { ignoreQueryPrefix: true })
+  const res = await getBrandGroup(overrides.brandName)
 
   const tabsFetch = {
-    [GROUP_TABS.MEMBERS]: fetchGroupMembers,
+    [GROUP_TABS.MEMBERS]: getBrandGroupMembers,
     [GROUP_TABS.ACTIVITY]: apiActions.getNews,
     [GROUP_TABS.STATISTICS]: apiUser.getDashboardData,
   }[match.params.subset]
 
-  const [
-    { group, requestingMembersCount, admins },
-    tabsData,
-  ] = await Promise.all([
-    fetchedGroup ? () => Promise.resolve() : fetchGroupById(match.params.id),
-    tabsFetch({
-      groupId: match.params.id,
-      page: queries.page || 1,
-      range: 'group',
-      subset: 'group',
-      status: USER_GROUP_STATUSES.ACTIVE,
-    }),
-  ])
+  const tabsRes = await tabsFetch({
+    page: queries.page || 1,
+    range: 'brandGroup',
+    subset: 'brandGroup',
+    belongsToBrand: overrides.brandName,
+    status: USER_GROUP_STATUSES.ACTIVE,
+  })
 
   return {
-    group: fetchedGroup || { ...group, requestingMembersCount, admins },
-    ...tabsData,
+    group: res,
+    ...tabsRes,
   }
 }
 
-class GroupViewPage extends PureComponent {
-  static displayName = 'GroupViewPage'
+class BrandPage extends PureComponent {
+  static displayName = 'BrandPage'
 
   static propTypes = {
     intl: intlShape.isRequired,
@@ -483,63 +471,6 @@ class GroupViewPage extends PureComponent {
   }
 
   $counter = React.createRef()
-
-  get buttonProps() {
-    const { loadingButton } = this.state
-    const { group } = this.props
-    let type
-
-    if (group.status === GROUPS_STATUSES.DELETED) {
-      type = BUTTON_TYPES.leave
-    } else if (group.info.memberStatus === USER_GROUP_STATUSES.INVITED) {
-      type = BUTTON_TYPES.invited
-    } else if (group.info.memberStatus === USER_GROUP_STATUSES.REQUESTING) {
-      type = BUTTON_TYPES.request
-    } else if (
-      group.info.isMember &&
-      group.info.memberRole === MEMBER_GROUP_ROLES.OWNER
-    ) {
-      type = BUTTON_TYPES.delete
-    } else if (
-      group.info.isMember &&
-      group.info.memberRole !== MEMBER_GROUP_ROLES.OWNER
-    ) {
-      type = BUTTON_TYPES.leave
-    } else if (group.private) {
-      type = BUTTON_TYPES.request
-    } else {
-      type = BUTTON_TYPES.join
-    }
-
-    const buttonProps = {
-      [BUTTON_TYPES.leave]: {
-        onClick: this.toggleMembership(false),
-        loading: loadingButton,
-        disabled: group.status === GROUPS_STATUSES.DELETED,
-      },
-      [BUTTON_TYPES.join]: {
-        onClick: this.toggleMembership(true),
-        loading: loadingButton,
-      },
-      [BUTTON_TYPES.delete]: {
-        onClick: this.deleteGroup,
-      },
-      [BUTTON_TYPES.request]: {
-        onClick: this.requestInvite,
-        loading: loadingButton,
-        disabled: group.info.memberStatus === USER_GROUP_STATUSES.REQUESTING,
-      },
-      [BUTTON_TYPES.invited]: {
-        disabled: loadingButton,
-        onClick: {
-          onAccept: this.toggleInvitation(true),
-          onDeny: this.toggleInvitation(false),
-        },
-      },
-    }
-
-    return { ...buttonProps[type], type }
-  }
 
   componentDidMount() {
     animateScroll.scrollToTop()
@@ -607,116 +538,6 @@ class GroupViewPage extends PureComponent {
     })
   }
 
-  toggleMembership = (join = false) => async () => {
-    const { group, mutate, match } = this.props
-
-    this.setState({ loadingButton: true })
-
-    if (join) {
-      await fetchJoinGroup(match.params.id)
-    } else {
-      await fetchLeaveGroup(match.params.id)
-    }
-
-    this.setState({ loadingButton: false }, () => {
-      mutate({
-        group: {
-          ...group,
-          info: {
-            ...group.info,
-            membersCount: join
-              ? group.info.membersCount + 1
-              : group.info.membersCount - 1,
-            isMember: join,
-          },
-        },
-      })
-    })
-  }
-
-  deleteGroup = async () => {
-    const { intl, history, match } = this.props
-
-    Modal.confirm({
-      title: intl.formatMessage({ id: 'app.actions.card.delete' }),
-      content: intl.formatMessage({ id: 'app.pages.groups.confirm' }),
-      okText: intl.formatMessage({
-        id: 'app.profilePage.deleteAccountModal.confirmButton',
-      }),
-      cancelText: intl.formatMessage({
-        id: 'app.profilePage.deleteAccountModal.cancelButton',
-      }),
-      okType: 'danger',
-      className: 'ant-modal-confirm_profile-page',
-      centered: true,
-      onOk: async () =>
-        fetchDeleteGroup(match.params.id)
-          .then(() => {
-            history.replace(`/groups/${GROUPS_SUBSETS.DISCOVER}`)
-          })
-          .catch(() => {
-            notification.error({
-              message: intl.formatMessage({ id: 'app.errors.unknown' }),
-            })
-          }),
-    })
-  }
-
-  requestInvite = async () => {
-    const { match, group, mutate, intl } = this.props
-
-    this.setState({ loadingButton: true })
-
-    await fetchJoinGroup(match.params.id)
-
-    this.setState({ loadingButton: false }, () => {
-      mutate({
-        group: {
-          ...group,
-          info: {
-            ...group.info,
-            memberStatus: USER_GROUP_STATUSES.REQUESTING,
-          },
-        },
-      })
-
-      notification.success({
-        message: group.name,
-        description: intl.formatMessage({
-          id: 'app.pages.groups.invitationsRequested',
-        }),
-      })
-    })
-  }
-
-  toggleInvitation = (approve = false) => async () => {
-    const { group, match, mutate } = this.props
-
-    this.setState({ loadingButton: true })
-
-    if (approve) {
-      await fetchJoinGroupByInvite(match.params.id)
-    } else {
-      await fetchDenyGroupByInvite(match.params.id)
-    }
-
-    this.setState({ loadingButton: false }, () => {
-      mutate({
-        group: {
-          ...group,
-          info: {
-            ...group.info,
-            isMember: approve,
-            membersCount: approve
-              ? group.info.membersCount + 1
-              : group.info.membersCount - 1,
-            memberStatus: approve ? USER_GROUP_STATUSES.ACTIVE : undefined,
-          },
-        },
-      })
-    })
-  }
-
   closeModal = () => {
     this.setState({ modalVisible: false })
   }
@@ -730,7 +551,7 @@ class GroupViewPage extends PureComponent {
     const response = await apiActions.getNews({
       groupId: match.params.id,
       page: newsPage + 1,
-      range: 'group',
+      range: 'brandGroup',
     })
 
     this.setState(
@@ -999,10 +820,6 @@ class GroupViewPage extends PureComponent {
                       )}
                   </Fragment>
                 )}
-
-                {group.belongsToBrand !== 'humanscale' && (
-                  <GroupButton {...this.buttonProps} />
-                )}
               </Container>
             </WhiteBlock>
 
@@ -1010,9 +827,7 @@ class GroupViewPage extends PureComponent {
               justify="center"
               list={[
                 {
-                  to: `/groups/view/${match.params.id}/${
-                    GROUP_TABS.STATISTICS
-                  }`,
+                  to: `/brand/dashboard/${GROUP_TABS.STATISTICS}`,
                   icon: ({ color }) => <Icon type="bar-chart" color={color} />,
                   text: intl.formatMessage({
                     id: 'app.header.menu.dashboard',
@@ -1020,13 +835,13 @@ class GroupViewPage extends PureComponent {
                   active: match.params.subset === GROUP_TABS.STATISTICS,
                 },
                 {
-                  to: `/groups/view/${match.params.id}/${GROUP_TABS.MEMBERS}`,
+                  to: `/brand/dashboard/${GROUP_TABS.MEMBERS}`,
                   icon: SuggestedIcon,
                   text: intl.formatMessage({ id: 'app.pages.groups.members' }),
                   active: match.params.subset === GROUP_TABS.MEMBERS,
                 },
                 {
-                  to: `/groups/view/${match.params.id}/${GROUP_TABS.ACTIVITY}`,
+                  to: `/brand/dashboard/${GROUP_TABS.ACTIVITY}`,
                   icon: FlagIconComponent,
                   text: intl.formatMessage({ id: 'app.pages.groups.activity' }),
                   active: match.params.subset === GROUP_TABS.ACTIVITY,
@@ -1342,4 +1157,4 @@ function mapAchievements(finishedCompetition) {
 export default compose(
   fetch(getGroupData, { loader: false }),
   injectIntl,
-)(GroupViewPage)
+)(BrandPage)
