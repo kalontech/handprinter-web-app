@@ -46,8 +46,8 @@ function CampaignDashboard(props) {
   const view = query.view || CAPMAIGN_TABS.actions
   if (!campaignId) return null
   const [campaign, loading, participants] = useCampaign(campaignId)
-  const sortedParticipants = participants.sort((a, b) =>
-    a.user._id === props.user._id ? -1 : 1,
+  const sortedParticipants = participants.filter(
+    p => p.user._id === props.user._id,
   )
   const me = sortedParticipants && sortedParticipants[0]
   const accomplishedUserActions = me ? me.accomplishedActions : []

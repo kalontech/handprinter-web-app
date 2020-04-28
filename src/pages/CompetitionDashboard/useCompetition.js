@@ -17,6 +17,7 @@ export default function useCompetition(competitionId) {
           _id: {
             $in: res.competition.actions.map(i => i._id),
           },
+          limit: 50,
         })
 
         if (res && competitionActionsRes) {
