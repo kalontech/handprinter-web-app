@@ -30,7 +30,6 @@ export default function renderParticipants(props) {
           i => i.accomplishedActions.length >= actionsNumberToComplete,
         )
       : participants
-  console.log(participantsFiltered)
   return (
     <Fragment>
       <MenuStyled
