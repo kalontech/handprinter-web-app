@@ -25,10 +25,8 @@ const SliderContainer = styled.div`
 
   .ant-carousel {
     position: relative;
-    top: -50px;
-    ${media.largeDesktop`
-      top: -420px;
-    `}
+    top: -420px;
+
     ${media.desktop`
       top: -380px;
     `}
@@ -96,19 +94,22 @@ const SliderControls = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: -330px;
-  margin-left: 700px;
+  margin-top: -290px;
+  margin-left: 1000px;
   max-width: 1180px;
+
   ${media.largeDesktop`
     padding-right: 34px;
     margin-top: -330px;
     margin-left: 700px;
   `}
+
   ${media.desktop`
     padding-right: 34px;
     margin-top: -330px;
     margin-left: 500px;
   `}
+
   ${media.phone`
     padding-right: 15px;
     margin-top: 0;

@@ -104,7 +104,7 @@ export const HandprintTitle = styled.h2`
   color: ${colors.humanscaleHeaderText};
 
   ${media.largeDesktop`
-    width: 250px;
+    width: 100%;
     height: 34px;
     left: 0px;
     top: 0px;
@@ -126,7 +126,6 @@ export const HandprintTitle = styled.h2`
 
 export const HandprintText = styled.p`
   position: absolute;
-  width: 400px;
   height: 230px;
   font-family: Noto Sans;
   font-style: normal;
@@ -145,14 +144,15 @@ export const HandprintText = styled.p`
   }
 
   ${media.largeDesktop`
-    width: 250px;
-    height: 265px;
+    width: 100%;
+    height: 165px;
     left: 0px;
     top: 54px;
     font-size: 14px;
     line-height: 24px;
     color: ${colors.dark};
     margin: 0px 20px;
+    align-items: center;
   `}
 
   ${media.phone`
@@ -569,7 +569,14 @@ export const HandprintInfo = styled.div`
   margin-left: 200px;
 
   ${media.largeDesktop`
-    left: calc(50% - 258px/2);
+    width: 90%;
+    left: calc(50% - 938px/2);
+    top: -150px;
+    margin-left: 0px;`}
+
+    ${media.desktop`
+    width: 90%;
+    left: calc(50% - 718px/2);
     top: -150px;
     margin-left: 0px;`}
 
@@ -638,6 +645,7 @@ export const TakeActionItemHeader = styled.div`
   display: flex;
   justify-content: flex-start;
   padding-left: 15px;
+  margin-left: 125px;
 
   p {
     font-family: Noto Sans;
