@@ -472,7 +472,7 @@
     "app.pages.groups.myGroups": "My groups",
     "app.pages.groups.featured": "Featured",
     "app.pages.groups.skipForNow": "Skip for now",
-    "app.pages.groups.actionsTaken": "{count} taken actions",
+    "app.pages.groups.actionsTaken": "{count} actions taken",
     "app.errors.30": "Group with such name already exists",
     "app.pages.groups.successCreated": "You successfully created the group",
     "app.pages.groups.invited": "Invited",
