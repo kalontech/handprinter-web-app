@@ -256,11 +256,7 @@ function AboutHumanscalePage(props) {
         <CampaignsBlock>
           <CampaignsFinger src={campaignsFinger} alt="" />
           <ScrollAnimation>
-            <CampaignsCarousel
-              campaigns={campaigns}
-              token={token}
-              hideControls={!!isMobile}
-            />
+            <CampaignsCarousel campaigns={campaigns} token={token} />
           </ScrollAnimation>
           <CampaignButtons>
             <Link to={token ? '/challenges' : '/account/login'}>

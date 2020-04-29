@@ -47,7 +47,7 @@ export const FootprintText = styled.p`
   position: absolute;
   width: 400px;
   height: 252px;
-  left: 88px;
+  left: 180px;
   top: 230px;
   font-family: Noto Sans;
   font-style: normal;
@@ -56,7 +56,7 @@ export const FootprintText = styled.p`
   line-height: 28px;
   display: flex;
   align-items: center;
-  text-align: center;
+  text-align: left;
   color: ${colors.interfaceFooterColor2};
 
   &:last-of-type {
@@ -73,12 +73,13 @@ export const FootprintText = styled.p`
     line-height: 28px;
     color: ${colors.dark};
     margin-top: 20px;
+    text-align: center;
   `}
 
   ${media.phone`
     width: 250px;
     height: 288px;
-    left: 19.5px;
+    left: calc(50% - 280px/2 + 12.1px);
     right: 20px;
     top: 54px;
     font-size: 14px;
@@ -126,11 +127,12 @@ export const HandprintTitle = styled.h2`
 
 export const HandprintText = styled.p`
   position: absolute;
+  left: 100px;
   height: 230px;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
-  text-align: center;
+  text-align: left;
   font-size: 16px;
   line-height: 28px;
   display: flex;
@@ -153,6 +155,7 @@ export const HandprintText = styled.p`
     color: ${colors.dark};
     margin: 0px 20px;
     align-items: center;
+    text-align: center;
   `}
 
   ${media.phone`
@@ -208,10 +211,10 @@ export const Hero = styled.section`
   `}
 
   ${media.phone`
-      flex-direction: column;
-      justify-content: center;
-      height: 516px;
-      background-position: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 516px;
+    background-position: center;
   `}
 `
 
@@ -220,12 +223,12 @@ export const HeroInfo = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: baseline;
+  text-align: left;
   padding-left: 100px;
   width: 733px;
-  height: 246px;
+  height: 346px;
 
-  ${media.tablet`
-    width: 573px;
+  ${media.largeDesktop`
     height: 170px;
     left: 0px;
     top: 0px;
@@ -239,7 +242,8 @@ export const HeroInfo = styled.div`
     flex: none;
     order: 0;
     align-self: center;
-    margin: 0px 60px;
+    padding-left: 0px;
+    align-items: center;
   `}
 
   ${media.phone`
@@ -259,14 +263,17 @@ export const HeroTitle = styled.div`
   text-align: left;
   color: ${colors.white};
   margin: 0 auto 50px;
-  max-width: 850px;
-  ${media.desktop`
-    max-width: 560px;
+  width: 670px;
+
+  ${media.largeDesktop`
+    width: 520px;
     margin-bottom: 30px;
-    line-height: 46px;
-    font-size: 37px;
+    font-size: 40px;
+    line-height: 54px;
     letter-spacing: -0.4px;
+    text-align: center;
   `}
+
   ${media.phone`
     font-family: Noto Sans;
     font-style: normal;
@@ -309,14 +316,27 @@ export const WhiteButton = styled(Button)`
     border-color: ${colors.white};
     color: ${colors.humanscaleHeaderText};
   }
+
+  ${media.largeDesktop`
+    margin-top: 40px;
+  `}
+
+  ${media.desktop`
+    margin-top: 40px;
+  `}
+
+  ${media.tablet`
+    margin-top: 20px;
+  `}
+
 `
 
 export const GreenButton = styled(Button)`
   text-transform: uppercase;
   margin: 0 auto;
-  border: 1px solid ${colors.ocean};
+  border: 1px solid ${colors.humanscaleIvy};
   border-radius: 0;
-  background: ${colors.ocean};
+  background: ${colors.humanscaleIvy};
   font-family: Noto Sans;
   font-style: normal;
   font-weight: bold;
@@ -329,8 +349,8 @@ export const GreenButton = styled(Button)`
   color: ${colors.white};
   &&:hover,
   &&:focus {
-    background: ${colors.btnSecondaryHover};
-    border-color: ${colors.btnSecondaryHover};
+    background: ${colors.humanscaleForest};
+    border-color: ${colors.humanscaleForest};
     color: ${colors.white};
   }
 `
@@ -577,12 +597,12 @@ export const HandprintEarthImage = styled.img`
 export const HandprintInfo = styled.div`
   width: 500px;
   position: absolute;
-  left: 630px;
+  left: 570px;
   margin-left: 200px;
 
   ${media.largeDesktop`
     width: 90%;
-    left: calc(50% - 938px/2);
+    left: calc(50% - 930px/2);
     top: 50px;
     margin-left: 0px;`}
 
@@ -608,7 +628,7 @@ export const TakeActionWrapper = styled.section`
   `}
 
   ${media.phone`
-    height: 1840px;
+    height: 1880px;
   `}
 `
 

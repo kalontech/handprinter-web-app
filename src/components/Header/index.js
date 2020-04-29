@@ -892,7 +892,7 @@ function Header(props) {
                           ? 'Physical Units On'
                           : 'Time Units On'}
                       </p>
-                      {isMobile && renderUnitsSwitch()}
+                      {renderUnitsSwitch()}
                     </UnitsSwitch>
                   </Menu.Item>
                 </Menu>
