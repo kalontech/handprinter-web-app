@@ -269,6 +269,7 @@ export const HeroTitle = styled.div`
     width: 520px;
     margin-bottom: 30px;
     font-size: 40px;
+    font-weight: 400;
     line-height: 54px;
     letter-spacing: -0.4px;
     text-align: center;
@@ -326,7 +327,11 @@ export const WhiteButton = styled(Button)`
   `}
 
   ${media.tablet`
-    margin-top: 20px;
+    margin-top: 40px;
+  `}
+
+  ${media.phone`
+    margin-top: -15px;
   `}
 
 `
@@ -692,12 +697,14 @@ export const TakeActionItemHeader = styled.div`
 
   ${media.largeDesktop`
     margin-left: 20px;
+    width: 270px;
   `}
 
   ${media.phone`
     flex-direction: column;
     width: 171px;
     height: 25px;
+    margin-left: 0px;
 
     p {
       width: 171px;
@@ -721,6 +728,11 @@ export const TakeActionDivider = styled.span`
   width: 73vw;
   border-top: 1px solid ${colors.white};
   right: 137px !important;
+
+  ${media.largeDesktop`
+    width: 70%;
+    right: 0 !important;
+  `}
 
   ${media.phone`
     width: 135px;
@@ -1114,8 +1126,8 @@ export const SmallCircle = styled.img`
   ${media.phone`
     width: 101.71px;
     height: 101.59px;
-    left: 100px;
-    top: 207px;
+    left: 140px;
+    top: 237px;
   `}
 `
 
@@ -1139,8 +1151,8 @@ export const BigCircle = styled.img`
   ${media.phone`
     width: 202px;
     height: 201.77px;
-    left: 51px;
-    top: 50px;
+    left: 90px;
+    top: 87px;
   `}
 `
 
