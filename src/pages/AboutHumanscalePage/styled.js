@@ -8,14 +8,14 @@ import bg from '../../assets/about-humanscale/bg.png'
 
 export const FootprintTitle = styled.h2`
   position: absolute;
-  width: 600px;
+  width: 500px;
   height: 71px;
-  left: 83px;
-  top: 147px;
+  left: 133px;
+  top: 87px;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
-  text-align: center;
+  text-align: left;
   font-size: 42px;
   line-height: 71px;
   letter-spacing: -0.4px;
@@ -30,16 +30,18 @@ export const FootprintTitle = styled.h2`
     font-size: 40px;
     line-height: 54px;
     margin-top: 24px;
+    text-align: center;
   `}
 
   ${media.phone`
     width: 100%;
     height: 34px;
     left: 0px;
-    top: 0px;
+    top: -10px;
     font-size: 25px;
     line-height: 34px;
     margin-top: 24px;
+    text-align: center;
   `}
 `
 
@@ -47,7 +49,7 @@ export const FootprintText = styled.p`
   position: absolute;
   width: 400px;
   height: 252px;
-  left: 180px;
+  left: 130px;
   top: 230px;
   font-family: Noto Sans;
   font-style: normal;
@@ -81,9 +83,9 @@ export const FootprintText = styled.p`
     height: 288px;
     left: calc(50% - 280px/2 + 12.1px);
     right: 20px;
-    top: 54px;
+    top: 74px;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 22px;
     color: ${colors.dark};
     margin-top: 20px;
   `}
@@ -93,13 +95,13 @@ export const HandprintTitle = styled.h2`
   position: absolute;
   width: 603px;
   height: 77px;
-  left: 0px;
-  top: -50px;
+  left: 100px;
+  top: -140px;
   word-break: normal;
   font-family: Noto Sans;
   font-style: normal;
   font-weight: normal;
-  text-align: center;
+  text-align: left;
   font-size: 42px;
   line-height: 71px;
   color: ${colors.humanscaleHeaderText};
@@ -112,16 +114,18 @@ export const HandprintTitle = styled.h2`
     font-size: 40px;
     line-height: 54px;
     margin: 0px 20px;
+    text-align: center;
   `}
 
   ${media.phone`
     width: 250px;
     height: 34px;
     left: 0px;
-    top: 0px;
+    top: -30px;
     font-size: 25px;
     line-height: 34px;
     margin: 0px 20px;
+    text-align: center;
   `}
 `
 
@@ -149,7 +153,7 @@ export const HandprintText = styled.p`
     width: 518px;
     height: 196px;
     left: calc(50% - 534px/2 + 12.1px);
-    top: 54px;
+    top: 90px;
     font-size: 16px;
     line-height: 28px;
     color: ${colors.dark};
@@ -162,9 +166,9 @@ export const HandprintText = styled.p`
     width: 250px;
     height: 265px;
     left: 0px;
-    top: 54px;
+    top: 50px;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 22px;
     text-align: center;
     color: ${colors.dark};
     margin: 0px 20px;
@@ -284,8 +288,6 @@ export const HeroTitle = styled.div`
     text-align: center;
     color: ${colors.white};
     margin-bottom: 8px;
-    line-height: 36px;
-    font-size: 28px;
     letter-spacing: 0px;
     margin-bottom: 15px;
     width: 270px;
@@ -319,7 +321,7 @@ export const WhiteButton = styled(Button)`
   }
 
   ${media.largeDesktop`
-    margin-top: 40px;
+    margin-top: 20px;
   `}
 
   ${media.desktop`
@@ -619,7 +621,7 @@ export const HandprintInfo = styled.div`
 
   ${media.phone`
     left: calc(50% - 288px/2);
-    top: 50px;
+    top: 40px;
     margin-left: 0px;`}
 `
 
@@ -1209,6 +1211,11 @@ export const CampaignsHeader = styled.div`
   text-align: center;
   color: ${colors.humanscaleHeaderText};
 
+  ${media.largeDesktop`
+    margin-top: 0px;
+    margin-bottom: 58px;
+  `}
+
   ${media.phone`
     width: 290px;
     height: 137px;
@@ -1315,12 +1322,13 @@ export const CampaignsCard = styled.div`
 `
 
 export const CampaignsInfo = styled.div`
-  margin-top: 50px;
+  margin-top: 60px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   div {
+    margin-top: 10px;
     display: flex;
     justify-content: space-around;
     text-align: center;
@@ -1328,7 +1336,7 @@ export const CampaignsInfo = styled.div`
   }
 
   ${media.phone`
-    margin-top: 0px;
+    margin-top: -20px;
     div {
       width: 290px;
       margin-top: 70px;
@@ -1418,7 +1426,7 @@ export const JoinHandprinterContent = styled.div`
   ${media.phone`
     p {
       width: 228px;
-      height: 69px;
+      height: 109px;
       left: 0px;
       top: 0px;
       font-size: 25px;

@@ -175,7 +175,7 @@ function AboutHumanscalePage(props) {
             <HandprintTitle>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.title" />
             </HandprintTitle>
-            <HandprintText style={{ top: `${isMobile ? '50px' : '90px'}` }}>
+            <HandprintText>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text1" />
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text2" />
             </HandprintText>
