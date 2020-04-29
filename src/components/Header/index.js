@@ -758,7 +758,6 @@ function Header(props) {
                   mode="inline"
                   inlineIndent={0}
                   selectedKeys={[selectedMenuItem]}
-                  onClick={onClick}
                 >
                   <Menu.Item key="/challenges">
                     <Link to="/challenges">
