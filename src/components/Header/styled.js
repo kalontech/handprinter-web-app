@@ -234,7 +234,9 @@ export const CollapseMenu = styled(CollapsedMenu)`
 
 export const CollapseTop = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: 35px 80px;
   background: ${colors.lightGray};
 
@@ -497,6 +499,21 @@ export const UnitsBlock = styled.div`
   margin-right: 31px;
   cursor: pointer;
   z-index: 0.1;
+
+  ${media.largeDesktop`
+    top: 30px;
+    right: 13px;
+  `}
+
+  ${media.desktop`
+    top: 30px;
+    right: 12px;
+  `}
+
+  ${media.phone`
+    top: 30px;
+    right: -22px;
+  `}
 `
 
 export const SVGAtomWrap = styled.div`
@@ -549,4 +566,28 @@ export const PopoverText = styled.text`
   line-height: 20px;
   text-align: center;
   color: ${colors.white};
+`
+
+export const ResponsiveLoginWrap = styled.div`
+  padding-top: 20px;
+`
+
+export const UnitsSwitch = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+
+  ${media.largeDesktop`
+    padding-left: 44px;
+  `}
+
+  ${media.desktop`
+    padding-left: 44px;
+  `}
+
+  ${media.phone`
+    padding-left: 14px;
+  `}
 `

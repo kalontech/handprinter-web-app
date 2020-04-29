@@ -1,12 +1,14 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
-import { Carousel } from 'antd'
 import { Link } from 'react-router-dom'
 import { animateScroll } from 'react-scroll/modules'
 import PageMetadata from 'components/PageMetadata'
 import * as api from 'api/campaigns'
-
+import { sizes } from 'utils/mediaQueryTemplate'
 import { object } from 'prop-types'
+
+import CampaignsCarousel from 'components/CampaignsCarousel'
+import ScrollAnimation from 'components/ScrollAnimation'
 
 import {
   Hero,
@@ -33,7 +35,9 @@ import {
   TakeActionHeader,
   TakeAction,
   TakeActionDoIt,
+  TakeActionDoItItemInfo,
   TakeActionShareTo,
+  TakeActionSharedToItemInfo,
   CampaignsMainWrapper,
   CampaignsInfo,
   CampaignsHeader,
@@ -42,7 +46,7 @@ import {
   JoinHandprinterContentBlock,
   JoinHandprinterContent,
   HandprintImagesWrapper,
-  HandprintFingerImage,
+  HandprintEarthImage,
   HandprintLeapImage,
   TakeActionItemHeader,
   TakeActionItemInfo,
@@ -59,19 +63,17 @@ import {
   BigCircle,
   SharedToImageWrapper,
   CampaignsFinger,
-  CampaignsCards,
-  CampaignsCard,
   CampaignButtons,
   TakeActionDivider,
-  Slider,
-  Slide,
 } from './styled'
 
 import footprintFinger from './assets/footprintFinger.svg'
+import footprintFingerMobile from './assets/footprintFingerMobile.svg'
 import footprintFinger2 from './assets/footprintFinger2.svg'
 import footprintLeap from './assets/footprintLeap.png'
 import footprintImage from './assets/footprintImage.png'
 import handprintImage from './assets/handprintImage.png'
+import handprintImageLeapMobile from './assets/handprintImageLeapMobile.svg'
 import handprintLeap from './assets/handprintLeap.png'
 
 import takeActionFingerprint from './assets/takeActionFingerprint.svg'
@@ -90,6 +92,19 @@ import earth from './assets/earth.svg'
 
 function AboutHumanscalePage(props) {
   const [campaigns, setCampaigns] = useState([])
+  const [width, setWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    animateScroll.scrollToTop()
+    getCampaigns().then(data => setCampaigns(data))
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange)
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+    }
+  }, [])
 
   const getCampaigns = async () => {
     const {
@@ -98,16 +113,19 @@ function AboutHumanscalePage(props) {
     return docs
   }
 
-  useEffect(() => {
-    animateScroll.scrollToTop()
-    getCampaigns().then(data => setCampaigns(data))
-  }, [])
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth)
+  }
+
+  const isTablet = width < sizes.largeDesktop
+  const isMobile = width < sizes.tablet
 
   const token = window.localStorage.getItem('accessToken')
 
   return (
     <Fragment>
       <PageMetadata pageName="aboutInterfacePage" />
+
       <Hero>
         <HeroInfo>
           <HeroTitle>
@@ -133,7 +151,10 @@ function AboutHumanscalePage(props) {
           <FootprintImagesBlock>
             <FootprintMainImage src={footprintImage} alt="" />
             <FootprintLeapImage src={footprintLeap} alt="" />
-            <FootprintFingerImage src={footprintFinger} alt="" />
+            {!isTablet && <FootprintFingerImage src={footprintFinger} alt="" />}
+            {(isMobile || isTablet) && (
+              <FootprintFingerImage src={footprintFingerMobile} alt="" />
+            )}
             <FootprintFootImage src={footprintFinger2} alt="" />
           </FootprintImagesBlock>
         </FootprintWrapper>
@@ -142,14 +163,19 @@ function AboutHumanscalePage(props) {
         <HandprintWrapper>
           <HandprintImagesWrapper>
             <HandprintMainImage src={handprintImage} alt="" />
-            <HandprintLeapImage src={handprintLeap} alt="" />
-            <HandprintFingerImage src={earth} alt="" />
+            {!isMobile && !isTablet && (
+              <HandprintLeapImage src={handprintLeap} alt="" />
+            )}
+            {isMobile && (
+              <HandprintLeapImage src={handprintImageLeapMobile} alt="" />
+            )}
+            <HandprintEarthImage src={earth} alt="" />
           </HandprintImagesWrapper>
           <HandprintInfo>
             <HandprintTitle>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.title" />
             </HandprintTitle>
-            <HandprintText style={{ top: '90px' }}>
+            <HandprintText>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text1" />
               <FormattedMessage id="app.aboutHumanscalePage.handprint.text2" />
             </HandprintText>
@@ -165,7 +191,7 @@ function AboutHumanscalePage(props) {
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.takeAction" />
             </p>
-            <TakeActionDivider style={{ right: '137px' }} />
+            <TakeActionDivider />
           </TakeActionItemHeader>
           <TakeActionItemInfo>
             <p>
@@ -186,7 +212,7 @@ function AboutHumanscalePage(props) {
             </p>
             <TakeActionDivider style={{ right: '79px' }} />
           </TakeActionItemHeader>
-          <TakeActionItemInfo>
+          <TakeActionDoItItemInfo>
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionDoItInfo" />
             </p>
@@ -194,7 +220,7 @@ function AboutHumanscalePage(props) {
               <TakeActionDoItMainImage src={doItMainImage} alt="" />
               <TakeActionDoItHandprint src={doItHandprint} alt="" />
             </TakeActionDoItImageWrapper>
-          </TakeActionItemInfo>
+          </TakeActionDoItItemInfo>
         </TakeActionDoIt>
         <TakeActionShareTo>
           <TakeActionItemHeader>
@@ -203,7 +229,7 @@ function AboutHumanscalePage(props) {
             </p>
             <TakeActionDivider style={{ right: '45px' }} />
           </TakeActionItemHeader>
-          <TakeActionItemInfo>
+          <TakeActionSharedToItemInfo>
             <p>
               <FormattedMessage id="app.aboutHumanscalePage.handprint.takeActionShareInfo" />
             </p>
@@ -212,7 +238,7 @@ function AboutHumanscalePage(props) {
               <SmallCircle src={smallOval} alt="" />
               <BigCircle src={bigOval} alt="" />
             </SharedToImageWrapper>
-          </TakeActionItemInfo>
+          </TakeActionSharedToItemInfo>
         </TakeActionShareTo>
       </TakeActionWrapper>
       <CampaignsMainWrapper>
@@ -229,28 +255,9 @@ function AboutHumanscalePage(props) {
         </CampaignsInfo>
         <CampaignsBlock>
           <CampaignsFinger src={campaignsFinger} alt="" />
-          <CampaignsCards>
-            <Slider>
-              <Carousel dots={false} arrows={true} variableWidth={true}>
-                {campaigns.map(camp => {
-                  return (
-                    <Slide key={camp.id}>
-                      <Link
-                        to={token ? `campaign/${camp.id}` : '/account/login'}
-                      >
-                        <CampaignsCard>
-                          <img src={camp.logo.src} alt="" />
-                          <div>
-                            <div>{camp.name}</div>
-                          </div>
-                        </CampaignsCard>
-                      </Link>
-                    </Slide>
-                  )
-                })}
-              </Carousel>
-            </Slider>
-          </CampaignsCards>
+          <ScrollAnimation>
+            <CampaignsCarousel campaigns={campaigns} token={token} />
+          </ScrollAnimation>
           <CampaignButtons>
             <Link to={token ? '/challenges' : '/account/login'}>
               <GreenButton>
