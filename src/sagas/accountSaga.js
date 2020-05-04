@@ -10,17 +10,21 @@ import { prepareUserProfile } from './helpers'
 
 function* logIn({ email, password, createOrganizationFlow }) {
   try {
-    const { token } = yield call(apiAuth.logIn, email, password)
+    const res = yield call(apiAuth.logIn, email, password)
+    const { token, user } = res
     yield put(Creators.logInSuccess(token))
     yield call(prepareUserProfile)
     const brandedConfig = getBrandedConfig()
     if (createOrganizationFlow) {
       yield call(history.push, '/account/create-organization')
     } else {
-      yield call(
-        history.push,
-        brandedConfig ? '/pages/home' : '/account/dashboard',
-      )
+      let to = '/account/dashboard'
+      if (brandedConfig) {
+        if (brandedConfig.brandName === 'Humanscale' && !user.firstLogin) {
+          to = '/challenges'
+        } else to = '/pages/home'
+      }
+      yield call(history.push, to)
     }
   } catch (error) {
     yield put(Creators.logInFailure(decodeError(error)))
