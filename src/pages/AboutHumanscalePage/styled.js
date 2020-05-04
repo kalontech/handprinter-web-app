@@ -644,7 +644,7 @@ export const TakeActionHeader = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 300px;
+  height: 250px;
   width: 100%;
 
   p {
@@ -1095,7 +1095,7 @@ export const TakeActionSharedToImage = styled.img`
   left: -100px;
 
   ${media.desktop`
-    top: 90px;
+    top: 120px;
     left: -220px;
   `}
 
@@ -1121,15 +1121,15 @@ export const SmallCircle = styled.img`
   `}
 
   ${media.desktop`
-    top: 210px;
-    left: -30px;
+    top: 250px;
+    left: -40px;
   `}
 
   ${media.phone`
     width: 101.71px;
     height: 101.59px;
-    left: 140px;
-    top: 237px;
+    left: 100px;
+    top: 207px;
   `}
 `
 
@@ -1146,15 +1146,15 @@ export const BigCircle = styled.img`
   `}
 
   ${media.desktop`
-    top: -115px;
-    left: -135px;
+    top: -80px;
+    left: -140px;
   `}
 
   ${media.phone`
     width: 202px;
     height: 201.77px;
-    left: 90px;
-    top: 87px;
+    left: 51px;
+    top: 53px;
   `}
 `
 
@@ -1304,6 +1304,8 @@ export const CampaignsCard = styled.div`
   }
 
   ${media.phone`
+    justify-content: flex-start;
+    padding-left: 15px;
     width: 240px;
     height: 124px;
     border-radius: 4px;
@@ -1312,11 +1314,12 @@ export const CampaignsCard = styled.div`
       width: 72px;
       height: 72px;
       margin-left: 0px;
+      margin-right: 15px;
     }
 
     div {
-      width: 90px;
-      height: 44px;
+      width: 130px;
+      min-height: 24px;
     }
   `}
 `

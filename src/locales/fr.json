@@ -262,7 +262,7 @@
     "app.measurementPage.CommonBasis.Text1": "Lorsque nous parlons avec tout le monde, les impacts de l'action sont exprimés par rapport à l'empreinte d'un citoyen du monde moyen. Ensuite, HandPrinter calcule et vous montre l'impact de vos actions sur votre propre empreinte. Si votre empreinte est deux fois plus grande que l'empreinte de citoyen du monde moyen, alors une action avec «2 jours» d'avantages pour les citoyens de l'eau dans le monde réduira votre empreinte sur l'eau d'un jour.",
     "app.measurementPage.CommonBasis.Text2": "Ce qui est bien, c’est que <strong> plus votre empreinte au sol diminue, plus chaque action devient puissante <\/strong> lorsque l’imprimante manuelle calcule l’effet de l’action sur votre empreinte.",
     "app.measurementPage.Animation.Title": "Faites votre empreinte de main plus grande que votre empreinte. Devenir <strong> Net positif <\/strong>",
-    "app.actions.card.by": "par {username}",
+    "app.actions.card.by": "par <span class=\"name\"> {username} <\/span>",
     "app.actions.engage": "Partager",
     "app.actions.takeAction": "Passer à l'action",
     "app.actions.congratulations": "Toutes nos félicitations",
@@ -471,7 +471,7 @@
     "app.pages.groups.myGroups": "Mes groupes",
     "app.pages.groups.featured": "En vedette",
     "app.pages.groups.skipForNow": "Ignorer pour l'instant",
-    "app.pages.groups.actionsTaken": "{count} actions entreprises",
+    "app.pages.groups.actionsTaken": "{count} actions prises",
     "app.errors.30": "Un groupe avec ce nom existe déjà",
     "app.pages.groups.successCreated": "Vous avez créé le groupe avec succès",
     "app.pages.groups.invited": "Invité",
@@ -774,5 +774,6 @@
     "app.actionsPage.tabs.teams": "Équipes",
     "app.timeUnits.switch.text": "Unités de temps activées",
     "app.physicalUnits.switch.text": "Unités physiques activées",
-    "app.aboutHumanscalePage.handprint.text": ""
+    "app.aboutHumanscalePage.handprint.text": "",
+    "app.aboutHumanscalePage.takeActionHeader": "It's easy!"
 }
