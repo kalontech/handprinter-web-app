@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { compose } from 'redux'
 import colors from 'config/colors'
@@ -6,6 +6,9 @@ import colors from 'config/colors'
 import { getUserInitialAvatar } from 'api'
 
 import styled from 'styled-components'
+
+import { sizes } from 'utils/mediaQueryTemplate'
+import { Icon } from 'antd'
 
 import { Checkbox } from '../../components/Styled'
 import fingerPrintSVG from '../../assets/icons/fingerprint-part.svg'
@@ -27,6 +30,7 @@ import {
   ModalContent,
   AchievementFooter,
   SkipFooterButton,
+  BreadcrumbStyledMobile,
 } from './styled'
 import {
   DashboardHeaderWhiteLine,
@@ -37,7 +41,17 @@ import {
 } from '../DashboardPage/header'
 import { sendInvitations } from '../../api/competitions'
 
+const StyledArrowIcon = styled(Icon)`
+  svg {
+    width: 15px;
+    height: 15px;
+    color: ${colors.gray};
+    margin-right: 15px;
+  }
+`
+
 const Header = props => {
+  const [width, setWidth] = useState(window.innerWidth)
   const { competition, participantsCount, ownGroupsList, isMember } = props
   const { name, description } = competition
   const [inviteModalVisible, setInviteModalVisible] = useState(false)
@@ -46,6 +60,9 @@ const Header = props => {
     { id: 'app.pages.groups.membersCount' },
     { count: participantsCount },
   )
+
+  const isTablet = width < sizes.largeDesktop
+  const isMobile = width < sizes.tablet
 
   function onGroupSelected(e, group) {
     const checked = e.target.checked
@@ -57,14 +74,36 @@ const Header = props => {
       )
     }
   }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange)
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+    }
+  }, [])
+
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth)
+  }
+
   return (
     <DashboardHeaderWhiteLine organization>
-      <BreadcrumbStyled separator=">">
-        <BreadcrumbItem style={{ color: colors.green }} href="/challenges">
-          <FormattedMessage id="app.pages.challenges" />
-        </BreadcrumbItem>
-        <BreadcrumbItem>{name}</BreadcrumbItem>
-      </BreadcrumbStyled>
+      {isTablet && (
+        <BreadcrumbStyledMobile separator=">">
+          <StyledArrowIcon type="left" />
+          <BreadcrumbItem href="/challenges" style={{ color: colors.darkGray }}>
+            <FormattedMessage id="app.pages.challenges" />
+          </BreadcrumbItem>
+        </BreadcrumbStyledMobile>
+      )}
+      {!isMobile && !isTablet && (
+        <BreadcrumbStyled separator=">">
+          <BreadcrumbItem style={{ color: colors.green }} href="/challenges">
+            <FormattedMessage id="app.pages.challenges" />
+          </BreadcrumbItem>
+          <BreadcrumbItem>{name}</BreadcrumbItem>
+        </BreadcrumbStyled>
+      )}
       <Banner src={competition.banner.src} />
       <DashboardHeaderUserPictureWrap>
         <DashboardHeaderUserPicture src={competition.logo.src} />

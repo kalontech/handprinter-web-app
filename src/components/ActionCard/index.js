@@ -12,6 +12,7 @@ import EditIcon from 'assets/icons/EditIcon'
 import DeleteIcon from 'assets/icons/DeleteIcon'
 
 import ActionCardLabelSet from '../ActionCardLabelSet'
+import { ReactComponent as BigLeap } from '../CompetitionCard/assets/challengeLeap1.svg'
 
 const TooltipContainer = styled.div`
   line-height: 20px;
@@ -25,6 +26,11 @@ const CardWrap = styled.div`
   padding-bottom: 10px;
   margin: 0 auto;
   display: inline-block;
+
+  ${media.phone`
+    padding-top: 0px;
+    padding-bottom: 0px;
+  `}
 `
 
 const CardContainer = styled.div`
@@ -157,6 +163,39 @@ const WildWrapper = styled.p`
   color: gray;
 `
 
+const ChallengeLabel = styled.div`
+  position: absolute;
+  z-index: 1000;
+  width: 129px;
+  height: 23px;
+  right: 8px;
+  top: 8px;
+  background: ${colors.green};
+  border-radius: 4px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 4px 8px;
+
+  p {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    width: 98px;
+    height: 12px;
+    font-size: 8px;
+    line-height: 12px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+    color: ${colors.white};
+    margin-left: 21px;
+  }
+`
+
+const SWGWrap = styled.div``
+
 const ActionCard = props => {
   const {
     to,
@@ -174,6 +213,7 @@ const ActionCard = props => {
     isHabit,
     isWild,
     showPhysicalValues,
+    selectedKey,
   } = props
 
   const popover = (
@@ -192,10 +232,24 @@ const ActionCard = props => {
     </Tooltip>
   )
 
+  const bigLeapStyles = {
+    position: 'absolute',
+    left: '14px',
+    top: '4px',
+  }
+
   return (
     <Link to={to} onClick={onClick}>
       <CardWrap>
         <CardContainer isSlide={isSlide} style={styles && styles}>
+          {selectedKey === 'todo' && (
+            <ChallengeLabel>
+              <SWGWrap>
+                <BigLeap style={bigLeapStyles} />
+              </SWGWrap>
+              <p>| available to taken</p>
+            </ChallengeLabel>
+          )}
           <CardImage>
             {picture && <img src={picture} alt={name} />}
 
@@ -291,6 +345,7 @@ ActionCard.propTypes = {
   impactsInUnits: PropTypes.object,
   isWild: PropTypes.bool,
   showPhysicalValues: PropTypes.bool,
+  selectedKey: PropTypes.string,
 }
 
 export default ActionCard

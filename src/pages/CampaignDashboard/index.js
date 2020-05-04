@@ -1,4 +1,5 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import qs from 'qs'
 import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
@@ -8,10 +9,13 @@ import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import ActionsIconComponent from 'assets/icons/HandIcon'
 import StatisticsIconComponent from 'assets/icons/StatisticsIcon'
+import { Select, Icon } from 'antd'
+import { sizes } from 'utils/mediaQueryTemplate'
+import colors from 'config/colors'
 
 import useCampaign from './useCampaign'
 import Header from './header'
-import { Content } from './styled'
+import { Content, TabsSelect } from './styled'
 import renderParticipants from './participants'
 import renderActions from './actions'
 import renderActivity from './activity'
@@ -19,6 +23,8 @@ import renderStatistics from './statistics'
 import { CAPMAIGN_TABS } from './constants'
 import Tabs from './tabs'
 import { UIContextSettings } from '../../context/uiSettingsContext'
+
+const { Option } = Select
 
 function renderContent(view, props) {
   switch (view) {
@@ -35,6 +41,7 @@ function renderContent(view, props) {
   }
 }
 function CampaignDashboard(props) {
+  const [width, setWidth] = useState(window.innerWidth)
   const UIContextData = useContext(UIContextSettings)
   const {
     location,
@@ -60,7 +67,65 @@ function CampaignDashboard(props) {
     }
   }
 
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange)
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+    }
+  }, [])
+
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth)
+  }
+
+  const isTablet = width < sizes.largeDesktop
+  const isMobile = width < sizes.tablet
+
   if (loading || !campaign) return <Spinner />
+
+  const tabList = [
+    {
+      to: `?view=${CAPMAIGN_TABS.actions}`,
+      icon: ActionsIconComponent,
+      text: formatMessage({ id: 'app.header.menu.actions' }),
+      active: view === CAPMAIGN_TABS.actions,
+    },
+    {
+      to: `?view=${CAPMAIGN_TABS.statistics}`,
+      icon: StatisticsIconComponent,
+      text: formatMessage({ id: 'app.pages.groups.statistics' }),
+      active: view === CAPMAIGN_TABS.statistics,
+    },
+    {
+      to: `?view=${CAPMAIGN_TABS.participants}`,
+      icon: SuggestedIconComponent,
+      text: formatMessage({ id: 'app.campaignPage.participants' }),
+      active: view === CAPMAIGN_TABS.participants,
+    },
+    {
+      to: `?view=${CAPMAIGN_TABS.activity}`,
+      icon: FlagIconComponent,
+      text: formatMessage({ id: 'app.pages.groups.activity' }),
+      active: view === CAPMAIGN_TABS.activity,
+    },
+  ]
+
+  const defaultSelectVal = (
+    <div>
+      <Icon
+        component={ActionsIconComponent}
+        style={{ marginRight: '10px', color: 'white' }}
+      />
+      {formatMessage({ id: 'app.header.menu.actions' })}
+    </div>
+  )
+
+  const dropdownStyle = {
+    background: `${colors.dark}`,
+    marginTop: '-3px',
+    paddingLeft: isMobile ? '10px' : '36px',
+  }
+
   return (
     <Fragment>
       <Header
@@ -68,34 +133,65 @@ function CampaignDashboard(props) {
         campaign={campaign}
         accomplishedUserActions={accomplishedUserActions}
       />
-      <Tabs
-        list={[
-          {
-            to: `?view=${CAPMAIGN_TABS.actions}`,
-            icon: ActionsIconComponent,
-            text: formatMessage({ id: 'app.header.menu.actions' }),
-            active: view === CAPMAIGN_TABS.actions,
-          },
-          {
-            to: `?view=${CAPMAIGN_TABS.statistics}`,
-            icon: StatisticsIconComponent,
-            text: formatMessage({ id: 'app.pages.groups.statistics' }),
-            active: view === CAPMAIGN_TABS.statistics,
-          },
-          {
-            to: `?view=${CAPMAIGN_TABS.participants}`,
-            icon: SuggestedIconComponent,
-            text: formatMessage({ id: 'app.campaignPage.participants' }),
-            active: view === CAPMAIGN_TABS.participants,
-          },
-          {
-            to: `?view=${CAPMAIGN_TABS.activity}`,
-            icon: FlagIconComponent,
-            text: formatMessage({ id: 'app.pages.groups.activity' }),
-            active: view === CAPMAIGN_TABS.activity,
-          },
-        ]}
-      />
+      {!isTablet && !isMobile && <Tabs list={tabList} />}
+      {(isTablet || isMobile) && (
+        <TabsSelect>
+          <Select
+            mode="default"
+            defaultValue={defaultSelectVal}
+            dropdownMenuStyle={dropdownStyle}
+          >
+            <Option key={1} style={{ background: `${colors.dark}` }}>
+              <Link
+                to={`?view=${CAPMAIGN_TABS.actions}`}
+                style={{ color: `${colors.white}` }}
+              >
+                <Icon
+                  component={ActionsIconComponent}
+                  style={{ marginRight: '10px' }}
+                />
+                {formatMessage({ id: 'app.header.menu.actions' })}
+              </Link>
+            </Option>
+            <Option key={2} style={{ background: `${colors.dark}` }}>
+              <Link
+                to={`?view=${CAPMAIGN_TABS.statistics}`}
+                style={{ color: `${colors.white}` }}
+              >
+                <Icon
+                  component={StatisticsIconComponent}
+                  style={{ marginRight: '10px' }}
+                />
+                {formatMessage({ id: 'app.pages.groups.statistics' })}
+              </Link>
+            </Option>
+            <Option key={3} style={{ background: `${colors.dark}` }}>
+              <Link
+                to={`?view=${CAPMAIGN_TABS.participants}`}
+                style={{ color: `${colors.white}` }}
+              >
+                <Icon
+                  component={SuggestedIconComponent}
+                  style={{ marginRight: '10px' }}
+                />
+                {formatMessage({ id: 'app.campaignPage.participants' })}
+              </Link>
+            </Option>
+            <Option key={4} style={{ background: `${colors.dark}` }}>
+              <Link
+                to={`?view=${CAPMAIGN_TABS.activity}`}
+                style={{ color: `${colors.white}` }}
+              >
+                <Icon
+                  component={FlagIconComponent}
+                  style={{ marginRight: '10px' }}
+                />
+                {formatMessage({ id: 'app.pages.groups.activity' })}
+              </Link>
+            </Option>
+          </Select>
+        </TabsSelect>
+      )}
       <Content>
         {renderContent(view, {
           ...props,

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { AutoComplete, Select, Col, Menu, Breadcrumb } from 'antd'
+import { AutoComplete, Select, Col, Menu, Breadcrumb, Icon } from 'antd'
 import { Link } from 'react-router-dom'
 
 import { Pagination } from 'components/Styled'
@@ -97,6 +97,7 @@ export const EmptyList = styled.p`
   flex-grow: 1;
   font-size: 24px;
   color: ${colors.darkGray};
+  padding: 15px 0px;
 `
 
 export const PaginationStyled = styled(Pagination)`
@@ -113,6 +114,11 @@ export const HeaderCamapingDescription = styled.p`
   margin-top: 15px;
   width: 580px;
   text-align: center;
+
+  ${media.phone`
+    width: 90%;
+    height: 100px;
+  `}
 `
 
 export const ProgressWrapper = styled.div`
@@ -125,9 +131,15 @@ export const ProgressWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 50px;
+
+  ${media.largeDesktop`
+    width: 75%;
+    background-color: ${colors.lightGray};
+  `}
+
   ${media.phone`
-    padding-left: 15px;
-    padding-right: 15px;  
+    padding: 15px 15px 0px 15px; 
+    width: 100%;
   `}
 
   .ant-progress-success-bg {
@@ -152,6 +164,17 @@ export const ProgressText = styled.p`
   color: ${colors.darkGray};
 `
 
+export const ProgressTextMobile = styled.p`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: ${colors.darkGray};
+  text-align: right;
+  width: 100%;
+`
+
 export const CampaignStatusWrapper = styled.div`
   border: ${props =>
     props.inactive
@@ -164,6 +187,15 @@ export const CampaignStatusWrapper = styled.div`
   justify-content: center;
   display: flex;
   margin-left: 20px;
+
+  ${media.largeDesktop`
+    margin-top: 5px;
+    margin-left: 0px;
+  `}
+
+  ${media.phone`
+    margin-left: 0px;
+  `}
 `
 export const CampaignStatus = styled.p`
   font-family: Noto Sans;
@@ -181,9 +213,23 @@ export const DashboardHeaderUserName = styled.div`
   line-height: 35px;
   margin-top: 14px;
   display: flex;
+  flex-direction: column;
   margin-left: ${props => (props.statusLabel ? '118px' : '0px')};
   align-items: center;
   justify-content: center;
+
+  ${media.largeDesktop`
+    min-height: 65px;
+    max-height: 100px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px;
+  `}
+
+  ${media.phone`
+    flex-direction: column;
+  `}
 `
 
 export const Banner = styled.img`
@@ -198,13 +244,11 @@ export const Content = styled.div`
   padding: 20px 70px;
 
   ${media.largeDesktop`
-    padding-left: 34px;
-    padding-right: 34px;
+    padding: 0px 15px;
   `}
 
   ${media.phone`
-    padding-left: 15px;
-    padding-right: 15px;  
+    padding: 0px;
   `}
 `
 
@@ -233,6 +277,24 @@ export const MenuStyled = styled(Menu)`
       border-bottom: 3px solid ${colors.green};
     }
   }
+
+  ${media.largeDesktop`
+    width: 100vw;
+    position: relative;
+    border-radius: 0px;
+    top: 0px;
+    left: -15px;
+    margin: 0px;
+  `}
+
+  ${media.phone`
+    width: 100%;
+    position: relative;
+    border-radius: 0px;
+    top: 0px;
+    left: 0px;
+    margin: 0px;
+  `}
 `
 
 export const StatisticsMain = styled.div`
@@ -340,6 +402,21 @@ export const BreadcrumbStyled = styled(Breadcrumb)`
   .ant-breadcrumb-separator {
     color: ${colors.green};
   }
+
+  ${media.phone`
+    .ant-breadcrumb-separator {
+      color: ${colors.lightGray};
+    }
+  `}
+`
+
+export const BreadcrumbStyledMobile = styled(Breadcrumb)`
+  height: 50px;
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  margin-left: 20px;
+  color: ${colors.gray};
 `
 
 export const BreadcrumbItem = styled(Breadcrumb.Item)`
@@ -349,4 +426,75 @@ export const BreadcrumbItem = styled(Breadcrumb.Item)`
   font-size: 16px;
   line-height: 28px;
   color: ${colors.dark};
+`
+
+export const TabsSelect = styled.div`
+  height: 50px;
+  width: 100%;
+  background-color: ${colors.dark};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+
+  .ant-select {
+    width: 100%;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    background: #344442;
+    color: white;
+    margin-bottom: 3.3px;
+  }
+
+  .ant-select-selection {
+    background: #344442;
+    border-color: #344442;
+  }
+
+  .ant-select-open {
+    border-color: #344442;
+  }
+
+  .ant-select-focused {
+    border-color: #344442;
+  }
+
+  .ant-select-arrow {
+    margin-right: 34px;
+    color: ${colors.white};
+
+    ${media.phone`
+      margin-left: 10px;
+    `}
+  }
+
+  .ant-select-selection-selected-value {
+    margin-left: 34px;
+    color: ${colors.white};
+
+    ${media.phone`
+      margin-left: 10px;
+    `}
+  }
+`
+
+export const StyledIcon = styled(Icon)`
+  svg {
+    width: 20px;
+    height: 20px;
+    color: ${colors.gray};
+  }
+`
+
+export const FeedWrapper = styled.div`
+  padding-right: 145px;
+  padding-left: 145px;
+
+  ${media.largeDesktop`
+    padding: 16px 34px 16px 34px;
+  `}
+
+  ${media.phone`
+    padding: 16px
+  `}
 `

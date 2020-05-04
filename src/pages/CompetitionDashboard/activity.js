@@ -4,11 +4,13 @@ import React from 'react'
 
 import Feed from 'components/Feed'
 
+import { FeedWrapper } from './styled'
+
 export default function renderActivity(props) {
   const { competition } = props
 
   return (
-    <div style={{ paddingLeft: 130, paddingRight: 130 }}>
+    <FeedWrapper>
       <Feed
         readFrom={{
           feedGroup: 'timeline',
@@ -19,6 +21,6 @@ export default function renderActivity(props) {
           userId: `competition-${competition._id}`,
         }}
       />
-    </div>
+    </FeedWrapper>
   )
 }

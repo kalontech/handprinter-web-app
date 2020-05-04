@@ -1,14 +1,17 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import qs from 'qs'
 import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
-import _ from 'lodash'
 import { injectIntl } from 'react-intl'
 import { compose } from 'redux'
 import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import ActionsIconComponent from 'assets/icons/HandIcon'
 import StatisticsIconComponent from 'assets/icons/StatisticsIcon'
+import { Select, Icon } from 'antd'
+import { sizes } from 'utils/mediaQueryTemplate'
+import colors from 'config/colors'
 
 import useCompetition from './useCompetition'
 import useOwnGroupsList from './useOwnGroupsList'
@@ -25,6 +28,9 @@ import { COMPETITION_TABS } from './constants'
 import Tabs from './tabs'
 import { INVITATION_STATUSES } from '../IncreaseHandprintPage'
 import { UIContextSettings } from '../../context/uiSettingsContext'
+import { TabsSelect } from '../CampaignDashboard/styled'
+
+const { Option } = Select
 
 function renderContent(view, props) {
   switch (view) {
@@ -43,6 +49,7 @@ function renderContent(view, props) {
   }
 }
 function CampaignDashboard(props) {
+  const [width, setWidth] = useState(window.innerWidth)
   const UIContextData = useContext(UIContextSettings)
   const {
     location,
@@ -72,7 +79,62 @@ function CampaignDashboard(props) {
     }
   }
 
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange)
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+    }
+  }, [])
+
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth)
+  }
+
+  const isTablet = width < sizes.largeDesktop
+  const isMobile = width < sizes.tablet
+
   if (loading || !competition) return <Spinner />
+
+  const tabList = [
+    {
+      to: `?view=${COMPETITION_TABS.actions}`,
+      icon: ActionsIconComponent,
+      text: formatMessage({ id: 'app.header.menu.actions' }),
+      active: view === COMPETITION_TABS.actions,
+    },
+    {
+      to: `?view=${COMPETITION_TABS.statistics}`,
+      icon: StatisticsIconComponent,
+      text: formatMessage({ id: 'app.pages.groups.statistics' }),
+      active: view === COMPETITION_TABS.statistics,
+    },
+    {
+      to: `?view=${COMPETITION_TABS.participants}`,
+      icon: SuggestedIconComponent,
+      text: formatMessage({ id: 'app.campaignPage.participants' }),
+      active: view === COMPETITION_TABS.participants,
+    },
+    {
+      to: `?view=${COMPETITION_TABS.activity}`,
+      icon: FlagIconComponent,
+      text: formatMessage({ id: 'app.pages.groups.activity' }),
+      active: view === COMPETITION_TABS.activity,
+    },
+  ]
+
+  const defaultSelectVal = (
+    <div>
+      <Icon component={ActionsIconComponent} style={{ marginRight: '10px' }} />
+      {formatMessage({ id: 'app.header.menu.actions' })}
+    </div>
+  )
+
+  const dropdownStyle = {
+    background: `${colors.dark}`,
+    marginTop: '-3px',
+    paddingLeft: isMobile ? '10px' : '36px',
+  }
+
   return (
     <Fragment>
       <Header
@@ -84,40 +146,86 @@ function CampaignDashboard(props) {
           !!invitations.find(i => i.status === INVITATION_STATUSES.ACCEPTED)
         }
       />
-      <Tabs
-        list={[
-          {
-            to: `?view=${COMPETITION_TABS.actions}`,
-            icon: ActionsIconComponent,
-            text: formatMessage({ id: 'app.header.menu.actions' }),
-            active: view === COMPETITION_TABS.actions,
-          },
-          {
-            to: `?view=${COMPETITION_TABS.statistics}`,
-            icon: StatisticsIconComponent,
-            text: formatMessage({ id: 'app.pages.groups.statistics' }),
-            active: view === COMPETITION_TABS.statistics,
-          },
-          {
-            to: `?view=${COMPETITION_TABS.participants}`,
-            icon: SuggestedIconComponent,
-            text: formatMessage({ id: 'app.campaignPage.participants' }),
-            active: view === COMPETITION_TABS.participants,
-          },
-          !_.isEmpty(invitations) && {
-            to: `?view=${COMPETITION_TABS.groups}&tabIndex=0`,
-            icon: SuggestedIconComponent,
-            text: formatMessage({ id: 'app.pages.groups.myGroups' }),
-            active: view === COMPETITION_TABS.groups,
-          },
-          {
-            to: `?view=${COMPETITION_TABS.activity}`,
-            icon: FlagIconComponent,
-            text: formatMessage({ id: 'app.pages.groups.activity' }),
-            active: view === COMPETITION_TABS.activity,
-          },
-        ]}
-      />
+      {!isTablet && !isMobile && <Tabs list={tabList} />}
+      {(isTablet || isMobile) && (
+        <TabsSelect>
+          <Select
+            mode="default"
+            defaultValue={defaultSelectVal}
+            dropdownMenuStyle={dropdownStyle}
+            defaultOpen
+          >
+            <Option
+              key={1}
+              style={{
+                background: `${colors.dark}`,
+              }}
+            >
+              <Link
+                to={`?view=${COMPETITION_TABS.actions}`}
+                style={{ color: `${colors.white}` }}
+              >
+                <Icon
+                  component={ActionsIconComponent}
+                  style={{ marginRight: '10px' }}
+                />
+                {formatMessage({ id: 'app.header.menu.actions' })}
+              </Link>
+            </Option>
+            <Option
+              key={2}
+              style={{
+                background: `${colors.dark}`,
+              }}
+            >
+              <Link
+                to={`?view=${COMPETITION_TABS.statistics}`}
+                style={{ color: `${colors.white}` }}
+              >
+                <Icon
+                  component={StatisticsIconComponent}
+                  style={{ marginRight: '10px' }}
+                />
+                {formatMessage({ id: 'app.pages.groups.statistics' })}
+              </Link>
+            </Option>
+            <Option
+              key={3}
+              style={{
+                background: `${colors.dark}`,
+              }}
+            >
+              <Link
+                to={`?view=${COMPETITION_TABS.participants}`}
+                style={{ color: `${colors.white}` }}
+              >
+                <Icon
+                  component={SuggestedIconComponent}
+                  style={{ marginRight: '10px' }}
+                />
+                {formatMessage({ id: 'app.campaignPage.participants' })}
+              </Link>
+            </Option>
+            <Option
+              key={4}
+              style={{
+                background: `${colors.dark}`,
+              }}
+            >
+              <Link
+                to={`?view=${COMPETITION_TABS.activity}`}
+                style={{ color: `${colors.white}` }}
+              >
+                <Icon
+                  component={FlagIconComponent}
+                  style={{ marginRight: '10px' }}
+                />
+                {formatMessage({ id: 'app.pages.groups.activity' })}
+              </Link>
+            </Option>
+          </Select>
+        </TabsSelect>
+      )}
       <Content>
         {renderContent(view, {
           ...props,

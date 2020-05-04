@@ -8,7 +8,13 @@ import colors from 'config/colors'
 
 import moment from 'moment'
 
-import { ProgressWrapper, ProgressTextWrapper, ProgressText } from './styled'
+import {
+  ProgressWrapper,
+  ProgressTextWrapper,
+  ProgressText,
+  ProgressTextMobile,
+  StyledIcon,
+} from './styled'
 
 function CampaignProgress(props) {
   const {
@@ -18,6 +24,8 @@ function CampaignProgress(props) {
     expired,
     successCount,
     tooltipText,
+    isMobile,
+    isTablet,
   } = props
   const percent = (accomplished / total) * 100
   const successPercent = (successCount / total) * 100
@@ -33,19 +41,43 @@ function CampaignProgress(props) {
   )
   return (
     <ProgressWrapper>
-      <ProgressTextWrapper>
-        <ProgressText>{accomplishedLabel}</ProgressText>
-        <ProgressText>{daysLeft}</ProgressText>
-      </ProgressTextWrapper>
-      <Tooltip title={tooltipText}>
-        <Progress
-          percent={percent}
-          successPercent={Math.min(percent, successPercent)}
-          showInfo={false}
-          strokeColor={expired ? colors.darkGray : undefined}
-          strokeWidth={4}
-        />
-      </Tooltip>
+      {!isMobile && !isTablet && (
+        <>
+          <ProgressTextWrapper>
+            <ProgressText>{accomplishedLabel}</ProgressText>
+            <ProgressText>{daysLeft}</ProgressText>
+          </ProgressTextWrapper>
+          <Tooltip title={tooltipText}>
+            <Progress
+              percent={percent}
+              successPercent={Math.min(percent, successPercent)}
+              showInfo={false}
+              strokeColor={expired ? colors.darkGray : undefined}
+              strokeWidth={4}
+            />
+          </Tooltip>
+        </>
+      )}
+      {(isMobile || isTablet) && (
+        <>
+          <ProgressTextWrapper>
+            <ProgressText>{accomplishedLabel}</ProgressText>
+            <StyledIcon type="info-circle" />
+          </ProgressTextWrapper>
+          <Tooltip title={tooltipText}>
+            <Progress
+              percent={percent}
+              successPercent={Math.min(percent, successPercent)}
+              showInfo={false}
+              strokeColor={expired ? colors.darkGray : undefined}
+              strokeWidth={4}
+            />
+          </Tooltip>
+          <ProgressTextWrapper>
+            <ProgressTextMobile>{daysLeft}</ProgressTextMobile>
+          </ProgressTextWrapper>
+        </>
+      )}
     </ProgressWrapper>
   )
 }
@@ -58,6 +90,8 @@ CampaignProgress.propTypes = {
   intl: Object,
   expired: Boolean,
   tooltipText: String,
+  isMobile: Boolean,
+  isTablet: Boolean,
 }
 
 export default compose(injectIntl)(CampaignProgress)

@@ -651,6 +651,7 @@ export const GlobalStyle = createGlobalStyle`
       flex-direction: column;
       width: 100%;
       padding-left: 0;
+      /* border-color: ${colors.dark}; */
     `}
   }
 
@@ -764,6 +765,32 @@ export const GlobalStyle = createGlobalStyle`
   .ant-input-affix-wrapper .ant-input,
   .ant-select-open .ant-select-selection {
     box-shadow: none;
+  }
+
+  .raf-panel-footer {
+    div {
+      display: flex;
+      flex-direction: column;
+      
+
+      div {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+      }
+    }
+
+    ${media.largeDesktop`
+      div {
+        flex-direction: row;
+      }
+    `}
+
+    ${media.phone`
+      div {
+        flex-direction: column;
+      }
+    `}
   }
  
   .ant-select__override-for__register-page {
