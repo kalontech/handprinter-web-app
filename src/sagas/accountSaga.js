@@ -10,7 +10,8 @@ import { prepareUserProfile } from './helpers'
 
 function* logIn({ email, password, createOrganizationFlow }) {
   try {
-    const { token } = yield call(apiAuth.logIn, email, password)
+    const res = yield call(apiAuth.logIn, email, password)
+    const { token, user } = res
     yield put(Creators.logInSuccess(token))
     yield call(prepareUserProfile)
     const brandedConfig = getBrandedConfig()
@@ -19,8 +20,9 @@ function* logIn({ email, password, createOrganizationFlow }) {
     } else {
       let to = '/account/dashboard'
       if (brandedConfig) {
-        if (brandedConfig.brandName === 'Humanscale') to = '/challenges'
-        else to = '/pages/home'
+        if (brandedConfig.brandName === 'Humanscale' && !user.firstLogin) {
+          to = '/challenges'
+        } else to = '/pages/home'
       }
       yield call(history.push, to)
     }
