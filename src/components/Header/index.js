@@ -931,7 +931,7 @@ function Header(props) {
                   >
                     <Menu mode="horizontal" selectedKeys={[selectedMenuItem]}>
                       <Menu.Item key="/challenges">
-                        <Link to="/challenges/campaigns">
+                        <Link to="/challenges">
                           <FormattedMessage id="app.pages.challenges" />
                         </Link>
                       </Menu.Item>
