@@ -42,10 +42,9 @@ const UserName = styled.span`
   `}
 
   ${media.phone`
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
     width: 180px;
+    flex-direction: row;
+    flex-wrap: wrap;
   `}
 `
 
@@ -265,18 +264,18 @@ export const ActivityHeader = props => {
                   }}
                 >
                   <UserName>
-                    <strong>{userName}</strong>
+                    <strong>{userName}&nbsp;</strong>
                     {isDidAction && (
-                      <>
+                      <span>
                         {' did action '}
                         <strong>{actionName}</strong>
-                      </>
+                      </span>
                     )}
                     {isCommentedAction && (
-                      <>
+                      <p>
                         {' commented on action '}
                         <strong>{actionName}</strong>
-                      </>
+                      </p>
                     )}
                   </UserName>
                   <CreatedAtText>{createdAt}</CreatedAtText>
