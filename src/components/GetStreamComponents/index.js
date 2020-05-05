@@ -267,16 +267,16 @@ export const ActivityHeader = props => {
                   <UserName>
                     <strong>{userName}</strong>
                     {isDidAction && (
-                      <p>
+                      <>
                         {' did action '}
                         <strong>{actionName}</strong>
-                      </p>
+                      </>
                     )}
                     {isCommentedAction && (
-                      <p>
+                      <>
                         {' commented on action '}
                         <strong>{actionName}</strong>
-                      </p>
+                      </>
                     )}
                   </UserName>
                   <CreatedAtText>{createdAt}</CreatedAtText>
@@ -363,14 +363,11 @@ export const CommentButton = props => {
 
   return (
     <ReactionToggleIcon
-      // counts={counts}
       own_reactions={own_reactions}
       kind="comment"
       onPress={onPress}
       activeIcon={filled ? CommentFilled : CommentDefault}
       inactiveIcon={filled ? CommentFilled : CommentDefault}
-      // labelSingle="comment"
-      // labelPlural="comments"
     />
   )
 }
@@ -409,14 +406,11 @@ export const LikeButton = props => {
 
   return (
     <ReactionToggleIcon
-      // counts={counts}
       own_reactions={own_reactions}
       kind="like"
       onPress={handleOnPress}
       activeIcon={LikeFilled}
       inactiveIcon={LikeDefault}
-      // labelSingle="like"
-      // labelPlural="likes"
     />
   )
 }

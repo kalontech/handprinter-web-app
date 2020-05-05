@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import _ from 'lodash'
 import qs from 'qs'
 import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
@@ -114,6 +115,12 @@ function CampaignDashboard(props) {
       text: formatMessage({ id: 'app.campaignPage.participants' }),
       active: view === COMPETITION_TABS.participants,
     },
+    !_.isEmpty(invitations) && {
+      to: `?view=${COMPETITION_TABS.groups}&tabIndex=0`,
+      icon: SuggestedIconComponent,
+      text: formatMessage({ id: 'app.pages.groups.myGroups' }),
+      active: view === COMPETITION_TABS.groups,
+    },
     {
       to: `?view=${COMPETITION_TABS.activity}`,
       icon: FlagIconComponent,
@@ -205,8 +212,27 @@ function CampaignDashboard(props) {
                 {formatMessage({ id: 'app.campaignPage.participants' })}
               </Link>
             </Option>
+            {!_.isEmpty(invitations) && (
+              <Option
+                key={4}
+                style={{
+                  background: `${colors.dark}`,
+                }}
+              >
+                <Link
+                  to={`?view=${COMPETITION_TABS.groups}&tabIndex=0`}
+                  style={{ color: `${colors.white}` }}
+                >
+                  <Icon
+                    component={SuggestedIconComponent}
+                    style={{ marginRight: '10px' }}
+                  />
+                  {formatMessage({ id: 'app.pages.groups.myGroups' })}
+                </Link>
+              </Option>
+            )}
             <Option
-              key={4}
+              key={5}
               style={{
                 background: `${colors.dark}`,
               }}
