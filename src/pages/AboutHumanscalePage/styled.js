@@ -1129,7 +1129,7 @@ export const SmallCircle = styled.img`
     width: 101.71px;
     height: 101.59px;
     left: 100px;
-    top: 207px;
+    top: 237px;
   `}
 `
 
@@ -1154,7 +1154,7 @@ export const BigCircle = styled.img`
     width: 202px;
     height: 201.77px;
     left: 51px;
-    top: 53px;
+    top: 83px;
   `}
 `
 
