@@ -123,7 +123,7 @@ function CampaignDashboard(props) {
   const dropdownStyle = {
     background: `${colors.dark}`,
     marginTop: '-3px',
-    paddingLeft: isMobile ? '10px' : '36px',
+    paddingLeft: isMobile ? '8px' : '18px',
   }
 
   return (

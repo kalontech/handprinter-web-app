@@ -108,6 +108,8 @@ export const DashboardHeaderUserSince = styled.div`
   color: ${colors.darkGray};
   font-size: 16px;
   line-height: 20px;
+  width: 100%;
+  text-align: center;
 `
 
 const HeaderUserInfoRowCol = styled(Col)`

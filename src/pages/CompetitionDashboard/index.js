@@ -132,7 +132,7 @@ function CampaignDashboard(props) {
   const dropdownStyle = {
     background: `${colors.dark}`,
     marginTop: '-3px',
-    paddingLeft: isMobile ? '10px' : '36px',
+    paddingLeft: isMobile ? '8px' : '18px',
   }
 
   return (
@@ -153,7 +153,6 @@ function CampaignDashboard(props) {
             mode="default"
             defaultValue={defaultSelectVal}
             dropdownMenuStyle={dropdownStyle}
-            defaultOpen
           >
             <Option
               key={1}

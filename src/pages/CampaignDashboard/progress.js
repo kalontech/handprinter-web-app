@@ -62,17 +62,18 @@ function CampaignProgress(props) {
         <>
           <ProgressTextWrapper>
             <ProgressText>{accomplishedLabel}</ProgressText>
-            <StyledIcon type="info-circle" />
+            <Tooltip title={tooltipText} placement="topRight">
+              <StyledIcon type="info-circle" />
+            </Tooltip>
           </ProgressTextWrapper>
-          <Tooltip title={tooltipText}>
-            <Progress
-              percent={percent}
-              successPercent={Math.min(percent, successPercent)}
-              showInfo={false}
-              strokeColor={expired ? colors.darkGray : undefined}
-              strokeWidth={4}
-            />
-          </Tooltip>
+          <Progress
+            percent={percent}
+            successPercent={Math.min(percent, successPercent)}
+            showInfo={false}
+            strokeColor={expired ? colors.darkGray : undefined}
+            strokeWidth={4}
+            trigger="click"
+          />
           <ProgressTextWrapper>
             <ProgressTextMobile>{daysLeft}</ProgressTextMobile>
           </ProgressTextWrapper>

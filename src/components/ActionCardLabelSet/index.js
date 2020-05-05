@@ -10,6 +10,9 @@ const CardLabelWrap = styled.div`
   display: flex;
   ${media.phone`
     ${props => props.mobileFixedWidth && 'max-width: 285px;'}
+    margin-right: 5px;
+    position: relative;
+    left: 4%;
   `}
 `
 

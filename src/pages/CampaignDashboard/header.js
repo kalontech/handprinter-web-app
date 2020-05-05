@@ -121,7 +121,7 @@ const Header = props => {
           {!!statusLabelId && (
             <CampaignStatusWrapper inactive={expired}>
               <CampaignStatus inactive={expired}>
-                <FormattedMessage id={'statusLabelId'} />
+                <FormattedMessage id={statusLabelId} />
               </CampaignStatus>
             </CampaignStatusWrapper>
           )}

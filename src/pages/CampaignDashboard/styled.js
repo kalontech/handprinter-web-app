@@ -186,7 +186,6 @@ export const CampaignStatusWrapper = styled.div`
   align-items: center;
   justify-content: center;
   display: flex;
-  margin-left: 20px;
 
   ${media.largeDesktop`
     margin-top: 5px;
@@ -209,23 +208,24 @@ export const CampaignStatus = styled.p`
 
 export const DashboardHeaderUserName = styled.div`
   color: ${colors.dark};
+  height: 100px;
   font-size: 28px;
   line-height: 35px;
   margin-top: 14px;
   display: flex;
   flex-direction: column;
-  margin-left: ${props => (props.statusLabel ? '118px' : '0px')};
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  margin-left: 0px;
 
-  ${media.largeDesktop`
+  /* ${media.largeDesktop`
     min-height: 65px;
     max-height: 100px;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     margin: 0px;
-  `}
+  `} */
 
   ${media.phone`
     flex-direction: column;
@@ -464,16 +464,25 @@ export const TabsSelect = styled.div`
     color: ${colors.white};
 
     ${media.phone`
-      margin-left: 10px;
+      margin-right: 12px;
     `}
   }
 
+  .ant-select-selection__rendered {
+    margin-left: 5px;
+    margin-right: 0px;
+  }
+
+  .ant-select-arrow {
+    margin-right: 12px;
+  }
+
   .ant-select-selection-selected-value {
-    margin-left: 34px;
+    margin-left: 21px;
     color: ${colors.white};
 
     ${media.phone`
-      margin-left: 10px;
+      margin-left: 12px;
     `}
   }
 `
