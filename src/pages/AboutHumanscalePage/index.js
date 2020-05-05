@@ -184,7 +184,9 @@ function AboutHumanscalePage(props) {
       </WhatIsHandprint>
       <TakeActionWrapper>
         <TakeActionHeader>
-          <p>{"It's easy!"}</p>
+          <p>
+            <FormattedMessage id="app.aboutHumanscalePage.takeActionHeader" />
+          </p>
         </TakeActionHeader>
         <TakeAction>
           <TakeActionItemHeader>

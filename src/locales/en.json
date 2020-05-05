@@ -262,8 +262,7 @@
     "app.measurementPage.CommonBasis.Text1": "When we speak with everyone, action impacts are expressed in relation to an average global citizen's footprint. Then for your personally, handprinter calculates and shows you the impacts of your actions in relation to your own footprint. If your footprint is twice as large as the average global citizen's footprint, then taking an action with &Prime;2 days&Prime; of global citizen water benefits will reduce your water footprint by 1 day.",
     "app.measurementPage.CommonBasis.Text2": "The cool thing is that <strong> the smaller your footprint gets, the more powerful each action will become <\/strong> when handprinter calculates the action’s effect on your footprint.",
     "app.measurementPage.Animation.Title": "Make your handprint bigger than your footprint. Become <strong>Net Positive<\/strong>",
-    "app.actions.card.by": "by {username}",
-    "app.forms.invitingMessage.maxLength": "Message is too long",
+    "app.actions.card.by": "by <span class=\"name\">{username}<\/span>",
     "app.actions.engage": "Share",
     "app.actions.takeAction": "Take action",
     "app.actions.congratulations": "Congratulations",
@@ -555,8 +554,8 @@
     "app.footer.description.link": "the Social Hotspots Database",
     "app.actions.thanks.taking.actions": "You've taken an action that is believed to reduce your footprint. As soon as this action has been modeled, your footprint will be adjusted with the action's impacts.",
     "app.actionsPage.without.using.handprinter": "I would have done this action without using Handprinter.",
-    "app.actionsPage.oneOfCauses": "Optionally give credit to an event or another user for helping cause me using Handprinter:",
-    "app.actionsPage.oneOfCausesEmails": "Optionally give credit to an event or another user:",
+    "app.actionsPage.oneOfCauses": "My use of Handprinter is one of the causes of me taking this action.",
+    "app.actionsPage.oneOfCausesEmails": "One of the causes of me taking this action is an event or another user:",
     "app.actionsPage.oneOfCausesEmailsHint": "Enter email or ID code",
     "app.profilePage.tabs.footprint": "Footprint",
     "app.pages.footprint.personalizedFootprint": "Personalized footprint",
@@ -776,5 +775,5 @@
     "app.timeUnits.switch.text": "Time Units On",
     "app.physicalUnits.switch.text": "Physical Units On",
     "app.aboutHumanscalePage.handprint.text": "",
-    "app.actions.type.modeling": "In modeling"
+    "app.aboutHumanscalePage.takeActionHeader": "It's easy!"
 }

@@ -262,7 +262,7 @@
     "app.measurementPage.CommonBasis.Text1": "当我们与每个人交谈时，行动影响与全球公民的平均足迹相关。然后，对于您的个人，handprinter计算并向您显示您的行为对您自己的足迹的影响。如果您的足迹是全球公民平均足迹的两倍，那么采取“2天”全球公民用水效益的行动将使您的用水足迹减少1天。",
     "app.measurementPage.CommonBasis.Text2": "很酷的是， <strong>当你的足迹变得越小，handprinter计算行动对你的足迹的影响时，每个动作的影响会变得更有力<\/strong> 。",
     "app.measurementPage.Animation.Title": "让您的手印大于您的足迹。变得<strong>净积极<\/strong>",
-    "app.actions.card.by": "通过 {username}",
+    "app.actions.card.by": "通过<span class=\"name\"> {username} <\/span>",
     "app.actions.engage": "分享",
     "app.actions.takeAction": "采取行动",
     "app.actions.congratulations": "恭喜",
@@ -471,7 +471,7 @@
     "app.pages.groups.myGroups": "我的团队",
     "app.pages.groups.featured": "精选",
     "app.pages.groups.skipForNow": "暂时跳过",
-    "app.pages.groups.actionsTaken": "{count}采取了行动",
+    "app.pages.groups.actionsTaken": "{count}采取的行动",
     "app.errors.30": "具有此名称的组已存在",
     "app.pages.groups.successCreated": "您已成功创建该组",
     "app.pages.groups.invited": "邀请",
@@ -774,5 +774,6 @@
     "app.actionsPage.tabs.teams": "队伍",
     "app.timeUnits.switch.text": "时间单位开启",
     "app.physicalUnits.switch.text": "物理单位开",
-    "app.aboutHumanscalePage.handprint.text": ""
+    "app.aboutHumanscalePage.handprint.text": "",
+    "app.aboutHumanscalePage.takeActionHeader": "It's easy!"
 }
