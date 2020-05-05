@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Row, Col, Select, Spin, Icon } from 'antd'
 import qs from 'qs'
+import _ from 'lodash'
 import styled from 'styled-components'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import debounce from 'lodash/debounce'
@@ -8,18 +9,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { animateScroll } from 'react-scroll/modules'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import DiscoverIconComponent from 'assets/icons/DiscoverIcon'
 import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
 import HistoryIconComponent from 'assets/icons/HistoryIcon'
 
-import {
-  BlockContainer,
-  Pagination,
-  DefaultButton,
-  Modal,
-} from 'components/Styled'
+import { BlockContainer, DefaultButton, Modal } from 'components/Styled'
 import ActionCard from 'components/ActionCard'
 import Spinner from 'components/Spinner'
 import colors from 'config/colors'
@@ -198,49 +195,11 @@ const SearchFieldWrap = styled.div`
   }
 `
 
-async function getActionsList(props) {
-  const { location, match, timeValues } = props
-  const query = qs.parse(location.search, { ignoreQueryPrefix: true })
-
-  if (!query.page) query.page = 1
-  if (window.innerWidth < sizes.largeDesktop) query.limit = 10
-
-  const getActions =
-    [
-      api.getActions,
-      api.getSuggestedActions,
-      api.getActionsMyIdeas,
-      api.getActionsHistory,
-      api.getActionsModeling,
-    ][Object.values(ACTIONS_SUBSETS).indexOf(match.params.subset)] ||
-    api.getActions
-
-  const getTimeValues = timeValues
-    ? () => Promise.resolve({})
-    : api.getTimeValues
-
-  const [
-    {
-      actions: { docs: actions, limit, totalDocs: total, page },
-    },
-    { timeValues: timeValuesResponse },
-  ] = await Promise.all([getActions(query), getTimeValues()])
-
-  const result = {
-    actions,
-    limit,
-    page,
-    total,
-    timeValues,
-  }
-
-  if (!timeValues && timeValuesResponse)
-    result.timeValues = timeValuesResponse.sort((a, b) => a.minutes - b.minutes)
-
-  window.scrollTo(0, 0)
-
-  return result
-}
+const FooterSpinner = styled.div`
+  width: 100%;
+  height: 40px;
+  display: flex;
+`
 
 function ActionsPage(props) {
   const UIContextData = useContext(UIContextSettings)
@@ -274,6 +233,8 @@ function ActionsPage(props) {
     // if value will be defined
     searchFieldValue: undefined,
   })
+  const [currPage, setCurrPage] = useState(1)
+  const [result, setResult] = useState({})
   const [visibleTabs, setVisibleTabs] = useState(false)
   const [listType, setListType] = useState(
     window.screen.availWidth <= sizes.tablet
@@ -287,8 +248,57 @@ function ActionsPage(props) {
   const $search = React.createRef()
 
   useEffect(() => {
-    props.fetch()
-  }, [props.location, props.match])
+    async function getActionsList() {
+      const { location, match, timeValues } = props
+      const query = qs.parse(location.search, { ignoreQueryPrefix: true })
+      const shouldConcatActions = _.isEqual(query, result.lastQuery)
+      const lastQuery = { ...query }
+      if (window.innerWidth < sizes.largeDesktop) query.limit = 10
+
+      const getActions =
+        [
+          api.getActions,
+          api.getSuggestedActions,
+          api.getActionsMyIdeas,
+          api.getActionsHistory,
+          api.getActionsModeling,
+        ][Object.values(ACTIONS_SUBSETS).indexOf(match.params.subset)] ||
+        api.getActions
+
+      const getTimeValues = timeValues
+        ? () => Promise.resolve({})
+        : api.getTimeValues
+
+      const [
+        {
+          actions: { docs: actions, limit, totalDocs: total, page },
+        },
+        { timeValues: timeValuesResponse },
+      ] = await Promise.all([
+        getActions({ ...query, page: currPage }),
+        getTimeValues(),
+      ])
+
+      const resResult = {
+        actions: shouldConcatActions
+          ? _.get(result, 'actions', []).concat(actions)
+          : actions,
+        limit,
+        page,
+        total,
+        timeValues,
+        lastQuery,
+      }
+
+      if (!timeValues && timeValuesResponse)
+        resResult.timeValues = timeValuesResponse.sort(
+          (a, b) => a.minutes - b.minutes,
+        )
+      setResult(resResult)
+    }
+
+    getActionsList()
+  }, [props.location, props.match, currPage])
 
   useEffect(() => {
     animateScroll.scrollToTop()
@@ -366,7 +376,8 @@ function ActionsPage(props) {
     if (Object.keys(data).length === 0) {
       history.push(`/actions/${match.params.subset}`)
     } else {
-      updateQueries({ ...data, page: 1 })
+      updateQueries({ ...data })
+      setCurrPage(1)
     }
   }, 600)
 
@@ -473,14 +484,12 @@ function ActionsPage(props) {
     intl: { formatMessage, formatRelative, locale },
     user,
     loading,
-    actions,
-    limit,
-    page,
-    total,
     match,
     history,
   } = props
 
+  const actions = result.actions || []
+  const total = result.total || 9
   return (
     <React.Fragment>
       <PageMetadata pageName="actionsPage" />
@@ -683,84 +692,98 @@ function ActionsPage(props) {
               </NotFoundWrap>
             ) : (
               <Row gutter={{ md: 20 }}>
-                {actions.map(action => (
-                  <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
-                    <ScrollAnimation>
-                      <ActionCard
-                        to={
-                          action.status === ACTION_STATES.PROPOSED
-                            ? `/account/actions/preview/${action.slug}`
-                            : `/actions/${match.params.subset}/${action.slug}`
-                        }
-                        picture={action.picture}
-                        canChange={action.status === ACTION_STATES.PROPOSED}
-                        onEdit={e => {
-                          e.preventDefault()
-
-                          history.push(`/account/actions/edit/${action.slug}`)
-                        }}
-                        onDelete={onActionDelete(action._id)}
-                        name={
-                          action.translatedName && action.translatedName[locale]
-                            ? action.translatedName[locale]
-                            : action.name
-                        }
-                        impacts={() => {
-                          let tooltipTextId, buttonTextId
-                          switch (action.status) {
-                            case ACTION_STATES.MODELING:
-                              tooltipTextId =
-                                'app.actions.card.waitModelingHint'
-                              buttonTextId = 'app.actions.card.waitModeling'
-                              break
-                            case ACTION_STATES.DENIED:
-                              tooltipTextId = 'app.actions.card.deniedHint'
-                              buttonTextId = 'app.actions.card.denied'
-                              break
-                            default:
-                              tooltipTextId = 'app.actions.card.waitAdminHint'
-                              buttonTextId = 'app.actions.card.waitAdmin'
+                <InfiniteScroll
+                  dataLength={actions.length} // This is important field to render the next data
+                  next={() => {
+                    setCurrPage(currPage + 1)
+                  }}
+                  hasMore={actions.length < total}
+                  loader={
+                    <FooterSpinner>
+                      <Spinner />
+                    </FooterSpinner>
+                  }
+                >
+                  {actions.map(action => (
+                    <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
+                      <ScrollAnimation>
+                        <ActionCard
+                          to={
+                            action.status === ACTION_STATES.PROPOSED
+                              ? `/account/actions/preview/${action.slug}`
+                              : `/actions/${match.params.subset}/${action.slug}`
                           }
-                          return action.status !== ACTION_STATES.PUBLISHED ? (
-                            <Tooltip
-                              placement="top"
-                              title={formatMessage({
-                                id: tooltipTextId,
-                              })}
-                            >
-                              <ImpactButton
-                                style={{ height: 35 }}
-                                isModelling={
-                                  action.status === ACTION_STATES.MODELING
-                                }
-                              >
-                                {formatMessage({
-                                  id: buttonTextId,
+                          picture={action.picture}
+                          canChange={action.status === ACTION_STATES.PROPOSED}
+                          onEdit={e => {
+                            e.preventDefault()
+
+                            history.push(`/account/actions/edit/${action.slug}`)
+                          }}
+                          onDelete={onActionDelete(action._id)}
+                          name={
+                            action.translatedName &&
+                            action.translatedName[locale]
+                              ? action.translatedName[locale]
+                              : action.name
+                          }
+                          impacts={() => {
+                            let tooltipTextId, buttonTextId
+                            switch (action.status) {
+                              case ACTION_STATES.MODELING:
+                                tooltipTextId =
+                                  'app.actions.card.waitModelingHint'
+                                buttonTextId = 'app.actions.card.waitModeling'
+                                break
+                              case ACTION_STATES.DENIED:
+                                tooltipTextId = 'app.actions.card.deniedHint'
+                                buttonTextId = 'app.actions.card.denied'
+                                break
+                              default:
+                                tooltipTextId = 'app.actions.card.waitAdminHint'
+                                buttonTextId = 'app.actions.card.waitAdmin'
+                            }
+                            return action.status !== ACTION_STATES.PUBLISHED ? (
+                              <Tooltip
+                                placement="top"
+                                title={formatMessage({
+                                  id: tooltipTextId,
                                 })}
-                              </ImpactButton>
-                            </Tooltip>
-                          ) : (
-                            <ActionCardLabelSet
-                              impacts={action.impacts}
-                              impactsInUnits={action.impactsInUnits}
-                              showPhysicalValues={
-                                UIContextData.showPhysicalValues
-                              }
-                            />
-                          )
-                        }}
-                        suggestedBy={action.suggestedBy}
-                        suggestedAt={
-                          action.suggestedAt &&
-                          formatRelative(action.suggestedAt)
-                        }
-                        isHabit={action.isHabit}
-                        impactsInUnits={action.impactsInUnits}
-                        isWild={action.isWild}
-                      />
-                    </ScrollAnimation>
-                  </Col>
-                ))}
+                              >
+                                <ImpactButton
+                                  style={{ height: 35 }}
+                                  isModelling={
+                                    action.status === ACTION_STATES.MODELING
+                                  }
+                                >
+                                  {formatMessage({
+                                    id: buttonTextId,
+                                  })}
+                                </ImpactButton>
+                              </Tooltip>
+                            ) : (
+                              <ActionCardLabelSet
+                                impacts={action.impacts}
+                                impactsInUnits={action.impactsInUnits}
+                                showPhysicalValues={
+                                  UIContextData.showPhysicalValues
+                                }
+                              />
+                            )
+                          }}
+                          suggestedBy={action.suggestedBy}
+                          suggestedAt={
+                            action.suggestedAt &&
+                            formatRelative(action.suggestedAt)
+                          }
+                          isHabit={action.isHabit}
+                          impactsInUnits={action.impactsInUnits}
+                          isWild={action.isWild}
+                        />
+                      </ScrollAnimation>
+                    </Col>
+                  ))}
+                </InfiniteScroll>
 
                 {actions.length === 0 && (
                   <NotFoundWrap>
@@ -768,31 +791,6 @@ function ActionsPage(props) {
                   </NotFoundWrap>
                 )}
               </Row>
-            )}
-
-            {!loading && total > limit && (
-              <Pagination
-                current={page}
-                pageSize={limit}
-                total={total}
-                itemRender={(current, type, originalElement) => {
-                  if (type === 'page') {
-                    return (
-                      <button
-                        onClick={() => {
-                          updateQueries({ page: current })
-                        }}
-                      >
-                        {originalElement}
-                      </button>
-                    )
-                  }
-                  if (type === 'prev' || type === 'next') {
-                    return null
-                  }
-                  return originalElement
-                }}
-              />
             )}
           </InnerContainer>
         </BlockContainer>
@@ -805,6 +803,5 @@ export default compose(
   connect(state => ({
     user: state.user.data,
   })),
-  fetch(getActionsList, { loader: false }),
   injectIntl,
 )(ActionsPage)
