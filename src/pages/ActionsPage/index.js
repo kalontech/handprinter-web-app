@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Row, Col, Select, Spin, Icon } from 'antd'
 import qs from 'qs'
-import _ from 'lodash'
-import styled from 'styled-components'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import debounce from 'lodash/debounce'
 import PropTypes from 'prop-types'
@@ -15,14 +13,13 @@ import FlagIconComponent from 'assets/icons/FlagIcon'
 import DiscoverIconComponent from 'assets/icons/DiscoverIcon'
 import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
 import HistoryIconComponent from 'assets/icons/HistoryIcon'
+import { sizes } from 'utils/mediaQueryTemplate'
 
-import { BlockContainer, DefaultButton, Modal } from 'components/Styled'
+import { BlockContainer, Modal } from 'components/Styled'
 import ActionCard from 'components/ActionCard'
 import Spinner from 'components/Spinner'
-import colors from 'config/colors'
 import PageMetadata from 'components/PageMetadata'
-import media, { sizes } from 'utils/mediaQueryTemplate'
-import hexToRgba from 'utils/hexToRgba'
+
 import { ACTIONS_SUBSETS, ACTION_STATES } from 'utils/constants'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Tooltip from 'components/Tooltip'
@@ -35,170 +32,23 @@ import { categories, behaviour, types } from './filterData'
 import { Checkbox } from '../../components/Styled'
 import { UIContextSettings } from '../../context/uiSettingsContext'
 
+import {
+  Wrapper,
+  InnerContainer,
+  ActionSearchDropdownPicture,
+  SearchBlockWrapper,
+  SearchField,
+  StyledSearchIcon,
+  SearchWrap,
+  NotFoundWrap,
+  ImpactButton,
+  ActionSearchDropdownOptionContent,
+  SearchFieldWrap,
+  FooterSpinner,
+} from './styled'
+import useActions from './useActions'
+
 const { Option } = Select
-
-const Wrapper = styled.div`
-  background-color: ${colors.lightGray};
-  position: relative;
-  height: 100%;
-  flex-grow: 1;
-`
-
-const InnerContainer = styled.div`
-  padding: 20px 0;
-
-  ${media.largeDesktop`
-    padding: 15px 0;
-  `}
-`
-
-const ActionSearchDropdownPicture = styled.div`
-  background-image: url(${props => props.src});
-  background-size: cover;
-  background-position: center center;
-  width: 70px;
-  height: 70px;
-  border-radius: 5px;
-  margin-right: 10px;
-  display: inline-block;
-`
-
-const SearchBlockWrapper = styled.div`
-  background-color: ${colors.white};
-  padding: 20px;
-  ${media.phone`
-    margin: 0;
-    .ant-popover-content {
-      width: 100vw;
-    }
-    .ant-modal-content {
-      height: 100vh;
-      .ant-modal-close-x {
-        position: absolute;
-        top: 15px;
-        right: -1px;
-      }
-      .ant-modal-header {
-        padding: 36px 15px 15px;
-        .ant-modal-title {
-          font-size: 22px;
-        }
-      }
-      .ant-modal-body {
-        padding: 15px;
-      }
-    }
-    
-    .ant-modal-wrap {
-      z-index: 1070;
-      overflow: unset;
-    }
-    .ant-modal-header {
-      border-bottom: none;
-    }
-  `}
-`
-
-const SearchField = styled(Select)`
-  width: 100%;
-
-  .ant-select-selection--single {
-    height: 46px;
-  }
-  .ant-select-selection__rendered {
-    line-height: 46px;
-  }
-
-  .ant-select-dropdown-menu-item-active {
-    &:focus,
-    &:hover {
-      background-color: ${colors.lightGray} !important;
-    }
-  }
-
-  .ant-select-selection-selected-value {
-    color: ${colors.darkGray};
-  }
-
-  .ant-select-selection__rendered {
-    margin: 0 16px;
-  }
-`
-
-const StyledSearchIcon = styled(Icon)`
-  font-size: 18px;
-  color: ${colors.darkGray};
-  font-weight: bold;
-  position: absolute;
-  right: 15px;
-  top: 15px;
-`
-
-const SearchWrap = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const NotFoundWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 500px;
-  font-size: 24px;
-  color: ${colors.darkGray};
-`
-
-export const ImpactButton = styled(DefaultButton)`
-  min-width: 100%;
-  background-color: transparent;
-  color: ${props => (props.isModelling ? colors.blue : colors.darkGray)};
-  border: 1px solid
-    ${props =>
-      props.isModelling
-        ? hexToRgba(colors.blue, 0.4)
-        : hexToRgba(colors.darkGray, 0.4)};
-  border-radius: 4px;
-  font-weight: 400;
-
-  &&:hover,
-  &&:active {
-    background-color: transparent;
-    color: ${props => (props.isModelling ? colors.blue : colors.dark)};
-    border-color: ${props =>
-      props.isModelling
-        ? hexToRgba(colors.blue, 0.6)
-        : hexToRgba(colors.dark, 0.6)};
-  }
-`
-
-const ActionSearchDropdownOptionContent = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const SearchFieldWrap = styled.div`
-  width: 100%;
-  .ant-select-dropdown,
-  .ant-select-dropdown-menu {
-    max-height: 402px;
-    z-index: 900;
-  }
-  .ant-select-dropdown-menu-item:hover,
-  .ant-select-dropdown-menu-item-active {
-    background-color: ${colors.lightGray};
-  }
-  .ant-select-selected-icon {
-    display: none;
-  }
-`
-
-const FooterSpinner = styled.div`
-  width: 100%;
-  height: 40px;
-  display: flex;
-`
 
 function ActionsPage(props) {
   const UIContextData = useContext(UIContextSettings)
@@ -214,14 +64,8 @@ function ActionsPage(props) {
     limit: PropTypes.number,
     page: PropTypes.number,
     total: PropTypes.number,
-    timeValues: PropTypes.array,
   }
 
-  ActionsPage.defaultProps = {
-    actions: [],
-  }
-
-  // use state
   const [searchData, setSearchData] = useState({
     searchedActions: [],
     total: null,
@@ -233,7 +77,8 @@ function ActionsPage(props) {
     searchFieldValue: undefined,
   })
   const [currPage, setCurrPage] = useState(1)
-  const [result, setResult] = useState({})
+
+  const [actions, total] = useActions(props, currPage, setCurrPage)
   const [visibleTabs, setVisibleTabs] = useState(false)
   const [listType, setListType] = useState(
     window.screen.availWidth <= sizes.tablet
@@ -245,59 +90,6 @@ function ActionsPage(props) {
   const [selectedBehaviour, setSelectedBehaviour] = useState([])
 
   const $search = React.createRef()
-
-  useEffect(() => {
-    async function getActionsList() {
-      const { location, match, timeValues } = props
-      const query = qs.parse(location.search, { ignoreQueryPrefix: true })
-      const shouldConcatActions = _.isEqual(query, result.lastQuery)
-      const lastQuery = { ...query }
-      if (window.innerWidth < sizes.largeDesktop) query.limit = 10
-
-      const getActions =
-        [
-          api.getActions,
-          api.getSuggestedActions,
-          api.getActionsMyIdeas,
-          api.getActionsHistory,
-          api.getActionsModeling,
-        ][Object.values(ACTIONS_SUBSETS).indexOf(match.params.subset)] ||
-        api.getActions
-
-      const getTimeValues = timeValues
-        ? () => Promise.resolve({})
-        : api.getTimeValues
-
-      const [
-        {
-          actions: { docs: actions, limit, totalDocs: total, page },
-        },
-        { timeValues: timeValuesResponse },
-      ] = await Promise.all([
-        getActions({ ...query, page: currPage }),
-        getTimeValues(),
-      ])
-
-      const resResult = {
-        actions: shouldConcatActions
-          ? _.get(result, 'actions', []).concat(actions)
-          : actions,
-        limit,
-        page,
-        total,
-        timeValues,
-        lastQuery,
-      }
-
-      if (!timeValues && timeValuesResponse)
-        resResult.timeValues = timeValuesResponse.sort(
-          (a, b) => a.minutes - b.minutes,
-        )
-      setResult(resResult)
-    }
-
-    getActionsList()
-  }, [props.location, props.match, currPage])
 
   useEffect(() => {
     animateScroll.scrollToTop()
@@ -376,7 +168,6 @@ function ActionsPage(props) {
       history.push(`/actions/${match.params.subset}`)
     } else {
       updateQueries({ ...data })
-      setCurrPage(1)
     }
   }, 600)
 
@@ -487,8 +278,6 @@ function ActionsPage(props) {
     history,
   } = props
 
-  const actions = result.actions || []
-  const total = result.total || 9
   return (
     <React.Fragment>
       <PageMetadata pageName="actionsPage" />
@@ -692,7 +481,7 @@ function ActionsPage(props) {
             ) : (
               <Row gutter={{ md: 20 }}>
                 <InfiniteScroll
-                  dataLength={actions.length} // This is important field to render the next data
+                  dataLength={actions.length}
                   next={() => {
                     setCurrPage(currPage + 1)
                   }}
