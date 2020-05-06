@@ -1,5 +1,4 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import qs from 'qs'
 import Spinner from 'components/Spinner'
@@ -10,9 +9,8 @@ import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import ActionsIconComponent from 'assets/icons/HandIcon'
 import StatisticsIconComponent from 'assets/icons/StatisticsIcon'
-import { Select, Icon } from 'antd'
+import { Icon } from 'antd'
 import { sizes } from 'utils/mediaQueryTemplate'
-import colors from 'config/colors'
 
 import useCompetition from './useCompetition'
 import useOwnGroupsList from './useOwnGroupsList'
@@ -29,9 +27,7 @@ import { COMPETITION_TABS } from './constants'
 import Tabs from './tabs'
 import { INVITATION_STATUSES } from '../IncreaseHandprintPage'
 import { UIContextSettings } from '../../context/uiSettingsContext'
-import { TabsSelect } from '../CampaignDashboard/styled'
-
-const { Option } = Select
+import TabsSelect from '../../components/TabsSelect'
 
 function renderContent(view, props) {
   switch (view) {
@@ -136,12 +132,6 @@ function CampaignDashboard(props) {
     </div>
   )
 
-  const dropdownStyle = {
-    background: `${colors.dark}`,
-    marginTop: '-3px',
-    paddingLeft: isMobile ? '8px' : '18px',
-  }
-
   return (
     <Fragment>
       <Header
@@ -155,101 +145,11 @@ function CampaignDashboard(props) {
       />
       {!isTablet && !isMobile && <Tabs list={tabList} />}
       {(isTablet || isMobile) && (
-        <TabsSelect>
-          <Select
-            mode="default"
-            defaultValue={defaultSelectVal}
-            dropdownMenuStyle={dropdownStyle}
-          >
-            <Option
-              key={1}
-              style={{
-                background: `${colors.dark}`,
-              }}
-            >
-              <Link
-                to={`?view=${COMPETITION_TABS.actions}`}
-                style={{ color: `${colors.white}` }}
-              >
-                <Icon
-                  component={ActionsIconComponent}
-                  style={{ marginRight: '10px' }}
-                />
-                {formatMessage({ id: 'app.header.menu.actions' })}
-              </Link>
-            </Option>
-            <Option
-              key={2}
-              style={{
-                background: `${colors.dark}`,
-              }}
-            >
-              <Link
-                to={`?view=${COMPETITION_TABS.statistics}`}
-                style={{ color: `${colors.white}` }}
-              >
-                <Icon
-                  component={StatisticsIconComponent}
-                  style={{ marginRight: '10px' }}
-                />
-                {formatMessage({ id: 'app.pages.groups.statistics' })}
-              </Link>
-            </Option>
-            <Option
-              key={3}
-              style={{
-                background: `${colors.dark}`,
-              }}
-            >
-              <Link
-                to={`?view=${COMPETITION_TABS.participants}`}
-                style={{ color: `${colors.white}` }}
-              >
-                <Icon
-                  component={SuggestedIconComponent}
-                  style={{ marginRight: '10px' }}
-                />
-                {formatMessage({ id: 'app.campaignPage.participants' })}
-              </Link>
-            </Option>
-            {!_.isEmpty(invitations) && (
-              <Option
-                key={4}
-                style={{
-                  background: `${colors.dark}`,
-                }}
-              >
-                <Link
-                  to={`?view=${COMPETITION_TABS.groups}&tabIndex=0`}
-                  style={{ color: `${colors.white}` }}
-                >
-                  <Icon
-                    component={SuggestedIconComponent}
-                    style={{ marginRight: '10px' }}
-                  />
-                  {formatMessage({ id: 'app.pages.groups.myGroups' })}
-                </Link>
-              </Option>
-            )}
-            <Option
-              key={5}
-              style={{
-                background: `${colors.dark}`,
-              }}
-            >
-              <Link
-                to={`?view=${COMPETITION_TABS.activity}`}
-                style={{ color: `${colors.white}` }}
-              >
-                <Icon
-                  component={FlagIconComponent}
-                  style={{ marginRight: '10px' }}
-                />
-                {formatMessage({ id: 'app.pages.groups.activity' })}
-              </Link>
-            </Option>
-          </Select>
-        </TabsSelect>
+        <TabsSelect
+          data={tabList}
+          isMobile={isMobile}
+          defaultSelectVal={defaultSelectVal}
+        />
       )}
       <Content>
         {renderContent(view, {

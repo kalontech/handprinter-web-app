@@ -1,5 +1,4 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import qs from 'qs'
 import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
@@ -9,13 +8,15 @@ import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import ActionsIconComponent from 'assets/icons/HandIcon'
 import StatisticsIconComponent from 'assets/icons/StatisticsIcon'
-import { Select, Icon } from 'antd'
+import { Icon } from 'antd'
 import { sizes } from 'utils/mediaQueryTemplate'
-import colors from 'config/colors'
+
+import TabsSelect from '../../components/TabsSelect'
 
 import useCampaign from './useCampaign'
 import Header from './header'
-import { Content, TabsSelect } from './styled'
+import { Content } from './styled'
+
 import renderParticipants from './participants'
 import renderActions from './actions'
 import renderActivity from './activity'
@@ -23,8 +24,6 @@ import renderStatistics from './statistics'
 import { CAPMAIGN_TABS } from './constants'
 import Tabs from './tabs'
 import { UIContextSettings } from '../../context/uiSettingsContext'
-
-const { Option } = Select
 
 function renderContent(view, props) {
   switch (view) {
@@ -120,12 +119,6 @@ function CampaignDashboard(props) {
     </div>
   )
 
-  const dropdownStyle = {
-    background: `${colors.dark}`,
-    marginTop: '-3px',
-    paddingLeft: isMobile ? '8px' : '18px',
-  }
-
   return (
     <Fragment>
       <Header
@@ -135,62 +128,11 @@ function CampaignDashboard(props) {
       />
       {!isTablet && !isMobile && <Tabs list={tabList} />}
       {(isTablet || isMobile) && (
-        <TabsSelect>
-          <Select
-            mode="default"
-            defaultValue={defaultSelectVal}
-            dropdownMenuStyle={dropdownStyle}
-          >
-            <Option key={1} style={{ background: `${colors.dark}` }}>
-              <Link
-                to={`?view=${CAPMAIGN_TABS.actions}`}
-                style={{ color: `${colors.white}` }}
-              >
-                <Icon
-                  component={ActionsIconComponent}
-                  style={{ marginRight: '10px' }}
-                />
-                {formatMessage({ id: 'app.header.menu.actions' })}
-              </Link>
-            </Option>
-            <Option key={2} style={{ background: `${colors.dark}` }}>
-              <Link
-                to={`?view=${CAPMAIGN_TABS.statistics}`}
-                style={{ color: `${colors.white}` }}
-              >
-                <Icon
-                  component={StatisticsIconComponent}
-                  style={{ marginRight: '10px' }}
-                />
-                {formatMessage({ id: 'app.pages.groups.statistics' })}
-              </Link>
-            </Option>
-            <Option key={3} style={{ background: `${colors.dark}` }}>
-              <Link
-                to={`?view=${CAPMAIGN_TABS.participants}`}
-                style={{ color: `${colors.white}` }}
-              >
-                <Icon
-                  component={SuggestedIconComponent}
-                  style={{ marginRight: '10px' }}
-                />
-                {formatMessage({ id: 'app.campaignPage.participants' })}
-              </Link>
-            </Option>
-            <Option key={4} style={{ background: `${colors.dark}` }}>
-              <Link
-                to={`?view=${CAPMAIGN_TABS.activity}`}
-                style={{ color: `${colors.white}` }}
-              >
-                <Icon
-                  component={FlagIconComponent}
-                  style={{ marginRight: '10px' }}
-                />
-                {formatMessage({ id: 'app.pages.groups.activity' })}
-              </Link>
-            </Option>
-          </Select>
-        </TabsSelect>
+        <TabsSelect
+          data={tabList}
+          isMobile={isMobile}
+          defaultSelectVal={defaultSelectVal}
+        />
       )}
       <Content>
         {renderContent(view, {
