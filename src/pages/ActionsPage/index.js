@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { Link } from 'react-router-dom'
 import { Row, Col, Select, Spin, Icon } from 'antd'
 import qs from 'qs'
 import styled from 'styled-components'
@@ -198,6 +199,55 @@ const SearchFieldWrap = styled.div`
   }
 `
 
+export const TabsSelect = styled.div`
+  height: 50px;
+  width: 100%;
+  background-color: ${colors.dark};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  .ant-select {
+    width: 100%;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    background: #344442;
+    color: white;
+    margin-bottom: 3.3px;
+  }
+  .ant-select-selection {
+    background: #344442;
+    border-color: #344442;
+  }
+  .ant-select-open {
+    border-color: #344442;
+  }
+  .ant-select-focused {
+    border-color: #344442;
+  }
+  .ant-select-arrow {
+    margin-right: 34px;
+    color: ${colors.white};
+    ${media.phone`
+      margin-right: 12px;
+    `}
+  }
+  .ant-select-selection__rendered {
+    margin-left: 5px;
+    margin-right: 0px;
+  }
+  .ant-select-arrow {
+    margin-right: 12px;
+  }
+  .ant-select-selection-selected-value {
+    margin-left: 21px;
+    color: ${colors.white};
+    ${media.phone`
+      margin-left: 12px;
+    `}
+  }
+`
+
 async function getActionsList(props) {
   const { location, match, timeValues } = props
   const query = qs.parse(location.search, { ignoreQueryPrefix: true })
@@ -283,6 +333,7 @@ function ActionsPage(props) {
   const [selectedCategories, setSelectedCategories] = useState([])
   const [selectedType, setSelectedType] = useState([])
   const [selectedBehaviour, setSelectedBehaviour] = useState([])
+  const [width, setWidth] = useState(window.innerWidth)
 
   const $search = React.createRef()
 
@@ -297,6 +348,20 @@ function ActionsPage(props) {
       window.removeEventListener('orientationchange', changeTabsType)
     }
   }, [])
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange)
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+    }
+  }, [])
+
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth)
+  }
+
+  const isTablet = width < sizes.largeDesktop
+  const isMobile = width < sizes.tablet
 
   const changeTabsType = () => {
     setListType({
@@ -481,39 +546,57 @@ function ActionsPage(props) {
     history,
   } = props
 
+  const tabsList = [
+    {
+      to: `/actions/${ACTIONS_SUBSETS.DISCOVER}`,
+      icon: DiscoverIconComponent,
+      text: formatMessage({ id: 'app.actionsPage.tabs.discover' }),
+      active: match.params.subset === ACTIONS_SUBSETS.DISCOVER,
+    },
+    {
+      to: `/actions/${ACTIONS_SUBSETS.SUGGESTED}`,
+      icon: SuggestedIconComponent,
+      text: formatMessage({ id: 'app.actionsPage.tabs.suggested' }),
+      active: match.params.subset === ACTIONS_SUBSETS.SUGGESTED,
+    },
+    {
+      to: `/actions/${ACTIONS_SUBSETS.MY_IDEAS}`,
+      icon: FlagIconComponent,
+      text: formatMessage({ id: 'app.actionsPage.tabs.my-ideas' }),
+      active: match.params.subset === ACTIONS_SUBSETS.MY_IDEAS,
+    },
+    {
+      to: `/actions/${ACTIONS_SUBSETS.TAKEN}`,
+      icon: HistoryIconComponent,
+      text: formatMessage({ id: 'app.actionsPage.tabs.history' }),
+      active: match.params.subset === ACTIONS_SUBSETS.TAKEN,
+    },
+  ]
+
+  const defaultSelectVal = (
+    <div>
+      <Icon
+        component={DiscoverIconComponent}
+        style={{ marginRight: '10px', color: 'white' }}
+      />
+      {formatMessage({ id: 'app.header.menu.actions' })}
+    </div>
+  )
+
+  const dropdownStyle = {
+    background: `${colors.dark}`,
+    marginTop: '-3px',
+    paddingLeft: isMobile ? '8px' : '18px',
+  }
+
   return (
     <React.Fragment>
       <PageMetadata pageName="actionsPage" />
 
       <Wrapper>
-        {user && (
+        {user && (!isMobile && !isTablet) && (
           <TabsSecondary
-            list={[
-              {
-                to: `/actions/${ACTIONS_SUBSETS.DISCOVER}`,
-                icon: DiscoverIconComponent,
-                text: formatMessage({ id: 'app.actionsPage.tabs.discover' }),
-                active: match.params.subset === ACTIONS_SUBSETS.DISCOVER,
-              },
-              {
-                to: `/actions/${ACTIONS_SUBSETS.SUGGESTED}`,
-                icon: SuggestedIconComponent,
-                text: formatMessage({ id: 'app.actionsPage.tabs.suggested' }),
-                active: match.params.subset === ACTIONS_SUBSETS.SUGGESTED,
-              },
-              {
-                to: `/actions/${ACTIONS_SUBSETS.MY_IDEAS}`,
-                icon: FlagIconComponent,
-                text: formatMessage({ id: 'app.actionsPage.tabs.my-ideas' }),
-                active: match.params.subset === ACTIONS_SUBSETS.MY_IDEAS,
-              },
-              {
-                to: `/actions/${ACTIONS_SUBSETS.TAKEN}`,
-                icon: HistoryIconComponent,
-                text: formatMessage({ id: 'app.actionsPage.tabs.history' }),
-                active: match.params.subset === ACTIONS_SUBSETS.TAKEN,
-              },
-            ]}
+            list={tabsList}
             isOpen={visibleTabs}
             listType={listType}
             toggleVisible={visible => setVisibleTabs(visible)}
@@ -524,6 +607,84 @@ function ActionsPage(props) {
               },
             }}
           />
+        )}
+        {user && (isTablet || isMobile) && (
+          <TabsSelect>
+            <Select
+              mode="default"
+              defaultValue={defaultSelectVal}
+              dropdownMenuStyle={dropdownStyle}
+            >
+              <Option
+                key={1}
+                style={{
+                  background: `${colors.dark}`,
+                }}
+              >
+                <Link
+                  to={`/actions/${ACTIONS_SUBSETS.DISCOVER}`}
+                  style={{ color: `${colors.white}` }}
+                >
+                  <Icon
+                    component={DiscoverIconComponent}
+                    style={{ marginRight: '10px' }}
+                  />
+                  {formatMessage({ id: 'app.header.menu.actions' })}
+                </Link>
+              </Option>
+              <Option
+                key={2}
+                style={{
+                  background: `${colors.dark}`,
+                }}
+              >
+                <Link
+                  to={`/actions/${ACTIONS_SUBSETS.SUGGESTED}`}
+                  style={{ color: `${colors.white}` }}
+                >
+                  <Icon
+                    component={SuggestedIconComponent}
+                    style={{ marginRight: '10px' }}
+                  />
+                  {formatMessage({ id: 'app.pages.groups.statistics' })}
+                </Link>
+              </Option>
+              <Option
+                key={3}
+                style={{
+                  background: `${colors.dark}`,
+                }}
+              >
+                <Link
+                  to={`/actions/${ACTIONS_SUBSETS.MY_IDEAS}`}
+                  style={{ color: `${colors.white}` }}
+                >
+                  <Icon
+                    component={FlagIconComponent}
+                    style={{ marginRight: '10px' }}
+                  />
+                  {formatMessage({ id: 'app.campaignPage.participants' })}
+                </Link>
+              </Option>
+              <Option
+                key={4}
+                style={{
+                  background: `${colors.dark}`,
+                }}
+              >
+                <Link
+                  to={`/actions/${ACTIONS_SUBSETS.TAKEN}`}
+                  style={{ color: `${colors.white}` }}
+                >
+                  <Icon
+                    component={HistoryIconComponent}
+                    style={{ marginRight: '10px' }}
+                  />
+                  {formatMessage({ id: 'app.pages.groups.myGroups' })}
+                </Link>
+              </Option>
+            </Select>
+          </TabsSelect>
         )}
 
         <BlockContainer>
