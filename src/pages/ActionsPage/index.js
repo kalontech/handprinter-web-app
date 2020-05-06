@@ -248,6 +248,33 @@ export const TabsSelect = styled.div`
   }
 `
 
+const SelectButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
+  width: 100%;
+  padding-right: 10px;
+`
+
+const SelectButton = styled.button`
+  width: 135px;
+  height: 38px;
+  background: ${hexToRgba(`${colors.white}`, 0.1)};
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.4s all;
+
+  &:hover {
+    background: ${hexToRgba(`${colors.white}`, 0.18)};
+  }
+
+  p {
+    opacity: 1;
+    color: ${colors.white};
+  }
+`
+
 async function getActionsList(props) {
   const { location, match, timeValues } = props
   const query = qs.parse(location.search, { ignoreQueryPrefix: true })
@@ -586,7 +613,7 @@ function ActionsPage(props) {
   const dropdownStyle = {
     background: `${colors.dark}`,
     marginTop: '-3px',
-    paddingLeft: isMobile ? '8px' : '18px',
+    padding: '0px',
   }
 
   return (
@@ -614,11 +641,17 @@ function ActionsPage(props) {
               mode="default"
               defaultValue={defaultSelectVal}
               dropdownMenuStyle={dropdownStyle}
+              defaultOpen
             >
               <Option
                 key={1}
                 style={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
                   background: `${colors.dark}`,
+                  borderBottom: '1px solid gray',
+                  paddingLeft: isMobile ? '8px' : '28px',
                 }}
               >
                 <Link
@@ -635,7 +668,12 @@ function ActionsPage(props) {
               <Option
                 key={2}
                 style={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
                   background: `${colors.dark}`,
+                  borderBottom: '1px solid gray',
+                  paddingLeft: isMobile ? '8px' : '28px',
                 }}
               >
                 <Link
@@ -652,7 +690,12 @@ function ActionsPage(props) {
               <Option
                 key={3}
                 style={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
                   background: `${colors.dark}`,
+                  borderBottom: '1px solid gray',
+                  paddingLeft: isMobile ? '8px' : '28px',
                 }}
               >
                 <Link
@@ -669,7 +712,12 @@ function ActionsPage(props) {
               <Option
                 key={4}
                 style={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
                   background: `${colors.dark}`,
+                  borderBottom: '1px solid gray',
+                  paddingLeft: isMobile ? '8px' : '28px',
                 }}
               >
                 <Link
@@ -682,6 +730,26 @@ function ActionsPage(props) {
                   />
                   {formatMessage({ id: 'app.pages.groups.myGroups' })}
                 </Link>
+              </Option>
+              <Option
+                key={5}
+                style={{
+                  background: `${colors.dark}`,
+                  cursor: 'unset',
+                }}
+                disabled
+              >
+                <SelectButtonWrapper>
+                  <SelectButton
+                    onClick={() => {
+                      history.push('/account/actions/create')
+                    }}
+                  >
+                    <p style={{ opacity: '1' }}>
+                      {formatMessage({ id: 'app.headerActions.addAction' })}
+                    </p>
+                  </SelectButton>
+                </SelectButtonWrapper>
               </Option>
             </Select>
           </TabsSelect>
