@@ -137,13 +137,33 @@ const StyledSearchIcon = styled(Icon)`
   position: absolute;
   right: 15px;
   top: 15px;
+
+  ${media.largeDesktop`
+    top: 15px;
+  `}
+
+  ${media.phone`
+    top: 80px;
+  `}
 `
 
 const SearchWrap = styled.div`
   position: relative;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+
+  ${media.largeDesktop`
+    justify-content: space-around;
+    align-items: center;
+  `}
+
+  ${media.phone`
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  `}
 `
 
 const NotFoundWrap = styled.div`
@@ -197,6 +217,14 @@ const SearchFieldWrap = styled.div`
   .ant-select-selected-icon {
     display: none;
   }
+
+  ${media.largeDesktop`
+    width: 23%;
+  `}
+
+  ${media.phone`
+    width: 100%;
+  `}
 `
 
 export const TabsSelect = styled.div`
@@ -242,6 +270,7 @@ export const TabsSelect = styled.div`
   .ant-select-selection-selected-value {
     margin-left: 21px;
     color: ${colors.white};
+
     ${media.phone`
       margin-left: 12px;
     `}
@@ -273,6 +302,42 @@ const SelectButton = styled.button`
     opacity: 1;
     color: ${colors.white};
   }
+`
+
+const MobileFilterWrap = styled.div`
+  display: flex;
+  width: 100%;
+  overflow: scroll;
+  margin-bottom: 20px;
+
+  ${media.largeDesktop`
+    width: 74%;
+    margin-bottom: 0px;
+  `}
+
+  ${media.phone`
+    width: 100%;
+    margin-bottom: 20px;
+  `}
+`
+const MobileFilter = styled.div`
+  border: 1px solid #d7dbdb;
+  box-sizing: border-box;
+  border-radius: 4px;
+  min-width: 100px;
+  height: 46px;
+  margin-right: 4px;
+  padding: 13px 16px;
+
+  ${media.largeDesktop`
+    min-width: 31%;
+    margin-right: 20px;
+  `}
+
+  ${media.phone`
+    min-width: 100px;
+    margin-right: 4px;
+  `}
 `
 
 async function getActionsList(props) {
@@ -641,7 +706,6 @@ function ActionsPage(props) {
               mode="default"
               defaultValue={defaultSelectVal}
               dropdownMenuStyle={dropdownStyle}
-              defaultOpen
             >
               <Option
                 key={1}
@@ -761,146 +825,310 @@ function ActionsPage(props) {
               <Col>
                 {match.params.subset === ACTIONS_SUBSETS.DISCOVER && (
                   <SearchBlockWrapper>
-                    <SearchWrap>
-                      <Select
-                        allowClear={true}
-                        mode="default"
-                        style={{ width: '100%' }}
-                        onChange={handleCategoryChange}
-                        menuItemSelectedIcon={<Icon />}
-                        value={selectedItems(selectedCategories, 'Category')}
-                      >
-                        {categories.map(category => {
-                          return (
-                            <Option key={category.id}>
-                              <Checkbox
-                                checked={selectedCategories.includes(
-                                  category.name,
-                                )}
-                                style={{ marginRight: '10px' }}
-                              />
-                              {category.name}
-                            </Option>
-                          )
-                        })}
-                      </Select>
-                      <Select
-                        allowClear={true}
-                        value={selectedItems(
-                          selectedType,
-                          formatMessage({
-                            id: 'app.actions.type',
-                          }),
-                        )}
-                        mode="default"
-                        style={{ width: '100%' }}
-                        onChange={handleTypeChange}
-                        menuItemSelectedIcon={<Icon />}
-                      >
-                        {types.map(type => {
-                          return (
-                            <Option key={type.name}>
-                              <Checkbox
-                                checked={selectedType.includes(type.name)}
-                                style={{ marginRight: '10px' }}
-                              />
-                              {formatMessage({
-                                id: `app.actions.type.${type.id}`,
-                              })}
-                            </Option>
-                          )
-                        })}
-                      </Select>
-                      <Select
-                        allowClear={true}
-                        value={selectedItems(
-                          selectedBehaviour,
-                          formatMessage({
-                            id: 'app.actions.behaviour',
-                          }),
-                        )}
-                        mode="default"
-                        style={{ width: '100%' }}
-                        onChange={handleBehaviourChange}
-                        menuItemSelectedIcon={<Icon />}
-                      >
-                        {behaviour.map(behaviour => {
-                          return (
-                            <Option key={behaviour.name}>
-                              <Checkbox
-                                checked={selectedBehaviour.includes(
-                                  behaviour.name,
-                                )}
-                                style={{ marginRight: '10px' }}
-                              />
-                              {formatMessage({
-                                id: `app.actions.behaviour.${behaviour.id}`,
-                              })}
-                            </Option>
-                          )
-                        })}
-                      </Select>
-                      <SearchFieldWrap ref={$search}>
-                        <SearchField
-                          placeholder={formatMessage({
-                            id: 'app.actionsPage.searchPlaceholder',
-                          })}
-                          value={searchData.searchFieldValue}
-                          notFoundContent={
-                            searchData.searching ? (
-                              <Spin size="small" />
-                            ) : !searchData.searching &&
-                              Number.isInteger(searchData.total) &&
-                              searchData.total === 0 ? (
-                              <FormattedMessage id="app.actionsPage.searchNotFound" />
-                            ) : null
-                          }
-                          showSearch
-                          suffixIcon={<span />}
-                          /*
-                           * Filter by match searched value and option value.
-                           *
-                           * How it works:
-                           * Search option has 2 values: [ picture, name ].
-                           * We filter option value (option.props.children[1]) with
-                           * search value (value from search input)
-                           *
-                           * Why we use it:
-                           * We need filter data from search response and
-                           * show to user matched data
-                           */
-                          filterOption={(input, option) =>
-                            (option.props.children.props.children[1] &&
-                              option.props.children.props.children[1]
-                                .toLowerCase()
-                                .indexOf(input.toLowerCase()) >= 0) ||
-                            /\S/.test(input)
-                          }
-                          onSearch={value =>
-                            value.length > 0 && searchActions({ name: value })
-                          }
-                          onChange={handleSearchFieldChange}
-                          onDropdownVisibleChange={handleDropdownVisibleChange}
-                          getPopupContainer={() => $search.current}
+                    {!isTablet && !isMobile && (
+                      <SearchWrap>
+                        <Select
+                          allowClear={true}
+                          mode="default"
+                          style={{ width: '100%' }}
+                          onChange={handleCategoryChange}
+                          menuItemSelectedIcon={<Icon />}
+                          value={selectedItems(selectedCategories, 'Category')}
                         >
-                          {searchData.searchedActions.map(action => (
-                            <Select.Option
-                              key={action.picture}
-                              onClick={handleOpenActionCard(action)}
-                            >
-                              <ActionSearchDropdownOptionContent>
-                                <ActionSearchDropdownPicture
-                                  src={action.picture}
-                                  alt=""
+                          {categories.map(category => {
+                            return (
+                              <Option key={category.id}>
+                                <Checkbox
+                                  checked={selectedCategories.includes(
+                                    category.name,
+                                  )}
+                                  style={{ marginRight: '10px' }}
                                 />
-                                {action.name}
-                              </ActionSearchDropdownOptionContent>
-                            </Select.Option>
-                          ))}
-                        </SearchField>
-                      </SearchFieldWrap>
-                      <StyledSearchIcon type="search" />
-                    </SearchWrap>
+                                {category.name}
+                              </Option>
+                            )
+                          })}
+                        </Select>
+                        <Select
+                          allowClear={true}
+                          value={selectedItems(
+                            selectedType,
+                            formatMessage({
+                              id: 'app.actions.type',
+                            }),
+                          )}
+                          mode="default"
+                          style={{ width: '100%' }}
+                          onChange={handleTypeChange}
+                          menuItemSelectedIcon={<Icon />}
+                        >
+                          {types.map(type => {
+                            return (
+                              <Option key={type.name}>
+                                <Checkbox
+                                  checked={selectedType.includes(type.name)}
+                                  style={{ marginRight: '10px' }}
+                                />
+                                {formatMessage({
+                                  id: `app.actions.type.${type.id}`,
+                                })}
+                              </Option>
+                            )
+                          })}
+                        </Select>
+                        <Select
+                          allowClear={true}
+                          value={selectedItems(
+                            selectedBehaviour,
+                            formatMessage({
+                              id: 'app.actions.behaviour',
+                            }),
+                          )}
+                          mode="default"
+                          style={{ width: '100%' }}
+                          onChange={handleBehaviourChange}
+                          menuItemSelectedIcon={<Icon />}
+                        >
+                          {behaviour.map(behaviour => {
+                            return (
+                              <Option key={behaviour.name}>
+                                <Checkbox
+                                  checked={selectedBehaviour.includes(
+                                    behaviour.name,
+                                  )}
+                                  style={{ marginRight: '10px' }}
+                                />
+                                {formatMessage({
+                                  id: `app.actions.behaviour.${behaviour.id}`,
+                                })}
+                              </Option>
+                            )
+                          })}
+                        </Select>
+                        <SearchFieldWrap ref={$search}>
+                          <SearchField
+                            placeholder={formatMessage({
+                              id: 'app.actionsPage.searchPlaceholder',
+                            })}
+                            value={searchData.searchFieldValue}
+                            notFoundContent={
+                              searchData.searching ? (
+                                <Spin size="small" />
+                              ) : !searchData.searching &&
+                                Number.isInteger(searchData.total) &&
+                                searchData.total === 0 ? (
+                                <FormattedMessage id="app.actionsPage.searchNotFound" />
+                              ) : null
+                            }
+                            showSearch
+                            suffixIcon={<span />}
+                            /*
+                             * Filter by match searched value and option value.
+                             *
+                             * How it works:
+                             * Search option has 2 values: [ picture, name ].
+                             * We filter option value (option.props.children[1]) with
+                             * search value (value from search input)
+                             *
+                             * Why we use it:
+                             * We need filter data from search response and
+                             * show to user matched data
+                             */
+                            filterOption={(input, option) =>
+                              (option.props.children.props.children[1] &&
+                                option.props.children.props.children[1]
+                                  .toLowerCase()
+                                  .indexOf(input.toLowerCase()) >= 0) ||
+                              /\S/.test(input)
+                            }
+                            onSearch={value =>
+                              value.length > 0 && searchActions({ name: value })
+                            }
+                            onChange={handleSearchFieldChange}
+                            onDropdownVisibleChange={
+                              handleDropdownVisibleChange
+                            }
+                            getPopupContainer={() => $search.current}
+                          >
+                            {searchData.searchedActions.map(action => (
+                              <Select.Option
+                                key={action.picture}
+                                onClick={handleOpenActionCard(action)}
+                              >
+                                <ActionSearchDropdownOptionContent>
+                                  <ActionSearchDropdownPicture
+                                    src={action.picture}
+                                    alt=""
+                                  />
+                                  {action.name}
+                                </ActionSearchDropdownOptionContent>
+                              </Select.Option>
+                            ))}
+                          </SearchField>
+                        </SearchFieldWrap>
+                        <StyledSearchIcon type="search" />
+                      </SearchWrap>
+                    )}
+                    {(isTablet || isMobile) && (
+                      <SearchWrap>
+                        <MobileFilterWrap>
+                          <MobileFilter>
+                            <div>Category</div>
+                          </MobileFilter>
+                          <MobileFilter>
+                            <div>Category</div>
+                          </MobileFilter>
+                          <MobileFilter>
+                            <div>Category</div>
+                          </MobileFilter>
+                          {/* <Select
+                            allowClear={true}
+                            mode="default"
+                            style={{
+                              width: isTablet ? '160px' : '0px',
+                            }}
+                            onChange={handleCategoryChange}
+                            menuItemSelectedIcon={<Icon />}
+                            value={selectedItems(
+                              selectedCategories,
+                              'Category',
+                            )}
+                          >
+                            {categories.map(category => {
+                              return (
+                                <Option key={category.id}>
+                                  <Checkbox
+                                    checked={selectedCategories.includes(
+                                      category.name,
+                                    )}
+                                    style={{ marginRight: '10px' }}
+                                  />
+                                  {category.name}
+                                </Option>
+                              )
+                            })}
+                          </Select>
+                          <Select
+                            allowClear={true}
+                            value={selectedItems(
+                              selectedType,
+                              formatMessage({
+                                id: 'app.actions.type',
+                              }),
+                            )}
+                            mode="default"
+                            style={{ width: isTablet ? '160px' : '0px' }}
+                            onChange={handleTypeChange}
+                            menuItemSelectedIcon={<Icon />}
+                          >
+                            {types.map(type => {
+                              return (
+                                <Option key={type.name}>
+                                  <Checkbox
+                                    checked={selectedType.includes(type.name)}
+                                    style={{ marginRight: '10px' }}
+                                  />
+                                  {formatMessage({
+                                    id: `app.actions.type.${type.id}`,
+                                  })}
+                                </Option>
+                              )
+                            })}
+                          </Select>
+                          <Select
+                            allowClear={true}
+                            value={selectedItems(
+                              selectedBehaviour,
+                              formatMessage({
+                                id: 'app.actions.behaviour',
+                              }),
+                            )}
+                            mode="default"
+                            style={{ width: isTablet ? '160px' : '0px' }}
+                            onChange={handleBehaviourChange}
+                            menuItemSelectedIcon={<Icon />}
+                          >
+                            {behaviour.map(behaviour => {
+                              return (
+                                <Option key={behaviour.name}>
+                                  <Checkbox
+                                    checked={selectedBehaviour.includes(
+                                      behaviour.name,
+                                    )}
+                                    style={{ marginRight: '10px' }}
+                                  />
+                                  {formatMessage({
+                                    id: `app.actions.behaviour.${behaviour.id}`,
+                                  })}
+                                </Option>
+                              )
+                            })}
+                          </Select> */}
+                        </MobileFilterWrap>
+                        <SearchFieldWrap ref={$search}>
+                          <SearchField
+                            placeholder={formatMessage({
+                              id: 'app.actionsPage.searchPlaceholder',
+                            })}
+                            value={searchData.searchFieldValue}
+                            notFoundContent={
+                              searchData.searching ? (
+                                <Spin size="small" />
+                              ) : !searchData.searching &&
+                                Number.isInteger(searchData.total) &&
+                                searchData.total === 0 ? (
+                                <FormattedMessage id="app.actionsPage.searchNotFound" />
+                              ) : null
+                            }
+                            showSearch
+                            suffixIcon={<span />}
+                            /*
+                             * Filter by match searched value and option value.
+                             *
+                             * How it works:
+                             * Search option has 2 values: [ picture, name ].
+                             * We filter option value (option.props.children[1]) with
+                             * search value (value from search input)
+                             *
+                             * Why we use it:
+                             * We need filter data from search response and
+                             * show to user matched data
+                             */
+                            filterOption={(input, option) =>
+                              (option.props.children.props.children[1] &&
+                                option.props.children.props.children[1]
+                                  .toLowerCase()
+                                  .indexOf(input.toLowerCase()) >= 0) ||
+                              /\S/.test(input)
+                            }
+                            onSearch={value =>
+                              value.length > 0 && searchActions({ name: value })
+                            }
+                            onChange={handleSearchFieldChange}
+                            onDropdownVisibleChange={
+                              handleDropdownVisibleChange
+                            }
+                            getPopupContainer={() => $search.current}
+                          >
+                            {searchData.searchedActions.map(action => (
+                              <Select.Option
+                                key={action.picture}
+                                onClick={handleOpenActionCard(action)}
+                              >
+                                <ActionSearchDropdownOptionContent>
+                                  <ActionSearchDropdownPicture
+                                    src={action.picture}
+                                    alt=""
+                                  />
+                                  {action.name}
+                                </ActionSearchDropdownOptionContent>
+                              </Select.Option>
+                            ))}
+                          </SearchField>
+                        </SearchFieldWrap>
+                        <StyledSearchIcon type="search" />
+                      </SearchWrap>
+                    )}
                   </SearchBlockWrapper>
                 )}
               </Col>
