@@ -39,6 +39,7 @@ import * as api from 'api/actions'
 import { categories, behaviour, types } from './filterData'
 import { Checkbox } from '../../components/Styled'
 import { UIContextSettings } from '../../context/uiSettingsContext'
+import ActionFilterModal from '../../components/ActionFilterModal'
 
 const { Option } = Select
 
@@ -335,7 +336,7 @@ const MobileFilter = styled.div`
   `}
 
   ${media.phone`
-    min-width: 100px;
+    min-width: 150px;
     margin-right: 4px;
   `}
 `
@@ -426,6 +427,9 @@ function ActionsPage(props) {
   const [selectedType, setSelectedType] = useState([])
   const [selectedBehaviour, setSelectedBehaviour] = useState([])
   const [width, setWidth] = useState(window.innerWidth)
+  const [isCategoryFilterOpen, setIsCategoryFilterOpen] = useState(false)
+  const [isTypeFilterOpen, setIsTypeFilterOpen] = useState(false)
+  const [isBehaviourFilterOpen, setIsBehaviourFilterOpen] = useState(false)
 
   const $search = React.createRef()
 
@@ -618,11 +622,9 @@ function ActionsPage(props) {
   }
 
   const selectedItems = (arr, lable) => {
-    return arr.join('').length > 20
-      ? `${lable}|${arr
-          .map(i => ` ${i}`)
-          .join(', ')
-          .slice(0, 20)}...`
+    const isTab = isTablet ? 13 : 25
+    return `${lable}|${arr.join('')}`.length > isTab
+      ? `${`${lable}|${arr.map(i => ` ${i}`).join(', ')}`.slice(0, isTab)}...`
       : `${lable}|${arr.map(i => ` ${i}`)}`
   }
 
@@ -680,6 +682,42 @@ function ActionsPage(props) {
     marginTop: '-3px',
     padding: '0px',
   }
+
+  const openCategoryFilterModal = val => {
+    setIsCategoryFilterOpen(true)
+  }
+
+  const openTypeFilterModal = val => {
+    setIsTypeFilterOpen(val)
+  }
+
+  const openBehaviourFilterModal = val => {
+    setIsBehaviourFilterOpen(val)
+  }
+
+  function paramsToObject(entries) {
+    let result = {
+      categories: [],
+      behaviour: [],
+      type: [],
+    }
+
+    for (let entry of entries) {
+      const [key, value] = entry
+      if (key.slice(0, key.length - 3) === 'category') {
+        result.categories.push(value)
+      } else if (key.slice(0, key.length - 3) === 'behaviour') {
+        result.behaviour.push(value)
+      } else if (key.slice(0, key.length - 3) === 'type') {
+        result.type.push(value)
+      }
+    }
+    return result
+  }
+
+  const urlParams = new URLSearchParams(props.location.search)
+  const entries = urlParams.entries()
+  const filtersLables = paramsToObject(entries)
 
   return (
     <React.Fragment>
@@ -972,98 +1010,60 @@ function ActionsPage(props) {
                     {(isTablet || isMobile) && (
                       <SearchWrap>
                         <MobileFilterWrap>
-                          <MobileFilter>
-                            <div>Category</div>
-                          </MobileFilter>
-                          <MobileFilter>
-                            <div>Category</div>
-                          </MobileFilter>
-                          <MobileFilter>
-                            <div>Category</div>
-                          </MobileFilter>
-                          {/* <Select
-                            allowClear={true}
-                            mode="default"
-                            style={{
-                              width: isTablet ? '160px' : '0px',
-                            }}
-                            onChange={handleCategoryChange}
-                            menuItemSelectedIcon={<Icon />}
-                            value={selectedItems(
-                              selectedCategories,
+                          <MobileFilter
+                            onClick={() => openCategoryFilterModal(true)}
+                          >
+                            {selectedItems(
+                              filtersLables.categories,
                               'Category',
                             )}
+                            <ActionFilterModal
+                              isFilterModalOpen={isCategoryFilterOpen}
+                              openFilterModal={setIsCategoryFilterOpen}
+                              isMobile={isMobile}
+                              title="Category"
+                              selectedFilters={selectedCategories}
+                              filtersData={categories}
+                              handleOnAfterFiltersChange={
+                                handleOnAfterFiltersChange
+                              }
+                            />
+                          </MobileFilter>
+                          <MobileFilter
+                            onClick={() => openTypeFilterModal(true)}
                           >
-                            {categories.map(category => {
-                              return (
-                                <Option key={category.id}>
-                                  <Checkbox
-                                    checked={selectedCategories.includes(
-                                      category.name,
-                                    )}
-                                    style={{ marginRight: '10px' }}
-                                  />
-                                  {category.name}
-                                </Option>
-                              )
-                            })}
-                          </Select>
-                          <Select
-                            allowClear={true}
-                            value={selectedItems(
-                              selectedType,
-                              formatMessage({
-                                id: 'app.actions.type',
-                              }),
+                            {selectedItems(filtersLables.type, 'Type')}
+                            <ActionFilterModal
+                              isFilterModalOpen={isTypeFilterOpen}
+                              openFilterModal={setIsTypeFilterOpen}
+                              isMobile={isMobile}
+                              title="Type"
+                              selectedFilters={selectedType}
+                              filtersData={types}
+                              handleOnAfterFiltersChange={
+                                handleOnAfterFiltersChange
+                              }
+                            />
+                          </MobileFilter>
+                          <MobileFilter
+                            onClick={() => openBehaviourFilterModal(true)}
+                          >
+                            {selectedItems(
+                              filtersLables.behaviour,
+                              'Behaviour',
                             )}
-                            mode="default"
-                            style={{ width: isTablet ? '160px' : '0px' }}
-                            onChange={handleTypeChange}
-                            menuItemSelectedIcon={<Icon />}
-                          >
-                            {types.map(type => {
-                              return (
-                                <Option key={type.name}>
-                                  <Checkbox
-                                    checked={selectedType.includes(type.name)}
-                                    style={{ marginRight: '10px' }}
-                                  />
-                                  {formatMessage({
-                                    id: `app.actions.type.${type.id}`,
-                                  })}
-                                </Option>
-                              )
-                            })}
-                          </Select>
-                          <Select
-                            allowClear={true}
-                            value={selectedItems(
-                              selectedBehaviour,
-                              formatMessage({
-                                id: 'app.actions.behaviour',
-                              }),
-                            )}
-                            mode="default"
-                            style={{ width: isTablet ? '160px' : '0px' }}
-                            onChange={handleBehaviourChange}
-                            menuItemSelectedIcon={<Icon />}
-                          >
-                            {behaviour.map(behaviour => {
-                              return (
-                                <Option key={behaviour.name}>
-                                  <Checkbox
-                                    checked={selectedBehaviour.includes(
-                                      behaviour.name,
-                                    )}
-                                    style={{ marginRight: '10px' }}
-                                  />
-                                  {formatMessage({
-                                    id: `app.actions.behaviour.${behaviour.id}`,
-                                  })}
-                                </Option>
-                              )
-                            })}
-                          </Select> */}
+                            <ActionFilterModal
+                              isFilterModalOpen={isBehaviourFilterOpen}
+                              openFilterModal={setIsBehaviourFilterOpen}
+                              isMobile={isMobile}
+                              title="Behaviour"
+                              selectedFilters={selectedBehaviour}
+                              filtersData={behaviour}
+                              handleOnAfterFiltersChange={
+                                handleOnAfterFiltersChange
+                              }
+                            />
+                          </MobileFilter>
                         </MobileFilterWrap>
                         <SearchFieldWrap ref={$search}>
                           <SearchField
