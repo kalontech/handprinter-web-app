@@ -12,7 +12,7 @@ import Tooltip from 'components/Tooltip'
 
 import { MenuStyled, Column, EmptyList } from './styled'
 import { ACTIONS_TABS } from './constants'
-import { ImpactButton } from '../ActionsPage'
+import { ImpactButton } from '../ActionsPage/styled'
 
 function getActions(props, selectedKey) {
   const {
