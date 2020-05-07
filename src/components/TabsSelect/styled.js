@@ -15,22 +15,22 @@ export const TabsSelectWrapper = styled.div`
     width: 100%;
     margin-right: 0px;
     margin-bottom: 0px;
-    background: #344442;
+    background: ${colors.dark};
     color: white;
     margin-bottom: 3.3px;
   }
 
   .ant-select-selection {
-    background: #344442;
-    border-color: #344442;
+    background: ${colors.dark};
+    border-color: ${colors.dark};
   }
 
   .ant-select-open {
-    border-color: #344442;
+    border-color: ${colors.dark};
   }
 
   .ant-select-focused {
-    border-color: #344442;
+    border-color: ${colors.dark};
   }
 
   .ant-select-arrow {

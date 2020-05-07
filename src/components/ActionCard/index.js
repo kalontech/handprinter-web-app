@@ -12,7 +12,7 @@ import EditIcon from 'assets/icons/EditIcon'
 import DeleteIcon from 'assets/icons/DeleteIcon'
 
 import ActionCardLabelSet from '../ActionCardLabelSet'
-import { ReactComponent as BigLeap } from '../CompetitionCard/assets/challengeLeap1.svg'
+import { ReactComponent as BigLeaf } from '../CompetitionCard/assets/challengeBigLeaf.svg'
 
 const TooltipContainer = styled.div`
   line-height: 20px;
@@ -232,7 +232,7 @@ const ActionCard = props => {
     </Tooltip>
   )
 
-  const bigLeapStyles = {
+  const bigLeafStyles = {
     position: 'absolute',
     left: '14px',
     top: '4px',
@@ -245,7 +245,7 @@ const ActionCard = props => {
           {selectedKey === 'todo' && (
             <ChallengeLabel>
               <SWGWrap>
-                <BigLeap style={bigLeapStyles} />
+                <BigLeaf style={bigLeafStyles} />
               </SWGWrap>
               <p>| available to taken</p>
             </ChallengeLabel>

@@ -7,8 +7,8 @@ import colors from 'config/colors'
 import hexToRgba from 'utils/hexToRgba'
 import media from 'utils/mediaQueryTemplate'
 
-import { ReactComponent as BigLeap } from './assets/challengeLeap1.svg'
-import { ReactComponent as SmallLeap } from './assets/challengeLeap2.svg'
+import { ReactComponent as BigLeaf } from './assets/challengeBigLeaf.svg'
+import { ReactComponent as SmallLeaf } from './assets/challengeSmallLeaf.svg'
 import { ReactComponent as ArrowCircle } from './assets/circleArrow.svg'
 import { ReactComponent as DottedCircle } from './assets/circle3.svg'
 
@@ -154,7 +154,7 @@ export default function CompetitionCard(props) {
           <ChallengeLabel color={isCampaign ? 'green' : 'ocean'}>
             {status === 'avaliable' && (
               <SWGWrap>
-                <BigLeap style={bigLeapStyles} />
+                <BigLeaf style={bigLeapStyles} />
               </SWGWrap>
             )}
             <p>
@@ -166,7 +166,7 @@ export default function CompetitionCard(props) {
           <ChallengeLabel color="dark">
             {
               <SWGWrap>
-                <SmallLeap style={smallLeapStyles} />
+                <SmallLeaf style={smallLeapStyles} />
                 <ArrowCircle style={arrowCircleStyles} />
               </SWGWrap>
             }
@@ -179,7 +179,7 @@ export default function CompetitionCard(props) {
           <ChallengeLabel color="blue">
             {status === 'in_progress' && (
               <SWGWrap>
-                <SmallLeap style={leap3Styles} />
+                <SmallLeaf style={leap3Styles} />
                 <DottedCircle style={dottedCircleStyles} />
               </SWGWrap>
             )}
