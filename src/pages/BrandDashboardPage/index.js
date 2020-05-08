@@ -19,7 +19,6 @@ import SuggestedIcon from 'assets/icons/SuggestedIcon'
 
 import colors from 'config/colors'
 import {
-  QUESTIONS_ANCHOR,
   MEMBER_GROUP_ROLES,
   USER_GROUP_STATUSES,
   GROUPS_STATUSES,
@@ -28,17 +27,13 @@ import fetch from 'utils/fetch'
 import decodeError from 'utils/decodeError'
 import media, { sizes } from 'utils/mediaQueryTemplate'
 import hexToRgba from 'utils/hexToRgba'
-import CalendarWidget from 'components/CalendarWidget'
-import GoodRatioWidget from 'components/GoodRatioWidget'
 import Spinner from 'components/Spinner'
 import NewsList from 'components/NewsList'
 import GroupDetailedForm from 'components/GroupDetailedForm'
 import GroupManage from 'components/GroupManage'
 import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
 import MemberCard from 'components/MemberCard'
-import icons from 'components/ActionCardLabel/icons'
 import { SecondaryButton, Modal, Pagination } from 'components/Styled'
-import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 import { getUserInitialAvatar } from 'api'
 import * as apiUser from 'api/user'
 import * as apiActions from 'api/actions'
@@ -47,6 +42,8 @@ import {
   getBrandGroup,
   getBrandGroupMembers,
 } from 'api/groups'
+
+import Statistics from './statistics'
 
 import {
   Achievements,
@@ -218,27 +215,6 @@ const ButtonLoadMore = styled(SecondaryButton)`
   }
 `
 
-const WidgetContent = styled.div`
-  ${props =>
-    props.useWidgetMinHeight &&
-    `
-    min-height: 500px;
-  `}
-  ${media.phone`
-    ${props =>
-      props.useWidgetMinHeight &&
-      `
-      min-height: auto;
-    `}
-  `}
-`
-
-const GoodRatioCol = styled(Col)`
-  ${media.desktop`
-    margin-top: 20px;
-  `}
-`
-
 const NewsContainer = styled.div`
   background-color: ${colors.white};
   padding: 17px 40px;
@@ -253,118 +229,6 @@ const NewsContainer = styled.div`
     margin-right: -15px;
     padding-left: 15px;
     padding-right: 15px;
-  `}
-`
-
-const WidgetContainer = styled.div`
-  background-color: ${colors.white};
-  border-radius: 4px;
-  box-shadow: 0 1px 10px 0 rgba(52, 68, 66, 0.08);
-  padding: 30px 30px 20px 30px;
-
-  ${media.phone`
-    padding: 30px 10px 30px 10px;
-  `}
-
-  ${props =>
-    props.noPaddings &&
-    css`
-      padding: 0;
-      ${media.phone`
-        padding: 0;
-      `}
-    `};
-`
-
-const WidgetHeader = styled.div`
-  padding-bottom: 55px;
-  ${media.desktop`
-    padding-bottom: 25px;
-  `}
-  ${media.phone`
-    padding-bottom: 28px;
-  `}
-
-  ${props =>
-    props.withBorder &&
-    css`
-      padding-bottom: 32px;
-      border-bottom: 1px solid ${colors.whiteSmoke};
-    `};
-`
-
-const WidgetTitle = styled.p`
-  color: ${colors.dark};
-  font-size: 22px;
-  line-height: 30px;
-`
-
-const InfoElementWrap = styled.div`
-  margin-left: 5px;
-  display: inline-block;
-`
-
-const InfoElementLink = styled(Link)`
-  color: ${colors.white};
-  text-decoration: underline;
-
-  &:hover {
-    color: ${colors.white};
-    text-decoration: underline;
-  }
-`
-
-const ImpactCategorySelector = styled(Tabs)`
-  .ant-tabs-nav-scroll {
-    text-align: center;
-  }
-  .ant-tabs-tab {
-    padding: 16.5px 4px;
-    ${media.desktop`
-      padding: 16.5px 0;
-    `}
-    ${media.phone`
-      margin: 0 25px 0 0;
-    `}
-
-    span {
-      align-items: center;
-      display: flex;
-      font-size: 16px;
-      font-weight: 400;
-    }
-  }
-
-  .ant-tabs-bar {
-    border-bottom: none;
-    margin: 0;
-  }
-
-  .ant-tabs-ink-bar {
-    height: 4px;
-  }
-
-  .ant-tabs-nav {
-    ${media.desktop`
-      padding: 0 20px;
-      > div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    `}
-  }
-`
-
-const StyledIcon = styled(Icon)`
-  ${media.phone`
-    margin: 0 5px !important;
-  `}
-`
-
-const ImpactCategorySelectorName = styled.strong`
-  ${media.phone`
-    display: none;
   `}
 `
 
@@ -580,7 +444,6 @@ class BrandPage extends PureComponent {
       tabsType,
       modalVisible,
       loadingMorelNews,
-      currentImpactCategory,
       moreAchievesVisible,
     } = this.state
     const {
@@ -590,8 +453,6 @@ class BrandPage extends PureComponent {
       match,
       members,
       news,
-      calendar,
-      ratio,
       location,
       history,
     } = this.props
@@ -830,7 +691,7 @@ class BrandPage extends PureComponent {
                   to: `/brand/dashboard/${GROUP_TABS.STATISTICS}`,
                   icon: ({ color }) => <Icon type="bar-chart" color={color} />,
                   text: intl.formatMessage({
-                    id: 'app.header.menu.dashboard',
+                    id: 'app.pages.groups.statistics',
                   }),
                   active: match.params.subset === GROUP_TABS.STATISTICS,
                 },
@@ -854,189 +715,8 @@ class BrandPage extends PureComponent {
               }}
             >
               <Content>
-                {loading ? (
-                  <Spinner />
-                ) : (
-                  <Fragment>
-                    <Row gutter={20}>
-                      <Col span={24}>
-                        <WidgetContainer noPaddings>
-                          <WidgetContent>
-                            <ImpactCategorySelector
-                              defaultActiveKey={currentImpactCategory}
-                              onChange={this.handleImpactCategoryChange}
-                            >
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['climate']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.climate" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="climate"
-                              />
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['waste']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.waste" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="waste"
-                              />
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['water']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.water" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="water"
-                              />
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['ecosystem']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.ecosystem" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="ecosystem"
-                              />
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['health']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.health" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="health"
-                              />
-                            </ImpactCategorySelector>
-                          </WidgetContent>
-                        </WidgetContainer>
-                      </Col>
-                    </Row>
-                    <Row gutter={20} style={{ marginTop: '20px' }}>
-                      <Col span={12} sm={24} lg={12} xs={24}>
-                        <WidgetContainer>
-                          <WidgetHeader>
-                            <WidgetTitle>
-                              <FormattedMessage id="app.dashboardPage.ourNetPositiveDays" />
-                              <InfoElementWrap>
-                                <InfoElement
-                                  type={INFO_ELEMENT_TYPES.QUESTION}
-                                  tooltipProps={{
-                                    placement: 'bottomLeft',
-                                    title: (
-                                      <Fragment>
-                                        <p>
-                                          <FormattedMessage id="app.dashboardPage.myNetPositiveDays.infoTooltip" />
-                                        </p>
-                                        <div>
-                                          <InfoElementLink
-                                            to={`/pages/faq#${
-                                              QUESTIONS_ANCHOR.WHAT_CALENDAR_SHOWING
-                                            }`}
-                                          >
-                                            <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
-                                          </InfoElementLink>
-                                        </div>
-                                      </Fragment>
-                                    ),
-                                  }}
-                                />
-                              </InfoElementWrap>
-                            </WidgetTitle>
-                          </WidgetHeader>
-                          <WidgetContent useWidgetMinHeight>
-                            {calendar[currentImpactCategory] && (
-                              <CalendarWidget
-                                activeDays={calendar[currentImpactCategory]}
-                              />
-                            )}
-                          </WidgetContent>
-                        </WidgetContainer>
-                      </Col>
-                      <GoodRatioCol span={12} sm={24} lg={12} xs={24}>
-                        <WidgetContainer>
-                          <WidgetHeader>
-                            <WidgetTitle>
-                              <FormattedMessage id="app.dashboardPage.ourGoodRatio" />
-                              <InfoElementWrap>
-                                <InfoElement
-                                  type={INFO_ELEMENT_TYPES.QUESTION}
-                                  tooltipProps={{
-                                    placement: 'bottomLeft',
-                                    title: (
-                                      <Fragment>
-                                        <p>
-                                          <FormattedMessage id="app.dashboardPage.goodRatio.infoTooltip" />
-                                        </p>
-                                        <div>
-                                          <InfoElementLink
-                                            to={`/pages/faq#${
-                                              QUESTIONS_ANCHOR.WHAT_SCALE_SHOWING
-                                            }`}
-                                          >
-                                            <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
-                                          </InfoElementLink>
-                                        </div>
-                                      </Fragment>
-                                    ),
-                                  }}
-                                />
-                              </InfoElementWrap>
-                            </WidgetTitle>
-                          </WidgetHeader>
-                          <WidgetContent useWidgetMinHeight>
-                            {ratio.footprintDays && (
-                              <GoodRatioWidget
-                                footprintDays={Math.round(
-                                  ratio.footprintDays[currentImpactCategory],
-                                )}
-                                handprintDays={Math.round(
-                                  ratio.handprintDays[currentImpactCategory],
-                                )}
-                              />
-                            )}
-                          </WidgetContent>
-                        </WidgetContainer>
-                      </GoodRatioCol>
-                    </Row>
-                  </Fragment>
-                )}
+                <Statistics {...this.props} />
               </Content>
-
               <Content>
                 {loading ? (
                   <Spinner />

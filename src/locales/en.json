@@ -281,6 +281,12 @@
     "app.actions.timeValues.other.MTHS": "Months",
     "app.actions.timeValues.one.YRS": "Year",
     "app.actions.timeValues.other.YRS": "Years",
+    "app.actions.timeValues.one.MEMBERS": "Member",
+    "app.actions.timeValues.other.MEMBERS": "Members",
+    "app.actions.timeValues.one.NETWORK MEMBERS": "Network member",
+    "app.actions.timeValues.other.NETWORK MEMBERS": "Network members",
+    "app.actions.timeValues.one.ACTIONS TAKEN": "Action taken",
+    "app.actions.timeValues.other.ACTIONS TAKEN": "Actions taken",
     "app.eatonFooter.text": "Eaton is dedicated to improving the quality of life and the environment through the use of power management technologies and services. Eaton has approximately 96,000 employees and sells products to customers in more than 175 countries.",
     "app.eatonFooter.cta.link": "Learn more",
     "app.eatonFooter.poweredBy": "Powered by",
@@ -775,5 +781,8 @@
     "app.timeUnits.switch.text": "Time Units On",
     "app.physicalUnits.switch.text": "Physical Units On",
     "app.aboutHumanscalePage.handprint.text": "",
-    "app.aboutHumanscalePage.takeActionHeader": "It's easy!"
+    "app.aboutHumanscalePage.takeActionHeader": "It's easy!",
+    "app.organization.impact": "Organization impact",
+    "app.organization.total.impact": "The total impact of the Organization based on taken actions by all members",
+    "app.organization.total.impact.network": "The impact of the organization Network."
 }
