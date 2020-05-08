@@ -136,6 +136,7 @@ export default function renderActions(props) {
                     action.suggestedAt && formatRelative(action.suggestedAt)
                   }
                   isHabit={action.isHabit}
+                  selectedKey={selectedKey}
                 />
               </ScrollAnimation>
             </Column>

@@ -48,6 +48,11 @@ const LabelContainer = styled.div`
   :last-child {
     margin-right: 0;
   }
+  ${media.phone`
+    width: 52px;
+    height: 32px;
+    margin-right: 3px;
+  `}
 `
 
 const Category = styled.div`

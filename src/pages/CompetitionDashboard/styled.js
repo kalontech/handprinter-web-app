@@ -103,6 +103,7 @@ export const EmptyList = styled.p`
   flex-grow: 1;
   font-size: 24px;
   color: ${colors.darkGray};
+  padding: 15px 0px;
 `
 
 export const PaginationStyled = styled(Pagination)`
@@ -187,6 +188,18 @@ export const DashboardHeaderUserName = styled.div`
   margin-left: ${props => (props.statusLabel ? '118px' : '0px')};
   align-items: center;
   justify-content: center;
+
+  ${media.largeDesktop`
+    min-height: 65px;
+    max-height: 100px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  `}
+
+  ${media.phone`
+    flex-direction: column;
+  `}
 `
 
 export const Banner = styled.img`
@@ -201,13 +214,11 @@ export const Content = styled.div`
   padding: 20px 70px;
 
   ${media.largeDesktop`
-    padding-left: 34px;
-    padding-right: 34px;
+    padding: 0px 15px;
   `}
 
   ${media.phone`
-    padding-left: 15px;
-    padding-right: 15px;  
+    padding: 0px;
   `}
 `
 
@@ -236,6 +247,24 @@ export const MenuStyled = styled(Menu)`
       border-bottom: 3px solid ${colors.green};
     }
   }
+
+  ${media.largeDesktop`
+    width: 100vw;
+    position: relative;
+    border-radius: 0px;
+    top: 0px;
+    left: -15px;
+    margin: 0px;
+  `}
+
+  ${media.phone`
+    width: 100%;
+    position: relative;
+    border-radius: 0px;
+    top: 0px;
+    left: 0px;
+    margin: 0px;
+  `}
 `
 
 export const StatisticsMain = styled.div`
@@ -345,6 +374,23 @@ export const BreadcrumbStyled = styled(Breadcrumb)`
   }
 `
 
+export const BreadcrumbStyledMobile = styled(Breadcrumb)`
+  height: 50px;
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  margin-left: 15px;
+  .ant-breadcrumb-separator {
+    color: ${colors.green};
+  }
+
+  ${media.phone`
+    .ant-breadcrumb-separator {
+      color: ${colors.lightGray};
+    }
+  `}
+`
+
 export const BreadcrumbItem = styled(Breadcrumb.Item)`
   font-family: Noto Sans;
   font-style: normal;
@@ -363,6 +409,10 @@ export const HeaderCompetitionButtonContainer = styled.div`
   align-items: center;
   justify-content: flex-end;
   flex-direction: row;
+
+  ${media.largeDesktop`
+    justify-content: center;
+  `}
 `
 
 export const HeaderCompetitionButton = styled(SecondaryButton)``
@@ -477,5 +527,17 @@ export const AchievementFooter = styled.div`
   ${media.phone`
     border-radius: 0;
     padding: 0 10px;
+  `}
+`
+
+export const FeedWrapper = styled.div`
+  padding: 0px 145px;
+
+  ${media.largeDesktop`
+    padding: 16px 34px 16px 34px;
+  `}
+
+  ${media.phone`
+    padding: 16px
   `}
 `
