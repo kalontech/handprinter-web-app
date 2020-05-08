@@ -71,7 +71,7 @@ const AppRouter = () => {
             }
             useAuthentication
           />
-          <Redirect exact from="/actions" to="/actions/discover?page=1" />
+          <Redirect exact from="/actions" to="/actions/discover" />
           <Route
             path="/actions/:subset/:slug?"
             component={ActionsPage}

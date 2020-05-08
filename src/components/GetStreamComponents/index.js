@@ -5,7 +5,7 @@
 
 import _ from 'lodash'
 import moment from 'moment-timezone'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import {
   CommentField,
   CommentList,
@@ -16,8 +16,9 @@ import { Avatar, Box, Flex, jsx, Text } from 'theme-ui'
 import styled from 'styled-components'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import colors from 'config/colors'
+import media, { sizes } from 'utils/mediaQueryTemplate'
 
-import { Popover, Icon } from 'antd'
+import { Popover, Icon, Divider } from 'antd'
 
 import { FormattedMessage } from 'react-intl'
 
@@ -34,6 +35,17 @@ const UserName = styled.span`
   font-size: 16px;
   line-height: 20px;
   color: ${colors.dark};
+
+  ${media.largeDesktop`
+    display: flex;
+    justify-content: flex-start;
+  `}
+
+  ${media.phone`
+    width: 180px;
+    flex-direction: row;
+    flex-wrap: wrap;
+  `}
 `
 
 const CreatedAtText = styled.span`
@@ -60,6 +72,7 @@ export const ActivityFooter = props => {
 
   return (
     <>
+      <Divider style={{ margin: '10px 0px 0px 0px' }} />
       {props.activity.mentions && props.activity.mentions.length > 0 && (
         <Box sx={{ p: 3 }}>
           <Text sx={{ fontStyle: 'italic', mb: 1 }}>Mentions:</Text>
@@ -152,6 +165,7 @@ export const ActivityFooter = props => {
 }
 
 export const ActivityHeader = props => {
+  const [width, setWidth] = useState(window.innerWidth)
   const UIContextData = useContext(UIContextSettings)
 
   const activity = _.get(props, 'activity')
@@ -164,60 +178,153 @@ export const ActivityHeader = props => {
   const createdAt = moment.tz(activity.time, 'UTC').fromNow()
   const userName = _.get(activity, 'actor.data.name', 'Unknown user')
 
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange)
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+    }
+  }, [])
+
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth)
+  }
+
+  const isTablet = width < sizes.largeDesktop
+  const isMobile = width < sizes.tablet
+
   return (
     <Flex
       sx={{
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'space-between',
         p: 3,
       }}
     >
-      <Flex
-        sx={{
-          alignItems: 'center',
-        }}
-      >
-        <Avatar
-          src={_.get(activity, 'actor.data.profileImage')}
-          sx={{ mr: 2 }}
-        />
-        <Box>
-          <Box>
-            <UserName>
-              <strong>{userName}</strong>
-            </UserName>
-            {isDidAction && (
-              <UserName>
-                {' did action '}
-                <strong>{actionName}</strong>
-              </UserName>
-            )}
-            {isCommentedAction && (
-              <UserName>
-                {' commented on action '}
-                <strong>{actionName}</strong>
-              </UserName>
-            )}
-          </Box>
-          <CreatedAtText>{createdAt}</CreatedAtText>
-        </Box>
-      </Flex>
-
-      <Box>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
+      {!isMobile && !isTablet && (
+        <Flex
+          sx={{
             alignItems: 'center',
           }}
         >
-          {actionImpacts && (
-            <ActionCardLabelSet
-              impacts={actionImpacts}
-              impactsInUnits={actionImpactsInUnits}
-              showPhysicalValues={UIContextData.showPhysicalValues}
-            />
-          )}
+          <Avatar
+            src={_.get(activity, 'actor.data.profileImage')}
+            sx={{ mr: 2 }}
+          />
+          <Box>
+            <Box>
+              <UserName>
+                <strong>{userName}</strong>
+              </UserName>
+              {isDidAction && (
+                <UserName>
+                  {' did action '}
+                  <strong>{actionName}</strong>
+                </UserName>
+              )}
+              {isCommentedAction && (
+                <UserName>
+                  {' commented on action '}
+                  <strong>{actionName}</strong>
+                </UserName>
+              )}
+            </Box>
+            <CreatedAtText>{createdAt}</CreatedAtText>
+          </Box>
+        </Flex>
+      )}
+      {(isMobile || isTablet) && (
+        <Flex
+          sx={{
+            flexDirection: 'column',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+          }}
+        >
+          <Box>
+            <Box>
+              <Box
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  marginBottom: '20px',
+                  marginLeft: '8px',
+                  width: isTablet ? '100%' : 'none',
+                }}
+              >
+                <Avatar
+                  src={_.get(activity, 'actor.data.profileImage')}
+                  sx={{ mr: 2 }}
+                />
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    marginLeft: '12px',
+                  }}
+                >
+                  <UserName>
+                    <strong>{userName}&nbsp;</strong>
+                    {isDidAction && (
+                      <span>
+                        {' did action '}
+                        <strong>{actionName}</strong>
+                      </span>
+                    )}
+                    {isCommentedAction && (
+                      <p>
+                        {' commented on action '}
+                        <strong>{actionName}</strong>
+                      </p>
+                    )}
+                  </UserName>
+                  <CreatedAtText>{createdAt}</CreatedAtText>
+                </div>
+              </Box>
+            </Box>
+
+            {actionImpacts && (
+              <ActionCardLabelSet
+                impacts={actionImpacts}
+                impactsInUnits={actionImpactsInUnits}
+                showPhysicalValues={UIContextData.showPhysicalValues}
+              />
+            )}
+          </Box>
+        </Flex>
+      )}
+      {!isMobile && !isTablet && (
+        <Box>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {actionImpacts && (
+              <ActionCardLabelSet
+                impacts={actionImpacts}
+                impactsInUnits={actionImpactsInUnits}
+                showPhysicalValues={UIContextData.showPhysicalValues}
+              />
+            )}
+            <Popover
+              content={
+                <DeletePostText
+                  onClick={() => props.onRemoveActivity(activity.id)}
+                >
+                  <FormattedMessage id="app.actions.card.delete" />
+                </DeletePostText>
+              }
+            >
+              <Icon type="ellipsis" rotate={90} />
+            </Popover>
+          </div>
+        </Box>
+      )}
+      {(isMobile || isTablet) && (
+        <Box>
           <Popover
             content={
               <DeletePostText
@@ -229,8 +336,8 @@ export const ActivityHeader = props => {
           >
             <Icon type="ellipsis" rotate={90} />
           </Popover>
-        </div>
-      </Box>
+        </Box>
+      )}
     </Flex>
   )
 }
@@ -255,14 +362,11 @@ export const CommentButton = props => {
 
   return (
     <ReactionToggleIcon
-      counts={counts}
       own_reactions={own_reactions}
       kind="comment"
       onPress={onPress}
       activeIcon={filled ? CommentFilled : CommentDefault}
       inactiveIcon={filled ? CommentFilled : CommentDefault}
-      labelSingle="comment"
-      labelPlural="comments"
     />
   )
 }
@@ -301,14 +405,11 @@ export const LikeButton = props => {
 
   return (
     <ReactionToggleIcon
-      counts={counts}
       own_reactions={own_reactions}
       kind="like"
       onPress={handleOnPress}
       activeIcon={LikeFilled}
       inactiveIcon={LikeDefault}
-      labelSingle="like"
-      labelPlural="likes"
     />
   )
 }

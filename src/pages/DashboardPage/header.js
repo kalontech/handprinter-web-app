@@ -21,8 +21,8 @@ export const DashboardHeaderWhiteLine = styled(Row)`
   align-items: center;
   width: 100%;
   ${media.desktop`
-    background-color: transparent;
-    margin-top: 90px;
+    background-color: ${colors.lightGray};
+    margin-top: 0px;
     height: auto;
   `}
 `
@@ -108,9 +108,8 @@ export const DashboardHeaderUserSince = styled.div`
   color: ${colors.darkGray};
   font-size: 16px;
   line-height: 20px;
-  ${media.desktop`
-    margin-top: 30px;
-  `}
+  width: 100%;
+  text-align: center;
 `
 
 const HeaderUserInfoRowCol = styled(Col)`

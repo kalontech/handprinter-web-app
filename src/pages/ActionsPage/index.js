@@ -1,34 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
 import { Row, Col, Select, Spin, Icon } from 'antd'
 import qs from 'qs'
-import styled from 'styled-components'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import debounce from 'lodash/debounce'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { animateScroll } from 'react-scroll/modules'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import DiscoverIconComponent from 'assets/icons/DiscoverIcon'
 import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
 import HistoryIconComponent from 'assets/icons/HistoryIcon'
+import { sizes } from 'utils/mediaQueryTemplate'
 
-import {
-  BlockContainer,
-  Pagination,
-  DefaultButton,
-  Modal,
-} from 'components/Styled'
+import { BlockContainer, Modal } from 'components/Styled'
 import ActionCard from 'components/ActionCard'
 import Spinner from 'components/Spinner'
-import colors from 'config/colors'
 import PageMetadata from 'components/PageMetadata'
-import media, { sizes } from 'utils/mediaQueryTemplate'
-import hexToRgba from 'utils/hexToRgba'
+
 import { ACTIONS_SUBSETS, ACTION_STATES } from 'utils/constants'
-import fetch from 'utils/fetch'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import Tooltip from 'components/Tooltip'
 import ScrollAnimation from 'components/ScrollAnimation'
@@ -40,350 +32,26 @@ import { categories, behaviour, types } from './filterData'
 import { Checkbox } from '../../components/Styled'
 import { UIContextSettings } from '../../context/uiSettingsContext'
 import ActionFilterModal from '../../components/ActionFilterModal'
+import {
+  Wrapper,
+  InnerContainer,
+  ActionSearchDropdownPicture,
+  SearchBlockWrapper,
+  SearchField,
+  StyledSearchIcon,
+  SearchWrap,
+  NotFoundWrap,
+  ImpactButton,
+  ActionSearchDropdownOptionContent,
+  SearchFieldWrap,
+  FooterSpinner,
+  MobileFilterWrap,
+  MobileFilter,
+} from './styled'
+import useActions from './useActions'
+import TabsSelect from '../../components/TabsSelect'
 
 const { Option } = Select
-
-const Wrapper = styled.div`
-  background-color: ${colors.lightGray};
-  position: relative;
-  height: 100%;
-  flex-grow: 1;
-`
-
-const InnerContainer = styled.div`
-  padding: 20px 0;
-
-  ${media.largeDesktop`
-    padding: 15px 0;
-  `}
-`
-
-const ActionSearchDropdownPicture = styled.div`
-  background-image: url(${props => props.src});
-  background-size: cover;
-  background-position: center center;
-  width: 70px;
-  height: 70px;
-  border-radius: 5px;
-  margin-right: 10px;
-  display: inline-block;
-`
-
-const SearchBlockWrapper = styled.div`
-  background-color: ${colors.white};
-  padding: 20px;
-  ${media.phone`
-    margin: 0;
-    .ant-popover-content {
-      width: 100vw;
-    }
-    .ant-modal-content {
-      height: 100vh;
-      .ant-modal-close-x {
-        position: absolute;
-        top: 15px;
-        right: -1px;
-      }
-      .ant-modal-header {
-        padding: 36px 15px 15px;
-        .ant-modal-title {
-          font-size: 22px;
-        }
-      }
-      .ant-modal-body {
-        padding: 15px;
-      }
-    }
-    
-    .ant-modal-wrap {
-      z-index: 1070;
-      overflow: unset;
-    }
-    .ant-modal-header {
-      border-bottom: none;
-    }
-  `}
-`
-
-const SearchField = styled(Select)`
-  width: 100%;
-
-  .ant-select-selection--single {
-    height: 46px;
-  }
-  .ant-select-selection__rendered {
-    line-height: 46px;
-  }
-
-  .ant-select-dropdown-menu-item-active {
-    &:focus,
-    &:hover {
-      background-color: ${colors.lightGray} !important;
-    }
-  }
-
-  .ant-select-selection-selected-value {
-    color: ${colors.darkGray};
-  }
-
-  .ant-select-selection__rendered {
-    margin: 0 16px;
-  }
-`
-
-const StyledSearchIcon = styled(Icon)`
-  font-size: 18px;
-  color: ${colors.darkGray};
-  font-weight: bold;
-  position: absolute;
-  right: 15px;
-  top: 15px;
-
-  ${media.largeDesktop`
-    top: 15px;
-  `}
-
-  ${media.phone`
-    top: 80px;
-  `}
-`
-
-const SearchWrap = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  ${media.largeDesktop`
-    justify-content: space-around;
-    align-items: center;
-  `}
-
-  ${media.phone`
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  `}
-`
-
-const NotFoundWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 500px;
-  font-size: 24px;
-  color: ${colors.darkGray};
-`
-
-export const ImpactButton = styled(DefaultButton)`
-  min-width: 100%;
-  background-color: transparent;
-  color: ${props => (props.isModelling ? colors.blue : colors.darkGray)};
-  border: 1px solid
-    ${props =>
-      props.isModelling
-        ? hexToRgba(colors.blue, 0.4)
-        : hexToRgba(colors.darkGray, 0.4)};
-  border-radius: 4px;
-  font-weight: 400;
-
-  &&:hover,
-  &&:active {
-    background-color: transparent;
-    color: ${props => (props.isModelling ? colors.blue : colors.dark)};
-    border-color: ${props =>
-      props.isModelling
-        ? hexToRgba(colors.blue, 0.6)
-        : hexToRgba(colors.dark, 0.6)};
-  }
-`
-
-const ActionSearchDropdownOptionContent = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const SearchFieldWrap = styled.div`
-  width: 100%;
-  .ant-select-dropdown,
-  .ant-select-dropdown-menu {
-    max-height: 402px;
-    z-index: 900;
-  }
-  .ant-select-dropdown-menu-item:hover,
-  .ant-select-dropdown-menu-item-active {
-    background-color: ${colors.lightGray};
-  }
-  .ant-select-selected-icon {
-    display: none;
-  }
-
-  ${media.largeDesktop`
-    width: 23%;
-  `}
-
-  ${media.phone`
-    width: 100%;
-  `}
-`
-
-export const TabsSelect = styled.div`
-  height: 50px;
-  width: 100%;
-  background-color: ${colors.dark};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  .ant-select {
-    width: 100%;
-    margin-right: 0px;
-    margin-bottom: 0px;
-    background: #344442;
-    color: white;
-    margin-bottom: 3.3px;
-  }
-  .ant-select-selection {
-    background: #344442;
-    border-color: #344442;
-  }
-  .ant-select-open {
-    border-color: #344442;
-  }
-  .ant-select-focused {
-    border-color: #344442;
-  }
-  .ant-select-arrow {
-    margin-right: 34px;
-    color: ${colors.white};
-    ${media.phone`
-      margin-right: 12px;
-    `}
-  }
-  .ant-select-selection__rendered {
-    margin-left: 5px;
-    margin-right: 0px;
-  }
-  .ant-select-arrow {
-    margin-right: 12px;
-  }
-  .ant-select-selection-selected-value {
-    margin-left: 21px;
-    color: ${colors.white};
-
-    ${media.phone`
-      margin-left: 12px;
-    `}
-  }
-`
-
-const SelectButtonWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
-  height: 100%;
-  width: 100%;
-  padding-right: 10px;
-`
-
-const SelectButton = styled.button`
-  width: 135px;
-  height: 38px;
-  background: ${hexToRgba(`${colors.white}`, 0.1)};
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: 0.4s all;
-
-  &:hover {
-    background: ${hexToRgba(`${colors.white}`, 0.18)};
-  }
-
-  p {
-    opacity: 1;
-    color: ${colors.white};
-  }
-`
-
-const MobileFilterWrap = styled.div`
-  display: flex;
-  width: 100%;
-  overflow: scroll;
-  margin-bottom: 20px;
-
-  ${media.largeDesktop`
-    width: 74%;
-    margin-bottom: 0px;
-  `}
-
-  ${media.phone`
-    width: 100%;
-    margin-bottom: 20px;
-  `}
-`
-const MobileFilter = styled.div`
-  border: 1px solid #d7dbdb;
-  box-sizing: border-box;
-  border-radius: 4px;
-  min-width: 100px;
-  height: 46px;
-  margin-right: 4px;
-  padding: 13px 16px;
-
-  ${media.largeDesktop`
-    min-width: 31%;
-    margin-right: 20px;
-  `}
-
-  ${media.phone`
-    min-width: 150px;
-    margin-right: 4px;
-  `}
-`
-
-async function getActionsList(props) {
-  const { location, match, timeValues } = props
-  const query = qs.parse(location.search, { ignoreQueryPrefix: true })
-
-  if (!query.page) query.page = 1
-  if (window.innerWidth < sizes.largeDesktop) query.limit = 10
-
-  const getActions =
-    [
-      api.getActions,
-      api.getSuggestedActions,
-      api.getActionsMyIdeas,
-      api.getActionsHistory,
-      api.getActionsModeling,
-    ][Object.values(ACTIONS_SUBSETS).indexOf(match.params.subset)] ||
-    api.getActions
-
-  const getTimeValues = timeValues
-    ? () => Promise.resolve({})
-    : api.getTimeValues
-
-  const [
-    {
-      actions: { docs: actions, limit, totalDocs: total, page },
-    },
-    { timeValues: timeValuesResponse },
-  ] = await Promise.all([getActions(query), getTimeValues()])
-
-  const result = {
-    actions,
-    limit,
-    page,
-    total,
-    timeValues,
-  }
-
-  if (!timeValues && timeValuesResponse)
-    result.timeValues = timeValuesResponse.sort((a, b) => a.minutes - b.minutes)
-
-  window.scrollTo(0, 0)
-
-  return result
-}
 
 function ActionsPage(props) {
   const UIContextData = useContext(UIContextSettings)
@@ -399,14 +67,8 @@ function ActionsPage(props) {
     limit: PropTypes.number,
     page: PropTypes.number,
     total: PropTypes.number,
-    timeValues: PropTypes.array,
   }
 
-  ActionsPage.defaultProps = {
-    actions: [],
-  }
-
-  // use state
   const [searchData, setSearchData] = useState({
     searchedActions: [],
     total: null,
@@ -417,6 +79,9 @@ function ActionsPage(props) {
     // if value will be defined
     searchFieldValue: undefined,
   })
+  const [currPage, setCurrPage] = useState(1)
+
+  const [actions, total] = useActions(props, currPage, setCurrPage)
   const [visibleTabs, setVisibleTabs] = useState(false)
   const [listType, setListType] = useState(
     window.screen.availWidth <= sizes.tablet
@@ -432,10 +97,6 @@ function ActionsPage(props) {
   const [isBehaviourFilterOpen, setIsBehaviourFilterOpen] = useState(false)
 
   const $search = React.createRef()
-
-  useEffect(() => {
-    props.fetch()
-  }, [props.location, props.match])
 
   useEffect(() => {
     animateScroll.scrollToTop()
@@ -527,7 +188,7 @@ function ActionsPage(props) {
     if (Object.keys(data).length === 0) {
       history.push(`/actions/${match.params.subset}`)
     } else {
-      updateQueries({ ...data, page: 1 })
+      updateQueries({ ...data })
     }
   }, 600)
 
@@ -632,10 +293,6 @@ function ActionsPage(props) {
     intl: { formatMessage, formatRelative, locale },
     user,
     loading,
-    actions,
-    limit,
-    page,
-    total,
     match,
     history,
   } = props
@@ -676,12 +333,6 @@ function ActionsPage(props) {
       {formatMessage({ id: 'app.header.menu.actions' })}
     </div>
   )
-
-  const dropdownStyle = {
-    background: `${colors.dark}`,
-    marginTop: '-3px',
-    padding: '0px',
-  }
 
   const openCategoryFilterModal = val => {
     setIsCategoryFilterOpen(true)
@@ -739,122 +390,14 @@ function ActionsPage(props) {
           />
         )}
         {user && (isTablet || isMobile) && (
-          <TabsSelect>
-            <Select
-              mode="default"
-              defaultValue={defaultSelectVal}
-              dropdownMenuStyle={dropdownStyle}
-            >
-              <Option
-                key={1}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  background: `${colors.dark}`,
-                  borderBottom: '1px solid gray',
-                  paddingLeft: isMobile ? '8px' : '28px',
-                }}
-              >
-                <Link
-                  to={`/actions/${ACTIONS_SUBSETS.DISCOVER}`}
-                  style={{ color: `${colors.white}` }}
-                >
-                  <Icon
-                    component={DiscoverIconComponent}
-                    style={{ marginRight: '10px' }}
-                  />
-                  {formatMessage({ id: 'app.header.menu.actions' })}
-                </Link>
-              </Option>
-              <Option
-                key={2}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  background: `${colors.dark}`,
-                  borderBottom: '1px solid gray',
-                  paddingLeft: isMobile ? '8px' : '28px',
-                }}
-              >
-                <Link
-                  to={`/actions/${ACTIONS_SUBSETS.SUGGESTED}`}
-                  style={{ color: `${colors.white}` }}
-                >
-                  <Icon
-                    component={SuggestedIconComponent}
-                    style={{ marginRight: '10px' }}
-                  />
-                  {formatMessage({ id: 'app.pages.groups.statistics' })}
-                </Link>
-              </Option>
-              <Option
-                key={3}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  background: `${colors.dark}`,
-                  borderBottom: '1px solid gray',
-                  paddingLeft: isMobile ? '8px' : '28px',
-                }}
-              >
-                <Link
-                  to={`/actions/${ACTIONS_SUBSETS.MY_IDEAS}`}
-                  style={{ color: `${colors.white}` }}
-                >
-                  <Icon
-                    component={FlagIconComponent}
-                    style={{ marginRight: '10px' }}
-                  />
-                  {formatMessage({ id: 'app.campaignPage.participants' })}
-                </Link>
-              </Option>
-              <Option
-                key={4}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  background: `${colors.dark}`,
-                  borderBottom: '1px solid gray',
-                  paddingLeft: isMobile ? '8px' : '28px',
-                }}
-              >
-                <Link
-                  to={`/actions/${ACTIONS_SUBSETS.TAKEN}`}
-                  style={{ color: `${colors.white}` }}
-                >
-                  <Icon
-                    component={HistoryIconComponent}
-                    style={{ marginRight: '10px' }}
-                  />
-                  {formatMessage({ id: 'app.pages.groups.myGroups' })}
-                </Link>
-              </Option>
-              <Option
-                key={5}
-                style={{
-                  background: `${colors.dark}`,
-                  cursor: 'unset',
-                }}
-                disabled
-              >
-                <SelectButtonWrapper>
-                  <SelectButton
-                    onClick={() => {
-                      history.push('/account/actions/create')
-                    }}
-                  >
-                    <p style={{ opacity: '1' }}>
-                      {formatMessage({ id: 'app.headerActions.addAction' })}
-                    </p>
-                  </SelectButton>
-                </SelectButtonWrapper>
-              </Option>
-            </Select>
-          </TabsSelect>
+          <TabsSelect
+            defaultSelectVal={defaultSelectVal}
+            isMobile={isMobile}
+            data={tabsList}
+            history={history}
+            formatMessage={formatMessage}
+            isActionsPage={true}
+          />
         )}
 
         <BlockContainer>
@@ -1140,84 +683,98 @@ function ActionsPage(props) {
               </NotFoundWrap>
             ) : (
               <Row gutter={{ md: 20 }}>
-                {actions.map(action => (
-                  <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
-                    <ScrollAnimation>
-                      <ActionCard
-                        to={
-                          action.status === ACTION_STATES.PROPOSED
-                            ? `/account/actions/preview/${action.slug}`
-                            : `/actions/${match.params.subset}/${action.slug}`
-                        }
-                        picture={action.picture}
-                        canChange={action.status === ACTION_STATES.PROPOSED}
-                        onEdit={e => {
-                          e.preventDefault()
-
-                          history.push(`/account/actions/edit/${action.slug}`)
-                        }}
-                        onDelete={onActionDelete(action._id)}
-                        name={
-                          action.translatedName && action.translatedName[locale]
-                            ? action.translatedName[locale]
-                            : action.name
-                        }
-                        impacts={() => {
-                          let tooltipTextId, buttonTextId
-                          switch (action.status) {
-                            case ACTION_STATES.MODELING:
-                              tooltipTextId =
-                                'app.actions.card.waitModelingHint'
-                              buttonTextId = 'app.actions.card.waitModeling'
-                              break
-                            case ACTION_STATES.DENIED:
-                              tooltipTextId = 'app.actions.card.deniedHint'
-                              buttonTextId = 'app.actions.card.denied'
-                              break
-                            default:
-                              tooltipTextId = 'app.actions.card.waitAdminHint'
-                              buttonTextId = 'app.actions.card.waitAdmin'
+                <InfiniteScroll
+                  dataLength={actions.length}
+                  next={() => {
+                    setCurrPage(currPage + 1)
+                  }}
+                  hasMore={actions.length < total}
+                  loader={
+                    <FooterSpinner>
+                      <Spinner />
+                    </FooterSpinner>
+                  }
+                >
+                  {actions.map(action => (
+                    <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
+                      <ScrollAnimation>
+                        <ActionCard
+                          to={
+                            action.status === ACTION_STATES.PROPOSED
+                              ? `/account/actions/preview/${action.slug}`
+                              : `/actions/${match.params.subset}/${action.slug}`
                           }
-                          return action.status !== ACTION_STATES.PUBLISHED ? (
-                            <Tooltip
-                              placement="top"
-                              title={formatMessage({
-                                id: tooltipTextId,
-                              })}
-                            >
-                              <ImpactButton
-                                style={{ height: 35 }}
-                                isModelling={
-                                  action.status === ACTION_STATES.MODELING
-                                }
-                              >
-                                {formatMessage({
-                                  id: buttonTextId,
+                          picture={action.picture}
+                          canChange={action.status === ACTION_STATES.PROPOSED}
+                          onEdit={e => {
+                            e.preventDefault()
+
+                            history.push(`/account/actions/edit/${action.slug}`)
+                          }}
+                          onDelete={onActionDelete(action._id)}
+                          name={
+                            action.translatedName &&
+                            action.translatedName[locale]
+                              ? action.translatedName[locale]
+                              : action.name
+                          }
+                          impacts={() => {
+                            let tooltipTextId, buttonTextId
+                            switch (action.status) {
+                              case ACTION_STATES.MODELING:
+                                tooltipTextId =
+                                  'app.actions.card.waitModelingHint'
+                                buttonTextId = 'app.actions.card.waitModeling'
+                                break
+                              case ACTION_STATES.DENIED:
+                                tooltipTextId = 'app.actions.card.deniedHint'
+                                buttonTextId = 'app.actions.card.denied'
+                                break
+                              default:
+                                tooltipTextId = 'app.actions.card.waitAdminHint'
+                                buttonTextId = 'app.actions.card.waitAdmin'
+                            }
+                            return action.status !== ACTION_STATES.PUBLISHED ? (
+                              <Tooltip
+                                placement="top"
+                                title={formatMessage({
+                                  id: tooltipTextId,
                                 })}
-                              </ImpactButton>
-                            </Tooltip>
-                          ) : (
-                            <ActionCardLabelSet
-                              impacts={action.impacts}
-                              impactsInUnits={action.impactsInUnits}
-                              showPhysicalValues={
-                                UIContextData.showPhysicalValues
-                              }
-                            />
-                          )
-                        }}
-                        suggestedBy={action.suggestedBy}
-                        suggestedAt={
-                          action.suggestedAt &&
-                          formatRelative(action.suggestedAt)
-                        }
-                        isHabit={action.isHabit}
-                        impactsInUnits={action.impactsInUnits}
-                        isWild={action.isWild}
-                      />
-                    </ScrollAnimation>
-                  </Col>
-                ))}
+                              >
+                                <ImpactButton
+                                  style={{ height: 35 }}
+                                  isModelling={
+                                    action.status === ACTION_STATES.MODELING
+                                  }
+                                >
+                                  {formatMessage({
+                                    id: buttonTextId,
+                                  })}
+                                </ImpactButton>
+                              </Tooltip>
+                            ) : (
+                              <ActionCardLabelSet
+                                impacts={action.impacts}
+                                impactsInUnits={action.impactsInUnits}
+                                showPhysicalValues={
+                                  UIContextData.showPhysicalValues
+                                }
+                              />
+                            )
+                          }}
+                          suggestedBy={action.suggestedBy}
+                          suggestedAt={
+                            action.suggestedAt &&
+                            formatRelative(action.suggestedAt)
+                          }
+                          isHabit={action.isHabit}
+                          impactsInUnits={action.impactsInUnits}
+                          isWild={action.isWild}
+                        />
+                      </ScrollAnimation>
+                    </Col>
+                  ))}
+                </InfiniteScroll>
 
                 {actions.length === 0 && (
                   <NotFoundWrap>
@@ -1225,31 +782,6 @@ function ActionsPage(props) {
                   </NotFoundWrap>
                 )}
               </Row>
-            )}
-
-            {!loading && total > limit && (
-              <Pagination
-                current={page}
-                pageSize={limit}
-                total={total}
-                itemRender={(current, type, originalElement) => {
-                  if (type === 'page') {
-                    return (
-                      <button
-                        onClick={() => {
-                          updateQueries({ page: current })
-                        }}
-                      >
-                        {originalElement}
-                      </button>
-                    )
-                  }
-                  if (type === 'prev' || type === 'next') {
-                    return null
-                  }
-                  return originalElement
-                }}
-              />
             )}
           </InnerContainer>
         </BlockContainer>
@@ -1262,6 +794,5 @@ export default compose(
   connect(state => ({
     user: state.user.data,
   })),
-  fetch(getActionsList, { loader: false }),
   injectIntl,
 )(ActionsPage)

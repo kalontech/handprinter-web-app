@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useState, useEffect } from 'react'
 import qs from 'qs'
 import Spinner from 'components/Spinner'
 import { connect } from 'react-redux'
@@ -8,10 +8,15 @@ import SuggestedIconComponent from 'assets/icons/SuggestedIcon'
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import ActionsIconComponent from 'assets/icons/HandIcon'
 import StatisticsIconComponent from 'assets/icons/StatisticsIcon'
+import { Icon } from 'antd'
+import { sizes } from 'utils/mediaQueryTemplate'
+
+import TabsSelect from '../../components/TabsSelect'
 
 import useCampaign from './useCampaign'
 import Header from './header'
 import { Content } from './styled'
+
 import renderParticipants from './participants'
 import renderActions from './actions'
 import renderActivity from './activity'
@@ -35,6 +40,7 @@ function renderContent(view, props) {
   }
 }
 function CampaignDashboard(props) {
+  const [width, setWidth] = useState(window.innerWidth)
   const UIContextData = useContext(UIContextSettings)
   const {
     location,
@@ -60,7 +66,59 @@ function CampaignDashboard(props) {
     }
   }
 
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange)
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+    }
+  }, [])
+
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth)
+  }
+
+  const isTablet = width < sizes.largeDesktop
+  const isMobile = width < sizes.tablet
+
   if (loading || !campaign) return <Spinner />
+
+  const tabList = [
+    {
+      to: `?view=${CAPMAIGN_TABS.actions}`,
+      icon: ActionsIconComponent,
+      text: formatMessage({ id: 'app.header.menu.actions' }),
+      active: view === CAPMAIGN_TABS.actions,
+    },
+    {
+      to: `?view=${CAPMAIGN_TABS.statistics}`,
+      icon: StatisticsIconComponent,
+      text: formatMessage({ id: 'app.pages.groups.statistics' }),
+      active: view === CAPMAIGN_TABS.statistics,
+    },
+    {
+      to: `?view=${CAPMAIGN_TABS.participants}`,
+      icon: SuggestedIconComponent,
+      text: formatMessage({ id: 'app.campaignPage.participants' }),
+      active: view === CAPMAIGN_TABS.participants,
+    },
+    {
+      to: `?view=${CAPMAIGN_TABS.activity}`,
+      icon: FlagIconComponent,
+      text: formatMessage({ id: 'app.pages.groups.activity' }),
+      active: view === CAPMAIGN_TABS.activity,
+    },
+  ]
+
+  const defaultSelectVal = (
+    <div>
+      <Icon
+        component={ActionsIconComponent}
+        style={{ marginRight: '10px', color: 'white' }}
+      />
+      {formatMessage({ id: 'app.header.menu.actions' })}
+    </div>
+  )
+
   return (
     <Fragment>
       <Header
@@ -68,34 +126,14 @@ function CampaignDashboard(props) {
         campaign={campaign}
         accomplishedUserActions={accomplishedUserActions}
       />
-      <Tabs
-        list={[
-          {
-            to: `?view=${CAPMAIGN_TABS.actions}`,
-            icon: ActionsIconComponent,
-            text: formatMessage({ id: 'app.header.menu.actions' }),
-            active: view === CAPMAIGN_TABS.actions,
-          },
-          {
-            to: `?view=${CAPMAIGN_TABS.statistics}`,
-            icon: StatisticsIconComponent,
-            text: formatMessage({ id: 'app.pages.groups.statistics' }),
-            active: view === CAPMAIGN_TABS.statistics,
-          },
-          {
-            to: `?view=${CAPMAIGN_TABS.participants}`,
-            icon: SuggestedIconComponent,
-            text: formatMessage({ id: 'app.campaignPage.participants' }),
-            active: view === CAPMAIGN_TABS.participants,
-          },
-          {
-            to: `?view=${CAPMAIGN_TABS.activity}`,
-            icon: FlagIconComponent,
-            text: formatMessage({ id: 'app.pages.groups.activity' }),
-            active: view === CAPMAIGN_TABS.activity,
-          },
-        ]}
-      />
+      {!isTablet && !isMobile && <Tabs list={tabList} />}
+      {(isTablet || isMobile) && (
+        <TabsSelect
+          data={tabList}
+          isMobile={isMobile}
+          defaultSelectVal={defaultSelectVal}
+        />
+      )}
       <Content>
         {renderContent(view, {
           ...props,
