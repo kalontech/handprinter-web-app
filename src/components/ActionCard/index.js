@@ -242,14 +242,14 @@ const ActionCard = props => {
     <Link to={to} onClick={onClick}>
       <CardWrap>
         <CardContainer isSlide={isSlide} style={styles && styles}>
-          {selectedKey === 'todo' && (
+          {/* {selectedKey === 'todo' && (
             <ChallengeLabel>
               <SWGWrap>
                 <BigLeaf style={bigLeafStyles} />
               </SWGWrap>
               <p>| available to taken</p>
             </ChallengeLabel>
-          )}
+          )} */}
           <CardImage>
             {picture && <img src={picture} alt={name} />}
 
