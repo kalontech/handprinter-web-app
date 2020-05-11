@@ -346,8 +346,8 @@ export const BlockContainer = styled.div`
   `};
 
   ${media.phone`
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
   `};
 `
 

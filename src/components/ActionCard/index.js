@@ -30,6 +30,7 @@ const CardWrap = styled.div`
   ${media.phone`
     padding-top: 0px;
     padding-bottom: 0px;
+    margin: 10px 10px 0px 10px;
   `}
 `
 
@@ -48,12 +49,18 @@ const CardContainer = styled.div`
   transition: transform 0.3s;
   ${media.phone`
     margin-right: 0;
-    max-width: ${props => (props.isSlide ? 'calc(100% - 15px)' : '100%')};
+    max-width: ${props => (props.isSlide ? 'calc(100% - 15px)' : '94%')};
   `}
 
   &:hover {
     transform: translateY(-4px);
   }
+
+  ${media.phone`
+    padding: 10px;
+    box-shadow: 0px 1px 10px rgba(52, 68, 66, 0.08);
+    border-radius: 4px;
+  `}
 `
 
 const CardImage = styled.div`

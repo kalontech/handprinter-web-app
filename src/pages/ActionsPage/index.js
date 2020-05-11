@@ -334,18 +334,6 @@ function ActionsPage(props) {
     </div>
   )
 
-  const openCategoryFilterModal = val => {
-    setIsCategoryFilterOpen(true)
-  }
-
-  const openTypeFilterModal = val => {
-    setIsTypeFilterOpen(val)
-  }
-
-  const openBehaviourFilterModal = val => {
-    setIsBehaviourFilterOpen(val)
-  }
-
   function paramsToObject(entries) {
     let result = {
       categories: [],
@@ -554,15 +542,23 @@ function ActionsPage(props) {
                       <SearchWrap>
                         <MobileFilterWrap>
                           <MobileFilter
-                            onClick={() => openCategoryFilterModal(true)}
+                            onClick={() => setIsCategoryFilterOpen(true)}
+                            style={{
+                              minWidth: '129px',
+                              height: '46px',
+                            }}
                           >
-                            {selectedItems(
-                              filtersLables.categories,
-                              'Category',
-                            )}
+                            <span>
+                              {selectedItems(
+                                filtersLables.categories,
+                                'Category',
+                              )}
+                            </span>
                             <ActionFilterModal
                               isFilterModalOpen={isCategoryFilterOpen}
-                              openFilterModal={setIsCategoryFilterOpen}
+                              setIsCategoryFilterOpen={val => {
+                                setIsCategoryFilterOpen(val)
+                              }}
                               isMobile={isMobile}
                               title="Category"
                               selectedFilters={selectedCategories}
@@ -573,12 +569,16 @@ function ActionsPage(props) {
                             />
                           </MobileFilter>
                           <MobileFilter
-                            onClick={() => openTypeFilterModal(true)}
+                            onClick={() => setIsTypeFilterOpen(true)}
+                            style={{
+                              minWidth: '106px',
+                              height: '46px',
+                            }}
                           >
                             {selectedItems(filtersLables.type, 'Type')}
                             <ActionFilterModal
                               isFilterModalOpen={isTypeFilterOpen}
-                              openFilterModal={setIsTypeFilterOpen}
+                              setIsTypeFilterOpen={setIsTypeFilterOpen}
                               isMobile={isMobile}
                               title="Type"
                               selectedFilters={selectedType}
@@ -589,7 +589,11 @@ function ActionsPage(props) {
                             />
                           </MobileFilter>
                           <MobileFilter
-                            onClick={() => openBehaviourFilterModal(true)}
+                            onClick={() => setIsBehaviourFilterOpen(true)}
+                            style={{
+                              minWidth: '135px',
+                              height: '46px',
+                            }}
                           >
                             {selectedItems(
                               filtersLables.behaviour,
@@ -597,7 +601,9 @@ function ActionsPage(props) {
                             )}
                             <ActionFilterModal
                               isFilterModalOpen={isBehaviourFilterOpen}
-                              openFilterModal={setIsBehaviourFilterOpen}
+                              setIsBehaviourFilterOpen={
+                                setIsBehaviourFilterOpen
+                              }
                               isMobile={isMobile}
                               title="Behaviour"
                               selectedFilters={selectedBehaviour}

@@ -9,14 +9,16 @@ import { TabsSelectWrapper, SelectButtonWrapper, SelectButton } from './styled'
 
 const { Option } = Select
 
-const TabsSelect = ({
-  defaultSelectVal,
-  isMobile,
-  data,
-  history,
-  formatMessage,
-  isActionsPage,
-}) => {
+const TabsSelect = props => {
+  const {
+    defaultSelectVal,
+    isMobile,
+    data,
+    history,
+    formatMessage,
+    isActionsPage,
+  } = props
+
   return (
     <TabsSelectWrapper>
       <Select
@@ -31,7 +33,11 @@ const TabsSelect = ({
         {data.map(tabOpt => {
           if (tabOpt) {
             return (
-              <Option key={1} style={{ background: `${colors.dark}` }}>
+              <Option
+                key={1}
+                style={{ background: `${colors.dark}` }}
+                value={tabOpt.text}
+              >
                 <Link to={tabOpt.to} style={{ color: `${colors.white}` }}>
                   <Icon
                     component={tabOpt.icon}

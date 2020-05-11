@@ -10,7 +10,9 @@ const ActionFilterModal = props => {
   const [filterData, setFilterData] = useState([])
   const {
     isFilterModalOpen,
-    openFilterModal,
+    setIsCategoryFilterOpen,
+    setIsTypeFilterOpen,
+    setIsBehaviourFilterOpen,
     isMobile,
     title,
     filtersData,
@@ -18,18 +20,30 @@ const ActionFilterModal = props => {
   } = props
 
   const handleCancel = () => {
-    openFilterModal(false)
+    if (title.toLowerCase() === 'category') {
+      setIsCategoryFilterOpen(false)
+    } else if (title.toLowerCase() === 'type') {
+      setIsTypeFilterOpen(false)
+    } else if (title.toLowerCase() === 'behaviour') {
+      setIsBehaviourFilterOpen(false)
+    }
   }
 
-  const handleApply = () => {
-    openFilterModal(false)
+  const handleApply = e => {
+    e.stopPropagation()
     handleOnAfterFiltersChange({
       data: { [`${title.toLowerCase()}`]: filterData },
     })
+    handleCancel()
   }
 
-  const clearFilters = () => {
+  const clearFilters = e => {
+    e.stopPropagation()
     setFilterData([])
+    handleOnAfterFiltersChange({
+      data: { [`${title.toLowerCase()}`]: [] },
+    })
+    handleCancel()
   }
 
   const handleFilterChange = value => {
@@ -65,7 +79,9 @@ const ActionFilterModal = props => {
       visible={isFilterModalOpen}
       onOk={e => {
         e.stopPropagation()
-        openFilterModal(true)
+        setIsCategoryFilterOpen(false)
+        setIsTypeFilterOpen(false)
+        setIsBehaviourFilterOpen(false)
       }}
       onCancel={e => {
         e.stopPropagation()
@@ -117,7 +133,9 @@ const ActionFilterModal = props => {
 
 ActionFilterModal.propTypes = {
   isFilterModalOpen: PropTypes.bool,
-  openFilterModal: PropTypes.func,
+  setIsCategoryFilterOpen: PropTypes.func,
+  setIsTypeFilterOpen: PropTypes.func,
+  setIsBehaviourFilterOpen: PropTypes.func,
   isMobile: PropTypes.bool,
   title: PropTypes.string,
   selectedFilters: PropTypes.string,

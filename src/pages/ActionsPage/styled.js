@@ -16,8 +16,12 @@ export const InnerContainer = styled.div`
   padding: 20px 0;
 
   ${media.largeDesktop`
-  padding: 15px 0;
-`}
+    padding: 15px 0px;
+  `}
+
+  ${media.phone`
+    padding: 0px;
+  `}
 `
 
 export const ActionSearchDropdownPicture = styled.div`
@@ -180,7 +184,14 @@ export const SearchFieldWrap = styled.div`
 
   ${media.largeDesktop`
     width: 23%;
+    margin-bottom: 16px;
   `}
+
+  ${media.desktop`
+    width: 23%;
+    margin-bottom: 16px;
+  `}
+
   ${media.phone`
     width: 100%;
   `}
@@ -205,26 +216,39 @@ export const MobileFilterWrap = styled.div`
 
   ${media.phone`
     width: 100%;
-    margin-bottom: 20px;
+    margin-left: 0px;
+    margin-bottom: 0px;
 `}
+
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
 `
 
 export const MobileFilter = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   border: 1px solid #d7dbdb;
   box-sizing: border-box;
   border-radius: 4px;
-  min-width: 100px;
   height: 46px;
   margin-right: 4px;
-  padding: 13px 16px;
+  padding: 0px 7px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
 
   ${media.largeDesktop`
-    min-width: 31%;
-    margin-right: 20px;
+    /* min-width: 31%; */
+    margin-right: 15px;
 `}
 
   ${media.phone`
-    min-width: 150px;
+    /* min-width: 150px; */
     margin-right: 4px;
 `}
 `
