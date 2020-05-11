@@ -132,6 +132,7 @@ function CampaignDashboard(props) {
           data={tabList}
           isMobile={isMobile}
           defaultSelectVal={defaultSelectVal}
+          search={props.location.search}
         />
       )}
       <Content>

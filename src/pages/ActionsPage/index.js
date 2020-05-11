@@ -383,6 +383,7 @@ function ActionsPage(props) {
             isMobile={isMobile}
             data={tabsList}
             history={history}
+            search={props.location.search}
             formatMessage={formatMessage}
             isActionsPage={true}
           />

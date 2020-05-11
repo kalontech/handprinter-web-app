@@ -17,13 +17,35 @@ const TabsSelect = props => {
     history,
     formatMessage,
     isActionsPage,
+    search,
   } = props
+
+  let defaultValue
+  switch (search) {
+    case '?view=actions':
+      defaultValue = 'Actions'
+      break
+    case '?view=statistics':
+      defaultValue = 'Statistics'
+      break
+    case '?view=participants':
+      defaultValue = 'Participants'
+      break
+    case '?view=activity':
+      defaultValue = 'Activity'
+      break
+    case '?view=groups&tabIndex=0':
+      defaultValue = 'My Groups'
+      break
+    default:
+      break
+  }
 
   return (
     <TabsSelectWrapper>
       <Select
         mode="default"
-        defaultValue={defaultSelectVal}
+        defaultValue={defaultValue || defaultSelectVal}
         dropdownMenuStyle={{
           background: `${colors.dark}`,
           marginTop: '-3px',
@@ -83,6 +105,7 @@ TabsSelect.propTypes = {
   history: PropTypes.object,
   formatMessage: PropTypes.func,
   isActionsPage: PropTypes.bool,
+  search: PropTypes.string,
 }
 
 export default TabsSelect
