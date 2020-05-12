@@ -57,15 +57,22 @@ const TabsSelect = props => {
             return (
               <Option
                 key={1}
-                style={{ background: `${colors.dark}` }}
+                style={{ background: `${colors.dark}`, width: '100%' }}
                 value={tabOpt.text}
               >
-                <Link to={tabOpt.to} style={{ color: `${colors.white}` }}>
+                <Link
+                  to={tabOpt.to}
+                  style={{
+                    color: `${colors.white}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
                   <Icon
                     component={tabOpt.icon}
                     style={{ marginRight: '10px' }}
                   />
-                  {tabOpt.text}
+                  <p style={{ width: '90%' }}>{tabOpt.text}</p>
                 </Link>
               </Option>
             )

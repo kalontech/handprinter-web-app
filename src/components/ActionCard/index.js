@@ -190,7 +190,7 @@ const ChallengeLabel = styled.div`
     font-weight: normal;
     width: 98px;
     height: 12px;
-    font-size: 8px;
+    font-size: 7px;
     line-height: 12px;
     display: flex;
     align-items: center;
@@ -199,6 +199,15 @@ const ChallengeLabel = styled.div`
     color: ${colors.white};
     margin-left: 21px;
   }
+
+  ${media.phone`
+    right: 18px;
+    top: 18px;
+
+    p {
+      font-size: 7px;
+    }
+  `}
 `
 
 const SWGWrap = styled.div``

@@ -69,6 +69,10 @@ export const SearchBlockWrapper = styled.div`
     border-bottom: none;
   }
 `}
+
+  ${media.phone`
+  height: 150px;
+`}
 `
 
 export const SearchField = styled(Select)`
@@ -108,8 +112,11 @@ export const StyledSearchIcon = styled(Icon)`
   ${media.largeDesktop`
     top: 15px;
   `}
+
   ${media.phone`
-    top: 80px;
+    position: relative;
+    left: 120px;
+    top: -47px;
   `}
 `
 
