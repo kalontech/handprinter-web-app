@@ -78,7 +78,7 @@ function ActionsPage(props) {
   })
   const [currPage, setCurrPage] = useState(1)
 
-  const [actions, total] = useActions(props, currPage, setCurrPage)
+  const [actions, total, isLoading] = useActions(props, currPage, setCurrPage)
   const [visibleTabs, setVisibleTabs] = useState(false)
   const [listType, setListType] = useState(
     window.screen.availWidth <= sizes.tablet
@@ -273,7 +273,6 @@ function ActionsPage(props) {
   const {
     intl: { formatMessage, formatRelative, locale },
     user,
-    loading,
     match,
     history,
   } = props
@@ -474,11 +473,12 @@ function ActionsPage(props) {
               </Col>
             </Row>
 
-            {loading ? (
+            {isLoading && (
               <NotFoundWrap>
                 <Spinner />
               </NotFoundWrap>
-            ) : (
+            )}
+            {actions.length && (
               <Row gutter={{ md: 20 }}>
                 <InfiniteScroll
                   dataLength={actions.length}
@@ -572,13 +572,12 @@ function ActionsPage(props) {
                     </Col>
                   ))}
                 </InfiniteScroll>
-
-                {actions.length === 0 && (
-                  <NotFoundWrap>
-                    <FormattedMessage id="app.actionsPage.actionsNotFound" />
-                  </NotFoundWrap>
-                )}
               </Row>
+            )}
+            {!actions.length && (
+              <NotFoundWrap>
+                <FormattedMessage id="app.actionsPage.actionsNotFound" />
+              </NotFoundWrap>
             )}
           </InnerContainer>
         </BlockContainer>

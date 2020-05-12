@@ -18,6 +18,7 @@ export default function useActions(props, page, setPage) {
   const query = qs.parse(location.search, { ignoreQueryPrefix: true })
   const [actions, setActions] = useState([])
   const [total, setTotal] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
   const previousPage = usePrevious(page)
   useEffect(() => {
     // Fetching only if need to display next page of actions
@@ -53,8 +54,9 @@ export default function useActions(props, page, setPage) {
         shouldConcatActions ? actions.concat(nextActions) : nextActions,
       )
       setTotal(_.get(response, 'actions.totalDocs', 0))
+      setIsLoading(false)
     }
   }
 
-  return [actions, total]
+  return [actions, total, isLoading]
 }
