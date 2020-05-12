@@ -12,7 +12,7 @@ import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
 import notification from 'antd/lib/notification'
 import _ from 'lodash'
-import Print from 'assets/icons/fingerprint-part.svg'
+import Print from 'assets/icons/print.svg'
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import SuggestedIcon from 'assets/icons/SuggestedIcon'
 
@@ -28,7 +28,6 @@ import media, { sizes } from 'utils/mediaQueryTemplate'
 import hexToRgba from 'utils/hexToRgba'
 import Spinner from 'components/Spinner'
 import NewsList from 'components/NewsList'
-import GroupDetailedForm from 'components/GroupDetailedForm'
 import GroupManage from 'components/GroupManage'
 import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
 import MemberCard from 'components/MemberCard'
@@ -44,22 +43,13 @@ import {
 
 import Statistics from './statistics'
 
+import ActionCardLabel from '../../components/ActionCardLabel'
+import ActionCardPhysicalLabel from '../../components/ActionCardPhysicalLabel'
 import {
-  Achievements,
-  AchievementPopover,
-  PopoverWrapper,
-  PopoverTitle,
-  PopoverText,
-  Achievement,
-  OtherAchievementsText,
-  AchievementModal,
-  AchievementTitle,
-  AchievementFooter,
-  AchievementFooterButton,
-  ModalContent,
-  AchievementRow,
-  AchievementCol,
-} from '../DashboardPage/header'
+  IMPACT_CATEGORIES,
+  TimeValueAbbreviations,
+} from '../../utils/constants'
+import { processedUnitValue } from '../../components/ActionCardLabelSet'
 
 const Block = styled.section`
   display: flex;
@@ -80,10 +70,10 @@ const SpinnerStyled = styled(Spinner)`
 `
 
 const FingerPrint = styled.div`
-  height: 140px;
+  height: 205px;
   width: 100%;
   text-align: center;
-  background: ${colors.ocean} url(${Print}) no-repeat center bottom;
+  background: ${colors.ocean} url(${Print}) no-repeat left bottom;
   background-size: initial;
 `
 
@@ -114,6 +104,7 @@ const Container = styled.div`
 
 const WhiteBlock = styled.div`
   width: 100%;
+  min-height: 114px;
   background-color: ${colors.white};
   padding: 0;
   margin: 0;
@@ -261,6 +252,79 @@ const MoreAdminsItem = styled.span`
   height: 42px;
   width: 42px;
   font-weight: bold;
+`
+
+const LogoWrap = styled.div`
+  transform: translateY(-50%);
+  position: absolute;
+  left: 80px;
+`
+
+const Logo = styled.img`
+  width: 176px;
+  height: 176px;
+  object-fit: cover;
+  display: inline-block;
+  border-radius: 50%;
+`
+
+const Title = styled.p`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 28px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: ${colors.white};
+  background: #87bd24;
+  border-radius: 4px;
+  width: 274px;
+  height: 58px;
+  position: absolute;
+  left: 288px;
+  text-align: center;
+  transform: translateY(-110%);
+`
+
+const MemberLabel = styled.p`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration-line: underline;
+  position: absolute;
+  color: ${colors.white};
+  background: #169080;
+  border-radius: 4px;
+  right: 160px;
+  text-align: center;
+  padding: 5px;
+  transform: translateY(-120%);
+`
+
+const Description = styled.p`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  color: ${colors.dark};
+  width: 560px;
+`
+const InfoBlock = styled.div`
+  margin-left: 290px;
+  margin-top: 11px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
+
+const LabelBlock = styled.div`
+  margin-right: 155px;
+  display: flex;
+  flex-direction: row;
 `
 
 const GROUP_TABS = {
@@ -438,13 +502,7 @@ class BrandPage extends PureComponent {
   }
 
   render() {
-    const {
-      visibleTabs,
-      tabsType,
-      modalVisible,
-      loadingMorelNews,
-      moreAchievesVisible,
-    } = this.state
+    const { visibleTabs, tabsType, modalVisible, loadingMorelNews } = this.state
     const {
       loading,
       group,
@@ -455,9 +513,7 @@ class BrandPage extends PureComponent {
       location,
       history,
     } = this.props
-    const achievements =
-      group && group.achievements ? group.achievements.map(mapAchievements) : []
-
+    console.log('artem', group)
     return (
       <Block>
         {loading && !group && <SpinnerStyled />}
@@ -465,141 +521,47 @@ class BrandPage extends PureComponent {
         {group && (
           <Fragment>
             <FingerPrint />
-
-            <GroupDetailedForm
-              counter={intl.formatMessage(
-                { id: 'app.pages.groups.membersCount' },
-                { count: group.info.membersCount },
-              )}
-              initialValues={group}
-              disabled={
-                group.status === GROUPS_STATUSES.DELETED ||
-                (group.info.memberRole &&
-                  group.info.memberRole === MEMBER_GROUP_ROLES.MEMBER)
-              }
-              onSubmit={this.handleSubmit}
-            />
-
             <WhiteBlock>
-              {!!achievements && (
-                <Achievements>
-                  {achievements.slice(0, 5).map(i => {
-                    const achievement = i.achievement
-                    if (!achievement) return null
-                    const accomplished = i.accomplishedActions
-                      ? i.accomplishedActions.length
-                      : 0
-                    const total =
-                      _.get(achievement, 'actions.length', 0) *
-                      _.get(i, 'participantsCount', 0)
-                    const accomplishedLabel = intl.formatMessage(
-                      { id: 'app.campaignPage.progress.accomplished' },
-                      {
-                        accomplished: accomplished,
-                        total,
-                      },
-                    )
-                    return (
-                      <AchievementPopover
-                        key={i.id}
-                        overlayClassName={'achievements-popover'}
-                        content={
-                          <PopoverWrapper>
-                            <PopoverTitle>
-                              {_.get(i, 'achievement.name')}
-                            </PopoverTitle>
-                            <PopoverText>{accomplishedLabel}</PopoverText>
-                          </PopoverWrapper>
-                        }
-                      >
-                        <Achievement specialShape={i.specialShape}>
-                          <img
-                            alt={''}
-                            src={_.get(i, 'achievement.logo.src')}
-                          />
-                        </Achievement>
-                      </AchievementPopover>
-                    )
-                  })}
-                  {achievements.length > 5 && (
-                    <Achievement
-                      onClick={() => this.setMoreAchievesVisible(true)}
-                      other
-                    >
-                      <OtherAchievementsText>
-                        +{achievements.length - 5}
-                      </OtherAchievementsText>
-                    </Achievement>
-                  )}
-                </Achievements>
-              )}
-              <AchievementModal
-                width={592}
-                visible={moreAchievesVisible}
-                closable
-                onCancel={() => this.setMoreAchievesVisible(false)}
-                centered
-                destroyOnClose
-                title={
-                  <AchievementTitle>
-                    <FormattedMessage id={'app.dashboardPage.achievements'} />
-                  </AchievementTitle>
-                }
-                footer={[
-                  <AchievementFooter key="submit">
-                    <AchievementFooterButton
-                      type="primary"
-                      onClick={() => {
-                        this.setMoreAchievesVisible(false)
-                      }}
-                    >
-                      OK
-                    </AchievementFooterButton>
-                  </AchievementFooter>,
-                ]}
-              >
-                <ModalContent>
-                  <AchievementRow type="flex" justify="left">
-                    {achievements.map(i => {
-                      const achievement = i.achievement
-                      if (!achievement) return null
-                      const accomplished = i.accomplishedActions
-                        ? i.accomplishedActions.length
-                        : 0
-                      const total = _.get(achievement, 'actions.length', 0)
-                      const accomplishedLabel = intl.formatMessage(
-                        { id: 'app.campaignPage.progress.accomplished' },
-                        {
-                          accomplished: accomplished,
-                          total,
-                        },
-                      )
-                      return (
-                        <AchievementCol key={i.id} span={6}>
-                          <AchievementPopover
-                            overlayClassName={'achievements-popover'}
-                            content={
-                              <PopoverWrapper>
-                                <PopoverTitle>
-                                  {!!i.achievement && i.achievement.name}
-                                </PopoverTitle>
-                                <PopoverText>{accomplishedLabel}</PopoverText>
-                              </PopoverWrapper>
-                            }
-                          >
-                            <Achievement specialShape={i.specialShape}>
-                              <img
-                                alt={''}
-                                src={_.get(i, 'achievement.logo.src')}
-                              />
-                            </Achievement>
-                          </AchievementPopover>
-                        </AchievementCol>
-                      )
-                    })}
-                  </AchievementRow>
-                </ModalContent>
-              </AchievementModal>
+              <LogoWrap>
+                <Logo src={getUserInitialAvatar(group.name)} alt="preview" />
+              </LogoWrap>
+              <Title>{group.name}</Title>
+              <MemberLabel>
+                <FormattedMessage id="app.pages.groups.youAreMember" />
+              </MemberLabel>
+              <InfoBlock>
+                <Description>{group.description}</Description>
+                <LabelBlock>
+                  <ActionCardLabel
+                    largeLabel
+                    labelWidth={105}
+                    category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
+                    unit={TimeValueAbbreviations.ACTIONS_TAKEN}
+                    value={group.userImpacts.actions.length}
+                    variant={'positive'}
+                  />
+                  <ActionCardPhysicalLabel
+                    largeLabel
+                    labelWidth={105}
+                    category={IMPACT_CATEGORIES.CLIMATE}
+                    unit={IMPACT_CATEGORIES.CLIMATE}
+                    value={processedUnitValue(
+                      _.get(
+                        group,
+                        'userImpacts.impactsInUnits.footprint.climate',
+                      ),
+                    )}
+                  />
+                  <ActionCardLabel
+                    largeLabel
+                    labelWidth={105}
+                    category={IMPACT_CATEGORIES.MEMBERS}
+                    unit={TimeValueAbbreviations.MEMBERS}
+                    value={group.info.membersCount}
+                    variant={'positive'}
+                  />
+                </LabelBlock>
+              </InfoBlock>
 
               <Container>
                 {group.info.memberStatus === USER_GROUP_STATUSES.ACTIVE && (
@@ -820,16 +782,6 @@ class BrandPage extends PureComponent {
         </Modal>
       </Block>
     )
-  }
-}
-
-function mapAchievements(finishedCompetition) {
-  return {
-    _id: finishedCompetition._id,
-    achievement: finishedCompetition.competition,
-    accomplishedActions: finishedCompetition.accomplishedActions,
-    participantsCount: finishedCompetition.participantsCount,
-    specialShape: true,
   }
 }
 

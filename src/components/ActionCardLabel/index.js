@@ -143,6 +143,7 @@ const ActionCardLabel = ({
   hideTooltip,
   intl: { formatMessage },
   largeLabel,
+  labelWidth,
   ...otherProp
 }) => {
   const tooltipProps = {}
@@ -183,11 +184,7 @@ const ActionCardLabel = ({
       <LabelContainer
         style={
           largeLabel && {
-            width:
-              category === IMPACT_CATEGORIES.MEMBERS ||
-              category === IMPACT_CATEGORIES.ACTIONS_TAKEN
-                ? 105
-                : 81,
+            width: labelWidth || 81,
             height: 68,
             marginleft: 10,
             marginRight: 10,

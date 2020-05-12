@@ -72,6 +72,7 @@ export default function renderStatistics(props) {
               <ActionLabelsBlock>
                 <ActionCardLabel
                   largeLabel
+                  labelWidth={105}
                   category={IMPACT_CATEGORIES.MEMBERS}
                   unit={TimeValueAbbreviations.MEMBERS}
                   value={group.info.membersCount}
@@ -79,6 +80,7 @@ export default function renderStatistics(props) {
                 />
                 <ActionCardLabel
                   largeLabel
+                  labelWidth={105}
                   category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
                   unit={TimeValueAbbreviations.ACTIONS_TAKEN}
                   value={group.userImpacts.actions.length}
@@ -100,6 +102,7 @@ export default function renderStatistics(props) {
               <ActionLabelsBlock>
                 <ActionCardLabel
                   largeLabel
+                  labelWidth={105}
                   category={IMPACT_CATEGORIES.MEMBERS}
                   unit={TimeValueAbbreviations.NETWORK_MEMBERS}
                   value={
@@ -109,6 +112,7 @@ export default function renderStatistics(props) {
                 />
                 <ActionCardLabel
                   largeLabel
+                  labelWidth={105}
                   category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
                   unit={TimeValueAbbreviations.ACTIONS_TAKEN}
                   value={group.networkImpacts.actions.length}
