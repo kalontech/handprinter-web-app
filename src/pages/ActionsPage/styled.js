@@ -71,8 +71,8 @@ export const SearchBlockWrapper = styled.div`
 `}
 
   ${media.phone`
-  height: 150px;
-`}
+    height: 150px;
+  `}
 `
 
 export const SearchField = styled(Select)`
@@ -115,7 +115,7 @@ export const StyledSearchIcon = styled(Icon)`
 
   ${media.phone`
     position: relative;
-    left: 120px;
+    left: 125px;
     top: -47px;
   `}
 `
@@ -224,7 +224,7 @@ export const MobileFilterWrap = styled.div`
   ${media.phone`
     width: 100%;
     margin-left: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 `}
 
   &::-webkit-scrollbar {
