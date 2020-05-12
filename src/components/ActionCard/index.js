@@ -247,7 +247,7 @@ const ActionCard = props => {
               <SWGWrap>
                 <BigLeaf style={bigLeafStyles} />
               </SWGWrap>
-              <p>| available to taken</p>
+              <p>| available to be taken</p>
             </ChallengeLabel>
           )}
           <CardImage>
