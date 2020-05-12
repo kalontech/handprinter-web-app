@@ -54,8 +54,8 @@ export default function useActions(props, page, setPage) {
         shouldConcatActions ? actions.concat(nextActions) : nextActions,
       )
       setTotal(_.get(response, 'actions.totalDocs', 0))
-      setIsLoading(false)
     }
+    setIsLoading(false)
   }
 
   return [actions, total, isLoading]
