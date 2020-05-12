@@ -25,10 +25,28 @@ const Block = styled(Link)`
   box-shadow: 0 1px 10px rgba(52, 68, 66, 0.08);
   border-radius: 4px;
   margin-bottom: 20px;
+  margin-right: 0px;
   height: 250px;
+  width: 95%;
+
+  ${media.largeDesktop`
+    margin-right: 17px;
+    margin-left: 2px;
+    width: 47%;
+  `}
+
+  ${media.desktop`
+    margin-right: 8px;
+    margin-left: 2px;
+    width: 340px;
+    height: 213px;
+  `}
 
   ${media.phone`
-    min-width: 290px;
+    margin-right: 0px;
+    margin-left: 0px;
+    width: 100%;
+    height: 211px;
   `}
 `
 
@@ -55,6 +73,11 @@ const ImgPlaceholder = styled.div`
   font-size: 48px;
   font-family: Noto Serif, sans-serif;
   color: ${colors.gray};
+
+  ${media.phone`
+    min-width: 90px;
+    height: 90px;
+  `}
 `
 
 const Photo = styled.img`
@@ -65,6 +88,11 @@ const Photo = styled.img`
   position: absolute;
   top: 0;
   left: 0;
+
+  ${media.phone`
+    width: 90px;
+    height: 90px;
+  `}
 `
 
 const Info = styled.div`
@@ -80,12 +108,30 @@ const FullName = styled.span`
   line-height: 26px;
   font-size: 19px;
   color: ${colors.dark};
+
+  ${media.phone`
+    font-family: Noto Serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 19px;
+    line-height: 26px;
+    color: #344442;
+  `}
 `
 
 const Counter = styled.span`
   line-height: 20px;
   font-size: 14px;
   color: ${colors.darkGray};
+
+  ${media.phone`
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color: #858F8E;
+  `}
 `
 
 const ParticipantPopover = styled(Popover)`
@@ -136,6 +182,7 @@ export default class MemberCard extends React.PureComponent {
     tooltipText: PropTypes.string,
     impactsInUnits: PropTypes.object,
     showPhysicalValues: PropTypes.bool,
+    isTablet: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -168,6 +215,7 @@ export default class MemberCard extends React.PureComponent {
       expired,
       tooltipText,
       showPhysicalValues,
+      isTablet,
     } = this.props
 
     return (
@@ -233,6 +281,7 @@ export default class MemberCard extends React.PureComponent {
                 endDate={dateTo}
                 expired={expired}
                 tooltipText={tooltipText}
+                isTablet={isTablet}
               />
             )}
           </Info>
