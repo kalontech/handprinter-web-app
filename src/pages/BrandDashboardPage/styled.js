@@ -14,6 +14,7 @@ export const StatisticsScrollTitle = styled.p`
 export const StatisticsScroll = styled.div`
   height: 705px;
   padding: 3px;
+  overflow: scroll;
 `
 
 export const StatisticsMain = styled.div`

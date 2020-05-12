@@ -24,10 +24,14 @@ import {
 function getSortedActions(actions) {
   const res = {}
   // Group by slug
-  actions.forEach(action => {
+  actions.forEach(({ action, picture, impactsTime }) => {
     if (!res[action.slug]) res[action.slug] = {}
     res[action.slug] = {
-      action,
+      action: {
+        ...action,
+        picture,
+        impacts: impactsTime,
+      },
       count: res[action.slug].count ? res[action.slug].count + 1 : 1,
     }
   })
