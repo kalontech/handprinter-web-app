@@ -33,7 +33,7 @@ const Main = styled.div`
     padding: 20px 0px; 
     flex-direction: row;
     justify-content: flex-start;
-    flex-wrap: wrap
+    flex-wrap: wrap;
   `}
 
   ${media.phone`
@@ -228,58 +228,6 @@ export default function renderGroups(props) {
           {!isMobile &&
             !isTablet &&
             renderGroup({ ...props, ...progressGroupProps }, groupParticipants)}
-          {groupParticipants.map(participant => {
-            const accomplished = participant.accomplishedActions.length
-            const total = competition.actions.length
-            const percent = (accomplished / total) * 100
-            return (
-              <MemberCard
-                key={participant.user._id}
-                to={`/account/${participant.user._id}`}
-                fullName={participant.user.fullName}
-                photo={
-                  participant.user.photo ||
-                  getUserInitialAvatar(participant.user.fullName)
-                }
-                counter={intl.formatMessage(
-                  { id: 'app.campaignPage.progress.accomplished' },
-                  {
-                    accomplished,
-                    total,
-                  },
-                )}
-                impacts={{ handprint: participant.userInfo.impacts }}
-                progressBarPercent={percent}
-                {...progressProps}
-              />
-            )
-          })}
-          {groupParticipants.map(participant => {
-            const accomplished = participant.accomplishedActions.length
-            const total = competition.actions.length
-            const percent = (accomplished / total) * 100
-            return (
-              <MemberCard
-                key={participant.user._id}
-                to={`/account/${participant.user._id}`}
-                fullName={participant.user.fullName}
-                photo={
-                  participant.user.photo ||
-                  getUserInitialAvatar(participant.user.fullName)
-                }
-                counter={intl.formatMessage(
-                  { id: 'app.campaignPage.progress.accomplished' },
-                  {
-                    accomplished,
-                    total,
-                  },
-                )}
-                impacts={{ handprint: participant.userInfo.impacts }}
-                progressBarPercent={percent}
-                {...progressProps}
-              />
-            )
-          })}
           {groupParticipants.map(participant => {
             const accomplished = participant.accomplishedActions.length
             const total = competition.actions.length
