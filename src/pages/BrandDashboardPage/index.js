@@ -13,7 +13,7 @@ import Col from 'antd/lib/col'
 import notification from 'antd/lib/notification'
 import _ from 'lodash'
 import Print from 'assets/icons/print.svg'
-import FlagIconComponent from 'assets/icons/FlagIcon'
+// import FlagIconComponent from 'assets/icons/FlagIcon'
 import SuggestedIcon from 'assets/icons/SuggestedIcon'
 
 import colors from 'config/colors'
@@ -680,12 +680,12 @@ class BrandPage extends PureComponent {
                   text: intl.formatMessage({ id: 'app.pages.groups.members' }),
                   active: match.params.subset === GROUP_TABS.MEMBERS,
                 },
-                {
-                  to: `/brand/dashboard/${GROUP_TABS.ACTIVITY}`,
-                  icon: FlagIconComponent,
-                  text: intl.formatMessage({ id: 'app.pages.groups.activity' }),
-                  active: match.params.subset === GROUP_TABS.ACTIVITY,
-                },
+                // {
+                //   to: `/brand/dashboard/${GROUP_TABS.ACTIVITY}`,
+                //   icon: FlagIconComponent,
+                //   text: intl.formatMessage({ id: 'app.pages.groups.activity' }),
+                //   active: match.params.subset === GROUP_TABS.ACTIVITY,
+                // },
               ]}
               isOpen={visibleTabs}
               listType={tabsType}
