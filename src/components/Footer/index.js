@@ -25,6 +25,7 @@ import {
 
 const Footer = ({ brandedConfig }) => (
   <FooterWrap>
+    {/* <Intercom appID="az33rewf" /> */}
     <FooterContent>
       <Wrap>
         <Row>

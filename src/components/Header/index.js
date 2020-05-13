@@ -6,6 +6,7 @@ import { Menu, Popover, Alert, Icon } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { Animate } from 'react-animate-mount'
+import Intercom from 'react-intercom'
 // import moment from 'moment'
 
 /* TODO
@@ -400,6 +401,12 @@ function Header(props) {
     )
   }
 
+  const intercomUser = {
+    user_id: user && user.id,
+    email: user && user.email,
+    name: user && user.fullName,
+  }
+
   return (
     <StyledAffix>
       {isIE && (
@@ -416,6 +423,7 @@ function Header(props) {
           banner
         />
       )}
+      <Intercom appID="km9dsvhh" {...intercomUser} />
 
       {type === 'minimal' && (
         <HeaderWrap isLoggedIn={user}>
