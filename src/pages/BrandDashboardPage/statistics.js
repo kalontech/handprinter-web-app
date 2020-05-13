@@ -44,12 +44,15 @@ function getSortedActions(actions) {
 export default function renderStatistics(props) {
   const UIContextData = useContext(UIContextSettings)
 
-  const { loading, group } = props
+  const { loading, group, groupNetwork } = props
+  if (!group) return null
   const sortedActions = getSortedActions(group.userImpacts.actions)
-  const organizationImpacts = group.userImpacts.impacts
-  const organizationImpactsInUnits = group.userImpacts.impactsInUnits
-  const networkImpacts = group.networkImpacts.impacts
-  const networkImpactsInUnits = group.networkImpacts.impactsInUnits
+  const organizationImpacts = group.userImpacts && group.userImpacts.impacts
+  const organizationImpactsInUnits =
+    group.userImpacts && group.userImpacts.impactsInUnits
+  const networkImpacts = groupNetwork && groupNetwork.networkImpacts.impacts
+  const networkImpactsInUnits =
+    groupNetwork && groupNetwork.networkImpacts.impactsInUnits
 
   return (
     <Fragment>
@@ -87,42 +90,53 @@ export default function renderStatistics(props) {
                   labelWidth={105}
                   category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
                   unit={TimeValueAbbreviations.ACTIONS_TAKEN}
-                  value={group.userImpacts.actions.length}
+                  value={
+                    group.userImpacts ? group.userImpacts.actions.length : 0
+                  }
                   variant={'positive'}
                 />
               </ActionLabelsBlock>
               <Separator />
-              <TotalImpactTitle>
-                <FormattedMessage id="app.organization.total.impact.network" />
-              </TotalImpactTitle>
-              <ActionLabelsBlock>
-                <ActionCardLabelSet
-                  largeLabel
-                  impacts={networkImpacts}
-                  impactsInUnits={networkImpactsInUnits}
-                  showPhysicalValues={UIContextData.showPhysicalValues}
-                />
-              </ActionLabelsBlock>
-              <ActionLabelsBlock>
-                <ActionCardLabel
-                  largeLabel
-                  labelWidth={105}
-                  category={IMPACT_CATEGORIES.MEMBERS}
-                  unit={TimeValueAbbreviations.NETWORK_MEMBERS}
-                  value={
-                    group.info.membersCount + group.info.networkMembersCount
-                  }
-                  variant={'positive'}
-                />
-                <ActionCardLabel
-                  largeLabel
-                  labelWidth={105}
-                  category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
-                  unit={TimeValueAbbreviations.ACTIONS_TAKEN}
-                  value={group.networkImpacts.actions.length}
-                  variant={'positive'}
-                />
-              </ActionLabelsBlock>
+              {groupNetwork && (
+                <Fragment>
+                  <TotalImpactTitle>
+                    <FormattedMessage id="app.organization.total.impact.network" />
+                  </TotalImpactTitle>
+                  <ActionLabelsBlock>
+                    <ActionCardLabelSet
+                      largeLabel
+                      impacts={networkImpacts}
+                      impactsInUnits={networkImpactsInUnits}
+                      showPhysicalValues={UIContextData.showPhysicalValues}
+                    />
+                  </ActionLabelsBlock>
+                  <ActionLabelsBlock>
+                    <ActionCardLabel
+                      largeLabel
+                      labelWidth={105}
+                      category={IMPACT_CATEGORIES.MEMBERS}
+                      unit={TimeValueAbbreviations.NETWORK_MEMBERS}
+                      value={
+                        group.info.membersCount +
+                        groupNetwork.info.networkMembersCount
+                      }
+                      variant={'positive'}
+                    />
+                    <ActionCardLabel
+                      largeLabel
+                      labelWidth={105}
+                      category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
+                      unit={TimeValueAbbreviations.ACTIONS_TAKEN}
+                      value={
+                        groupNetwork.networkImpacts
+                          ? groupNetwork.networkImpacts.actions.length
+                          : 0
+                      }
+                      variant={'positive'}
+                    />
+                  </ActionLabelsBlock>
+                </Fragment>
+              )}
             </StatisticsScroll>
           </StatisticsContainer>
           <StatisticsContainer>
@@ -152,4 +166,5 @@ renderStatistics.propTypes = {
   history: Object,
   user: Object,
   group: Object,
+  groupNetwork: Object,
 }

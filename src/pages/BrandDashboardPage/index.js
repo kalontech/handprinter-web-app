@@ -33,11 +33,11 @@ import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
 import MemberCard from 'components/MemberCard'
 import { SecondaryButton, Modal, Pagination } from 'components/Styled'
 import { getUserInitialAvatar } from 'api'
-import * as apiUser from 'api/user'
 import * as apiActions from 'api/actions'
 import {
   fetchUpdateGroup,
   getBrandGroup,
+  getBrandGroupNetwork,
   getBrandGroupMembers,
 } from 'api/groups'
 
@@ -341,16 +341,17 @@ async function getGroupData(props) {
   const tabsFetch = {
     [GROUP_TABS.MEMBERS]: getBrandGroupMembers,
     [GROUP_TABS.ACTIVITY]: apiActions.getNews,
-    [GROUP_TABS.STATISTICS]: apiUser.getDashboardData,
   }[match.params.subset]
 
-  const tabsRes = await tabsFetch({
-    page: queries.page || 1,
-    range: 'brandGroup',
-    subset: 'brandGroup',
-    belongsToBrand: overrides.brandName,
-    status: USER_GROUP_STATUSES.ACTIVE,
-  })
+  const tabsRes =
+    tabsFetch &&
+    (await tabsFetch({
+      page: queries.page || 1,
+      range: 'brandGroup',
+      subset: 'brandGroup',
+      belongsToBrand: overrides.brandName,
+      status: USER_GROUP_STATUSES.ACTIVE,
+    }))
 
   return {
     group: res,
@@ -385,6 +386,7 @@ class BrandPage extends PureComponent {
   }
 
   state = {
+    groupNetwork: undefined,
     modalVisible: false,
     loadingMorelNews: false,
     newsPage: 1,
@@ -405,7 +407,7 @@ class BrandPage extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { match, location } = this.props
+    const { match, location, group } = this.props
     const { match: oldMatch, location: oldLocation } = prevProps
 
     if (
@@ -415,10 +417,21 @@ class BrandPage extends PureComponent {
       animateScroll.scrollToTop()
       this.props.fetch()
     }
+
+    if (group && !prevProps.group) {
+      this.fetchGroupNetwork()
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('orientationchange', this.changeTabsType)
+  }
+
+  fetchGroupNetwork = async () => {
+    const groupNetwork = await getBrandGroupNetwork(
+      this.props.overrides.brandName,
+    )
+    if (groupNetwork) this.setState({ groupNetwork })
   }
 
   changeTabsType = () => {
@@ -502,7 +515,13 @@ class BrandPage extends PureComponent {
   }
 
   render() {
-    const { visibleTabs, tabsType, modalVisible, loadingMorelNews } = this.state
+    const {
+      visibleTabs,
+      tabsType,
+      modalVisible,
+      loadingMorelNews,
+      groupNetwork,
+    } = this.state
     const {
       loading,
       group,
@@ -513,7 +532,6 @@ class BrandPage extends PureComponent {
       location,
       history,
     } = this.props
-    console.log('artem', group)
     return (
       <Block>
         {loading && !group && <SpinnerStyled />}
@@ -676,7 +694,7 @@ class BrandPage extends PureComponent {
               }}
             >
               <Content>
-                <Statistics {...this.props} />
+                <Statistics {...this.props} groupNetwork={groupNetwork} />
               </Content>
               <Content>
                 {loading ? (
