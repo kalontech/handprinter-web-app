@@ -3,23 +3,21 @@ import { compose } from 'redux'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import qs from 'qs'
 import { animateScroll } from 'react-scroll/modules'
 import Icon from 'antd/lib/icon'
 import Tooltip from 'antd/lib/tooltip'
 import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
-import Tabs from 'antd/lib/tabs'
 import notification from 'antd/lib/notification'
 import _ from 'lodash'
-import Print from 'assets/icons/fingerprint-part.svg'
+import Print from 'assets/icons/print.svg'
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import SuggestedIcon from 'assets/icons/SuggestedIcon'
 
 import colors from 'config/colors'
 import {
-  QUESTIONS_ANCHOR,
   MEMBER_GROUP_ROLES,
   USER_GROUP_STATUSES,
   GROUPS_STATUSES,
@@ -28,42 +26,30 @@ import fetch from 'utils/fetch'
 import decodeError from 'utils/decodeError'
 import media, { sizes } from 'utils/mediaQueryTemplate'
 import hexToRgba from 'utils/hexToRgba'
-import CalendarWidget from 'components/CalendarWidget'
-import GoodRatioWidget from 'components/GoodRatioWidget'
 import Spinner from 'components/Spinner'
 import NewsList from 'components/NewsList'
-import GroupDetailedForm from 'components/GroupDetailedForm'
 import GroupManage from 'components/GroupManage'
 import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
 import MemberCard from 'components/MemberCard'
-import icons from 'components/ActionCardLabel/icons'
 import { SecondaryButton, Modal, Pagination } from 'components/Styled'
-import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 import { getUserInitialAvatar } from 'api'
-import * as apiUser from 'api/user'
 import * as apiActions from 'api/actions'
 import {
   fetchUpdateGroup,
   getBrandGroup,
+  getBrandGroupNetwork,
   getBrandGroupMembers,
 } from 'api/groups'
 
+import Statistics from './statistics'
+
+import ActionCardLabel from '../../components/ActionCardLabel'
+import ActionCardPhysicalLabel from '../../components/ActionCardPhysicalLabel'
 import {
-  Achievements,
-  AchievementPopover,
-  PopoverWrapper,
-  PopoverTitle,
-  PopoverText,
-  Achievement,
-  OtherAchievementsText,
-  AchievementModal,
-  AchievementTitle,
-  AchievementFooter,
-  AchievementFooterButton,
-  ModalContent,
-  AchievementRow,
-  AchievementCol,
-} from '../DashboardPage/header'
+  IMPACT_CATEGORIES,
+  TimeValueAbbreviations,
+} from '../../utils/constants'
+import { processedUnitValue } from '../../components/ActionCardLabelSet'
 
 const Block = styled.section`
   display: flex;
@@ -84,10 +70,10 @@ const SpinnerStyled = styled(Spinner)`
 `
 
 const FingerPrint = styled.div`
-  height: 140px;
+  height: 205px;
   width: 100%;
   text-align: center;
-  background: ${colors.ocean} url(${Print}) no-repeat center bottom;
+  background: ${colors.ocean} url(${Print}) no-repeat left bottom;
   background-size: initial;
 `
 
@@ -118,6 +104,7 @@ const Container = styled.div`
 
 const WhiteBlock = styled.div`
   width: 100%;
+  min-height: 114px;
   background-color: ${colors.white};
   padding: 0;
   margin: 0;
@@ -218,27 +205,6 @@ const ButtonLoadMore = styled(SecondaryButton)`
   }
 `
 
-const WidgetContent = styled.div`
-  ${props =>
-    props.useWidgetMinHeight &&
-    `
-    min-height: 500px;
-  `}
-  ${media.phone`
-    ${props =>
-      props.useWidgetMinHeight &&
-      `
-      min-height: auto;
-    `}
-  `}
-`
-
-const GoodRatioCol = styled(Col)`
-  ${media.desktop`
-    margin-top: 20px;
-  `}
-`
-
 const NewsContainer = styled.div`
   background-color: ${colors.white};
   padding: 17px 40px;
@@ -253,118 +219,6 @@ const NewsContainer = styled.div`
     margin-right: -15px;
     padding-left: 15px;
     padding-right: 15px;
-  `}
-`
-
-const WidgetContainer = styled.div`
-  background-color: ${colors.white};
-  border-radius: 4px;
-  box-shadow: 0 1px 10px 0 rgba(52, 68, 66, 0.08);
-  padding: 30px 30px 20px 30px;
-
-  ${media.phone`
-    padding: 30px 10px 30px 10px;
-  `}
-
-  ${props =>
-    props.noPaddings &&
-    css`
-      padding: 0;
-      ${media.phone`
-        padding: 0;
-      `}
-    `};
-`
-
-const WidgetHeader = styled.div`
-  padding-bottom: 55px;
-  ${media.desktop`
-    padding-bottom: 25px;
-  `}
-  ${media.phone`
-    padding-bottom: 28px;
-  `}
-
-  ${props =>
-    props.withBorder &&
-    css`
-      padding-bottom: 32px;
-      border-bottom: 1px solid ${colors.whiteSmoke};
-    `};
-`
-
-const WidgetTitle = styled.p`
-  color: ${colors.dark};
-  font-size: 22px;
-  line-height: 30px;
-`
-
-const InfoElementWrap = styled.div`
-  margin-left: 5px;
-  display: inline-block;
-`
-
-const InfoElementLink = styled(Link)`
-  color: ${colors.white};
-  text-decoration: underline;
-
-  &:hover {
-    color: ${colors.white};
-    text-decoration: underline;
-  }
-`
-
-const ImpactCategorySelector = styled(Tabs)`
-  .ant-tabs-nav-scroll {
-    text-align: center;
-  }
-  .ant-tabs-tab {
-    padding: 16.5px 4px;
-    ${media.desktop`
-      padding: 16.5px 0;
-    `}
-    ${media.phone`
-      margin: 0 25px 0 0;
-    `}
-
-    span {
-      align-items: center;
-      display: flex;
-      font-size: 16px;
-      font-weight: 400;
-    }
-  }
-
-  .ant-tabs-bar {
-    border-bottom: none;
-    margin: 0;
-  }
-
-  .ant-tabs-ink-bar {
-    height: 4px;
-  }
-
-  .ant-tabs-nav {
-    ${media.desktop`
-      padding: 0 20px;
-      > div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    `}
-  }
-`
-
-const StyledIcon = styled(Icon)`
-  ${media.phone`
-    margin: 0 5px !important;
-  `}
-`
-
-const ImpactCategorySelectorName = styled.strong`
-  ${media.phone`
-    display: none;
   `}
 `
 
@@ -400,6 +254,79 @@ const MoreAdminsItem = styled.span`
   font-weight: bold;
 `
 
+const LogoWrap = styled.div`
+  transform: translateY(-50%);
+  position: absolute;
+  left: 80px;
+`
+
+const Logo = styled.img`
+  width: 176px;
+  height: 176px;
+  object-fit: cover;
+  display: inline-block;
+  border-radius: 50%;
+`
+
+const Title = styled.p`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 28px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: ${colors.white};
+  background: #87bd24;
+  border-radius: 4px;
+  width: 274px;
+  height: 58px;
+  position: absolute;
+  left: 288px;
+  text-align: center;
+  transform: translateY(-110%);
+`
+
+const MemberLabel = styled.p`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration-line: underline;
+  position: absolute;
+  color: ${colors.white};
+  background: #169080;
+  border-radius: 4px;
+  right: 160px;
+  text-align: center;
+  padding: 5px;
+  transform: translateY(-120%);
+`
+
+const Description = styled.p`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  color: ${colors.dark};
+  width: 560px;
+`
+const InfoBlock = styled.div`
+  margin-left: 290px;
+  margin-top: 11px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
+
+const LabelBlock = styled.div`
+  margin-right: 155px;
+  display: flex;
+  flex-direction: row;
+`
+
 const GROUP_TABS = {
   MEMBERS: 'members',
   STATISTICS: 'statistics',
@@ -414,16 +341,17 @@ async function getGroupData(props) {
   const tabsFetch = {
     [GROUP_TABS.MEMBERS]: getBrandGroupMembers,
     [GROUP_TABS.ACTIVITY]: apiActions.getNews,
-    [GROUP_TABS.STATISTICS]: apiUser.getDashboardData,
   }[match.params.subset]
 
-  const tabsRes = await tabsFetch({
-    page: queries.page || 1,
-    range: 'brandGroup',
-    subset: 'brandGroup',
-    belongsToBrand: overrides.brandName,
-    status: USER_GROUP_STATUSES.ACTIVE,
-  })
+  const tabsRes =
+    tabsFetch &&
+    (await tabsFetch({
+      page: queries.page || 1,
+      range: 'brandGroup',
+      subset: 'brandGroup',
+      belongsToBrand: overrides.brandName,
+      status: USER_GROUP_STATUSES.ACTIVE,
+    }))
 
   return {
     group: res,
@@ -458,6 +386,7 @@ class BrandPage extends PureComponent {
   }
 
   state = {
+    groupNetwork: undefined,
     modalVisible: false,
     loadingMorelNews: false,
     newsPage: 1,
@@ -478,7 +407,7 @@ class BrandPage extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { match, location } = this.props
+    const { match, location, group } = this.props
     const { match: oldMatch, location: oldLocation } = prevProps
 
     if (
@@ -488,10 +417,21 @@ class BrandPage extends PureComponent {
       animateScroll.scrollToTop()
       this.props.fetch()
     }
+
+    if (group && !prevProps.group) {
+      this.fetchGroupNetwork()
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('orientationchange', this.changeTabsType)
+  }
+
+  fetchGroupNetwork = async () => {
+    const groupNetwork = await getBrandGroupNetwork(
+      this.props.overrides.brandName,
+    )
+    if (groupNetwork) this.setState({ groupNetwork })
   }
 
   changeTabsType = () => {
@@ -580,8 +520,7 @@ class BrandPage extends PureComponent {
       tabsType,
       modalVisible,
       loadingMorelNews,
-      currentImpactCategory,
-      moreAchievesVisible,
+      groupNetwork,
     } = this.state
     const {
       loading,
@@ -590,14 +529,9 @@ class BrandPage extends PureComponent {
       match,
       members,
       news,
-      calendar,
-      ratio,
       location,
       history,
     } = this.props
-    const achievements =
-      group && group.achievements ? group.achievements.map(mapAchievements) : []
-
     return (
       <Block>
         {loading && !group && <SpinnerStyled />}
@@ -605,141 +539,47 @@ class BrandPage extends PureComponent {
         {group && (
           <Fragment>
             <FingerPrint />
-
-            <GroupDetailedForm
-              counter={intl.formatMessage(
-                { id: 'app.pages.groups.membersCount' },
-                { count: group.info.membersCount },
-              )}
-              initialValues={group}
-              disabled={
-                group.status === GROUPS_STATUSES.DELETED ||
-                (group.info.memberRole &&
-                  group.info.memberRole === MEMBER_GROUP_ROLES.MEMBER)
-              }
-              onSubmit={this.handleSubmit}
-            />
-
             <WhiteBlock>
-              {!!achievements && (
-                <Achievements>
-                  {achievements.slice(0, 5).map(i => {
-                    const achievement = i.achievement
-                    if (!achievement) return null
-                    const accomplished = i.accomplishedActions
-                      ? i.accomplishedActions.length
-                      : 0
-                    const total =
-                      _.get(achievement, 'actions.length', 0) *
-                      _.get(i, 'participantsCount', 0)
-                    const accomplishedLabel = intl.formatMessage(
-                      { id: 'app.campaignPage.progress.accomplished' },
-                      {
-                        accomplished: accomplished,
-                        total,
-                      },
-                    )
-                    return (
-                      <AchievementPopover
-                        key={i.id}
-                        overlayClassName={'achievements-popover'}
-                        content={
-                          <PopoverWrapper>
-                            <PopoverTitle>
-                              {_.get(i, 'achievement.name')}
-                            </PopoverTitle>
-                            <PopoverText>{accomplishedLabel}</PopoverText>
-                          </PopoverWrapper>
-                        }
-                      >
-                        <Achievement specialShape={i.specialShape}>
-                          <img
-                            alt={''}
-                            src={_.get(i, 'achievement.logo.src')}
-                          />
-                        </Achievement>
-                      </AchievementPopover>
-                    )
-                  })}
-                  {achievements.length > 5 && (
-                    <Achievement
-                      onClick={() => this.setMoreAchievesVisible(true)}
-                      other
-                    >
-                      <OtherAchievementsText>
-                        +{achievements.length - 5}
-                      </OtherAchievementsText>
-                    </Achievement>
-                  )}
-                </Achievements>
-              )}
-              <AchievementModal
-                width={592}
-                visible={moreAchievesVisible}
-                closable
-                onCancel={() => this.setMoreAchievesVisible(false)}
-                centered
-                destroyOnClose
-                title={
-                  <AchievementTitle>
-                    <FormattedMessage id={'app.dashboardPage.achievements'} />
-                  </AchievementTitle>
-                }
-                footer={[
-                  <AchievementFooter key="submit">
-                    <AchievementFooterButton
-                      type="primary"
-                      onClick={() => {
-                        this.setMoreAchievesVisible(false)
-                      }}
-                    >
-                      OK
-                    </AchievementFooterButton>
-                  </AchievementFooter>,
-                ]}
-              >
-                <ModalContent>
-                  <AchievementRow type="flex" justify="left">
-                    {achievements.map(i => {
-                      const achievement = i.achievement
-                      if (!achievement) return null
-                      const accomplished = i.accomplishedActions
-                        ? i.accomplishedActions.length
-                        : 0
-                      const total = _.get(achievement, 'actions.length', 0)
-                      const accomplishedLabel = intl.formatMessage(
-                        { id: 'app.campaignPage.progress.accomplished' },
-                        {
-                          accomplished: accomplished,
-                          total,
-                        },
-                      )
-                      return (
-                        <AchievementCol key={i.id} span={6}>
-                          <AchievementPopover
-                            overlayClassName={'achievements-popover'}
-                            content={
-                              <PopoverWrapper>
-                                <PopoverTitle>
-                                  {!!i.achievement && i.achievement.name}
-                                </PopoverTitle>
-                                <PopoverText>{accomplishedLabel}</PopoverText>
-                              </PopoverWrapper>
-                            }
-                          >
-                            <Achievement specialShape={i.specialShape}>
-                              <img
-                                alt={''}
-                                src={_.get(i, 'achievement.logo.src')}
-                              />
-                            </Achievement>
-                          </AchievementPopover>
-                        </AchievementCol>
-                      )
-                    })}
-                  </AchievementRow>
-                </ModalContent>
-              </AchievementModal>
+              <LogoWrap>
+                <Logo src={getUserInitialAvatar(group.name)} alt="preview" />
+              </LogoWrap>
+              <Title>{group.name}</Title>
+              <MemberLabel>
+                <FormattedMessage id="app.pages.groups.youAreMember" />
+              </MemberLabel>
+              <InfoBlock>
+                <Description>{group.description}</Description>
+                <LabelBlock>
+                  <ActionCardLabel
+                    largeLabel
+                    labelWidth={105}
+                    category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
+                    unit={TimeValueAbbreviations.ACTIONS_TAKEN}
+                    value={group.userImpacts.actions.length}
+                    variant={'positive'}
+                  />
+                  <ActionCardPhysicalLabel
+                    largeLabel
+                    labelWidth={105}
+                    category={IMPACT_CATEGORIES.CLIMATE}
+                    unit={IMPACT_CATEGORIES.CLIMATE}
+                    value={processedUnitValue(
+                      _.get(
+                        group,
+                        'userImpacts.impactsInUnits.footprint.climate',
+                      ),
+                    )}
+                  />
+                  <ActionCardLabel
+                    largeLabel
+                    labelWidth={105}
+                    category={IMPACT_CATEGORIES.MEMBERS}
+                    unit={TimeValueAbbreviations.MEMBERS}
+                    value={group.info.membersCount}
+                    variant={'positive'}
+                  />
+                </LabelBlock>
+              </InfoBlock>
 
               <Container>
                 {group.info.memberStatus === USER_GROUP_STATUSES.ACTIVE && (
@@ -830,7 +670,7 @@ class BrandPage extends PureComponent {
                   to: `/brand/dashboard/${GROUP_TABS.STATISTICS}`,
                   icon: ({ color }) => <Icon type="bar-chart" color={color} />,
                   text: intl.formatMessage({
-                    id: 'app.header.menu.dashboard',
+                    id: 'app.pages.groups.statistics',
                   }),
                   active: match.params.subset === GROUP_TABS.STATISTICS,
                 },
@@ -854,189 +694,8 @@ class BrandPage extends PureComponent {
               }}
             >
               <Content>
-                {loading ? (
-                  <Spinner />
-                ) : (
-                  <Fragment>
-                    <Row gutter={20}>
-                      <Col span={24}>
-                        <WidgetContainer noPaddings>
-                          <WidgetContent>
-                            <ImpactCategorySelector
-                              defaultActiveKey={currentImpactCategory}
-                              onChange={this.handleImpactCategoryChange}
-                            >
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['climate']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.climate" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="climate"
-                              />
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['waste']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.waste" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="waste"
-                              />
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['water']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.water" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="water"
-                              />
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['ecosystem']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.ecosystem" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="ecosystem"
-                              />
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['health']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.health" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="health"
-                              />
-                            </ImpactCategorySelector>
-                          </WidgetContent>
-                        </WidgetContainer>
-                      </Col>
-                    </Row>
-                    <Row gutter={20} style={{ marginTop: '20px' }}>
-                      <Col span={12} sm={24} lg={12} xs={24}>
-                        <WidgetContainer>
-                          <WidgetHeader>
-                            <WidgetTitle>
-                              <FormattedMessage id="app.dashboardPage.ourNetPositiveDays" />
-                              <InfoElementWrap>
-                                <InfoElement
-                                  type={INFO_ELEMENT_TYPES.QUESTION}
-                                  tooltipProps={{
-                                    placement: 'bottomLeft',
-                                    title: (
-                                      <Fragment>
-                                        <p>
-                                          <FormattedMessage id="app.dashboardPage.myNetPositiveDays.infoTooltip" />
-                                        </p>
-                                        <div>
-                                          <InfoElementLink
-                                            to={`/pages/faq#${
-                                              QUESTIONS_ANCHOR.WHAT_CALENDAR_SHOWING
-                                            }`}
-                                          >
-                                            <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
-                                          </InfoElementLink>
-                                        </div>
-                                      </Fragment>
-                                    ),
-                                  }}
-                                />
-                              </InfoElementWrap>
-                            </WidgetTitle>
-                          </WidgetHeader>
-                          <WidgetContent useWidgetMinHeight>
-                            {calendar[currentImpactCategory] && (
-                              <CalendarWidget
-                                activeDays={calendar[currentImpactCategory]}
-                              />
-                            )}
-                          </WidgetContent>
-                        </WidgetContainer>
-                      </Col>
-                      <GoodRatioCol span={12} sm={24} lg={12} xs={24}>
-                        <WidgetContainer>
-                          <WidgetHeader>
-                            <WidgetTitle>
-                              <FormattedMessage id="app.dashboardPage.ourGoodRatio" />
-                              <InfoElementWrap>
-                                <InfoElement
-                                  type={INFO_ELEMENT_TYPES.QUESTION}
-                                  tooltipProps={{
-                                    placement: 'bottomLeft',
-                                    title: (
-                                      <Fragment>
-                                        <p>
-                                          <FormattedMessage id="app.dashboardPage.goodRatio.infoTooltip" />
-                                        </p>
-                                        <div>
-                                          <InfoElementLink
-                                            to={`/pages/faq#${
-                                              QUESTIONS_ANCHOR.WHAT_SCALE_SHOWING
-                                            }`}
-                                          >
-                                            <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
-                                          </InfoElementLink>
-                                        </div>
-                                      </Fragment>
-                                    ),
-                                  }}
-                                />
-                              </InfoElementWrap>
-                            </WidgetTitle>
-                          </WidgetHeader>
-                          <WidgetContent useWidgetMinHeight>
-                            {ratio.footprintDays && (
-                              <GoodRatioWidget
-                                footprintDays={Math.round(
-                                  ratio.footprintDays[currentImpactCategory],
-                                )}
-                                handprintDays={Math.round(
-                                  ratio.handprintDays[currentImpactCategory],
-                                )}
-                              />
-                            )}
-                          </WidgetContent>
-                        </WidgetContainer>
-                      </GoodRatioCol>
-                    </Row>
-                  </Fragment>
-                )}
+                <Statistics {...this.props} groupNetwork={groupNetwork} />
               </Content>
-
               <Content>
                 {loading ? (
                   <Spinner />
@@ -1141,16 +800,6 @@ class BrandPage extends PureComponent {
         </Modal>
       </Block>
     )
-  }
-}
-
-function mapAchievements(finishedCompetition) {
-  return {
-    _id: finishedCompetition._id,
-    achievement: finishedCompetition.competition,
-    accomplishedActions: finishedCompetition.accomplishedActions,
-    participantsCount: finishedCompetition.participantsCount,
-    specialShape: true,
   }
 }
 

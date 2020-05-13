@@ -40,6 +40,10 @@ const LabelContainer = styled.div`
       ? hexToRgba(`${colors.ocean}`, 0.3)
       : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
       ? hexToRgba(`${colors.green}`, 0.3)
+      : unit === TimeValueAbbreviations.MEMBERS && variant === 'positive'
+      ? hexToRgba(`${colors.blue}`, 0.3)
+      : unit === TimeValueAbbreviations.ACTIONS_TAKEN && variant === 'positive'
+      ? hexToRgba(`${colors.green}`, 0.3)
       : hexToRgba(`${colors.darkGray}`, 0.3)};
   border-radius: 4px;
   overflow: hidden;
@@ -67,6 +71,10 @@ const Category = styled.div`
       ? hexToRgba(`${colors.ocean}`, 0.1)
       : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
       ? hexToRgba(`${colors.green}`, 0.1)
+      : unit === TimeValueAbbreviations.MEMBERS && variant === 'positive'
+      ? hexToRgba(`${colors.blue}`, 0.1)
+      : unit === TimeValueAbbreviations.ACTIONS_TAKEN && variant === 'positive'
+      ? hexToRgba(`${colors.green}`, 0.1)
       : hexToRgba(`${colors.darkGray}`, 0.1)};
 
   ${media.phone`
@@ -81,6 +89,11 @@ const Category = styled.div`
         ? `${colors.ocean}`
         : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
         ? `${colors.green}`
+        : unit === TimeValueAbbreviations.MEMBERS && variant === 'positive'
+        ? `${colors.blue}`
+        : unit === TimeValueAbbreviations.ACTIONS_TAKEN &&
+          variant === 'positive'
+        ? `${colors.green}`
         : `${colors.darkGray}`};
   }
 `
@@ -94,10 +107,18 @@ const Caption = styled.div`
       ? `${colors.ocean}`
       : unit === TimeValueAbbreviations.MINUTES && variant === 'positive'
       ? `${colors.green}`
+      : unit === TimeValueAbbreviations.MEMBERS && variant === 'positive'
+      ? `${colors.blue}`
+      : unit === TimeValueAbbreviations.NETWORK_MEMBERS &&
+        variant === 'positive'
+      ? `${colors.blue}`
+      : unit === TimeValueAbbreviations.ACTIONS_TAKEN && variant === 'positive'
+      ? `${colors.green}`
       : `${colors.darkGray}`};
   font-size: 10px;
   font-weight: bold;
   line-height: 1.4;
+  text-align: center;
 `
 const Value = styled.div`
   font-weight: 400;
@@ -121,6 +142,8 @@ const ActionCardLabel = ({
   unit,
   hideTooltip,
   intl: { formatMessage },
+  largeLabel,
+  labelWidth,
   ...otherProp
 }) => {
   const tooltipProps = {}
@@ -158,7 +181,18 @@ const ActionCardLabel = ({
       )}
       mouseEnterDelay={1}
     >
-      <LabelContainer unit={unit} variant={variant}>
+      <LabelContainer
+        style={
+          largeLabel && {
+            width: labelWidth || 81,
+            height: 68,
+            marginleft: 10,
+            marginRight: 10,
+          }
+        }
+        unit={unit}
+        variant={variant}
+      >
         <Category unit={unit} variant={variant}>
           <Icon component={() => icons[variant][category]} {...otherProp} />
         </Category>

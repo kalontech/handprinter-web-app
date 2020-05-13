@@ -90,6 +90,8 @@ const ActionCardPhysicalLabel = ({
   unit,
   hideTooltip,
   intl: { formatMessage },
+  largeLabel,
+  labelWidth,
   ...otherProp
 }) => {
   const tooltipProps = {}
@@ -122,7 +124,17 @@ const ActionCardPhysicalLabel = ({
       )}
       mouseEnterDelay={1}
     >
-      <LabelContainer unit={unit}>
+      <LabelContainer
+        style={
+          largeLabel && {
+            width: labelWidth || 81,
+            height: 68,
+            marginleft: 10,
+            marginRight: 10,
+          }
+        }
+        unit={unit}
+      >
         <Category unit={unit}>
           <Icon component={() => icons['positive'][category]} {...otherProp} />
         </Category>

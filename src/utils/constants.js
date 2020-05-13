@@ -4,6 +4,9 @@ export const IMPACT_CATEGORIES = {
   ECOSYSTEM: 'ecosystem',
   WATER: 'water',
   WASTE: 'waste',
+  MEMBERS: 'members',
+  NETWORK_MEMBERS: 'networkMembers',
+  ACTIONS_TAKEN: 'actionsTaken',
 }
 
 export const TimeValueAbbreviations = {
@@ -12,6 +15,9 @@ export const TimeValueAbbreviations = {
   DAYS: 'DAYS',
   MONTHS: 'MTHS',
   YEARS: 'YRS',
+  MEMBERS: 'MEMBERS',
+  NETWORK_MEMBERS: 'NETWORK MEMBERS',
+  ACTIONS_TAKEN: 'ACTIONS TAKEN',
 }
 
 export const ACTIONS_SUBSETS = {

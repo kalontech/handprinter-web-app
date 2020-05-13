@@ -16,6 +16,30 @@ const CardLabelWrap = styled.div`
   `}
 `
 
+// this func loop throw incoming value and if it less then 1 it multiple val to 10 to minimize it length
+export const processedUnitValue = val => {
+  if (val < 1) {
+    let i = 0
+    while (val < 1) {
+      val *= 10
+      i = i + 1
+    }
+    // if incoming val is not bigger then 1 we should do while loop and return array
+    // with rounded result with 1 number after dot and i as count of numbers after dot
+    // 0.0001 -> [1.0, 4]
+    // 0.12345 -> [1.2, 1]
+    return [(Math.round(val * 100) / 100).toFixed(1), i]
+  } else {
+    // if incoming val greater then 100 we don't want to show numbers after dot
+    // if val greater then 100 we return val as it comes if val smaller then 100 we fixed it to 1 number after dot
+    // 1.23 -> [1.2, null]
+    // 1231.10 -> [1231, null]
+    return val > 100
+      ? [Math.round(val * 100) / 100, null]
+      : [val.toFixed(1), null]
+  }
+}
+
 const ActionCardLabelSet = props => {
   const {
     impacts,
@@ -23,33 +47,10 @@ const ActionCardLabelSet = props => {
     hideTooltip,
     mobileFixedWidth,
     showPhysicalValues,
+    largeLabel,
   } = props
 
   if (!impacts) return null
-
-  // this func loop throw incoming value and if it less then 1 it multiple val to 10 to minimize it length
-  const processedUnitValue = val => {
-    if (val < 1) {
-      let i = 0
-      while (val < 1) {
-        val *= 10
-        i = i + 1
-      }
-      // if incoming val is not bigger then 1 we should do while loop and return array
-      // with rounded result with 1 number after dot and i as count of numbers after dot
-      // 0.0001 -> [1.0, 4]
-      // 0.12345 -> [1.2, 1]
-      return [(Math.round(val * 100) / 100).toFixed(1), i]
-    } else {
-      // if incoming val greater then 100 we don't want to show numbers after dot
-      // if val greater then 100 we return val as it comes if val smaller then 100 we fixed it to 1 number after dot
-      // 1.23 -> [1.2, null]
-      // 1231.10 -> [1231, null]
-      return val > 100
-        ? [Math.round(val * 100) / 100, null]
-        : [val.toFixed(1), null]
-    }
-  }
 
   if (showPhysicalValues) {
     return (
@@ -59,6 +60,7 @@ const ActionCardLabelSet = props => {
             .filter(([category, value]) => value > 0)
             .map(([category, value], index) => (
               <ActionCardPhysicalLabel
+                largeLabel={largeLabel}
                 hideTooltip={hideTooltip}
                 key={index}
                 category={category}
@@ -72,6 +74,7 @@ const ActionCardLabelSet = props => {
             .map(([category, value], index) => (
               <ActionCardPhysicalLabel
                 key={index}
+                largeLabel={largeLabel}
                 category={category}
                 unit={category}
                 value={processedUnitValue(value)}
@@ -87,6 +90,7 @@ const ActionCardLabelSet = props => {
             .filter(([category, timeValue]) => timeValue.minutes > 0)
             .map(([category, timeValue], index) => (
               <ActionCardLabel
+                largeLabel={largeLabel}
                 hideTooltip={hideTooltip}
                 key={index}
                 category={category}
@@ -103,6 +107,7 @@ const ActionCardLabelSet = props => {
             .map(([category, timeValue], index) => (
               <ActionCardLabel
                 key={index}
+                largeLabel={largeLabel}
                 category={category}
                 unit={timeValue.humanReadable.unit}
                 value={timeValue.humanReadable.value}
