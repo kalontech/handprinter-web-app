@@ -46,7 +46,7 @@ const Block = styled(Link)`
     margin-right: 0px;
     margin-left: 0px;
     width: 100%;
-    height: 211px;
+    min-height: 211px;
   `}
 `
 
