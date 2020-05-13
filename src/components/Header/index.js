@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { Animate } from 'react-animate-mount'
 import Intercom from 'react-intercom'
+import env from 'config/env'
 // import moment from 'moment'
 
 /* TODO
@@ -29,6 +30,7 @@ import {
   HeaderPopover,
   PopoverTitle,
 } from 'components/Styled'
+import * as Sentry from '@sentry/browser'
 
 import colors from 'config/colors'
 import { getBrandedConfig } from 'config/branded'
@@ -402,9 +404,17 @@ function Header(props) {
   }
 
   const intercomUser = {
-    user_id: user && user.id,
+    user_id: user && user._id,
     email: user && user.email,
     name: user && user.fullName,
+  }
+
+  const { REACT_APP_ENVIRONMENT } = env
+
+  if (user) {
+    Sentry.configureScope(function(scope) {
+      scope.setUser({ email: user.email, id: user.id })
+    })
   }
 
   return (
@@ -423,7 +433,9 @@ function Header(props) {
           banner
         />
       )}
-      <Intercom appID="km9dsvhh" {...intercomUser} />
+      {REACT_APP_ENVIRONMENT === 'production' && (
+        <Intercom appID="km9dsvhh" {...intercomUser} />
+      )}
 
       {type === 'minimal' && (
         <HeaderWrap isLoggedIn={user}>

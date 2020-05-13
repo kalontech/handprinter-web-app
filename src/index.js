@@ -12,14 +12,13 @@ import 'react-activity-feed/dist/index.es.css'
 import 'react-router-modal/css/react-router-modal.css'
 
 import './index.less'
+import env from 'config/env'
+
 import App from './app'
 import * as serviceWorker from './serviceWorker'
-import env from 'config/env'
 
 const {
   NODE_ENV,
-  REACT_APP_DEV_SENTRY_KEY,
-  REACT_APP_DEV_SENTRY_PROJECT_ID,
   REACT_APP_ENVIRONMENT,
   REACT_APP_HOTJAR_HJID,
   REACT_APP_HOTJAR_HJSV,
@@ -27,7 +26,9 @@ const {
 
 if (NODE_ENV === 'production') {
   Sentry.init({
-    dsn: `https://${REACT_APP_DEV_SENTRY_KEY}@sentry.io/${REACT_APP_DEV_SENTRY_PROJECT_ID}`,
+    dsn:
+      'https://f544bf43afeb4940b366dd22cfcd6018@o138408.ingest.sentry.io/5238804',
+    environment: REACT_APP_ENVIRONMENT,
   })
 
   if (REACT_APP_ENVIRONMENT === 'production') {
