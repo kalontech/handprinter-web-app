@@ -10,6 +10,7 @@ import Icon from 'antd/lib/icon'
 import Tooltip from 'antd/lib/tooltip'
 import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
+import Breadcrumb from 'antd/lib/breadcrumb'
 import notification from 'antd/lib/notification'
 import _ from 'lodash'
 import Print from 'assets/icons/print.svg'
@@ -75,6 +76,12 @@ const FingerPrint = styled.div`
   text-align: center;
   background: ${colors.ocean} url(${Print}) no-repeat left bottom;
   background-size: initial;
+
+  ${media.phone`
+    width: 100%;
+    height: 138px;
+    background-size: 100% 100%;
+  `}
 `
 
 const Container = styled.div`
@@ -108,6 +115,14 @@ const WhiteBlock = styled.div`
   background-color: ${colors.white};
   padding: 0;
   margin: 0;
+
+  ${media.largeDesktop`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0px;
+    min-height: 200px;
+  `}
 `
 
 const UserPhoto = styled.img`
@@ -258,6 +273,14 @@ const LogoWrap = styled.div`
   transform: translateY(-50%);
   position: absolute;
   left: 80px;
+
+  ${media.phone`
+    display: flex;
+    justify-content: center;
+    left: 0;
+    top: 190px;
+    width: 100%;
+  `}
 `
 
 const Logo = styled.img`
@@ -266,6 +289,11 @@ const Logo = styled.img`
   object-fit: cover;
   display: inline-block;
   border-radius: 50%;
+
+  ${media.phone`
+    width: 110px;
+    height: 110px;
+  `}
 `
 
 const Title = styled.p`
@@ -285,6 +313,36 @@ const Title = styled.p`
   left: 288px;
   text-align: center;
   transform: translateY(-110%);
+
+  ${media.phone`
+    width: 100%;
+    left: 0;
+    top: 305px;
+    background: transparent;
+    color: ${colors.dark};
+  `}
+`
+
+const MobileTitle = styled.p`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 28px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: ${colors.white};
+  background: #87bd24;
+  border-radius: 4px;
+  width: 274px;
+  height: 58px;
+  text-align: center;
+
+  ${media.phone`
+    width: 100%;
+    background: transparent;
+    color: ${colors.dark};
+  `}
 `
 
 const MemberLabel = styled.p`
@@ -302,6 +360,27 @@ const MemberLabel = styled.p`
   text-align: center;
   padding: 5px;
   transform: translateY(-120%);
+
+  ${media.phone`
+    right: 0;
+  `}
+`
+
+const MobileMemberLabel = styled.p`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration-line: underline;
+  color: #169080;
+  border-radius: 4px;
+  text-align: center;
+  padding: 5px;
+
+  ${media.phone`
+    padding: 5px;
+  `}
 `
 
 const Description = styled.p`
@@ -312,19 +391,109 @@ const Description = styled.p`
   line-height: 28px;
   color: ${colors.dark};
   width: 560px;
+
+  ${media.phone`
+    width: 288px;
+    text-align: center;
+  `}
 `
+const MobileDescription = styled.p`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+  color: ${colors.dark};
+  width: 560px;
+
+  ${media.phone`
+    width: 288px;
+    text-align: center;
+    padding: 7px;
+  `}
+`
+
 const InfoBlock = styled.div`
   margin-left: 290px;
   margin-top: 11px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  ${media.phone`
+    margin-left: 0px;
+    margin-top: 0px;
+    padding-top: 15px;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  `}
 `
 
 const LabelBlock = styled.div`
   margin-right: 155px;
   display: flex;
   flex-direction: row;
+`
+
+export const BreadcrumbStyled = styled(Breadcrumb)`
+  height: 50px;
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  margin-left: 20px;
+  .ant-breadcrumb-separator {
+    color: ${colors.green};
+  }
+`
+
+export const BreadcrumbItem = styled(Breadcrumb.Item)`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: ${colors.darkGray};
+`
+
+const StyledArrowIcon = styled(Icon)`
+  svg {
+    width: 15px;
+    height: 15px;
+    color: ${colors.gray};
+    margin-right: 15px;
+  }
+`
+
+export const StatusWrapper = styled.div`
+  border: ${props =>
+    props.inactive
+      ? `1px solid ${colors.darkGray}`
+      : `1px solid ${colors.green}`};
+  border-radius: 4px;
+  width: 98px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+
+  ${media.largeDesktop`
+    margin-top: 5px;
+    margin-left: 0px;
+  `}
+
+  ${media.phone`
+    
+  `}
+`
+export const Status = styled.p`
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 20px;
+  color: ${props => (props.inactive ? colors.darkGray : colors.green)};
+  text-transform: uppercase;
 `
 
 const GROUP_TABS = {
@@ -397,6 +566,7 @@ class BrandPage extends PureComponent {
       window.screen.availWidth <= sizes.tablet
         ? TABS_TYPES.select
         : TABS_TYPES.default,
+    width: window.innerWidth,
   }
 
   $counter = React.createRef()
@@ -404,6 +574,7 @@ class BrandPage extends PureComponent {
   componentDidMount() {
     animateScroll.scrollToTop()
     window.addEventListener('orientationchange', this.changeTabsType)
+    window.addEventListener('resize', this.handleWindowSizeChange)
   }
 
   componentDidUpdate(prevProps) {
@@ -425,6 +596,7 @@ class BrandPage extends PureComponent {
 
   componentWillUnmount() {
     window.removeEventListener('orientationchange', this.changeTabsType)
+    window.removeEventListener('resize', this.handleWindowSizeChange)
   }
 
   fetchGroupNetwork = async () => {
@@ -478,6 +650,12 @@ class BrandPage extends PureComponent {
     })
   }
 
+  handleWindowSizeChange = () => {
+    this.setState({
+      width: window.innerWidth,
+    })
+  }
+
   closeModal = () => {
     this.setState({ modalVisible: false })
   }
@@ -521,6 +699,7 @@ class BrandPage extends PureComponent {
       modalVisible,
       loadingMorelNews,
       groupNetwork,
+      width,
     } = this.state
     const {
       loading,
@@ -532,136 +711,299 @@ class BrandPage extends PureComponent {
       location,
       history,
     } = this.props
+
+    const isTablet = width < sizes.largeDesktop
+    const isMobile = width < sizes.tablet
+
     return (
       <Block>
         {loading && !group && <SpinnerStyled />}
-
+        {(isMobile || isTablet) && (
+          <BreadcrumbStyled separator=">">
+            <StyledArrowIcon type="left" />
+            <BreadcrumbItem
+              href="/challenges"
+              style={{ color: colors.darkGray }}
+            >
+              <FormattedMessage id="app.brandDashboardPage.toOrganizations" />
+            </BreadcrumbItem>
+          </BreadcrumbStyled>
+        )}
         {group && (
           <Fragment>
             <FingerPrint />
-            <WhiteBlock>
-              <LogoWrap>
-                <Logo src={getUserInitialAvatar(group.name)} alt="preview" />
-              </LogoWrap>
-              <Title>{group.name}</Title>
-              <MemberLabel>
-                <FormattedMessage id="app.pages.groups.youAreMember" />
-              </MemberLabel>
-              <InfoBlock>
-                <Description>{group.description}</Description>
-                <LabelBlock>
-                  <ActionCardLabel
-                    largeLabel
-                    labelWidth={105}
-                    category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
-                    unit={TimeValueAbbreviations.ACTIONS_TAKEN}
-                    value={group.userImpacts.actions.length}
-                    variant={'positive'}
-                  />
-                  <ActionCardPhysicalLabel
-                    largeLabel
-                    labelWidth={105}
-                    category={IMPACT_CATEGORIES.CLIMATE}
-                    unit={IMPACT_CATEGORIES.CLIMATE}
-                    value={processedUnitValue(
-                      _.get(
-                        group,
-                        'userImpacts.impactsInUnits.footprint.climate',
-                      ),
-                    )}
-                  />
-                  <ActionCardLabel
-                    largeLabel
-                    labelWidth={105}
-                    category={IMPACT_CATEGORIES.MEMBERS}
-                    unit={TimeValueAbbreviations.MEMBERS}
-                    value={group.info.membersCount}
-                    variant={'positive'}
-                  />
-                </LabelBlock>
-              </InfoBlock>
-
-              <Container>
-                {group.info.memberStatus === USER_GROUP_STATUSES.ACTIVE && (
-                  <Fragment>
-                    <AdminsList>
-                      {group.admins.map(({ user, groupInfo }, index) => (
-                        <AdminsListItem index={index} key={user._id}>
-                          <Link to={`/account/${user._id}`}>
-                            <Tooltip
-                              placement="top"
-                              title={`${user.fullName ||
-                                ''} (${intl.formatMessage({
-                                id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
-                              })})`}
-                            >
-                              <UserPhoto
-                                src={
-                                  user.photo ||
-                                  getUserInitialAvatar(user.fullName)
-                                }
-                                alt="your photo"
-                              />
-                            </Tooltip>
-                          </Link>
-                        </AdminsListItem>
-                      ))}
-
-                      {group.admins.length > 5 && (
-                        <AdminsListItem index={6}>
-                          <MoreAdminsItem>
-                            +{group.admins.length - 5}
-                          </MoreAdminsItem>
-                        </AdminsListItem>
+            {!isTablet && !isMobile && (
+              <WhiteBlock>
+                <LogoWrap>
+                  <Logo src={getUserInitialAvatar(group.name)} alt="preview" />
+                </LogoWrap>
+                <Title>{group.name}</Title>
+                <MemberLabel>
+                  <FormattedMessage id="app.pages.groups.youAreMember" />
+                </MemberLabel>
+                <InfoBlock>
+                  <Description>{group.description}</Description>
+                  <LabelBlock>
+                    <ActionCardLabel
+                      largeLabel
+                      labelWidth={105}
+                      category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
+                      unit={TimeValueAbbreviations.ACTIONS_TAKEN}
+                      value={group.userImpacts.actions.length}
+                      variant={'positive'}
+                    />
+                    <ActionCardPhysicalLabel
+                      largeLabel
+                      labelWidth={105}
+                      category={IMPACT_CATEGORIES.CLIMATE}
+                      unit={IMPACT_CATEGORIES.CLIMATE}
+                      value={processedUnitValue(
+                        _.get(
+                          group,
+                          'userImpacts.impactsInUnits.footprint.climate',
+                        ),
                       )}
-                    </AdminsList>
+                    />
+                    <ActionCardLabel
+                      largeLabel
+                      labelWidth={105}
+                      category={IMPACT_CATEGORIES.MEMBERS}
+                      unit={TimeValueAbbreviations.MEMBERS}
+                      value={group.info.membersCount}
+                      variant={'positive'}
+                    />
+                  </LabelBlock>
+                </InfoBlock>
 
-                    {[
-                      MEMBER_GROUP_ROLES.ADMIN,
-                      MEMBER_GROUP_ROLES.OWNER,
-                    ].includes(group.info.memberRole) &&
-                      group.status === GROUPS_STATUSES.ACTIVE && (
-                        <Tooltip
-                          getPopupContainer={() => this.$counter.current}
-                          placement="top"
-                          title={
-                            <TooltipTitle>
-                              {intl.formatMessage({
-                                id: 'app.pages.groups.addRemovePeople',
-                              })}
-                              <br />
-                              {group.requestingMembersCount > 0 &&
-                                intl.formatMessage(
-                                  {
-                                    id:
-                                      'app.pages.groups.addRemovePeopleCounter',
-                                  },
-                                  { count: group.requestingMembersCount },
-                                )}
-                            </TooltipTitle>
-                          }
-                        >
-                          <DashedAdminCircle
-                            index={
-                              group.admins.length > 5 ? 7 : group.admins.length
+                <Container>
+                  {group.info.memberStatus === USER_GROUP_STATUSES.ACTIVE && (
+                    <Fragment>
+                      <AdminsList>
+                        {group.admins.map(({ user, groupInfo }, index) => (
+                          <AdminsListItem index={index} key={user._id}>
+                            <Link to={`/account/${user._id}`}>
+                              <Tooltip
+                                placement="top"
+                                title={`${user.fullName ||
+                                  ''} (${intl.formatMessage({
+                                  id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
+                                })})`}
+                              >
+                                <UserPhoto
+                                  src={
+                                    user.photo ||
+                                    getUserInitialAvatar(user.fullName)
+                                  }
+                                  alt="your photo"
+                                />
+                              </Tooltip>
+                            </Link>
+                          </AdminsListItem>
+                        ))}
+
+                        {group.admins.length > 5 && (
+                          <AdminsListItem index={6}>
+                            <MoreAdminsItem>
+                              +{group.admins.length - 5}
+                            </MoreAdminsItem>
+                          </AdminsListItem>
+                        )}
+                      </AdminsList>
+
+                      {[
+                        MEMBER_GROUP_ROLES.ADMIN,
+                        MEMBER_GROUP_ROLES.OWNER,
+                      ].includes(group.info.memberRole) &&
+                        group.status === GROUPS_STATUSES.ACTIVE && (
+                          <Tooltip
+                            getPopupContainer={() => this.$counter.current}
+                            placement="top"
+                            title={
+                              <TooltipTitle>
+                                {intl.formatMessage({
+                                  id: 'app.pages.groups.addRemovePeople',
+                                })}
+                                <br />
+                                {group.requestingMembersCount > 0 &&
+                                  intl.formatMessage(
+                                    {
+                                      id:
+                                        'app.pages.groups.addRemovePeopleCounter',
+                                    },
+                                    { count: group.requestingMembersCount },
+                                  )}
+                              </TooltipTitle>
                             }
-                            ref={this.$counter}
-                            onClick={() => {
-                              this.setState({ modalVisible: true })
-                            }}
                           >
-                            {group.requestingMembersCount > 0 && (
-                              <Counter>{group.requestingMembersCount}</Counter>
-                            )}
+                            <DashedAdminCircle
+                              index={
+                                group.admins.length > 5
+                                  ? 7
+                                  : group.admins.length
+                              }
+                              ref={this.$counter}
+                              onClick={() => {
+                                this.setState({ modalVisible: true })
+                              }}
+                            >
+                              {group.requestingMembersCount > 0 && (
+                                <Counter>
+                                  {group.requestingMembersCount}
+                                </Counter>
+                              )}
 
-                            <Icon type="plus" />
-                          </DashedAdminCircle>
-                        </Tooltip>
+                              <Icon type="plus" />
+                            </DashedAdminCircle>
+                          </Tooltip>
+                        )}
+                    </Fragment>
+                  )}
+                </Container>
+              </WhiteBlock>
+            )}
+
+            {isTablet && (
+              <WhiteBlock>
+                <LogoWrap>
+                  <Logo src={getUserInitialAvatar(group.name)} alt="preview" />
+                </LogoWrap>
+
+                <InfoBlock>
+                  <MobileTitle>{group.name}</MobileTitle>
+                  <StatusWrapper>
+                    <Status>
+                      <FormattedMessage id="in progress" />
+                    </Status>
+                  </StatusWrapper>
+                  {/* {!!statusLabelId && (
+                  <StatusWrapper inactive={expired}>
+                    <Status inactive={expired}>
+                      <FormattedMessage id={statusLabelId} />
+                    </Status>
+                  </StatusWrapper>
+                )} */}
+                  <MobileDescription>{group.description}</MobileDescription>
+                  <MobileMemberLabel>
+                    <FormattedMessage id="app.pages.groups.youAreMember" />
+                  </MobileMemberLabel>
+                  {/*    <LabelBlock>
+                    <ActionCardLabel
+                      largeLabel
+                      labelWidth={105}
+                      category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
+                      unit={TimeValueAbbreviations.ACTIONS_TAKEN}
+                      value={group.userImpacts.actions.length}
+                      variant={'positive'}
+                    />
+                    <ActionCardPhysicalLabel
+                      largeLabel
+                      labelWidth={105}
+                      category={IMPACT_CATEGORIES.CLIMATE}
+                      unit={IMPACT_CATEGORIES.CLIMATE}
+                      value={processedUnitValue(
+                        _.get(
+                          group,
+                          'userImpacts.impactsInUnits.footprint.climate',
+                        ),
                       )}
-                  </Fragment>
-                )}
-              </Container>
-            </WhiteBlock>
+                    />
+                    <ActionCardLabel
+                      largeLabel
+                      labelWidth={105}
+                      category={IMPACT_CATEGORIES.MEMBERS}
+                      unit={TimeValueAbbreviations.MEMBERS}
+                      value={group.info.membersCount}
+                      variant={'positive'}
+                    />
+                  </LabelBlock> */}
+                </InfoBlock>
+
+                {/* <Container>
+                  {group.info.memberStatus === USER_GROUP_STATUSES.ACTIVE && (
+                    <Fragment>
+                      <AdminsList>
+                        {group.admins.map(({ user, groupInfo }, index) => (
+                          <AdminsListItem index={index} key={user._id}>
+                            <Link to={`/account/${user._id}`}>
+                              <Tooltip
+                                placement="top"
+                                title={`${user.fullName ||
+                                  ''} (${intl.formatMessage({
+                                  id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
+                                })})`}
+                              >
+                                <UserPhoto
+                                  src={
+                                    user.photo ||
+                                    getUserInitialAvatar(user.fullName)
+                                  }
+                                  alt="your photo"
+                                />
+                              </Tooltip>
+                            </Link>
+                          </AdminsListItem>
+                        ))}
+
+                        {group.admins.length > 5 && (
+                          <AdminsListItem index={6}>
+                            <MoreAdminsItem>
+                              +{group.admins.length - 5}
+                            </MoreAdminsItem>
+                          </AdminsListItem>
+                        )}
+                      </AdminsList>
+
+                      {[
+                        MEMBER_GROUP_ROLES.ADMIN,
+                        MEMBER_GROUP_ROLES.OWNER,
+                      ].includes(group.info.memberRole) &&
+                        group.status === GROUPS_STATUSES.ACTIVE && (
+                          <Tooltip
+                            getPopupContainer={() => this.$counter.current}
+                            placement="top"
+                            title={
+                              <TooltipTitle>
+                                {intl.formatMessage({
+                                  id: 'app.pages.groups.addRemovePeople',
+                                })}
+                                <br />
+                                {group.requestingMembersCount > 0 &&
+                                  intl.formatMessage(
+                                    {
+                                      id:
+                                        'app.pages.groups.addRemovePeopleCounter',
+                                    },
+                                    { count: group.requestingMembersCount },
+                                  )}
+                              </TooltipTitle>
+                            }
+                          >
+                            <DashedAdminCircle
+                              index={
+                                group.admins.length > 5
+                                  ? 7
+                                  : group.admins.length
+                              }
+                              ref={this.$counter}
+                              onClick={() => {
+                                this.setState({ modalVisible: true })
+                              }}
+                            >
+                              {group.requestingMembersCount > 0 && (
+                                <Counter>
+                                  {group.requestingMembersCount}
+                                </Counter>
+                              )}
+
+                              <Icon type="plus" />
+                            </DashedAdminCircle>
+                          </Tooltip>
+                        )}
+                    </Fragment>
+                  )}
+                </Container>  */}
+              </WhiteBlock>
+            )}
 
             <TabsSecondary
               justify="center"
