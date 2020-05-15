@@ -545,7 +545,6 @@ class BrandPage extends PureComponent {
         {group && (
           <UIContextSettings.Consumer>
             {context => {
-              console.log(context)
               return (
                 <Fragment>
                   <FingerPrint />
