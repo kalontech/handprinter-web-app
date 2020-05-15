@@ -750,7 +750,10 @@ class BrandPage extends PureComponent {
                                     },
                                   )}
                                   impacts={{ handprint: item.impacts }}
-                                  impactsInUnits={item.user.impactsInUnits}
+                                  impactsInUnits={{
+                                    handprint:
+                                      item.user.impactsInUnits.footprint,
+                                  }}
                                   showPhysicalValues={
                                     context.showPhysicalValues
                                   }
