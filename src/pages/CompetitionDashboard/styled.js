@@ -120,6 +120,10 @@ export const HeaderCamapingDescription = styled.p`
   margin-top: 15px;
   width: 580px;
   text-align: center;
+
+  ${media.phone`
+    width: 280px;
+  `}
 `
 
 export const ProgressWrapper = styled.div`
@@ -138,6 +142,7 @@ export const ProgressWrapper = styled.div`
   `}
 
   ${media.largeDesktop`
+    height: 20px;
     padding-left: 0px;
     padding-right: 15px;  
   `}
@@ -199,6 +204,7 @@ export const DashboardHeaderUserName = styled.div`
 
   ${media.phone`
     flex-direction: column;
+    text-align: center;
   `}
 `
 
@@ -214,11 +220,12 @@ export const Content = styled.div`
   padding: 20px 70px;
 
   ${media.largeDesktop`
-    padding: 0px 15px;
+    background-color: ${colors.white};
+    padding: 20px 34px 20px 34px; 
   `}
 
   ${media.phone`
-    padding: 0px;
+    padding: 16px; 
   `}
 `
 

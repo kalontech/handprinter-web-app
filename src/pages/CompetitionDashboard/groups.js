@@ -3,12 +3,13 @@ import _ from 'lodash'
 import qs from 'qs'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
-import { Menu } from 'antd'
+import { Menu, Select } from 'antd'
 import MemberCard from 'components/MemberCard'
 import { PrimaryButton, DefaultButton } from 'components/Styled'
 import styled from 'styled-components'
 import colors from 'config/colors'
 import moment from 'moment'
+import media from 'utils/mediaQueryTemplate'
 
 import { getGroups } from './participants'
 import { getUserInitialAvatar } from '../../api'
@@ -16,15 +17,28 @@ import { MenuStyled } from './styled'
 import { INVITATION_STATUSES } from '../IncreaseHandprintPage'
 import { acceptInvitation, denyInvitation } from '../../api/competitions'
 
+const { Option } = Select
+
 const Main = styled.div`
   width: 100%;
   max-height: 600px;
   overflow: scroll;
-  background-color: white;
+  background-color: ${colors.white};
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  ${media.largeDesktop`
+    padding: 20px 0px; 
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  `}
+
+  ${media.phone`
+    padding: 20px 3px; 
+  `}
 `
 
 const ParticipantsMain = styled(Main)`
@@ -74,7 +88,14 @@ function getGroupParticipants(props, invitation) {
 }
 
 export default function renderGroups(props) {
-  const { invitations, competition, intl, accomplishedUserActions } = props
+  const {
+    invitations,
+    competition,
+    intl,
+    accomplishedUserActions,
+    isMobile,
+    isTablet,
+  } = props
 
   const accomplished = accomplishedUserActions.length
   const expired = moment().isAfter(competition.dateTo)
@@ -131,6 +152,7 @@ export default function renderGroups(props) {
     endDate: competition.dateTo,
     expired,
     tooltipText,
+    isTablet,
   }
 
   const progressProps = {
@@ -140,19 +162,32 @@ export default function renderGroups(props) {
     endDate: competition.dateTo,
     expired,
     tooltipText,
+    isTablet,
   }
 
   return (
     <Fragment>
-      <MenuStyled mode="horizontal" inlineIndent={0} selectedKeys={[search]}>
-        {invitations.map((invitation, index) => (
-          <Menu.Item key={`?view=groups&tabIndex=${index}`}>
-            <Link to={`?view=groups&tabIndex=${index}`}>
-              <span>{invitation.group.name}</span>
-            </Link>
-          </Menu.Item>
-        ))}
-      </MenuStyled>
+      {!isTablet && !isMobile && (
+        <MenuStyled mode="horizontal" inlineIndent={0} selectedKeys={[search]}>
+          {invitations.map((invitation, index) => (
+            <Menu.Item key={`?view=groups&tabIndex=${index}`}>
+              <Link to={`?view=groups&tabIndex=${index}`}>
+                <span>{invitation.group.name}</span>
+              </Link>
+            </Menu.Item>
+          ))}
+        </MenuStyled>
+      )}
+      {(isTablet || isMobile) && (
+        <Select
+          style={{ width: '100%' }}
+          defaultValue={invitations[0].group.name}
+        >
+          {invitations.map((invitation, index) => (
+            <Option key={index}>{invitation.group.name}</Option>
+          ))}
+        </Select>
+      )}
       {invitation.status === INVITATION_STATUSES.PENDING && (
         <Main>
           <Text>{joinCompetition}</Text>
@@ -190,14 +225,15 @@ export default function renderGroups(props) {
       )}
       {invitation.status === INVITATION_STATUSES.ACCEPTED && (
         <ParticipantsMain>
-          {renderGroup({ ...props, ...progressGroupProps }, groupParticipants)}
+          {!isMobile &&
+            !isTablet &&
+            renderGroup({ ...props, ...progressGroupProps }, groupParticipants)}
           {groupParticipants.map(participant => {
             const accomplished = participant.accomplishedActions.length
             const total = competition.actions.length
             const percent = (accomplished / total) * 100
             return (
               <MemberCard
-                containerStyle={{ width: '95%' }}
                 key={participant.user._id}
                 to={`/account/${participant.user._id}`}
                 fullName={participant.user.fullName}
@@ -270,6 +306,8 @@ renderGroups.propTypes = {
   competition: Object,
   intl: Object,
   accomplishedUserActions: Array,
+  isTablet: Boolean,
+  isMobile: Boolean,
 }
 
 renderGroup.propTypes = {

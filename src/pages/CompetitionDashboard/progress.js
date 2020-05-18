@@ -11,7 +11,7 @@ import moment from 'moment'
 import { ProgressWrapper, ProgressTextWrapper, ProgressText } from './styled'
 
 function CampaignProgress(props) {
-  const { total, accomplished, endDate, expired, tooltipText } = props
+  const { total, accomplished, endDate, expired, tooltipText, isTablet } = props
   const percent = (accomplished / total) * 100
   const daysLeft = props.intl.formatMessage(
     { id: 'app.campaignPage.progress.daysLeft' },
@@ -23,7 +23,7 @@ function CampaignProgress(props) {
   return (
     <ProgressWrapper>
       <ProgressTextWrapper style={{ justifyContent: 'flex-end' }}>
-        <ProgressText>{daysLeft}</ProgressText>
+        {!isTablet && <ProgressText>{daysLeft}</ProgressText>}
       </ProgressTextWrapper>
       <Tooltip title={tooltipText}>
         <Progress
@@ -43,6 +43,7 @@ CampaignProgress.propTypes = {
   endDate: Date,
   intl: Object,
   expired: Boolean,
+  isTablet: Boolean,
   tooltipText: String,
 }
 

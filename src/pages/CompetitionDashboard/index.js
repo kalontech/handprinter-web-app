@@ -155,6 +155,8 @@ function CampaignDashboard(props) {
       <Content>
         {renderContent(view, {
           ...props,
+          isMobile,
+          isTablet,
           competition,
           loading,
           participants,
