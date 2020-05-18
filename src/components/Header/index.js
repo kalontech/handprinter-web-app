@@ -470,7 +470,7 @@ function Header(props) {
                     </PrimaryButton>
                   </Link>
                 )}
-                {user && (
+                {overrides && overrides.brandName === 'Humanscale' && !user && (
                   <Link
                     to="/account/register"
                     style={{
