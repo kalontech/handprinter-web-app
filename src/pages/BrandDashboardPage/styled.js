@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
 
 export const StatisticsScrollTitle = styled.p`
   font-family: Noto Sans;
@@ -101,4 +102,17 @@ export const Separator = styled.div`
   height: 1px;
   width: 100%;
   background-color: #c4c4c4;
+`
+
+export const FeedWrapper = styled.div`
+  padding-right: 145px;
+  padding-left: 145px;
+
+  ${media.largeDesktop`
+    padding: 16px 34px 16px 34px;
+  `}
+
+  ${media.phone`
+    padding: 16px
+  `}
 `

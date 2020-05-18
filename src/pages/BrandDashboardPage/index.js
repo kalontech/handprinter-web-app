@@ -13,7 +13,7 @@ import Col from 'antd/lib/col'
 import notification from 'antd/lib/notification'
 import _ from 'lodash'
 import Print from 'assets/icons/print.svg'
-// import FlagIconComponent from 'assets/icons/FlagIcon'
+import FlagIconComponent from 'assets/icons/FlagIcon'
 import SuggestedIcon from 'assets/icons/SuggestedIcon'
 
 import colors from 'config/colors'
@@ -25,13 +25,11 @@ import {
 import fetch from 'utils/fetch'
 import decodeError from 'utils/decodeError'
 import media, { sizes } from 'utils/mediaQueryTemplate'
-import hexToRgba from 'utils/hexToRgba'
 import Spinner from 'components/Spinner'
-import NewsList from 'components/NewsList'
 import GroupManage from 'components/GroupManage'
 import TabsSecondary, { TABS_TYPES } from 'components/TabsSecondary'
 import MemberCard from 'components/MemberCard'
-import { SecondaryButton, Modal, Pagination } from 'components/Styled'
+import { Modal, Pagination } from 'components/Styled'
 import { getUserInitialAvatar } from 'api'
 import * as apiActions from 'api/actions'
 import {
@@ -52,6 +50,7 @@ import {
   TimeValueAbbreviations,
 } from '../../utils/constants'
 import { processedUnitValue } from '../../components/ActionCardLabelSet'
+import renderActivity from './activity'
 
 const Block = styled.section`
   display: flex;
@@ -193,37 +192,6 @@ const PaginationStyled = styled(Pagination)`
   margin-top: 35px;
 `
 
-const ButtonLoadMore = styled(SecondaryButton)`
-  background-color: ${colors.gray};
-  color: ${colors.ocean};
-  max-width: 170px;
-  margin: 40px auto 0;
-
-  :hover,
-  :focus,
-  :active {
-    background-color: ${colors.gray};
-    color: ${colors.ocean};
-  }
-`
-
-const NewsContainer = styled.div`
-  background-color: ${colors.white};
-  padding: 17px 40px;
-  box-shadow: 0 0 10px ${hexToRgba(colors.dark, 0.08)};
-  border-radius: 4px;
-  ${media.desktop`
-    padding-left: 34px;
-    padding-right: 34px;
-  `}
-  ${media.phone`
-    margin-left: -15px;
-    margin-right: -15px;
-    padding-left: 15px;
-    padding-right: 15px;
-  `}
-`
-
 const AdminsList = styled.ul`
   list-style: none;
   z-index: 2;
@@ -340,9 +308,10 @@ async function getGroupData(props) {
   const queries = qs.parse(location.search, { ignoreQueryPrefix: true })
   const res = await getBrandGroup(overrides.brandName)
 
+  // For members and activity tabs we need get brand group members
   const tabsFetch = {
     [GROUP_TABS.MEMBERS]: getBrandGroupMembers,
-    [GROUP_TABS.ACTIVITY]: apiActions.getNews,
+    [GROUP_TABS.ACTIVITY]: getBrandGroupMembers,
   }[match.params.subset]
 
   const tabsRes =
@@ -378,7 +347,6 @@ class BrandPage extends PureComponent {
     history: PropTypes.object,
     location: PropTypes.object,
     members: PropTypes.object,
-    news: PropTypes.object,
     calendar: PropTypes.object,
     ratio: PropTypes.object,
     user: PropTypes.object,
@@ -386,7 +354,6 @@ class BrandPage extends PureComponent {
 
   static defaultProps = {
     members: {},
-    news: {},
     calendar: {},
     ratio: {},
   }
@@ -394,8 +361,6 @@ class BrandPage extends PureComponent {
   state = {
     groupNetwork: undefined,
     modalVisible: false,
-    loadingMorelNews: false,
-    newsPage: 1,
     currentImpactCategory: 'climate',
     loadingButton: false,
     visibleTabs: false,
@@ -521,20 +486,13 @@ class BrandPage extends PureComponent {
   }
 
   render() {
-    const {
-      visibleTabs,
-      tabsType,
-      modalVisible,
-      loadingMorelNews,
-      groupNetwork,
-    } = this.state
+    const { visibleTabs, tabsType, modalVisible, groupNetwork } = this.state
     const {
       loading,
       group,
       intl,
       match,
       members,
-      news,
       location,
       history,
     } = this.props
@@ -701,12 +659,14 @@ class BrandPage extends PureComponent {
                         }),
                         active: match.params.subset === GROUP_TABS.MEMBERS,
                       },
-                      // {
-                      //   to: `/brand/dashboard/${GROUP_TABS.ACTIVITY}`,
-                      //   icon: FlagIconComponent,
-                      //   text: intl.formatMessage({ id: 'app.pages.groups.activity' }),
-                      //   active: match.params.subset === GROUP_TABS.ACTIVITY,
-                      // },
+                      {
+                        to: `/brand/dashboard/${GROUP_TABS.ACTIVITY}`,
+                        icon: FlagIconComponent,
+                        text: intl.formatMessage({
+                          id: 'app.pages.groups.activity',
+                        }),
+                        active: match.params.subset === GROUP_TABS.ACTIVITY,
+                      },
                     ]}
                     isOpen={visibleTabs}
                     listType={tabsType}
@@ -796,30 +756,7 @@ class BrandPage extends PureComponent {
                     </Content>
 
                     <Content>
-                      {loading ? (
-                        <Spinner />
-                      ) : (
-                        <NewsContainer>
-                          <NewsList
-                            actionLinkPrefix={`/groups/view/${
-                              match.params.id
-                            }/${match.params.subset}/`}
-                            news={news}
-                            locale={intl.locale}
-                          />
-                        </NewsContainer>
-                      )}
-
-                      {!loading && (
-                        <ButtonLoadMore
-                          loading={loadingMorelNews}
-                          onClick={this.loadMore}
-                        >
-                          {intl.formatMessage({
-                            id: 'app.newsPage.loadMoreNews',
-                          })}
-                        </ButtonLoadMore>
-                      )}
+                      {loading ? <Spinner /> : renderActivity(this.props)}
                     </Content>
                   </TabsSecondary>
                 </Fragment>
