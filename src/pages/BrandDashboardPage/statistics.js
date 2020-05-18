@@ -25,7 +25,6 @@ function getSortedActions(actions) {
   const res = {}
   // Group by slug
   actions.forEach(({ action, picture, impactsTime }) => {
-    console.log(action)
     if (!res[action.slug]) res[action.slug] = {}
     res[action.slug] = {
       action: {

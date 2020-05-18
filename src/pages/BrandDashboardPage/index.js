@@ -728,8 +728,6 @@ class BrandPage extends PureComponent {
                         >
                           {members.docs &&
                             members.docs.map(item => {
-                              console.log(item.impacts)
-                              console.log(item.user.impactsInUnits)
                               return (
                                 <Column
                                   key={item.user._id}
