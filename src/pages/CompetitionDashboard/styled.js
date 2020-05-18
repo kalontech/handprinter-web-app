@@ -220,12 +220,11 @@ export const Content = styled.div`
   padding: 20px 70px;
 
   ${media.largeDesktop`
-    background-color: ${colors.white};
-    padding: 20px 34px 20px 34px; 
+    padding: 0px 15px;
   `}
 
   ${media.phone`
-    padding: 16px; 
+    padding: 0px;
   `}
 `
 
@@ -545,6 +544,6 @@ export const FeedWrapper = styled.div`
   `}
 
   ${media.phone`
-    padding: 16px
+    padding: 16px;
   `}
 `
