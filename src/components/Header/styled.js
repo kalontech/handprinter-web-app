@@ -131,11 +131,11 @@ export const Logo = styled.div`
 `
 
 export const LogoSmall = styled.div`
-  display: block;
+  display: flex;
   flex: 1;
   justify-content: flex-start;
   ${media.largeDesktop`
-    justify-content: center;
+    justify-content: flex-end;
     a {
       display: flex;
       justify-content: center;

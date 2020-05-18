@@ -444,6 +444,6 @@ export const FeedWrapper = styled.div`
   `}
 
   ${media.phone`
-    padding: 16px
+    padding: 16px;
   `}
 `

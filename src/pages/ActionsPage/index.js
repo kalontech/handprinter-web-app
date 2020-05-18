@@ -688,7 +688,7 @@ function ActionsPage(props) {
                 <Spinner />
               </NotFoundWrap>
             )}
-            {actions.length && (
+            {actions.length > 0 ? (
               <Row gutter={{ md: 20 }}>
                 <InfiniteScroll
                   dataLength={actions.length}
@@ -783,7 +783,7 @@ function ActionsPage(props) {
                   ))}
                 </InfiniteScroll>
               </Row>
-            )}
+            ) : null}
             {!actions.length && (
               <NotFoundWrap>
                 <FormattedMessage id="app.actionsPage.actionsNotFound" />

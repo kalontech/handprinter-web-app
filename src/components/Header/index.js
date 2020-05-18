@@ -470,7 +470,7 @@ function Header(props) {
                     </PrimaryButton>
                   </Link>
                 )}
-                {!user && (
+                {user && (
                   <Link
                     to="/account/register"
                     style={{
