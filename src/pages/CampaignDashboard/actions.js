@@ -32,9 +32,9 @@ function getActions(props, selectedKey) {
         ? isAccomplished
         : !isAccomplished
     })
-  } else {
-    return actions
-  }
+  } else if (selectedKey === ACTIONS_TABS.ACCOMPLISHED) {
+    return []
+  } else return actions
 }
 
 export default function renderActions(props) {
