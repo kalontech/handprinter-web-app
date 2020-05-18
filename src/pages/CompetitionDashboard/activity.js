@@ -9,8 +9,6 @@ import { FeedWrapper } from './styled'
 export default function renderActivity(props) {
   const { competition } = props
 
-  console.log(props)
-
   return (
     <FeedWrapper>
       <Feed
