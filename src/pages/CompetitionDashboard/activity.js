@@ -9,6 +9,8 @@ import { FeedWrapper } from './styled'
 export default function renderActivity(props) {
   const { competition } = props
 
+  console.log(props)
+
   return (
     <FeedWrapper>
       <Feed
@@ -20,6 +22,8 @@ export default function renderActivity(props) {
           feedGroup: 'timeline',
           userId: `competition-${competition._id}`,
         }}
+        participants={props.participants}
+        history={props.history}
       />
     </FeedWrapper>
   )

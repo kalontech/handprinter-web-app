@@ -27,6 +27,8 @@ const Feed = ({
   onSuccess,
   verb,
   context,
+  participants,
+  history,
 }) => {
   const [isStatusUpdateFormExpanded, setIsStatusUpdateFormExpanded] = useState(
     false,
@@ -238,6 +240,8 @@ const Feed = ({
                     <ActivityHeader
                       key={`header-${props.activity.id}`}
                       {...props}
+                      participants={participants}
+                      history={history}
                     />
                   )
                 }}
