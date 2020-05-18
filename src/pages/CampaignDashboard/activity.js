@@ -20,6 +20,8 @@ export default function renderActivity(props) {
           feedGroup: 'timeline',
           userId: `campaign-${campaign._id}`,
         }}
+        participants={props.participants}
+        history={props.history}
       />
     </FeedWrapper>
   )
