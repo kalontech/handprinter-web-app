@@ -149,6 +149,11 @@ const Button = styled(DefaultButton)`
     background-color: ${hexToRgba(colors.white, 0.15)};
     color: ${colors.white};
   }
+
+  ${media.largeDesktop`
+    display: relative;
+    left: 500px;
+  `}
 `
 
 export const TABS_TYPES = {

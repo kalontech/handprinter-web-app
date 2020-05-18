@@ -16,8 +16,12 @@ export const InnerContainer = styled.div`
   padding: 20px 0;
 
   ${media.largeDesktop`
-  padding: 15px 0;
-`}
+    padding: 15px 0px;
+  `}
+
+  ${media.phone`
+    padding: 0px;
+  `}
 `
 
 export const ActionSearchDropdownPicture = styled.div`
@@ -65,6 +69,10 @@ export const SearchBlockWrapper = styled.div`
     border-bottom: none;
   }
 `}
+
+  ${media.phone`
+    height: 150px;
+  `}
 `
 
 export const SearchField = styled(Select)`
@@ -100,6 +108,16 @@ export const StyledSearchIcon = styled(Icon)`
   position: absolute;
   right: 15px;
   top: 15px;
+
+  ${media.largeDesktop`
+    top: 15px;
+  `}
+
+  ${media.phone`
+    position: relative;
+    left: 125px;
+    top: -47px;
+  `}
 `
 
 export const SearchWrap = styled.div`
@@ -107,6 +125,16 @@ export const SearchWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${media.largeDesktop`
+    justify-content: space-around;
+    align-items: center;
+  `}
+  ${media.phone`
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  `}
 `
 
 export const NotFoundWrap = styled.div`
@@ -160,10 +188,74 @@ export const SearchFieldWrap = styled.div`
   .ant-select-selected-icon {
     display: none;
   }
+
+  ${media.largeDesktop`
+    width: 23%;
+    margin-bottom: 16px;
+  `}
+
+  ${media.desktop`
+    width: 23%;
+    margin-bottom: 16px;
+  `}
+
+  ${media.phone`
+    width: 100%;
+  `}
 `
 
 export const FooterSpinner = styled.div`
   width: 100%;
   height: 40px;
   display: flex;
+`
+
+export const MobileFilterWrap = styled.div`
+  display: flex;
+  width: 100%;
+  overflow: scroll;
+  margin-bottom: 20px;
+
+  ${media.largeDesktop`
+    width: 74%;
+    margin-bottom: 0px;
+`}
+
+  ${media.phone`
+    width: 100%;
+    margin-left: 0px;
+    margin-bottom: 10px;
+`}
+
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+`
+
+export const MobileFilter = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid #d7dbdb;
+  box-sizing: border-box;
+  border-radius: 4px;
+  height: 46px;
+  margin-right: 4px;
+  padding: 0px 7px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+
+  ${media.largeDesktop`
+    /* min-width: 31%; */
+    margin-right: 15px;
+`}
+
+  ${media.phone`
+    /* min-width: 150px; */
+    margin-right: 4px;
+`}
 `
