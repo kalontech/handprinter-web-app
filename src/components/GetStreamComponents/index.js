@@ -330,21 +330,23 @@ export const ActivityHeader = props => {
                 showPhysicalValues={UIContextData.showPhysicalValues}
               />
             )}
-            <Popover
-              content={
-                <DeletePostText
-                  onClick={() => props.onRemoveActivity(activity.id)}
-                >
-                  <FormattedMessage id="app.actions.card.delete" />
-                </DeletePostText>
-              }
-            >
-              <Icon type="ellipsis" rotate={90} />
-            </Popover>
+            {props.feedGroup === 'network' && (
+              <Popover
+                content={
+                  <DeletePostText
+                    onClick={() => props.onRemoveActivity(activity.id)}
+                  >
+                    <FormattedMessage id="app.actions.card.delete" />
+                  </DeletePostText>
+                }
+              >
+                <Icon type="ellipsis" rotate={90} />
+              </Popover>
+            )}
           </div>
         </Box>
       )}
-      {(isMobile || isTablet) && (
+      {(isMobile || isTablet) && props.feedGroup === 'network' && (
         <Box>
           <Popover
             content={
