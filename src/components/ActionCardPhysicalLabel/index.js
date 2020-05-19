@@ -106,7 +106,7 @@ const ActionCardPhysicalLabel = ({
           <FormattedMessage
             id="app.actionCardLabel.tooltip.text"
             values={{
-              value: value,
+              value: `${num} ${power ? `e-${power}` : ''}`,
               unit: (
                 <FormattedHTMLMessage
                   id={`app.actions.physicalValues.one.${unit}`}
@@ -146,9 +146,7 @@ const ActionCardPhysicalLabel = ({
           </Caption>
           <Value>
             {num}
-            {/* if power (count of numbers after dot) is greater then 3 - 
-            then we show <sup>-{power}</sup> */}
-            {power > 3 ? <sup>-{power}</sup> : null}
+            {power && <sup>-{power}</sup>}
           </Value>
         </Impact>
       </LabelContainer>
