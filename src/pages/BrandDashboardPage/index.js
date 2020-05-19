@@ -522,6 +522,7 @@ class BrandPage extends PureComponent {
                       <LabelBlock>
                         <ActionCardLabel
                           largeLabel
+                          hideTooltip
                           labelWidth={105}
                           category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
                           unit={TimeValueAbbreviations.ACTIONS_TAKEN}
@@ -542,6 +543,7 @@ class BrandPage extends PureComponent {
                         />
                         <ActionCardLabel
                           largeLabel
+                          hideTooltip
                           labelWidth={105}
                           category={IMPACT_CATEGORIES.MEMBERS}
                           unit={TimeValueAbbreviations.MEMBERS}
@@ -713,9 +715,7 @@ class BrandPage extends PureComponent {
                                     )}
                                     impacts={{ handprint: item.impacts }}
                                     impactsInUnits={{
-                                      handprint: item.user.impactsInUnits
-                                        ? item.user.impactsInUnits.footprint
-                                        : null,
+                                      handprint: item.impactsInUnits,
                                     }}
                                     showPhysicalValues={
                                       context.showPhysicalValues
