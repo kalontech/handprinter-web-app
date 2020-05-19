@@ -122,8 +122,8 @@ const WhiteBlock = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 50px 0px;
-    min-height: 200px;
+    padding: 15px 0px 25px 0px;
+    min-height: 150px;
   `}
 `
 
@@ -276,6 +276,10 @@ const LogoWrap = styled.div`
   position: absolute;
   left: 80px;
 
+  ${media.largeDesktop`
+    top: 250px;
+  `}
+
   ${media.phone`
     display: flex;
     justify-content: center;
@@ -292,6 +296,11 @@ const Logo = styled.img`
   display: inline-block;
   border-radius: 50%;
 
+  ${media.desktop`
+    width: 130px;
+    height: 130px;
+  `}
+
   ${media.phone`
     width: 110px;
     height: 110px;
@@ -307,7 +316,7 @@ const Title = styled.p`
   align-items: center;
   display: flex;
   color: ${colors.white};
-  background: #87bd24;
+  background: ${colors.green};
   border-radius: 4px;
   width: 274px;
   height: 58px;
@@ -315,6 +324,14 @@ const Title = styled.p`
   left: 288px;
   text-align: center;
   transform: translateY(-110%);
+
+  ${media.largeDesktop`
+    top: 250px;
+  `}
+
+  ${media.tablet`
+    left: 228px;
+  `}
 
   ${media.phone`
     width: 100%;
@@ -334,7 +351,7 @@ const MobileTitle = styled.p`
   align-items: center;
   display: flex;
   color: ${colors.white};
-  background: #87bd24;
+  background: ${colors.green};
   border-radius: 4px;
   width: 274px;
   height: 58px;
@@ -356,12 +373,17 @@ const MemberLabel = styled.p`
   text-decoration-line: underline;
   position: absolute;
   color: ${colors.white};
-  background: #169080;
+  background: ${colors.ocean};
   border-radius: 4px;
   right: 160px;
   text-align: center;
   padding: 5px;
   transform: translateY(-120%);
+
+  ${media.largeDesktop`
+    right: 44px;
+    top: 250px;
+  `}
 
   ${media.phone`
     right: 0;
@@ -375,7 +397,7 @@ const MobileMemberLabel = styled.p`
   font-size: 14px;
   line-height: 20px;
   text-decoration-line: underline;
-  color: #169080;
+  color: ${colors.ocean};
   border-radius: 4px;
   text-align: center;
   padding: 5px;
@@ -393,6 +415,14 @@ const Description = styled.p`
   line-height: 28px;
   color: ${colors.dark};
   width: 560px;
+
+  ${media.largeDesktop`
+    width: 544px;
+  `}
+
+  ${media.desktop`
+    width: 504px;
+  `}
 
   ${media.phone`
     width: 288px;
@@ -422,13 +452,26 @@ const InfoBlock = styled.div`
   flex-direction: row;
   justify-content: space-between;
 
+  ${media.largeDesktop`
+    margin-left: 100px;
+    margin-top: 0px;
+    flex-direction: column;
+    align-items: center;
+  `}
+
+  ${media.desktop`
+    width: 504px;
+    margin-left: 190px;
+    margin-top: 0px;
+    flex-direction: column;
+    align-items: center;
+  `}
+
   ${media.phone`
     margin-left: 0px;
     margin-top: 0px;
-    padding-top: 15px;
+    padding-top: 40px;
     width: 100%;
-    flex-direction: column;
-    align-items: center;
   `}
 `
 
@@ -436,6 +479,20 @@ const LabelBlock = styled.div`
   margin-right: 155px;
   display: flex;
   flex-direction: row;
+
+  ${media.largeDesktop`
+    margin-top: 10px;
+    margin-left: -185px;
+    margin-right: 0px;
+  `}
+
+  ${media.desktop`
+    margin-left: -150px;
+  `}
+
+  ${media.phone`
+    margin-left: 0px;
+  `}
 `
 
 export const BreadcrumbStyled = styled(Breadcrumb)`
@@ -523,6 +580,8 @@ async function getGroupData(props) {
       belongsToBrand: overrides.brandName,
       status: USER_GROUP_STATUSES.ACTIVE,
     }))
+
+  console.log(res)
 
   return {
     group: res,
@@ -755,36 +814,38 @@ class BrandPage extends PureComponent {
                       </MemberLabel>
                       <InfoBlock>
                         <Description>{group.description}</Description>
-                        <LabelBlock>
-                          <ActionCardLabel
-                            largeLabel
-                            labelWidth={105}
-                            category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
-                            unit={TimeValueAbbreviations.ACTIONS_TAKEN}
-                            value={group.userImpacts.actions.length}
-                            variant={'positive'}
-                          />
-                          <ActionCardPhysicalLabel
-                            largeLabel
-                            labelWidth={105}
-                            category={IMPACT_CATEGORIES.CLIMATE}
-                            unit={IMPACT_CATEGORIES.CLIMATE}
-                            value={processedUnitValue(
-                              _.get(
-                                group,
-                                'userImpacts.impactsInUnits.footprint.climate',
-                              ),
-                            )}
-                          />
-                          <ActionCardLabel
-                            largeLabel
-                            labelWidth={105}
-                            category={IMPACT_CATEGORIES.MEMBERS}
-                            unit={TimeValueAbbreviations.MEMBERS}
-                            value={group.info.membersCount}
-                            variant={'positive'}
-                          />
-                        </LabelBlock>
+                        {group.userImpacts && (
+                          <LabelBlock>
+                            <ActionCardLabel
+                              largeLabel
+                              labelWidth={105}
+                              category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
+                              unit={TimeValueAbbreviations.ACTIONS_TAKEN}
+                              value={group.userImpacts.actions.length}
+                              variant={'positive'}
+                            />
+                            <ActionCardPhysicalLabel
+                              largeLabel
+                              labelWidth={105}
+                              category={IMPACT_CATEGORIES.CLIMATE}
+                              unit={IMPACT_CATEGORIES.CLIMATE}
+                              value={processedUnitValue(
+                                _.get(
+                                  group,
+                                  'userImpacts.impactsInUnits.footprint.climate',
+                                ),
+                              )}
+                            />
+                            <ActionCardLabel
+                              largeLabel
+                              labelWidth={105}
+                              category={IMPACT_CATEGORIES.MEMBERS}
+                              unit={TimeValueAbbreviations.MEMBERS}
+                              value={group.info.membersCount}
+                              variant={'positive'}
+                            />
+                          </LabelBlock>
+                        )}
                       </InfoBlock>
 
                       <Container>
@@ -881,7 +942,7 @@ class BrandPage extends PureComponent {
                     </WhiteBlock>
                   )}
 
-                  {isTablet && (
+                  {isTablet && !isMobile && (
                     <WhiteBlock>
                       <LogoWrap>
                         <Logo
@@ -891,55 +952,193 @@ class BrandPage extends PureComponent {
                       </LogoWrap>
 
                       <InfoBlock>
+                        <Title>{group.name}</Title>
+                        <MemberLabel>
+                          <FormattedMessage id="app.pages.groups.youAreMember" />
+                        </MemberLabel>
+                        <Description>{group.description}</Description>
+                        <LabelBlock>
+                          <ActionCardLabel
+                            largeLabel
+                            labelWidth={105}
+                            category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
+                            unit={TimeValueAbbreviations.ACTIONS_TAKEN}
+                            value={group.userImpacts.actions.length}
+                            variant={'positive'}
+                          />
+                          <ActionCardPhysicalLabel
+                            largeLabel
+                            labelWidth={105}
+                            category={IMPACT_CATEGORIES.CLIMATE}
+                            unit={IMPACT_CATEGORIES.CLIMATE}
+                            value={processedUnitValue(
+                              _.get(
+                                group,
+                                'userImpacts.impactsInUnits.footprint.climate',
+                              ),
+                            )}
+                          />
+                          <ActionCardLabel
+                            largeLabel
+                            labelWidth={105}
+                            category={IMPACT_CATEGORIES.MEMBERS}
+                            unit={TimeValueAbbreviations.MEMBERS}
+                            value={group.info.membersCount}
+                            variant={'positive'}
+                          />
+                          <Icon
+                            type="question-circle"
+                            theme="filled"
+                            style={{ color: `${colors.gray}` }}
+                          />
+                        </LabelBlock>
+                      </InfoBlock>
+
+                      {/* <Container>
+                  {group.info.memberStatus === USER_GROUP_STATUSES.ACTIVE && (
+                    <Fragment>
+                      <AdminsList>
+                        {group.admins.map(({ user, groupInfo }, index) => (
+                          <AdminsListItem index={index} key={user._id}>
+                            <Link to={`/account/${user._id}`}>
+                              <Tooltip
+                                placement="top"
+                                title={`${user.fullName ||
+                                  ''} (${intl.formatMessage({
+                                  id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
+                                })})`}
+                              >
+                                <UserPhoto
+                                  src={
+                                    user.photo ||
+                                    getUserInitialAvatar(user.fullName)
+                                  }
+                                  alt="your photo"
+                                />
+                              </Tooltip>
+                            </Link>
+                          </AdminsListItem>
+                        ))}
+
+                        {group.admins.length > 5 && (
+                          <AdminsListItem index={6}>
+                            <MoreAdminsItem>
+                              +{group.admins.length - 5}
+                            </MoreAdminsItem>
+                          </AdminsListItem>
+                        )}
+                      </AdminsList>
+
+                      {[
+                        MEMBER_GROUP_ROLES.ADMIN,
+                        MEMBER_GROUP_ROLES.OWNER,
+                      ].includes(group.info.memberRole) &&
+                        group.status === GROUPS_STATUSES.ACTIVE && (
+                          <Tooltip
+                            getPopupContainer={() => this.$counter.current}
+                            placement="top"
+                            title={
+                              <TooltipTitle>
+                                {intl.formatMessage({
+                                  id: 'app.pages.groups.addRemovePeople',
+                                })}
+                                <br />
+                                {group.requestingMembersCount > 0 &&
+                                  intl.formatMessage(
+                                    {
+                                      id:
+                                        'app.pages.groups.addRemovePeopleCounter',
+                                    },
+                                    { count: group.requestingMembersCount },
+                                  )}
+                              </TooltipTitle>
+                            }
+                          >
+                            <DashedAdminCircle
+                              index={
+                                group.admins.length > 5
+                                  ? 7
+                                  : group.admins.length
+                              }
+                              ref={this.$counter}
+                              onClick={() => {
+                                this.setState({ modalVisible: true })
+                              }}
+                            >
+                              {group.requestingMembersCount > 0 && (
+                                <Counter>
+                                  {group.requestingMembersCount}
+                                </Counter>
+                              )}
+
+                              <Icon type="plus" />
+                            </DashedAdminCircle>
+                          </Tooltip>
+                        )}
+                    </Fragment>
+                  )}
+                </Container>  */}
+                    </WhiteBlock>
+                  )}
+                  {isMobile && (
+                    <WhiteBlock>
+                      <LogoWrap>
+                        <Logo
+                          src={getUserInitialAvatar(group.name)}
+                          alt="preview"
+                        />
+                      </LogoWrap>
+                      <InfoBlock>
                         <MobileTitle>{group.name}</MobileTitle>
-                        <StatusWrapper>
-                          <Status>
-                            <FormattedMessage id="in progress" />
-                          </Status>
-                        </StatusWrapper>
-                        {/* {!!statusLabelId && (
-                  <StatusWrapper inactive={expired}>
-                    <Status inactive={expired}>
-                      <FormattedMessage id={statusLabelId} />
-                    </Status>
-                  </StatusWrapper>
-                )} */}
                         <MobileDescription>
                           {group.description}
                         </MobileDescription>
                         <MobileMemberLabel>
                           <FormattedMessage id="app.pages.groups.youAreMember" />
                         </MobileMemberLabel>
-                        {/*    <LabelBlock>
-                    <ActionCardLabel
-                      largeLabel
-                      labelWidth={105}
-                      category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
-                      unit={TimeValueAbbreviations.ACTIONS_TAKEN}
-                      value={group.userImpacts.actions.length}
-                      variant={'positive'}
-                    />
-                    <ActionCardPhysicalLabel
-                      largeLabel
-                      labelWidth={105}
-                      category={IMPACT_CATEGORIES.CLIMATE}
-                      unit={IMPACT_CATEGORIES.CLIMATE}
-                      value={processedUnitValue(
-                        _.get(
-                          group,
-                          'userImpacts.impactsInUnits.footprint.climate',
-                        ),
-                      )}
-                    />
-                    <ActionCardLabel
-                      largeLabel
-                      labelWidth={105}
-                      category={IMPACT_CATEGORIES.MEMBERS}
-                      unit={TimeValueAbbreviations.MEMBERS}
-                      value={group.info.membersCount}
-                      variant={'positive'}
-                    />
-                  </LabelBlock> */}
+                        <div
+                          style={{
+                            width: '80%',
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                          }}
+                        >
+                          <Icon
+                            type="question-circle"
+                            theme="filled"
+                            style={{ color: `${colors.gray}` }}
+                          />
+                        </div>
+                        <LabelBlock>
+                          <ActionCardLabel
+                            largeLabel
+                            labelWidth={81}
+                            category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
+                            unit={TimeValueAbbreviations.ACTIONS_TAKEN}
+                            value={group.userImpacts.actions.length}
+                            variant={'positive'}
+                          />
+                          <ActionCardPhysicalLabel
+                            largeLabel
+                            labelWidth={81}
+                            category={IMPACT_CATEGORIES.CLIMATE}
+                            unit={IMPACT_CATEGORIES.CLIMATE}
+                            value={processedUnitValue(
+                              _.get(
+                                group,
+                                'userImpacts.impactsInUnits.footprint.climate',
+                              ),
+                            )}
+                          />
+                          <ActionCardLabel
+                            largeLabel
+                            labelWidth={81}
+                            category={IMPACT_CATEGORIES.MEMBERS}
+                            unit={TimeValueAbbreviations.MEMBERS}
+                            value={group.info.membersCount}
+                            variant={'positive'}
+                          />
+                        </LabelBlock>
                       </InfoBlock>
 
                       {/* <Container>

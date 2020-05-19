@@ -84,7 +84,7 @@ export const TotalImpactTitle = styled.p`
   font-style: normal;
   font-size: 16px;
   line-height: 20px;
-  color: #344442;
+  color: ${colors.dark};
   text-align: center;
   margin-top: 42px;
 `
@@ -100,5 +100,5 @@ export const ActionLabelsBlock = styled.div`
 export const Separator = styled.div`
   height: 1px;
   width: 100%;
-  background-color: #c4c4c4;
+  background-color: ${colors.switchUnitsBackground};
 `

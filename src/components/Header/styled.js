@@ -43,9 +43,9 @@ export const HeaderWrap = styled(Layout.Header)`
   justify-content: space-between;
   font-size: 16px;
   font-family: ${({ font }) => font || '"Noto Sans", sans-serif'};
+
   ${media.largeDesktop`
     padding: 0 34px;
-    flex-direction: row-reverse;
   `}
   ${media.phone`
     height: 70px;
@@ -134,12 +134,11 @@ export const LogoSmall = styled.div`
   display: flex;
   flex: 1;
   justify-content: flex-start;
+
   ${media.largeDesktop`
-    justify-content: flex-end;
     a {
       display: flex;
       justify-content: center;
-      margin-left: -20px;
     }
   `}
 `
