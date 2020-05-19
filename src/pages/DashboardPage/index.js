@@ -140,6 +140,9 @@ const DashboardHeaderUserName = styled.div`
   color: ${colors.dark};
   font-size: 28px;
   line-height: 35px;
+
+  ${media.phone`
+  `}
 `
 
 const DashboardHeaderUserSince = styled.div`

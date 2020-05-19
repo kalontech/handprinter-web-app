@@ -5,16 +5,47 @@ import { Select, Icon } from 'antd'
 
 import colors from 'config/colors'
 
-import { TabsSelectWrapper } from './styled'
+import { TabsSelectWrapper, SelectButtonWrapper, SelectButton } from './styled'
 
 const { Option } = Select
 
-const TabsSelect = ({ defaultSelectVal, isMobile, data }) => {
+const TabsSelect = props => {
+  const {
+    defaultSelectVal,
+    isMobile,
+    data,
+    history,
+    formatMessage,
+    isActionsPage,
+    search,
+  } = props
+
+  let defaultValue
+  switch (search) {
+    case '?view=actions':
+      defaultValue = 'Actions'
+      break
+    case '?view=statistics':
+      defaultValue = 'Statistics'
+      break
+    case '?view=participants':
+      defaultValue = 'Participants'
+      break
+    case '?view=activity':
+      defaultValue = 'Activity'
+      break
+    case '?view=groups&tabIndex=0':
+      defaultValue = 'My Groups'
+      break
+    default:
+      break
+  }
+
   return (
     <TabsSelectWrapper>
       <Select
         mode="default"
-        defaultValue={defaultSelectVal}
+        defaultValue={defaultValue || defaultSelectVal}
         dropdownMenuStyle={{
           background: `${colors.dark}`,
           marginTop: '-3px',
@@ -24,18 +55,51 @@ const TabsSelect = ({ defaultSelectVal, isMobile, data }) => {
         {data.map(tabOpt => {
           if (tabOpt) {
             return (
-              <Option key={1} style={{ background: `${colors.dark}` }}>
-                <Link to={tabOpt.to} style={{ color: `${colors.white}` }}>
+              <Option
+                key={1}
+                style={{ background: `${colors.dark}`, width: '100%' }}
+                value={tabOpt.text}
+              >
+                <Link
+                  to={tabOpt.to}
+                  style={{
+                    color: `${colors.white}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
                   <Icon
                     component={tabOpt.icon}
                     style={{ marginRight: '10px' }}
                   />
-                  {tabOpt.text}
+                  <p style={{ width: '90%' }}>{tabOpt.text}</p>
                 </Link>
               </Option>
             )
           }
         })}
+        {isActionsPage && (
+          <Option
+            key={5}
+            style={{
+              background: `${colors.dark}`,
+              cursor: 'unset',
+            }}
+            disabled
+          >
+            <SelectButtonWrapper>
+              <SelectButton
+                onClick={() => {
+                  history.push('/account/actions/create')
+                }}
+              >
+                <p style={{ opacity: '1' }}>
+                  {formatMessage({ id: 'app.headerActions.addAction' })}
+                </p>
+              </SelectButton>
+            </SelectButtonWrapper>
+          </Option>
+        )}
       </Select>
     </TabsSelectWrapper>
   )
@@ -45,6 +109,10 @@ TabsSelect.propTypes = {
   defaultSelectVal: PropTypes.node,
   isMobile: PropTypes.bool,
   data: PropTypes.array,
+  history: PropTypes.object,
+  formatMessage: PropTypes.func,
+  isActionsPage: PropTypes.bool,
+  search: PropTypes.string,
 }
 
 export default TabsSelect

@@ -116,8 +116,7 @@ export const HeaderCamapingDescription = styled.p`
   text-align: center;
 
   ${media.phone`
-    width: 90%;
-    height: 100px;
+    width: 280px;
   `}
 `
 
@@ -445,6 +444,6 @@ export const FeedWrapper = styled.div`
   `}
 
   ${media.phone`
-    padding: 16px
+    padding: 16px;
   `}
 `

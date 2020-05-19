@@ -192,6 +192,14 @@ export const ActivityHeader = props => {
   const isTablet = width < sizes.largeDesktop
   const isMobile = width < sizes.tablet
 
+  const selectedUserId = (participants, actor) => {
+    participants.filter(item => {
+      if (item.user.fullName === actor) {
+        return props.history.push(`/account/${item.user._id}`)
+      }
+    })
+  }
+
   return (
     <Flex
       sx={{
@@ -209,9 +217,18 @@ export const ActivityHeader = props => {
           <Avatar
             src={_.get(activity, 'actor.data.profileImage')}
             sx={{ mr: 2 }}
+            onClick={() =>
+              selectedUserId(props.participants, activity.actor.data.name)
+            }
+            style={{ cursor: 'pointer' }}
           />
           <Box>
-            <Box>
+            <Box
+              onClick={() =>
+                selectedUserId(props.participants, activity.actor.data.name)
+              }
+              style={{ cursor: 'pointer' }}
+            >
               <UserName>
                 <strong>{userName}</strong>
               </UserName>
@@ -250,7 +267,11 @@ export const ActivityHeader = props => {
                   marginBottom: '20px',
                   marginLeft: '8px',
                   width: isTablet ? '100%' : 'none',
+                  cursor: 'pointer',
                 }}
+                onClick={() =>
+                  selectedUserId(props.participants, activity.actor.data.name)
+                }
               >
                 <Avatar
                   src={_.get(activity, 'actor.data.profileImage')}

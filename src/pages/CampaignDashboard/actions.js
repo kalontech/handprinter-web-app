@@ -32,9 +32,9 @@ function getActions(props, selectedKey) {
         ? isAccomplished
         : !isAccomplished
     })
-  } else {
-    return actions
-  }
+  } else if (selectedKey === ACTIONS_TABS.ACCOMPLISHED) {
+    return []
+  } else return actions
 }
 
 export default function renderActions(props) {
@@ -52,6 +52,7 @@ export default function renderActions(props) {
     : ACTIONS_TABS.TODO
 
   const filteredActions = getActions(props, selectedKey)
+
   return (
     <Fragment>
       <MenuStyled
