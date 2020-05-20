@@ -844,8 +844,6 @@ class BrandPage extends PureComponent {
       </div>
     )
 
-    console.log(this.state.activeTab)
-
     return (
       <Block>
         {loading && !group && <SpinnerStyled />}
@@ -1064,98 +1062,6 @@ class BrandPage extends PureComponent {
                           />
                         </LabelBlock>
                       </InfoBlock>
-
-                      <Container>
-                        {group.info.memberStatus ===
-                          USER_GROUP_STATUSES.ACTIVE && (
-                          <Fragment>
-                            <AdminsList>
-                              {group.admins.map(
-                                ({ user, groupInfo }, index) => (
-                                  <AdminsListItem index={index} key={user._id}>
-                                    <Link to={`/account/${user._id}`}>
-                                      <Tooltip
-                                        placement="top"
-                                        title={`${user.fullName ||
-                                          ''} (${intl.formatMessage({
-                                          id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
-                                        })})`}
-                                      >
-                                        <UserPhoto
-                                          src={
-                                            user.photo ||
-                                            getUserInitialAvatar(user.fullName)
-                                          }
-                                          alt="your photo"
-                                        />
-                                      </Tooltip>
-                                    </Link>
-                                  </AdminsListItem>
-                                ),
-                              )}
-
-                              {group.admins.length > 5 && (
-                                <AdminsListItem index={6}>
-                                  <MoreAdminsItem>
-                                    +{group.admins.length - 5}
-                                  </MoreAdminsItem>
-                                </AdminsListItem>
-                              )}
-                            </AdminsList>
-
-                            {[
-                              MEMBER_GROUP_ROLES.ADMIN,
-                              MEMBER_GROUP_ROLES.OWNER,
-                            ].includes(group.info.memberRole) &&
-                              group.status === GROUPS_STATUSES.ACTIVE && (
-                                <Tooltip
-                                  getPopupContainer={() =>
-                                    this.$counter.current
-                                  }
-                                  placement="top"
-                                  title={
-                                    <TooltipTitle>
-                                      {intl.formatMessage({
-                                        id: 'app.pages.groups.addRemovePeople',
-                                      })}
-                                      <br />
-                                      {group.requestingMembersCount > 0 &&
-                                        intl.formatMessage(
-                                          {
-                                            id:
-                                              'app.pages.groups.addRemovePeopleCounter',
-                                          },
-                                          {
-                                            count: group.requestingMembersCount,
-                                          },
-                                        )}
-                                    </TooltipTitle>
-                                  }
-                                >
-                                  <DashedAdminCircle
-                                    index={
-                                      group.admins.length > 5
-                                        ? 7
-                                        : group.admins.length
-                                    }
-                                    ref={this.$counter}
-                                    onClick={() => {
-                                      this.setState({ modalVisible: true })
-                                    }}
-                                  >
-                                    {group.requestingMembersCount > 0 && (
-                                      <Counter>
-                                        {group.requestingMembersCount}
-                                      </Counter>
-                                    )}
-
-                                    <Icon type="plus" />
-                                  </DashedAdminCircle>
-                                </Tooltip>
-                              )}
-                          </Fragment>
-                        )}
-                      </Container>
                     </WhiteBlock>
                   )}
                   {isMobile && (
@@ -1218,98 +1124,6 @@ class BrandPage extends PureComponent {
                           />
                         </LabelBlock>
                       </InfoBlock>
-
-                      <Container>
-                        {group.info.memberStatus ===
-                          USER_GROUP_STATUSES.ACTIVE && (
-                          <Fragment>
-                            <AdminsList>
-                              {group.admins.map(
-                                ({ user, groupInfo }, index) => (
-                                  <AdminsListItem index={index} key={user._id}>
-                                    <Link to={`/account/${user._id}`}>
-                                      <Tooltip
-                                        placement="top"
-                                        title={`${user.fullName ||
-                                          ''} (${intl.formatMessage({
-                                          id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
-                                        })})`}
-                                      >
-                                        <UserPhoto
-                                          src={
-                                            user.photo ||
-                                            getUserInitialAvatar(user.fullName)
-                                          }
-                                          alt="your photo"
-                                        />
-                                      </Tooltip>
-                                    </Link>
-                                  </AdminsListItem>
-                                ),
-                              )}
-
-                              {group.admins.length > 5 && (
-                                <AdminsListItem index={6}>
-                                  <MoreAdminsItem>
-                                    +{group.admins.length - 5}
-                                  </MoreAdminsItem>
-                                </AdminsListItem>
-                              )}
-                            </AdminsList>
-
-                            {[
-                              MEMBER_GROUP_ROLES.ADMIN,
-                              MEMBER_GROUP_ROLES.OWNER,
-                            ].includes(group.info.memberRole) &&
-                              group.status === GROUPS_STATUSES.ACTIVE && (
-                                <Tooltip
-                                  getPopupContainer={() =>
-                                    this.$counter.current
-                                  }
-                                  placement="top"
-                                  title={
-                                    <TooltipTitle>
-                                      {intl.formatMessage({
-                                        id: 'app.pages.groups.addRemovePeople',
-                                      })}
-                                      <br />
-                                      {group.requestingMembersCount > 0 &&
-                                        intl.formatMessage(
-                                          {
-                                            id:
-                                              'app.pages.groups.addRemovePeopleCounter',
-                                          },
-                                          {
-                                            count: group.requestingMembersCount,
-                                          },
-                                        )}
-                                    </TooltipTitle>
-                                  }
-                                >
-                                  <DashedAdminCircle
-                                    index={
-                                      group.admins.length > 5
-                                        ? 7
-                                        : group.admins.length
-                                    }
-                                    ref={this.$counter}
-                                    onClick={() => {
-                                      this.setState({ modalVisible: true })
-                                    }}
-                                  >
-                                    {group.requestingMembersCount > 0 && (
-                                      <Counter>
-                                        {group.requestingMembersCount}
-                                      </Counter>
-                                    )}
-
-                                    <Icon type="plus" />
-                                  </DashedAdminCircle>
-                                </Tooltip>
-                              )}
-                          </Fragment>
-                        )}
-                      </Container>
                     </WhiteBlock>
                   )}
                   {!isTablet && !isMobile && (

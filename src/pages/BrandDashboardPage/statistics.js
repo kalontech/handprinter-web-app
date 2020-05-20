@@ -11,6 +11,7 @@ import {
   TotalImpactTitle,
   ActionLabelsBlock,
   Separator,
+  ActionLabelsTitle,
 } from './styled'
 import AccomplishedAction from './accomplishedAction'
 
@@ -60,14 +61,15 @@ export default function renderStatistics(props) {
         <Spinner />
       ) : (
         <StatisticsMain>
-          {props.activeTab && (
+          {!props.isTablet && !props.isMobile && (
             <StatisticsContainer>
-              {!props.isTablet && !props.isMobile && (
-                <StatisticsScrollTitle>
-                  <FormattedMessage id="app.organization.impact" />
-                </StatisticsScrollTitle>
-              )}
+              <StatisticsScrollTitle>
+                <FormattedMessage id="app.organization.impact" />
+              </StatisticsScrollTitle>
               <StatisticsScroll>
+                <ActionLabelsTitle>
+                  <p>Text</p>
+                </ActionLabelsTitle>
                 <TotalImpactTitle>
                   <FormattedMessage id="app.organization.total.impact" />
                 </TotalImpactTitle>
@@ -143,13 +145,109 @@ export default function renderStatistics(props) {
               </StatisticsScroll>
             </StatisticsContainer>
           )}
-          {!props.activeTab && (
+          {props.activeTab && props.isTablet && (
+            <StatisticsContainer>
+              <StatisticsScroll>
+                <TotalImpactTitle>
+                  <FormattedMessage id="app.organization.total.impact" />
+                </TotalImpactTitle>
+                <ActionLabelsTitle>
+                  <p>Text</p>
+                </ActionLabelsTitle>
+                <ActionLabelsBlock>
+                  <ActionCardLabelSet
+                    largeLabel
+                    impacts={organizationImpacts}
+                    impactsInUnits={organizationImpactsInUnits}
+                    showPhysicalValues={UIContextData.showPhysicalValues}
+                  />
+                </ActionLabelsBlock>
+                <ActionLabelsBlock>
+                  <ActionCardLabel
+                    largeLabel
+                    labelWidth={105}
+                    category={IMPACT_CATEGORIES.MEMBERS}
+                    unit={TimeValueAbbreviations.MEMBERS}
+                    value={group.info.membersCount}
+                    variant={'positive'}
+                  />
+                  <ActionCardLabel
+                    largeLabel
+                    labelWidth={105}
+                    category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
+                    unit={TimeValueAbbreviations.ACTIONS_TAKEN}
+                    value={
+                      group.userImpacts ? group.userImpacts.actions.length : 0
+                    }
+                    variant={'positive'}
+                  />
+                </ActionLabelsBlock>
+                <Separator />
+                {groupNetwork && (
+                  <Fragment>
+                    <TotalImpactTitle>
+                      <FormattedMessage id="app.organization.total.impact.network" />
+                    </TotalImpactTitle>
+                    <ActionLabelsBlock>
+                      <ActionCardLabelSet
+                        largeLabel
+                        impacts={networkImpacts}
+                        impactsInUnits={networkImpactsInUnits}
+                        showPhysicalValues={UIContextData.showPhysicalValues}
+                      />
+                    </ActionLabelsBlock>
+                    <ActionLabelsBlock>
+                      <ActionCardLabel
+                        largeLabel
+                        labelWidth={105}
+                        category={IMPACT_CATEGORIES.MEMBERS}
+                        unit={TimeValueAbbreviations.NETWORK_MEMBERS}
+                        value={
+                          group.info.membersCount +
+                          groupNetwork.info.networkMembersCount
+                        }
+                        variant={'positive'}
+                      />
+                      <ActionCardLabel
+                        largeLabel
+                        labelWidth={105}
+                        category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
+                        unit={TimeValueAbbreviations.ACTIONS_TAKEN}
+                        value={
+                          groupNetwork.networkImpacts
+                            ? groupNetwork.networkImpacts.actions.length
+                            : 0
+                        }
+                        variant={'positive'}
+                      />
+                    </ActionLabelsBlock>
+                  </Fragment>
+                )}
+              </StatisticsScroll>
+            </StatisticsContainer>
+          )}
+          {!props.activeTab && props.isTablet && (
             <StatisticsContainer>
               {!props.isTablet && !props.isMobile && (
                 <StatisticsScrollTitle>
                   <FormattedMessage id="app.header.menu.actions" />
                 </StatisticsScrollTitle>
               )}
+              <StatisticsScroll>
+                {sortedActions.map(accomplished => (
+                  <AccomplishedAction
+                    key={accomplished.action._id}
+                    accomplished={accomplished}
+                  />
+                ))}
+              </StatisticsScroll>
+            </StatisticsContainer>
+          )}
+          {!props.activeTab && !props.isTablet && !props.isMobile && (
+            <StatisticsContainer>
+              <StatisticsScrollTitle>
+                <FormattedMessage id="app.header.menu.actions" />
+              </StatisticsScrollTitle>
               <StatisticsScroll>
                 {sortedActions.map(accomplished => (
                   <AccomplishedAction

@@ -8,11 +8,19 @@ import media from 'utils/mediaQueryTemplate'
 
 const CardLabelWrap = styled.div`
   display: flex;
-  ${media.phone`
+
+  ${media.tablet`
     ${props => props.mobileFixedWidth && 'max-width: 285px;'}
     margin-right: 5px;
     position: relative;
     left: 4%;
+  `}
+
+  ${media.phone`
+    margin-right: 0px;
+    position: relative;
+    flex-wrap: wrap;
+    justify-content: center;
   `}
 `
 
