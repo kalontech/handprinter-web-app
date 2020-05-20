@@ -196,3 +196,16 @@ export const ActionLabelsTitle = styled.div`
     align-items: flex-start;
   `}
 `
+
+export const FeedWrapper = styled.div`
+  padding-right: 145px;
+  padding-left: 145px;
+
+  ${media.largeDesktop`
+    padding: 16px 34px 16px 34px;
+  `}
+
+  ${media.phone`
+    padding: 16px
+  `}
+`
