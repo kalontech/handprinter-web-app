@@ -160,6 +160,7 @@ export default function renderStatistics(props) {
                     impacts={organizationImpacts}
                     impactsInUnits={organizationImpactsInUnits}
                     showPhysicalValues={UIContextData.showPhysicalValues}
+                    justify
                   />
                 </ActionLabelsBlock>
                 <ActionLabelsBlock>
@@ -194,6 +195,7 @@ export default function renderStatistics(props) {
                         impacts={networkImpacts}
                         impactsInUnits={networkImpactsInUnits}
                         showPhysicalValues={UIContextData.showPhysicalValues}
+                        justify
                       />
                     </ActionLabelsBlock>
                     <ActionLabelsBlock>
@@ -238,6 +240,8 @@ export default function renderStatistics(props) {
                   <AccomplishedAction
                     key={accomplished.action._id}
                     accomplished={accomplished}
+                    isTablet={props.isTablet}
+                    isMobile={props.isMobile}
                   />
                 ))}
               </StatisticsScroll>

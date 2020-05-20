@@ -66,6 +66,24 @@ export const AccomplishedActionContainer = styled.div`
     background: ${colors.white};
     padding: 8px;
   `}
+
+  ${media.phone`
+    width: 100%;
+    height: 179px;
+  `}
+`
+
+export const AccomplishedActionContainerMobile = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  background: ${colors.white};
+  padding: 5px;
+
+  ${media.phone`
+    width: 100%;
+    height: 179px;
+  `};
 `
 
 export const AccomplishedActionPicture = styled.img`
@@ -74,6 +92,7 @@ export const AccomplishedActionPicture = styled.img`
   border-radius: 4px;
   object-fit: cover;
 `
+
 export const AccomplishedActionName = styled.p`
   display: flex;
   font-family: Noto Sans;
@@ -83,6 +102,7 @@ export const AccomplishedActionName = styled.p`
   line-height: 28px;
   color: ${colors.dark};
 `
+
 export const AccomplishedActionCountBG = styled.div`
   width: 32px;
   height: 32px;
@@ -108,6 +128,10 @@ export const AccomplishedActionNameBlock = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   margin-left: 13px;
+
+  ${media.phone`
+    width: 166px;
+  `}
 `
 
 export const TotalImpactTitle = styled.p`

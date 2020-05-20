@@ -8,8 +8,9 @@ import media from 'utils/mediaQueryTemplate'
 
 const CardLabelWrap = styled.div`
   display: flex;
+  justify-content: flex-start;
 
-  ${media.tablet`
+  ${media.largeDesktop`
     ${props => props.mobileFixedWidth && 'max-width: 285px;'}
     margin-right: 5px;
     position: relative;
@@ -20,7 +21,7 @@ const CardLabelWrap = styled.div`
     margin-right: 0px;
     position: relative;
     flex-wrap: wrap;
-    justify-content: center;
+    left: 0;
   `}
 `
 
@@ -56,13 +57,17 @@ const ActionCardLabelSet = props => {
     mobileFixedWidth,
     showPhysicalValues,
     largeLabel,
+    justify,
   } = props
 
   if (!impacts) return null
 
   if (showPhysicalValues) {
     return (
-      <CardLabelWrap mobileFixedWidth={mobileFixedWidth}>
+      <CardLabelWrap
+        mobileFixedWidth={mobileFixedWidth}
+        style={{ justifyContent: justify ? 'center' : 'flex-start' }}
+      >
         {impactsInUnits.footprint &&
           Object.entries(impactsInUnits.footprint)
             .filter(([category, value]) => value > 0)
@@ -92,7 +97,10 @@ const ActionCardLabelSet = props => {
     )
   } else {
     return (
-      <CardLabelWrap mobileFixedWidth={mobileFixedWidth}>
+      <CardLabelWrap
+        mobileFixedWidth={mobileFixedWidth}
+        style={{ justifyContent: justify ? 'center' : 'flex-start' }}
+      >
         {impacts.footprint &&
           Object.entries(impacts.footprint)
             .filter(([category, timeValue]) => timeValue.minutes > 0)
@@ -135,6 +143,7 @@ ActionCardLabelSet.propTypes = {
   hideTooltip: PropTypes.bool,
   mobileFixedWidth: PropTypes.bool,
   showPhysicalValues: PropTypes.bool,
+  justify: PropTypes.bool,
 }
 
 export default ActionCardLabelSet

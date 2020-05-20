@@ -560,8 +560,9 @@ const StatisticTabsWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 50px;
-  width: 300px;
+  width: 100%;
   justify-content: space-around;
+  background: ${colors.white};
 
   div {
     display: flex;
