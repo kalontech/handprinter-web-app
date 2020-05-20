@@ -48,6 +48,7 @@ import Statistics from './statistics'
 
 import ActionCardLabel from '../../components/ActionCardLabel'
 import ActionCardPhysicalLabel from '../../components/ActionCardPhysicalLabel'
+import TabsSelect from '../../components/TabsSelect'
 import {
   IMPACT_CATEGORIES,
   TimeValueAbbreviations,
@@ -98,6 +99,7 @@ const Container = styled.div`
   ${media.largeDesktop`
     padding-left: 34px;
     padding-right: 34px;
+    background: ${colors.lightGray};
   `}
 
   ${media.phone`
@@ -542,7 +544,6 @@ export const StatusWrapper = styled.div`
   `}
 
   ${media.phone`
-    
   `}
 `
 export const Status = styled.p`
@@ -553,6 +554,20 @@ export const Status = styled.p`
   line-height: 20px;
   color: ${props => (props.inactive ? colors.darkGray : colors.green)};
   text-transform: uppercase;
+`
+
+const StatisticTabsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 300px;
+  justify-content: space-around;
+
+  div {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
 `
 
 const GROUP_TABS = {
@@ -580,8 +595,6 @@ async function getGroupData(props) {
       belongsToBrand: overrides.brandName,
       status: USER_GROUP_STATUSES.ACTIVE,
     }))
-
-  console.log(res)
 
   return {
     group: res,
@@ -632,6 +645,7 @@ class BrandPage extends PureComponent {
         ? TABS_TYPES.select
         : TABS_TYPES.default,
     width: window.innerWidth,
+    activeTab: true,
   }
 
   $counter = React.createRef()
@@ -757,6 +771,18 @@ class BrandPage extends PureComponent {
     this.setState({ moreAchievesVisible: visible })
   }
 
+  toggleToTabOrgImpact = () => {
+    this.setState({
+      activeTab: true,
+    })
+  }
+
+  toggleToTabActions = () => {
+    this.setState({
+      activeTab: false,
+    })
+  }
+
   render() {
     const {
       visibleTabs,
@@ -765,6 +791,7 @@ class BrandPage extends PureComponent {
       loadingMorelNews,
       groupNetwork,
       width,
+      activeTab,
     } = this.state
     const {
       loading,
@@ -779,6 +806,45 @@ class BrandPage extends PureComponent {
 
     const isTablet = width < sizes.largeDesktop
     const isMobile = width < sizes.tablet
+
+    const tabsList = [
+      {
+        to: `/brand/dashboard/${GROUP_TABS.STATISTICS}`,
+        icon: ({ color }) => <Icon type="bar-chart" color={color} />,
+        text: intl.formatMessage({
+          id: 'app.pages.groups.statistics',
+        }),
+        active: match.params.subset === GROUP_TABS.STATISTICS,
+      },
+      {
+        to: `/brand/dashboard/${GROUP_TABS.MEMBERS}`,
+        icon: SuggestedIcon,
+        text: intl.formatMessage({
+          id: 'app.pages.groups.members',
+        }),
+        active: match.params.subset === GROUP_TABS.MEMBERS,
+      },
+      // {
+      //   to: `/brand/dashboard/${GROUP_TABS.ACTIVITY}`,
+      //   icon: FlagIconComponent,
+      //   text: intl.formatMessage({ id: 'app.pages.groups.activity' }),
+      //   active: match.params.subset === GROUP_TABS.ACTIVITY,
+      // },
+    ]
+
+    const defaultSelectVal = (
+      <div>
+        <Icon
+          type="bar-chart"
+          style={{ marginRight: '10px', color: 'white' }}
+        />
+        {intl.formatMessage({
+          id: 'app.pages.groups.statistics',
+        })}
+      </div>
+    )
+
+    console.log(this.state.activeTab)
 
     return (
       <Block>
@@ -843,6 +909,11 @@ class BrandPage extends PureComponent {
                               unit={TimeValueAbbreviations.MEMBERS}
                               value={group.info.membersCount}
                               variant={'positive'}
+                            />
+                            <Icon
+                              type="question-circle"
+                              theme="filled"
+                              style={{ color: `${colors.gray}` }}
                             />
                           </LabelBlock>
                         )}
@@ -994,90 +1065,97 @@ class BrandPage extends PureComponent {
                         </LabelBlock>
                       </InfoBlock>
 
-                      {/* <Container>
-                  {group.info.memberStatus === USER_GROUP_STATUSES.ACTIVE && (
-                    <Fragment>
-                      <AdminsList>
-                        {group.admins.map(({ user, groupInfo }, index) => (
-                          <AdminsListItem index={index} key={user._id}>
-                            <Link to={`/account/${user._id}`}>
-                              <Tooltip
-                                placement="top"
-                                title={`${user.fullName ||
-                                  ''} (${intl.formatMessage({
-                                  id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
-                                })})`}
-                              >
-                                <UserPhoto
-                                  src={
-                                    user.photo ||
-                                    getUserInitialAvatar(user.fullName)
-                                  }
-                                  alt="your photo"
-                                />
-                              </Tooltip>
-                            </Link>
-                          </AdminsListItem>
-                        ))}
-
-                        {group.admins.length > 5 && (
-                          <AdminsListItem index={6}>
-                            <MoreAdminsItem>
-                              +{group.admins.length - 5}
-                            </MoreAdminsItem>
-                          </AdminsListItem>
-                        )}
-                      </AdminsList>
-
-                      {[
-                        MEMBER_GROUP_ROLES.ADMIN,
-                        MEMBER_GROUP_ROLES.OWNER,
-                      ].includes(group.info.memberRole) &&
-                        group.status === GROUPS_STATUSES.ACTIVE && (
-                          <Tooltip
-                            getPopupContainer={() => this.$counter.current}
-                            placement="top"
-                            title={
-                              <TooltipTitle>
-                                {intl.formatMessage({
-                                  id: 'app.pages.groups.addRemovePeople',
-                                })}
-                                <br />
-                                {group.requestingMembersCount > 0 &&
-                                  intl.formatMessage(
-                                    {
-                                      id:
-                                        'app.pages.groups.addRemovePeopleCounter',
-                                    },
-                                    { count: group.requestingMembersCount },
-                                  )}
-                              </TooltipTitle>
-                            }
-                          >
-                            <DashedAdminCircle
-                              index={
-                                group.admins.length > 5
-                                  ? 7
-                                  : group.admins.length
-                              }
-                              ref={this.$counter}
-                              onClick={() => {
-                                this.setState({ modalVisible: true })
-                              }}
-                            >
-                              {group.requestingMembersCount > 0 && (
-                                <Counter>
-                                  {group.requestingMembersCount}
-                                </Counter>
+                      <Container>
+                        {group.info.memberStatus ===
+                          USER_GROUP_STATUSES.ACTIVE && (
+                          <Fragment>
+                            <AdminsList>
+                              {group.admins.map(
+                                ({ user, groupInfo }, index) => (
+                                  <AdminsListItem index={index} key={user._id}>
+                                    <Link to={`/account/${user._id}`}>
+                                      <Tooltip
+                                        placement="top"
+                                        title={`${user.fullName ||
+                                          ''} (${intl.formatMessage({
+                                          id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
+                                        })})`}
+                                      >
+                                        <UserPhoto
+                                          src={
+                                            user.photo ||
+                                            getUserInitialAvatar(user.fullName)
+                                          }
+                                          alt="your photo"
+                                        />
+                                      </Tooltip>
+                                    </Link>
+                                  </AdminsListItem>
+                                ),
                               )}
 
-                              <Icon type="plus" />
-                            </DashedAdminCircle>
-                          </Tooltip>
+                              {group.admins.length > 5 && (
+                                <AdminsListItem index={6}>
+                                  <MoreAdminsItem>
+                                    +{group.admins.length - 5}
+                                  </MoreAdminsItem>
+                                </AdminsListItem>
+                              )}
+                            </AdminsList>
+
+                            {[
+                              MEMBER_GROUP_ROLES.ADMIN,
+                              MEMBER_GROUP_ROLES.OWNER,
+                            ].includes(group.info.memberRole) &&
+                              group.status === GROUPS_STATUSES.ACTIVE && (
+                                <Tooltip
+                                  getPopupContainer={() =>
+                                    this.$counter.current
+                                  }
+                                  placement="top"
+                                  title={
+                                    <TooltipTitle>
+                                      {intl.formatMessage({
+                                        id: 'app.pages.groups.addRemovePeople',
+                                      })}
+                                      <br />
+                                      {group.requestingMembersCount > 0 &&
+                                        intl.formatMessage(
+                                          {
+                                            id:
+                                              'app.pages.groups.addRemovePeopleCounter',
+                                          },
+                                          {
+                                            count: group.requestingMembersCount,
+                                          },
+                                        )}
+                                    </TooltipTitle>
+                                  }
+                                >
+                                  <DashedAdminCircle
+                                    index={
+                                      group.admins.length > 5
+                                        ? 7
+                                        : group.admins.length
+                                    }
+                                    ref={this.$counter}
+                                    onClick={() => {
+                                      this.setState({ modalVisible: true })
+                                    }}
+                                  >
+                                    {group.requestingMembersCount > 0 && (
+                                      <Counter>
+                                        {group.requestingMembersCount}
+                                      </Counter>
+                                    )}
+
+                                    <Icon type="plus" />
+                                  </DashedAdminCircle>
+                                </Tooltip>
+                              )}
+                          </Fragment>
                         )}
-                    </Fragment>
-                  )}
-                </Container>  */}
+                      </Container>
                     </WhiteBlock>
                   )}
                   {isMobile && (
@@ -1141,234 +1219,385 @@ class BrandPage extends PureComponent {
                         </LabelBlock>
                       </InfoBlock>
 
-                      {/* <Container>
-                  {group.info.memberStatus === USER_GROUP_STATUSES.ACTIVE && (
-                    <Fragment>
-                      <AdminsList>
-                        {group.admins.map(({ user, groupInfo }, index) => (
-                          <AdminsListItem index={index} key={user._id}>
-                            <Link to={`/account/${user._id}`}>
-                              <Tooltip
-                                placement="top"
-                                title={`${user.fullName ||
-                                  ''} (${intl.formatMessage({
-                                  id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
-                                })})`}
-                              >
-                                <UserPhoto
-                                  src={
-                                    user.photo ||
-                                    getUserInitialAvatar(user.fullName)
-                                  }
-                                  alt="your photo"
-                                />
-                              </Tooltip>
-                            </Link>
-                          </AdminsListItem>
-                        ))}
-
-                        {group.admins.length > 5 && (
-                          <AdminsListItem index={6}>
-                            <MoreAdminsItem>
-                              +{group.admins.length - 5}
-                            </MoreAdminsItem>
-                          </AdminsListItem>
-                        )}
-                      </AdminsList>
-
-                      {[
-                        MEMBER_GROUP_ROLES.ADMIN,
-                        MEMBER_GROUP_ROLES.OWNER,
-                      ].includes(group.info.memberRole) &&
-                        group.status === GROUPS_STATUSES.ACTIVE && (
-                          <Tooltip
-                            getPopupContainer={() => this.$counter.current}
-                            placement="top"
-                            title={
-                              <TooltipTitle>
-                                {intl.formatMessage({
-                                  id: 'app.pages.groups.addRemovePeople',
-                                })}
-                                <br />
-                                {group.requestingMembersCount > 0 &&
-                                  intl.formatMessage(
-                                    {
-                                      id:
-                                        'app.pages.groups.addRemovePeopleCounter',
-                                    },
-                                    { count: group.requestingMembersCount },
-                                  )}
-                              </TooltipTitle>
-                            }
-                          >
-                            <DashedAdminCircle
-                              index={
-                                group.admins.length > 5
-                                  ? 7
-                                  : group.admins.length
-                              }
-                              ref={this.$counter}
-                              onClick={() => {
-                                this.setState({ modalVisible: true })
-                              }}
-                            >
-                              {group.requestingMembersCount > 0 && (
-                                <Counter>
-                                  {group.requestingMembersCount}
-                                </Counter>
+                      <Container>
+                        {group.info.memberStatus ===
+                          USER_GROUP_STATUSES.ACTIVE && (
+                          <Fragment>
+                            <AdminsList>
+                              {group.admins.map(
+                                ({ user, groupInfo }, index) => (
+                                  <AdminsListItem index={index} key={user._id}>
+                                    <Link to={`/account/${user._id}`}>
+                                      <Tooltip
+                                        placement="top"
+                                        title={`${user.fullName ||
+                                          ''} (${intl.formatMessage({
+                                          id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
+                                        })})`}
+                                      >
+                                        <UserPhoto
+                                          src={
+                                            user.photo ||
+                                            getUserInitialAvatar(user.fullName)
+                                          }
+                                          alt="your photo"
+                                        />
+                                      </Tooltip>
+                                    </Link>
+                                  </AdminsListItem>
+                                ),
                               )}
 
-                              <Icon type="plus" />
-                            </DashedAdminCircle>
-                          </Tooltip>
+                              {group.admins.length > 5 && (
+                                <AdminsListItem index={6}>
+                                  <MoreAdminsItem>
+                                    +{group.admins.length - 5}
+                                  </MoreAdminsItem>
+                                </AdminsListItem>
+                              )}
+                            </AdminsList>
+
+                            {[
+                              MEMBER_GROUP_ROLES.ADMIN,
+                              MEMBER_GROUP_ROLES.OWNER,
+                            ].includes(group.info.memberRole) &&
+                              group.status === GROUPS_STATUSES.ACTIVE && (
+                                <Tooltip
+                                  getPopupContainer={() =>
+                                    this.$counter.current
+                                  }
+                                  placement="top"
+                                  title={
+                                    <TooltipTitle>
+                                      {intl.formatMessage({
+                                        id: 'app.pages.groups.addRemovePeople',
+                                      })}
+                                      <br />
+                                      {group.requestingMembersCount > 0 &&
+                                        intl.formatMessage(
+                                          {
+                                            id:
+                                              'app.pages.groups.addRemovePeopleCounter',
+                                          },
+                                          {
+                                            count: group.requestingMembersCount,
+                                          },
+                                        )}
+                                    </TooltipTitle>
+                                  }
+                                >
+                                  <DashedAdminCircle
+                                    index={
+                                      group.admins.length > 5
+                                        ? 7
+                                        : group.admins.length
+                                    }
+                                    ref={this.$counter}
+                                    onClick={() => {
+                                      this.setState({ modalVisible: true })
+                                    }}
+                                  >
+                                    {group.requestingMembersCount > 0 && (
+                                      <Counter>
+                                        {group.requestingMembersCount}
+                                      </Counter>
+                                    )}
+
+                                    <Icon type="plus" />
+                                  </DashedAdminCircle>
+                                </Tooltip>
+                              )}
+                          </Fragment>
                         )}
-                    </Fragment>
-                  )}
-                </Container>  */}
+                      </Container>
                     </WhiteBlock>
                   )}
-                  <TabsSecondary
-                    justify="center"
-                    list={[
-                      {
-                        to: `/brand/dashboard/${GROUP_TABS.STATISTICS}`,
-                        icon: ({ color }) => (
-                          <Icon type="bar-chart" color={color} />
-                        ),
-                        text: intl.formatMessage({
-                          id: 'app.pages.groups.statistics',
-                        }),
-                        active: match.params.subset === GROUP_TABS.STATISTICS,
-                      },
-                      {
-                        to: `/brand/dashboard/${GROUP_TABS.MEMBERS}`,
-                        icon: SuggestedIcon,
-                        text: intl.formatMessage({
-                          id: 'app.pages.groups.members',
-                        }),
-                        active: match.params.subset === GROUP_TABS.MEMBERS,
-                      },
-                      // {
-                      //   to: `/brand/dashboard/${GROUP_TABS.ACTIVITY}`,
-                      //   icon: FlagIconComponent,
-                      //   text: intl.formatMessage({ id: 'app.pages.groups.activity' }),
-                      //   active: match.params.subset === GROUP_TABS.ACTIVITY,
-                      // },
-                    ]}
-                    isOpen={visibleTabs}
-                    listType={tabsType}
-                    toggleVisible={visible => {
-                      this.setState({ visibleTabs: visible })
-                    }}
-                  >
-                    <Content>
-                      <Statistics {...this.props} groupNetwork={groupNetwork} />
-                    </Content>
-                    <Content>
-                      {loading ? (
-                        <Spinner />
-                      ) : (
-                        <Row
-                          type="flex"
-                          gutter={{ md: 20 }}
-                          style={{ flexGrow: '1' }}
-                        >
-                          {members.docs &&
-                            members.docs.map(item => {
-                              return (
-                                <Column
-                                  key={item.user._id}
-                                  xl={8}
-                                  lg={12}
-                                  md={12}
-                                  xs={24}
-                                >
-                                  <MemberCard
-                                    to={`/account/${item.user._id}`}
-                                    fullName={item.user.fullName}
-                                    photo={
-                                      item.user.photo ||
-                                      getUserInitialAvatar(item.user.fullName)
-                                    }
-                                    counter={intl.formatMessage(
-                                      { id: 'app.pages.groups.actionsTaken' },
-                                      {
-                                        count:
-                                          item.groupInfo
-                                            .memberTakenActionsCount,
-                                      },
-                                    )}
-                                    impacts={{ handprint: item.impacts }}
-                                    impactsInUnits={{
-                                      handprint: item.user.impactsInUnits
-                                        ? item.user.impactsInUnits.footprint
-                                        : null,
-                                    }}
-                                    showPhysicalValues={
-                                      context.showPhysicalValues
-                                    }
-                                  />
-                                </Column>
-                              )
-                            })}
-                        </Row>
-                      )}
-
-                      {!loading && members.totalPages > 1 && (
-                        <PaginationStyled
-                          current={members.page}
-                          pageSize={members.limit}
-                          total={members.totalDocs}
-                          itemRender={(current, type, originalElement) => {
-                            if (type === 'page') {
-                              return (
-                                <button
-                                  onClick={() => {
-                                    history.push(
-                                      `${location.pathname}?page=${current}`,
-                                    )
-                                  }}
-                                >
-                                  {originalElement}
-                                </button>
-                              )
-                            }
-                            if (type === 'prev' || type === 'next') {
-                              return null
-                            }
-                            return originalElement
-                          }}
+                  {!isTablet && !isMobile && (
+                    <TabsSecondary
+                      justify="center"
+                      list={tabsList}
+                      isOpen={visibleTabs}
+                      listType={tabsType}
+                      toggleVisible={visible => {
+                        this.setState({ visibleTabs: visible })
+                      }}
+                    >
+                      <Content>
+                        <Statistics
+                          {...this.props}
+                          groupNetwork={groupNetwork}
                         />
-                      )}
-                    </Content>
+                      </Content>
+                      <Content>
+                        {loading ? (
+                          <Spinner />
+                        ) : (
+                          <Row
+                            type="flex"
+                            gutter={{ md: 20 }}
+                            style={{ flexGrow: '1' }}
+                          >
+                            {members.docs &&
+                              members.docs.map(item => {
+                                return (
+                                  <Column
+                                    key={item.user._id}
+                                    xl={8}
+                                    lg={12}
+                                    md={12}
+                                    xs={24}
+                                  >
+                                    <MemberCard
+                                      to={`/account/${item.user._id}`}
+                                      fullName={item.user.fullName}
+                                      photo={
+                                        item.user.photo ||
+                                        getUserInitialAvatar(item.user.fullName)
+                                      }
+                                      counter={intl.formatMessage(
+                                        { id: 'app.pages.groups.actionsTaken' },
+                                        {
+                                          count:
+                                            item.groupInfo
+                                              .memberTakenActionsCount,
+                                        },
+                                      )}
+                                      impacts={{ handprint: item.impacts }}
+                                      impactsInUnits={{
+                                        handprint: item.user.impactsInUnits
+                                          ? item.user.impactsInUnits.footprint
+                                          : null,
+                                      }}
+                                      showPhysicalValues={
+                                        context.showPhysicalValues
+                                      }
+                                    />
+                                  </Column>
+                                )
+                              })}
+                          </Row>
+                        )}
 
-                    <Content>
-                      {loading ? (
-                        <Spinner />
-                      ) : (
-                        <NewsContainer>
-                          <NewsList
-                            actionLinkPrefix={`/groups/view/${
-                              match.params.id
-                            }/${match.params.subset}/`}
-                            news={news}
-                            locale={intl.locale}
+                        {!loading && members.totalPages > 1 && (
+                          <PaginationStyled
+                            current={members.page}
+                            pageSize={members.limit}
+                            total={members.totalDocs}
+                            itemRender={(current, type, originalElement) => {
+                              if (type === 'page') {
+                                return (
+                                  <button
+                                    onClick={() => {
+                                      history.push(
+                                        `${location.pathname}?page=${current}`,
+                                      )
+                                    }}
+                                  >
+                                    {originalElement}
+                                  </button>
+                                )
+                              }
+                              if (type === 'prev' || type === 'next') {
+                                return null
+                              }
+                              return originalElement
+                            }}
                           />
-                        </NewsContainer>
-                      )}
+                        )}
+                      </Content>
 
-                      {!loading && (
-                        <ButtonLoadMore
-                          loading={loadingMorelNews}
-                          onClick={this.loadMore}
+                      <Content>
+                        {loading ? (
+                          <Spinner />
+                        ) : (
+                          <NewsContainer>
+                            <NewsList
+                              actionLinkPrefix={`/groups/view/${
+                                match.params.id
+                              }/${match.params.subset}/`}
+                              news={news}
+                              locale={intl.locale}
+                            />
+                          </NewsContainer>
+                        )}
+
+                        {!loading && (
+                          <ButtonLoadMore
+                            loading={loadingMorelNews}
+                            onClick={this.loadMore}
+                          >
+                            {intl.formatMessage({
+                              id: 'app.newsPage.loadMoreNews',
+                            })}
+                          </ButtonLoadMore>
+                        )}
+                      </Content>
+                    </TabsSecondary>
+                  )}
+                  {(isTablet || isMobile) && (
+                    <>
+                      <TabsSelect
+                        data={tabsList}
+                        isMobile={isMobile}
+                        defaultSelectVal={defaultSelectVal}
+                        search={this.props.location.search}
+                      />
+                      <StatisticTabsWrapper>
+                        <div
+                          onClick={this.toggleToTabOrgImpact}
+                          style={{
+                            borderBottom: activeTab
+                              ? `3px solid ${colors.green}`
+                              : 'none',
+                          }}
                         >
-                          {intl.formatMessage({
-                            id: 'app.newsPage.loadMoreNews',
-                          })}
-                        </ButtonLoadMore>
+                          <span>Organization Impacts</span>
+                        </div>
+                        <div
+                          onClick={this.toggleToTabActions}
+                          style={{
+                            borderBottom: !activeTab
+                              ? `3px solid ${colors.green}`
+                              : 'none',
+                          }}
+                        >
+                          <span>Actions</span>
+                        </div>
+                      </StatisticTabsWrapper>
+                      {this.props.match.params.subset === 'statistics' && (
+                        <Content>
+                          <Statistics
+                            {...this.props}
+                            groupNetwork={groupNetwork}
+                            isTablet={isTablet}
+                            isMobile={isMobile}
+                            activeTab={activeTab}
+                          />
+                        </Content>
                       )}
-                    </Content>
-                  </TabsSecondary>
+                      {this.props.match.params.subset === 'members' && (
+                        <>
+                          <Content>
+                            {loading ? (
+                              <Spinner />
+                            ) : (
+                              <Row
+                                type="flex"
+                                gutter={{ md: 20 }}
+                                style={{ flexGrow: '1' }}
+                              >
+                                {members.docs &&
+                                  members.docs.map(item => {
+                                    return (
+                                      <Column
+                                        key={item.user._id}
+                                        xl={8}
+                                        lg={12}
+                                        md={12}
+                                        xs={24}
+                                      >
+                                        <MemberCard
+                                          to={`/account/${item.user._id}`}
+                                          fullName={item.user.fullName}
+                                          photo={
+                                            item.user.photo ||
+                                            getUserInitialAvatar(
+                                              item.user.fullName,
+                                            )
+                                          }
+                                          counter={intl.formatMessage(
+                                            {
+                                              id:
+                                                'app.pages.groups.actionsTaken',
+                                            },
+                                            {
+                                              count:
+                                                item.groupInfo
+                                                  .memberTakenActionsCount,
+                                            },
+                                          )}
+                                          impacts={{
+                                            handprint: item.impacts,
+                                          }}
+                                          impactsInUnits={{
+                                            handprint: item.user.impactsInUnits
+                                              ? item.user.impactsInUnits
+                                                  .footprint
+                                              : null,
+                                          }}
+                                          showPhysicalValues={
+                                            context.showPhysicalValues
+                                          }
+                                        />
+                                      </Column>
+                                    )
+                                  })}
+                              </Row>
+                            )}
+
+                            {!loading && members.totalPages > 1 && (
+                              <PaginationStyled
+                                current={members.page}
+                                pageSize={members.limit}
+                                total={members.totalDocs}
+                                itemRender={(
+                                  current,
+                                  type,
+                                  originalElement,
+                                ) => {
+                                  if (type === 'page') {
+                                    return (
+                                      <button
+                                        onClick={() => {
+                                          history.push(
+                                            `${
+                                              location.pathname
+                                            }?page=${current}`,
+                                          )
+                                        }}
+                                      >
+                                        {originalElement}
+                                      </button>
+                                    )
+                                  }
+                                  if (type === 'prev' || type === 'next') {
+                                    return null
+                                  }
+                                  return originalElement
+                                }}
+                              />
+                            )}
+                          </Content>
+                          <Content>
+                            {loading ? (
+                              <Spinner />
+                            ) : (
+                              <NewsContainer>
+                                <NewsList
+                                  actionLinkPrefix={`/groups/view/${
+                                    match.params.id
+                                  }/${match.params.subset}/`}
+                                  news={news}
+                                  locale={intl.locale}
+                                />
+                              </NewsContainer>
+                            )}
+
+                            {!loading && (
+                              <ButtonLoadMore
+                                loading={loadingMorelNews}
+                                onClick={this.loadMore}
+                              >
+                                {intl.formatMessage({
+                                  id: 'app.newsPage.loadMoreNews',
+                                })}
+                              </ButtonLoadMore>
+                            )}
+                          </Content>
+                        </>
+                      )}
+                    </>
+                  )}
                 </Fragment>
               )
             }}

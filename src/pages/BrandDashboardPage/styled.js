@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import colors from 'config/colors'
+import media from 'utils/mediaQueryTemplate'
 
 export const StatisticsScrollTitle = styled.p`
   font-family: Noto Sans;
@@ -29,13 +30,24 @@ export const StatisticsContainer = styled.div`
   width: 49%;
   height: 815px;
   padding: 0px 30px;
+
+  ${media.largeDesktop`
+    width: 100%;
+    height: 815px;
+    background: ${colors.lightGray}
+  `}
 `
 
 export const AccomplishedActionContainer = styled.div`
   display: flex;
   margin-bottom: 20px;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+
+  ${media.largeDesktop`
+    background: ${colors.white};
+    padding: 8px;
+  `}
 `
 export const AccomplishedActionPicture = styled.img`
   width: 70px;

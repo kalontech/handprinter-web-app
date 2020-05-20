@@ -60,98 +60,106 @@ export default function renderStatistics(props) {
         <Spinner />
       ) : (
         <StatisticsMain>
-          <StatisticsContainer>
-            <StatisticsScrollTitle>
-              <FormattedMessage id="app.organization.impact" />
-            </StatisticsScrollTitle>
-            <StatisticsScroll>
-              <TotalImpactTitle>
-                <FormattedMessage id="app.organization.total.impact" />
-              </TotalImpactTitle>
-              <ActionLabelsBlock>
-                <ActionCardLabelSet
-                  largeLabel
-                  impacts={organizationImpacts}
-                  impactsInUnits={organizationImpactsInUnits}
-                  showPhysicalValues={UIContextData.showPhysicalValues}
-                />
-              </ActionLabelsBlock>
-              <ActionLabelsBlock>
-                <ActionCardLabel
-                  largeLabel
-                  labelWidth={105}
-                  category={IMPACT_CATEGORIES.MEMBERS}
-                  unit={TimeValueAbbreviations.MEMBERS}
-                  value={group.info.membersCount}
-                  variant={'positive'}
-                />
-                <ActionCardLabel
-                  largeLabel
-                  labelWidth={105}
-                  category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
-                  unit={TimeValueAbbreviations.ACTIONS_TAKEN}
-                  value={
-                    group.userImpacts ? group.userImpacts.actions.length : 0
-                  }
-                  variant={'positive'}
-                />
-              </ActionLabelsBlock>
-              <Separator />
-              {groupNetwork && (
-                <Fragment>
-                  <TotalImpactTitle>
-                    <FormattedMessage id="app.organization.total.impact.network" />
-                  </TotalImpactTitle>
-                  <ActionLabelsBlock>
-                    <ActionCardLabelSet
-                      largeLabel
-                      impacts={networkImpacts}
-                      impactsInUnits={networkImpactsInUnits}
-                      showPhysicalValues={UIContextData.showPhysicalValues}
-                    />
-                  </ActionLabelsBlock>
-                  <ActionLabelsBlock>
-                    <ActionCardLabel
-                      largeLabel
-                      labelWidth={105}
-                      category={IMPACT_CATEGORIES.MEMBERS}
-                      unit={TimeValueAbbreviations.NETWORK_MEMBERS}
-                      value={
-                        group.info.membersCount +
-                        groupNetwork.info.networkMembersCount
-                      }
-                      variant={'positive'}
-                    />
-                    <ActionCardLabel
-                      largeLabel
-                      labelWidth={105}
-                      category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
-                      unit={TimeValueAbbreviations.ACTIONS_TAKEN}
-                      value={
-                        groupNetwork.networkImpacts
-                          ? groupNetwork.networkImpacts.actions.length
-                          : 0
-                      }
-                      variant={'positive'}
-                    />
-                  </ActionLabelsBlock>
-                </Fragment>
+          {props.activeTab && (
+            <StatisticsContainer>
+              {!props.isTablet && !props.isMobile && (
+                <StatisticsScrollTitle>
+                  <FormattedMessage id="app.organization.impact" />
+                </StatisticsScrollTitle>
               )}
-            </StatisticsScroll>
-          </StatisticsContainer>
-          <StatisticsContainer>
-            <StatisticsScrollTitle>
-              <FormattedMessage id="app.header.menu.actions" />
-            </StatisticsScrollTitle>
-            <StatisticsScroll>
-              {sortedActions.map(accomplished => (
-                <AccomplishedAction
-                  key={accomplished.action._id}
-                  accomplished={accomplished}
-                />
-              ))}
-            </StatisticsScroll>
-          </StatisticsContainer>
+              <StatisticsScroll>
+                <TotalImpactTitle>
+                  <FormattedMessage id="app.organization.total.impact" />
+                </TotalImpactTitle>
+                <ActionLabelsBlock>
+                  <ActionCardLabelSet
+                    largeLabel
+                    impacts={organizationImpacts}
+                    impactsInUnits={organizationImpactsInUnits}
+                    showPhysicalValues={UIContextData.showPhysicalValues}
+                  />
+                </ActionLabelsBlock>
+                <ActionLabelsBlock>
+                  <ActionCardLabel
+                    largeLabel
+                    labelWidth={105}
+                    category={IMPACT_CATEGORIES.MEMBERS}
+                    unit={TimeValueAbbreviations.MEMBERS}
+                    value={group.info.membersCount}
+                    variant={'positive'}
+                  />
+                  <ActionCardLabel
+                    largeLabel
+                    labelWidth={105}
+                    category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
+                    unit={TimeValueAbbreviations.ACTIONS_TAKEN}
+                    value={
+                      group.userImpacts ? group.userImpacts.actions.length : 0
+                    }
+                    variant={'positive'}
+                  />
+                </ActionLabelsBlock>
+                <Separator />
+                {groupNetwork && (
+                  <Fragment>
+                    <TotalImpactTitle>
+                      <FormattedMessage id="app.organization.total.impact.network" />
+                    </TotalImpactTitle>
+                    <ActionLabelsBlock>
+                      <ActionCardLabelSet
+                        largeLabel
+                        impacts={networkImpacts}
+                        impactsInUnits={networkImpactsInUnits}
+                        showPhysicalValues={UIContextData.showPhysicalValues}
+                      />
+                    </ActionLabelsBlock>
+                    <ActionLabelsBlock>
+                      <ActionCardLabel
+                        largeLabel
+                        labelWidth={105}
+                        category={IMPACT_CATEGORIES.MEMBERS}
+                        unit={TimeValueAbbreviations.NETWORK_MEMBERS}
+                        value={
+                          group.info.membersCount +
+                          groupNetwork.info.networkMembersCount
+                        }
+                        variant={'positive'}
+                      />
+                      <ActionCardLabel
+                        largeLabel
+                        labelWidth={105}
+                        category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
+                        unit={TimeValueAbbreviations.ACTIONS_TAKEN}
+                        value={
+                          groupNetwork.networkImpacts
+                            ? groupNetwork.networkImpacts.actions.length
+                            : 0
+                        }
+                        variant={'positive'}
+                      />
+                    </ActionLabelsBlock>
+                  </Fragment>
+                )}
+              </StatisticsScroll>
+            </StatisticsContainer>
+          )}
+          {!props.activeTab && (
+            <StatisticsContainer>
+              {!props.isTablet && !props.isMobile && (
+                <StatisticsScrollTitle>
+                  <FormattedMessage id="app.header.menu.actions" />
+                </StatisticsScrollTitle>
+              )}
+              <StatisticsScroll>
+                {sortedActions.map(accomplished => (
+                  <AccomplishedAction
+                    key={accomplished.action._id}
+                    accomplished={accomplished}
+                  />
+                ))}
+              </StatisticsScroll>
+            </StatisticsContainer>
+          )}
         </StatisticsMain>
       )}
     </Fragment>
@@ -167,4 +175,7 @@ renderStatistics.propTypes = {
   user: Object,
   group: Object,
   groupNetwork: Object,
+  isTablet: Boolean,
+  isMobile: Boolean,
+  activeTab: Boolean,
 }
