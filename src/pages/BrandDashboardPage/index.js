@@ -847,6 +847,7 @@ class BrandPage extends PureComponent {
                           <LabelBlock>
                             <ActionCardLabel
                               largeLabel
+                              hideTooltip
                               labelWidth={105}
                               category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
                               unit={TimeValueAbbreviations.ACTIONS_TAKEN}
@@ -867,17 +868,18 @@ class BrandPage extends PureComponent {
                             />
                             <ActionCardLabel
                               largeLabel
+                              hideTooltip
                               labelWidth={105}
                               category={IMPACT_CATEGORIES.MEMBERS}
                               unit={TimeValueAbbreviations.MEMBERS}
                               value={group.info.membersCount}
                               variant={'positive'}
                             />
-                            <Icon
+                            {/* <Icon
                               type="question-circle"
                               theme="filled"
                               style={{ color: `${colors.gray}` }}
-                            />
+                            /> */}
                           </LabelBlock>
                         )}
                       </InfoBlock>
@@ -994,6 +996,7 @@ class BrandPage extends PureComponent {
                         <LabelBlock>
                           <ActionCardLabel
                             largeLabel
+                            hideTooltip
                             labelWidth={105}
                             category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
                             unit={TimeValueAbbreviations.ACTIONS_TAKEN}
@@ -1014,17 +1017,18 @@ class BrandPage extends PureComponent {
                           />
                           <ActionCardLabel
                             largeLabel
+                            hideTooltip
                             labelWidth={105}
                             category={IMPACT_CATEGORIES.MEMBERS}
                             unit={TimeValueAbbreviations.MEMBERS}
                             value={group.info.membersCount}
                             variant={'positive'}
                           />
-                          <Icon
+                          {/* <Icon
                             type="question-circle"
                             theme="filled"
                             style={{ color: `${colors.gray}` }}
-                          />
+                          /> */}
                         </LabelBlock>
                       </InfoBlock>
                     </WhiteBlock>
@@ -1052,15 +1056,16 @@ class BrandPage extends PureComponent {
                             justifyContent: 'flex-end',
                           }}
                         >
-                          <Icon
+                          {/* <Icon
                             type="question-circle"
                             theme="filled"
                             style={{ color: `${colors.gray}` }}
-                          />
+                          /> */}
                         </div>
                         <LabelBlock>
                           <ActionCardLabel
                             largeLabel
+                            hideTooltip
                             labelWidth={81}
                             category={IMPACT_CATEGORIES.ACTIONS_TAKEN}
                             unit={TimeValueAbbreviations.ACTIONS_TAKEN}
@@ -1081,6 +1086,7 @@ class BrandPage extends PureComponent {
                           />
                           <ActionCardLabel
                             largeLabel
+                            hideTooltip
                             labelWidth={81}
                             category={IMPACT_CATEGORIES.MEMBERS}
                             unit={TimeValueAbbreviations.MEMBERS}
@@ -1143,9 +1149,7 @@ class BrandPage extends PureComponent {
                                       )}
                                       impacts={{ handprint: item.impacts }}
                                       impactsInUnits={{
-                                        handprint: item.user.impactsInUnits
-                                          ? item.user.impactsInUnits.footprint
-                                          : null,
+                                        handprint: item.impactsInUnits,
                                       }}
                                       showPhysicalValues={
                                         context.showPhysicalValues
@@ -1275,10 +1279,7 @@ class BrandPage extends PureComponent {
                                             handprint: item.impacts,
                                           }}
                                           impactsInUnits={{
-                                            handprint: item.user.impactsInUnits
-                                              ? item.user.impactsInUnits
-                                                  .footprint
-                                              : null,
+                                            handprint: item.impactsInUnits,
                                           }}
                                           showPhysicalValues={
                                             context.showPhysicalValues
