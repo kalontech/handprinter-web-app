@@ -11,7 +11,7 @@ import {
   TotalImpactTitle,
   ActionLabelsBlock,
   Separator,
-  ActionLabelsTitle,
+  // ActionLabelsTitle,
 } from './styled'
 import AccomplishedAction from './accomplishedAction'
 
