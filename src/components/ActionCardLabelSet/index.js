@@ -14,7 +14,6 @@ const CardLabelWrap = styled.div`
     ${props => props.mobileFixedWidth && 'max-width: 285px;'}
     margin-right: 5px;
     position: relative;
-    left: 4%;
   `}
 
   ${media.phone`
@@ -61,7 +60,7 @@ const ActionCardLabelSet = props => {
   } = props
 
   if (!impacts) return null
-
+  console.log(impacts, impactsInUnits)
   if (showPhysicalValues) {
     return (
       <CardLabelWrap

@@ -65,6 +65,7 @@ export const AccomplishedActionContainer = styled.div`
   ${media.largeDesktop`
     background: ${colors.white};
     padding: 8px;
+    width: 670px;
   `}
 
   ${media.phone`

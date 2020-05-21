@@ -20,7 +20,8 @@ function AccomplishedAction(props) {
   const { action, count } = accomplished
   if (!action) return null
   const UIContextData = useContext(UIContextSettings)
-
+  console.log('@!@!@@')
+  console.log(props.isTablet, props.isMobile)
   return (
     <>
       {props.isMobile && (
@@ -43,7 +44,7 @@ function AccomplishedAction(props) {
           )}
         </AccomplishedActionContainerMobile>
       )}
-      {!props.isTablet && !props.isMobile && (
+      {!props.isMobile && (
         <AccomplishedActionContainer>
           <AccomplishedActionPicture src={action.picture} />
           <AccomplishedActionNameBlock>
