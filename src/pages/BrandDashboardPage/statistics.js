@@ -67,9 +67,11 @@ export default function renderStatistics(props) {
                 <FormattedMessage id="app.organization.impact" />
               </StatisticsScrollTitle>
               <StatisticsScroll>
-                <ActionLabelsTitle>
-                  <p>Text</p>
-                </ActionLabelsTitle>
+                {/* <ActionLabelsTitle>
+                  <p>
+                    The {group.name} has been active since {group.name}
+                  </p>
+                </ActionLabelsTitle> */}
                 <TotalImpactTitle>
                   <FormattedMessage id="app.organization.total.impact" />
                 </TotalImpactTitle>
@@ -151,9 +153,11 @@ export default function renderStatistics(props) {
                 <TotalImpactTitle>
                   <FormattedMessage id="app.organization.total.impact" />
                 </TotalImpactTitle>
-                <ActionLabelsTitle>
-                  <p>Text</p>
-                </ActionLabelsTitle>
+                {/* <ActionLabelsTitle>
+                  <p>
+                    The {group.name} has been active since {group.name}
+                  </p>
+                </ActionLabelsTitle> */}
                 <ActionLabelsBlock>
                   <ActionCardLabelSet
                     largeLabel
