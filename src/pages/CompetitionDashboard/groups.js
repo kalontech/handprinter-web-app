@@ -120,7 +120,7 @@ export default function renderGroups(props) {
   const { tabIndex } = qs.parse(search, { ignoreQueryPrefix: true })
   const invitation = invitations[tabIndex]
   let groupParticipants = getGroupParticipants(props, invitation)
-  console.log(groupParticipants)
+
   const accomplishedInGroup = groupParticipants
     .map(item => {
       return item.accomplishedActions.length

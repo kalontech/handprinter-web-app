@@ -785,5 +785,6 @@
     "app.aboutHumanscalePage.takeActionHeader": "It's easy!",
     "app.organization.impact": "Organization impact",
     "app.organization.total.impact": "The total impact of the Organization based on taken actions by all members",
-    "app.organization.total.impact.network": "The impact of the organization Network."
+    "app.organization.total.impact.network": "The impact of the organization Network.",
+    "app.brandDashboardPage.toOrganizations": "Back to Organizations"
 }
