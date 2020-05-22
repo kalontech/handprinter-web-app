@@ -93,9 +93,13 @@ import {
   PopoverText,
   ResponsiveLoginWrap,
   UnitsSwitch,
+  ImpactLabelWrapper,
 } from './styled'
 
 import { UIContextSettings } from '../../context/uiSettingsContext'
+
+import ImpactHeaderPhysicalLabel from '../../components/impactHeaderPhysicalLabel'
+import { IMPACT_CATEGORIES } from '../../utils/constants'
 
 const SubMenu = Menu.SubMenu
 
@@ -1050,6 +1054,16 @@ function Header(props) {
                     </Popover>
                   </CenterMenu>
                   <RightAlign>
+                    <ImpactLabelWrapper>
+                      <ImpactHeaderPhysicalLabel
+                        largeLabel
+                        labelWidth={74}
+                        category={IMPACT_CATEGORIES.CLIMATE}
+                        unit={IMPACT_CATEGORIES.CLIMATE}
+                        value={[432, 5]}
+                        headerLabel
+                      />
+                    </ImpactLabelWrapper>
                     {/* {this.getNotificationsPopover(
                         fontColor,
                         fontNames,

@@ -461,7 +461,7 @@ export const NotificationCount = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: #e67424;
+  background-color: ${colors.orange};
   font-family: ${({ fontNames }) => fontNames || '"Noto Sans", sans-serif'};
   font-weight: bold;
   line-height: 10px;
@@ -493,7 +493,7 @@ export const TakeActionButton = styled(PrimaryButton)`
 export const UnitsBlock = styled.div`
   position: absolute;
   top: 34px;
-  right: 176px;
+  right: 100px;
   width: 44px;
   height: 22px;
   border-radius: 50px;
@@ -592,4 +592,10 @@ export const UnitsSwitch = styled.div`
   ${media.phone`
     padding-left: 14px;
   `}
+`
+
+export const ImpactLabelWrapper = styled.div`
+  position: absolute;
+  right: 225px;
+  width: 74px;
 `

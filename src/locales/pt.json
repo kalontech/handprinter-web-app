@@ -775,5 +775,7 @@
     "app.timeUnits.switch.text": "Unidades de tempo ativadas",
     "app.physicalUnits.switch.text": "Unidades físicas ativadas",
     "app.aboutHumanscalePage.handprint.text": "",
-    "app.aboutHumanscalePage.takeActionHeader": "It's easy!"
+    "app.aboutHumanscalePage.takeActionHeader": "It's easy!",
+    "app.actions.physicalValues.one.climate.kg": "kg",
+    "app.actions.physicalValues.one.climate.co2": "CO2"
 }
