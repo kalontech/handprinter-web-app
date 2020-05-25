@@ -60,7 +60,7 @@ const ActionCardLabelSet = props => {
   } = props
 
   if (!impacts) return null
-  console.log(impacts, impactsInUnits)
+
   if (showPhysicalValues) {
     return (
       <CardLabelWrap

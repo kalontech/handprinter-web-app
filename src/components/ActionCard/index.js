@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -10,9 +10,14 @@ import hexToRgba from 'utils/hexToRgba'
 import media from 'utils/mediaQueryTemplate'
 import EditIcon from 'assets/icons/EditIcon'
 import DeleteIcon from 'assets/icons/DeleteIcon'
+import moment from 'moment'
+import * as api from 'api/actions'
 
 import ActionCardLabelSet from '../ActionCardLabelSet'
 import { ReactComponent as BigLeaf } from '../CompetitionCard/assets/challengeBigLeaf.svg'
+import { ReactComponent as SmallLeaf } from '../CompetitionCard/assets/challengeSmallLeaf.svg'
+import { ReactComponent as ArrowCircle } from '../CompetitionCard/assets/circleArrow.svg'
+import { ReactComponent as DottedCircle } from '../CompetitionCard/assets/circle3.svg'
 
 const TooltipContainer = styled.div`
   line-height: 20px;
@@ -173,11 +178,13 @@ const WildWrapper = styled.p`
 const ChallengeLabel = styled.div`
   position: absolute;
   z-index: 1000;
-  width: 129px;
+  min-width: 100px;
   height: 23px;
   right: 8px;
   top: 8px;
-  background: ${colors.green};
+  background: ${props => {
+    return colors[`${props.color}`]
+  }};
   border-radius: 4px;
   display: flex;
   justify-content: flex-start;
@@ -188,7 +195,7 @@ const ChallengeLabel = styled.div`
     font-family: Noto Sans;
     font-style: normal;
     font-weight: normal;
-    width: 98px;
+    min-width: 50px;
     height: 12px;
     font-size: 7px;
     line-height: 12px;
@@ -198,6 +205,7 @@ const ChallengeLabel = styled.div`
     text-transform: uppercase;
     color: ${colors.white};
     margin-left: 21px;
+    margin-right: 7px;
   }
 
   ${media.phone`
@@ -213,7 +221,11 @@ const ChallengeLabel = styled.div`
 const SWGWrap = styled.div``
 
 const ActionCard = props => {
+  const [availableFrom, setAvailableFrom] = useState(
+    moment().subtract(1, 'days'),
+  )
   const {
+    id,
     to,
     picture,
     name,
@@ -229,8 +241,23 @@ const ActionCard = props => {
     isHabit,
     isWild,
     showPhysicalValues,
-    selectedKey,
+    user,
+    canBeHabit,
   } = props
+
+  const checkAvailableTakeAction = async actionId => {
+    if (!actionId || !user) return
+    try {
+      const res = await api.getTakenActionAvailableFrom({ actionId })
+      setAvailableFrom(res.availableFrom)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    checkAvailableTakeAction(id).then(data => data)
+  }, [])
 
   const popover = (
     <Tooltip
@@ -253,17 +280,62 @@ const ActionCard = props => {
     left: '14px',
     top: '4px',
   }
+  const smallLeapStyles = {
+    position: 'absolute',
+    left: '9px',
+    top: '6px',
+  }
+  const leap3Styles = {
+    position: 'absolute',
+    height: '8.5px',
+    width: '5.5px',
+    left: '10px',
+    top: '7px',
+  }
+  const arrowCircleStyles = {
+    position: 'absolute',
+    left: '6px',
+    top: '4px',
+  }
+  const dottedCircleStyles = {
+    position: 'absolute',
+    left: '5px',
+    top: '4px',
+  }
+
+  const isWillAvailable = moment(Date.now()).isSameOrBefore(availableFrom)
 
   return (
     <Link to={to} onClick={onClick}>
       <CardWrap>
         <CardContainer isSlide={isSlide} style={styles && styles}>
-          {selectedKey === 'todo' && (
-            <ChallengeLabel>
+          {!isWillAvailable && !canBeHabit && (
+            <ChallengeLabel color="green">
               <SWGWrap>
                 <BigLeaf style={bigLeafStyles} />
               </SWGWrap>
               <p>| available to be taken</p>
+            </ChallengeLabel>
+          )}
+          {isWillAvailable && !canBeHabit && (
+            <ChallengeLabel color="blue">
+              <SWGWrap>
+                <SmallLeaf style={leap3Styles} />
+                <DottedCircle style={dottedCircleStyles} />
+              </SWGWrap>
+              <p>
+                | will be available again on{' '}
+                {moment(availableFrom).format('MMMM Do, YYYY')}
+              </p>
+            </ChallengeLabel>
+          )}
+          {canBeHabit && (
+            <ChallengeLabel color="dark">
+              <SWGWrap>
+                <SmallLeaf style={smallLeapStyles} />
+                <ArrowCircle style={arrowCircleStyles} />
+              </SWGWrap>
+              <p>| on {moment(availableFrom).format('MMMM Do, YYYY')}</p>
             </ChallengeLabel>
           )}
           <CardImage>
@@ -362,6 +434,9 @@ ActionCard.propTypes = {
   isWild: PropTypes.bool,
   showPhysicalValues: PropTypes.bool,
   selectedKey: PropTypes.string,
+  id: PropTypes.number,
+  user: PropTypes.object,
+  canBeHabit: PropTypes.bool,
 }
 
 export default ActionCard

@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { animateScroll } from 'react-scroll/modules'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import _ from 'lodash'
 
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import DiscoverIconComponent from 'assets/icons/DiscoverIcon'
@@ -50,6 +51,8 @@ import {
 } from './styled'
 import useActions from './useActions'
 import TabsSelect from '../../components/TabsSelect'
+
+import { ACTIONS_TABS } from '../CompetitionDashboard/constants'
 
 const { Option } = Select
 
@@ -356,6 +359,12 @@ function ActionsPage(props) {
   const urlParams = new URLSearchParams(props.location.search)
   const entries = urlParams.entries()
   const filtersLables = paramsToObject(entries)
+
+  const selectedKey = _.get(props, 'location.search', '').includes(
+    ACTIONS_TABS.ACCOMPLISHED,
+  )
+    ? ACTIONS_TABS.ACCOMPLISHED
+    : ACTIONS_TABS.TODO
 
   return (
     <React.Fragment>
@@ -702,85 +711,104 @@ function ActionsPage(props) {
                     </FooterSpinner>
                   }
                 >
-                  {actions.map(action => (
-                    <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
-                      <ScrollAnimation>
-                        <ActionCard
-                          to={
-                            action.status === ACTION_STATES.PROPOSED
-                              ? `/account/actions/preview/${action.slug}`
-                              : `/actions/${match.params.subset}/${action.slug}`
-                          }
-                          picture={action.picture}
-                          canChange={action.status === ACTION_STATES.PROPOSED}
-                          onEdit={e => {
-                            e.preventDefault()
+                  {actions
+                    .sort((a, b) => {
+                      return a.habit.canBeHabit - b.habit.canBeHabit
+                    })
+                    .map(action => {
+                      return (
+                        <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
+                          <ScrollAnimation>
+                            <ActionCard
+                              id={action._id}
+                              to={
+                                action.status === ACTION_STATES.PROPOSED
+                                  ? `/account/actions/preview/${action.slug}`
+                                  : `/actions/${match.params.subset}/${
+                                      action.slug
+                                    }`
+                              }
+                              picture={action.picture}
+                              canChange={
+                                action.status === ACTION_STATES.PROPOSED
+                              }
+                              onEdit={e => {
+                                e.preventDefault()
 
-                            history.push(`/account/actions/edit/${action.slug}`)
-                          }}
-                          onDelete={onActionDelete(action._id)}
-                          name={
-                            action.translatedName &&
-                            action.translatedName[locale]
-                              ? action.translatedName[locale]
-                              : action.name
-                          }
-                          impacts={() => {
-                            let tooltipTextId, buttonTextId
-                            switch (action.status) {
-                              case ACTION_STATES.MODELING:
-                                tooltipTextId =
-                                  'app.actions.card.waitModelingHint'
-                                buttonTextId = 'app.actions.card.waitModeling'
-                                break
-                              case ACTION_STATES.DENIED:
-                                tooltipTextId = 'app.actions.card.deniedHint'
-                                buttonTextId = 'app.actions.card.denied'
-                                break
-                              default:
-                                tooltipTextId = 'app.actions.card.waitAdminHint'
-                                buttonTextId = 'app.actions.card.waitAdmin'
-                            }
-                            return action.status !== ACTION_STATES.PUBLISHED ? (
-                              <Tooltip
-                                placement="top"
-                                title={formatMessage({
-                                  id: tooltipTextId,
-                                })}
-                              >
-                                <ImpactButton
-                                  style={{ height: 35 }}
-                                  isModelling={
-                                    action.status === ACTION_STATES.MODELING
-                                  }
-                                >
-                                  {formatMessage({
-                                    id: buttonTextId,
-                                  })}
-                                </ImpactButton>
-                              </Tooltip>
-                            ) : (
-                              <ActionCardLabelSet
-                                impacts={action.impacts}
-                                impactsInUnits={action.impactsInUnits}
-                                showPhysicalValues={
-                                  UIContextData.showPhysicalValues
+                                history.push(
+                                  `/account/actions/edit/${action.slug}`,
+                                )
+                              }}
+                              onDelete={onActionDelete(action._id)}
+                              name={
+                                action.translatedName &&
+                                action.translatedName[locale]
+                                  ? action.translatedName[locale]
+                                  : action.name
+                              }
+                              impacts={() => {
+                                let tooltipTextId, buttonTextId
+                                switch (action.status) {
+                                  case ACTION_STATES.MODELING:
+                                    tooltipTextId =
+                                      'app.actions.card.waitModelingHint'
+                                    buttonTextId =
+                                      'app.actions.card.waitModeling'
+                                    break
+                                  case ACTION_STATES.DENIED:
+                                    tooltipTextId =
+                                      'app.actions.card.deniedHint'
+                                    buttonTextId = 'app.actions.card.denied'
+                                    break
+                                  default:
+                                    tooltipTextId =
+                                      'app.actions.card.waitAdminHint'
+                                    buttonTextId = 'app.actions.card.waitAdmin'
                                 }
-                              />
-                            )
-                          }}
-                          suggestedBy={action.suggestedBy}
-                          suggestedAt={
-                            action.suggestedAt &&
-                            formatRelative(action.suggestedAt)
-                          }
-                          isHabit={action.isHabit}
-                          impactsInUnits={action.impactsInUnits}
-                          isWild={action.isWild}
-                        />
-                      </ScrollAnimation>
-                    </Col>
-                  ))}
+                                return action.status !==
+                                  ACTION_STATES.PUBLISHED ? (
+                                  <Tooltip
+                                    placement="top"
+                                    title={formatMessage({
+                                      id: tooltipTextId,
+                                    })}
+                                  >
+                                    <ImpactButton
+                                      style={{ height: 35 }}
+                                      isModelling={
+                                        action.status === ACTION_STATES.MODELING
+                                      }
+                                    >
+                                      {formatMessage({
+                                        id: buttonTextId,
+                                      })}
+                                    </ImpactButton>
+                                  </Tooltip>
+                                ) : (
+                                  <ActionCardLabelSet
+                                    impacts={action.impacts}
+                                    impactsInUnits={action.impactsInUnits}
+                                    showPhysicalValues={
+                                      UIContextData.showPhysicalValues
+                                    }
+                                  />
+                                )
+                              }}
+                              suggestedBy={action.suggestedBy}
+                              suggestedAt={
+                                action.suggestedAt &&
+                                formatRelative(action.suggestedAt)
+                              }
+                              canBeHabit={action.habit.canBeHabit}
+                              impactsInUnits={action.impactsInUnits}
+                              isWild={action.isWild}
+                              selectedKey={selectedKey}
+                              user={props.user}
+                            />
+                          </ScrollAnimation>
+                        </Col>
+                      )
+                    })}
                 </InfiniteScroll>
               </Row>
             ) : null}
