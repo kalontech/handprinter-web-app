@@ -493,7 +493,7 @@ export const TakeActionButton = styled(PrimaryButton)`
 export const UnitsBlock = styled.div`
   position: absolute;
   top: 34px;
-  right: 100px;
+  right: 90px;
   width: 44px;
   height: 22px;
   border-radius: 50px;
@@ -596,6 +596,6 @@ export const UnitsSwitch = styled.div`
 
 export const ImpactLabelWrapper = styled.div`
   position: absolute;
-  right: 225px;
+  right: 200px;
   width: 74px;
 `

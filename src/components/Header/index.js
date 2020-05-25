@@ -31,6 +31,7 @@ import {
   PopoverTitle,
 } from 'components/Styled'
 import * as Sentry from '@sentry/browser'
+import _ from 'lodash'
 
 import colors from 'config/colors'
 import { getBrandedConfig } from 'config/branded'
@@ -51,6 +52,8 @@ import { ReactComponent as Clock } from '../../assets/unit-icons/clock2.svg'
 import { ReactComponent as ClockBack } from '../../assets/unit-icons/clockBack.svg'
 import { ReactComponent as AtomBack } from '../../assets/unit-icons/physicalBack.svg'
 import { ReactComponent as AtomCenter } from '../../assets/unit-icons/physicalCenter.svg'
+import { processedUnitValue } from '../../components/ActionCardLabelSet'
+import { fetchDashboardData } from '../../pages/DashboardPage'
 
 import {
   LeftAlignPublic,
@@ -135,6 +138,7 @@ function Header(props) {
   const [isPhysicalUnit, setIsPhysicalUnit] = useState(false)
   const [isTimeUnit, setIsTimeUnit] = useState(true)
   // const [loadingNews, setLoadingNews] = useState(true)
+  const [dashboardData, setDashboardData] = useState({})
 
   const selectedMenuItem = () => {
     const { location } = props
@@ -162,6 +166,7 @@ function Header(props) {
   }
 
   useEffect(() => {
+    fetchDashboardData(props).then(data => setDashboardData(data))
     window.addEventListener('resize', handleWindowSizeChange)
     //   if (this.props.type === 'private') {
     //     // this.fetchNews()
@@ -1060,8 +1065,14 @@ function Header(props) {
                         labelWidth={74}
                         category={IMPACT_CATEGORIES.CLIMATE}
                         unit={IMPACT_CATEGORIES.CLIMATE}
-                        value={[432, 5]}
+                        value={
+                          dashboardData.ratio &&
+                          processedUnitValue(
+                            _.get(dashboardData, 'ratio.footprintDays.climate'),
+                          )
+                        }
                         headerLabel
+                        hideTooltip
                       />
                     </ImpactLabelWrapper>
                     {/* {this.getNotificationsPopover(

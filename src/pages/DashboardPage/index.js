@@ -351,7 +351,7 @@ const stubs = {
   },
 }
 
-async function fetchDashboardData(props) {
+export async function fetchDashboardData(props) {
   const { personId } = props.match.params
   const { location } = props
   const query = qs.parse(location.search, { ignoreQueryPrefix: true })
@@ -392,7 +392,7 @@ async function fetchDashboardData(props) {
         ]
       }
     })
-
+    console.log(calendar, ratio, stats, user, error)
     return { calendar, ratio, stats, user, error }
   }
 

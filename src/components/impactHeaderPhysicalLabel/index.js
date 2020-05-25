@@ -30,7 +30,7 @@ const LabelContainer = styled.div`
   border: 1px solid transparent;
   margin-right: 6px;
   border-color: ${hexToRgba(`${colors.ocean}`, 0.3)};
-  border-radius: 4px;
+  border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
   font-family: 'Noto Sans';
@@ -106,10 +106,10 @@ const impactHeaderPhysicalLabel = ({
   largeLabel,
   labelWidth,
   headerLabel,
-  ...otherProp
 }) => {
   const tooltipProps = {}
   if (hideTooltip) tooltipProps.visible = false
+  if (!value) return null
   const [num, power] = value
 
   return (
