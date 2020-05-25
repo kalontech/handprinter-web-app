@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
@@ -118,7 +117,7 @@ const impactHeaderPhysicalLabel = ({
       title={() => (
         <TooltipContainer>
           <FormattedMessage
-            id="app.actionCardLabel.tooltip.text"
+            id="app.header.climate.label"
             values={{
               value: `${num} ${power ? `e-${power}` : ''}`,
               unit: (
@@ -129,11 +128,6 @@ const impactHeaderPhysicalLabel = ({
               category: category,
             }}
           />
-          <div>
-            <Link to="/pages/measurement-units">
-              <FormattedMessage id="app.actionCardLabel.tooltip.link" />
-            </Link>
-          </div>
         </TooltipContainer>
       )}
       mouseEnterDelay={1}

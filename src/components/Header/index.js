@@ -1072,7 +1072,6 @@ function Header(props) {
                           )
                         }
                         headerLabel
-                        hideTooltip
                       />
                     </ImpactLabelWrapper>
                     {/* {this.getNotificationsPopover(

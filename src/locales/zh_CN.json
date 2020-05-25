@@ -777,5 +777,6 @@
     "app.aboutHumanscalePage.handprint.text": "",
     "app.aboutHumanscalePage.takeActionHeader": "It's easy!",
     "app.actions.physicalValues.one.climate.kg": "kg",
-    "app.actions.physicalValues.one.climate.co2": "CO2"
+    "app.actions.physicalValues.one.climate.co2": "CO2",
+    "app.header.climate.label": "kg CO2e saved by You"
 }
