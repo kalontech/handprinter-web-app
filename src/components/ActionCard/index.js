@@ -17,6 +17,7 @@ import ActionCardLabelSet from '../ActionCardLabelSet'
 import { ReactComponent as BigLeaf } from '../CompetitionCard/assets/challengeBigLeaf.svg'
 import { ReactComponent as SmallLeaf } from '../CompetitionCard/assets/challengeSmallLeaf.svg'
 import { ReactComponent as ArrowCircle } from '../CompetitionCard/assets/circleArrow.svg'
+import { ReactComponent as ArrowsCircle } from '../CompetitionCard/assets/arrowsCircle.svg'
 import { ReactComponent as DottedCircle } from '../CompetitionCard/assets/circle3.svg'
 
 const TooltipContainer = styled.div`
@@ -309,7 +310,7 @@ const ActionCard = props => {
     <Link to={to} onClick={onClick}>
       <CardWrap>
         <CardContainer isSlide={isSlide} style={styles && styles}>
-          {!isWillAvailable && !canBeHabit && (
+          {!isWillAvailable && (
             <ChallengeLabel color="green">
               <SWGWrap>
                 <BigLeaf style={bigLeafStyles} />
@@ -317,19 +318,29 @@ const ActionCard = props => {
               <p>| available to be taken</p>
             </ChallengeLabel>
           )}
-          {isWillAvailable && !canBeHabit && (
-            <ChallengeLabel color="blue">
-              <SWGWrap>
-                <SmallLeaf style={leap3Styles} />
-                <DottedCircle style={dottedCircleStyles} />
-              </SWGWrap>
-              <p>
-                | will be available again on{' '}
-                {moment(availableFrom).format('MMMM Do, YYYY')}
-              </p>
-            </ChallengeLabel>
+          {isWillAvailable && (
+            <>
+              <ChallengeLabel color="blue">
+                <SWGWrap>
+                  <SmallLeaf style={leap3Styles} />
+                  <DottedCircle style={dottedCircleStyles} />
+                </SWGWrap>
+                <p>
+                  | will be available again on{' '}
+                  {moment(availableFrom).format('MMMM Do, YYYY')}
+                </p>
+              </ChallengeLabel>
+              {canBeHabit && (
+                <ChallengeLabel color="dark" style={{ top: '35px' }}>
+                  <SWGWrap>
+                    <ArrowsCircle style={arrowCircleStyles} />
+                  </SWGWrap>
+                  <p>| Chosen as habit</p>
+                </ChallengeLabel>
+              )}
+            </>
           )}
-          {canBeHabit && (
+          {!availableFrom && !canBeHabit && (
             <ChallengeLabel color="dark">
               <SWGWrap>
                 <SmallLeaf style={smallLeapStyles} />
