@@ -713,9 +713,10 @@ function ActionsPage(props) {
                 >
                   {actions
                     .sort((a, b) => {
-                      if (a.habit.canBeHabit && b.habit.canBeHabit) {
-                        return a.habit.canBeHabit - b.habit.canBeHabit
-                      }
+                      return (
+                        _.get(a, 'habit.canBeHabit') -
+                        _.get(b, 'habit.canBeHabit')
+                      )
                     })
                     .map(action => {
                       return (
@@ -801,7 +802,7 @@ function ActionsPage(props) {
                                 action.suggestedAt &&
                                 formatRelative(action.suggestedAt)
                               }
-                              canBeHabit={action.habit.canBeHabit}
+                              canBeHabit={_.get(action, 'habit.canBeHabit')}
                               impactsInUnits={action.impactsInUnits}
                               isWild={action.isWild}
                               selectedKey={selectedKey}
