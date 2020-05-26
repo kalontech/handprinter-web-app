@@ -31,6 +31,7 @@ import {
   PopoverTitle,
 } from 'components/Styled'
 import * as Sentry from '@sentry/browser'
+import _ from 'lodash'
 
 import colors from 'config/colors'
 import { getBrandedConfig } from 'config/branded'
@@ -51,6 +52,8 @@ import { ReactComponent as Clock } from '../../assets/unit-icons/clock2.svg'
 import { ReactComponent as ClockBack } from '../../assets/unit-icons/clockBack.svg'
 import { ReactComponent as AtomBack } from '../../assets/unit-icons/physicalBack.svg'
 import { ReactComponent as AtomCenter } from '../../assets/unit-icons/physicalCenter.svg'
+import { processedUnitValue } from '../../components/ActionCardLabelSet'
+import { fetchDashboardData } from '../../pages/DashboardPage'
 
 import {
   LeftAlignPublic,
@@ -93,9 +96,13 @@ import {
   PopoverText,
   ResponsiveLoginWrap,
   UnitsSwitch,
+  ImpactLabelWrapper,
 } from './styled'
 
 import { UIContextSettings } from '../../context/uiSettingsContext'
+
+import ImpactHeaderPhysicalLabel from '../../components/impactHeaderPhysicalLabel'
+import { IMPACT_CATEGORIES } from '../../utils/constants'
 
 const SubMenu = Menu.SubMenu
 
@@ -131,6 +138,7 @@ function Header(props) {
   const [isPhysicalUnit, setIsPhysicalUnit] = useState(false)
   const [isTimeUnit, setIsTimeUnit] = useState(true)
   // const [loadingNews, setLoadingNews] = useState(true)
+  const [ratio, setRatio] = useState(null)
 
   const selectedMenuItem = () => {
     const { location } = props
@@ -158,6 +166,9 @@ function Header(props) {
   }
 
   useEffect(() => {
+    fetchDashboardData(props).then(data =>
+      setRatio(_.get(data, 'ratio.footprintDays.climate')),
+    )
     window.addEventListener('resize', handleWindowSizeChange)
     //   if (this.props.type === 'private') {
     //     // this.fetchNews()
@@ -1050,6 +1061,16 @@ function Header(props) {
                     </Popover>
                   </CenterMenu>
                   <RightAlign>
+                    <ImpactLabelWrapper>
+                      <ImpactHeaderPhysicalLabel
+                        largeLabel
+                        labelWidth={74}
+                        category={IMPACT_CATEGORIES.CLIMATE}
+                        unit={IMPACT_CATEGORIES.CLIMATE}
+                        value={ratio && processedUnitValue(ratio)}
+                        headerLabel
+                      />
+                    </ImpactLabelWrapper>
                     {/* {this.getNotificationsPopover(
                         fontColor,
                         fontNames,

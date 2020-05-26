@@ -1,7 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { Icon } from 'antd'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 
@@ -10,8 +8,6 @@ import hexToRgba from 'utils/hexToRgba'
 import media from 'utils/mediaQueryTemplate'
 import { IMPACT_CATEGORIES } from 'utils/constants'
 import Tooltip from 'components/Tooltip'
-
-import icons from './icons'
 
 const TooltipContainer = styled.div`
   line-height: 20px;
@@ -28,13 +24,12 @@ const TooltipContainer = styled.div`
 
 const LabelContainer = styled.div`
   display: flex;
-  width: 63px;
   height: 34px;
   background-color: ${colors.white};
   border: 1px solid transparent;
   margin-right: 6px;
   border-color: ${hexToRgba(`${colors.ocean}`, 0.3)};
-  border-radius: 4px;
+  border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
   font-family: 'Noto Sans';
@@ -47,7 +42,7 @@ const Category = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
+  width: 50%;
   background-color: ${hexToRgba(`${colors.ocean}`, 0.1)};
 
   ${media.phone`
@@ -60,14 +55,30 @@ const Category = styled.div`
 `
 
 const Caption = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
   color: ${colors.ocean};
-  font-size: 10px;
+  font-family: Noto Sans;
+  font-style: normal;
   font-weight: bold;
-  line-height: 1.4;
+  font-size: 10px;
+  line-height: 12px;
 `
+
 const Value = styled.div`
-  font-weight: 400;
-  color: ${colors.dark};
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  color: ${colors.ocean};
 
   sup {
     font-size: 8px;
@@ -75,15 +86,16 @@ const Value = styled.div`
 `
 
 const Impact = styled.div`
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-grow: 1;
   line-height: 1;
+  padding: 1.5px 1.6px 1.5px 1.5px;
 `
 
-const ActionCardPhysicalLabel = ({
+const impactHeaderPhysicalLabel = ({
   category,
   value,
   variant,
@@ -93,10 +105,10 @@ const ActionCardPhysicalLabel = ({
   largeLabel,
   labelWidth,
   headerLabel,
-  ...otherProp
 }) => {
   const tooltipProps = {}
   if (hideTooltip) tooltipProps.visible = false
+  if (!value) return null
   const [num, power] = value
 
   return (
@@ -105,7 +117,7 @@ const ActionCardPhysicalLabel = ({
       title={() => (
         <TooltipContainer>
           <FormattedMessage
-            id="app.actionCardLabel.tooltip.text"
+            id="app.header.climate.label"
             values={{
               value: `${num} ${power ? `e-${power}` : ''}`,
               unit: (
@@ -116,11 +128,6 @@ const ActionCardPhysicalLabel = ({
               category: category,
             }}
           />
-          <div>
-            <Link to="/pages/measurement-units">
-              <FormattedMessage id="app.actionCardLabel.tooltip.link" />
-            </Link>
-          </div>
         </TooltipContainer>
       )}
       mouseEnterDelay={1}
@@ -132,20 +139,21 @@ const ActionCardPhysicalLabel = ({
             height: headerLabel ? 30 : 68,
             marginleft: 10,
             marginRight: 10,
-            marginTop: 5,
           }
         }
         unit={unit}
       >
         <Category unit={unit}>
-          <Icon component={() => icons['positive'][category]} {...otherProp} />
-        </Category>
-        <Impact>
           <Caption unit={unit}>
             <FormattedHTMLMessage
-              id={`app.actions.physicalValues.one.${unit}`}
+              id={`app.actions.physicalValues.one.climate.kg`}
+            />
+            <FormattedHTMLMessage
+              id={`app.actions.physicalValues.one.climate.co2`}
             />
           </Caption>
+        </Category>
+        <Impact>
           <Value>
             {num}
             {power && <sup>-{power}</sup>}
@@ -156,11 +164,11 @@ const ActionCardPhysicalLabel = ({
   )
 }
 
-ActionCardPhysicalLabel.propTypes = {
+impactHeaderPhysicalLabel.propTypes = {
   category: PropTypes.oneOf(Object.values(IMPACT_CATEGORIES)).isRequired,
   unit: PropTypes.string.isRequired,
   value: PropTypes.array.isRequired,
   powInd: PropTypes.number,
 }
 
-export default injectIntl(ActionCardPhysicalLabel)
+export default injectIntl(impactHeaderPhysicalLabel)

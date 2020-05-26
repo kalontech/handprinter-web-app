@@ -775,5 +775,19 @@
     "app.timeUnits.switch.text": "Zeiteinheiten Ein",
     "app.physicalUnits.switch.text": "Physische Einheiten Ein",
     "app.aboutHumanscalePage.handprint.text": "",
-    "app.aboutHumanscalePage.takeActionHeader": "It's easy!"
+    "app.aboutHumanscalePage.takeActionHeader": "It's easy!",
+    "app.actions.physicalValues.one.climate.kg": "kg",
+    "app.actions.physicalValues.one.climate.co2": "CO2",
+    "app.header.climate.label": "kg CO2e saved by You",
+    "app.organization.impact": "Organization impact",
+    "app.organization.total.impact": "The total impact of the Organization based on taken actions by all members",
+    "app.organization.total.impact.network": "The impact of the organization Network.",
+    "app.brandDashboardPage.toOrganizations": "Back to Organizations",
+    "app.actions.timeValues.one.MEMBERS": "Member",
+    "app.actions.timeValues.other.MEMBERS": "Members",
+    "app.actions.timeValues.one.NETWORK MEMBERS": "Network member",
+    "app.actions.timeValues.other.NETWORK MEMBERS": "Network members",
+    "app.actions.timeValues.one.ACTIONS TAKEN": "Action taken",
+    "app.actions.timeValues.other.ACTIONS TAKEN": "Actions taken",
+    "app.actions.type.modeling": "Modeling"
 }
