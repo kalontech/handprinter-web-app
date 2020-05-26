@@ -33,6 +33,7 @@ export default function useActions(props, page, setPage) {
   }, [props.location, props.match])
 
   async function getActionsList(shouldConcatActions, page = 1) {
+    if (!shouldConcatActions) setActions([])
     /*
         Depending on match.params.subset fetching different lists of actions
         (modeling, history, etc.)
@@ -43,7 +44,6 @@ export default function useActions(props, page, setPage) {
         api.getSuggestedActions,
         api.getActionsMyIdeas,
         api.getActionsHistory,
-        api.getActionsModeling,
       ][Object.values(ACTIONS_SUBSETS).indexOf(match.params.subset)] ||
       api.getActions
 
