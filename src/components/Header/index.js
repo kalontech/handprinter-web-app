@@ -807,6 +807,13 @@ function Header(props) {
                       </Link>
                     </Menu.Item>
                   )}
+                  {overrides && overrides.brandName && (
+                    <Menu.Item key="/brandDashboard">
+                      <Link to="/brand/dashboard/statistics">
+                        {overrides.brandName}
+                      </Link>
+                    </Menu.Item>
+                  )}
                   <SubMenu
                     key="about"
                     title={
