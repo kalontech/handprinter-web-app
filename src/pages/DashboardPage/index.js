@@ -392,7 +392,7 @@ export async function fetchDashboardData(props) {
         ]
       }
     })
-    console.log(calendar, ratio, stats, user, error)
+
     return { calendar, ratio, stats, user, error }
   }
 
