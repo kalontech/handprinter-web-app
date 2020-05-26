@@ -713,7 +713,9 @@ function ActionsPage(props) {
                 >
                   {actions
                     .sort((a, b) => {
-                      return a.habit.canBeHabit - b.habit.canBeHabit
+                      if (a.habit.canBeHabit && b.habit.canBeHabit) {
+                        return a.habit.canBeHabit - b.habit.canBeHabit
+                      }
                     })
                     .map(action => {
                       return (
