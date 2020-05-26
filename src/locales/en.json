@@ -782,5 +782,11 @@
     "app.organization.impact": "Organization impact",
     "app.organization.total.impact": "The total impact of the Organization based on taken actions by all members",
     "app.organization.total.impact.network": "The impact of the organization Network.",
-    "app.brandDashboardPage.toOrganizations": "Back to Organizations"
+    "app.brandDashboardPage.toOrganizations": "Back to Organizations",
+    "app.actions.timeValues.one.MEMBERS": "Member",
+    "app.actions.timeValues.other.MEMBERS": "Members",
+    "app.actions.timeValues.one.NETWORK MEMBERS": "Network member",
+    "app.actions.timeValues.other.NETWORK MEMBERS": "Network members",
+    "app.actions.timeValues.one.ACTIONS TAKEN": "Action taken",
+    "app.actions.timeValues.other.ACTIONS TAKEN": "Actions taken"
 }

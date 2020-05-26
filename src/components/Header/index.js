@@ -138,7 +138,7 @@ function Header(props) {
   const [isPhysicalUnit, setIsPhysicalUnit] = useState(false)
   const [isTimeUnit, setIsTimeUnit] = useState(true)
   // const [loadingNews, setLoadingNews] = useState(true)
-  const [dashboardData, setDashboardData] = useState({})
+  const [ratio, setRatio] = useState(null)
 
   const selectedMenuItem = () => {
     const { location } = props
@@ -166,7 +166,9 @@ function Header(props) {
   }
 
   useEffect(() => {
-    fetchDashboardData(props).then(data => setDashboardData(data))
+    fetchDashboardData(props).then(data =>
+      setRatio(_.get(data, 'ratio.footprintDays.climate')),
+    )
     window.addEventListener('resize', handleWindowSizeChange)
     //   if (this.props.type === 'private') {
     //     // this.fetchNews()
@@ -1065,12 +1067,7 @@ function Header(props) {
                         labelWidth={74}
                         category={IMPACT_CATEGORIES.CLIMATE}
                         unit={IMPACT_CATEGORIES.CLIMATE}
-                        value={
-                          dashboardData.ratio &&
-                          processedUnitValue(
-                            _.get(dashboardData, 'ratio.footprintDays.climate'),
-                          )
-                        }
+                        value={ratio && processedUnitValue(ratio)}
                         headerLabel
                       />
                     </ImpactLabelWrapper>
