@@ -6,8 +6,7 @@ import colors from 'config/colors'
 import { getUserInitialAvatar } from 'api'
 
 import styled from 'styled-components'
-
-import { sizes } from 'utils/mediaQueryTemplate'
+import media, { sizes } from 'utils/mediaQueryTemplate'
 import { Icon } from 'antd'
 
 import { Checkbox } from '../../components/Styled'
@@ -26,6 +25,7 @@ import {
   AchievementTitle,
   AchivmentLogo,
   AchivmentBanner,
+  AchivmentMobileBanner,
   AchievementFooterButton,
   ModalContent,
   AchievementFooter,
@@ -123,55 +123,108 @@ const Header = props => {
           </HeaderCompetitionButton>
         )}
       </HeaderCompetitionButtonContainer>
-      <AchievementModal
-        width={592}
-        visible={inviteModalVisible}
-        closable
-        onCancel={() => setInviteModalVisible(false)}
-        centered
-        destroyOnClose
-        footer={[
-          <AchievementFooter key="submit">
-            <SkipFooterButton
-              type="secondary"
-              onClick={() => {
-                setInviteModalVisible(false)
-              }}
-            >
-              <FormattedMessage id="app.pages.groups.skipForNow" />
-            </SkipFooterButton>
-            <AchievementFooterButton
-              type="primary"
-              disabled={!groupsToInvite.length}
-              onClick={() => {
-                setInviteModalVisible(false)
-                sendInvitations({ groupsToInvite }, competition._id)
-                window.location.reload()
-              }}
-            >
-              <FormattedMessage id="app.increaseHandprintPage.form.sendInvites" />
-            </AchievementFooterButton>
-          </AchievementFooter>,
-        ]}
-      >
-        <AchivmentBanner>
-          <FingerLogo src={fingerPrintSVG} />
-        </AchivmentBanner>
-        <AchivmentLogo src={competition.logo.src} alt="" />
-        <AchievementTitle>{competition.name}</AchievementTitle>
-        <ModalMessage>
-          <FormattedMessage id="app.increaseHandprintPage.form.selectGroupToInvite" />
-        </ModalMessage>
-        <ModalContent>
-          {ownGroupsList.map(group =>
-            renderGroup(
-              group,
-              e => onGroupSelected(e, group),
-              groupsToInvite.find(i => i._id === group._id),
-            ),
-          )}
-        </ModalContent>
-      </AchievementModal>
+      {(!isTablet || !isMobile) && (
+        <AchievementModal
+          width={592}
+          visible={inviteModalVisible}
+          closable
+          onCancel={() => setInviteModalVisible(false)}
+          centered
+          destroyOnClose
+          footer={[
+            <AchievementFooter key="submit">
+              <SkipFooterButton
+                type="secondary"
+                onClick={() => {
+                  setInviteModalVisible(false)
+                }}
+              >
+                <FormattedMessage id="app.pages.groups.skipForNow" />
+              </SkipFooterButton>
+              <AchievementFooterButton
+                type="primary"
+                disabled={!groupsToInvite.length}
+                onClick={() => {
+                  setInviteModalVisible(false)
+                  sendInvitations({ groupsToInvite }, competition._id)
+                  window.location.reload()
+                }}
+              >
+                <FormattedMessage id="app.increaseHandprintPage.form.sendInvites" />
+              </AchievementFooterButton>
+            </AchievementFooter>,
+          ]}
+        >
+          <AchivmentBanner>
+            <FingerLogo src={fingerPrintSVG} />
+          </AchivmentBanner>
+          <AchivmentLogo src={competition.logo.src} alt="" />
+          <AchievementTitle>{competition.name}</AchievementTitle>
+          <ModalMessage>
+            <FormattedMessage id="app.increaseHandprintPage.form.selectGroupToInvite" />
+          </ModalMessage>
+          <ModalContent>
+            {ownGroupsList.map(group =>
+              renderGroup(
+                group,
+                e => onGroupSelected(e, group),
+                groupsToInvite.find(i => i._id === group._id),
+              ),
+            )}
+          </ModalContent>
+        </AchievementModal>
+      )}
+      {isTablet && (
+        <AchievementModal
+          width={592}
+          visible={inviteModalVisible}
+          closable
+          onCancel={() => setInviteModalVisible(false)}
+          centered
+          destroyOnClose
+          footer={[
+            <AchievementFooter key="submit">
+              <AchievementFooterButton
+                type="primary"
+                disabled={!groupsToInvite.length}
+                onClick={() => {
+                  setInviteModalVisible(false)
+                  sendInvitations({ groupsToInvite }, competition._id)
+                  window.location.reload()
+                }}
+              >
+                <FormattedMessage id="app.increaseHandprintPage.form.sendInvites" />
+              </AchievementFooterButton>
+              <SkipFooterButton
+                type="secondary"
+                onClick={() => {
+                  setInviteModalVisible(false)
+                }}
+                style={{ marginLeft: '0px' }}
+              >
+                <FormattedMessage id="app.pages.groups.skipForNow" />
+              </SkipFooterButton>
+            </AchievementFooter>,
+          ]}
+        >
+          <AchivmentMobileBanner>
+            <AchievementTitle>{competition.name}</AchievementTitle>
+          </AchivmentMobileBanner>
+
+          <ModalMessage>
+            <FormattedMessage id="app.increaseHandprintPage.form.selectGroupToInvite" />
+          </ModalMessage>
+          <ModalContent>
+            {ownGroupsList.map(group =>
+              renderGroup(
+                group,
+                e => onGroupSelected(e, group),
+                groupsToInvite.find(i => i._id === group._id),
+              ),
+            )}
+          </ModalContent>
+        </AchievementModal>
+      )}
     </DashboardHeaderWhiteLine>
   )
 }
@@ -187,6 +240,10 @@ function renderGroup(group, onCheckboxChange, checked) {
     cursor: pointer;
     display: flex;
     align-items: center;
+
+    ${media.phone`
+      padding-right: 10px;
+    `}
   `
 
   const GroupImage = styled.img`

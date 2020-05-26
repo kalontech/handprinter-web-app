@@ -440,6 +440,18 @@ export const ModalMessage = styled.p`
   margin-bottom: 29px;
   margin-top: 15px;
   color: ${colors.darkGray};
+
+  ${media.phone`
+    margin-bottom: 42px;
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #858F8E;
+    text-align: left;
+    padding-left: 16px;
+  `}
 `
 
 export const AchivmentLogo = styled.img`
@@ -458,6 +470,15 @@ export const AchivmentBanner = styled.div`
   border-radius: 4px 4px 0px 0px;
 `
 
+export const AchivmentMobileBanner = styled.div`
+  min-height: 62px;
+  width: 100%;
+  color: black;
+  background-color: ${colors.white};
+  border-bottom: 1px solid ${colors.gray};
+  border-radius: 4px 4px 0px 0px;
+`
+
 export const AchievementTitle = styled.p`
   text-align: center;
   font-family: Noto Sans;
@@ -465,6 +486,17 @@ export const AchievementTitle = styled.p`
   font-weight: normal;
   font-size: 28px;
   width: 100%;
+
+  ${media.phone`
+    padding: 14px 44px 7px 16px;
+    display: flex;
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 28px;
+    text-align: left;
+  `}
 `
 
 export const AchievementFooterButton = styled(PrimaryButton)`
@@ -481,9 +513,13 @@ export const SkipFooterButton = styled(DefaultButton)`
 
 export const AchievementModal = styled(Modal)`
   .ant-modal-close-x {
-    color: white;
+    color: ${colors.white};
     width: 50px;
     height: 50px;
+
+    ${media.phone`
+      color: ${colors.dark};
+    `}
   }
 
   .ant-modal-footer {
@@ -493,6 +529,10 @@ export const AchievementModal = styled(Modal)`
 
   .ant-modal-body {
     height: 600px;
+
+    ${media.phone`
+      height: 525px;
+    `}
   }
 
   .ant-modal-title {
@@ -504,10 +544,17 @@ export const AchievementModal = styled(Modal)`
   .ant-modal-header {
     border: 0px;
   }
+
+  .ant-modal-content {
+    ${media.phone`
+      margin: 58px 16px 20px 16px;
+    `}
+  }
 `
 
 export const ModalContent = styled.div`
   width: 472px;
+  height: 218px;
   max-height: 218px;
   overflow: scroll;
   margin: 0 60px 40px 60px;
@@ -518,7 +565,7 @@ export const ModalContent = styled.div`
   ${media.phone`
     width: 90%;
     margin: 5%;
-    border-radius: 0;
+    border-radius: 4px;
   `}
 `
 
@@ -531,8 +578,15 @@ export const AchievementFooter = styled.div`
   border-radius: 0px 0px 4px 4px;
 
   ${media.phone`
+    height: 170px;
+    position: relative;
+    bottom: 140px;
+    flex-direction: column;
+    justify-content: space-around;
     border-radius: 0;
-    padding: 0 10px;
+    padding: 20px 10px;
+    width: 100%;
+    background-color: ${colors.white};
   `}
 `
 
