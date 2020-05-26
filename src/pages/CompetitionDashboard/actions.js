@@ -84,7 +84,6 @@ export default function renderActions(props) {
                   canChange={action.status === ACTION_STATES.PROPOSED}
                   onEdit={e => {
                     e.preventDefault()
-
                     history.push(`/account/actions/edit/${action.slug}`)
                   }}
                   name={
