@@ -778,5 +778,9 @@
     "app.aboutHumanscalePage.takeActionHeader": "It's easy!",
     "app.actions.physicalValues.one.climate.kg": "kg",
     "app.actions.physicalValues.one.climate.co2": "CO2",
-    "app.header.climate.label": "kg CO2e saved by You"
+    "app.header.climate.label": "kg CO2e saved by You",
+    "app.organization.impact": "Organization impact",
+    "app.organization.total.impact": "The total impact of the Organization based on taken actions by all members",
+    "app.organization.total.impact.network": "The impact of the organization Network.",
+    "app.brandDashboardPage.toOrganizations": "Back to Organizations"
 }

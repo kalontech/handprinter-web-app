@@ -132,6 +132,7 @@ const ActionCardPhysicalLabel = ({
             height: headerLabel ? 30 : 68,
             marginleft: 10,
             marginRight: 10,
+            marginTop: 5,
           }
         }
         unit={unit}

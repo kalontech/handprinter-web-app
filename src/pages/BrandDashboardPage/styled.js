@@ -10,12 +10,25 @@ export const StatisticsScrollTitle = styled.p`
   line-height: 30px;
   color: ${colors.dark};
   margin: 40px 0px;
+
+  ${media.phone`
+  `}
 `
 
 export const StatisticsScroll = styled.div`
   height: 705px;
   padding: 3px;
   overflow: scroll;
+
+  ${media.largeDesktop`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `}
+
+  ${media.phone`
+    width: 100%;
+  `}
 `
 
 export const StatisticsMain = styled.div`
@@ -30,20 +43,57 @@ export const StatisticsContainer = styled.div`
   width: 49%;
   height: 815px;
   padding: 0px 30px;
+
+  ${media.largeDesktop`
+    width: 100%;
+    height: 815px;
+    background: ${colors.lightGray}
+  `}
+
+  ${media.phone`
+    width: 100%;
+    padding: 0px;
+  `}
 `
 
 export const AccomplishedActionContainer = styled.div`
   display: flex;
   margin-bottom: 20px;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+
+  ${media.largeDesktop`
+    background: ${colors.white};
+    padding: 8px;
+    width: 670px;
+  `}
+
+  ${media.phone`
+    width: 100%;
+    height: 179px;
+  `}
 `
+
+export const AccomplishedActionContainerMobile = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  background: ${colors.white};
+  padding: 5px;
+
+  ${media.phone`
+    width: 100%;
+    height: 179px;
+  `};
+`
+
 export const AccomplishedActionPicture = styled.img`
   width: 70px;
   height: 70px;
   border-radius: 4px;
   object-fit: cover;
 `
+
 export const AccomplishedActionName = styled.p`
   display: flex;
   font-family: Noto Sans;
@@ -53,6 +103,7 @@ export const AccomplishedActionName = styled.p`
   line-height: 28px;
   color: ${colors.dark};
 `
+
 export const AccomplishedActionCountBG = styled.div`
   width: 32px;
   height: 32px;
@@ -78,6 +129,10 @@ export const AccomplishedActionNameBlock = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   margin-left: 13px;
+
+  ${media.phone`
+    width: 166px;
+  `}
 `
 
 export const TotalImpactTitle = styled.p`
@@ -85,9 +140,13 @@ export const TotalImpactTitle = styled.p`
   font-style: normal;
   font-size: 16px;
   line-height: 20px;
-  color: #344442;
+  color: ${colors.dark};
   text-align: center;
   margin-top: 42px;
+
+  ${media.phone`
+    margin-top: 0px;
+  `}
 `
 
 export const ActionLabelsBlock = styled.div`
@@ -96,12 +155,47 @@ export const ActionLabelsBlock = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
+
+  ${media.phone`
+    flex-wrap: wrap;
+  `}
 `
 
 export const Separator = styled.div`
   height: 1px;
   width: 100%;
-  background-color: #c4c4c4;
+  background-color: ${colors.switchUnitsBackground};
+`
+
+export const ActionLabelsTitle = styled.div`
+  display: flex;
+  align-items: center;
+  width: 507px;
+  height: 68px;
+  background: ${colors.lightGray};
+  border-radius: 4px;
+
+  p {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 2px;
+    width: 100%;
+    text-align: center;
+  }
+
+  ${media.largeDesktop`
+    margin-top: 20px;
+    background: ${colors.white};
+  `}
+
+  ${media.phone`
+    width: 255px;
+    min-height: 50px;
+    padding: 15px;
+    align-items: flex-start;
+  `}
 `
 
 export const FeedWrapper = styled.div`
