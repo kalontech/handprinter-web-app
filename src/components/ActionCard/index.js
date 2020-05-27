@@ -311,7 +311,7 @@ const ActionCard = props => {
                   {moment(availableFrom).format('MMMM Do, YYYY')}
                 </p>
               </ChallengeLabel>
-              {canBeHabit && (
+              {isHabit === true && (
                 <ChallengeLabel color="dark" style={{ top: '35px' }}>
                   <SWGWrap>
                     <ArrowsCircle style={arrowCircleStyles} />

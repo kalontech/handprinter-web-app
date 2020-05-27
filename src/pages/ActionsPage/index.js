@@ -98,6 +98,7 @@ function ActionsPage(props) {
   const [isCategoryFilterOpen, setIsCategoryFilterOpen] = useState(false)
   const [isTypeFilterOpen, setIsTypeFilterOpen] = useState(false)
   const [isBehaviourFilterOpen, setIsBehaviourFilterOpen] = useState(false)
+  const [takenActions, setTakenActions] = useState(null)
 
   const $search = React.createRef()
 
@@ -115,6 +116,10 @@ function ActionsPage(props) {
       window.removeEventListener('resize', handleWindowSizeChange)
     }
   }, [])
+
+  useEffect(() => {
+    api.getActionsHistory().then(data => setTakenActions(data.actions.docs))
+  }, [takenActions])
 
   const handleWindowSizeChange = () => {
     setWidth(window.innerWidth)
@@ -365,6 +370,19 @@ function ActionsPage(props) {
   )
     ? ACTIONS_TABS.ACCOMPLISHED
     : ACTIONS_TABS.TODO
+
+  const filteredIsHabit = name => {
+    let isHabit
+    if (takenActions) {
+      takenActions.filter(item => {
+        if (item.name === name) {
+          isHabit = item.isHabit
+        }
+      })
+    }
+
+    return isHabit
+  }
 
   return (
     <React.Fragment>
@@ -808,6 +826,7 @@ function ActionsPage(props) {
                               selectedKey={selectedKey}
                               user={props.user}
                               availableFrom={action.availableFrom}
+                              isHabit={filteredIsHabit(action.name)}
                             />
                           </ScrollAnimation>
                         </Col>
