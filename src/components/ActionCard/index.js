@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -11,7 +11,6 @@ import media from 'utils/mediaQueryTemplate'
 import EditIcon from 'assets/icons/EditIcon'
 import DeleteIcon from 'assets/icons/DeleteIcon'
 import moment from 'moment'
-import * as api from 'api/actions'
 
 import ActionCardLabelSet from '../ActionCardLabelSet'
 import { ReactComponent as BigLeaf } from '../CompetitionCard/assets/challengeBigLeaf.svg'
@@ -222,11 +221,7 @@ const ChallengeLabel = styled.div`
 const SWGWrap = styled.div``
 
 const ActionCard = props => {
-  const [availableFrom, setAvailableFrom] = useState(
-    moment().subtract(1, 'days'),
-  )
   const {
-    id,
     to,
     picture,
     name,
@@ -242,23 +237,9 @@ const ActionCard = props => {
     isHabit,
     isWild,
     showPhysicalValues,
-    user,
     canBeHabit,
+    availableFrom = moment().subtract(1, 'days'),
   } = props
-
-  const checkAvailableTakeAction = async actionId => {
-    if (!actionId || !user) return
-    try {
-      const res = await api.getTakenActionAvailableFrom({ actionId })
-      setAvailableFrom(res.availableFrom)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  useEffect(() => {
-    checkAvailableTakeAction(id).then(data => data)
-  }, [])
 
   const popover = (
     <Tooltip
@@ -448,6 +429,7 @@ ActionCard.propTypes = {
   id: PropTypes.number,
   user: PropTypes.object,
   canBeHabit: PropTypes.bool,
+  availableFrom: PropTypes.Date,
 }
 
 export default ActionCard

@@ -807,6 +807,7 @@ function ActionsPage(props) {
                               isWild={action.isWild}
                               selectedKey={selectedKey}
                               user={props.user}
+                              availableFrom={action.availableFrom}
                             />
                           </ScrollAnimation>
                         </Col>
