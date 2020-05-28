@@ -2,9 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import styled, { css } from 'styled-components'
-import Popover from 'antd/lib/popover'
 
-import ExpandMoreIcon from 'assets/icons/ExpandMoreIcon'
 import colors from 'config/colors'
 import media from 'utils/mediaQueryTemplate'
 import hexToRgba from 'utils/hexToRgba'
@@ -102,40 +100,6 @@ const NavLinkStyled = styled(NavLink)`
   }
 `
 
-const ButtonToggle = styled.button`
-  padding: 0;
-  margin: 0;
-  align-items: center;
-  justify-content: center;
-  display: inline-flex;
-  color: ${colors.white};
-  background-color: ${colors.dark};
-  font-size: 14px;
-  min-height: 44px;
-  border: 0;
-  outline: 0;
-  cursor: pointer;
-
-  ${media.tablet`
-    background-color: transparent;
-  `}
-
-  i:first-child {
-    margin-right: 6px;
-  }
-
-  i:nth-child(2) {
-    max-height: 24px;
-    transition: transform 0.3s linear;
-    transform: ${({ rotateIcon }) =>
-      rotateIcon ? 'rotate(-180deg)' : 'rotate(0deg)'};
-  }
-
-  .ant-popover-inner-content {
-    padding: 6px;
-  }
-`
-
 const Button = styled(DefaultButton)`
   background-color: ${hexToRgba(colors.white, 0.1)};
   color: ${colors.white};
@@ -195,7 +159,6 @@ export default class TabsSecondary extends React.PureComponent {
 
   render() {
     const {
-      isOpen,
       toggleVisible,
       list,
       listType,
@@ -236,34 +199,8 @@ export default class TabsSecondary extends React.PureComponent {
             {
               {
                 default: linksList,
-                select: (
-                  <Popover
-                    content={linksList}
-                    trigger="click"
-                    placement="bottomLeft"
-                    visible={isOpen}
-                    onVisibleChange={toggleVisible}
-                    overlayStyle={{
-                      paddingTop: '14px',
-                      left: '15px',
-                      top: '37px',
-                    }}
-                    getPopupContainer={() => this.$button.current}
-                  >
-                    <ButtonToggle
-                      onClick={() => toggleVisible(!isOpen)}
-                      rotateIcon={isOpen}
-                      ref={this.$button}
-                    >
-                      <activeItem.icon color={colors.white} />
-                      {activeItem.text}
-                      <ExpandMoreIcon iconColor={colors.green} />
-                    </ButtonToggle>
-                  </Popover>
-                ),
               }[listType]
             }
-
             {button && <Button onClick={button.onClick}>{button.text}</Button>}
           </Container>
         </Block>
