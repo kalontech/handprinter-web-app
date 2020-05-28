@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 
 import _ from 'lodash'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Activity,
   StreamApp,
@@ -38,8 +38,17 @@ const Feed = ({
     false,
   )
   const [actions, setActions] = useState([])
+  const [defaultFeeds, setDefaultFeeds] = useState([])
 
   const { REACT_APP_GETSTREAM_API_KEY, REACT_APP_GETSTREAM_APP_ID } = env
+
+  useEffect(() => {
+    async function buildDefaultFeeds() {
+      let feeds = ['timeline:world']
+      setDefaultFeeds(feeds)
+    }
+    buildDefaultFeeds()
+  }, [false])
 
   const promiseOptions = inputValue => {
     return new Promise(resolve => {
@@ -121,7 +130,7 @@ const Feed = ({
                   }
                 })
               : [],
-            to: [...(writeTo.cc || []), 'timeline:world'],
+            to: [...(writeTo.cc || []), ...defaultFeeds],
             ...modifiedDataProps,
           })}
           userId={writeTo.userId}
