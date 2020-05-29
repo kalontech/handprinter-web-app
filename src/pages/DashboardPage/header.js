@@ -261,6 +261,13 @@ export const FingerLogo = styled.img`
   position: absolute;
   top: 39.62px;
   left: 130px;
+
+  ${media.phone`
+    position: absolute;
+    top: 53px;
+    left: 0px;
+    width: 100%;
+  `}
 `
 
 export const AchievementFooterButton = styled(PrimaryButton)`

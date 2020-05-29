@@ -808,6 +808,7 @@ function ActionsPage(props) {
                               selectedKey={selectedKey}
                               user={props.user}
                               availableFrom={action.availableFrom}
+                              isHabit={action.isHabit}
                             />
                           </ScrollAnimation>
                         </Col>
