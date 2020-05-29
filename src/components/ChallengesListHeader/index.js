@@ -93,7 +93,17 @@ class ChallengesListHeader extends React.PureComponent {
             }}
           />
         )}
-        {isTablet && (
+        {(isTablet || isMobile) && tabList.length === 1 && (
+          <TabsSecondary
+            list={tabList}
+            isOpen={visibleTabs}
+            listType={tabsType}
+            toggleVisible={visible => {
+              this.setState({ visibleTabs: visible })
+            }}
+          />
+        )}
+        {isTablet && tabList.length > 1 && (
           <TabsSelect
             data={tabList}
             isMobile={isMobile}
