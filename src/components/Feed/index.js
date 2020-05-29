@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 
 import _ from 'lodash'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Activity,
   StreamApp,
@@ -18,6 +18,8 @@ import { ActivityFooter, ActivityHeader } from 'components/GetStreamComponents'
 import Mention from 'components/GetStreamComponents/Mention.svg'
 import AttachAction from 'components/GetStreamComponents/AttachAction.svg'
 import env from 'config/env'
+
+import useDefaultFeeds from './useDefaultFeeds'
 
 const Feed = ({
   readFrom = {},
@@ -38,17 +40,9 @@ const Feed = ({
     false,
   )
   const [actions, setActions] = useState([])
-  const [defaultFeeds, setDefaultFeeds] = useState([])
+  const defaultFeeds = useDefaultFeeds(user)
 
   const { REACT_APP_GETSTREAM_API_KEY, REACT_APP_GETSTREAM_APP_ID } = env
-
-  useEffect(() => {
-    async function buildDefaultFeeds() {
-      let feeds = ['timeline:world']
-      setDefaultFeeds(feeds)
-    }
-    buildDefaultFeeds()
-  }, [false])
 
   const promiseOptions = inputValue => {
     return new Promise(resolve => {
