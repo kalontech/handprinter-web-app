@@ -38,7 +38,7 @@ import { getBrandedConfig } from 'config/branded'
 
 import { logOut } from 'redux/accountStore'
 import { getUserInitialAvatar } from 'api'
-// import * as apiActions from 'api/actions'
+import * as apiUser from 'api/user'
 import { Creators as UserStoreCreators } from 'redux/userStore'
 
 import { GreenButton } from '../../pages/AboutHumanscalePage/styled'
@@ -53,7 +53,6 @@ import { ReactComponent as ClockBack } from '../../assets/unit-icons/clockBack.s
 import { ReactComponent as AtomBack } from '../../assets/unit-icons/physicalBack.svg'
 import { ReactComponent as AtomCenter } from '../../assets/unit-icons/physicalCenter.svg'
 import { processedUnitValue } from '../../components/ActionCardLabelSet'
-import { fetchDashboardData } from '../../pages/DashboardPage'
 
 import {
   LeftAlignPublic,
@@ -129,16 +128,11 @@ function Header(props) {
     user: {},
   }
 
-  // let fetchNewsIntervalId = null
   const [collapsed, setCollapsed] = useState(true)
   const [width, setWidth] = useState(window.innerWidth)
-  // const [notification, setNotification] = useState([])
-  // const [unreadCount, setUnreadCount] = useState(0)
-  // const [isFetchingNews, setIsFetchingNews] = useState(false)
   const [isPhysicalUnit, setIsPhysicalUnit] = useState(false)
   const [isTimeUnit, setIsTimeUnit] = useState(true)
-  // const [loadingNews, setLoadingNews] = useState(true)
-  const [ratio, setRatio] = useState(null)
+  const [userImpactInUnits, setUserImpactInUnits] = useState(null)
 
   const selectedMenuItem = () => {
     const { location } = props
@@ -166,72 +160,24 @@ function Header(props) {
   }
 
   useEffect(() => {
-    fetchDashboardData(props).then(data =>
-      setRatio(_.get(data, 'ratio.footprintDays.climate')),
-    )
+    apiUser.getMe().then(data => {
+      setUserImpactInUnits(
+        _.get(data, 'user.userImpact.impactsInUnits.footprint'),
+      )
+    })
     window.addEventListener('resize', handleWindowSizeChange)
-    //   if (this.props.type === 'private') {
-    //     // this.fetchNews()
-    //     // this.fetchNewsIntervalId = setInterval(() => this.fetchNews(true), 10000)
-    //   }
     return () => {
       window.removeEventListener('resize', handleWindowSizeChange)
-      // if (this.fetchNewsIntervalId) clearInterval(this.fetchNewsIntervalId)
     }
   }, [])
-
-  // component did update
-
-  // useEffect(() => {
-  //   if (fetchNewsIntervalId && !props.token) {
-  //     clearInterval(this.fetchNewsIntervalId)
-  //   }
-  // }, [fetchNewsIntervalId, props.token])
 
   const handleWindowSizeChange = () => {
     setWidth(window.innerWidth)
   }
 
-  // const fetchNews = async (counterOnly = false) => {
-  //   setIsFetchingNews(true)
-
-  //   const { news, unreadCount } = await apiActions.getNews({
-  //     page: 1,
-  //     range: 'network',
-  //   })
-
-  //   if (counterOnly) {
-  //     setUnreadCount(unreadCount)
-  //     setIsFetchingNews(false)
-  //   } else {
-  //     const { user } = props
-  //     setLoadingNews(false)
-  //     setNotification(
-  //       news.filter(
-  //         item =>
-  //           item.arguments.user.id !== user._id &&
-  //           moment(item.date).isAfter(user.lastTimeReadNewsAt),
-  //       ),
-  //     )
-  //     setUnreadCount(unreadCount)
-  //     setIsFetchingNews(false)
-  //   }
-  // }
-
   const onClick = () => {
     setCollapsed(!collapsed)
   }
-
-  // const sendLastTimeReadNotif = async shouldReset => {
-  //   if (!shouldReset) return
-  //   const date = Date.now()
-  //   await apiActions.sendLastTimeReadNewsAt(date)
-  //   // await this.fetchNews()
-  //   props.setUser({
-  //     ...props.user,
-  //     lastTimeReadNewsAt: date,
-  //   })
-  // }
 
   const toggleTimeUnits = () => {
     UIContextData.setShowPhysicalValues(false)
@@ -245,49 +191,7 @@ function Header(props) {
     setIsTimeUnit(false)
   }
 
-  // let $notifContainer = React.createRef()
   let $profileSettingsPopover = React.createRef()
-
-  // const getNotificationsPopover = (
-  //   fontColor,
-  //   fontNames,
-  //   notification,
-  //   unreadCount,
-  //   isFetchingNews,
-  // ) => {
-  //   return (
-  //     <StyledNotificationsPopover
-  //       overlayClassName="notification-popover"
-  //       placement="bottomRight"
-  //       trigger={['hover', 'click']}
-  //       overlayStyle={{ paddingTop: '10px' }}
-  //       content={
-  //         <NotificationsContainer
-  //           notification={notification}
-  //           fontColor={fontColor}
-  //           fontNames={fontNames}
-  //           loading={isFetchingNews}
-  //         />
-  //       }
-  //       getPopupContainer={() => $notifContainer}
-  //       onVisibleChange={sendLastTimeReadNotif}
-  //     >
-  //       <NotificationPopoverTitle
-  //         ref={node => {
-  //           $notifContainer = node
-  //         }}
-  //       >
-  //         <img src={newsBellIcon} alt="" />
-  //         {unreadCount > 0 && (
-  //           <NotificationCount fontNames={fontNames}>
-  //             {unreadCount}
-  //           </NotificationCount>
-  //         )}
-  //       </NotificationPopoverTitle>
-  //     </StyledNotificationsPopover>
-  //   )
-  // }
-
   const { type, user, withoutHeaderContent, location, overrides } = props
 
   const isTablet = width < sizes.largeDesktop
@@ -1074,7 +978,10 @@ function Header(props) {
                         labelWidth={74}
                         category={IMPACT_CATEGORIES.CLIMATE}
                         unit={IMPACT_CATEGORIES.CLIMATE}
-                        value={ratio && processedUnitValue(ratio)}
+                        value={
+                          userImpactInUnits &&
+                          processedUnitValue(userImpactInUnits.climate)
+                        }
                         headerLabel
                       />
                     </ImpactLabelWrapper>
