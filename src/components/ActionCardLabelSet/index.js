@@ -26,6 +26,7 @@ const CardLabelWrap = styled.div`
 
 // this func loop throw incoming value and if it less then 1 it multiple val to 10 to minimize it length
 export const processedUnitValue = val => {
+  if (!val) return [0, null]
   if (val < 1) {
     let i = 0
     while (val < 1) {
