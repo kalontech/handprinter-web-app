@@ -38,6 +38,14 @@ export const takeAction = (actionId, isHabit, initiatorId) =>
     method: 'POST',
   })
 
+export const createFeedPost = actionId =>
+  fetchAPI(`/actions/feedpost`, {
+    body: {
+      actionId,
+    },
+    method: 'POST',
+  })
+
 export const getNews = ({ page, range, groupId, belongsToBrand } = {}) =>
   fetchAPI(
     `/actions/news?${qs.stringify({ page, range, groupId, belongsToBrand })}`,

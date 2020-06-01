@@ -66,6 +66,7 @@ import {
   SearchableInputHeader,
   ProposeView,
 } from './styled'
+import { createFeedPost } from '../../api/actions'
 
 const ActionModalPageSteps = {
   LOADING: 'LOADING',
@@ -359,6 +360,7 @@ function ActionModalPage(props) {
         children: <TakeActionShareProgress {...props} action={action} />,
         width: 'medium',
         height: 'auto',
+        onClose: () => createFeedPost(action._id),
       })
     return renderInContainer({
       children: (
@@ -503,12 +505,19 @@ function ActionModalPage(props) {
     })
   }
 
-  const renderInContainer = ({ children, width, height, closeBtnColor }) => {
+  const renderInContainer = ({
+    children,
+    width,
+    height,
+    closeBtnColor,
+    onClose,
+  }) => {
     renderInContainer.propTypes = {
       children: PropTypes.node,
       width: PropTypes.number,
       height: PropTypes.number,
       closeBtnColor: PropTypes.string,
+      onClose: PropTypes.func,
     }
 
     return (
@@ -517,6 +526,7 @@ function ActionModalPage(props) {
         <CloseButton
           style={{ color: closeBtnColor }}
           onClick={() => {
+            onClose && onClose()
             history.length > 1 ? history.goBack() : closeModal()
           }}
         >
