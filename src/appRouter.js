@@ -227,7 +227,7 @@ const AppRouter = () => {
             useAuthentication
           />
           <Route
-            path="/account/:personId"
+            path="/account/:personId/:subset?"
             component={DashboardPage}
             useAuthentication
             withoutCTA

@@ -611,13 +611,17 @@ class DashboardPage extends Component {
           <TabsSecondary
             list={[
               {
-                to: '/account/dashboard/statistics',
+                to: personId
+                  ? `/account/${personId}/statistics`
+                  : '/account/dashboard/statistics',
                 icon: DiscoverIconComponent,
                 text: formatMessage({ id: 'app.pages.groups.statistics' }),
                 active: subset === 'statistics',
               },
               {
-                to: '/account/dashboard/activity',
+                to: personId
+                  ? `/account/${personId}/activity`
+                  : '/account/dashboard/activity',
                 icon: FlagIconComponent,
                 text: formatMessage({ id: 'app.pages.groups.activity' }),
                 active: subset === 'activity',
