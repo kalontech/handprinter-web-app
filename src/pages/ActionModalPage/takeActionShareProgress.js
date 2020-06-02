@@ -9,6 +9,7 @@ import Feed from 'components/Feed'
 import pigImage from 'assets/actions/pig.png'
 
 import { TakenActionPanel, TakenActionAuthContent } from './styled'
+import { createFeedPost } from '../../api/actions'
 
 const TakenActionTitle = styled.text`
   font-family: Noto Serif;
@@ -85,6 +86,7 @@ function takeActionShareProgress(props) {
               type="primary"
               htmlType="submit"
               onClick={() => {
+                createFeedPost(action._id)
                 history.length > 1 ? history.goBack() : closeModal()
               }}
             >

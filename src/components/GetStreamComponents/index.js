@@ -240,8 +240,9 @@ export const ActivityHeader = props => {
               )}
               {isCommentedAction && (
                 <UserName>
-                  {' commented on action '}
+                  {' did action '}
                   <strong>{actionName}</strong>
+                  {' and the related post below'}
                 </UserName>
               )}
             </Box>

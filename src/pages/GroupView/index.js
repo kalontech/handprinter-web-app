@@ -28,11 +28,9 @@ import {
 import fetch from 'utils/fetch'
 import decodeError from 'utils/decodeError'
 import media, { sizes } from 'utils/mediaQueryTemplate'
-import hexToRgba from 'utils/hexToRgba'
 import CalendarWidget from 'components/CalendarWidget'
 import GoodRatioWidget from 'components/GoodRatioWidget'
 import Spinner from 'components/Spinner'
-import NewsList from 'components/NewsList'
 import GroupDetailedForm from 'components/GroupDetailedForm'
 import GroupButton, { BUTTON_TYPES } from 'components/GroupButton'
 import GroupManage from 'components/GroupManage'
@@ -71,6 +69,7 @@ import {
   AchievementRow,
   AchievementCol,
 } from '../DashboardPage/header'
+import Feed from '../../components/Feed'
 
 const Block = styled.section`
   display: flex;
@@ -247,19 +246,15 @@ const GoodRatioCol = styled(Col)`
 `
 
 const NewsContainer = styled.div`
-  background-color: ${colors.white};
-  padding: 17px 40px;
-  box-shadow: 0 0 10px ${hexToRgba(colors.dark, 0.08)};
-  border-radius: 4px;
-  ${media.desktop`
-    padding-left: 34px;
-    padding-right: 34px;
+  padding-right: 145px;
+  padding-left: 145px;
+
+  ${media.largeDesktop`
+    padding: 16px 34px 16px 34px;
   `}
+
   ${media.phone`
-    margin-left: -15px;
-    margin-right: -15px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 16px;
   `}
 `
 
@@ -768,7 +763,6 @@ class GroupViewPage extends PureComponent {
       intl,
       match,
       members,
-      news,
       calendar,
       ratio,
       location,
@@ -1291,12 +1285,15 @@ class GroupViewPage extends PureComponent {
                   <Spinner />
                 ) : (
                   <NewsContainer>
-                    <NewsList
-                      actionLinkPrefix={`/groups/view/${match.params.id}/${
-                        match.params.subset
-                      }/`}
-                      news={news}
-                      locale={intl.locale}
+                    <Feed
+                      readFrom={{
+                        feedGroup: 'timeline',
+                        userId: `group-${group._id}`,
+                      }}
+                      writeTo={{
+                        feedGroup: 'timeline',
+                        userId: `group-${group._id}`,
+                      }}
                     />
                   </NewsContainer>
                 )}

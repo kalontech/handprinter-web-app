@@ -273,16 +273,7 @@ const AppRouter = () => {
           <ModalRoute
             path="/actions/:subset/:slug"
             parentPath={({ params }) => `/actions/${params.subset}`}
-            onBackdropClick={() => {
-              history.length > 1
-                ? history.goBack()
-                : history.push(
-                    history.location.pathname
-                      .split('/')
-                      .slice(0, 3)
-                      .join('/'),
-                  )
-            }}
+            onBackdropClick={() => {}}
             component={ActionModalPage}
           />
 
