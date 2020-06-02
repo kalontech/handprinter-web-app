@@ -231,7 +231,6 @@ const AppRouter = () => {
             component={DashboardPage}
             useAuthentication
             withoutCTA
-            requireAuthentication
           />
           <Route
             path="/organizations/invite"
