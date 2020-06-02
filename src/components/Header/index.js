@@ -160,11 +160,13 @@ function Header(props) {
   }
 
   useEffect(() => {
-    apiUser.getMe().then(data => {
-      setUserImpactInUnits(
-        _.get(data, 'user.userImpact.impactsInUnits.footprint'),
-      )
-    })
+    if (_.get(props, 'user._id')) {
+      apiUser.getMe().then(data => {
+        setUserImpactInUnits(
+          _.get(data, 'user.userImpact.impactsInUnits.footprint'),
+        )
+      })
+    }
     window.addEventListener('resize', handleWindowSizeChange)
     return () => {
       window.removeEventListener('resize', handleWindowSizeChange)
