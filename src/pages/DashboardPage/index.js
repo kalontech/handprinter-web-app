@@ -964,17 +964,21 @@ class DashboardPage extends Component {
         )}
         {subset === 'activity' && !personId && <UserDashboardActivity />}
         {subset === 'activity' && !!personId && (
-          <Content>
-            <FeedWrapper>
-              <Feed
-                hideUpdateForm
-                readFrom={{
-                  feedGroup: 'timeline',
-                  userId: `user-${personId}`,
-                }}
-              />
-            </FeedWrapper>
-          </Content>
+          <WidgetBlockContainer
+            blur={error && error.code === PERMISSION_DENIED_CODE}
+          >
+            <Content>
+              <FeedWrapper>
+                <Feed
+                  hideUpdateForm
+                  readFrom={{
+                    feedGroup: 'timeline',
+                    userId: `user-${personId}`,
+                  }}
+                />
+              </FeedWrapper>
+            </Content>
+          </WidgetBlockContainer>
         )}
       </Fragment>
     )
