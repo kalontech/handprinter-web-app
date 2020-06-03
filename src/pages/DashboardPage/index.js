@@ -26,6 +26,7 @@ import { BlockContainer, DefaultButton } from 'components/Styled'
 import TabsSecondary from 'components/TabsSecondary'
 import DiscoverIconComponent from 'assets/icons/DiscoverIcon'
 import FlagIconComponent from 'assets/icons/FlagIcon'
+import Feed from 'components/Feed'
 
 import icons from 'components/ActionCardLabel/icons'
 import { getUserInitialAvatar } from 'api'
@@ -306,6 +307,32 @@ const AdminPlusButton = styled.img`
   border-radius: 50%;
   margin-left: -15px;
   cursor: pointer;
+`
+
+export const FeedWrapper = styled.div`
+  padding-right: 145px;
+  padding-left: 145px;
+
+  ${media.largeDesktop`
+    padding: 16px 34px 16px 34px;
+  `}
+
+  ${media.phone`
+    padding: 16px
+  `}
+`
+
+const Content = styled.div`
+  background-color: ${colors.lightGray};
+  padding: 20px 70px;
+
+  ${media.largeDesktop`
+    padding: 0px 15px;
+  `}
+
+  ${media.phone`
+    padding: 0px;
+  `}
 `
 
 const YEAR = 365
@@ -935,7 +962,20 @@ class DashboardPage extends Component {
             )}
           </WidgetBlockContainer>
         )}
-        {subset === 'activity' && <UserDashboardActivity />}
+        {subset === 'activity' && !personId && <UserDashboardActivity />}
+        {subset === 'activity' && !!personId && (
+          <Content>
+            <FeedWrapper>
+              <Feed
+                hideUpdateForm
+                readFrom={{
+                  feedGroup: 'timeline',
+                  userId: `user-${personId}`,
+                }}
+              />
+            </FeedWrapper>
+          </Content>
+        )}
       </Fragment>
     )
   }
