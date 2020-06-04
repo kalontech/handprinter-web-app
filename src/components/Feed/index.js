@@ -27,6 +27,7 @@ const Feed = ({
   user = {},
   writeTo = {},
   hideFlatFeed = false,
+  hideUpdateForm = false,
   onSuccess,
   verb,
   context,
@@ -95,139 +96,141 @@ const Feed = ({
       appId={REACT_APP_GETSTREAM_APP_ID}
       token={user.feedToken}
     >
-      <div
-        className={
-          isStatusUpdateFormExpanded || attachActionFormExpanded
-            ? 'status-update-form--expanded'
-            : ''
-        }
-      >
-        <StatusUpdateForm
-          onSuccess={() => {
-            setIsStatusUpdateFormExpanded(false)
-            setAttachActionFormExpanded(false)
-            onSuccess && onSuccess()
-          }}
-          feedGroup={writeTo.feedGroup || 'user'}
-          modifyActivityData={data => ({
-            ...data,
-            mentions: isStatusUpdateFormExpanded
-              ? mentions.map(mention => {
-                  return {
-                    foreignId: mention.value,
-                    name: mention.label,
-                    profileImage: mention.photo,
-                  }
-                })
-              : [],
-            attachedActions: attachActionFormExpanded
-              ? actions.map(action => {
-                  return {
-                    foreignId: action.value,
-                    name: action.label,
-                    profileImage: action.photo,
-                  }
-                })
-              : [],
-            to: [...(writeTo.cc || []), ...defaultFeeds],
-            ...modifiedDataProps,
-          })}
-          userId={writeTo.userId}
-          FooterItem={
-            <>
-              <img
-                onClick={() => {
-                  setIsStatusUpdateFormExpanded(value => !value)
-                }}
-                src={Mention}
-                style={{
-                  cursor: 'pointer',
-                  height: '26px',
-                  marginLeft: '32px',
-                  marginTop: hideFlatFeed ? '15px' : '-12px',
-                  width: '26px',
-                }}
-              />
-              {isStatusUpdateFormExpanded && (
-                <div
-                  style={{
-                    alignItems: 'center',
-                    backgroundColor: 'rgb(250, 250, 250)',
-                    bottom: '85px',
-                    display: 'flex',
-                    left: '0px',
-                    padding: '16px',
-                    position: 'absolute',
-                    width: '100%',
-                    zIndex: 1,
-                  }}
-                >
-                  <div style={{ width: '100%' }}>
-                    <AsyncSelect
-                      cacheOptions
-                      defaultOptions
-                      placeholder={'Select Person...'}
-                      isMulti
-                      loadOptions={promiseOptions}
-                      onChange={value => {
-                        setMentions(value)
-                      }}
-                    />
-                    <CloseIcon
-                      style={{ alignSelf: 'center' }}
-                      onClick={() => setIsStatusUpdateFormExpanded(false)}
-                    />
-                  </div>
-                </div>
-              )}
-              <img
-                onClick={() => {
-                  setAttachActionFormExpanded(value => !value)
-                }}
-                src={AttachAction}
-                style={{
-                  cursor: 'pointer',
-                  height: '26px',
-                  marginLeft: '32px',
-                  marginTop: hideFlatFeed ? '15px' : '-12px',
-                  width: '26px',
-                }}
-              />
-              {attachActionFormExpanded && (
-                <div
-                  style={{
-                    alignItems: 'center',
-                    backgroundColor: 'rgb(250, 250, 250)',
-                    bottom: '85px',
-                    display: 'flex',
-                    left: '0px',
-                    padding: '16px',
-                    position: 'absolute',
-                    width: '100%',
-                  }}
-                >
-                  <div style={{ width: '100%' }}>
-                    <AsyncSelect
-                      placeholder={'Select Action...'}
-                      cacheOptions
-                      defaultOptions
-                      isMulti
-                      loadOptions={promiseActionOptions}
-                      onChange={value => {
-                        setActions(value)
-                      }}
-                    />
-                    <CloseIcon
-                      style={{ alignSelf: 'center' }}
-                      onClick={() => setAttachActionFormExpanded(false)}
-                    />
-                  </div>
-                </div>
-              )}
-            </>
+      {!hideUpdateForm && (
+        <div
+          className={
+            isStatusUpdateFormExpanded || attachActionFormExpanded
+              ? 'status-update-form--expanded'
+              : ''
           }
-        />
-      </div>
+        >
+          <StatusUpdateForm
+            onSuccess={() => {
+              setIsStatusUpdateFormExpanded(false)
+              setAttachActionFormExpanded(false)
+              onSuccess && onSuccess()
+            }}
+            feedGroup={writeTo.feedGroup || 'user'}
+            modifyActivityData={data => ({
+              ...data,
+              mentions: isStatusUpdateFormExpanded
+                ? mentions.map(mention => {
+                    return {
+                      foreignId: mention.value,
+                      name: mention.label,
+                      profileImage: mention.photo,
+                    }
+                  })
+                : [],
+              attachedActions: attachActionFormExpanded
+                ? actions.map(action => {
+                    return {
+                      foreignId: action.value,
+                      name: action.label,
+                      profileImage: action.photo,
+                    }
+                  })
+                : [],
+              to: [...(writeTo.cc || []), ...defaultFeeds],
+              ...modifiedDataProps,
+            })}
+            userId={writeTo.userId}
+            FooterItem={
+              <>
+                <img
+                  onClick={() => {
+                    setIsStatusUpdateFormExpanded(value => !value)
+                  }}
+                  src={Mention}
+                  style={{
+                    cursor: 'pointer',
+                    height: '26px',
+                    marginLeft: '32px',
+                    marginTop: hideFlatFeed ? '15px' : '-12px',
+                    width: '26px',
+                  }}
+                />
+                {isStatusUpdateFormExpanded && (
+                  <div
+                    style={{
+                      alignItems: 'center',
+                      backgroundColor: 'rgb(250, 250, 250)',
+                      bottom: '85px',
+                      display: 'flex',
+                      left: '0px',
+                      padding: '16px',
+                      position: 'absolute',
+                      width: '100%',
+                      zIndex: 1,
+                    }}
+                  >
+                    <div style={{ width: '100%' }}>
+                      <AsyncSelect
+                        cacheOptions
+                        defaultOptions
+                        placeholder={'Select Person...'}
+                        isMulti
+                        loadOptions={promiseOptions}
+                        onChange={value => {
+                          setMentions(value)
+                        }}
+                      />
+                      <CloseIcon
+                        style={{ alignSelf: 'center' }}
+                        onClick={() => setIsStatusUpdateFormExpanded(false)}
+                      />
+                    </div>
+                  </div>
+                )}
+                <img
+                  onClick={() => {
+                    setAttachActionFormExpanded(value => !value)
+                  }}
+                  src={AttachAction}
+                  style={{
+                    cursor: 'pointer',
+                    height: '26px',
+                    marginLeft: '32px',
+                    marginTop: hideFlatFeed ? '15px' : '-12px',
+                    width: '26px',
+                  }}
+                />
+                {attachActionFormExpanded && (
+                  <div
+                    style={{
+                      alignItems: 'center',
+                      backgroundColor: 'rgb(250, 250, 250)',
+                      bottom: '85px',
+                      display: 'flex',
+                      left: '0px',
+                      padding: '16px',
+                      position: 'absolute',
+                      width: '100%',
+                    }}
+                  >
+                    <div style={{ width: '100%' }}>
+                      <AsyncSelect
+                        placeholder={'Select Action...'}
+                        cacheOptions
+                        defaultOptions
+                        isMulti
+                        loadOptions={promiseActionOptions}
+                        onChange={value => {
+                          setActions(value)
+                        }}
+                      />
+                      <CloseIcon
+                        style={{ alignSelf: 'center' }}
+                        onClick={() => setAttachActionFormExpanded(false)}
+                      />
+                    </div>
+                  </div>
+                )}
+              </>
+            }
+          />
+        </div>
+      )}
       {!hideFlatFeed && (
         <FlatFeed
           Activity={props => {

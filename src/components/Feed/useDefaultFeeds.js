@@ -8,6 +8,7 @@ import _ from 'lodash'
    - user dashboard world
    - branded activity
    - user's each group activity
+   - personal user feed
 */
 export default function useDefaultFeeds(user) {
   const [defaultFeeds, setDefaultFeeds] = useState([])
@@ -15,6 +16,9 @@ export default function useDefaultFeeds(user) {
   useEffect(() => {
     async function buildDefaultFeeds() {
       let feeds = ['timeline:world']
+      if (user._id) {
+        feeds.push(`timeline:user-${user._id}`)
+      }
       if (user.belongsToBrand) {
         feeds.push(`timeline:brand-${user.belongsToBrand}`)
       }
