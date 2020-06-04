@@ -81,6 +81,7 @@ export default function renderStatistics(props) {
                     impacts={organizationImpacts}
                     impactsInUnits={organizationImpactsInUnits}
                     showPhysicalValues={UIContextData.showPhysicalValues}
+                    hideTooltipTitle
                   />
                 </ActionLabelsBlock>
                 <ActionLabelsBlock>
@@ -113,6 +114,7 @@ export default function renderStatistics(props) {
                     </TotalImpactTitle>
                     <ActionLabelsBlock>
                       <ActionCardLabelSet
+                        hideTooltipTitle
                         largeLabel
                         impacts={networkImpacts}
                         impactsInUnits={networkImpactsInUnits}
@@ -164,6 +166,7 @@ export default function renderStatistics(props) {
                 </ActionLabelsTitle> */}
                 <ActionLabelsBlock>
                   <ActionCardLabelSet
+                    hideTooltipTitle
                     largeLabel
                     impacts={organizationImpacts}
                     impactsInUnits={organizationImpactsInUnits}
@@ -201,6 +204,7 @@ export default function renderStatistics(props) {
                     </TotalImpactTitle>
                     <ActionLabelsBlock>
                       <ActionCardLabelSet
+                        hideTooltipTitle
                         largeLabel
                         impacts={networkImpacts}
                         impactsInUnits={networkImpactsInUnits}
