@@ -149,6 +149,13 @@ export const Achievement = styled.div`
   overflow: hidden;
 `
 
+const AchievementImage = styled.img`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  object-fit: cover;
+`
+
 export const AchievementSmall = styled(Achievement)`
   width: 40px;
   height: 40px;
@@ -404,7 +411,7 @@ const Header = props => {
                 }
               >
                 <Achievement specialShape={i.specialShape}>
-                  <img alt={''} src={_.get(i, 'achievement.logo.src')} />
+                  <AchievementImage src={_.get(i, 'achievement.logo.src')} />
                 </Achievement>
               </AchievementPopover>
             )
