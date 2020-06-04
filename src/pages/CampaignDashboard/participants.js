@@ -11,14 +11,7 @@ import { getUserInitialAvatar } from '../../api'
 import { calcImpactsInUnits } from '../../utils/calcImpactsInUnits'
 
 export default function renderParticipants(props) {
-  const {
-    loading,
-    participants,
-    intl,
-    campaign,
-    user,
-    showPhysicalValues,
-  } = props
+  const { loading, participants, intl, campaign, showPhysicalValues } = props
   const selectedKey = _.get(props, 'location.search', '').includes('finished')
     ? 'finished'
     : 'participants'
@@ -66,7 +59,7 @@ export default function renderParticipants(props) {
                   { count: item.userInfo.takenActionsCount },
                 )}
                 impacts={{ handprint: item.userInfo.impacts }}
-                achievements={user.achievements}
+                achievements={item.user.achievements}
                 showPhysicalValues={showPhysicalValues}
                 impactsInUnits={calcImpactsInUnits(item.accomplishedActions)}
               />

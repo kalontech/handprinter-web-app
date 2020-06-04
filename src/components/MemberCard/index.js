@@ -9,11 +9,15 @@ import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import { FormattedMessage } from 'react-intl'
 import { Popover } from 'antd'
 
+import adminBadge from 'assets/icons/admin-badge.svg'
+import ownerBadge from 'assets/icons/owner-badge.svg'
+
 import Progress from '../../pages/CompetitionDashboard/progress'
 import {
   Achievements,
   AchievementSmall,
 } from '../../pages/DashboardPage/header'
+import { MEMBER_GROUP_ROLES } from '../../utils/constants'
 
 const Block = styled(Link)`
   padding: 30px 20px 20px;
@@ -48,6 +52,13 @@ const Block = styled(Link)`
     width: 100%;
     min-height: 211px;
   `}
+`
+
+const AchievementImage = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  object-fit: cover;
 `
 
 const User = styled.div`
@@ -160,6 +171,14 @@ const PopoverText = styled.text`
   color: ${colors.darkGray};
 `
 
+const Badge = styled.img`
+  display: flex;
+  height: 23px;
+  align-self: flex-end;
+  margin-top: -20px;
+  margin-right: -10px;
+`
+
 export default class MemberCard extends React.PureComponent {
   static displayName = 'MemberCard'
 
@@ -183,6 +202,7 @@ export default class MemberCard extends React.PureComponent {
     impactsInUnits: PropTypes.object,
     showPhysicalValues: PropTypes.bool,
     isTablet: PropTypes.bool,
+    role: PropTypes.string,
   }
 
   static defaultProps = {
@@ -216,10 +236,14 @@ export default class MemberCard extends React.PureComponent {
       tooltipText,
       showPhysicalValues,
       isTablet,
+      role,
     } = this.props
-
+    let badgeIcon
+    if (role === MEMBER_GROUP_ROLES.ADMIN) badgeIcon = adminBadge
+    if (role === MEMBER_GROUP_ROLES.OWNER) badgeIcon = ownerBadge
     return (
       <Block style={containerStyle} to={to}>
+        <Badge src={badgeIcon} />
         <User>
           <ImgPlaceholder>
             {!photo && this.fullNamePlaceholder}
@@ -267,7 +291,7 @@ export default class MemberCard extends React.PureComponent {
               <Achievements>
                 {achievements.slice(0, 5).map(i => (
                   <AchievementSmall specialShape={i.specialShape} key={i.id}>
-                    <img alt={''} src={_.get(i, 'campaign.logo.src')} />
+                    <AchievementImage src={_.get(i, 'campaign.logo.src')} />
                   </AchievementSmall>
                 ))}
               </Achievements>

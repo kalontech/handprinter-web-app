@@ -18,6 +18,7 @@ import { ActivityFooter, ActivityHeader } from 'components/GetStreamComponents'
 import Mention from 'components/GetStreamComponents/Mention.svg'
 import AttachAction from 'components/GetStreamComponents/AttachAction.svg'
 import env from 'config/env'
+import CloseIcon from 'assets/icons/CloseIcon'
 
 import useDefaultFeeds from './useDefaultFeeds'
 
@@ -104,7 +105,11 @@ const Feed = ({
           }
         >
           <StatusUpdateForm
-            onSuccess={onSuccess}
+            onSuccess={() => {
+              setIsStatusUpdateFormExpanded(false)
+              setAttachActionFormExpanded(false)
+              onSuccess && onSuccess()
+            }}
             feedGroup={writeTo.feedGroup || 'user'}
             modifyActivityData={data => ({
               ...data,
@@ -150,23 +155,29 @@ const Feed = ({
                     style={{
                       alignItems: 'center',
                       backgroundColor: 'rgb(250, 250, 250)',
-                      bottom: '73px',
+                      bottom: '85px',
                       display: 'flex',
                       left: '0px',
                       padding: '16px',
                       position: 'absolute',
                       width: '100%',
+                      zIndex: 1,
                     }}
                   >
                     <div style={{ width: '100%' }}>
                       <AsyncSelect
                         cacheOptions
                         defaultOptions
+                        placeholder={'Select Person...'}
                         isMulti
                         loadOptions={promiseOptions}
                         onChange={value => {
                           setMentions(value)
                         }}
+                      />
+                      <CloseIcon
+                        style={{ alignSelf: 'center' }}
+                        onClick={() => setIsStatusUpdateFormExpanded(false)}
                       />
                     </div>
                   </div>
@@ -189,7 +200,7 @@ const Feed = ({
                     style={{
                       alignItems: 'center',
                       backgroundColor: 'rgb(250, 250, 250)',
-                      bottom: '73px',
+                      bottom: '85px',
                       display: 'flex',
                       left: '0px',
                       padding: '16px',
@@ -199,6 +210,7 @@ const Feed = ({
                   >
                     <div style={{ width: '100%' }}>
                       <AsyncSelect
+                        placeholder={'Select Action...'}
                         cacheOptions
                         defaultOptions
                         isMulti
@@ -206,6 +218,10 @@ const Feed = ({
                         onChange={value => {
                           setActions(value)
                         }}
+                      />
+                      <CloseIcon
+                        style={{ alignSelf: 'center' }}
+                        onClick={() => setAttachActionFormExpanded(false)}
                       />
                     </div>
                   </div>

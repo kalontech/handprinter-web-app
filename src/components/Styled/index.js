@@ -63,6 +63,18 @@ const raf = css`
     .raf-emoji-picker {
       z-index: 1;
     }
+
+    .css-yk16xz-control {
+      width: 100%;
+    }
+
+    .css-1pahdxg-control {
+      width: 100%;
+    }
+
+    .css-2b097c-container {
+      width: 100%;
+    }
   }
 `
 

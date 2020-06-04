@@ -1226,29 +1226,39 @@ class GroupViewPage extends PureComponent {
                     style={{ flexGrow: '1' }}
                   >
                     {members.docs &&
-                      members.docs.map(item => (
-                        <Column
-                          key={item.user._id}
-                          xl={8}
-                          lg={12}
-                          md={12}
-                          xs={24}
-                        >
-                          <MemberCard
-                            to={`/account/${item.user._id}`}
-                            fullName={item.user.fullName}
-                            photo={
-                              item.user.photo ||
-                              getUserInitialAvatar(item.user.fullName)
-                            }
-                            counter={intl.formatMessage(
-                              { id: 'app.pages.groups.actionsTaken' },
-                              { count: item.groupInfo.memberTakenActionsCount },
-                            )}
-                            impacts={{ handprint: item.impacts }}
-                          />
-                        </Column>
-                      ))}
+                      members.docs
+                        // Sort users in alphabetical order
+                        .sort((a, b) =>
+                          _.get(a, 'user.fullName').localeCompare(
+                            _.get(b, 'user.fullName'),
+                          ),
+                        )
+                        .map(item => (
+                          <Column
+                            key={item.user._id}
+                            xl={8}
+                            lg={12}
+                            md={12}
+                            xs={24}
+                          >
+                            <MemberCard
+                              to={`/account/${item.user._id}`}
+                              fullName={item.user.fullName}
+                              photo={
+                                item.user.photo ||
+                                getUserInitialAvatar(item.user.fullName)
+                              }
+                              counter={intl.formatMessage(
+                                { id: 'app.pages.groups.actionsTaken' },
+                                {
+                                  count: item.groupInfo.memberTakenActionsCount,
+                                },
+                              )}
+                              impacts={{ handprint: item.impacts }}
+                              role={item.user.role}
+                            />
+                          </Column>
+                        ))}
                   </Row>
                 )}
 
