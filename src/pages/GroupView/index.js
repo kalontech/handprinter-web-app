@@ -1227,6 +1227,7 @@ class GroupViewPage extends PureComponent {
                   >
                     {members.docs &&
                       members.docs
+                        // Sort users in alphabetical order
                         .sort((a, b) =>
                           _.get(a, 'user.fullName').localeCompare(
                             _.get(b, 'user.fullName'),
