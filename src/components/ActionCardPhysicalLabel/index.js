@@ -93,6 +93,7 @@ const ActionCardPhysicalLabel = ({
   largeLabel,
   labelWidth,
   headerLabel,
+  hideTooltipTitle,
   ...otherProp
 }) => {
   const tooltipProps = {}
@@ -104,18 +105,20 @@ const ActionCardPhysicalLabel = ({
       {...tooltipProps}
       title={() => (
         <TooltipContainer>
-          <FormattedMessage
-            id="app.actionCardLabel.tooltip.text"
-            values={{
-              value: `${num} ${power ? `e-${power}` : ''}`,
-              unit: (
-                <FormattedHTMLMessage
-                  id={`app.actions.physicalValues.one.${unit}`}
-                />
-              ),
-              category: category,
-            }}
-          />
+          {!hideTooltipTitle && (
+            <FormattedMessage
+              id="app.actionCardLabel.tooltip.text"
+              values={{
+                value: `${num} ${power ? `e-${power}` : ''}`,
+                unit: (
+                  <FormattedHTMLMessage
+                    id={`app.actions.physicalValues.one.${unit}`}
+                  />
+                ),
+                category: category,
+              }}
+            />
+          )}
           <div>
             <Link to="/pages/measurement-units">
               <FormattedMessage id="app.actionCardLabel.tooltip.link" />

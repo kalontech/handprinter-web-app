@@ -144,6 +144,7 @@ const ActionCardLabel = ({
   intl: { formatMessage },
   largeLabel,
   labelWidth,
+  hideTooltipTitle,
   ...otherProp
 }) => {
   const tooltipProps = {}
@@ -154,24 +155,26 @@ const ActionCardLabel = ({
       {...tooltipProps}
       title={() => (
         <TooltipContainer>
-          <FormattedMessage
-            id="app.actionCardLabel.tooltip.text"
-            values={{
-              value: value,
-              unit: (
-                <FormattedPlural
-                  value={value}
-                  one={formatMessage({
-                    id: `app.actions.timeValues.one.${unit}`,
-                  })}
-                  other={formatMessage({
-                    id: `app.actions.timeValues.other.${unit}`,
-                  })}
-                />
-              ),
-              category: category,
-            }}
-          />
+          {!hideTooltipTitle && (
+            <FormattedMessage
+              id="app.actionCardLabel.tooltip.text"
+              values={{
+                value: value,
+                unit: (
+                  <FormattedPlural
+                    value={value}
+                    one={formatMessage({
+                      id: `app.actions.timeValues.one.${unit}`,
+                    })}
+                    other={formatMessage({
+                      id: `app.actions.timeValues.other.${unit}`,
+                    })}
+                  />
+                ),
+                category: category,
+              }}
+            />
+          )}
           <div>
             <Link to="/pages/measurement-units">
               <FormattedMessage id="app.actionCardLabel.tooltip.link" />
