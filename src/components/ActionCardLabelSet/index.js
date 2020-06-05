@@ -58,6 +58,7 @@ const ActionCardLabelSet = props => {
     showPhysicalValues,
     largeLabel,
     justify,
+    hideTooltipTitle,
   } = props
 
   if (!impacts) return null
@@ -73,6 +74,7 @@ const ActionCardLabelSet = props => {
             .filter(([category, value]) => value > 0)
             .map(([category, value], index) => (
               <ActionCardPhysicalLabel
+                hideTooltipTitle={hideTooltipTitle}
                 largeLabel={largeLabel}
                 hideTooltip={hideTooltip}
                 key={index}
@@ -86,6 +88,7 @@ const ActionCardLabelSet = props => {
             .filter(([category, value]) => value > 0)
             .map(([category, value], index) => (
               <ActionCardPhysicalLabel
+                hideTooltipTitle={hideTooltipTitle}
                 key={index}
                 largeLabel={largeLabel}
                 category={category}
@@ -106,6 +109,7 @@ const ActionCardLabelSet = props => {
             .filter(([category, timeValue]) => timeValue.minutes > 0)
             .map(([category, timeValue], index) => (
               <ActionCardLabel
+                hideTooltipTitle={hideTooltipTitle}
                 largeLabel={largeLabel}
                 hideTooltip={hideTooltip}
                 key={index}
@@ -122,6 +126,7 @@ const ActionCardLabelSet = props => {
             .filter(([category, timeValue]) => timeValue.minutes > 0)
             .map(([category, timeValue], index) => (
               <ActionCardLabel
+                hideTooltipTitle={hideTooltipTitle}
                 key={index}
                 largeLabel={largeLabel}
                 category={category}
