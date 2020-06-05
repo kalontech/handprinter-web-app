@@ -591,10 +591,10 @@ class DashboardPage extends Component {
     }
 
     const footPrintReduction = ratio
-      ? Math.round(YEAR - ratio.footprintDays[currentImpactCategory])
+      ? Math.floor(YEAR - ratio.footprintDays[currentImpactCategory])
       : 0
     const externalHandprint = ratio
-      ? Math.round(ratio.handprintDays[currentImpactCategory])
+      ? Math.floor(ratio.handprintDays[currentImpactCategory])
       : 0
     return (
       <Fragment>
