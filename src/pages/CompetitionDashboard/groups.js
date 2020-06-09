@@ -265,7 +265,7 @@ function renderGroup(props, groupParticipants) {
     intl,
     allInvitations,
     total,
-    accomplished,
+    accomplished = 0,
     endDate,
     expired,
     tooltipText,
@@ -273,7 +273,7 @@ function renderGroup(props, groupParticipants) {
   const groups = getGroups(groupParticipants, allInvitations)
   const cg = groups && Object.values(groups)[0] // competition group
   if (!cg || _.isEmpty(cg.participants)) return null
-  const participantsCount = cg.participants.length
+  const participantsCount = cg.participants.length || 1
   let totalActions = total * participantsCount
   const percentAccomplished = (accomplished / totalActions) * 100
   return (

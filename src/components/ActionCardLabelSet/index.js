@@ -45,7 +45,7 @@ export const processedUnitValue = val => {
     // 1231.10 -> [1231, null]
     return val > 100
       ? [Math.round(val * 100) / 100, null]
-      : [val.toFixed(1), null]
+      : [(Number(val) || 0).toFixed(1), null]
   }
 }
 

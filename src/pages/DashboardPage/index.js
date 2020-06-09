@@ -586,9 +586,9 @@ class DashboardPage extends Component {
     let avatar
     if (organization) {
       avatar = organization.photo || getUserInitialAvatar(organization.name)
-    } else {
+    } else if (user) {
       avatar = user.photo || getUserInitialAvatar(user.fullName)
-    }
+    } else avatar = getUserInitialAvatar('HP')
 
     const footPrintReduction = ratio
       ? Math.floor(YEAR - ratio.footprintDays[currentImpactCategory])
@@ -871,7 +871,7 @@ class DashboardPage extends Component {
               </GoodRatioCol>
             </Row>
 
-            {!personId && stats.network && (
+            {!personId && stats && stats.network && (
               <Row gutter={20} style={{ marginTop: '20px' }}>
                 <Col span={24}>
                   <WidgetContainer>
