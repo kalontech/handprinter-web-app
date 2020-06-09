@@ -138,11 +138,12 @@ export default function renderStatistics(props) {
               </StatisticsScrollTitle>
               <StatisticsScroll>
                 {sortedGroups.map(i => {
-                  const accomplished = i.participants.reduce(
-                    (acc, curr) => acc + curr.accomplishedActions.length,
-                    0,
-                  )
-                  const participantsCount = i.participants.length
+                  const accomplished =
+                    i.participants.reduce(
+                      (acc, curr) => acc + curr.accomplishedActions.length,
+                      0,
+                    ) || 0
+                  const participantsCount = i.participants.length || 1
                   let totalActions = total * participantsCount
                   const percentAccomplished =
                     (accomplished / totalActions) * 100
