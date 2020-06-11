@@ -8,7 +8,6 @@ import MemberCard from 'components/MemberCard'
 
 import { MenuStyled, Column, EmptyList } from './styled'
 import { getUserInitialAvatar } from '../../api'
-import { calcImpactsInUnits } from '../../utils/calcImpactsInUnits'
 
 export default function renderParticipants(props) {
   const { loading, participants, intl, campaign, showPhysicalValues } = props
@@ -61,7 +60,7 @@ export default function renderParticipants(props) {
                 impacts={{ handprint: item.userInfo.impacts }}
                 achievements={item.user.achievements}
                 showPhysicalValues={showPhysicalValues}
-                impactsInUnits={calcImpactsInUnits(item.accomplishedActions)}
+                impactsInUnits={_.get(item, 'user.impactsInUnits', {})}
               />
             </Column>
           ))}
