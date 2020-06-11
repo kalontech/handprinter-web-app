@@ -1231,9 +1231,11 @@ class GroupViewPage extends PureComponent {
                                   {ratio.footprintDays && (
                                     <GoodRatioWidget
                                       footprintDays={Math.round(
-                                        ratio.footprintDays[
-                                          currentImpactCategory
-                                        ],
+                                        _.get(
+                                          ratio,
+                                          `footprintDays.${currentImpactCategory}`,
+                                          365,
+                                        ),
                                       )}
                                       handprintDays={Math.round(
                                         ratio.handprintDays[

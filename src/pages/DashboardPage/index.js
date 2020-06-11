@@ -591,10 +591,12 @@ class DashboardPage extends Component {
     } else avatar = getUserInitialAvatar('HP')
 
     const footPrintReduction = ratio
-      ? Math.floor(YEAR - ratio.footprintDays[currentImpactCategory])
+      ? Math.floor(
+          YEAR - _.get(ratio, `footprintDays.${currentImpactCategory}`, YEAR),
+        )
       : 0
     const externalHandprint = ratio
-      ? Math.floor(ratio.handprintDays[currentImpactCategory])
+      ? Math.floor(_.get(ratio, `handprintDays.${currentImpactCategory}`, 0))
       : 0
     return (
       <Fragment>
@@ -859,10 +861,18 @@ class DashboardPage extends Component {
                     {!!ratio && (
                       <GoodRatioWidget
                         footprintDays={Math.round(
-                          ratio.footprintDays[currentImpactCategory],
+                          _.get(
+                            ratio,
+                            `footprintDays.${currentImpactCategory}`,
+                            YEAR,
+                          ),
                         )}
                         handprintDays={Math.round(
-                          ratio.handprintDays[currentImpactCategory],
+                          _.get(
+                            ratio,
+                            `handprintDays.${currentImpactCategory}`,
+                            0,
+                          ),
                         )}
                       />
                     )}
