@@ -53,6 +53,8 @@ import {
   fetchJoinGroupByInvite,
 } from 'api/groups'
 
+import { UIContextSettings } from '../../context/uiSettingsContext'
+
 import {
   Achievements,
   AchievementPopover,
@@ -776,549 +778,596 @@ class GroupViewPage extends PureComponent {
         {loading && !group && <SpinnerStyled />}
 
         {group && (
-          <Fragment>
-            <FingerPrint />
+          <UIContextSettings.Consumer>
+            {context => {
+              return (
+                <Fragment>
+                  <FingerPrint />
 
-            <GroupDetailedForm
-              counter={intl.formatMessage(
-                { id: 'app.pages.groups.membersCount' },
-                { count: group.info.membersCount },
-              )}
-              initialValues={group}
-              disabled={
-                group.status === GROUPS_STATUSES.DELETED ||
-                (group.info.memberRole &&
-                  group.info.memberRole === MEMBER_GROUP_ROLES.MEMBER)
-              }
-              onSubmit={this.handleSubmit}
-            />
-
-            <WhiteBlock>
-              {!!achievements && (
-                <Achievements>
-                  {achievements.slice(0, 5).map(i => {
-                    const achievement = i.achievement
-                    if (!achievement) return null
-                    const accomplished = i.accomplishedActions
-                      ? i.accomplishedActions.length
-                      : 0
-                    const total =
-                      _.get(achievement, 'actions.length', 0) *
-                      _.get(i, 'participantsCount', 0)
-                    const accomplishedLabel = intl.formatMessage(
-                      { id: 'app.campaignPage.progress.accomplished' },
-                      {
-                        accomplished: accomplished,
-                        total,
-                      },
-                    )
-                    return (
-                      <AchievementPopover
-                        key={i.id}
-                        overlayClassName={'achievements-popover'}
-                        content={
-                          <PopoverWrapper>
-                            <PopoverTitle>
-                              {_.get(i, 'achievement.name')}
-                            </PopoverTitle>
-                            <PopoverText>{accomplishedLabel}</PopoverText>
-                          </PopoverWrapper>
-                        }
-                      >
-                        <Achievement specialShape={i.specialShape}>
-                          <img
-                            alt={''}
-                            src={_.get(i, 'achievement.logo.src')}
-                          />
-                        </Achievement>
-                      </AchievementPopover>
-                    )
-                  })}
-                  {achievements.length > 5 && (
-                    <Achievement
-                      onClick={() => this.setMoreAchievesVisible(true)}
-                      other
-                    >
-                      <OtherAchievementsText>
-                        +{achievements.length - 5}
-                      </OtherAchievementsText>
-                    </Achievement>
-                  )}
-                </Achievements>
-              )}
-              <AchievementModal
-                width={592}
-                visible={moreAchievesVisible}
-                closable
-                onCancel={() => this.setMoreAchievesVisible(false)}
-                centered
-                destroyOnClose
-                title={
-                  <AchievementTitle>
-                    <FormattedMessage id={'app.dashboardPage.achievements'} />
-                  </AchievementTitle>
-                }
-                footer={[
-                  <AchievementFooter key="submit">
-                    <AchievementFooterButton
-                      type="primary"
-                      onClick={() => {
-                        this.setMoreAchievesVisible(false)
-                      }}
-                    >
-                      OK
-                    </AchievementFooterButton>
-                  </AchievementFooter>,
-                ]}
-              >
-                <ModalContent>
-                  <AchievementRow type="flex" justify="left">
-                    {achievements.map(i => {
-                      const achievement = i.achievement
-                      if (!achievement) return null
-                      const accomplished = i.accomplishedActions
-                        ? i.accomplishedActions.length
-                        : 0
-                      const total = _.get(achievement, 'actions.length', 0)
-                      const accomplishedLabel = intl.formatMessage(
-                        { id: 'app.campaignPage.progress.accomplished' },
-                        {
-                          accomplished: accomplished,
-                          total,
-                        },
-                      )
-                      return (
-                        <AchievementCol key={i.id} span={6}>
-                          <AchievementPopover
-                            overlayClassName={'achievements-popover'}
-                            content={
-                              <PopoverWrapper>
-                                <PopoverTitle>
-                                  {!!i.achievement && i.achievement.name}
-                                </PopoverTitle>
-                                <PopoverText>{accomplishedLabel}</PopoverText>
-                              </PopoverWrapper>
-                            }
-                          >
-                            <Achievement specialShape={i.specialShape}>
-                              <img
-                                alt={''}
-                                src={_.get(i, 'achievement.logo.src')}
-                              />
-                            </Achievement>
-                          </AchievementPopover>
-                        </AchievementCol>
-                      )
-                    })}
-                  </AchievementRow>
-                </ModalContent>
-              </AchievementModal>
-
-              <Container>
-                {group.info.memberStatus === USER_GROUP_STATUSES.ACTIVE && (
-                  <Fragment>
-                    <AdminsList>
-                      {group.admins.map(({ user, groupInfo }, index) => (
-                        <AdminsListItem index={index} key={user._id}>
-                          <Link to={`/account/${user._id}`}>
-                            <Tooltip
-                              placement="top"
-                              title={`${user.fullName ||
-                                ''} (${intl.formatMessage({
-                                id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
-                              })})`}
-                            >
-                              <UserPhoto
-                                src={
-                                  user.photo ||
-                                  getUserInitialAvatar(user.fullName)
-                                }
-                                alt="your photo"
-                              />
-                            </Tooltip>
-                          </Link>
-                        </AdminsListItem>
-                      ))}
-
-                      {group.admins.length > 5 && (
-                        <AdminsListItem index={6}>
-                          <MoreAdminsItem>
-                            +{group.admins.length - 5}
-                          </MoreAdminsItem>
-                        </AdminsListItem>
-                      )}
-                    </AdminsList>
-
-                    {[
-                      MEMBER_GROUP_ROLES.ADMIN,
-                      MEMBER_GROUP_ROLES.OWNER,
-                    ].includes(group.info.memberRole) &&
-                      group.status === GROUPS_STATUSES.ACTIVE && (
-                        <Tooltip
-                          getPopupContainer={() => this.$counter.current}
-                          placement="top"
-                          title={
-                            <TooltipTitle>
-                              {intl.formatMessage({
-                                id: 'app.pages.groups.addRemovePeople',
-                              })}
-                              <br />
-                              {group.requestingMembersCount > 0 &&
-                                intl.formatMessage(
-                                  {
-                                    id:
-                                      'app.pages.groups.addRemovePeopleCounter',
-                                  },
-                                  { count: group.requestingMembersCount },
-                                )}
-                            </TooltipTitle>
-                          }
-                        >
-                          <DashedAdminCircle
-                            index={
-                              group.admins.length > 5 ? 7 : group.admins.length
-                            }
-                            ref={this.$counter}
-                            onClick={() => {
-                              this.setState({ modalVisible: true })
-                            }}
-                          >
-                            {group.requestingMembersCount > 0 && (
-                              <Counter>{group.requestingMembersCount}</Counter>
-                            )}
-
-                            <Icon type="plus" />
-                          </DashedAdminCircle>
-                        </Tooltip>
-                      )}
-                  </Fragment>
-                )}
-
-                {group.belongsToBrand !== 'humanscale' && (
-                  <GroupButton {...this.buttonProps} />
-                )}
-              </Container>
-            </WhiteBlock>
-
-            <TabsSecondary
-              justify="center"
-              list={[
-                {
-                  to: `/groups/view/${match.params.id}/${
-                    GROUP_TABS.STATISTICS
-                  }`,
-                  icon: ({ color }) => <Icon type="bar-chart" color={color} />,
-                  text: intl.formatMessage({
-                    id: 'app.header.menu.dashboard',
-                  }),
-                  active: match.params.subset === GROUP_TABS.STATISTICS,
-                },
-                {
-                  to: `/groups/view/${match.params.id}/${GROUP_TABS.MEMBERS}`,
-                  icon: SuggestedIcon,
-                  text: intl.formatMessage({ id: 'app.pages.groups.members' }),
-                  active: match.params.subset === GROUP_TABS.MEMBERS,
-                },
-                {
-                  to: `/groups/view/${match.params.id}/${GROUP_TABS.ACTIVITY}`,
-                  icon: FlagIconComponent,
-                  text: intl.formatMessage({ id: 'app.pages.groups.activity' }),
-                  active: match.params.subset === GROUP_TABS.ACTIVITY,
-                },
-              ]}
-              isOpen={visibleTabs}
-              listType={tabsType}
-              toggleVisible={visible => {
-                this.setState({ visibleTabs: visible })
-              }}
-            >
-              <Content>
-                {loading ? (
-                  <Spinner />
-                ) : (
-                  <Fragment>
-                    <Row gutter={20}>
-                      <Col span={24}>
-                        <WidgetContainer noPaddings>
-                          <WidgetContent>
-                            <ImpactCategorySelector
-                              defaultActiveKey={currentImpactCategory}
-                              onChange={this.handleImpactCategoryChange}
-                            >
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['climate']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.climate" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="climate"
-                              />
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['waste']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.waste" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="waste"
-                              />
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['water']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.water" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="water"
-                              />
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['ecosystem']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.ecosystem" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="ecosystem"
-                              />
-                              <Tabs.TabPane
-                                tab={
-                                  <span>
-                                    <StyledIcon
-                                      component={() =>
-                                        icons['positive']['health']
-                                      }
-                                    />
-                                    <ImpactCategorySelectorName>
-                                      <FormattedMessage id="app.impactCategories.health" />
-                                    </ImpactCategorySelectorName>
-                                  </span>
-                                }
-                                key="health"
-                              />
-                            </ImpactCategorySelector>
-                          </WidgetContent>
-                        </WidgetContainer>
-                      </Col>
-                    </Row>
-                    <Row gutter={20} style={{ marginTop: '20px' }}>
-                      <Col span={12} sm={24} lg={12} xs={24}>
-                        <WidgetContainer>
-                          <WidgetHeader>
-                            <WidgetTitle>
-                              <FormattedMessage id="app.dashboardPage.ourNetPositiveDays" />
-                              <InfoElementWrap>
-                                <InfoElement
-                                  type={INFO_ELEMENT_TYPES.QUESTION}
-                                  tooltipProps={{
-                                    placement: 'bottomLeft',
-                                    title: (
-                                      <Fragment>
-                                        <p>
-                                          <FormattedMessage id="app.dashboardPage.myNetPositiveDays.infoTooltip" />
-                                        </p>
-                                        <div>
-                                          <InfoElementLink
-                                            to={`/pages/faq#${
-                                              QUESTIONS_ANCHOR.WHAT_CALENDAR_SHOWING
-                                            }`}
-                                          >
-                                            <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
-                                          </InfoElementLink>
-                                        </div>
-                                      </Fragment>
-                                    ),
-                                  }}
-                                />
-                              </InfoElementWrap>
-                            </WidgetTitle>
-                          </WidgetHeader>
-                          <WidgetContent useWidgetMinHeight>
-                            {calendar[currentImpactCategory] && (
-                              <CalendarWidget
-                                activeDays={calendar[currentImpactCategory]}
-                              />
-                            )}
-                          </WidgetContent>
-                        </WidgetContainer>
-                      </Col>
-                      <GoodRatioCol span={12} sm={24} lg={12} xs={24}>
-                        <WidgetContainer>
-                          <WidgetHeader>
-                            <WidgetTitle>
-                              <FormattedMessage id="app.dashboardPage.ourGoodRatio" />
-                              <InfoElementWrap>
-                                <InfoElement
-                                  type={INFO_ELEMENT_TYPES.QUESTION}
-                                  tooltipProps={{
-                                    placement: 'bottomLeft',
-                                    title: (
-                                      <Fragment>
-                                        <p>
-                                          <FormattedMessage id="app.dashboardPage.goodRatio.infoTooltip" />
-                                        </p>
-                                        <div>
-                                          <InfoElementLink
-                                            to={`/pages/faq#${
-                                              QUESTIONS_ANCHOR.WHAT_SCALE_SHOWING
-                                            }`}
-                                          >
-                                            <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
-                                          </InfoElementLink>
-                                        </div>
-                                      </Fragment>
-                                    ),
-                                  }}
-                                />
-                              </InfoElementWrap>
-                            </WidgetTitle>
-                          </WidgetHeader>
-                          <WidgetContent useWidgetMinHeight>
-                            {ratio.footprintDays && (
-                              <GoodRatioWidget
-                                footprintDays={Math.round(
-                                  ratio.footprintDays[currentImpactCategory],
-                                )}
-                                handprintDays={Math.round(
-                                  ratio.handprintDays[currentImpactCategory],
-                                )}
-                              />
-                            )}
-                          </WidgetContent>
-                        </WidgetContainer>
-                      </GoodRatioCol>
-                    </Row>
-                  </Fragment>
-                )}
-              </Content>
-
-              <Content>
-                {loading ? (
-                  <Spinner />
-                ) : (
-                  <Row
-                    type="flex"
-                    gutter={{ md: 20 }}
-                    style={{ flexGrow: '1' }}
-                  >
-                    {members.docs &&
-                      members.docs
-                        // Sort users in alphabetical order
-                        .sort((a, b) =>
-                          _.get(a, 'user.fullName').localeCompare(
-                            _.get(b, 'user.fullName'),
-                          ),
-                        )
-                        .map(item => (
-                          <Column
-                            key={item.user._id}
-                            xl={8}
-                            lg={12}
-                            md={12}
-                            xs={24}
-                          >
-                            <MemberCard
-                              to={`/account/${item.user._id}`}
-                              fullName={item.user.fullName}
-                              photo={
-                                item.user.photo ||
-                                getUserInitialAvatar(item.user.fullName)
-                              }
-                              counter={intl.formatMessage(
-                                { id: 'app.pages.groups.actionsTaken' },
-                                {
-                                  count: item.groupInfo.memberTakenActionsCount,
-                                },
-                              )}
-                              impacts={{ handprint: item.impacts }}
-                              role={item.user.role}
-                            />
-                          </Column>
-                        ))}
-                  </Row>
-                )}
-
-                {!loading && members.totalPages > 1 && (
-                  <PaginationStyled
-                    current={members.page}
-                    pageSize={members.limit}
-                    total={members.totalDocs}
-                    itemRender={(current, type, originalElement) => {
-                      if (type === 'page') {
-                        return (
-                          <button
-                            onClick={() => {
-                              history.push(
-                                `${location.pathname}?page=${current}`,
-                              )
-                            }}
-                          >
-                            {originalElement}
-                          </button>
-                        )
-                      }
-                      if (type === 'prev' || type === 'next') {
-                        return null
-                      }
-                      return originalElement
-                    }}
+                  <GroupDetailedForm
+                    counter={intl.formatMessage(
+                      { id: 'app.pages.groups.membersCount' },
+                      { count: group.info.membersCount },
+                    )}
+                    initialValues={group}
+                    disabled={
+                      group.status === GROUPS_STATUSES.DELETED ||
+                      (group.info.memberRole &&
+                        group.info.memberRole === MEMBER_GROUP_ROLES.MEMBER)
+                    }
+                    onSubmit={this.handleSubmit}
                   />
-                )}
-              </Content>
 
-              <Content>
-                {loading ? (
-                  <Spinner />
-                ) : (
-                  <NewsContainer>
-                    <Feed
-                      readFrom={{
-                        feedGroup: 'timeline',
-                        userId: `group-${group._id}`,
-                      }}
-                      writeTo={{
-                        feedGroup: 'timeline',
-                        userId: `group-${group._id}`,
-                      }}
-                    />
-                  </NewsContainer>
-                )}
+                  <WhiteBlock>
+                    {!!achievements && (
+                      <Achievements>
+                        {achievements.slice(0, 5).map(i => {
+                          const achievement = i.achievement
+                          if (!achievement) return null
+                          const accomplished = i.accomplishedActions
+                            ? i.accomplishedActions.length
+                            : 0
+                          const total =
+                            _.get(achievement, 'actions.length', 0) *
+                            _.get(i, 'participantsCount', 0)
+                          const accomplishedLabel = intl.formatMessage(
+                            { id: 'app.campaignPage.progress.accomplished' },
+                            {
+                              accomplished: accomplished,
+                              total,
+                            },
+                          )
+                          return (
+                            <AchievementPopover
+                              key={i.id}
+                              overlayClassName={'achievements-popover'}
+                              content={
+                                <PopoverWrapper>
+                                  <PopoverTitle>
+                                    {_.get(i, 'achievement.name')}
+                                  </PopoverTitle>
+                                  <PopoverText>{accomplishedLabel}</PopoverText>
+                                </PopoverWrapper>
+                              }
+                            >
+                              <Achievement specialShape={i.specialShape}>
+                                <img
+                                  alt={''}
+                                  src={_.get(i, 'achievement.logo.src')}
+                                />
+                              </Achievement>
+                            </AchievementPopover>
+                          )
+                        })}
+                        {achievements.length > 5 && (
+                          <Achievement
+                            onClick={() => this.setMoreAchievesVisible(true)}
+                            other
+                          >
+                            <OtherAchievementsText>
+                              +{achievements.length - 5}
+                            </OtherAchievementsText>
+                          </Achievement>
+                        )}
+                      </Achievements>
+                    )}
+                    <AchievementModal
+                      width={592}
+                      visible={moreAchievesVisible}
+                      closable
+                      onCancel={() => this.setMoreAchievesVisible(false)}
+                      centered
+                      destroyOnClose
+                      title={
+                        <AchievementTitle>
+                          <FormattedMessage
+                            id={'app.dashboardPage.achievements'}
+                          />
+                        </AchievementTitle>
+                      }
+                      footer={[
+                        <AchievementFooter key="submit">
+                          <AchievementFooterButton
+                            type="primary"
+                            onClick={() => {
+                              this.setMoreAchievesVisible(false)
+                            }}
+                          >
+                            OK
+                          </AchievementFooterButton>
+                        </AchievementFooter>,
+                      ]}
+                    >
+                      <ModalContent>
+                        <AchievementRow type="flex" justify="left">
+                          {achievements.map(i => {
+                            const achievement = i.achievement
+                            if (!achievement) return null
+                            const accomplished = i.accomplishedActions
+                              ? i.accomplishedActions.length
+                              : 0
+                            const total = _.get(
+                              achievement,
+                              'actions.length',
+                              0,
+                            )
+                            const accomplishedLabel = intl.formatMessage(
+                              { id: 'app.campaignPage.progress.accomplished' },
+                              {
+                                accomplished: accomplished,
+                                total,
+                              },
+                            )
+                            return (
+                              <AchievementCol key={i.id} span={6}>
+                                <AchievementPopover
+                                  overlayClassName={'achievements-popover'}
+                                  content={
+                                    <PopoverWrapper>
+                                      <PopoverTitle>
+                                        {!!i.achievement && i.achievement.name}
+                                      </PopoverTitle>
+                                      <PopoverText>
+                                        {accomplishedLabel}
+                                      </PopoverText>
+                                    </PopoverWrapper>
+                                  }
+                                >
+                                  <Achievement specialShape={i.specialShape}>
+                                    <img
+                                      alt={''}
+                                      src={_.get(i, 'achievement.logo.src')}
+                                    />
+                                  </Achievement>
+                                </AchievementPopover>
+                              </AchievementCol>
+                            )
+                          })}
+                        </AchievementRow>
+                      </ModalContent>
+                    </AchievementModal>
 
-                {!loading && (
-                  <ButtonLoadMore
-                    loading={loadingMorelNews}
-                    onClick={this.loadMore}
+                    <Container>
+                      {group.info.memberStatus ===
+                        USER_GROUP_STATUSES.ACTIVE && (
+                        <Fragment>
+                          <AdminsList>
+                            {group.admins.map(({ user, groupInfo }, index) => (
+                              <AdminsListItem index={index} key={user._id}>
+                                <Link to={`/account/${user._id}`}>
+                                  <Tooltip
+                                    placement="top"
+                                    title={`${user.fullName ||
+                                      ''} (${intl.formatMessage({
+                                      id: `app.pages.groups.${groupInfo.memberRole.toLowerCase()}`,
+                                    })})`}
+                                  >
+                                    <UserPhoto
+                                      src={
+                                        user.photo ||
+                                        getUserInitialAvatar(user.fullName)
+                                      }
+                                      alt="your photo"
+                                    />
+                                  </Tooltip>
+                                </Link>
+                              </AdminsListItem>
+                            ))}
+
+                            {group.admins.length > 5 && (
+                              <AdminsListItem index={6}>
+                                <MoreAdminsItem>
+                                  +{group.admins.length - 5}
+                                </MoreAdminsItem>
+                              </AdminsListItem>
+                            )}
+                          </AdminsList>
+
+                          {[
+                            MEMBER_GROUP_ROLES.ADMIN,
+                            MEMBER_GROUP_ROLES.OWNER,
+                          ].includes(group.info.memberRole) &&
+                            group.status === GROUPS_STATUSES.ACTIVE && (
+                              <Tooltip
+                                getPopupContainer={() => this.$counter.current}
+                                placement="top"
+                                title={
+                                  <TooltipTitle>
+                                    {intl.formatMessage({
+                                      id: 'app.pages.groups.addRemovePeople',
+                                    })}
+                                    <br />
+                                    {group.requestingMembersCount > 0 &&
+                                      intl.formatMessage(
+                                        {
+                                          id:
+                                            'app.pages.groups.addRemovePeopleCounter',
+                                        },
+                                        { count: group.requestingMembersCount },
+                                      )}
+                                  </TooltipTitle>
+                                }
+                              >
+                                <DashedAdminCircle
+                                  index={
+                                    group.admins.length > 5
+                                      ? 7
+                                      : group.admins.length
+                                  }
+                                  ref={this.$counter}
+                                  onClick={() => {
+                                    this.setState({ modalVisible: true })
+                                  }}
+                                >
+                                  {group.requestingMembersCount > 0 && (
+                                    <Counter>
+                                      {group.requestingMembersCount}
+                                    </Counter>
+                                  )}
+
+                                  <Icon type="plus" />
+                                </DashedAdminCircle>
+                              </Tooltip>
+                            )}
+                        </Fragment>
+                      )}
+
+                      {group.belongsToBrand !== 'humanscale' && (
+                        <GroupButton {...this.buttonProps} />
+                      )}
+                    </Container>
+                  </WhiteBlock>
+
+                  <TabsSecondary
+                    justify="center"
+                    list={[
+                      {
+                        to: `/groups/view/${match.params.id}/${
+                          GROUP_TABS.STATISTICS
+                        }`,
+                        icon: ({ color }) => (
+                          <Icon type="bar-chart" color={color} />
+                        ),
+                        text: intl.formatMessage({
+                          id: 'app.header.menu.dashboard',
+                        }),
+                        active: match.params.subset === GROUP_TABS.STATISTICS,
+                      },
+                      {
+                        to: `/groups/view/${match.params.id}/${
+                          GROUP_TABS.MEMBERS
+                        }`,
+                        icon: SuggestedIcon,
+                        text: intl.formatMessage({
+                          id: 'app.pages.groups.members',
+                        }),
+                        active: match.params.subset === GROUP_TABS.MEMBERS,
+                      },
+                      {
+                        to: `/groups/view/${match.params.id}/${
+                          GROUP_TABS.ACTIVITY
+                        }`,
+                        icon: FlagIconComponent,
+                        text: intl.formatMessage({
+                          id: 'app.pages.groups.activity',
+                        }),
+                        active: match.params.subset === GROUP_TABS.ACTIVITY,
+                      },
+                    ]}
+                    isOpen={visibleTabs}
+                    listType={tabsType}
+                    toggleVisible={visible => {
+                      this.setState({ visibleTabs: visible })
+                    }}
                   >
-                    {intl.formatMessage({ id: 'app.newsPage.loadMoreNews' })}
-                  </ButtonLoadMore>
-                )}
-              </Content>
-            </TabsSecondary>
-          </Fragment>
+                    <Content>
+                      {loading ? (
+                        <Spinner />
+                      ) : (
+                        <Fragment>
+                          <Row gutter={20}>
+                            <Col span={24}>
+                              <WidgetContainer noPaddings>
+                                <WidgetContent>
+                                  <ImpactCategorySelector
+                                    defaultActiveKey={currentImpactCategory}
+                                    onChange={this.handleImpactCategoryChange}
+                                  >
+                                    <Tabs.TabPane
+                                      tab={
+                                        <span>
+                                          <StyledIcon
+                                            component={() =>
+                                              icons['positive']['climate']
+                                            }
+                                          />
+                                          <ImpactCategorySelectorName>
+                                            <FormattedMessage id="app.impactCategories.climate" />
+                                          </ImpactCategorySelectorName>
+                                        </span>
+                                      }
+                                      key="climate"
+                                    />
+                                    <Tabs.TabPane
+                                      tab={
+                                        <span>
+                                          <StyledIcon
+                                            component={() =>
+                                              icons['positive']['waste']
+                                            }
+                                          />
+                                          <ImpactCategorySelectorName>
+                                            <FormattedMessage id="app.impactCategories.waste" />
+                                          </ImpactCategorySelectorName>
+                                        </span>
+                                      }
+                                      key="waste"
+                                    />
+                                    <Tabs.TabPane
+                                      tab={
+                                        <span>
+                                          <StyledIcon
+                                            component={() =>
+                                              icons['positive']['water']
+                                            }
+                                          />
+                                          <ImpactCategorySelectorName>
+                                            <FormattedMessage id="app.impactCategories.water" />
+                                          </ImpactCategorySelectorName>
+                                        </span>
+                                      }
+                                      key="water"
+                                    />
+                                    <Tabs.TabPane
+                                      tab={
+                                        <span>
+                                          <StyledIcon
+                                            component={() =>
+                                              icons['positive']['ecosystem']
+                                            }
+                                          />
+                                          <ImpactCategorySelectorName>
+                                            <FormattedMessage id="app.impactCategories.ecosystem" />
+                                          </ImpactCategorySelectorName>
+                                        </span>
+                                      }
+                                      key="ecosystem"
+                                    />
+                                    <Tabs.TabPane
+                                      tab={
+                                        <span>
+                                          <StyledIcon
+                                            component={() =>
+                                              icons['positive']['health']
+                                            }
+                                          />
+                                          <ImpactCategorySelectorName>
+                                            <FormattedMessage id="app.impactCategories.health" />
+                                          </ImpactCategorySelectorName>
+                                        </span>
+                                      }
+                                      key="health"
+                                    />
+                                  </ImpactCategorySelector>
+                                </WidgetContent>
+                              </WidgetContainer>
+                            </Col>
+                          </Row>
+                          <Row gutter={20} style={{ marginTop: '20px' }}>
+                            <Col span={12} sm={24} lg={12} xs={24}>
+                              <WidgetContainer>
+                                <WidgetHeader>
+                                  <WidgetTitle>
+                                    <FormattedMessage id="app.dashboardPage.ourNetPositiveDays" />
+                                    <InfoElementWrap>
+                                      <InfoElement
+                                        type={INFO_ELEMENT_TYPES.QUESTION}
+                                        tooltipProps={{
+                                          placement: 'bottomLeft',
+                                          title: (
+                                            <Fragment>
+                                              <p>
+                                                <FormattedMessage id="app.dashboardPage.myNetPositiveDays.infoTooltip" />
+                                              </p>
+                                              <div>
+                                                <InfoElementLink
+                                                  to={`/pages/faq#${
+                                                    QUESTIONS_ANCHOR.WHAT_CALENDAR_SHOWING
+                                                  }`}
+                                                >
+                                                  <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
+                                                </InfoElementLink>
+                                              </div>
+                                            </Fragment>
+                                          ),
+                                        }}
+                                      />
+                                    </InfoElementWrap>
+                                  </WidgetTitle>
+                                </WidgetHeader>
+                                <WidgetContent useWidgetMinHeight>
+                                  {calendar[currentImpactCategory] && (
+                                    <CalendarWidget
+                                      activeDays={
+                                        calendar[currentImpactCategory]
+                                      }
+                                    />
+                                  )}
+                                </WidgetContent>
+                              </WidgetContainer>
+                            </Col>
+                            <GoodRatioCol span={12} sm={24} lg={12} xs={24}>
+                              <WidgetContainer>
+                                <WidgetHeader>
+                                  <WidgetTitle>
+                                    <FormattedMessage id="app.dashboardPage.ourGoodRatio" />
+                                    <InfoElementWrap>
+                                      <InfoElement
+                                        type={INFO_ELEMENT_TYPES.QUESTION}
+                                        tooltipProps={{
+                                          placement: 'bottomLeft',
+                                          title: (
+                                            <Fragment>
+                                              <p>
+                                                <FormattedMessage id="app.dashboardPage.goodRatio.infoTooltip" />
+                                              </p>
+                                              <div>
+                                                <InfoElementLink
+                                                  to={`/pages/faq#${
+                                                    QUESTIONS_ANCHOR.WHAT_SCALE_SHOWING
+                                                  }`}
+                                                >
+                                                  <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
+                                                </InfoElementLink>
+                                              </div>
+                                            </Fragment>
+                                          ),
+                                        }}
+                                      />
+                                    </InfoElementWrap>
+                                  </WidgetTitle>
+                                </WidgetHeader>
+                                <WidgetContent useWidgetMinHeight>
+                                  {ratio.footprintDays && (
+                                    <GoodRatioWidget
+                                      footprintDays={Math.round(
+                                        _.get(
+                                          ratio,
+                                          `footprintDays.${currentImpactCategory}`,
+                                          365,
+                                        ),
+                                      )}
+                                      handprintDays={Math.round(
+                                        ratio.handprintDays[
+                                          currentImpactCategory
+                                        ],
+                                      )}
+                                    />
+                                  )}
+                                </WidgetContent>
+                              </WidgetContainer>
+                            </GoodRatioCol>
+                          </Row>
+                        </Fragment>
+                      )}
+                    </Content>
+
+                    <Content>
+                      {loading ? (
+                        <Spinner />
+                      ) : (
+                        <Row
+                          type="flex"
+                          gutter={{ md: 20 }}
+                          style={{ flexGrow: '1' }}
+                        >
+                          {members.docs &&
+                            members.docs
+                              // Sort users in alphabetical order
+                              .sort((a, b) =>
+                                _.get(a, 'user.fullName').localeCompare(
+                                  _.get(b, 'user.fullName'),
+                                ),
+                              )
+                              .map(item => (
+                                <Column
+                                  key={item.user._id}
+                                  xl={8}
+                                  lg={12}
+                                  md={12}
+                                  xs={24}
+                                >
+                                  <MemberCard
+                                    to={`/account/${item.user._id}`}
+                                    fullName={item.user.fullName}
+                                    photo={
+                                      item.user.photo ||
+                                      getUserInitialAvatar(item.user.fullName)
+                                    }
+                                    counter={intl.formatMessage(
+                                      { id: 'app.pages.groups.actionsTaken' },
+                                      {
+                                        count:
+                                          item.groupInfo
+                                            .memberTakenActionsCount,
+                                      },
+                                    )}
+                                    impacts={{ handprint: item.impacts }}
+                                    impactsInUnits={{
+                                      handprint: item.impactsInUnits,
+                                    }}
+                                    showPhysicalValues={
+                                      context.showPhysicalValues
+                                    }
+                                    role={item.user.role}
+                                  />
+                                </Column>
+                              ))}
+                        </Row>
+                      )}
+
+                      {!loading && members.totalPages > 1 && (
+                        <PaginationStyled
+                          current={members.page}
+                          pageSize={members.limit}
+                          total={members.totalDocs}
+                          itemRender={(current, type, originalElement) => {
+                            if (type === 'page') {
+                              return (
+                                <button
+                                  onClick={() => {
+                                    history.push(
+                                      `${location.pathname}?page=${current}`,
+                                    )
+                                  }}
+                                >
+                                  {originalElement}
+                                </button>
+                              )
+                            }
+                            if (type === 'prev' || type === 'next') {
+                              return null
+                            }
+                            return originalElement
+                          }}
+                        />
+                      )}
+                    </Content>
+
+                    <Content>
+                      {loading ? (
+                        <Spinner />
+                      ) : (
+                        <NewsContainer>
+                          <Feed
+                            readFrom={{
+                              feedGroup: 'timeline',
+                              userId: `group-${group._id}`,
+                            }}
+                            writeTo={{
+                              feedGroup: 'timeline',
+                              userId: `group-${group._id}`,
+                            }}
+                          />
+                        </NewsContainer>
+                      )}
+
+                      {!loading && (
+                        <ButtonLoadMore
+                          loading={loadingMorelNews}
+                          onClick={this.loadMore}
+                        >
+                          {intl.formatMessage({
+                            id: 'app.newsPage.loadMoreNews',
+                          })}
+                        </ButtonLoadMore>
+                      )}
+                    </Content>
+                  </TabsSecondary>
+                </Fragment>
+              )
+            }}
+          </UIContextSettings.Consumer>
         )}
 
         <Modal
