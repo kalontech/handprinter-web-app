@@ -3,6 +3,7 @@ import Spinner from 'components/Spinner'
 import { FormattedMessage } from 'react-intl'
 import moment from 'moment'
 import MemberCard from 'components/MemberCard'
+import _ from 'lodash'
 
 import {
   StatisticsScroll,
@@ -12,7 +13,6 @@ import {
 } from './styled'
 import { getUserInitialAvatar } from '../../api'
 import AccomplishedAction from './accomplishedAction'
-import { calcImpactsInUnits } from '../../utils/calcImpactsInUnits'
 
 import { UIContextSettings } from '../../context/uiSettingsContext'
 
@@ -86,8 +86,10 @@ export default function renderStatistics(props) {
                       { accomplished, total },
                     )}
                     impacts={{ handprint: participant.userInfo.impacts }}
-                    impactsInUnits={calcImpactsInUnits(
-                      participant.accomplishedActions,
+                    impactsInUnits={_.get(
+                      participant,
+                      'user.impactsInUnits',
+                      {},
                     )}
                     progressBarPercent={percentAccomplished}
                     total={total}
