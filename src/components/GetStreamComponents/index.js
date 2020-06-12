@@ -69,7 +69,7 @@ const DeletePostText = styled.span`
 
 export const ActivityFooter = props => {
   const [isShowComments, setIsShowComments] = useState(false)
-
+  const numberOfComments = _.get(props, 'activity.reaction_counts.comment', 0)
   return (
     <>
       <Divider style={{ margin: '10px 0px 0px 0px' }} />
@@ -143,6 +143,9 @@ export const ActivityFooter = props => {
               setIsShowComments(value => !value)
             }}
           />
+          {numberOfComments > 0 && (
+            <span style={{ alignSelf: 'center' }}>{numberOfComments}</span>
+          )}
         </Flex>
         <Box sx={{ display: isShowComments ? 'block' : 'none' }}>
           <CommentField
