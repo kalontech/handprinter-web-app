@@ -448,6 +448,7 @@ class DashboardPage extends Component {
     calendar: PropTypes.object.isRequired,
     intl: PropTypes.object.isRequired,
     myGroups: PropTypes.array,
+    history: PropTypes.object,
   }
 
   state = {
@@ -962,7 +963,9 @@ class DashboardPage extends Component {
             )}
           </WidgetBlockContainer>
         )}
-        {subset === 'activity' && !personId && <UserDashboardActivity />}
+        {subset === 'activity' && !personId && (
+          <UserDashboardActivity history={this.props.history} />
+        )}
         {subset === 'activity' && !!personId && (
           <WidgetBlockContainer
             blur={error && error.code === PERMISSION_DENIED_CODE}
@@ -975,6 +978,7 @@ class DashboardPage extends Component {
                     feedGroup: 'timeline',
                     userId: `user-${personId}`,
                   }}
+                  history={this.props.history}
                 />
               </FeedWrapper>
             </Content>
