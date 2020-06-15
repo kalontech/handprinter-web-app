@@ -19,7 +19,6 @@ function getActions(props, selectedKey) {
     participants,
     campaign: { actions },
   } = props
-  if (participants.length === 0) return []
   const sortedParticipants = participants.filter(
     p => p.user._id === props.user._id,
   )
