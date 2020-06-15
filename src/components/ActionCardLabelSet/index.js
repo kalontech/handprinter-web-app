@@ -59,6 +59,7 @@ const ActionCardLabelSet = props => {
     largeLabel,
     justify,
     hideTooltipTitle,
+    hasTakenActions,
   } = props
 
   if (!impacts) return null
@@ -81,6 +82,7 @@ const ActionCardLabelSet = props => {
                 category={category}
                 unit={category}
                 value={processedUnitValue(value)}
+                hasTakenActions={hasTakenActions}
               />
             ))}
         {impactsInUnits.handprint &&
@@ -94,6 +96,7 @@ const ActionCardLabelSet = props => {
                 category={category}
                 unit={category}
                 value={processedUnitValue(value)}
+                hasTakenActions={hasTakenActions}
               />
             ))}
       </CardLabelWrap>
@@ -119,6 +122,7 @@ const ActionCardLabelSet = props => {
                 variant={
                   timeValue.humanReadable.value >= 0 ? 'positive' : 'negative'
                 }
+                hasTakenActions={hasTakenActions}
               />
             ))}
         {impacts.handprint &&
@@ -135,6 +139,7 @@ const ActionCardLabelSet = props => {
                 variant={
                   timeValue.humanReadable.value >= 0 ? 'positive' : 'negative'
                 }
+                hasTakenActions={hasTakenActions}
               />
             ))}
       </CardLabelWrap>
@@ -149,6 +154,7 @@ ActionCardLabelSet.propTypes = {
   mobileFixedWidth: PropTypes.bool,
   showPhysicalValues: PropTypes.bool,
   justify: PropTypes.bool,
+  hasTakenActions: PropTypes.bool,
 }
 
 export default ActionCardLabelSet

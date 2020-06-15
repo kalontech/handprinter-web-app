@@ -94,6 +94,7 @@ const ActionCardPhysicalLabel = ({
   labelWidth,
   headerLabel,
   hideTooltipTitle,
+  hasTakenActions,
   ...otherProp
 }) => {
   const tooltipProps = {}
@@ -164,6 +165,7 @@ ActionCardPhysicalLabel.propTypes = {
   unit: PropTypes.string.isRequired,
   value: PropTypes.array.isRequired,
   powInd: PropTypes.number,
+  hasTakenActions: PropTypes.bool,
 }
 
 export default injectIntl(ActionCardPhysicalLabel)

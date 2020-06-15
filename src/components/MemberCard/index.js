@@ -203,6 +203,7 @@ export default class MemberCard extends React.PureComponent {
     showPhysicalValues: PropTypes.bool,
     isTablet: PropTypes.bool,
     role: PropTypes.string,
+    hasTakenActions: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -237,6 +238,7 @@ export default class MemberCard extends React.PureComponent {
       showPhysicalValues,
       isTablet,
       role,
+      hasTakenActions,
     } = this.props
     let badgeIcon
     if (role === MEMBER_GROUP_ROLES.ADMIN) badgeIcon = adminBadge
@@ -315,6 +317,7 @@ export default class MemberCard extends React.PureComponent {
             impacts={impacts}
             impactsInUnits={impactsInUnits}
             showPhysicalValues={showPhysicalValues}
+            hasTakenActions={hasTakenActions}
           />
         )}
       </Block>
