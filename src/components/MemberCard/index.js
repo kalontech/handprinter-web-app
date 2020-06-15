@@ -179,6 +179,15 @@ const Badge = styled.img`
   margin-right: -10px;
 `
 
+function getIsImpactsInModeling(impacts, hasTakenActions) {
+  if (!hasTakenActions) return false
+  if (!impacts.handprint) return true
+  const modeledImpacts = Object.entries(impacts.handprint).filter(
+    ([category, timeValue]) => timeValue.minutes > 0,
+  )
+  return modeledImpacts.length === 0
+}
+
 export default class MemberCard extends React.PureComponent {
   static displayName = 'MemberCard'
 
@@ -243,6 +252,7 @@ export default class MemberCard extends React.PureComponent {
     let badgeIcon
     if (role === MEMBER_GROUP_ROLES.ADMIN) badgeIcon = adminBadge
     if (role === MEMBER_GROUP_ROLES.OWNER) badgeIcon = ownerBadge
+    const impactsInModeling = getIsImpactsInModeling(impacts, hasTakenActions)
     return (
       <Block style={containerStyle} to={to}>
         <Badge src={badgeIcon} />
@@ -317,7 +327,7 @@ export default class MemberCard extends React.PureComponent {
             impacts={impacts}
             impactsInUnits={impactsInUnits}
             showPhysicalValues={showPhysicalValues}
-            hasTakenActions={hasTakenActions}
+            impactsInModeling={impactsInModeling}
           />
         )}
       </Block>

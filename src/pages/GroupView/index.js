@@ -1300,6 +1300,9 @@ class GroupViewPage extends PureComponent {
                                       context.showPhysicalValues
                                     }
                                     role={item.user.role}
+                                    hasTakenActions={
+                                      item.groupInfo.memberTakenActionsCount > 0
+                                    }
                                   />
                                 </Column>
                               ))}

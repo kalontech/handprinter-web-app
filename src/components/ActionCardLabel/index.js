@@ -145,13 +145,12 @@ const ActionCardLabel = ({
   largeLabel,
   labelWidth,
   hideTooltipTitle,
-  hasTakenActions,
+  impactsInModeling,
   ...otherProp
 }) => {
   const tooltipProps = {}
   if (hideTooltip) tooltipProps.visible = false
 
-  const impactsInModeling = false
   return (
     <Tooltip
       {...tooltipProps}
@@ -164,21 +163,23 @@ const ActionCardLabel = ({
                   ? 'app.actionCardLabel.tooltip.modeling'
                   : 'app.actionCardLabel.tooltip.text'
               }
-              values={{
-                value: value,
-                unit: (
-                  <FormattedPlural
-                    value={value}
-                    one={formatMessage({
-                      id: `app.actions.timeValues.one.${unit}`,
-                    })}
-                    other={formatMessage({
-                      id: `app.actions.timeValues.other.${unit}`,
-                    })}
-                  />
-                ),
-                category: category,
-              }}
+              values={
+                !impactsInModeling && {
+                  value: value,
+                  unit: (
+                    <FormattedPlural
+                      value={value}
+                      one={formatMessage({
+                        id: `app.actions.timeValues.one.${unit}`,
+                      })}
+                      other={formatMessage({
+                        id: `app.actions.timeValues.other.${unit}`,
+                      })}
+                    />
+                  ),
+                  category: category,
+                }
+              }
             />
           )}
           {!impactsInModeling && (
@@ -237,7 +238,7 @@ ActionCardLabel.propTypes = {
   variant: PropTypes.oneOf(['positive', 'negative']).isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   powInd: PropTypes.number,
-  hasTakenActions: PropTypes.bool,
+  impactsInModeling: PropTypes.bool,
 }
 
 export default injectIntl(ActionCardLabel)
