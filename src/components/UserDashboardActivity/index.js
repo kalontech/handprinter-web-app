@@ -105,6 +105,7 @@ class UserDashboardActivity extends Component {
               readFrom={{
                 feedGroup: 'network',
               }}
+              history={this.props.history}
             />
           )}
           {range === NEWS_RANGES.WORLD && (
@@ -113,12 +114,17 @@ class UserDashboardActivity extends Component {
                 feedGroup: 'timeline',
                 userId: 'world',
               }}
+              history={this.props.history}
             />
           )}
         </BlockContainer>
       </PageContainer>
     )
   }
+}
+
+UserDashboardActivity.propTypes = {
+  history: Object,
 }
 
 export default compose(injectIntl)(UserDashboardActivity)

@@ -2,6 +2,7 @@ import React, { Fragment, useContext } from 'react'
 import Spinner from 'components/Spinner'
 import { FormattedMessage } from 'react-intl'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
+import moment from 'moment'
 
 import {
   StatisticsScroll,
@@ -11,7 +12,7 @@ import {
   TotalImpactTitle,
   ActionLabelsBlock,
   Separator,
-  // ActionLabelsTitle,
+  ActionLabelsTitle,
 } from './styled'
 import AccomplishedAction from './accomplishedAction'
 
@@ -67,11 +68,12 @@ export default function renderStatistics(props) {
                 <FormattedMessage id="app.organization.impact" />
               </StatisticsScrollTitle>
               <StatisticsScroll>
-                {/* <ActionLabelsTitle>
+                <ActionLabelsTitle>
                   <p>
-                    The {group.name} has been active since {group.name}
+                    The {group.name} has been active since{' '}
+                    {moment(group.info.dateFrom).format('LL')}
                   </p>
-                </ActionLabelsTitle> */}
+                </ActionLabelsTitle>
                 <TotalImpactTitle>
                   <FormattedMessage id="app.organization.total.impact" />
                 </TotalImpactTitle>
@@ -159,11 +161,12 @@ export default function renderStatistics(props) {
                 <TotalImpactTitle>
                   <FormattedMessage id="app.organization.total.impact" />
                 </TotalImpactTitle>
-                {/* <ActionLabelsTitle>
+                <ActionLabelsTitle>
                   <p>
-                    The {group.name} has been active since {group.name}
+                    The {group.name} has been active since{' '}
+                    {moment(group.info.dateFrom).format('LL')}
                   </p>
-                </ActionLabelsTitle> */}
+                </ActionLabelsTitle>
                 <ActionLabelsBlock>
                   <ActionCardLabelSet
                     hideTooltipTitle

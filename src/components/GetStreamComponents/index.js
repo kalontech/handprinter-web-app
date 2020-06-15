@@ -69,7 +69,7 @@ const DeletePostText = styled.span`
 
 export const ActivityFooter = props => {
   const [isShowComments, setIsShowComments] = useState(false)
-
+  const numberOfComments = _.get(props, 'activity.reaction_counts.comment', 0)
   return (
     <>
       <Divider style={{ margin: '10px 0px 0px 0px' }} />
@@ -143,6 +143,9 @@ export const ActivityFooter = props => {
               setIsShowComments(value => !value)
             }}
           />
+          {numberOfComments > 0 && (
+            <span style={{ alignSelf: 'center' }}>{numberOfComments}</span>
+          )}
         </Flex>
         <Box sx={{ display: isShowComments ? 'block' : 'none' }}>
           <CommentField
@@ -175,8 +178,10 @@ export const ActivityHeader = props => {
   const actionImpacts = _.get(activity, 'context.action.impacts')
   const actionImpactsInUnits = _.get(activity, 'context.action.impactsInUnits')
   const actionName = _.get(activity, 'context.action.name', 'Unknown action')
+  const actionSlug = _.get(activity, 'context.action.slug')
   const createdAt = moment.tz(activity.time, 'UTC').fromNow()
   const userName = _.get(activity, 'actor.data.name', 'Unknown user')
+  const userId = _.get(activity, 'actor.id', 'user-').replace('user-', '')
 
   useEffect(() => {
     window.addEventListener('resize', handleWindowSizeChange)
@@ -193,11 +198,24 @@ export const ActivityHeader = props => {
   const isMobile = width < sizes.tablet
 
   const selectedUserId = (participants, actor) => {
-    participants.filter(item => {
-      if (item.user.fullName === actor) {
-        return props.history.push(`/account/${item.user._id}`)
-      }
-    })
+    participants &&
+      participants.filter(item => {
+        if (item.user.fullName === actor) {
+          return props.history.push(`/account/${item.user._id}`)
+        }
+      })
+  }
+
+  const navigateToAction = () => {
+    if (props.history) {
+      props.history.push(`/actions/discover/${actionSlug}`)
+    }
+  }
+
+  const navigateToUser = () => {
+    if (props.history) {
+      props.history.push(`/account/${userId}`)
+    }
   }
 
   return (
@@ -223,25 +241,20 @@ export const ActivityHeader = props => {
             style={{ cursor: 'pointer' }}
           />
           <Box>
-            <Box
-              onClick={() =>
-                selectedUserId(props.participants, activity.actor.data.name)
-              }
-              style={{ cursor: 'pointer' }}
-            >
-              <UserName>
+            <Box>
+              <UserName onClick={navigateToUser} style={{ cursor: 'pointer' }}>
                 <strong>{userName}</strong>
               </UserName>
               {isDidAction && (
-                <UserName>
+                <UserName style={{ cursor: 'pointer' }}>
                   {' did action '}
-                  <strong>{actionName}</strong>
+                  <strong onClick={navigateToAction}>{actionName}</strong>
                 </UserName>
               )}
               {isCommentedAction && (
-                <UserName>
+                <UserName style={{ cursor: 'pointer' }}>
                   {' did action '}
-                  <strong>{actionName}</strong>
+                  <strong onClick={navigateToAction}>{actionName}</strong>
                   {' and the related post below'}
                 </UserName>
               )}
@@ -270,9 +283,6 @@ export const ActivityHeader = props => {
                   width: isTablet ? '100%' : 'none',
                   cursor: 'pointer',
                 }}
-                onClick={() =>
-                  selectedUserId(props.participants, activity.actor.data.name)
-                }
               >
                 <Avatar
                   src={_.get(activity, 'actor.data.profileImage')}
@@ -286,17 +296,17 @@ export const ActivityHeader = props => {
                   }}
                 >
                   <UserName>
-                    <strong>{userName}&nbsp;</strong>
+                    <strong onClick={navigateToUser}>{userName}&nbsp;</strong>
                     {isDidAction && (
                       <span>
                         {' did action '}
-                        <strong>{actionName}</strong>
+                        <strong onClick={navigateToAction}>{actionName}</strong>
                       </span>
                     )}
                     {isCommentedAction && (
                       <p>
                         {' commented on action '}
-                        <strong>{actionName}</strong>
+                        <strong onClick={navigateToAction}>{actionName}</strong>
                       </p>
                     )}
                   </UserName>
