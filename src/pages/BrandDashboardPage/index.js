@@ -1163,7 +1163,7 @@ class BrandPage extends PureComponent {
 
                         {!loading && members.totalPages > 1 && (
                           <PaginationStyled
-                            current={members.page}
+                            current={Number(members.page)}
                             pageSize={members.limit}
                             total={members.totalDocs}
                             itemRender={(current, type, originalElement) => {
