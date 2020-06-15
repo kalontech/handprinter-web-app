@@ -1348,6 +1348,7 @@ class GroupViewPage extends PureComponent {
                               feedGroup: 'timeline',
                               userId: `group-${group._id}`,
                             }}
+                            history={this.props.history}
                           />
                         </NewsContainer>
                       )}
