@@ -250,6 +250,7 @@ export default function renderGroups(props) {
                 )}
                 impacts={{ handprint: participant.userInfo.impacts }}
                 progressBarPercent={percent}
+                hasTakenActions={accomplished > 0}
                 {...progressProps}
               />
             )
@@ -297,6 +298,7 @@ function renderGroup(props, groupParticipants) {
       endDate={endDate}
       expired={expired}
       tooltipText={tooltipText}
+      hasTakenActions={accomplished > 0}
     />
   )
 }

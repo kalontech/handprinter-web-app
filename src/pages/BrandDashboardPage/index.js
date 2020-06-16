@@ -1154,6 +1154,10 @@ class BrandPage extends PureComponent {
                                       showPhysicalValues={
                                         context.showPhysicalValues
                                       }
+                                      hasTakenActions={
+                                        item.groupInfo.memberTakenActionsCount >
+                                        0
+                                      }
                                     />
                                   </Column>
                                 )
@@ -1283,6 +1287,10 @@ class BrandPage extends PureComponent {
                                           }}
                                           showPhysicalValues={
                                             context.showPhysicalValues
+                                          }
+                                          hasTakenActions={
+                                            item.groupInfo
+                                              .memberTakenActionsCount > 0
                                           }
                                         />
                                       </Column>

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import _ from 'lodash'
 
 import ActionCardLabel from 'components/ActionCardLabel'
 import ActionCardPhysicalLabel from 'components/ActionCardPhysicalLabel'
@@ -59,6 +60,7 @@ const ActionCardLabelSet = props => {
     largeLabel,
     justify,
     hideTooltipTitle,
+    impactsInModeling,
   } = props
 
   if (!impacts) return null
@@ -71,7 +73,7 @@ const ActionCardLabelSet = props => {
       >
         {impactsInUnits.footprint &&
           Object.entries(impactsInUnits.footprint)
-            .filter(([category, value]) => value > 0)
+            .filter(([category, value]) => impactsInModeling || value > 0)
             .map(([category, value], index) => (
               <ActionCardPhysicalLabel
                 hideTooltipTitle={hideTooltipTitle}
@@ -81,11 +83,12 @@ const ActionCardLabelSet = props => {
                 category={category}
                 unit={category}
                 value={processedUnitValue(value)}
+                impactsInModeling={impactsInModeling}
               />
             ))}
         {impactsInUnits.handprint &&
           Object.entries(impactsInUnits.handprint)
-            .filter(([category, value]) => value > 0)
+            .filter(([category, value]) => impactsInModeling || value > 0)
             .map(([category, value], index) => (
               <ActionCardPhysicalLabel
                 hideTooltipTitle={hideTooltipTitle}
@@ -94,6 +97,7 @@ const ActionCardLabelSet = props => {
                 category={category}
                 unit={category}
                 value={processedUnitValue(value)}
+                impactsInModeling={impactsInModeling}
               />
             ))}
       </CardLabelWrap>
@@ -106,7 +110,10 @@ const ActionCardLabelSet = props => {
       >
         {impacts.footprint &&
           Object.entries(impacts.footprint)
-            .filter(([category, timeValue]) => timeValue.minutes > 0)
+            .filter(
+              ([category, timeValue]) =>
+                impactsInModeling || timeValue.minutes > 0,
+            )
             .map(([category, timeValue], index) => (
               <ActionCardLabel
                 hideTooltipTitle={hideTooltipTitle}
@@ -114,27 +121,36 @@ const ActionCardLabelSet = props => {
                 hideTooltip={hideTooltip}
                 key={index}
                 category={category}
-                unit={timeValue.humanReadable.unit}
-                value={timeValue.humanReadable.value}
+                unit={_.get(timeValue, 'humanReadable.unit', '')}
+                value={_.get(timeValue, 'humanReadable.value', '')}
                 variant={
-                  timeValue.humanReadable.value >= 0 ? 'positive' : 'negative'
+                  _.get(timeValue, 'humanReadable.value', 0) >= 0
+                    ? 'positive'
+                    : 'negative'
                 }
+                impactsInModeling={impactsInModeling}
               />
             ))}
         {impacts.handprint &&
           Object.entries(impacts.handprint)
-            .filter(([category, timeValue]) => timeValue.minutes > 0)
+            .filter(
+              ([category, timeValue]) =>
+                impactsInModeling || timeValue.minutes > 0,
+            )
             .map(([category, timeValue], index) => (
               <ActionCardLabel
                 hideTooltipTitle={hideTooltipTitle}
                 key={index}
                 largeLabel={largeLabel}
                 category={category}
-                unit={timeValue.humanReadable.unit}
-                value={timeValue.humanReadable.value}
+                unit={_.get(timeValue, 'humanReadable.unit', '')}
+                value={_.get(timeValue, 'humanReadable.value', '')}
                 variant={
-                  timeValue.humanReadable.value >= 0 ? 'positive' : 'negative'
+                  _.get(timeValue, 'humanReadable.value', 0) >= 0
+                    ? 'positive'
+                    : 'negative'
                 }
+                impactsInModeling={impactsInModeling}
               />
             ))}
       </CardLabelWrap>
@@ -149,6 +165,7 @@ ActionCardLabelSet.propTypes = {
   mobileFixedWidth: PropTypes.bool,
   showPhysicalValues: PropTypes.bool,
   justify: PropTypes.bool,
+  hasTakenActions: PropTypes.bool,
 }
 
 export default ActionCardLabelSet

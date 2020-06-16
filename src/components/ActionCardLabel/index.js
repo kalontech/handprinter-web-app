@@ -145,6 +145,7 @@ const ActionCardLabel = ({
   largeLabel,
   labelWidth,
   hideTooltipTitle,
+  impactsInModeling,
   ...otherProp
 }) => {
   const tooltipProps = {}
@@ -157,29 +158,37 @@ const ActionCardLabel = ({
         <TooltipContainer>
           {!hideTooltipTitle && (
             <FormattedMessage
-              id="app.actionCardLabel.tooltip.text"
-              values={{
-                value: value,
-                unit: (
-                  <FormattedPlural
-                    value={value}
-                    one={formatMessage({
-                      id: `app.actions.timeValues.one.${unit}`,
-                    })}
-                    other={formatMessage({
-                      id: `app.actions.timeValues.other.${unit}`,
-                    })}
-                  />
-                ),
-                category: category,
-              }}
+              id={
+                impactsInModeling
+                  ? 'app.actionCardLabel.tooltip.modeling'
+                  : 'app.actionCardLabel.tooltip.text'
+              }
+              values={
+                !impactsInModeling && {
+                  value: value,
+                  unit: (
+                    <FormattedPlural
+                      value={value}
+                      one={formatMessage({
+                        id: `app.actions.timeValues.one.${unit}`,
+                      })}
+                      other={formatMessage({
+                        id: `app.actions.timeValues.other.${unit}`,
+                      })}
+                    />
+                  ),
+                  category: category,
+                }
+              }
             />
           )}
-          <div>
-            <Link to="/pages/measurement-units">
-              <FormattedMessage id="app.actionCardLabel.tooltip.link" />
-            </Link>
-          </div>
+          {!impactsInModeling && (
+            <div>
+              <Link to="/pages/measurement-units">
+                <FormattedMessage id="app.actionCardLabel.tooltip.link" />
+              </Link>
+            </div>
+          )}
         </TooltipContainer>
       )}
       mouseEnterDelay={1}
@@ -200,20 +209,24 @@ const ActionCardLabel = ({
         <Category unit={unit} variant={variant}>
           <Icon component={() => icons[variant][category]} {...otherProp} />
         </Category>
-        <Impact>
-          <Caption unit={unit} variant={variant}>
-            <FormattedPlural
-              value={value}
-              one={formatMessage({
-                id: `app.actions.timeValues.one.${unit}`,
-              })}
-              other={formatMessage({
-                id: `app.actions.timeValues.other.${unit}`,
-              })}
-            />
-          </Caption>
-          <Value>{value}</Value>
-        </Impact>
+        {impactsInModeling ? (
+          <Impact>?</Impact>
+        ) : (
+          <Impact>
+            <Caption unit={unit} variant={variant}>
+              <FormattedPlural
+                value={value}
+                one={formatMessage({
+                  id: `app.actions.timeValues.one.${unit}`,
+                })}
+                other={formatMessage({
+                  id: `app.actions.timeValues.other.${unit}`,
+                })}
+              />
+            </Caption>
+            <Value>{value}</Value>
+          </Impact>
+        )}
       </LabelContainer>
     </Tooltip>
   )
@@ -225,6 +238,7 @@ ActionCardLabel.propTypes = {
   variant: PropTypes.oneOf(['positive', 'negative']).isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   powInd: PropTypes.number,
+  impactsInModeling: PropTypes.bool,
 }
 
 export default injectIntl(ActionCardLabel)
