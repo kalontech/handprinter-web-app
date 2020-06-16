@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import qs from 'qs'
 import _ from 'lodash'
 import * as api from 'api/actions'
+import Compress from 'compress.js'
 
 import { ACTIONS_SUBSETS } from 'utils/constants'
 
@@ -50,6 +51,12 @@ export default function useActions(props, page, setPage) {
     const response = await getActions({ ...query, limit: 20, page })
     if (response && response.actions) {
       const nextActions = _.get(response, 'actions.docs', [])
+      // TODO run script for production DB
+      // for (let i = 0; i < nextActions.length; i++) {
+      //   const element = nextActions[i]
+      //   await compressActionPicture(element)
+      // }
+
       setActions(
         shouldConcatActions ? actions.concat(nextActions) : nextActions,
       )
@@ -59,4 +66,35 @@ export default function useActions(props, page, setPage) {
   }
 
   return [actions, total, isLoading]
+}
+
+export async function compressActionPicture(action) {
+  let blob = await fetch(action.picture).then(r => r.blob())
+  const body = new FormData()
+  const compress = new Compress()
+  const compressed = await compress.compress([blob], {
+    size: 1,
+    quality: 1,
+    maxWidth: 1920,
+    maxHeight: 1920,
+    resize: true,
+  })
+  const base64str = compressed[0].data
+  const imgExt = compressed[0].ext
+  const compressedFile = Compress.convertBase64ToFile(base64str, imgExt)
+  body.append('picture', compressedFile)
+
+  const compressedPreview = await compress.compress([blob], {
+    size: 0.1,
+    quality: 0.5,
+    maxWidth: 200,
+    maxHeight: 200,
+    resize: true,
+  })
+  const base64strPreview = compressedPreview[0].data
+  const imgExtPreview = compressedPreview[0].ext
+  const preview = Compress.convertBase64ToFile(base64strPreview, imgExtPreview)
+  body.append('picturePreview', preview)
+
+  await api.updateAction(action._id, { body })
 }
