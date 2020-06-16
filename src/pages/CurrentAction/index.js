@@ -71,6 +71,21 @@ class CurrentActionPage extends React.PureComponent {
       const imgExt = compressed[0].ext
       const file = Compress.convertBase64ToFile(base64str, imgExt)
       body.append('picture', file)
+
+      const compressedPreview = await compress.compress([values.photo.file], {
+        size: 0.1,
+        quality: 0.5,
+        maxWidth: 200,
+        maxHeight: 200,
+        resize: true,
+      })
+      const base64strPreview = compressedPreview[0].data
+      const imgExtPreview = compressedPreview[0].ext
+      const preview = Compress.convertBase64ToFile(
+        base64strPreview,
+        imgExtPreview,
+      )
+      body.append('picturePreview', preview)
     }
 
     body.append('description', values.description)

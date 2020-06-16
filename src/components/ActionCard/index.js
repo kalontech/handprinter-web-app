@@ -18,6 +18,7 @@ import { ReactComponent as SmallLeaf } from '../CompetitionCard/assets/challenge
 import { ReactComponent as ArrowCircle } from '../CompetitionCard/assets/circleArrow.svg'
 import { ReactComponent as ArrowsCircle } from '../CompetitionCard/assets/arrowsCircle.svg'
 import { ReactComponent as DottedCircle } from '../CompetitionCard/assets/circle3.svg'
+import ProgressiveImage from '../ProgressiveImage'
 
 const TooltipContainer = styled.div`
   line-height: 20px;
@@ -224,6 +225,7 @@ const ActionCard = props => {
   const {
     to,
     picture,
+    picturePreview,
     name,
     impacts,
     suggestedBy,
@@ -331,7 +333,13 @@ const ActionCard = props => {
             </ChallengeLabel>
           )}
           <CardImage>
-            {picture && <img src={picture} alt={name} />}
+            {picture && (
+              <ProgressiveImage
+                alt={name}
+                preview={picturePreview}
+                image={picture}
+              />
+            )}
 
             {canChange && (
               <IconsWrap>
@@ -411,6 +419,7 @@ ActionCard.propTypes = {
   impacts: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   name: PropTypes.string.isRequired,
   picture: PropTypes.string,
+  picturePreview: PropTypes.string,
   font: PropTypes.string,
   placeholder: PropTypes.bool,
   canChange: PropTypes.bool,
