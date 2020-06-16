@@ -18,6 +18,8 @@ import fetch from 'utils/fetch'
 import * as apiActions from 'api/actions'
 import { Creators } from 'redux/actions'
 
+import Compress from 'compress.js'
+
 const Container = styled(OceanContainer)`
   ${media.tablet`
     background-color: ${colors.ocean};
@@ -57,7 +59,18 @@ class CurrentActionPage extends React.PureComponent {
     const body = new FormData()
 
     if (values.photo && values.photo.file) {
-      body.append('picture', values.photo.file)
+      const compress = new Compress()
+      const compressed = await compress.compress([values.photo.file], {
+        size: 1,
+        quality: 1,
+        maxWidth: 1920,
+        maxHeight: 1920,
+        resize: true,
+      })
+      const base64str = compressed[0].data
+      const imgExt = compressed[0].ext
+      const file = Compress.convertBase64ToFile(base64str, imgExt)
+      body.append('picture', file)
     }
 
     body.append('description', values.description)
