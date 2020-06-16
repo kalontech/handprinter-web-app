@@ -61,6 +61,7 @@ export default function renderParticipants(props) {
                 achievements={item.user.achievements}
                 showPhysicalValues={showPhysicalValues}
                 impactsInUnits={_.get(item, 'user.impactsInUnits', {})}
+                hasTakenActions={item.userInfo.takenActionsCount > 0}
               />
             </Column>
           ))}

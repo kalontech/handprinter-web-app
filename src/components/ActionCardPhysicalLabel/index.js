@@ -94,6 +94,7 @@ const ActionCardPhysicalLabel = ({
   labelWidth,
   headerLabel,
   hideTooltipTitle,
+  impactsInModeling,
   ...otherProp
 }) => {
   const tooltipProps = {}
@@ -107,23 +108,31 @@ const ActionCardPhysicalLabel = ({
         <TooltipContainer>
           {!hideTooltipTitle && (
             <FormattedMessage
-              id="app.actionCardLabel.tooltip.text"
-              values={{
-                value: `${num} ${power ? `e-${power}` : ''}`,
-                unit: (
-                  <FormattedHTMLMessage
-                    id={`app.actions.physicalValues.one.${unit}`}
-                  />
-                ),
-                category: category,
-              }}
+              id={
+                impactsInModeling
+                  ? 'app.actionCardLabel.tooltip.modeling'
+                  : 'app.actionCardLabel.tooltip.text'
+              }
+              values={
+                !impactsInModeling && {
+                  value: `${num} ${power ? `e-${power}` : ''}`,
+                  unit: (
+                    <FormattedHTMLMessage
+                      id={`app.actions.physicalValues.one.${unit}`}
+                    />
+                  ),
+                  category: category,
+                }
+              }
             />
           )}
-          <div>
-            <Link to="/pages/measurement-units">
-              <FormattedMessage id="app.actionCardLabel.tooltip.link" />
-            </Link>
-          </div>
+          {!impactsInModeling && (
+            <div>
+              <Link to="/pages/measurement-units">
+                <FormattedMessage id="app.actionCardLabel.tooltip.link" />
+              </Link>
+            </div>
+          )}
         </TooltipContainer>
       )}
       mouseEnterDelay={1}
@@ -143,17 +152,21 @@ const ActionCardPhysicalLabel = ({
         <Category unit={unit}>
           <Icon component={() => icons['positive'][category]} {...otherProp} />
         </Category>
-        <Impact>
-          <Caption unit={unit}>
-            <FormattedHTMLMessage
-              id={`app.actions.physicalValues.one.${unit}`}
-            />
-          </Caption>
-          <Value>
-            {num}
-            {power && <sup>-{power}</sup>}
-          </Value>
-        </Impact>
+        {impactsInModeling ? (
+          <Impact>?</Impact>
+        ) : (
+          <Impact>
+            <Caption unit={unit}>
+              <FormattedHTMLMessage
+                id={`app.actions.physicalValues.one.${unit}`}
+              />
+            </Caption>
+            <Value>
+              {num}
+              {power && <sup>-{power}</sup>}
+            </Value>
+          </Impact>
+        )}
       </LabelContainer>
     </Tooltip>
   )
@@ -164,6 +177,7 @@ ActionCardPhysicalLabel.propTypes = {
   unit: PropTypes.string.isRequired,
   value: PropTypes.array.isRequired,
   powInd: PropTypes.number,
+  impactsInModeling: PropTypes.bool,
 }
 
 export default injectIntl(ActionCardPhysicalLabel)
