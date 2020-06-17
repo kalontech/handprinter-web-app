@@ -127,7 +127,7 @@ export default function renderGroups(props) {
     })
     .reduce((sum, curr) => {
       return sum + curr
-    })
+    }, 0)
 
   const joinCompetition = intl.formatMessage(
     { id: 'app.competitions.join' },
