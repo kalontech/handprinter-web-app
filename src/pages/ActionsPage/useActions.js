@@ -52,11 +52,6 @@ export default function useActions(props, page, setPage) {
     const response = await getActions({ ...query, limit: 20, page })
     if (response && response.actions) {
       const nextActions = _.get(response, 'actions.docs', [])
-      // TODO run script for production DB
-      // for (let i = 0; i < nextActions.length; i++) {
-      //   const element = nextActions[i]
-      //   await compressActionPicture(element)
-      // }
 
       setActions(
         shouldConcatActions ? actions.concat(nextActions) : nextActions,
