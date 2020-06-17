@@ -732,6 +732,7 @@ function ActionsPage(props) {
                                     }`
                               }
                               picture={action.picture}
+                              picturePreview={action.picturePreview}
                               canChange={
                                 action.status === ACTION_STATES.PROPOSED
                               }

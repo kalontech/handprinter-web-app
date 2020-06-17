@@ -7,6 +7,13 @@ import { fetchAPI } from './index' // eslint-disable-line unicorn/import-index
 export const fetchAction = ({ id, slug, ...params }) =>
   fetchAPI(`/actions/find_one/${slug || id}`, params)
 
+export const updateAction = (id, { body, ...params }) =>
+  fetchAPI(`/actions/find_one/${id}`, {
+    body,
+    method: 'PUT',
+    ...params,
+  })
+
 export const getActions = (query = {}) =>
   fetchAPI(`/actions?${qs.stringify(query)}`)
 
