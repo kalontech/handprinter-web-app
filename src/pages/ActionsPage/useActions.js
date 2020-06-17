@@ -34,6 +34,7 @@ export default function useActions(props, page, setPage) {
   }, [props.location, props.match])
 
   async function getActionsList(shouldConcatActions, page = 1) {
+    setIsLoading(true)
     if (!shouldConcatActions) setActions([])
     /*
         Depending on match.params.subset fetching different lists of actions
