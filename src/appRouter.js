@@ -154,13 +154,11 @@ const AppRouter = () => {
               useAuthentication
             />
           )}
-          {brandedConfig && (
-            <Route
-              path="/brand/dashboard/:subset"
-              component={BrandDashboardPage}
-              useAuthentication
-            />
-          )}
+          <Route
+            path="/organizations/:organizationId/dashboard/:subset"
+            component={BrandDashboardPage}
+            useAuthentication
+          />
           <Route
             path="/pages/our-vision"
             component={OurVisionPage}

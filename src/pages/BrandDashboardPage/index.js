@@ -33,12 +33,12 @@ import MemberCard from 'components/MemberCard'
 import { Modal, Pagination } from 'components/Styled'
 import { getUserInitialAvatar } from 'api'
 import * as apiActions from 'api/actions'
+import { fetchUpdateGroup } from 'api/groups'
 import {
-  fetchUpdateGroup,
-  getBrandGroup,
-  getBrandGroupNetwork,
-  getBrandGroupMembers,
-} from 'api/groups'
+  getOrganization,
+  getOrganizationNetwork,
+  getMembers,
+} from 'api/organization'
 
 import { UIContextSettings } from '../../context/uiSettingsContext'
 
@@ -78,6 +78,19 @@ const FingerPrint = styled.div`
   text-align: center;
   background: ${colors.ocean} url(${Print}) no-repeat left bottom;
   background-size: initial;
+
+  ${media.phone`
+    width: 100%;
+    height: 138px;
+    background-size: 100% 100%;
+  `}
+`
+
+const Banner = styled.img`
+  height: 205px;
+  width: 100%;
+  background-size: initial;
+  object-fit: cover;
 
   ${media.phone`
     width: 100%;
@@ -546,25 +559,20 @@ const GROUP_TABS = {
 }
 
 async function getGroupData(props) {
-  const { match, location, overrides } = props
+  const { match, location } = props
   const queries = qs.parse(location.search, { ignoreQueryPrefix: true })
-  const res = await getBrandGroup(overrides.brandName)
-
+  const res = await getOrganization(match.params.organizationId)
   // For members and activity tabs we need get brand group members
-  const tabsFetch = {
-    [GROUP_TABS.MEMBERS]: getBrandGroupMembers,
-    [GROUP_TABS.ACTIVITY]: getBrandGroupMembers,
-  }[match.params.subset]
-
-  const tabsRes =
-    tabsFetch &&
-    (await tabsFetch({
+  let tabsRes
+  if (
+    match.params.subset === GROUP_TABS.MEMBERS ||
+    match.params.subset === GROUP_TABS.ACTIVITY
+  ) {
+    tabsRes = await getMembers({
       page: queries.page || 1,
-      range: 'brandGroup',
-      subset: 'brandGroup',
-      belongsToBrand: overrides.brandName,
-      status: USER_GROUP_STATUSES.ACTIVE,
-    }))
+      id: res._id,
+    })
+  }
 
   return {
     group: res,
@@ -645,8 +653,8 @@ class BrandPage extends PureComponent {
   }
 
   fetchGroupNetwork = async () => {
-    const groupNetwork = await getBrandGroupNetwork(
-      this.props.overrides.brandName,
+    const groupNetwork = await getOrganizationNetwork(
+      _.get(this.props, 'group._id', ''),
     )
     if (groupNetwork) this.setState({ groupNetwork })
   }
@@ -774,7 +782,9 @@ class BrandPage extends PureComponent {
 
     const tabsList = [
       {
-        to: `/brand/dashboard/${GROUP_TABS.STATISTICS}`,
+        to: `/organizations/${_.get(group, '_id')}/dashboard/${
+          GROUP_TABS.STATISTICS
+        }`,
         icon: ({ color }) => <Icon type="bar-chart" color={color} />,
         text: intl.formatMessage({
           id: 'app.pages.groups.statistics',
@@ -782,7 +792,9 @@ class BrandPage extends PureComponent {
         active: match.params.subset === GROUP_TABS.STATISTICS,
       },
       {
-        to: `/brand/dashboard/${GROUP_TABS.MEMBERS}`,
+        to: `/organizations/${_.get(group, '_id')}/dashboard/${
+          GROUP_TABS.MEMBERS
+        }`,
         icon: SuggestedIcon,
         text: intl.formatMessage({
           id: 'app.pages.groups.members',
@@ -790,7 +802,9 @@ class BrandPage extends PureComponent {
         active: match.params.subset === GROUP_TABS.MEMBERS,
       },
       {
-        to: `/brand/dashboard/${GROUP_TABS.ACTIVITY}`,
+        to: `/organizations/${_.get(group, '_id')}/dashboard/${
+          GROUP_TABS.ACTIVITY
+        }`,
         icon: FlagIconComponent,
         text: intl.formatMessage({ id: 'app.pages.groups.activity' }),
         active: match.params.subset === GROUP_TABS.ACTIVITY,
@@ -828,12 +842,19 @@ class BrandPage extends PureComponent {
             {context => {
               return (
                 <Fragment>
-                  <FingerPrint />
+                  {_.get(group, 'banner.src') ? (
+                    <Banner src={group.banner.src} />
+                  ) : (
+                    <FingerPrint />
+                  )}
                   {!isTablet && !isMobile && (
                     <WhiteBlock>
                       <LogoWrap>
                         <Logo
-                          src={getUserInitialAvatar(group.name)}
+                          src={
+                            _.get(group, 'logo.src') ||
+                            getUserInitialAvatar(group.name)
+                          }
                           alt="preview"
                         />
                       </LogoWrap>
@@ -885,7 +906,7 @@ class BrandPage extends PureComponent {
                       </InfoBlock>
 
                       <Container>
-                        {group.info.memberStatus ===
+                        {_.get(group, 'info.memberStatus') ===
                           USER_GROUP_STATUSES.ACTIVE && (
                           <Fragment>
                             <AdminsList>
@@ -982,7 +1003,10 @@ class BrandPage extends PureComponent {
                     <WhiteBlock>
                       <LogoWrap>
                         <Logo
-                          src={getUserInitialAvatar(group.name)}
+                          src={
+                            _.get(group, 'logo.src') ||
+                            getUserInitialAvatar(group.name)
+                          }
                           alt="preview"
                         />
                       </LogoWrap>
@@ -1037,7 +1061,10 @@ class BrandPage extends PureComponent {
                     <WhiteBlock>
                       <LogoWrap>
                         <Logo
-                          src={getUserInitialAvatar(group.name)}
+                          src={
+                            _.get(group, 'logo.src') ||
+                            getUserInitialAvatar(group.name)
+                          }
                           alt="preview"
                         />
                       </LogoWrap>

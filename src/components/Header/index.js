@@ -715,7 +715,11 @@ function Header(props) {
                   )}
                   {overrides && overrides.brandName && (
                     <Menu.Item key="/brandDashboard">
-                      <Link to="/brand/dashboard/statistics">
+                      <Link
+                        to={`/organizations/${
+                          overrides.brandName
+                        }/dashboard/statistics`}
+                      >
                         {overrides.brandName}
                       </Link>
                     </Menu.Item>
@@ -904,7 +908,11 @@ function Header(props) {
                       )}
                       {overrides && overrides.brandName && (
                         <Menu.Item key="/brandDashboard">
-                          <Link to="/brand/dashboard/statistics">
+                          <Link
+                            to={`/organizations/${
+                              overrides.brandName
+                            }/dashboard/statistics`}
+                          >
                             {overrides.brandName}
                           </Link>
                         </Menu.Item>
