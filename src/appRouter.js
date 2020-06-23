@@ -39,7 +39,7 @@ import ForOrganizationsPage from './pages/ForOrganizationsPage'
 import DonationPage from './pages/DonationPage'
 import OrganizationList from './pages/OrganizationList'
 import AddAdminsModalPage from './pages/AddAdminsModalPage'
-import BrandDashboardPage from './pages/BrandDashboardPage'
+import OrganizationDashboardPage from './pages/OrganizationDashboardPage'
 import IncreaseOrganizationHandprintPage from './pages/IncreaseOrganizationHandprintPage'
 
 const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = env
@@ -156,7 +156,7 @@ const AppRouter = () => {
           )}
           <Route
             path="/organizations/:organizationId/dashboard/:subset"
-            component={BrandDashboardPage}
+            component={OrganizationDashboardPage}
             useAuthentication
           />
           <Route
