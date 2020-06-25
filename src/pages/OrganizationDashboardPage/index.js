@@ -775,6 +775,7 @@ class BrandPage extends PureComponent {
       members,
       location,
       history,
+      user,
     } = this.props
 
     const isTablet = width < sizes.largeDesktop
@@ -823,6 +824,11 @@ class BrandPage extends PureComponent {
       </div>
     )
 
+    const userId = _.get(user, '_id')
+    const isMember =
+      _.get(group, `members`, []).includes(userId) ||
+      _.get(group, `admins`, []).includes(userId)
+
     return (
       <Block>
         {loading && !group && <SpinnerStyled />}
@@ -859,9 +865,11 @@ class BrandPage extends PureComponent {
                         />
                       </LogoWrap>
                       <Title>{group.name}</Title>
-                      <MemberLabel>
-                        <FormattedMessage id="app.pages.groups.youAreMember" />
-                      </MemberLabel>
+                      {isMember && (
+                        <MemberLabel>
+                          <FormattedMessage id="app.pages.groups.youAreMember" />
+                        </MemberLabel>
+                      )}
                       <InfoBlock>
                         <Description>{group.description}</Description>
                         {group.userImpacts && (
@@ -1013,9 +1021,11 @@ class BrandPage extends PureComponent {
 
                       <InfoBlock>
                         <Title>{group.name}</Title>
-                        <MemberLabel>
-                          <FormattedMessage id="app.pages.groups.youAreMember" />
-                        </MemberLabel>
+                        {isMember && (
+                          <MemberLabel>
+                            <FormattedMessage id="app.pages.groups.youAreMember" />
+                          </MemberLabel>
+                        )}
                         <Description>{group.description}</Description>
                         <LabelBlock>
                           <ActionCardLabel
@@ -1073,9 +1083,11 @@ class BrandPage extends PureComponent {
                         <MobileDescription>
                           {group.description}
                         </MobileDescription>
-                        <MobileMemberLabel>
-                          <FormattedMessage id="app.pages.groups.youAreMember" />
-                        </MobileMemberLabel>
+                        {isMember && (
+                          <MobileMemberLabel>
+                            <FormattedMessage id="app.pages.groups.youAreMember" />
+                          </MobileMemberLabel>
+                        )}
                         <div
                           style={{
                             width: '80%',
