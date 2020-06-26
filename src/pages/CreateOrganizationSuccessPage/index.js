@@ -129,7 +129,7 @@ class CreateOrganizationSuccessPage extends React.PureComponent {
     } = this.props
     const organizationId = queryString.parse(search).organizationId
     this.props.history.push(
-      `/account/dashboard?organizationId=${organizationId}`,
+      `/organizations/${organizationId}/dashboard/statistics`,
     )
   }
 

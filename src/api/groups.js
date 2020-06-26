@@ -33,14 +33,6 @@ export const fetchDeleteGroup = id =>
 
 export const fetchGroupById = id => fetchAPI(`/groups/${id}`)
 
-export const getBrandGroup = brandName => fetchAPI(`/groups/brand/${brandName}`)
-
-export const getBrandGroupNetwork = brandName =>
-  fetchAPI(`/groups/brand-network/${brandName}`)
-
-export const getBrandGroupMembers = ({ belongsToBrand, page }) =>
-  fetchAPI(`/groups/brand/${belongsToBrand}/members?${qs.stringify({ page })}`)
-
 export const fetchUpdateGroup = (id, body) =>
   fetchAPI(`/groups/${id}`, { method: 'PUT', body })
 

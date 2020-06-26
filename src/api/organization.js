@@ -4,11 +4,17 @@ import { fetchAPI } from './index' // eslint-disable-line unicorn/import-index
 
 export const getOrganization = id => fetchAPI(`/organizations/${id}`)
 
+export const getOrganizationNetwork = id =>
+  fetchAPI(`/organizations/${id}/network`)
+
 export const updateOne = (body, id) =>
   fetchAPI(`/organizations/${id}`, { body, method: 'POST' })
 
 export const getAdmins = id =>
   fetchAPI(`/organizations/${id}/admins`, { method: 'GET' })
+
+export const getMembers = ({ id, page }) =>
+  fetchAPI(`/organizations/${id}/members?${qs.stringify({ page })}`)
 
 export const getOrganizationList = (query = {}) =>
   fetchAPI(`/organizations?${qs.stringify(query)}`)
