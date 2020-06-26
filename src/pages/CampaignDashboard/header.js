@@ -51,10 +51,12 @@ const Header = props => {
   let statusLabelId
   if (expired) statusLabelId = 'app.campaignPage.finished'
   if (finished) statusLabelId = 'app.campaignPage.completed'
-  const membersCount = props.intl.formatMessage(
-    { id: 'app.pages.groups.membersCount' },
-    { count: participantsCount },
-  )
+  const membersCount = props.participantsLoading
+    ? ''
+    : props.intl.formatMessage(
+        { id: 'app.pages.groups.membersCount' },
+        { count: participantsCount },
+      )
 
   const tooltipText =
     accomplished >= numberToComplete
@@ -147,6 +149,7 @@ Header.propTypes = {
   participantsCount: Number,
   intl: Object,
   accomplishedUserActions: Array,
+  participantsLoading: Boolean,
 }
 
 export default compose(injectIntl)(Header)

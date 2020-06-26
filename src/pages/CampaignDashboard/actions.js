@@ -16,15 +16,13 @@ import { ImpactButton } from '../ActionsPage/styled'
 
 function getActions(props, selectedKey) {
   const {
-    participants,
+    myProgress,
     campaign: { actions },
   } = props
-  const sortedParticipants = participants.filter(
-    p => p.user._id === props.user._id,
-  )
-  const me = sortedParticipants && sortedParticipants[0]
-  if (me) {
-    const myAccomplishedActionIds = me.accomplishedActions.map(i => i._id)
+  if (myProgress) {
+    const myAccomplishedActionIds = myProgress.accomplishedActions.map(
+      i => i._id,
+    )
     return actions.filter(action => {
       const isAccomplished = myAccomplishedActionIds.includes(action._id)
       return selectedKey === ACTIONS_TABS.ACCOMPLISHED

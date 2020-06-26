@@ -50,7 +50,7 @@ function getSortedParticipants(props) {
 export default function renderStatistics(props) {
   const UIContextData = useContext(UIContextSettings)
 
-  const { loading, intl, campaign } = props
+  const { participantsLoading, intl, campaign } = props
   const sortedParticipants = getSortedParticipants(props)
   const sortedActions = getSortedActions(props)
   const total = campaign.actions.length
@@ -60,7 +60,7 @@ export default function renderStatistics(props) {
 
   return (
     <Fragment>
-      {loading ? (
+      {participantsLoading ? (
         <Spinner />
       ) : (
         <StatisticsMain>
@@ -135,7 +135,7 @@ export default function renderStatistics(props) {
 }
 
 renderStatistics.propTypes = {
-  loading: Boolean,
+  participantsLoading: Boolean,
   participants: Array,
   intl: Object,
   campaign: Object,
