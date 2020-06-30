@@ -5,7 +5,7 @@ import { getActions } from '../../api/actions'
 
 export default function useCampaign(campaignId) {
   const [campaign, setCampaign] = useState()
-  const [participants, setParticipants] = useState([])
+  const [myProgress, setMyProgress] = useState()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function useCampaign(campaignId) {
             ...res.campaign,
             actions: campaingActionsRes.actions.docs,
           })
-          setParticipants(res.participants)
+          setMyProgress(res.myProgress)
         }
       } catch (error) {
         console.error(error)
@@ -36,5 +36,5 @@ export default function useCampaign(campaignId) {
     fetchList()
   }, [campaignId])
 
-  return [campaign, loading, participants]
+  return [campaign, loading, myProgress]
 }

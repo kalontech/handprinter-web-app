@@ -6,3 +6,6 @@ export const fetchCampaignsList = (query = {}) =>
   fetchAPI(`/campaigns?${qs.stringify(query)}`)
 
 export const getCampaign = id => fetchAPI(`/campaigns/${id}`)
+
+export const getCampaignParticipants = id =>
+  fetchAPI(`/campaigns/participants/${id}`)

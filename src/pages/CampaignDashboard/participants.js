@@ -10,7 +10,13 @@ import { MenuStyled, Column, EmptyList } from './styled'
 import { getUserInitialAvatar } from '../../api'
 
 export default function renderParticipants(props) {
-  const { loading, participants, intl, campaign, showPhysicalValues } = props
+  const {
+    participants,
+    intl,
+    campaign,
+    showPhysicalValues,
+    participantsLoading,
+  } = props
   const selectedKey = _.get(props, 'location.search', '').includes('finished')
     ? 'finished'
     : 'participants'
@@ -41,7 +47,7 @@ export default function renderParticipants(props) {
         </Menu.Item>
       </MenuStyled>
 
-      {loading ? (
+      {participantsLoading ? (
         <Spinner />
       ) : (
         <Row style={{ flexGrow: '1' }}>
@@ -79,7 +85,7 @@ export default function renderParticipants(props) {
 }
 
 renderParticipants.propTypes = {
-  loading: Boolean,
+  participantsLoading: Boolean,
   participants: Array,
   intl: Object,
   campaign: Object,

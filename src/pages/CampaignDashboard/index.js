@@ -24,6 +24,7 @@ import renderStatistics from './statistics'
 import { CAPMAIGN_TABS } from './constants'
 import Tabs from './tabs'
 import { UIContextSettings } from '../../context/uiSettingsContext'
+import useCampaignParticipants from './useCampaignParticipants'
 
 function renderContent(view, props) {
   switch (view) {
@@ -51,12 +52,11 @@ function CampaignDashboard(props) {
   const campaignId = match.params.campaignId
   const view = query.view || CAPMAIGN_TABS.actions
   if (!campaignId) return null
-  const [campaign, loading, participants] = useCampaign(campaignId)
-  const sortedParticipants = participants.filter(
-    p => p.user._id === props.user._id,
-  )
-  const me = sortedParticipants && sortedParticipants[0]
-  const accomplishedUserActions = me ? me.accomplishedActions : []
+  const [campaign, loading, myProgress] = useCampaign(campaignId)
+  const [participants, participantsLoading] = useCampaignParticipants(campaign)
+  const accomplishedUserActions = myProgress
+    ? myProgress.accomplishedActions
+    : []
 
   const toggleUnits = evt => {
     if (evt.key === 'PhysicalUnits') {
@@ -125,6 +125,7 @@ function CampaignDashboard(props) {
         participantsCount={participants.length}
         campaign={campaign}
         accomplishedUserActions={accomplishedUserActions}
+        participantsLoading={participantsLoading}
       />
       {!isTablet && !isMobile && <Tabs list={tabList} />}
       {(isTablet || isMobile) && (
@@ -143,6 +144,8 @@ function CampaignDashboard(props) {
           participants,
           toggleUnits,
           showPhysicalValues: UIContextData.showPhysicalValues,
+          myProgress,
+          participantsLoading,
         })}
       </Content>
     </Fragment>
