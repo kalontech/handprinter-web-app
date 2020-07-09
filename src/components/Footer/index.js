@@ -71,6 +71,13 @@ const Footer = ({ brandedConfig }) => (
                           </Link>
                         </li>
                       )}
+                      {!brandedConfig && (
+                        <li>
+                          <Link to="/pages/for-organizations">
+                            <FormattedMessage id="app.header.menu.forOrganizations" />
+                          </Link>
+                        </li>
+                      )}
                     </FooterMenu>
                     <FooterImage mobile>
                       <img src={footerLogo} alt="" />

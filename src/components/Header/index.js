@@ -530,15 +530,13 @@ function Header(props) {
                             <FormattedMessage id="app.header.menu.actions" />
                           </Link>
                         </Menu.Item>
-                        {/* {(!overrides ||
-                          !overrides.brandName ||
-                          overrides.brandName === 'Humanscale') && (
+                        {(!overrides || !overrides.brandName) && (
                           <Menu.Item key="/pages/for-organizations">
                             <Link to="/pages/for-organizations">
                               <FormattedMessage id="app.header.menu.forOrganizations" />
                             </Link>
                           </Menu.Item>
-                        )} */}
+                        )}
                         {user && (
                           <Menu.Item key="/groups">
                             <Link to="/groups/discover">
