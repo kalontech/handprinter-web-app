@@ -56,6 +56,13 @@ export default function renderStatistics(props) {
   const networkImpactsInUnits =
     groupNetwork && groupNetwork.networkImpacts.impactsInUnits
 
+  const activeSince = props.intl.formatMessage(
+    { id: 'app.organization.active.since' },
+    {
+      organization: group.name,
+      date: moment(group.info.dateFrom).format('LL'),
+    },
+  )
   return (
     <Fragment>
       {loading ? (
@@ -69,10 +76,7 @@ export default function renderStatistics(props) {
               </StatisticsScrollTitle>
               <StatisticsScroll>
                 <ActionLabelsTitle>
-                  <p>
-                    The {group.name} has been active since{' '}
-                    {moment(group.info.dateFrom).format('LL')}
-                  </p>
+                  <p>{activeSince}</p>
                 </ActionLabelsTitle>
                 <TotalImpactTitle>
                   <FormattedMessage id="app.organization.total.impact" />
@@ -162,10 +166,7 @@ export default function renderStatistics(props) {
                   <FormattedMessage id="app.organization.total.impact" />
                 </TotalImpactTitle>
                 <ActionLabelsTitle>
-                  <p>
-                    The {group.name} has been active since{' '}
-                    {moment(group.info.dateFrom).format('LL')}
-                  </p>
+                  <p>{activeSince}</p>
                 </ActionLabelsTitle>
                 <ActionLabelsBlock>
                   <ActionCardLabelSet
