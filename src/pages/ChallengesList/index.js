@@ -16,6 +16,7 @@ import { acceptInvitation } from '../../api/competitions'
 
 import useCampaignsList from './useCampaignsList'
 import useCompetitionsList from './useCompetitionsList'
+import { challengeStatuses } from '../../components/CompetitionCard'
 
 export const CHALLENGIES = {
   CAMPAIGNS: 'campaigns',
@@ -36,7 +37,13 @@ function getChallengies(campaigns, competitions) {
       type: CHALLENGIES.COMPETITIONS,
     })
   })
-  return challenges
+  return challenges.sort((a, b) => {
+    if (a.status === challengeStatuses.available) return -1
+    if (b.status === challengeStatuses.available) return 1
+    if (a.status === challengeStatuses.in_progress) return -1
+    if (b.status === challengeStatuses.in_progress) return 1
+    return 0
+  })
 }
 
 export default function ChallengesList(props) {

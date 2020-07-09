@@ -103,15 +103,16 @@ const ChallengeLabel = styled.div`
 
 const SWGWrap = styled.div``
 
+export const challengeStatuses = {
+  available: 'available',
+  in_progress: 'in_progress',
+  completed: 'completed',
+  expired: 'completed',
+}
+
 export default function CompetitionCard(props) {
   const { to, name, picture, counter, button, isCampaign, status } = props
 
-  const challengeStatuses = {
-    avaliable: 'avaliable',
-    in_progress: 'in progress',
-    completed: 'completed',
-    expired: 'completed',
-  }
   // styles
   const bigLeapStyles = {
     position: 'absolute',
@@ -150,9 +151,9 @@ export default function CompetitionCard(props) {
       <Info>
         <Name>{name}</Name>
         <CounterMembers>{counter}</CounterMembers>
-        {status === 'avaliable' && (
+        {status === challengeStatuses.available && (
           <ChallengeLabel color={isCampaign ? 'green' : 'ocean'}>
-            {status === 'avaliable' && (
+            {status === challengeStatuses.available && (
               <SWGWrap>
                 <BigLeaf style={bigLeapStyles} />
               </SWGWrap>
@@ -175,9 +176,9 @@ export default function CompetitionCard(props) {
             </p>
           </ChallengeLabel>
         )}
-        {status === 'in_progress' && (
+        {status === challengeStatuses.in_progress && (
           <ChallengeLabel color="blue">
-            {status === 'in_progress' && (
+            {status === challengeStatuses.in_progress && (
               <SWGWrap>
                 <SmallLeaf style={leap3Styles} />
                 <DottedCircle style={dottedCircleStyles} />
