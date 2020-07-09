@@ -40,14 +40,14 @@ function CampaignProgress(props) {
     },
   )
   return (
-    <ProgressWrapper>
-      {!isMobile && !isTablet && (
-        <>
-          <ProgressTextWrapper>
-            <ProgressText>{accomplishedLabel}</ProgressText>
-            <ProgressText>{daysLeft}</ProgressText>
-          </ProgressTextWrapper>
-          <Tooltip title={tooltipText}>
+    <Tooltip title={tooltipText}>
+      <ProgressWrapper>
+        {!isMobile && !isTablet && (
+          <>
+            <ProgressTextWrapper>
+              <ProgressText>{accomplishedLabel}</ProgressText>
+              <ProgressText>{daysLeft}</ProgressText>
+            </ProgressTextWrapper>
             <Progress
               percent={percent}
               successPercent={Math.min(percent, successPercent)}
@@ -55,31 +55,31 @@ function CampaignProgress(props) {
               strokeColor={expired ? colors.darkGray : undefined}
               strokeWidth={4}
             />
-          </Tooltip>
-        </>
-      )}
-      {(isMobile || isTablet) && (
-        <>
-          <ProgressTextWrapper>
-            <ProgressText>{accomplishedLabel}</ProgressText>
-            <Tooltip title={tooltipText} placement="topRight">
-              <StyledIcon type="info-circle" />
-            </Tooltip>
-          </ProgressTextWrapper>
-          <Progress
-            percent={percent}
-            successPercent={Math.min(percent, successPercent)}
-            showInfo={false}
-            strokeColor={expired ? colors.darkGray : undefined}
-            strokeWidth={4}
-            trigger="click"
-          />
-          <ProgressTextWrapper>
-            <ProgressTextMobile>{daysLeft}</ProgressTextMobile>
-          </ProgressTextWrapper>
-        </>
-      )}
-    </ProgressWrapper>
+          </>
+        )}
+        {(isMobile || isTablet) && (
+          <>
+            <ProgressTextWrapper>
+              <ProgressText>{accomplishedLabel}</ProgressText>
+              <Tooltip title={tooltipText} placement="topRight">
+                <StyledIcon type="info-circle" />
+              </Tooltip>
+            </ProgressTextWrapper>
+            <Progress
+              percent={percent}
+              successPercent={Math.min(percent, successPercent)}
+              showInfo={false}
+              strokeColor={expired ? colors.darkGray : undefined}
+              strokeWidth={4}
+              trigger="click"
+            />
+            <ProgressTextWrapper>
+              <ProgressTextMobile>{daysLeft}</ProgressTextMobile>
+            </ProgressTextWrapper>
+          </>
+        )}
+      </ProgressWrapper>
+    </Tooltip>
   )
 }
 
