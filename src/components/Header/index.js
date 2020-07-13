@@ -428,11 +428,6 @@ function Header(props) {
                   inlineIndent={0}
                   selectedKeys={[selectedMenuItem]}
                 >
-                  <Menu.Item key="/challenges">
-                    <Link to="/challenges">
-                      <FormattedMessage id="app.pages.challenges" />
-                    </Link>
-                  </Menu.Item>
                   <Menu.Item key="/actions">
                     <Link to="/actions">
                       <FormattedMessage id="app.header.menu.actions" />
@@ -544,22 +539,6 @@ function Header(props) {
                             </Link>
                           </Menu.Item>
                         )}
-                        <Menu.Item key="/groups">
-                          <Link
-                            to={
-                              overrides && overrides.brandName === 'Humanscale'
-                                ? '/groups/teams'
-                                : '/groups/discover'
-                            }
-                          >
-                            <FormattedMessage id="app.pages.groups" />
-                          </Link>
-                        </Menu.Item>
-                        <Menu.Item key="/challenges">
-                          <Link to="/challenges">
-                            <FormattedMessage id="app.pages.challenges" />
-                          </Link>
-                        </Menu.Item>
                       </Menu>
                       <Popover
                         placement="bottomLeft"
