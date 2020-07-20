@@ -31,7 +31,7 @@ function calculateTotalPercent(goal, current) {
     if (current[category]) totalCurrent += current[category]
     if (goal[category]) totalGoal += goal[category]
   })
-  return Math.round((totalCurrent * 100) / totalGoal)
+  return Math.min(100, Math.round((totalCurrent * 100) / totalGoal))
 }
 
 export default function renderGoal(props) {

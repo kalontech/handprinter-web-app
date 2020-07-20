@@ -69,6 +69,7 @@ const ProgressWrapper = styled.div`
     background-color: ${props => props.color};
   }
 `
+
 const Value = styled.div`
   color: ${colors.dark};
   font-family: Noto Sans;
@@ -84,7 +85,7 @@ export default function ImpactProgress(props) {
   if (!total) return null
 
   const color = IMPACT_CATEGORIES_COLORS[category.toUpperCase()] || colors.ocean
-  const percent = (current * 100) / total
+  const percent = Math.min(100, (current * 100) / total)
   const [currNum, currPower] = processedUnitValue(current)
   const [totalNum, totalPower] = processedUnitValue(total)
 
