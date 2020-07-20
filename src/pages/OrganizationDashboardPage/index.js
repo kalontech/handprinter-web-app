@@ -53,6 +53,7 @@ import {
 } from '../../utils/constants'
 import { processedUnitValue } from '../../components/ActionCardLabelSet'
 import renderActivity from './activity'
+import renderGoal from './goal'
 
 const Block = styled.section`
   display: flex;
@@ -556,6 +557,7 @@ const GROUP_TABS = {
   MEMBERS: 'members',
   STATISTICS: 'statistics',
   ACTIVITY: 'activity',
+  GOAL: 'goal',
 }
 
 async function getGroupData(props) {
@@ -809,6 +811,14 @@ class BrandPage extends PureComponent {
         icon: FlagIconComponent,
         text: intl.formatMessage({ id: 'app.pages.groups.activity' }),
         active: match.params.subset === GROUP_TABS.ACTIVITY,
+      },
+      {
+        to: `/organizations/${_.get(group, '_id')}/dashboard/${
+          GROUP_TABS.GOAL
+        }`,
+        icon: FlagIconComponent,
+        text: intl.formatMessage({ id: 'app.pages.groups.goal' }),
+        active: match.params.subset === GROUP_TABS.GOAL,
       },
     ]
 
@@ -1233,6 +1243,9 @@ class BrandPage extends PureComponent {
                       </Content>
                       <Content>
                         {loading ? <Spinner /> : renderActivity(this.props)}
+                      </Content>
+                      <Content>
+                        {loading ? <Spinner /> : renderGoal(this.props)}
                       </Content>
                     </TabsSecondary>
                   )}
