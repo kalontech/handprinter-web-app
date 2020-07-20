@@ -31,7 +31,7 @@ function calculateTotalPercent(goal, current) {
     if (current[category] && goal[category]) {
       summaryPercent += Math.min(
         100,
-        (current[category] / 100) * goal[category],
+        (current[category] * 100) / goal[category],
       )
       categoriesCount += 1
     }
