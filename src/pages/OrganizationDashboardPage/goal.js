@@ -25,13 +25,18 @@ function calculateTotalPercent(goal, current) {
   const categories = Object.keys(IMPACT_CATEGORIES).map(
     key => IMPACT_CATEGORIES[key],
   )
-  let totalCurrent = 0
-  let totalGoal = 0
+  let summaryPercent = 0
+  let categoriesCount = 0
   categories.forEach(category => {
-    if (current[category]) totalCurrent += current[category]
-    if (goal[category]) totalGoal += goal[category]
+    if (current[category] && goal[category]) {
+      summaryPercent += Math.min(
+        100,
+        (current[category] / 100) * goal[category],
+      )
+      categoriesCount += 1
+    }
   })
-  return Math.min(100, Math.round((totalCurrent * 100) / totalGoal))
+  return Math.min(100, Math.round(summaryPercent / categoriesCount))
 }
 
 export default function renderGoal(props) {
