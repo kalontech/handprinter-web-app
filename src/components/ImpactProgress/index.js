@@ -52,9 +52,14 @@ const ProgressLabelRight = styled.span`
   font-size: 10px;
   color: ${props => props.color};
   justify-content: flex-end;
+  align-items: center;
   width: 100%;
   flex: 1;
   display: flex;
+
+  sup {
+    font-size: 8px;
+  }
 `
 
 const ProgressWrapper = styled.div`

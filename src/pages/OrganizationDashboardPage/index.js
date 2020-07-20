@@ -783,7 +783,7 @@ class BrandPage extends PureComponent {
     const isTablet = width < sizes.largeDesktop
     const isMobile = width < sizes.tablet
 
-    const tabsList = [
+    let tabsList = [
       {
         to: `/organizations/${_.get(group, '_id')}/dashboard/${
           GROUP_TABS.STATISTICS
@@ -812,15 +812,18 @@ class BrandPage extends PureComponent {
         text: intl.formatMessage({ id: 'app.pages.groups.activity' }),
         active: match.params.subset === GROUP_TABS.ACTIVITY,
       },
-      {
+    ]
+
+    if (group && group.goal) {
+      tabsList.push({
         to: `/organizations/${_.get(group, '_id')}/dashboard/${
           GROUP_TABS.GOAL
         }`,
         icon: FlagIconComponent,
         text: intl.formatMessage({ id: 'app.pages.groups.goal' }),
         active: match.params.subset === GROUP_TABS.GOAL,
-      },
-    ]
+      })
+    }
 
     const defaultSelectVal = (
       <div>

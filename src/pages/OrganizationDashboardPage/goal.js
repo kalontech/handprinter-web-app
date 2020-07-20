@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import Spinner from 'components/Spinner'
 import { FormattedMessage } from 'react-intl'
 import { CircularProgressbar } from 'react-circular-progressbar'
+import _ from 'lodash'
 
 import {
   StatisticsScroll,
@@ -39,8 +40,14 @@ export default function renderGoal(props) {
 
   const loading = false
   const goal = group.goal
-  const currentProgress = group.userImpacts.footprint || {}
+  const currentProgress = _.get(
+    group,
+    'userImpacts.impactsInUnits.footprint',
+    {},
+  )
   const totalPercent = calculateTotalPercent(goal, currentProgress)
+
+  if (!goal) return <h1>No Goal</h1>
   return (
     <Fragment>
       {loading ? (
