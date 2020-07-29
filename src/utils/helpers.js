@@ -1,4 +1,5 @@
 import { webAppBaseUrl } from 'api'
+import moment from 'moment'
 
 const eatonCode = 'EarthDay2019'
 
@@ -9,3 +10,5 @@ export const getInvitationLinkEaton = code => {
   const encValue = Buffer.from(eatonCode).toString('base64')
   return `${webAppBaseUrl}/account/register/${code}/${encValue}`
 }
+
+export const getOrdinalNumber = number => moment.localeData().ordinal(number)

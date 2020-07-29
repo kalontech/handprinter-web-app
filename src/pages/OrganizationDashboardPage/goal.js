@@ -19,6 +19,7 @@ import {
 } from './styled'
 import ImpactProgress from '../../components/ImpactProgress'
 import { IMPACT_CATEGORIES } from '../../utils/constants'
+import renderMilestones from './milestones'
 
 function calculateTotalPercent(goal, current) {
   if (!goal || !current) return 0
@@ -36,7 +37,10 @@ function calculateTotalPercent(goal, current) {
       categoriesCount += 1
     }
   })
-  return Math.min(100, Math.round(summaryPercent / categoriesCount))
+  return Math.min(
+    100,
+    Math.round(categoriesCount ? summaryPercent / categoriesCount : 0),
+  )
 }
 
 export default function renderGoal(props) {
@@ -53,6 +57,7 @@ export default function renderGoal(props) {
   const totalPercent = calculateTotalPercent(goal, currentProgress)
 
   if (!goal) return <h1>No Goal</h1>
+  const milestones = group.milestones || []
   return (
     <Fragment>
       {loading ? (
@@ -107,8 +112,9 @@ export default function renderGoal(props) {
             <StatisticsScrollTitle>
               <FormattedMessage id="app.organization.milestones" />
             </StatisticsScrollTitle>
-            <Separator />
-            <StatisticsScroll>1</StatisticsScroll>
+            <StatisticsScroll>
+              {renderMilestones({ milestones, currentProgress })}
+            </StatisticsScroll>
           </StatisticsContainer>
         </StatisticsMain>
       )}

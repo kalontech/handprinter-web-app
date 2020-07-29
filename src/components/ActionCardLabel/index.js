@@ -44,6 +44,16 @@ const LabelContainer = styled.div`
       ? hexToRgba(`${colors.blue}`, 0.3)
       : unit === TimeValueAbbreviations.ACTIONS_TAKEN && variant === 'positive'
       ? hexToRgba(`${colors.green}`, 0.3)
+      : unit === TimeValueAbbreviations.HEALTH && variant === 'positive'
+      ? hexToRgba(`${colors.blue}`, 0.3)
+      : unit === TimeValueAbbreviations.CLIMATE && variant === 'positive'
+      ? hexToRgba(`${colors.ocean}`, 0.3)
+      : unit === TimeValueAbbreviations.ECOSYSTEM && variant === 'positive'
+      ? hexToRgba(`${colors.green}`, 0.3)
+      : unit === TimeValueAbbreviations.WATER && variant === 'positive'
+      ? hexToRgba(`${colors.green}`, 0.3)
+      : unit === TimeValueAbbreviations.WASTE && variant === 'positive'
+      ? hexToRgba(`${colors.ocean}`, 0.3)
       : hexToRgba(`${colors.darkGray}`, 0.3)};
   border-radius: 4px;
   overflow: hidden;
@@ -75,6 +85,16 @@ const Category = styled.div`
       ? hexToRgba(`${colors.blue}`, 0.1)
       : unit === TimeValueAbbreviations.ACTIONS_TAKEN && variant === 'positive'
       ? hexToRgba(`${colors.green}`, 0.1)
+      : unit === TimeValueAbbreviations.HEALTH && variant === 'positive'
+      ? hexToRgba(`${colors.blue}`, 0.1)
+      : unit === TimeValueAbbreviations.CLIMATE && variant === 'positive'
+      ? hexToRgba(`${colors.ocean}`, 0.1)
+      : unit === TimeValueAbbreviations.ECOSYSTEM && variant === 'positive'
+      ? hexToRgba(`${colors.green}`, 0.1)
+      : unit === TimeValueAbbreviations.WATER && variant === 'positive'
+      ? hexToRgba(`${colors.green}`, 0.1)
+      : unit === TimeValueAbbreviations.WASTE && variant === 'positive'
+      ? hexToRgba(`${colors.ocean}`, 0.1)
       : hexToRgba(`${colors.darkGray}`, 0.1)};
 
   ${media.phone`
@@ -94,6 +114,16 @@ const Category = styled.div`
         : unit === TimeValueAbbreviations.ACTIONS_TAKEN &&
           variant === 'positive'
         ? `${colors.green}`
+        : unit === TimeValueAbbreviations.HEALTH && variant === 'positive'
+        ? `${colors.blue}`
+        : unit === TimeValueAbbreviations.CLIMATE && variant === 'positive'
+        ? `${colors.ocean}`
+        : unit === TimeValueAbbreviations.ECOSYSTEM && variant === 'positive'
+        ? `${colors.green}`
+        : unit === TimeValueAbbreviations.WATER && variant === 'positive'
+        ? `${colors.green}`
+        : unit === TimeValueAbbreviations.WASTE && variant === 'positive'
+        ? `${colors.ocean}`
         : `${colors.darkGray}`};
   }
 `
@@ -114,6 +144,16 @@ const Caption = styled.div`
       ? `${colors.blue}`
       : unit === TimeValueAbbreviations.ACTIONS_TAKEN && variant === 'positive'
       ? `${colors.green}`
+      : unit === TimeValueAbbreviations.HEALTH && variant === 'positive'
+      ? `${colors.blue}`
+      : unit === TimeValueAbbreviations.CLIMATE && variant === 'positive'
+      ? `${colors.ocean}`
+      : unit === TimeValueAbbreviations.ECOSYSTEM && variant === 'positive'
+      ? `${colors.green}`
+      : unit === TimeValueAbbreviations.WATER && variant === 'positive'
+      ? `${colors.green}`
+      : unit === TimeValueAbbreviations.WASTE && variant === 'positive'
+      ? `${colors.ocean}`
       : `${colors.darkGray}`};
   font-size: 10px;
   font-weight: bold;
