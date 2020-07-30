@@ -563,7 +563,8 @@ const GROUP_TABS = {
 async function getGroupData(props) {
   const { match, location } = props
   const queries = qs.parse(location.search, { ignoreQueryPrefix: true })
-  const res = await getOrganization(match.params.organizationId)
+  const res =
+    props.group || (await getOrganization(match.params.organizationId))
   // For members and activity tabs we need get brand group members
   let tabsRes
   if (
