@@ -53,5 +53,5 @@ export default {
   humanscaleLightGray: '#B7B8B9',
   humanscaleMediumGray: '#939598',
   humanscaleHeaderText: '#2E5C57',
-  switchUnitsBackground: '#C4C4C4',
+  switchUnitsBackground: '#D7DBDB',
 }

@@ -170,6 +170,8 @@ export const Separator = styled.div`
 export const ActionLabelsTitle = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
   width: 507px;
   height: 68px;
   background: ${colors.lightGray};
@@ -180,7 +182,6 @@ export const ActionLabelsTitle = styled.div`
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
-    line-height: 2px;
     width: 100%;
     text-align: center;
   }
@@ -209,4 +210,108 @@ export const FeedWrapper = styled.div`
   ${media.phone`
     padding: 16px
   `}
+`
+
+export const GoalHeaderWrapper = styled.div`
+  height: 160px;
+  width: 100%;
+  display: flex;
+  padding-left: 30px;
+  align-items: center;
+  flex-direction: row;
+
+  .CircularProgressbar-path {
+    stroke: ${colors.green};
+    stroke-linecap: butt;
+  }
+
+  .CircularProgressbar-text {
+    font-family: Noto Sans;
+    font-size: 16px;
+    fill: ${colors.dark};
+  }
+`
+
+export const CircularProgressbarContainer = styled.div`
+  width: 100px;
+  height: 100px;
+`
+
+export const GoalTitle = styled.span`
+  font-family: Noto Sans;
+  font-size: 22px;
+  fill: ${colors.dark};
+`
+
+export const GoalDescription = styled.span`
+  font-family: Noto Sans;
+  font-size: 16px;
+  fill: ${colors.dark};
+`
+
+export const GoalTitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 25px;
+`
+
+export const MilestonePicture = styled.img`
+  width: 66px;
+  height: 66px;
+  border-radius: 33px;
+  object-fit: cover;
+  border: 5px solid ${props => (props.disabled ? colors.gray : colors.green)};
+`
+
+export const MilestoneNoPicture = styled.span`
+  font-family: Noto Sans;
+  font-size: 16px;
+  color: ${colors.white};
+  width: 66px;
+  height: 66px;
+  border-radius: 33px;
+  border: 5px solid ${props => (props.disabled ? colors.gray : colors.green)};
+  background-color: ${colors.darkGray};
+  align-items: center;
+  display: flex;
+  justify-content: center;
+`
+
+export const MilestoneDescription = styled.span`
+  font-family: Noto Sans;
+  font-size: 16px;
+  color: ${props => (props.disabled ? colors.darkGray : colors.dark)};
+  margin-top: 8px;
+`
+
+export const MilestoneTitle = styled.span`
+  font-family: Noto Sans;
+  font-size: 16px;
+  font-weight: bold;
+  color: ${props => (props.disabled ? colors.darkGray : colors.dark)};
+`
+
+export const MilestoneWrapper = styled.div`
+  display: flex;
+`
+
+export const MilestoneLabels = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-left: 16px;
+  min-height: 60px;
+`
+
+export const Line = styled.div`
+  flex: 1;
+  height: 100%;
+  align-self: center;
+  width: 2px;
+  background-color: ${props => (props.disabled ? colors.gray : colors.green)};
+`
+
+export const MilestonePictureWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `

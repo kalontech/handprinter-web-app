@@ -1,3 +1,5 @@
+import colors from '../config/colors'
+
 export const IMPACT_CATEGORIES = {
   HEALTH: 'health',
   CLIMATE: 'climate',
@@ -9,6 +11,17 @@ export const IMPACT_CATEGORIES = {
   ACTIONS_TAKEN: 'actionsTaken',
 }
 
+export const IMPACT_CATEGORIES_COLORS = {
+  HEALTH: colors.blue,
+  CLIMATE: colors.ocean,
+  ECOSYSTEM: colors.green,
+  WATER: colors.green,
+  WASTE: colors.ocean,
+  MEMBERS: colors.ocean,
+  NETWORK_MEMBERS: colors.ocean,
+  ACTIONS_TAKEN: colors.ocean,
+}
+
 export const TimeValueAbbreviations = {
   MINUTES: 'MINS',
   HOURS: 'HRS',
@@ -18,6 +31,11 @@ export const TimeValueAbbreviations = {
   MEMBERS: 'MEMBERS',
   NETWORK_MEMBERS: 'NETWORK MEMBERS',
   ACTIONS_TAKEN: 'ACTIONS TAKEN',
+  HEALTH: 'HEALTH',
+  CLIMATE: 'CLIMATE',
+  ECOSYSTEM: 'ECOSYSTEM',
+  WATER: 'WATER',
+  WASTE: 'WASTE',
 }
 
 export const ACTIONS_SUBSETS = {

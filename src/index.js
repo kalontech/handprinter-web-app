@@ -10,6 +10,7 @@ import 'intersection-observer'
 
 import 'react-activity-feed/dist/index.es.css'
 import 'react-router-modal/css/react-router-modal.css'
+import 'react-circular-progressbar/dist/styles.css'
 
 import './index.less'
 import env from 'config/env'
