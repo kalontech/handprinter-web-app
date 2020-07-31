@@ -16,10 +16,10 @@ import {
   GoalTitle,
   GoalDescription,
   GoalTitleContainer,
-} from './styled'
-import ImpactProgress from '../../components/ImpactProgress'
-import { IMPACT_CATEGORIES } from '../../utils/constants'
-import renderMilestones from './milestones'
+} from '../styled'
+import ImpactProgress from '../../../components/ImpactProgress'
+import { IMPACT_CATEGORIES } from '../../../utils/constants'
+import renderMilestones from '../milestones'
 
 function calculateTotalPercent(goal, current) {
   if (!goal || !current) return 0
