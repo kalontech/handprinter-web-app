@@ -53,7 +53,7 @@ import {
 } from '../../utils/constants'
 import { processedUnitValue } from '../../components/ActionCardLabelSet'
 import renderActivity from './activity'
-import renderGoal from './goal'
+import Goal from './Goal'
 
 const Block = styled.section`
   display: flex;
@@ -1249,7 +1249,7 @@ class BrandPage extends PureComponent {
                         {loading ? <Spinner /> : renderActivity(this.props)}
                       </Content>
                       <Content>
-                        {loading ? <Spinner /> : renderGoal(this.props)}
+                        {loading ? <Spinner /> : <Goal {...this.props} />}
                       </Content>
                     </TabsSecondary>
                   )}

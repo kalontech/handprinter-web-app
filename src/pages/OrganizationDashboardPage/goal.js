@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import Spinner from 'components/Spinner'
 import { FormattedMessage } from 'react-intl'
 import { CircularProgressbar } from 'react-circular-progressbar'
@@ -43,8 +43,19 @@ function calculateTotalPercent(goal, current) {
   )
 }
 
-export default function renderGoal(props) {
+export default function Goal(props) {
   const { group, user } = props
+
+  useEffect(() => {
+    const HEADER_HEIGHT = 600
+    const parentElement = document.querySelector('#milestone-container')
+    const activeMilestoneElement = document.querySelector('#active-milestone')
+    if (parentElement && activeMilestoneElement) {
+      parentElement.scrollTo({
+        top: activeMilestoneElement.getBoundingClientRect().top - HEADER_HEIGHT,
+      })
+    }
+  }, [])
   if (!group || !user) return null
 
   const loading = false
@@ -112,7 +123,7 @@ export default function renderGoal(props) {
             <StatisticsScrollTitle>
               <FormattedMessage id="app.organization.milestones" />
             </StatisticsScrollTitle>
-            <StatisticsScroll>
+            <StatisticsScroll id={'milestone-container'}>
               {renderMilestones({ milestones, currentProgress })}
             </StatisticsScroll>
           </StatisticsContainer>
@@ -122,7 +133,7 @@ export default function renderGoal(props) {
   )
 }
 
-renderGoal.propTypes = {
+Goal.propTypes = {
   group: Object,
   user: Object,
 }

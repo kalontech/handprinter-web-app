@@ -72,7 +72,7 @@ export function Milestone(props) {
   } = props
   const logo = _.get(milestone, 'logo.src')
   return (
-    <MilestoneWrapper>
+    <MilestoneWrapper id={active ? 'active-milestone' : undefined}>
       <MilestonePictureWrapper>
         {logo ? (
           <MilestonePicture disabled={disabled} alt={'milestone'} src={logo} />
