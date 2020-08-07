@@ -3,6 +3,8 @@
 import React from 'react'
 import _ from 'lodash'
 
+import { CircularProgressbar } from 'react-circular-progressbar'
+
 import {
   MilestonePicture,
   MilestoneDescription,
@@ -12,10 +14,14 @@ import {
   MilestoneNoPicture,
   MilestonePictureWrapper,
   Line,
+  MilestoneCircularProgressbarContainer,
+  CircularProgressbarText,
 } from './styled'
 import { getOrdinalNumber } from '../../utils/helpers'
-import { IMPACT_CATEGORIES } from '../../utils/constants'
-import ActionCardLabel from '../../components/ActionCardLabel'
+import {
+  IMPACT_CATEGORIES,
+  IMPACT_CATEGORIES_COLORS,
+} from '../../utils/constants'
 
 export default function renderMilestones(props) {
   const { milestones, currentProgress } = props
@@ -108,22 +114,22 @@ export function Milestone(props) {
   )
 }
 
+export function getCategoryColor(category) {
+  return IMPACT_CATEGORIES_COLORS[category.toUpperCase()]
+}
+
 export function MilestoneImpactProgress(props) {
   const { impact, category, currentProgress = 0 } = props
   if (!impact || !category) return null
 
   const percent = Math.min((currentProgress * 100) / impact, 100)
+  const color = getCategoryColor(category)
   return (
-    <div>
-      <ActionCardLabel
-        largeLabel
-        hideTooltip
-        labelWidth={75}
-        category={category}
-        unit={category.toUpperCase()}
-        value={`${Math.round(percent)}%`}
-        variant={'positive'}
-      />
-    </div>
+    <MilestoneCircularProgressbarContainer color={color}>
+      <CircularProgressbar value={percent} text={`${Math.round(percent)}%`} />
+      <CircularProgressbarText color={color}>
+        {category.toUpperCase()}
+      </CircularProgressbarText>
+    </MilestoneCircularProgressbarContainer>
   )
 }

@@ -878,7 +878,9 @@ class BrandPage extends PureComponent {
                           alt="preview"
                         />
                       </LogoWrap>
-                      <Title>{group.name}</Title>
+                      {group.name !== 'Humanscale' && (
+                        <Title>{group.name}</Title>
+                      )}
                       {isMember && (
                         <MemberLabel>
                           <FormattedMessage id="app.pages.groups.youAreMember" />

@@ -9,6 +9,7 @@ import { FormattedHTMLMessage } from 'react-intl'
 import icons from '../ActionCardPhysicalLabel/icons'
 import { IMPACT_CATEGORIES_COLORS } from '../../utils/constants'
 import { processedUnitValue } from '../ActionCardLabelSet'
+import { roundToFixed } from '../../utils/helpers'
 
 const Container = styled.div`
   width: 100%;
@@ -97,7 +98,7 @@ export default function ImpactProgress(props) {
       </Category>
       <ProgressWrapper color={color}>
         <ProgressLabelLeft color={color}>
-          {Math.round(percent)}%
+          {roundToFixed(percent)}%
           <Value>
             &mdash; {currNum}
             {currPower && <sup>-{currPower}</sup>}

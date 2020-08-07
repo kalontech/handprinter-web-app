@@ -237,6 +237,27 @@ export const CircularProgressbarContainer = styled.div`
   height: 100px;
 `
 
+export const MilestoneCircularProgressbarContainer = styled.div`
+  width: 70px;
+  height: 70px;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .CircularProgressbar-path {
+    stroke: ${props => props.color};
+    stroke-linecap: butt;
+  }
+
+  .CircularProgressbar-text {
+    font-family: Noto Sans;
+    font-size: 16px;
+    fill: ${colors.dark};
+  }
+`
+
 export const GoalTitle = styled.span`
   font-family: Noto Sans;
   font-size: 22px;
@@ -259,6 +280,14 @@ export const MilestonePicture = styled.img`
   width: 66px;
   height: 66px;
   border-radius: 33px;
+  object-fit: cover;
+  border: 5px solid ${props => (props.disabled ? colors.gray : colors.green)};
+`
+
+export const GoalPicture = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
   object-fit: cover;
   border: 5px solid ${props => (props.disabled ? colors.gray : colors.green)};
 `
@@ -289,6 +318,14 @@ export const MilestoneTitle = styled.span`
   font-size: 16px;
   font-weight: bold;
   color: ${props => (props.disabled ? colors.darkGray : colors.dark)};
+`
+
+export const CircularProgressbarText = styled.span`
+  font-family: Noto Sans;
+  font-weight: bold;
+  font-size: 10px;
+  color: ${props => props.color};
+  margin-top: 5px;
 `
 
 export const MilestoneWrapper = styled.div`

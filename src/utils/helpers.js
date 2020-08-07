@@ -12,3 +12,7 @@ export const getInvitationLinkEaton = code => {
 }
 
 export const getOrdinalNumber = number => moment.localeData().ordinal(number)
+
+export const roundToFixed = (number, decimalCount = 2) =>
+  Math.round((number + Number.EPSILON) * 10 ** decimalCount) /
+  10 ** decimalCount
