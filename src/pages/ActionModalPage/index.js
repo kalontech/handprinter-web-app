@@ -183,6 +183,14 @@ function ActionModalPage(props) {
     }
   }
 
+  const LinkRenderer = (props: any) => {
+    return (
+      <a href={props.href} target="_blank">
+        {props.children}
+      </a>
+    )
+  }
+
   const renderActionView = () => {
     const {
       location,
@@ -250,6 +258,7 @@ function ActionModalPage(props) {
                         action.translatedDescription[locale]) ||
                       action.description
                     }
+                    renderers={{ link: LinkRenderer }}
                   />
                 </ActionDescription>
 
@@ -261,6 +270,7 @@ function ActionModalPage(props) {
                           action.translatedAssumptions[locale]) ||
                         action.assumptions
                       }
+                      renderers={{ link: LinkRenderer }}
                     />
                   </ActionAssumptions>
                 )}

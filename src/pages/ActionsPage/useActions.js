@@ -31,7 +31,7 @@ export default function useActions(props, page, setPage) {
   useEffect(() => {
     setPage(1)
     getActionsList(false, 1)
-  }, [props.location, props.match])
+  }, [props.location.search, props.match.params.subset])
 
   async function getActionsList(shouldConcatActions, page = 1) {
     setIsLoading(true)
