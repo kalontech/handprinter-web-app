@@ -183,10 +183,10 @@ function ActionModalPage(props) {
     }
   }
 
-  const LinkRenderer = (props: any) => {
+  const LinkRenderer = linkProps => {
     return (
-      <a href={props.href} target="_blank">
-        {props.children}
+      <a href={linkProps.href} rel="noopener noreferrer" target="_blank">
+        {linkProps.children}
       </a>
     )
   }
