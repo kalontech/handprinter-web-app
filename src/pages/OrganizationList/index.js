@@ -149,7 +149,7 @@ class OrganizationsPage extends React.Component {
       <SearchWrap>
         <AutoCompleteStyled
           onSelect={id => {
-            history.push(`/organizations/${id}/dashboard/statistics`)
+            history.push(`/organizations/${id}/dashboard/goal`)
           }}
           onSearch={this.handleSearch}
           dataSource={searchList.map(item => (
@@ -186,7 +186,7 @@ class OrganizationsPage extends React.Component {
           {(organizations.docs || []).map(item => (
             <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
               <OrganizationCard
-                to={`/organizations/${item._id}/dashboard/statistics`}
+                to={`/organizations/${item._id}/dashboard/goal`}
                 name={item.name}
                 picture={item.picture || getUserInitialAvatar(item.name)}
               />
