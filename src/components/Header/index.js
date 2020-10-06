@@ -828,7 +828,7 @@ function Header(props) {
               <Link
                 style={overrides && headerLogoLinkStyle}
                 to={
-                  overrides.brandName === 'Humanscale'
+                  overrides && overrides.brandName === 'Humanscale'
                     ? '/organizations/Humanscale/dashboard/goal'
                     : '/'
                 }
