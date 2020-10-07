@@ -3,6 +3,8 @@ import Spinner from 'components/Spinner'
 import { FormattedMessage } from 'react-intl'
 import _ from 'lodash'
 
+import moment from 'moment'
+
 import {
   StatisticsScroll,
   StatisticsContainer,
@@ -68,6 +70,7 @@ export default function Goal(props) {
   if (!goal) return <h1>No Goal</h1>
   const milestones = group.milestones || []
   const logo = _.get(group, 'goal.logo.src')
+  const currentYear = moment().get('year')
   return (
     <Fragment>
       {loading ? (
@@ -76,6 +79,15 @@ export default function Goal(props) {
         <StatisticsMain>
           <StatisticsContainer>
             <StatisticsScrollTitle>
+              <FormattedMessage id="app.organization.milestones" />
+            </StatisticsScrollTitle>
+            <StatisticsScroll id={'milestone-container'}>
+              {renderMilestones({ milestones, currentProgress })}
+            </StatisticsScroll>
+          </StatisticsContainer>
+          <StatisticsContainer>
+            <StatisticsScrollTitle>
+              {currentYear}{' '}
               <FormattedMessage id="app.organization.current.goal" />
             </StatisticsScrollTitle>
             <StatisticsScroll>
@@ -101,14 +113,6 @@ export default function Goal(props) {
                   />
                 )
               })}
-            </StatisticsScroll>
-          </StatisticsContainer>
-          <StatisticsContainer>
-            <StatisticsScrollTitle>
-              <FormattedMessage id="app.organization.milestones" />
-            </StatisticsScrollTitle>
-            <StatisticsScroll id={'milestone-container'}>
-              {renderMilestones({ milestones, currentProgress })}
             </StatisticsScroll>
           </StatisticsContainer>
         </StatisticsMain>

@@ -553,7 +553,7 @@ const StatisticTabsWrapper = styled.div`
   }
 `
 
-const GROUP_TABS = {
+export const GROUP_TABS = {
   MEMBERS: 'members',
   STATISTICS: 'statistics',
   ACTIVITY: 'activity',
@@ -561,7 +561,7 @@ const GROUP_TABS = {
 }
 
 async function getGroupData(props) {
-  const { match, location } = props
+  const { match, location, history } = props
   const queries = qs.parse(location.search, { ignoreQueryPrefix: true })
   const res =
     props.group || (await getOrganization(match.params.organizationId))
@@ -575,6 +575,12 @@ async function getGroupData(props) {
       page: queries.page || 1,
       id: res._id,
     })
+  }
+
+  if (match.params.subset === GROUP_TABS.GOAL && !_.get(res, 'goal')) {
+    history.push(
+      `/organizations/${_.get(res, '_id')}/dashboard/${GROUP_TABS.STATISTICS}`,
+    )
   }
 
   return {
@@ -816,7 +822,7 @@ class BrandPage extends PureComponent {
     ]
 
     if (group && group.goal) {
-      tabsList.push({
+      tabsList.unshift({
         to: `/organizations/${_.get(group, '_id')}/dashboard/${
           GROUP_TABS.GOAL
         }`,
@@ -1162,6 +1168,11 @@ class BrandPage extends PureComponent {
                         this.setState({ visibleTabs: visible })
                       }}
                     >
+                      {group && group.goal && (
+                        <Content>
+                          {loading ? <Spinner /> : <Goal {...this.props} />}
+                        </Content>
+                      )}
                       <Content>
                         <Statistics
                           {...this.props}
@@ -1249,9 +1260,6 @@ class BrandPage extends PureComponent {
                       </Content>
                       <Content>
                         {loading ? <Spinner /> : renderActivity(this.props)}
-                      </Content>
-                      <Content>
-                        {loading ? <Spinner /> : <Goal {...this.props} />}
                       </Content>
                     </TabsSecondary>
                   )}

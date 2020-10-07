@@ -128,9 +128,7 @@ class CreateOrganizationSuccessPage extends React.PureComponent {
       location: { search },
     } = this.props
     const organizationId = queryString.parse(search).organizationId
-    this.props.history.push(
-      `/organizations/${organizationId}/dashboard/statistics`,
-    )
+    this.props.history.push(`/organizations/${organizationId}/dashboard/goal`)
   }
 
   searchByUser = async query => {

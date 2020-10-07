@@ -695,7 +695,7 @@ function Header(props) {
                       <Link
                         to={`/organizations/${
                           overrides.brandName
-                        }/dashboard/statistics`}
+                        }/dashboard/goal`}
                       >
                         {overrides.brandName}
                       </Link>
@@ -825,7 +825,14 @@ function Header(props) {
 
           <HeaderWrap isLoggedIn={user} font={fontNames} fontColor={fontColor}>
             <LogoSmall>
-              <Link style={overrides && headerLogoLinkStyle} to="/">
+              <Link
+                style={overrides && headerLogoLinkStyle}
+                to={
+                  overrides && overrides.brandName === 'Humanscale'
+                    ? '/organizations/Humanscale/dashboard/goal'
+                    : '/'
+                }
+              >
                 <img
                   src={(overrides && overrides.partialLogo) || partialLogoImg}
                   alt="Handprinter"
@@ -888,7 +895,7 @@ function Header(props) {
                           <Link
                             to={`/organizations/${
                               overrides.brandName
-                            }/dashboard/statistics`}
+                            }/dashboard/goal`}
                           >
                             {overrides.brandName}
                           </Link>
