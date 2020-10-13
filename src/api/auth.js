@@ -12,6 +12,23 @@ export const logIn = (email, password) =>
     method: 'POST',
   })
 
+export const logInEmail = email =>
+  fetchAPI('/auth/login/requestLink', {
+    body: {
+      email,
+      redirectUrl: `${webAppBaseUrl}/account/login`,
+    },
+    method: 'POST',
+  })
+
+export const logInCode = code =>
+  fetchAPI('/auth/login/withCode', {
+    body: {
+      code,
+    },
+    method: 'POST',
+  })
+
 export const register = (
   email,
   password,

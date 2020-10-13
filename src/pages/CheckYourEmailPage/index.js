@@ -39,7 +39,7 @@ export default class CheckYourEmailPage extends React.PureComponent {
               <FormattedHTMLMessage id="app.checkYourEmailPage.description" />
             </OceanDescription>
             <OceanForm>
-              <Link to="/account/reset-password">
+              <Link to="/account/login">
                 <Button
                   type="primary"
                   htmlType="submit"

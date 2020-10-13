@@ -31,6 +31,39 @@ function* logIn({ email, password, createOrganizationFlow }) {
   }
 }
 
+function* logInEmail({ email }) {
+  try {
+    yield call(apiAuth.logInEmail, email)
+    yield put(Creators.logInEmailSuccess())
+    yield call(history.push, '/account/check-your-email')
+  } catch (error) {
+    yield put(Creators.logInEmailFailure(decodeError(error)))
+  }
+}
+
+function* logInCode({ code, createOrganizationFlow }) {
+  try {
+    const res = yield call(apiAuth.logInCode, code)
+    const { token, user } = res
+    yield put(Creators.logInWithCodeSuccess(token))
+    yield call(prepareUserProfile)
+    const brandedConfig = getBrandedConfig()
+    if (createOrganizationFlow) {
+      yield call(history.push, '/account/create-organization')
+    } else {
+      let to = '/account/dashboard'
+      if (brandedConfig) {
+        if (brandedConfig.brandName === 'Humanscale' && !user.firstLogin) {
+          to = '/challenges'
+        } else to = '/pages/home'
+      }
+      yield call(history.push, to)
+    }
+  } catch (error) {
+    yield put(Creators.logInWithCodeFailure(decodeError(error)))
+  }
+}
+
 function* register({
   email,
   password,
@@ -86,6 +119,8 @@ function* setNewPassword({ code, password }) {
 
 export default {
   logIn,
+  logInEmail,
+  logInCode,
   register,
   resetPassword,
   setNewPassword,

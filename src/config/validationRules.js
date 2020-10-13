@@ -57,19 +57,6 @@ export default formatMessage => ({
       }),
     },
   ],
-  invitingMessage: [
-    {
-      max: MAX_INVITING_MESSAGE_LENGTH,
-      message: formatMessage(
-        {
-          id: 'app.forms.invitingMessage.maxLength',
-        },
-        {
-          maxLength: MAX_INVITING_MESSAGE_LENGTH,
-        },
-      ),
-    },
-  ],
   organizationName: [
     {
       required: true,

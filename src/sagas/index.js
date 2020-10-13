@@ -10,6 +10,14 @@ import startupSaga from './startupSaga'
 function* rootSaga() {
   yield fork(startupSaga.startup)
   yield takeLatest(AccountStoreTypes.LOG_IN_REQUEST, accountSaga.logIn)
+  yield takeLatest(
+    AccountStoreTypes.LOG_IN_EMAIL_REQUEST,
+    accountSaga.logInEmail,
+  )
+  yield takeLatest(
+    AccountStoreTypes.LOG_IN_WITH_CODE_REQUEST,
+    accountSaga.logInCode,
+  )
   yield takeLatest(AccountStoreTypes.REGISTER_REQUEST, accountSaga.register)
   yield takeLatest(UserStoreTypes.GET_ME_REQUEST, userSaga.getMe)
   yield takeLatest(UserStoreTypes.UPDATE_ME_INFO_REQUEST, userSaga.updateMeInfo)
