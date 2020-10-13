@@ -238,6 +238,8 @@ LoginPage.propTypes = {
   intl: PropTypes.object.isRequired,
   isLoggingIn: PropTypes.bool.isRequired,
   logInError: PropTypes.string,
+  logInWithCodeRequest: PropTypes.func.isRequired,
+  logInEmailRequest: PropTypes.func.isRequired,
   logInRequest: PropTypes.func.isRequired,
   overrides: PropTypes.object,
   location: PropTypes.shape({
