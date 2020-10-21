@@ -719,7 +719,7 @@
     "app.actions.physicalValues.one.climate": "kgCO2e",
     "app.actions.physicalValues.one.health": "DALYs",
     "app.actions.physicalValues.one.ecosystem": "SP*YR",
-    "app.actions.physicalValues.one.water": "M<sup>3<\/sup>",
+    "app.actions.physicalValues.one.water": "M³",
     "app.actions.physicalValues.one.waste": "KG",
     "app.actions.type.Wild": "Wild",
     "app.actions.type.Modeled": "Modelliert",

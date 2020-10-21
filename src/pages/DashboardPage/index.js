@@ -44,7 +44,10 @@ import { convertBytesToMegabytes } from 'utils/file'
 
 import UserDashboardActivity from 'components/UserDashboardActivity'
 
+import { processedUnitValue } from '../../components/ActionCardLabelSet'
+
 import Header from './header'
+import { UIContextSettings } from '../../context/uiSettingsContext'
 
 const WidgetContainer = styled.div`
   background-color: ${colors.white};
@@ -451,6 +454,8 @@ class DashboardPage extends Component {
     history: PropTypes.object,
   }
 
+  static contextType = UIContextSettings
+
   state = {
     currentImpactCategory: 'climate',
     organization: undefined,
@@ -481,9 +486,7 @@ class DashboardPage extends Component {
           organizationOwner: organizationOwner.user,
         })
       }
-    } catch (error) {
-      console.error(error)
-    }
+    } catch (error) {}
   }
 
   componentDidUpdate(prevProps) {
@@ -525,9 +528,7 @@ class DashboardPage extends Component {
         }
         this.setState({ organization })
       }
-    } catch (error) {
-      console.error(error)
-    }
+    } catch (error) {}
   }
 
   handleSelectImage = selectingLogo => {
@@ -564,6 +565,7 @@ class DashboardPage extends Component {
   }
 
   render() {
+    const uiContextSettings = this.context
     const {
       currentImpactCategory,
       organization,
@@ -861,6 +863,35 @@ class DashboardPage extends Component {
                   <WidgetContent useWidgetMinHeight>
                     {!!ratio && (
                       <GoodRatioWidget
+                        showPhysicalValues={
+                          uiContextSettings.showPhysicalValues
+                        }
+                        footprintInUnits={{
+                          value: processedUnitValue(
+                            _.get(
+                              ratio,
+                              `footprintInUnit.${currentImpactCategory}`,
+                              5000,
+                            ),
+                          ),
+
+                          unit: formatMessage({
+                            id: `app.actions.physicalValues.one.${currentImpactCategory}`,
+                          }),
+                        }}
+                        handprintInUnits={{
+                          value: processedUnitValue(
+                            _.get(
+                              ratio,
+                              `handprintInUnits.${currentImpactCategory}`,
+                              0,
+                            ),
+                          ),
+
+                          unit: formatMessage({
+                            id: `app.actions.physicalValues.one.${currentImpactCategory}`,
+                          }),
+                        }}
                         footprintDays={Math.round(
                           _.get(
                             ratio,
