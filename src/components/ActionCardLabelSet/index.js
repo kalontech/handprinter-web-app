@@ -65,7 +65,7 @@ const ActionCardLabelSet = props => {
 
   if (!impacts) return null
 
-  if (showPhysicalValues) {
+  if (showPhysicalValues && impactsInUnits) {
     return (
       <CardLabelWrap
         mobileFixedWidth={mobileFixedWidth}

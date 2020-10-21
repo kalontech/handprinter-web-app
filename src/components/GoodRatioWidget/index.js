@@ -36,12 +36,19 @@ class GoodRatioWidget extends Component {
   state = {
     footprintDays: 0,
     handprintDays: 0,
+    footprintInUnits: {},
+    handprintInUnits: {},
+    showPhysicalValues: false,
   }
 
   static getDerivedStateFromProps(props, state) {
+    console.log(props)
     return {
       footprintDays: props.footprintDays,
       handprintDays: props.handprintDays,
+      footprintInUnits: props.footprintInUnits,
+      handprintInUnits: props.handprintInUnits,
+      showPhysicalValues: props.showPhysicalValues,
     }
   }
 
@@ -76,7 +83,9 @@ class GoodRatioWidget extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.footprintDays !== this.props.footprintDays ||
-      prevProps.handprintDays !== this.props.handprintDays
+      prevProps.handprintDays !== this.props.handprintDays ||
+      prevProps.footprintInUnits !== this.props.footprintInUnits ||
+      prevProps.handprintInUnits !== this.props.handprintInUnits
     ) {
       this.update()
     }
@@ -249,7 +258,13 @@ class GoodRatioWidget extends Component {
                 fontSize={16}
               >
                 <tspan x={76.542} y={17.102} textAnchor="middle">
-                  {this.state.footprintDays}
+                  {this.state.showPhysicalValues
+                    ? `${this.state.footprintInUnits.value[0]} ${
+                        this.state.footprintInUnits.value[1]
+                          ? `e-${this.state.footprintInUnits.value[1]}`
+                          : ''
+                      }`
+                    : this.state.footprintDays}
                 </tspan>
               </text>
               <text
@@ -261,7 +276,9 @@ class GoodRatioWidget extends Component {
                 fontWeight="bold"
               >
                 <tspan x={64.428} y={30.689}>
-                  DAYS
+                  {this.state.showPhysicalValues
+                    ? this.state.footprintInUnits.unit
+                    : 'DAYS'}
                 </tspan>
               </text>
             </g>
@@ -302,7 +319,13 @@ class GoodRatioWidget extends Component {
                 fontSize={16}
               >
                 <tspan x={366.594} y={19.102} textAnchor="middle">
-                  {this.formatDays(this.state.handprintDays)}
+                  {this.state.showPhysicalValues
+                    ? `${this.state.handprintInUnits.value[0]} ${
+                        this.state.handprintInUnits.value[1]
+                          ? `e-${this.state.handprintInUnits.value[1]}`
+                          : ''
+                      }`
+                    : this.formatDays(this.state.handprintDays)}
                 </tspan>
               </text>
               <text
@@ -314,7 +337,9 @@ class GoodRatioWidget extends Component {
                 fontWeight="bold"
               >
                 <tspan x={354.168} y={32.688}>
-                  {this.getDaysLabel(this.state.handprintDays)}
+                  {this.state.showPhysicalValues
+                    ? this.state.handprintInUnits.unit
+                    : this.getDaysLabel(this.state.handprintDays)}
                 </tspan>
               </text>
             </g>
@@ -600,6 +625,9 @@ class GoodRatioWidget extends Component {
 }
 
 GoodRatioWidget.propTypes = {
+  showPhysicalValues: PropTypes.boolean,
+  footprintInUnits: PropTypes.object,
+  handprintInUnits: PropTypes.object,
   footprintDays: PropTypes.number.isRequired,
   handprintDays: PropTypes.number.isRequired,
 }
