@@ -21,6 +21,12 @@ export const { Types, Creators } = createActions({
   logInRequest: ['email', 'password', 'createOrganizationFlow'],
   logInSuccess: ['token'],
   logInFailure: ['error'],
+  logInEmailRequest: ['email'],
+  logInEmailSuccess: [''],
+  logInEmailFailure: ['error'],
+  logInWithCodeRequest: ['code', 'createOrganizationFlow'],
+  logInWithCodeSuccess: ['token'],
+  logInWithCodeFailure: ['error'],
   registerRequest: data => ({
     type: Types.REGISTER_REQUEST,
     ...data,
@@ -51,6 +57,46 @@ export const logInSuccess = (state = INITIAL_STATE, action) => ({
 })
 
 export const logInFailure = (state = INITIAL_STATE, action) => ({
+  ...state,
+  isLoggingIn: false,
+  logInError: action.error,
+  token: null,
+})
+
+export const logInEmailRequest = (state = INITIAL_STATE, action) => ({
+  ...state,
+  isLoggingIn: true,
+  logInError: null,
+})
+
+export const logInEmailSuccess = (state = INITIAL_STATE, action) => ({
+  ...state,
+  isLoggingIn: false,
+  logInError: null,
+})
+
+export const logInEmailFailure = (state = INITIAL_STATE, action) => ({
+  ...state,
+  isLoggingIn: false,
+  logInError: action.error,
+  token: null,
+})
+
+export const logInWithCodeRequest = (state = INITIAL_STATE, action) => ({
+  ...state,
+  isLoggingIn: true,
+  logInError: null,
+  token: null,
+})
+
+export const logInWithCodeSuccess = (state = INITIAL_STATE, action) => ({
+  ...state,
+  isLoggingIn: false,
+  logInError: null,
+  token: action.token,
+})
+
+export const logInWithCodeFailure = (state = INITIAL_STATE, action) => ({
   ...state,
   isLoggingIn: false,
   logInError: action.error,
@@ -137,6 +183,12 @@ export const HANDLERS = {
   [Types.LOG_IN_REQUEST]: logInRequest,
   [Types.LOG_IN_SUCCESS]: logInSuccess,
   [Types.LOG_IN_FAILURE]: logInFailure,
+  [Types.LOG_IN_EMAIL_REQUEST]: logInEmailRequest,
+  [Types.LOG_IN_EMAIL_SUCCESS]: logInEmailSuccess,
+  [Types.LOG_IN_EMAIL_FAILURE]: logInEmailFailure,
+  [Types.LOG_IN_WITH_CODE_REQUEST]: logInWithCodeRequest,
+  [Types.LOG_IN_WITH_CODE_SUCCESS]: logInWithCodeSuccess,
+  [Types.LOG_IN_WITH_CODE_FAILURE]: logInWithCodeFailure,
   [Types.REGISTER_REQUEST]: registerRequest,
   [Types.REGISTER_SUCCESS]: registerSuccess,
   [Types.REGISTER_FAILURE]: registerFailure,
