@@ -170,7 +170,7 @@ class ActionsCarousel extends React.Component {
                 <Slide key={index}>
                   <Link
                     to={
-                      this.props.token
+                      this.props.isLoggedIn
                         ? `campaign/${camp.id}`
                         : '/account/login'
                     }

@@ -120,8 +120,6 @@ function AboutHumanscalePage(props) {
   const isTablet = width < sizes.largeDesktop
   const isMobile = width < sizes.tablet
 
-  const token = window.localStorage.getItem('accessToken')
-
   return (
     <Fragment>
       <PageMetadata pageName="aboutInterfacePage" />
@@ -258,10 +256,13 @@ function AboutHumanscalePage(props) {
         <CampaignsBlock>
           <CampaignsFinger src={campaignsFinger} alt="" />
           <ScrollAnimation>
-            <CampaignsCarousel campaigns={campaigns} token={token} />
+            <CampaignsCarousel
+              campaigns={campaigns}
+              isLoggedIn={!!props.user}
+            />
           </ScrollAnimation>
           <CampaignButtons>
-            <Link to={token ? '/challenges' : '/account/login'}>
+            <Link to={props.user ? '/challenges' : '/account/login'}>
               <GreenButton>
                 <FormattedMessage id="app.aboutHumanscalePage.handprint.viewMoreBtn" />
               </GreenButton>
