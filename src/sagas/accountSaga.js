@@ -89,7 +89,7 @@ function* register({
       siloSecureCode,
     )
     setUserId(email)
-    logEvent(EVENT_TYPES.USER_REGISTRATION)
+    logEvent(EVENT_TYPES.USER_REGISTRATION, { invitationCode })
     yield put(Creators.registerSuccess(token))
     yield call(prepareUserProfile)
     if (createOrganizationFlow) {
