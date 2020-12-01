@@ -7,6 +7,7 @@ import { getBrandedConfig } from 'config/branded'
 import * as apiAuth from 'api/auth'
 
 import { prepareUserProfile } from './helpers'
+import { EVENT_TYPES, logEvent, setUserId } from '../amplitude'
 
 function* logIn({ email, password, createOrganizationFlow }) {
   try {
@@ -45,6 +46,8 @@ function* logInCode({ code, createOrganizationFlow }) {
   try {
     const res = yield call(apiAuth.logInCode, code)
     const { token, user } = res
+    setUserId(user.email)
+    logEvent(EVENT_TYPES.USER_LOGIN)
     yield put(Creators.logInWithCodeSuccess(token))
     yield call(prepareUserProfile)
     const brandedConfig = getBrandedConfig()
@@ -85,6 +88,8 @@ function* register({
       belongsToBrand,
       siloSecureCode,
     )
+    setUserId(email)
+    logEvent(EVENT_TYPES.USER_REGISTRATION)
     yield put(Creators.registerSuccess(token))
     yield call(prepareUserProfile)
     if (createOrganizationFlow) {
