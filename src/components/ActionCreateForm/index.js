@@ -15,6 +15,7 @@ import decodeError from 'utils/decodeError'
 import hexToRgba from 'utils/hexToRgba'
 
 import { categories } from '../../pages/ActionsPage/filterData'
+import { EVENT_TYPES, logEvent } from '../../amplitude'
 
 const { Option } = Select
 
@@ -281,7 +282,7 @@ class ActionCreatePage extends React.PureComponent {
 
       try {
         this._submitPromise = onSubmit(values)
-
+        logEvent(EVENT_TYPES.ACTION_PROPOSED)
         await this._submitPromise
 
         if (this._submitPromise) {

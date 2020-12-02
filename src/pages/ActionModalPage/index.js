@@ -116,6 +116,7 @@ function ActionModalPage(props) {
 
     try {
       await api.engageAction(action._id, engageEmails, props.user._id)
+      logEvent(EVENT_TYPES.ACTION_SUGGESTED)
       setSuccessEngageSent(true)
     } catch (error) {
       setEngageError(error)

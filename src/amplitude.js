@@ -13,6 +13,8 @@ export const EVENT_TYPES = {
   ACTION_MARKED_HABIT: 'Action is marked habit',
   ACTION_FILTERED: 'Actions are filtered',
   ACTION_ADDED_POST: 'User added a post to activity after action taking',
+  ACTION_SUGGESTED: 'Action is suggested',
+  ACTION_PROPOSED: 'Action is proposed',
   CHALLENGES_OPENED: 'Opened Challenges tab',
   CHALLENGES_REVIEW_CAMPAIGN: 'Review a Campaign',
   CHALLENGES_PARTICIPATE_CAMPAIGN: 'Participation in a Campaign',
@@ -24,6 +26,14 @@ export const EVENT_TYPES = {
   ORGANIZATION_VISITED: 'Organization dashboard is visited',
   ORGANIZATION_INFO_ADDED: 'Organization information is added',
   LANDINGPAGE_VISITED: 'Landing page is visited',
+  ACTIVITY_VISITED_IN_GROUPS: 'Visited his activity in Groups',
+  ACTIVITY_ADDED_POST_TO_GROUP: 'Added a post to Group activity',
+  ACTIVITY_ADDED_POST_TO_DASHBOARD: 'Added a post to User Dashboard activity',
+  ACTIVITY_ADDED_POST_TO_ORGANIZATION: 'Added a post to Organization activity',
+  ACTIVITY_ADDED_POST_TO_CAMPAIGN: 'Added a post to Campaign activity',
+  ACTIVITY_ADDED_POST_TO_COMPETITION: 'Added a post to Competition activity',
+  ACTIVITY_ADDED_REACTION: 'Added reaction',
+  ACTIVITY_ADDED_COMMENT: 'Added Comment',
 }
 
 const init = () => {

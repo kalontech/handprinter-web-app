@@ -21,6 +21,24 @@ import env from 'config/env'
 import CloseIcon from 'assets/icons/CloseIcon'
 
 import useDefaultFeeds from './useDefaultFeeds'
+import { EVENT_TYPES, logEvent } from '../../amplitude'
+
+function logFeedPostEvents(data) {
+  const feedChannel = _.values(
+    _.get(data, 'actor.client.subscriptions', [{ userId: '' }]),
+  )[0].userId
+  if (feedChannel.includes('group')) {
+    logEvent(EVENT_TYPES.ACTIVITY_ADDED_POST_TO_GROUP)
+  } else if (feedChannel.includes('user')) {
+    logEvent(EVENT_TYPES.ACTIVITY_ADDED_POST_TO_DASHBOARD)
+  } else if (feedChannel.includes('organization')) {
+    logEvent(EVENT_TYPES.ACTIVITY_ADDED_POST_TO_ORGANIZATION)
+  } else if (feedChannel.includes('campaign')) {
+    logEvent(EVENT_TYPES.ACTIVITY_ADDED_POST_TO_CAMPAIGN)
+  } else if (feedChannel.includes('competition')) {
+    logEvent(EVENT_TYPES.ACTIVITY_ADDED_POST_TO_COMPETITION)
+  }
+}
 
 const Feed = ({
   readFrom = {},
@@ -111,29 +129,32 @@ const Feed = ({
               onSuccess && onSuccess()
             }}
             feedGroup={writeTo.feedGroup || 'user'}
-            modifyActivityData={data => ({
-              ...data,
-              mentions: isStatusUpdateFormExpanded
-                ? mentions.map(mention => {
-                    return {
-                      foreignId: mention.value,
-                      name: mention.label,
-                      profileImage: mention.photo,
-                    }
-                  })
-                : [],
-              attachedActions: attachActionFormExpanded
-                ? actions.map(action => {
-                    return {
-                      foreignId: action.value,
-                      name: action.label,
-                      profileImage: action.photo,
-                    }
-                  })
-                : [],
-              to: [...(writeTo.cc || []), ...defaultFeeds],
-              ...modifiedDataProps,
-            })}
+            modifyActivityData={data => {
+              logFeedPostEvents(data)
+              return {
+                ...data,
+                mentions: isStatusUpdateFormExpanded
+                  ? mentions.map(mention => {
+                      return {
+                        foreignId: mention.value,
+                        name: mention.label,
+                        profileImage: mention.photo,
+                      }
+                    })
+                  : [],
+                attachedActions: attachActionFormExpanded
+                  ? actions.map(action => {
+                      return {
+                        foreignId: action.value,
+                        name: action.label,
+                        profileImage: action.photo,
+                      }
+                    })
+                  : [],
+                to: [...(writeTo.cc || []), ...defaultFeeds],
+                ...modifiedDataProps,
+              }
+            }}
             userId={writeTo.userId}
             FooterItem={
               <>

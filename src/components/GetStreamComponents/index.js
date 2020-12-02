@@ -27,6 +27,7 @@ import CommentFilled from './CommentFilled.svg'
 import LikeDefault from './LikeDefault.svg'
 import LikeFilled from './LikeFilled.svg'
 import { UIContextSettings } from '../../context/uiSettingsContext'
+import { EVENT_TYPES, logEvent } from '../../amplitude'
 
 const UserName = styled.span`
   font-family: Noto Sans;
@@ -140,6 +141,7 @@ export const ActivityFooter = props => {
             {...props}
             filled={isShowComments}
             onPress={() => {
+              logEvent(EVENT_TYPES.ACTIVITY_ADDED_COMMENT)
               setIsShowComments(value => !value)
             }}
           />
@@ -430,7 +432,7 @@ export const LikeButton = props => {
       onToggleReaction,
       onToggleChildReaction,
     } = props
-
+    logEvent(EVENT_TYPES.ACTIVITY_ADDED_REACTION)
     if (reaction && onToggleChildReaction) {
       return onToggleChildReaction('like', reaction, {}, {})
     }
