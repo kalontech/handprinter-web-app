@@ -36,6 +36,7 @@ import { getPaymentPlans } from 'api/payment'
 import CreateOrganizationFrom from './CreateOrganizationFrom'
 import ConfirmEmail from './confirmEmail'
 import Summary from './summary'
+import { EVENT_TYPES, logEvent } from '../../amplitude'
 
 export const BrandedBlockWrap = styled.div`
   position: relative;
@@ -310,6 +311,7 @@ class CreateOrganizationPage extends Component {
   handleSubmitOrganizationDetails = async organizationDetails => {
     const paymentPlans = await getPaymentPlans(organizationDetails)
     this.setState({ step: 3, organizationDetails, paymentPlans })
+    logEvent(EVENT_TYPES.ORGANIZATION_INFO_ADDED)
   }
 
   handleSubmitSummary = (route = '/account/create-organization/success') => {

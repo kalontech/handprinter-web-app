@@ -54,6 +54,7 @@ import {
 import { processedUnitValue } from '../../components/ActionCardLabelSet'
 import renderActivity from './activity'
 import Goal from './Goal'
+import { EVENT_TYPES, logEvent } from '../../amplitude'
 
 const Block = styled.section`
   display: flex;
@@ -637,6 +638,7 @@ class BrandPage extends PureComponent {
     animateScroll.scrollToTop()
     window.addEventListener('orientationchange', this.changeTabsType)
     window.addEventListener('resize', this.handleWindowSizeChange)
+    logEvent(EVENT_TYPES.ORGANIZATION_VISITED)
   }
 
   componentDidUpdate(prevProps) {

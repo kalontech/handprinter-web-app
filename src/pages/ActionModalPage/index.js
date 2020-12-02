@@ -67,6 +67,7 @@ import {
   ProposeView,
 } from './styled'
 import { createFeedPost } from '../../api/actions'
+import { EVENT_TYPES, logEvent } from '../../amplitude'
 
 const ActionModalPageSteps = {
   LOADING: 'LOADING',
@@ -155,6 +156,10 @@ function ActionModalPage(props) {
         isHabit,
         initiatorId,
       )
+      logEvent(EVENT_TYPES.ACTION_TAKEN, {
+        isHabit,
+        markedGiveCredit: !!takenAction.initiatorId,
+      })
       setStep(modalType)
       setTakeActionError(null)
       setTakenAction(takenAction)

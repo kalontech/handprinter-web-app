@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import ChallengesListHeader from 'components/ChallengesListHeader'
 
@@ -17,6 +17,7 @@ import { acceptInvitation } from '../../api/competitions'
 import useCampaignsList from './useCampaignsList'
 import useCompetitionsList from './useCompetitionsList'
 import { challengeStatuses } from '../../components/CompetitionCard'
+import { EVENT_TYPES, logEvent } from '../../amplitude'
 
 export const CHALLENGIES = {
   CAMPAIGNS: 'campaigns',
@@ -51,6 +52,10 @@ export default function ChallengesList(props) {
   const [competitions, loadingCompetitions] = useCompetitionsList(props)
   const challenges = getChallengies(campaigns, competitions)
 
+  useEffect(() => {
+    logEvent(EVENT_TYPES.CHALLENGES_OPENED)
+  }, [])
+
   return (
     <Block>
       <ChallengesListHeader />
@@ -67,6 +72,9 @@ export default function ChallengesList(props) {
               return (
                 <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
                   <CompetitionCard
+                    onClick={() =>
+                      logEvent(EVENT_TYPES.CHALLENGES_REVIEW_CAMPAIGN)
+                    }
                     to={to}
                     name={item.name}
                     picture={item.logo.src}

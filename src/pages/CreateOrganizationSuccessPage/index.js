@@ -16,6 +16,7 @@ import queryString from 'query-string'
 import { addAdmins } from 'api/organization'
 
 import SearchableInput from '../../components/SearchableInput'
+import { EVENT_TYPES, logEvent } from '../../amplitude'
 
 const Modal = styled(OceanModal)`
   width: 632px;
@@ -104,6 +105,10 @@ class CreateOrganizationSuccessPage extends React.PureComponent {
     query: '',
     admins: [],
     suggestions: [],
+  }
+
+  componentDidMount() {
+    logEvent(EVENT_TYPES.ORGANIZATION_CREATED)
   }
 
   handleSend = async () => {

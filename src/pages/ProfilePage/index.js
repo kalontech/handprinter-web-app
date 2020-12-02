@@ -51,6 +51,8 @@ import * as apiGroups from 'api/groups'
 import * as apiUser from 'api/user'
 import { getUserInitialAvatar } from 'api'
 
+import { EVENT_TYPES, logEvent } from '../../amplitude'
+
 const { TabPane } = Tabs
 
 export const Wrapper = styled.div`
@@ -621,7 +623,7 @@ class ProfilePage extends Component {
     body.append('private', values.private)
 
     const response = await apiGroups.fetchCreateGroup(body)
-
+    logEvent(EVENT_TYPES.GROUP_CREATED)
     this.setState({
       myGroups: [response.group, ...this.state.myGroups],
       createGroupModalVisible: false,

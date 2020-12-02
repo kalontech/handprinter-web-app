@@ -45,6 +45,8 @@ import PageMetadata from 'components/PageMetadata'
 
 import * as api from 'api/actions'
 
+import { EVENT_TYPES, logEvent } from '../../amplitude'
+
 const HeroTitle = styled(BlockTitleGreen)`
   margin-bottom: 24px;
 `
@@ -305,6 +307,8 @@ class HomePage extends Component {
       actions: { docs: actions },
     } = await api.getActions()
     this.setState({ actions })
+
+    logEvent(EVENT_TYPES.LANDINGPAGE_VISITED)
   }
 
   render = () => {

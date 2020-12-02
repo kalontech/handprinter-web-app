@@ -41,6 +41,8 @@ import {
 } from 'api/groups'
 import { getUserInitialAvatar } from 'api'
 
+import { EVENT_TYPES, logEvent } from '../../amplitude'
+
 const Block = styled.section`
   display: flex;
   flex-direction: column;
@@ -188,6 +190,10 @@ class GroupsPage extends React.PureComponent {
   }
 
   $search = React.createRef()
+
+  componentDidMount() {
+    logEvent(EVENT_TYPES.GROUPS_TAB_OPENED)
+  }
 
   componentDidUpdate(prevProps) {
     const { match, location } = this.props
@@ -427,6 +433,7 @@ class GroupsPage extends React.PureComponent {
               {(groups.docs || []).map(item => (
                 <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
                   <GroupCard
+                    onClick={() => logEvent(EVENT_TYPES.GROUP_OPENED)}
                     to={`/groups/view/${item._id}/statistics`}
                     name={item.name}
                     counter={intl.formatMessage(

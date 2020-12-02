@@ -13,6 +13,7 @@ import Tooltip from 'components/Tooltip'
 import { MenuStyled, Column, EmptyList } from './styled'
 import { ACTIONS_TABS } from './constants'
 import { ImpactButton } from '../ActionsPage/styled'
+import { EVENT_TYPES, logEvent } from '../../amplitude'
 
 function getActions(props, selectedKey) {
   const {
@@ -77,6 +78,9 @@ export default function renderActions(props) {
             <Column key={action.slug} xl={8} lg={12} md={12} xs={24}>
               <ScrollAnimation>
                 <ActionCard
+                  onClick={() =>
+                    logEvent(EVENT_TYPES.CHALLENGES_PARTICIPATE_CAMPAIGN)
+                  }
                   to={
                     action.status === ACTION_STATES.PROPOSED
                       ? `/account/actions/preview/${action.slug}`
