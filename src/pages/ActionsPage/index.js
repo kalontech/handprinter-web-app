@@ -172,7 +172,7 @@ function ActionsPage(props) {
 
   const handleOpenActionCard = ({ slug }) => () => {
     const { match, history } = props
-
+    logEvent(EVENT_TYPES.ACTION_SEARCHED)
     history.push(`/actions/${match.params.subset}/${slug}`)
   }
 
@@ -192,7 +192,7 @@ function ActionsPage(props) {
 
   const handleOnAfterFiltersChange = debounce(({ data, activeFilterCount }) => {
     const { match, history } = props
-
+    logEvent(EVENT_TYPES.ACTION_FILTERED)
     if (Object.keys(data).length === 0) {
       history.push(`/actions/${match.params.subset}`)
     } else {

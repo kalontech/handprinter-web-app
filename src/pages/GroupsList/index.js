@@ -303,7 +303,7 @@ class GroupsPage extends React.PureComponent {
     }))
 
     await fetchJoinGroupByInvite(id)
-
+    logEvent(EVENT_TYPES.GROUPS_INVITED)
     this.props.history.push(`/groups/view/${id}/statistics`)
   }
 
