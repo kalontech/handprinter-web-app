@@ -573,9 +573,6 @@ function ActionModalPage(props) {
   }
 
   const handleHabitCheckbox = e => {
-    if (e.target.checked) {
-      logEvent(EVENT_TYPES.ACTION_MARKED_HABIT)
-    }
     setIsHabit(e.target.checked)
   }
 
