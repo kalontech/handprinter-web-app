@@ -37,9 +37,8 @@ if (NODE_ENV === 'production') {
   if (REACT_APP_ENVIRONMENT === 'production') {
     hotjar.initialize(REACT_APP_HOTJAR_HJID, REACT_APP_HOTJAR_HJSV)
   }
+  initAplitude()
 }
-
-initAplitude()
 
 ReactDOM.render(<App />, document.getElementById('root'))
 // If you want your app to work offline and load faster, you can change
