@@ -72,6 +72,7 @@ import {
   AchievementCol,
 } from '../DashboardPage/header'
 import Feed from '../../components/Feed'
+import { EVENT_TYPES, logEvent } from '../../amplitude'
 
 const Block = styled.section`
   display: flex;
@@ -434,6 +435,9 @@ async function getGroupData(props) {
     }),
   ])
 
+  if (match.params.subset === GROUP_TABS.ACTIVITY) {
+    logEvent(EVENT_TYPES.ACTIVITY_VISITED_IN_GROUPS)
+  }
   return {
     group: fetchedGroup || { ...group, requestingMembersCount, admins },
     ...tabsData,
@@ -649,6 +653,7 @@ class GroupViewPage extends PureComponent {
       onOk: async () =>
         fetchDeleteGroup(match.params.id)
           .then(() => {
+            logEvent(EVENT_TYPES.GROUPS_DELETED)
             history.replace(`/groups/${GROUPS_SUBSETS.DISCOVER}`)
           })
           .catch(() => {

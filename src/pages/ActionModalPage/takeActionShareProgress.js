@@ -10,6 +10,7 @@ import pigImage from 'assets/actions/pig.png'
 
 import { TakenActionPanel, TakenActionAuthContent } from './styled'
 import { createFeedPost } from '../../api/actions'
+import { EVENT_TYPES, logEvent } from '../../amplitude'
 
 const TakenActionTitle = styled.text`
   font-family: Noto Serif;
@@ -76,6 +77,7 @@ function takeActionShareProgress(props) {
             verb="comment action"
             context={{ action }}
             onSuccess={() => {
+              logEvent(EVENT_TYPES.ACTION_ADDED_POST)
               history.length > 1 ? history.goBack() : closeModal()
             }}
           />

@@ -51,6 +51,8 @@ import * as apiGroups from 'api/groups'
 import * as apiUser from 'api/user'
 import { getUserInitialAvatar } from 'api'
 
+import { EVENT_TYPES, logEvent } from '../../amplitude'
+
 const { TabPane } = Tabs
 
 export const Wrapper = styled.div`
@@ -472,6 +474,7 @@ class ProfilePage extends Component {
   componentDidMount() {
     animateScroll.scrollToTop()
     window.addEventListener('resize', this.handleWindowSizeChange)
+    logEvent(EVENT_TYPES.PROFILE_VISITED)
   }
 
   componentWillUnmount() {
@@ -522,6 +525,7 @@ class ProfilePage extends Component {
     this.setState({ isFootprintUpdating: true })
     try {
       await apiUser.updateMe({ personalizedFootprint: footprintValue })
+      logEvent(EVENT_TYPES.PROFILE_CUSTOMIZED_FOOTPRINT)
       this.setState({ isFootprintUpdating: false })
     } catch (error) {
       console.error(error)
@@ -594,7 +598,7 @@ class ProfilePage extends Component {
       form: { validateFields },
       updateMeInfoRequest,
     } = this.props
-
+    logEvent(EVENT_TYPES.PROFILE_CHANGED_GENERAL)
     validateFields(['email', 'fullName', 'country'], (err, values) => {
       if (!err) {
         const { email, fullName, country } = values
@@ -621,7 +625,7 @@ class ProfilePage extends Component {
     body.append('private', values.private)
 
     const response = await apiGroups.fetchCreateGroup(body)
-
+    logEvent(EVENT_TYPES.GROUP_CREATED)
     this.setState({
       myGroups: [response.group, ...this.state.myGroups],
       createGroupModalVisible: false,
@@ -709,6 +713,7 @@ class ProfilePage extends Component {
         const body = new FormData()
         body.append('file', file)
         this.props.updateMePhotoRequest(body)
+        logEvent(EVENT_TYPES.PROFILE_CHANGED_GENERAL)
       }
     }
   }
@@ -874,6 +879,7 @@ class ProfilePage extends Component {
     let updatedMyGroupsList
 
     if (key === PROFILE_TABS_KEYS.MY_GROUPS) {
+      logEvent(EVENT_TYPES.PROFILE_CHECKED_GROUPS)
       const { groups } = await getMyGroupsList()
       updatedMyGroupsList = groups.docs
     }

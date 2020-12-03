@@ -91,6 +91,7 @@ export default class GroupCard extends React.PureComponent {
     counter: PropTypes.string,
     picture: PropTypes.string,
     buttons: PropTypes.func,
+    onClick: PropTypes.func,
     featured: PropTypes.shape({
       added: PropTypes.bool,
       onClick: PropTypes.func,
@@ -102,9 +103,17 @@ export default class GroupCard extends React.PureComponent {
   }
 
   render() {
-    const { to, name, picture, counter, buttons, featured } = this.props
+    const {
+      to,
+      name,
+      picture,
+      counter,
+      buttons,
+      featured,
+      onClick,
+    } = this.props
     return (
-      <Block to={to}>
+      <Block to={to} onClick={onClick}>
         {featured && (
           <ButtonFeatured
             onClick={featured.onClick}

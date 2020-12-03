@@ -111,7 +111,16 @@ export const challengeStatuses = {
 }
 
 export default function CompetitionCard(props) {
-  const { to, name, picture, counter, button, isCampaign, status } = props
+  const {
+    to,
+    name,
+    picture,
+    counter,
+    button,
+    isCampaign,
+    status,
+    onClick,
+  } = props
 
   // styles
   const bigLeapStyles = {
@@ -144,7 +153,7 @@ export default function CompetitionCard(props) {
   const laybelDesc = isCampaign ? 'campaign' : 'competition'
 
   return (
-    <Block to={to}>
+    <Block to={to} onClick={onClick}>
       <PictureWrap>
         <CardImage src={picture} alt="logo" />
       </PictureWrap>
@@ -201,6 +210,7 @@ CompetitionCard.propTypes = {
   counter: PropTypes.string,
   picture: PropTypes.string,
   button: PropTypes.func,
+  onClick: PropTypes.func,
   isCampaign: PropTypes.bool,
   dateTo: PropTypes.date,
   status: PropTypes.string,

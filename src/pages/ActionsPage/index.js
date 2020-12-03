@@ -53,6 +53,7 @@ import useActions from './useActions'
 import TabsSelect from '../../components/TabsSelect'
 
 import { ACTIONS_TABS } from '../CompetitionDashboard/constants'
+import { EVENT_TYPES, logEvent } from '../../amplitude'
 
 const { Option } = Select
 
@@ -100,6 +101,10 @@ function ActionsPage(props) {
   const [isBehaviourFilterOpen, setIsBehaviourFilterOpen] = useState(false)
 
   const $search = React.createRef()
+
+  useEffect(() => {
+    logEvent(EVENT_TYPES.ACTIONS_VISITED)
+  }, [])
 
   useEffect(() => {
     animateScroll.scrollToTop()
@@ -167,7 +172,7 @@ function ActionsPage(props) {
 
   const handleOpenActionCard = ({ slug }) => () => {
     const { match, history } = props
-
+    logEvent(EVENT_TYPES.ACTION_SEARCHED)
     history.push(`/actions/${match.params.subset}/${slug}`)
   }
 
@@ -187,7 +192,7 @@ function ActionsPage(props) {
 
   const handleOnAfterFiltersChange = debounce(({ data, activeFilterCount }) => {
     const { match, history } = props
-
+    logEvent(EVENT_TYPES.ACTION_FILTERED)
     if (Object.keys(data).length === 0) {
       history.push(`/actions/${match.params.subset}`)
     } else {
@@ -723,6 +728,9 @@ function ActionsPage(props) {
                         <Col key={action.slug} xl={8} lg={12} md={12} xs={24}>
                           <ScrollAnimation>
                             <ActionCard
+                              onClick={() => {
+                                logEvent(EVENT_TYPES.ACTION_OPENED)
+                              }}
                               id={action._id}
                               to={
                                 action.status === ACTION_STATES.PROPOSED

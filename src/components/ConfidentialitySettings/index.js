@@ -10,6 +10,8 @@ import { Creators } from 'redux/userStore'
 import ConfidentialityForm from 'components/ConfidentialityForm'
 import * as apiUser from 'api/user'
 
+import { EVENT_TYPES, logEvent } from '../../amplitude'
+
 const Title = styled.h4`
   font-weight: bold;
   font-size: 16px;
@@ -26,7 +28,7 @@ class ConfidentialitySettings extends React.PureComponent {
 
   handleSubmit = infoAccess => {
     const { updateUser, user } = this.props
-
+    logEvent(EVENT_TYPES.PROFILE_CHANGED_CONFIDENTIALITY)
     updateUser({ ...user, infoAccess })
     return apiUser.updateMe({ infoAccess }).catch(error => {
       updateUser(user)
