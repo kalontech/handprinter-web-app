@@ -23,6 +23,8 @@ import MultipleInput from 'components/MultipleInput'
 import ResendButton from 'components/ResendButton'
 import * as apiUser from 'api/user'
 
+import { EVENT_TYPES, logEvent } from '../../amplitude'
+
 export const INVITATION_STATUSES = {
   ACCEPTED: 'ACCEPTED',
   PENDING: 'PENDING',
@@ -456,6 +458,7 @@ class IncreaseHandprintPage extends Component {
   componentDidMount() {
     animateScroll.scrollToTop()
     this.getInvitationsList()
+    logEvent(EVENT_TYPES.STATIC_INCREASE_HP_VISITED)
   }
 
   componentDidUpdate = async (prevProps, prevState) => {
@@ -571,7 +574,7 @@ class IncreaseHandprintPage extends Component {
           const { ignored = [] } =
             (await apiUser.shareInvitationCode(data)) || {}
           this.getInvitationsList()
-
+          logEvent(EVENT_TYPES.STATIC_INVITATION_SENT)
           this.setState({
             isSharingInvitationCode: false,
             showInvitingMessageInput: false,

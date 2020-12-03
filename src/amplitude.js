@@ -22,6 +22,7 @@ export const EVENT_TYPES = {
   GROUP_OPENED: 'Opened Group',
   GROUPS_TAB_OPENED: 'Opened Group tab',
   GROUPS_INVITED: 'Invited to the group',
+  GROUPS_DELETED: 'Deleted his group',
   ORGANIZATION_CREATED: 'Organization creation',
   ORGANIZATION_VISITED: 'Organization dashboard is visited',
   ORGANIZATION_INFO_ADDED: 'Organization information is added',
@@ -34,6 +35,15 @@ export const EVENT_TYPES = {
   ACTIVITY_ADDED_POST_TO_COMPETITION: 'Added a post to Competition activity',
   ACTIVITY_ADDED_REACTION: 'Added reaction',
   ACTIVITY_ADDED_COMMENT: 'Added Comment',
+  PROFILE_VISITED: 'Profile page is visited (personal)',
+  PROFILE_CHANGED_GENERAL: 'Changed general information',
+  PROFILE_CHANGED_CONFIDENTIALITY: 'Changed confidentiality',
+  PROFILE_CHECKED_GROUPS: 'Checked groups',
+  PROFILE_CUSTOMIZED_FOOTPRINT: 'Customized foortprint',
+  STATIC_DONATION_VISITED: 'Donation page is visited',
+  STATIC_DONATION_SENT: 'Donation sent',
+  STATIC_INCREASE_HP_VISITED: 'Increase handprint page is visited',
+  STATIC_INVITATION_SENT: 'Invitation is sent',
 }
 
 const init = () => {

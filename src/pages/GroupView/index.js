@@ -653,6 +653,7 @@ class GroupViewPage extends PureComponent {
       onOk: async () =>
         fetchDeleteGroup(match.params.id)
           .then(() => {
+            logEvent(EVENT_TYPES.GROUPS_DELETED)
             history.replace(`/groups/${GROUPS_SUBSETS.DISCOVER}`)
           })
           .catch(() => {

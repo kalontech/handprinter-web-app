@@ -29,6 +29,8 @@ import SendGroupInvitesForm from 'components/SendGroupInvitesForm'
 import { fetchCreateGroup, fetchInviteInGroup } from 'api/groups'
 import { getUserInitialAvatar } from 'api'
 
+import { EVENT_TYPES, logEvent } from '../../amplitude'
+
 const GroupInfo = styled.div`
   background-color: ${colors.white};
   display: flex;
@@ -132,6 +134,7 @@ class GroupsListHeader extends React.PureComponent {
     body.append('private', values.private)
 
     const response = await fetchCreateGroup(body)
+    logEvent(EVENT_TYPES.GROUP_CREATED)
 
     this.setState({ modalType: MODAL_TYPES.sendInvites }, () => {
       const { groups, match } = this.props

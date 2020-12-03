@@ -28,6 +28,8 @@ import { donate, getSponsors } from 'api/payment'
 import { webAppBaseUrl } from 'api'
 import env from 'config/env'
 
+import { EVENT_TYPES, logEvent } from '../../amplitude'
+
 const Hero = styled.section`
   height: 360px;
   display: flex;
@@ -458,6 +460,7 @@ class DonationPage extends Component {
 
   componentDidMount() {
     this.fetchSponsors()
+    logEvent(EVENT_TYPES.STATIC_DONATION_VISITED)
   }
 
   async fetchSponsors() {
@@ -503,6 +506,7 @@ class DonationPage extends Component {
         await stripe.redirectToCheckout({
           sessionId: res.session.id,
         })
+        logEvent(EVENT_TYPES.STATIC_DONATION_SENT)
       }
     } catch (error) {
       console.error(error)
