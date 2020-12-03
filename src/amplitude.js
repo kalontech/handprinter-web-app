@@ -56,9 +56,12 @@ export const logEvent = (type, data) => {
   }
 }
 
-export const setUserId = email => {
+export const setUserData = (email, brand) => {
+  let brandName = brand
+  if (brand === null || brand === undefined) brandName = 'Generic'
   if (email) {
     amplitude.getInstance().setUserId(email)
+    amplitude.getInstance().setUserProperties({ brand: brandName, email })
   }
 }
 
