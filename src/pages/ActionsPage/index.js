@@ -9,6 +9,7 @@ import { compose } from 'redux'
 import { animateScroll } from 'react-scroll/modules'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import _ from 'lodash'
+import 'url-search-params-polyfill'
 
 import FlagIconComponent from 'assets/icons/FlagIcon'
 import DiscoverIconComponent from 'assets/icons/DiscoverIcon'
