@@ -53,7 +53,7 @@ import useActions from './useActions'
 import TabsSelect from '../../components/TabsSelect'
 
 import { ACTIONS_TABS } from '../CompetitionDashboard/constants'
-import { EVENT_TYPES, logEvent } from '../../amplitude'
+import { EVENT_TYPES, logEvent, setUserData } from '../../amplitude'
 
 const { Option } = Select
 
@@ -105,6 +105,12 @@ function ActionsPage(props) {
   useEffect(() => {
     logEvent(EVENT_TYPES.ACTIONS_VISITED)
   }, [])
+
+  useEffect(() => {
+    if (props.user) {
+      setUserData(props.user.email, props.user.belongsToBrand)
+    }
+  }, [props.user])
 
   useEffect(() => {
     animateScroll.scrollToTop()
