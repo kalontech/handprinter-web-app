@@ -667,7 +667,7 @@ ActionModalPage.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  user: state.user.data,
+  user: state.user ? state.user.data : null,
 })
 
 export default compose(

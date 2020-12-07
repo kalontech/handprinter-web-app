@@ -111,6 +111,7 @@
     "terser-webpack-plugin": "1.1.0",
     "theme-ui": "^0.3.1",
     "url-loader": "1.1.1",
+    "url-search-params-polyfill": "^8.1.0",
     "webpack": "4.19.1",
     "webpack-dev-server": "3.1.9",
     "webpack-manifest-plugin": "2.0.4",
