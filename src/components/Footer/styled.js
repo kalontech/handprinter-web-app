@@ -193,3 +193,16 @@ export const DecriptionLink = styled.a`
     color: ${hexToRgba(colors.white, 0.43)};
   }
 `
+
+export const SocialContainer = styled.div`
+  margin-left: 12px;
+  margin-top: 40px;
+`
+
+export const SocialImage = styled.img`
+  height: 34px;
+  width: 34px;
+  margin-right: 30px;
+`
+
+export const SocialLink = styled.a``

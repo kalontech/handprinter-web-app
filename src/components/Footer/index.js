@@ -7,6 +7,8 @@ import { CONTACT_DATA } from 'utils/constants'
 
 import FooterUnitsSelector from '../FooterUnitsSelector'
 import footerLogo from './assets/footer_image.png'
+import linkedln from './assets/linkedln.png'
+import facebook from './assets/facebook.png'
 
 import {
   FooterWrap,
@@ -21,6 +23,9 @@ import {
   Langs,
   CopyrightBlock,
   Copyright,
+  SocialImage,
+  SocialContainer,
+  SocialLink,
 } from './styled'
 
 const Footer = ({ brandedConfig }) => (
@@ -131,6 +136,20 @@ const Footer = ({ brandedConfig }) => (
                     <Col xs={{ span: 24 }}>
                       <FooterUnitsSelector />
                     </Col>
+                    <SocialContainer>
+                      <SocialLink
+                        href="https://www.facebook.com/Handprinter-109717977515590"
+                        target="_blank"
+                      >
+                        <SocialImage src={facebook} alt="" />
+                      </SocialLink>
+                      <SocialLink
+                        href="https://www.linkedin.com/company/handprinter"
+                        target="_blank"
+                      >
+                        <SocialImage src={linkedln} alt="" />
+                      </SocialLink>
+                    </SocialContainer>
                   </Row>
                 </div>
               </LangsWrap>
