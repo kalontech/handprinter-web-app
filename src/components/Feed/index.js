@@ -24,9 +24,7 @@ import useDefaultFeeds from './useDefaultFeeds'
 import { EVENT_TYPES, logEvent } from '../../amplitude'
 
 function logFeedPostEvents(data) {
-  const feedChannel = _.values(
-    _.get(data, 'actor.client.subscriptions', [{ userId: '' }]),
-  )[0].userId
+  const feedChannel = _.get(data, 'actor.id', '')
   if (feedChannel.includes('group')) {
     logEvent(EVENT_TYPES.ACTIVITY_ADDED_POST_TO_GROUP)
   } else if (feedChannel.includes('user')) {

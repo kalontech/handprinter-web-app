@@ -780,6 +780,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .raf-panel-footer {
+
     div {
       display: flex;
       flex-direction: column;
@@ -789,6 +790,19 @@ export const GlobalStyle = createGlobalStyle`
         display: flex;
         flex-direction: row;
         align-items: baseline;
+
+        .emoji-mart-scroll {
+          flex-direction: column;
+        }
+
+        .emoji-mart-bar {
+          display: block;
+
+          .emoji-mart-preview-data {
+            display: flex;
+            flex-direction: column;
+          }
+        }
       }
     }
 
@@ -804,6 +818,7 @@ export const GlobalStyle = createGlobalStyle`
       }
     `}
   }
+ 
  
   .ant-select__override-for__register-page {
     .ant-select-selection {
