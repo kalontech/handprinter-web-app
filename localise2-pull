@@ -1,0 +1,7 @@
+lokalise2 \
+    --token 18de88bf42c13a00e94246cfcbb5e9e493c39f03 \
+    --project-id 564414715c3f1961428845.12258042 \
+    file download \
+    --format json \
+    --directory-prefix "" \
+    --unzip-to ./src/locales
