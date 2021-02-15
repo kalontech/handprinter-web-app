@@ -3,8 +3,11 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import * as apiOrganization from 'api/organization'
+import _ from 'lodash'
 
 import Header from './Header'
+import { Body, Column, MainColumn } from './styled'
+import GetStarted from './GetStarted'
 
 function DashboardBrandPage(props) {
   const { user } = props
@@ -26,9 +29,15 @@ function DashboardBrandPage(props) {
     fetch()
   }, [user.belongsToBrand])
 
+  const isReturnUser = _.get(user, 'userImpact.actions.length') > 0
   return (
     <>
       <Header user={user} organization={organization} />
+      <Body>
+        <Column />
+        <MainColumn>{!isReturnUser && <GetStarted />}</MainColumn>
+        <Column />
+      </Body>
     </>
   )
 }

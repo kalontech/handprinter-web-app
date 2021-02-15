@@ -809,5 +809,11 @@
     "app.timeUnits.switch.text": "Time Units On",
     "externalHandprint": "External Handprint",
     "footprintReduction": "My Footprint reduction",
-    "totalPositiveDays": "Total net Positive Days"
+    "totalPositiveDays": "Total net Positive Days",
+    "getStarted": "Get Started",
+    "savePlanet1": "With enough Handprints we can ",
+    "savePlanet2": "heal ",
+    "savePlanet3": "the planet.",
+    "fromFpToHp": "From footprinters to handprinters",
+    "beforeGetStarted": "Before you get started, it’s often helpful to clarify what a Handprint is and to understand how we measure them."
 }
