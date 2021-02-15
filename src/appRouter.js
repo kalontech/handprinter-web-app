@@ -20,6 +20,7 @@ import CompetitionDashboardPage from './pages/CompetitionDashboard'
 import GroupViewPage from './pages/GroupView'
 import CheckYourEmailPage from './pages/CheckYourEmailPage'
 import DashboardPage from './pages/DashboardPage'
+import DashboardBrandPage from './pages/DashboardBrandPage'
 import FaqPage from './pages/FaqPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
@@ -45,6 +46,7 @@ import IncreaseOrganizationHandprintPage from './pages/IncreaseOrganizationHandp
 const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = env
 
 export const history = createBrowserHistory()
+export const BRANDS_WITH_OWN_DASHBOARD = ['Humanscale']
 
 if (REACT_APP_ENVIRONMENT === 'production') {
   GoogleAnalytics.initialize(REACT_APP_GA_TRACKING_CODE)
@@ -102,7 +104,12 @@ const AppRouter = () => {
           />
           <Route
             path="/account/dashboard/:subset?"
-            component={DashboardPage}
+            component={
+              brandedConfig &&
+              BRANDS_WITH_OWN_DASHBOARD.includes(brandedConfig.brandName)
+                ? DashboardBrandPage
+                : DashboardPage
+            }
             requireAuthentication
             withoutCTA
           />
