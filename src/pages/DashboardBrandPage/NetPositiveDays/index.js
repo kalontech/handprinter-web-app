@@ -14,33 +14,9 @@ import {
   ImpactDaysText,
   HowCalculated,
 } from './styled'
-import { IMPACT_CATEGORIES } from '../../../utils/constants'
-
-import icons from '../../../components/ActionCardLabel/icons'
+import { IMPACTS } from '../../../utils/constants'
 
 const YEAR = 365
-const NET_POSITIVE_DAYS = [
-  {
-    name: IMPACT_CATEGORIES.CLIMATE,
-    icon: icons['positive']['climate'],
-  },
-  {
-    name: IMPACT_CATEGORIES.WATER,
-    icon: icons['positive']['water'],
-  },
-  {
-    name: IMPACT_CATEGORIES.ECOSYSTEM,
-    icon: icons['positive']['ecosystem'],
-  },
-  {
-    name: IMPACT_CATEGORIES.WASTE,
-    icon: icons['positive']['waste'],
-  },
-  {
-    name: IMPACT_CATEGORIES.HEALTH,
-    icon: icons['positive']['health'],
-  },
-]
 
 function calculateNetPositiveDays(ratio, categories) {
   let summNetDays = 0
@@ -64,7 +40,7 @@ function calculateNetPositiveDays(ratio, categories) {
 export default function NetPositiveDays(props) {
   const { user, ratio } = props
   const createdAt = user.createdAt
-  const netPositiveDays = calculateNetPositiveDays(ratio, NET_POSITIVE_DAYS)
+  const netPositiveDays = calculateNetPositiveDays(ratio, IMPACTS)
 
   return (
     <Container whiteBG>
@@ -82,7 +58,7 @@ export default function NetPositiveDays(props) {
       </Text>
 
       <Impacts>
-        {NET_POSITIVE_DAYS.map((impact, index) => (
+        {IMPACTS.map((impact, index) => (
           <Row key={impact.name} darkBG={index % 2 === 0}>
             <StyledIcon component={() => impact.icon} />
             <ImpactText>

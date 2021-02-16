@@ -1,8 +1,7 @@
 import styled from 'styled-components'
-import colors from 'config/colors'
 
 export const Body = styled.div`
-  background-color: ${colors.lightGray};
+  background-color: #f5f5f5;
   display: flex;
   flex-direction: row;
   flex: 1;

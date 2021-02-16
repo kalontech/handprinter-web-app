@@ -820,5 +820,6 @@
     "netPositiveStatus" : "Net Positive Status",
     "netPositiveDaysSince" : "{days} Net Positive Days since {date}",
     "netPositiveDaysCount" : "{days} Days",
-    "netPositiveDaysHowCalculated" : "How is this calculated?"
+    "netPositiveDaysHowCalculated" : "How is this calculated?",
+    "viewCompleteCalendar" : "View your complete calendar"
 }
