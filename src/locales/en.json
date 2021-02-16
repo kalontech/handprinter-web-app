@@ -816,5 +816,9 @@
     "savePlanet3": "the planet.",
     "fromFpToHp": "From footprinters to handprinters",
     "beforeGetStarted": "Before you get started, it’s often helpful to clarify what a Handprint is and to understand how we measure them.",
-    "netPositiveStatusPlaceholder" : "Once you’ve completed your first challenge, you’ll start to see your Net Positive status here."
+    "netPositiveStatusPlaceholder" : "Once you’ve completed your first challenge, you’ll start to see your Net Positive status here.",
+    "netPositiveStatus" : "Net Positive Status",
+    "netPositiveDaysSince" : "{days} Net Positive Days since {date}",
+    "netPositiveDaysCount" : "{days} Days",
+    "netPositiveDaysHowCalculated" : "How is this calculated?"
 }

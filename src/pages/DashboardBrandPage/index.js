@@ -10,6 +10,7 @@ import Header from './Header'
 import { Body, Column, MainColumn } from './styled'
 import GetStarted from './GetStarted'
 import UserName from './UserName'
+import NetPositiveDays from './NetPositiveDays'
 
 function DashboardBrandPage(props) {
   const { user } = props
@@ -63,6 +64,7 @@ function DashboardBrandPage(props) {
             actionsTakenCount={actionsTakenCount}
             personalStats={dashboardData?.stats?.personal}
           />
+          <NetPositiveDays user={user} ratio={dashboardData?.ratio} />
         </Column>
         <MainColumn>{!isReturnUser && <GetStarted />}</MainColumn>
         <Column />
