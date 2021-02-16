@@ -10,6 +10,7 @@ export const Body = styled.div`
 
 export const Column = styled.div`
   width: 400px;
+  padding: 24px;
 `
 
 export const MainColumn = styled.div`

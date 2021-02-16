@@ -3,16 +3,19 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import * as apiOrganization from 'api/organization'
+import * as apiUser from 'api/user'
 import _ from 'lodash'
 
 import Header from './Header'
 import { Body, Column, MainColumn } from './styled'
 import GetStarted from './GetStarted'
+import UserName from './UserName'
 
 function DashboardBrandPage(props) {
   const { user } = props
 
   const [organization, setOrganization] = useState()
+  const [dashboardData, setDashboardData] = useState()
 
   useEffect(() => {
     async function fetch() {
@@ -29,12 +32,38 @@ function DashboardBrandPage(props) {
     fetch()
   }, [user.belongsToBrand])
 
-  const isReturnUser = _.get(user, 'userImpact.actions.length') > 0
+  useEffect(() => {
+    async function fetch() {
+      try {
+        const res = await apiUser.getDashboardData({
+          userId: user._id,
+          subset: 'user',
+        })
+        if (res) {
+          setDashboardData(res)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetch()
+  }, [user._id])
+
+  const actionsTakenCount = _.get(user, 'userImpact.actions.length')
+  const isReturnUser = actionsTakenCount > 0
   return (
     <>
       <Header user={user} organization={organization} />
       <Body>
-        <Column />
+        <Column>
+          <UserName
+            user={user}
+            isReturnUser={isReturnUser}
+            actionsTakenCount={actionsTakenCount}
+            personalStats={dashboardData?.stats?.personal}
+          />
+        </Column>
         <MainColumn>{!isReturnUser && <GetStarted />}</MainColumn>
         <Column />
       </Body>

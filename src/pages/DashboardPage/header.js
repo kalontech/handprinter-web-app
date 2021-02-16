@@ -58,7 +58,7 @@ export const DashboardHeaderUserPicture = styled.img`
   object-fit: cover;
 `
 
-const DashboardHeaderUserInfoValue = styled.div`
+export const DashboardHeaderUserInfoValue = styled.div`
   margin-bottom: 3px;
   color: ${colors.dark};
   font-size: 28px;
@@ -112,7 +112,7 @@ export const DashboardHeaderUserSince = styled.div`
   text-align: center;
 `
 
-const HeaderUserInfoRowCol = styled(Col)`
+export const HeaderUserInfoRowCol = styled(Col)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
