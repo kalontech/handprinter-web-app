@@ -30,7 +30,7 @@ export const Banner = styled.div`
   background-position: center center;
   resize-mode: contain;
   height: 100%;
-  width: 400px;
+  width: 350px;
   padding-right: 100px;
   justify-content: flex-end;
   display: flex;

@@ -821,5 +821,15 @@
     "netPositiveDaysSince" : "{days} Net Positive Days since {date}",
     "netPositiveDaysCount" : "{days} Days",
     "netPositiveDaysHowCalculated" : "How is this calculated?",
-    "viewCompleteCalendar" : "View your complete calendar"
+    "viewCompleteCalendar" : "View your complete calendar",
+    "yourFirstHandprint1": "Your first ",
+    "yourFirstHandprint2": "Handprint ",
+    "yourFirstHandprint3": "will be to {actionName}",
+    "posImactsCreatedAction": "Positive impacts created by this action",
+    "hsLatestCampaign": "Humanscale’s latest campaign.\nLet’s all make this happen!",
+    "campaignRuns": "Campaign runs from {dates}",
+    "campaignActions": "Campaign actions",
+    "takeOneAction": "Take one of these Actions to get started",
+    "weCanDoTwoOrAll": "We can do one or two or all of them if we have the time and energy. What’s there to stop us?",
+    "seeAllActions": "See all Actions"
 }

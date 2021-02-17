@@ -12,6 +12,8 @@ import GetStarted from './GetStarted'
 import UserName from './UserName'
 import NetPositiveDays from './NetPositiveDays'
 import Calendar from './Calendar'
+import TakeAction from './TakeAction'
+import TakeCampaignActions from './TakeCampaignActions'
 
 function DashboardBrandPage(props) {
   const { user } = props
@@ -71,7 +73,11 @@ function DashboardBrandPage(props) {
             calendar={dashboardData?.calendar}
           />
         </Column>
-        <MainColumn>{!isReturnUser && <GetStarted />}</MainColumn>
+        <MainColumn>
+          {!isReturnUser && <GetStarted />}
+          {!isReturnUser && <TakeAction />}
+          {isReturnUser && <TakeCampaignActions />}
+        </MainColumn>
         <Column />
       </Body>
     </>

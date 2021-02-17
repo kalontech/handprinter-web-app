@@ -8,7 +8,7 @@ export const Body = styled.div`
 `
 
 export const Column = styled.div`
-  width: 400px;
+  width: 350px;
   padding: 24px;
 `
 
