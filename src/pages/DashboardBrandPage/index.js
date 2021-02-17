@@ -14,6 +14,7 @@ import NetPositiveDays from './NetPositiveDays'
 import Calendar from './Calendar'
 import TakeAction from './TakeAction'
 import TakeCampaignActions from './TakeCampaignActions'
+import PositiveImpacts from './PositiveImpacts'
 
 function DashboardBrandPage(props) {
   const { user } = props
@@ -75,6 +76,7 @@ function DashboardBrandPage(props) {
         </Column>
         <MainColumn>
           {!isReturnUser && <GetStarted />}
+          {isReturnUser && <PositiveImpacts user={user} />}
           {!isReturnUser && <TakeAction />}
           {isReturnUser && <TakeCampaignActions />}
         </MainColumn>

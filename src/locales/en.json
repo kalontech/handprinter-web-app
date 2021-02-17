@@ -831,5 +831,12 @@
     "campaignActions": "Campaign actions",
     "takeOneAction": "Take one of these Actions to get started",
     "weCanDoTwoOrAll": "We can do one or two or all of them if we have the time and energy. What’s there to stop us?",
-    "seeAllActions": "See all Actions"
+    "seeAllActions": "See all Actions",
+    "positiveImpacts": "Positive Impacts",
+    "youTookFirstAction1": "Well done!\nYou’ve taken the first step towards a ",
+    "youTookFewAction1": "Well done!\nYou’re making a great progress towards a ",
+    "youTookFirstAction2": "Net Positive ",
+    "youTookFirstAction3": "future.",
+    "yourActionCreatingImpact": "Your actions are creating a positive impact.",
+    "thisIsEquivelent": "This is equivelent to:"
 }
