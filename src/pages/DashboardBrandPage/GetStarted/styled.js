@@ -56,4 +56,6 @@ export const LinkText = styled(Link)`
 export const Player = styled.div`
   height: 310px;
   margin: 0 40px;
+  border-radius: 12px;
+  overflow: hidden;
 `

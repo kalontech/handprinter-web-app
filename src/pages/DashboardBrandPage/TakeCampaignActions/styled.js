@@ -42,6 +42,8 @@ export const ImageStyled = styled.img`
   height: 310px;
   margin: 5px 40px;
   object-fit: cover;
+  border-radius: 12px;
+  overflow: hidden;
 `
 
 export const Dates = styled.span`
