@@ -838,5 +838,13 @@
     "youTookFirstAction2": "Net Positive ",
     "youTookFirstAction3": "future.",
     "yourActionCreatingImpact": "Your actions are creating a positive impact.",
-    "thisIsEquivelent": "This is equivelent to:"
+    "thisIsEquivelent": "This is equivelent to:",
+    "myCompany": "My Company",
+    "actionsCompleted": "Actions completed",
+    "brandGoals": "{brand} Goals",
+    "combinedEfforts": "Our combined efforts help us  achieve and maintain {goal} Certification for {brand} products.",
+    "productsAreNetPositive": "{curr} of {all} products are now net positive for {year}!",
+    "progressNextProduct": "Progress on Next Product",
+    "climateImpactNetPos": "Climate impact is now Net Positive for {milestoneName}!",
+    "seeAllProducts": "See all products"
 }
