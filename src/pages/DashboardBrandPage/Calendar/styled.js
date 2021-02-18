@@ -6,7 +6,7 @@ export const Container = styled.div`
   background-color: ${colors.white};
   border-radius: 12px;
   padding: 15px 11px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;

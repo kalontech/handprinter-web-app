@@ -7,7 +7,7 @@ export const Container = styled.div`
   background-color: ${props => (props.whiteBG ? colors.white : 'transparent')};
   border-radius: 12px;
   padding: 15px 0px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 `
 
 export const Name = styled.p`
