@@ -14,4 +14,5 @@ export const Column = styled.div`
 
 export const MainColumn = styled.div`
   flex: 1;
+  padding: 24px 0;
 `
