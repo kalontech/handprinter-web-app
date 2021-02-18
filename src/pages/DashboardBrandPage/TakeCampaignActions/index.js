@@ -21,9 +21,11 @@ import {
   SeeAllActions,
 } from './styled'
 import { EVENT_TYPES, logEvent } from '../../../amplitude'
+import CustomSkeleton from '../Skeleton'
 
 export default function TakeCampaignActions() {
   const [campaign, setCampaign] = useState()
+  const [loading, setLoading] = useState(true)
   const UIContextData = useContext(UIContextSettings)
 
   useEffect(() => {
@@ -34,10 +36,13 @@ export default function TakeCampaignActions() {
         setCampaign(latestCampaing?.campaign)
       } catch (error) {
         console.error(error)
+      } finally {
+        setLoading(false)
       }
     }
     fetch()
   }, [])
+  if (loading) return <CustomSkeleton rows={20} />
   if (!campaign) return null
   return (
     <Container>

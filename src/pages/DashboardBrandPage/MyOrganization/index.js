@@ -8,6 +8,8 @@ import chairImg from 'assets/images/chair.png'
 
 import { Col, Row } from 'antd'
 
+import CustomSkeleton from '../Skeleton'
+
 import {
   Container,
   Name,
@@ -28,6 +30,7 @@ import { MilestoneImpactProgress } from '../../OrganizationDashboardPage/milesto
 export default function MyOrganization(props) {
   const { user } = props
   const [organization, setOrganization] = useState()
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     async function fetch() {
       try {
@@ -38,10 +41,14 @@ export default function MyOrganization(props) {
         setOrganization(organizationRes)
       } catch (error) {
         console.error(error)
+      } finally {
+        setLoading(false)
       }
     }
     fetch()
   }, [user?.belongsToBrand])
+
+  if (loading) return <CustomSkeleton rows={16} />
   if (!organization) return null
   const { name, _id, userImpacts, info, goal, milestones } = organization
 

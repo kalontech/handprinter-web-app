@@ -5,6 +5,7 @@ import Link from 'react-router-dom/Link'
 import { fetchAction } from '../../../api/actions'
 import ActionCardLabelSet from '../../../components/ActionCardLabelSet'
 import { UIContextSettings } from '../../../context/uiSettingsContext'
+import CustomSkeleton from '../Skeleton'
 
 import {
   Container,
@@ -22,6 +23,7 @@ import {
 const ACTION_TO_GET_STARTED = 'use-led-bulb-instead-of-incandescent'
 export default function TakeAction() {
   const [action, setAction] = useState()
+  const [loading, setLoading] = useState(true)
   const UIContextData = useContext(UIContextSettings)
 
   useEffect(() => {
@@ -31,11 +33,14 @@ export default function TakeAction() {
         if (res && res.action) setAction(res.action)
       } catch (error) {
         console.error(error)
+      } finally {
+        setLoading(false)
       }
     }
 
     fetch()
   }, [])
+  if (loading) return <CustomSkeleton rows={11} />
   if (!action) return null
   const handleGetStarted = () => {}
   return (

@@ -16,10 +16,12 @@ import {
 } from './styled'
 import { fetchGroupsList } from '../../../api/groups'
 import { GROUPS_SUBSETS } from '../../../utils/constants'
+import CustomSkeleton from '../Skeleton'
 
 export default function MyTeam(props) {
   const { user } = props
   const [team, setTeam] = useState()
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     async function fetch() {
       try {
@@ -35,10 +37,13 @@ export default function MyTeam(props) {
         setTeam(userTeams[0])
       } catch (error) {
         console.error(error)
+      } finally {
+        setLoading(false)
       }
     }
     fetch()
   }, [])
+  if (loading) return <CustomSkeleton rows={6} />
   if (!team) return null
   const { picture, name, info } = team
   return (

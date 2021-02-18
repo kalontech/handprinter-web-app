@@ -21,10 +21,12 @@ import {
   HowCalculated,
   Chair,
 } from './styled'
+import CustomSkeleton from '../Skeleton'
 
 export default function PositiveImpacts(props) {
   const { user } = props
   const [action, setAction] = useState()
+  const [loading, setLoading] = useState(true)
   const UIContextData = useContext(UIContextSettings)
   const userActions = user?.userImpact?.actions || []
 
@@ -36,11 +38,14 @@ export default function PositiveImpacts(props) {
         if (res && res.action) setAction(res.action)
       } catch (error) {
         console.error(error)
+      } finally {
+        setLoading(false)
       }
     }
 
     fetch()
   }, [])
+  if (loading) return <CustomSkeleton rows={11} />
   if (!action) return null
   return (
     <Container>
