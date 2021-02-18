@@ -16,6 +16,7 @@ import TakeAction from './TakeAction'
 import TakeCampaignActions from './TakeCampaignActions'
 import PositiveImpacts from './PositiveImpacts'
 import MyOrganization from './MyOrganization'
+import MyTeam from './MyTeam'
 
 function DashboardBrandPage(props) {
   const { user } = props
@@ -83,6 +84,7 @@ function DashboardBrandPage(props) {
         </MainColumn>
         <Column>
           <MyOrganization user={user} />
+          <MyTeam user={user} />
         </Column>
       </Body>
     </>

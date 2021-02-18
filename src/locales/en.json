@@ -846,5 +846,7 @@
     "productsAreNetPositive": "{curr} of {all} products are now net positive for {year}!",
     "progressNextProduct": "Progress on Next Product",
     "climateImpactNetPos": "Climate impact is now Net Positive for {milestoneName}!",
-    "seeAllProducts": "See all products"
+    "seeAllProducts": "See all products",
+    "myTeam": "My Team",
+    "netPostiveDays": "Net positive days"
 }
