@@ -19,9 +19,10 @@ import MyOrganization from './MyOrganization'
 import MyTeam from './MyTeam'
 import Campaigns from './Campaigns'
 import MyNetwork from './MyNetwork'
+import TeamActivity from './TeamActivity'
 
 function DashboardBrandPage(props) {
-  const { user } = props
+  const { user, history } = props
 
   const [organization, setOrganization] = useState()
   const [dashboardData, setDashboardData] = useState()
@@ -87,6 +88,7 @@ function DashboardBrandPage(props) {
           {isReturnUser && <PositiveImpacts user={user} />}
           {!isReturnUser && <TakeAction />}
           {isReturnUser && <TakeCampaignActions />}
+          <TeamActivity user={user} history={history} />
         </MainColumn>
         <Column>
           <MyOrganization user={user} />
