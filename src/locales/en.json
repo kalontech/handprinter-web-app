@@ -848,5 +848,11 @@
     "climateImpactNetPos": "Climate impact is now Net Positive for {milestoneName}!",
     "seeAllProducts": "See all products",
     "myTeam": "My Team",
-    "netPostiveDays": "Net positive days"
+    "netPostiveDays": "Net positive days",
+    "seeAllCampaigns": "See all Campaigns",
+    "completedCampaigns": "Completed Campaigns",
+    "havingImpact": "You’ve been having an impact",
+    "actionsAndUp": "Actions add up and Teams working together make a greater impact.",
+    "peopleInYourNetwork": "People in your network are part of your Handprint and help it to grow.",
+    "seeMyNetwork": "See my Network"
 }

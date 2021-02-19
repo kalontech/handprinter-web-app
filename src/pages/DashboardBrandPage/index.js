@@ -17,6 +17,7 @@ import TakeCampaignActions from './TakeCampaignActions'
 import PositiveImpacts from './PositiveImpacts'
 import MyOrganization from './MyOrganization'
 import MyTeam from './MyTeam'
+import Campaigns from './Campaigns'
 
 function DashboardBrandPage(props) {
   const { user } = props
@@ -75,6 +76,7 @@ function DashboardBrandPage(props) {
             isReturnUser={isReturnUser}
             calendar={dashboardData?.calendar}
           />
+          <Campaigns user={user} intl={props.intl} />
         </Column>
         <MainColumn>
           {!isReturnUser && <GetStarted />}
@@ -93,7 +95,6 @@ function DashboardBrandPage(props) {
 
 const mapStateToProps = state => ({
   user: state.user.data,
-  countries: state.app.countries,
 })
 
 export default compose(
