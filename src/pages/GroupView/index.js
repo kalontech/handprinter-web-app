@@ -73,6 +73,7 @@ import {
 } from '../DashboardPage/header'
 import Feed from '../../components/Feed'
 import { EVENT_TYPES, logEvent } from '../../amplitude'
+import { processedUnitValue } from '../../components/ActionCardLabelSet'
 
 const Block = styled.section`
   display: flex;
@@ -1235,6 +1236,35 @@ class GroupViewPage extends PureComponent {
                                 <WidgetContent useWidgetMinHeight>
                                   {ratio.footprintDays && (
                                     <GoodRatioWidget
+                                      showPhysicalValues={
+                                        context.showPhysicalValues
+                                      }
+                                      footprintInUnits={{
+                                        value: processedUnitValue(
+                                          _.get(
+                                            ratio,
+                                            `footprintInUnit.${currentImpactCategory}`,
+                                            5000,
+                                          ),
+                                        ),
+
+                                        unit: intl.formatMessage({
+                                          id: `app.actions.physicalValues.one.${currentImpactCategory}`,
+                                        }),
+                                      }}
+                                      handprintInUnits={{
+                                        value: processedUnitValue(
+                                          _.get(
+                                            ratio,
+                                            `handprintInUnits.${currentImpactCategory}`,
+                                            0,
+                                          ),
+                                        ),
+
+                                        unit: intl.formatMessage({
+                                          id: `app.actions.physicalValues.one.${currentImpactCategory}`,
+                                        }),
+                                      }}
                                       footprintDays={Math.round(
                                         _.get(
                                           ratio,
