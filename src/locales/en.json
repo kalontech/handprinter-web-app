@@ -854,5 +854,7 @@
     "havingImpact": "You’ve been having an impact",
     "actionsAndUp": "Actions add up and Teams working together make a greater impact.",
     "peopleInYourNetwork": "People in your network are part of your Handprint and help it to grow.",
-    "seeMyNetwork": "See my Network"
+    "seeMyNetwork": "See my Network",
+    "totalMembers": "Total members",
+    "usersInvited": "Users invited"
 }

@@ -18,6 +18,7 @@ import PositiveImpacts from './PositiveImpacts'
 import MyOrganization from './MyOrganization'
 import MyTeam from './MyTeam'
 import Campaigns from './Campaigns'
+import MyNetwork from './MyNetwork'
 
 function DashboardBrandPage(props) {
   const { user } = props
@@ -43,10 +44,7 @@ function DashboardBrandPage(props) {
   useEffect(() => {
     async function fetch() {
       try {
-        const res = await apiUser.getDashboardData({
-          userId: user._id,
-          subset: 'user',
-        })
+        const res = await apiUser.getDashboardData()
         if (res) {
           setDashboardData(res)
         }
@@ -77,6 +75,12 @@ function DashboardBrandPage(props) {
             calendar={dashboardData?.calendar}
           />
           <Campaigns user={user} intl={props.intl} />
+          <MyNetwork
+            user={user}
+            isReturnUser={isReturnUser}
+            stats={dashboardData?.stats}
+            network={dashboardData?.network}
+          />
         </Column>
         <MainColumn>
           {!isReturnUser && <GetStarted />}

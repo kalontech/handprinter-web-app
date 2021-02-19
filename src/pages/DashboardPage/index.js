@@ -914,93 +914,11 @@ class DashboardPage extends Component {
             </Row>
 
             {!personId && stats && stats.network && (
-              <Row gutter={20} style={{ marginTop: '20px' }}>
-                <Col span={24}>
-                  <WidgetContainer>
-                    <WidgetHeader withBorder>
-                      <Row type="flex">
-                        <Col span={16} sm={24} lg={11} xs={24}>
-                          <WidgetTitle>
-                            <FormattedMessage
-                              id={
-                                organization
-                                  ? 'app.dashboardPage.organizationNetwork'
-                                  : 'app.dashboardPage.myNetwork'
-                              }
-                            />
-                            <InfoElementWrap>
-                              <InfoElement
-                                type={INFO_ELEMENT_TYPES.QUESTION}
-                                tooltipProps={{
-                                  placement: 'bottomLeft',
-                                  title: (
-                                    <Fragment>
-                                      <p>
-                                        <FormattedMessage id="app.dashboardPage.myNetwork.infoTooltip" />
-                                      </p>
-                                      <div>
-                                        <InfoElementLink
-                                          to={`/pages/faq#${
-                                            QUESTIONS_ANCHOR.WHAT_NETWORK_SHOWING
-                                          }`}
-                                        >
-                                          <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
-                                        </InfoElementLink>
-                                      </div>
-                                    </Fragment>
-                                  ),
-                                }}
-                              />
-                            </InfoElementWrap>
-                          </WidgetTitle>
-                          <WidgetDescription>
-                            <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
-                          </WidgetDescription>
-                        </Col>
-                        <MyNetworkCol span={8} sm={24} lg={13} xs={24}>
-                          <Row>
-                            <HeaderUserInfoRowCol
-                              span={8}
-                              lg={8}
-                              sm={24}
-                              xs={24}
-                            />
-                            <HeaderUserInfoRowCol
-                              span={8}
-                              lg={8}
-                              sm={24}
-                              xs={24}
-                            >
-                              <DashboardHeaderUserName>
-                                {stats.network.networkUsers}
-                              </DashboardHeaderUserName>
-                              <DashboardHeaderUserSince>
-                                <FormattedMessage id="app.dashboardPage.usersInvited" />
-                              </DashboardHeaderUserSince>
-                            </HeaderUserInfoRowCol>
-                            <HeaderUserInfoRowCol
-                              span={8}
-                              lg={8}
-                              sm={24}
-                              xs={24}
-                            >
-                              <DashboardHeaderUserName>
-                                {stats.network.actionsTaken}
-                              </DashboardHeaderUserName>
-                              <DashboardHeaderUserSince>
-                                <FormattedMessage id="app.dashboardPage.actionsTaken" />
-                              </DashboardHeaderUserSince>
-                            </HeaderUserInfoRowCol>
-                          </Row>
-                        </MyNetworkCol>
-                      </Row>
-                    </WidgetHeader>
-                    <WidgetContent>
-                      <NetworkWidget data={{ ...network, expanded: true }} />
-                    </WidgetContent>
-                  </WidgetContainer>
-                </Col>
-              </Row>
+              <NetworkWidgetComponent
+                stats={stats}
+                organization={organization}
+                network={network}
+              />
             )}
           </WidgetBlockContainer>
         )}
@@ -1028,6 +946,89 @@ class DashboardPage extends Component {
       </Fragment>
     )
   }
+}
+
+export function NetworkWidgetComponent({ organization, stats, network }) {
+  return (
+    <Row gutter={20} style={{ marginTop: '20px' }}>
+      <Col span={24}>
+        <WidgetContainer>
+          <WidgetHeader withBorder>
+            <Row type="flex">
+              <Col span={16} sm={24} lg={11} xs={24}>
+                <WidgetTitle>
+                  <FormattedMessage
+                    id={
+                      organization
+                        ? 'app.dashboardPage.organizationNetwork'
+                        : 'app.dashboardPage.myNetwork'
+                    }
+                  />
+                  <InfoElementWrap>
+                    <InfoElement
+                      type={INFO_ELEMENT_TYPES.QUESTION}
+                      tooltipProps={{
+                        placement: 'bottomLeft',
+                        title: (
+                          <Fragment>
+                            <p>
+                              <FormattedMessage id="app.dashboardPage.myNetwork.infoTooltip" />
+                            </p>
+                            <div>
+                              <InfoElementLink
+                                to={`/pages/faq#${
+                                  QUESTIONS_ANCHOR.WHAT_NETWORK_SHOWING
+                                }`}
+                              >
+                                <FormattedMessage id="app.dashboardPage.infoTooltipLinkToFAQ" />
+                              </InfoElementLink>
+                            </div>
+                          </Fragment>
+                        ),
+                      }}
+                    />
+                  </InfoElementWrap>
+                </WidgetTitle>
+                <WidgetDescription>
+                  <FormattedMessage id="app.dashboardPage.myNetworkDescription" />
+                </WidgetDescription>
+              </Col>
+              <MyNetworkCol span={8} sm={24} lg={13} xs={24}>
+                <Row>
+                  <HeaderUserInfoRowCol span={8} lg={8} sm={24} xs={24} />
+                  <HeaderUserInfoRowCol span={8} lg={8} sm={24} xs={24}>
+                    <DashboardHeaderUserName>
+                      {stats.network.networkUsers}
+                    </DashboardHeaderUserName>
+                    <DashboardHeaderUserSince>
+                      <FormattedMessage id="app.dashboardPage.usersInvited" />
+                    </DashboardHeaderUserSince>
+                  </HeaderUserInfoRowCol>
+                  <HeaderUserInfoRowCol span={8} lg={8} sm={24} xs={24}>
+                    <DashboardHeaderUserName>
+                      {stats.network.actionsTaken}
+                    </DashboardHeaderUserName>
+                    <DashboardHeaderUserSince>
+                      <FormattedMessage id="app.dashboardPage.actionsTaken" />
+                    </DashboardHeaderUserSince>
+                  </HeaderUserInfoRowCol>
+                </Row>
+              </MyNetworkCol>
+            </Row>
+          </WidgetHeader>
+          <WidgetContent>
+            <NetworkWidget data={{ ...network, expanded: true }} />
+          </WidgetContent>
+        </WidgetContainer>
+      </Col>
+    </Row>
+  )
+}
+
+NetworkWidgetComponent.propTypes = {
+  organization: Object,
+  network: Object,
+  stats: Object,
 }
 
 const mapStateToProps = state => ({
