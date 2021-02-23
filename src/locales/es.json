@@ -96,7 +96,7 @@
     "app.actions.physicalValues.one.ecosystem": "SP*YR",
     "app.actions.physicalValues.one.health": "DALYs",
     "app.actions.physicalValues.one.waste": "KG",
-    "app.actions.physicalValues.one.water": "M<sup>3<\/sup>",
+    "app.actions.physicalValues.one.water": "M3",
     "app.actions.reduceFootprint": "Tu reducido tu huella",
     "app.actions.share.progress": "¡Gracias!",
     "app.actions.share.progress.reduce.fp": "Redujiste tu huella. ¡Comparte tu progreso con el mundo!",
