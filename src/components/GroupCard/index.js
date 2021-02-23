@@ -56,12 +56,15 @@ const Info = styled.div`
 
 const Name = styled.h4`
   line-height: 1.37;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
   font-size: 19px;
   color: ${colors.dark};
   margin-bottom: 4px;
   font-family: Noto Serif, sans-serif;
-  max-height: 52px;
-  overflow-y: auto;
+  max-height: 26px;
+  overflow: hidden;
 `
 
 const CounterMembers = styled.p`
@@ -108,6 +111,7 @@ export default class GroupCard extends React.PureComponent {
       name,
       picture,
       counter,
+      actionsCounter,
       buttons,
       featured,
       onClick,
@@ -129,8 +133,10 @@ export default class GroupCard extends React.PureComponent {
 
         <Info>
           <Name>{name}</Name>
-          <CounterMembers>{counter}</CounterMembers>
 
+          <CounterMembers>
+            {counter} · {actionsCounter}
+          </CounterMembers>
           {typeof buttons === 'function' && buttons()}
         </Info>
       </Block>

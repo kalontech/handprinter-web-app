@@ -178,7 +178,7 @@ const WildWrapper = styled.p`
 
 const ChallengeLabel = styled.div`
   position: absolute;
-  z-index: 1000;
+  z-index: 2;
   min-width: 100px;
   height: 23px;
   right: 8px;

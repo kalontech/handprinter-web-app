@@ -19,8 +19,9 @@ import { GROUPS_SUBSETS } from '../../../utils/constants'
 import CustomSkeleton from '../Skeleton'
 
 export default function MyTeam(props) {
-  const { user } = props
+  const { user, teams } = props
   const [team, setTeam] = useState()
+  const [ranking, setRanking] = useState(0)
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     async function fetch() {
@@ -43,18 +44,23 @@ export default function MyTeam(props) {
     }
     fetch()
   }, [])
+  useEffect(() => {
+    if (teams && team) {
+      setRanking(teams.findIndex(t => t._id === team._id) + 1)
+    }
+  }, [teams, team])
   if (loading) return <CustomSkeleton rows={6} />
   if (!team) return null
-  const { picture, name, info } = team
+  const { picture, name, info, netPositiveDays } = team
   return (
     <Container whiteBG>
       <Name>
         <FormattedMessage id="myTeam" />
       </Name>
-      <TeamIcon src={picture} />
-      {/* TODO */}
-      <Heading>#1</Heading>
-      <Heading>{name}</Heading>
+      {picture && <TeamIcon src={picture} />}
+      <Heading>
+        #{ranking} {name}
+      </Heading>
       <Info>
         <InfoRow>
           <SuggestedIcon />
@@ -68,8 +74,7 @@ export default function MyTeam(props) {
           <InfoText>
             <FormattedMessage id="netPostiveDays" />
           </InfoText>
-          {/* TODO */}
-          <InfoCount>{85}</InfoCount>
+          <InfoCount>{netPositiveDays.climate}</InfoCount>
         </InfoRow>
       </Info>
     </Container>
@@ -78,4 +83,5 @@ export default function MyTeam(props) {
 
 MyTeam.propTypes = {
   user: Object,
+  teams: Object,
 }

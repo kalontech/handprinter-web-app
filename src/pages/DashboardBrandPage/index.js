@@ -20,12 +20,16 @@ import MyTeam from './MyTeam'
 import Campaigns from './Campaigns'
 import MyNetwork from './MyNetwork'
 import TeamActivity from './TeamActivity'
+import TeamStandings from './TeamStandings'
+import { fetchGroupsList } from '../../api/groups'
+import { GROUPS_SUBSETS } from '../../utils/constants'
 
 function DashboardBrandPage(props) {
   const { user, history } = props
 
   const [organization, setOrganization] = useState()
   const [dashboardData, setDashboardData] = useState()
+  const [teams, setTeams] = useState()
 
   useEffect(() => {
     async function fetch() {
@@ -56,6 +60,30 @@ function DashboardBrandPage(props) {
 
     fetch()
   }, [user._id])
+
+  useEffect(() => {
+    async function fetch() {
+      try {
+        const userGroups = await fetchGroupsList({
+          subset: GROUPS_SUBSETS.TEAMS,
+        })
+        const brandTeams =
+          userGroups?.groups?.docs?.filter(
+            group =>
+              group.belongsToBrand &&
+              group.belongsToBrand === user?.belongsToBrand,
+          ) || []
+        setTeams(
+          brandTeams.sort(
+            (a, b) => b.netPositiveDays.climate - a.netPositiveDays.climate,
+          ),
+        )
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetch()
+  }, [])
 
   const actionsTakenCount = _.get(user, 'userImpact.actions.length')
   const isReturnUser = actionsTakenCount > 0
@@ -92,7 +120,8 @@ function DashboardBrandPage(props) {
         </MainColumn>
         <Column>
           <MyOrganization user={user} />
-          <MyTeam user={user} />
+          <MyTeam user={user} teams={teams} />
+          <TeamStandings teams={teams} />
         </Column>
       </Body>
     </>
