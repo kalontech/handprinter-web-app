@@ -92,6 +92,7 @@ export default class GroupCard extends React.PureComponent {
     to: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     name: PropTypes.string,
     counter: PropTypes.string,
+    actionsCounter: PropTypes.string,
     picture: PropTypes.string,
     buttons: PropTypes.func,
     onClick: PropTypes.func,
