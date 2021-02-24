@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import colors from 'config/colors'
 import { Link } from 'react-router-dom'
+import { Row } from 'antd'
 
 export const Container = styled.div`
   background-color: ${props => (props.whiteBG ? colors.white : 'transparent')};
@@ -96,4 +97,10 @@ export const MilestoneTitle = styled.p`
   color: ${colors.dark};
   text-align: center;
   margin-bottom: 24px;
+`
+
+export const RowFlexCenter = styled(Row)`
+  align-items: center;
+  justify-content: center;
+  display: flex;
 `

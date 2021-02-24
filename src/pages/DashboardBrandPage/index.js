@@ -115,7 +115,7 @@ function DashboardBrandPage(props) {
           {!isReturnUser && <GetStarted />}
           {isReturnUser && <PositiveImpacts user={user} />}
           {!isReturnUser && <TakeAction />}
-          {isReturnUser && <TakeCampaignActions />}
+          {isReturnUser && <TakeCampaignActions intl={props.intl} />}
           <TeamActivity user={user} history={history} />
         </MainColumn>
         <Column>

@@ -112,6 +112,7 @@ const CardHeading = styled.h3`
   font-family: 'Noto Serif', serif;
   margin-bottom: 15px;
   text-align: left;
+  height: 80px;
 `
 
 const SuggestedInfoInitiator = styled(Link)`

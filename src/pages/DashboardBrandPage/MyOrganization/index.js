@@ -6,7 +6,7 @@ import FlagIconComponent from 'assets/icons/FlagIcon'
 import SuggestedIcon from 'assets/icons/SuggestedIcon'
 import chairImg from 'assets/images/chair.png'
 
-import { Col, Row } from 'antd'
+import { Col } from 'antd'
 
 import CustomSkeleton from '../Skeleton'
 
@@ -22,6 +22,7 @@ import {
   InfoCount,
   GoalIcon,
   MilestoneTitle,
+  RowFlexCenter,
 } from './styled'
 import { getOrganization, search } from '../../../api/organization'
 import { IMPACT_CATEGORIES } from '../../../utils/constants'
@@ -136,20 +137,22 @@ export default function MyOrganization(props) {
         <GoalIcon src={chairImg} />
       </div>
 
-      <Row style={{ flexGrow: '1' }}>
+      <RowFlexCenter>
         {Object.keys(IMPACT_CATEGORIES).map(key => {
           const category = IMPACT_CATEGORIES[key]
+          const impact = milestones[activeMilestoneIndex][category]
+          if (!impact || !category) return null
           return (
             <Col key={category} lg={8} md={12} xs={12}>
               <MilestoneImpactProgress
-                impact={milestones[activeMilestoneIndex][category]}
+                impact={impact}
                 category={category}
                 currentProgress={currentProgress[category]}
               />
             </Col>
           )
         })}
-      </Row>
+      </RowFlexCenter>
       <HowCalculated to={`/organizations/${_id}/dashboard/goal`}>
         <FormattedMessage id="seeAllProducts" />
       </HowCalculated>

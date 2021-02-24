@@ -18,7 +18,7 @@ export default function UserName(props) {
         <div style={{ display: 'flex' }}>
           <HeaderUserInfoRowCol>
             <DashboardHeaderUserInfoValue>
-              {personalStats?.actionsTaken}
+              {personalStats?.actionsTaken || 0}
             </DashboardHeaderUserInfoValue>
             <DashboardHeaderUserSince>
               <FormattedMessage id="app.dashboardPage.actionsTaken" />
@@ -26,10 +26,10 @@ export default function UserName(props) {
           </HeaderUserInfoRowCol>
           <HeaderUserInfoRowCol>
             <DashboardHeaderUserInfoValue>
-              {personalStats?.usersInvited}
+              {personalStats?.usersInvited || 0}
             </DashboardHeaderUserInfoValue>
             <DashboardHeaderUserSince>
-              <FormattedMessage id="app.dashboardPage.usersInvited" />
+              <FormattedMessage id="usersInvited" />
             </DashboardHeaderUserSince>
           </HeaderUserInfoRowCol>
         </div>

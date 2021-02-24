@@ -5,6 +5,9 @@ import { Col, Row } from 'antd'
 
 import ActionCard from 'components/ActionCard'
 
+import { ACTION_STATES } from 'utils/constants'
+import Tooltip from 'components/Tooltip'
+
 import { fetchCampaignsList, getCampaign } from '../../../api/campaigns'
 import ActionCardLabelSet from '../../../components/ActionCardLabelSet'
 import { UIContextSettings } from '../../../context/uiSettingsContext'
@@ -22,8 +25,9 @@ import {
 } from './styled'
 import { EVENT_TYPES, logEvent } from '../../../amplitude'
 import CustomSkeleton from '../Skeleton'
+import { ImpactButton } from '../../ActionsPage/styled'
 
-export default function TakeCampaignActions() {
+export default function TakeCampaignActions({ intl }) {
   const [campaign, setCampaign] = useState()
   const [loading, setLoading] = useState(true)
   const UIContextData = useContext(UIContextSettings)
@@ -85,13 +89,45 @@ export default function TakeCampaignActions() {
                   to={`/actions/discover/${action.slug}`}
                   picture={action.picture}
                   name={action.name}
-                  impacts={() => (
-                    <ActionCardLabelSet
-                      impacts={action.impacts}
-                      impactsInUnits={action.impactsInUnits}
-                      showPhysicalValues={UIContextData.showPhysicalValues}
-                    />
-                  )}
+                  impacts={() => {
+                    let tooltipTextId, buttonTextId
+                    switch (action.status) {
+                      case ACTION_STATES.MODELING:
+                        tooltipTextId = 'app.actions.card.waitModelingHint'
+                        buttonTextId = 'app.actions.card.waitModeling'
+                        break
+                      case ACTION_STATES.DENIED:
+                        tooltipTextId = 'app.actions.card.deniedHint'
+                        buttonTextId = 'app.actions.card.denied'
+                        break
+                      default:
+                        tooltipTextId = 'app.actions.card.waitAdminHint'
+                        buttonTextId = 'app.actions.card.waitAdmin'
+                    }
+                    return action.status !== ACTION_STATES.PUBLISHED ? (
+                      <Tooltip
+                        placement="top"
+                        title={intl.formatMessage({
+                          id: tooltipTextId,
+                        })}
+                      >
+                        <ImpactButton
+                          style={{ height: 35 }}
+                          isModelling={action.status === ACTION_STATES.MODELING}
+                        >
+                          {intl.formatMessage({
+                            id: buttonTextId,
+                          })}
+                        </ImpactButton>
+                      </Tooltip>
+                    ) : (
+                      <ActionCardLabelSet
+                        impacts={action.impacts}
+                        impactsInUnits={action.impactsInUnits}
+                        showPhysicalValues={UIContextData.showPhysicalValues}
+                      />
+                    )
+                  }}
                   suggestedBy={action.suggestedBy}
                   isHabit={action.isHabit}
                 />
@@ -105,4 +141,8 @@ export default function TakeCampaignActions() {
       </SeeAllActions>
     </Container>
   )
+}
+
+TakeCampaignActions.propTypes = {
+  intl: Object,
 }
