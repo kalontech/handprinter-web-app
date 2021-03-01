@@ -257,6 +257,7 @@ export const ActivityHeader = props => {
                 <UserName style={{ cursor: 'pointer' }}>
                   {' did action '}
                   <strong onClick={navigateToAction}>{actionName}</strong>
+                  <br />
                   {' and the related post below'}
                 </UserName>
               )}
