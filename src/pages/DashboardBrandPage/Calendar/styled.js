@@ -10,10 +10,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  .ant-select-arrow {
-    display: none;
-  }
 `
 
 export const CalendarStyled = styled.div`
