@@ -15,24 +15,7 @@ export default function UserName(props) {
     <Container whiteBG={true}>
       <Name>{user.fullName}</Name>
       {isReturnUser ? (
-        <div style={{ display: 'flex' }}>
-          <HeaderUserInfoRowCol>
-            <DashboardHeaderUserInfoValue>
-              {personalStats?.actionsTaken || 0}
-            </DashboardHeaderUserInfoValue>
-            <DashboardHeaderUserSince>
-              <FormattedMessage id="app.dashboardPage.actionsTaken" />
-            </DashboardHeaderUserSince>
-          </HeaderUserInfoRowCol>
-          <HeaderUserInfoRowCol>
-            <DashboardHeaderUserInfoValue>
-              {personalStats?.usersInvited || 0}
-            </DashboardHeaderUserInfoValue>
-            <DashboardHeaderUserSince>
-              <FormattedMessage id="usersInvited" />
-            </DashboardHeaderUserSince>
-          </HeaderUserInfoRowCol>
-        </div>
+        <div style={{ display: 'flex' }} />
       ) : (
         <Text>
           <FormattedMessage id="netPositiveStatusPlaceholder" />
