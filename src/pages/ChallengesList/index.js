@@ -32,12 +32,19 @@ function getChallengies(campaigns, competitions) {
       type: CHALLENGIES.CAMPAIGNS,
     })
   })
+  console.log(campaigns)
   competitions.forEach(competition => {
     challenges.push({
       ...competition,
       type: CHALLENGIES.COMPETITIONS,
     })
   })
+  challenges = challenges.filter(
+    c =>
+      c.status === challengeStatuses.available ||
+      c.status === challengeStatuses.in_progress ||
+      new Date(c.dateTo) > new Date().getTime() - 30 * 24 * 60 * 60 * 1000,
+  )
   return challenges.sort((a, b) => {
     if (a.status === challengeStatuses.available) return -1
     if (b.status === challengeStatuses.available) return 1
