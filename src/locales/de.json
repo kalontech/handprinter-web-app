@@ -625,7 +625,7 @@
     "app.NotFoundPage.Link2": "Kontaktiere uns",
     "app.NotFoundPage.Text": "oder",
     "app.NotFoundPage.Title": "Ups! Irgendwas lief schief",
-    "app.organization.active.since": "%1$s has been active since %1$s",
+    "app.organization.active.since": "{organization} has been active since {date}",
     "app.organization.addAdminUsers": "Fügen Sie Administratorbenutzer hinzu",
     "app.organization.adminUsers": "Admin-Benutzer",
     "app.organization.adminUsersDescription": "Diese Benutzer können Aktionen ausführen und Ideen zur Organisation hinzufügen. Sie können das Profil auch bearbeiten und neue Benutzer im Namen der Organisation einladen.",

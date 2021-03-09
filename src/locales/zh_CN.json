@@ -625,7 +625,7 @@
     "app.NotFoundPage.Link2": "联系我们",
     "app.NotFoundPage.Text": "要么",
     "app.NotFoundPage.Title": "哎呀！出事了",
-    "app.organization.active.since": "%1$s has been active since %1$s",
+    "app.organization.active.since": "{organization} has been active since {date}",
     "app.organization.addAdminUsers": "添加管理员用户",
     "app.organization.adminUsers": "管理员用户",
     "app.organization.adminUsersDescription": "这些用户可以执行操作并向组织添加想法。您还可以编辑配置文件并代表组织邀请新用户。",

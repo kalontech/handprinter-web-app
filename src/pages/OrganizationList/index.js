@@ -179,7 +179,6 @@ class OrganizationsPage extends React.Component {
 
   renderList() {
     const { intl, history, location, organizations } = this.props
-
     return (
       <React.Fragment>
         <Row gutter={{ md: 20 }} style={{ flexGrow: '1' }}>
@@ -188,7 +187,7 @@ class OrganizationsPage extends React.Component {
               <OrganizationCard
                 to={`/organizations/${item._id}/dashboard/goal`}
                 name={item.name}
-                picture={item.picture || getUserInitialAvatar(item.name)}
+                picture={item.logo?.src || getUserInitialAvatar(item.name)}
               />
             </Column>
           ))}
