@@ -17,11 +17,11 @@ export default function renderActivity(props) {
       <Feed
         readFrom={{
           feedGroup: 'timeline',
-          userId: `brand-${group.name.toLowerCase()}`,
+          userId: `brand-${group.name.toLowerCase().replace(/ /g, '-')}`,
         }}
         writeTo={{
           feedGroup: 'timeline',
-          userId: `brand-${group.name.toLowerCase()}`,
+          userId: `brand-${group.name.toLowerCase().replace(/ /g, '-')}`,
         }}
         history={props.history}
         participants={members && members.docs}
