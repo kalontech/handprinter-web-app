@@ -187,7 +187,10 @@ class OrganizationsPage extends React.Component {
               <OrganizationCard
                 to={`/organizations/${item._id}/dashboard/goal`}
                 name={item.name}
-                picture={item.logo?.src || getUserInitialAvatar(item.name)}
+                picture={
+                  (item.logo && item.logo.src) ||
+                  getUserInitialAvatar(item.name)
+                }
               />
             </Column>
           ))}
