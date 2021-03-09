@@ -85,7 +85,9 @@ function DashboardBrandPage(props) {
     fetch()
   }, [])
 
-  const actionsTakenCount = _.get(user, 'userImpact.actions.length')
+  const takenActions = _.get(dashboardData, 'takenActions', [])
+  const actionsTakenCount =
+    takenActions.length || _.get(user, 'userImpact.actions.length')
   const isReturnUser = actionsTakenCount > 0
   return (
     <>
@@ -114,9 +116,16 @@ function DashboardBrandPage(props) {
         </Column>
         <MainColumn>
           {!isReturnUser && <GetStarted />}
-          {isReturnUser && <PositiveImpacts user={user} />}
+          {isReturnUser && (
+            <PositiveImpacts user={user} takenActions={takenActions} />
+          )}
           {!isReturnUser && <TakeAction />}
-          {isReturnUser && <TakeCampaignActions intl={props.intl} />}
+          {isReturnUser && (
+            <TakeCampaignActions
+              takenActions={takenActions}
+              intl={props.intl}
+            />
+          )}
           <TeamActivity user={user} history={history} />
         </MainColumn>
         <Column>

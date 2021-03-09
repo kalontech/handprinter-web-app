@@ -27,7 +27,7 @@ import { EVENT_TYPES, logEvent } from '../../../amplitude'
 import CustomSkeleton from '../Skeleton'
 import { ImpactButton } from '../../ActionsPage/styled'
 
-export default function TakeCampaignActions({ intl }) {
+export default function TakeCampaignActions({ takenActions, intl }) {
   const [campaign, setCampaign] = useState()
   const [loading, setLoading] = useState(true)
   const UIContextData = useContext(UIContextSettings)
@@ -78,56 +78,23 @@ export default function TakeCampaignActions({ intl }) {
         <FormattedMessage id="weCanDoTwoOrAll" />
       </Text>
       {campaign.actions.length > 0 && (
-        <div style={{ margin: '0 40px' }}>
+        <div style={{ margin: '0 40px', marginBottom: 16 }}>
           <Row gutter={16} style={{ flexGrow: '1' }}>
-            {campaign.actions.slice(0, 4).map(action => (
-              <Col key={action.slug} lg={12} md={24} xs={24}>
+            {campaign.actions.map(action => (
+              <Col key={action.slug} lg={8} md={24} xs={24}>
                 <ActionCard
+                  takenAlready={
+                    takenActions &&
+                    takenActions.filter(tA => tA.action._id === action._id)
+                      .length > 0
+                  }
                   onClick={() =>
                     logEvent(EVENT_TYPES.CHALLENGES_PARTICIPATE_CAMPAIGN)
                   }
+                  compact={true}
                   to={`/actions/discover/${action.slug}`}
                   picture={action.picture}
                   name={action.name}
-                  impacts={() => {
-                    let tooltipTextId, buttonTextId
-                    switch (action.status) {
-                      case ACTION_STATES.MODELING:
-                        tooltipTextId = 'app.actions.card.waitModelingHint'
-                        buttonTextId = 'app.actions.card.waitModeling'
-                        break
-                      case ACTION_STATES.DENIED:
-                        tooltipTextId = 'app.actions.card.deniedHint'
-                        buttonTextId = 'app.actions.card.denied'
-                        break
-                      default:
-                        tooltipTextId = 'app.actions.card.waitAdminHint'
-                        buttonTextId = 'app.actions.card.waitAdmin'
-                    }
-                    return action.status !== ACTION_STATES.PUBLISHED ? (
-                      <Tooltip
-                        placement="top"
-                        title={intl.formatMessage({
-                          id: tooltipTextId,
-                        })}
-                      >
-                        <ImpactButton
-                          style={{ height: 35 }}
-                          isModelling={action.status === ACTION_STATES.MODELING}
-                        >
-                          {intl.formatMessage({
-                            id: buttonTextId,
-                          })}
-                        </ImpactButton>
-                      </Tooltip>
-                    ) : (
-                      <ActionCardLabelSet
-                        impacts={action.impacts}
-                        impactsInUnits={action.impactsInUnits}
-                        showPhysicalValues={UIContextData.showPhysicalValues}
-                      />
-                    )
-                  }}
                   suggestedBy={action.suggestedBy}
                   isHabit={action.isHabit}
                 />
@@ -136,13 +103,11 @@ export default function TakeCampaignActions({ intl }) {
           </Row>
         </div>
       )}
-      <SeeAllActions to={'/actions/discover'}>
-        <FormattedMessage id="seeAllActions" />
-      </SeeAllActions>
     </Container>
   )
 }
 
 TakeCampaignActions.propTypes = {
+  takenActions: Object,
   intl: Object,
 }

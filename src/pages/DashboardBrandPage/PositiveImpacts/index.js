@@ -24,16 +24,16 @@ import {
 import CustomSkeleton from '../Skeleton'
 
 export default function PositiveImpacts(props) {
-  const { user } = props
+  const { user, takenActions } = props
   const [action, setAction] = useState()
   const [loading, setLoading] = useState(true)
   const UIContextData = useContext(UIContextSettings)
   const userActions = user?.userImpact?.actions || []
-
+  const tA = takenActions.length === 0 ? userActions : takenActions
   useEffect(() => {
     async function fetch() {
       try {
-        const latestTakenAction = userActions[userActions.length - 1]?.action
+        const latestTakenAction = tA[tA.length - 1]?.action
         const res = await fetchAction({ slug: latestTakenAction?.slug })
         if (res && res.action) setAction(res.action)
       } catch (error) {
@@ -44,7 +44,7 @@ export default function PositiveImpacts(props) {
     }
 
     fetch()
-  }, [])
+  }, [tA])
   if (loading) return <CustomSkeleton rows={11} />
   if (!action) return null
   return (
@@ -98,5 +98,6 @@ export default function PositiveImpacts(props) {
 }
 
 PositiveImpacts.propTypes = {
+  takenActions: Object,
   user: Object,
 }
