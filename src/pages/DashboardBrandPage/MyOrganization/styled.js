@@ -13,11 +13,11 @@ export const Container = styled.div`
 `
 
 export const Info = styled.div`
-  margin: 24px 0;
+  margin-bottom: 8px;
 `
 
 export const InfoRow = styled.div`
-  width: 80%;
+  padding-right: 12px;
   justify-content: space-between;
   align-items: center;
   display: flex;
@@ -74,8 +74,7 @@ export const HowCalculated = styled(Link)`
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
-  text-decoration-line: underline;
-  color: ${colors.dark};
+  color: #8bc428;
   margin-top: 10px;
 `
 
@@ -85,7 +84,7 @@ export const GoalIcon = styled.img`
   border-radius: 40px;
   object-fit: cover;
   align-self: center;
-  margin: 24px 0;
+  margin-bottom: 16px;
 `
 
 export const MilestoneTitle = styled.p`

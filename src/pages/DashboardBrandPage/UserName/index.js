@@ -12,7 +12,7 @@ export default function UserName(props) {
   const { user, isReturnUser, personalStats } = props
   if (!user) return null
   return (
-    <Container whiteBG={isReturnUser}>
+    <Container whiteBG={true}>
       <Name>{user.fullName}</Name>
       {isReturnUser ? (
         <div style={{ display: 'flex' }}>

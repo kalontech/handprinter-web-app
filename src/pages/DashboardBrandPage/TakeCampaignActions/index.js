@@ -56,7 +56,7 @@ export default function TakeCampaignActions({ intl }) {
       <Heading>
         <FormattedMessage id={'hsLatestCampaign'} />
       </Heading>
-      <ImageStyled src={campaign.logo.src} />
+      <ImageStyled src={campaign.banner.src} />
       <Text>{campaign.description}</Text>
       <Dates>
         <FormattedMessage

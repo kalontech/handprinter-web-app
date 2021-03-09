@@ -98,11 +98,12 @@ function DashboardBrandPage(props) {
             actionsTakenCount={actionsTakenCount}
             personalStats={dashboardData?.stats?.personal}
           />
-          <NetPositiveDays user={user} ratio={dashboardData?.ratio} />
           <Calendar
             isReturnUser={isReturnUser}
             calendar={dashboardData?.calendar}
           />
+          <NetPositiveDays user={user} ratio={dashboardData?.ratio} />
+
           <Campaigns user={user} intl={props.intl} />
           <MyNetwork
             user={user}

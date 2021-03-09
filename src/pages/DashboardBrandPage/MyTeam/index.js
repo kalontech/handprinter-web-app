@@ -74,7 +74,7 @@ export default function MyTeam(props) {
           <InfoText>
             <FormattedMessage id="netPostiveDays" />
           </InfoText>
-          <InfoCount>{netPositiveDays.climate}</InfoCount>
+          <InfoCount>{Math.round(netPositiveDays.climate)}</InfoCount>
         </InfoRow>
       </Info>
     </Container>

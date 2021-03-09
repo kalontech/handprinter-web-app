@@ -11,7 +11,7 @@ export const Container = styled.div`
 `
 
 export const Info = styled.div`
-  margin: 24px 0;
+  margin-bottom: 8px;
 `
 
 export const InfoRow = styled.div`
@@ -63,7 +63,7 @@ export const TeamIcon = styled.img`
   width: 100%;
   border-radius: 4px;
   object-fit: cover;
-  margin: 14px 0;
+  margin-bottom: 16px;
 `
 
 export const IconStyled = styled.img`

@@ -49,7 +49,7 @@ export const LinkText = styled(Link)`
   font-size: 16px;
   line-height: 125%;
   align-items: center;
-  text-decoration-line: underline;
+  color: #8bc428;
   margin: 23px 40px;
 `
 

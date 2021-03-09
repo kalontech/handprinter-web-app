@@ -30,8 +30,7 @@ export const SeeNetwork = styled.p`
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
-  text-decoration-line: underline;
-  color: ${colors.dark};
+  color: #8bc428;
   margin-top: 24px;
   cursor: pointer;
 `

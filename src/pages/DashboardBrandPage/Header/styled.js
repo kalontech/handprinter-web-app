@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import colors from 'config/colors'
 
 export const Container = styled.div`
-  height: 221px;
-  background-color: ${colors.darkGreen};
+  height: 160px;
+  background-color: #169080;
   display: flex;
   flex-direction: row;
   align-items: center;

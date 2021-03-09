@@ -94,7 +94,6 @@ export const HowCalculated = styled(Link)`
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
-  text-decoration-line: underline;
-  color: ${colors.dark};
+  color: #8bc428;
   margin: 38px 0 10px 22px;
 `

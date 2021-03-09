@@ -65,7 +65,7 @@ export const ImpactDaysText = styled.p`
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
-  color: ${colors.gray};
+  color: ${colors.darkGray};
   margin-right: 16px;
 `
 
@@ -74,7 +74,6 @@ export const HowCalculated = styled(Link)`
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
-  text-decoration-line: underline;
-  color: ${colors.dark};
+  color: #8bc428;
   margin-left: 11px;
 `
