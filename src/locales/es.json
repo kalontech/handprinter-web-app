@@ -625,7 +625,7 @@
     "app.NotFoundPage.Link2": "Contáctenos",
     "app.NotFoundPage.Text": "o",
     "app.NotFoundPage.Title": "Huy! Algo salió mal",
-    "app.organization.active.since": "%1$s has been active since %1$s",
+    "app.organization.active.since": "{organization} has been active since {date}",
     "app.organization.addAdminUsers": "Agregar usuarios administradores",
     "app.organization.adminUsers": "Usuarios administradores",
     "app.organization.adminUsersDescription": "Estos usuarios pueden realizar acciones y agregar ideas a la organización. También puede editar el perfil e invitar a nuevos usuarios en nombre de la organización.",

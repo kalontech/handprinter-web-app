@@ -47,9 +47,9 @@ const Info = styled.div`
 `
 
 const Name = styled.h4`
-  line-height: 35px;
   font-size: 28px;
   color: ${colors.dark};
+  overflow: hidden;
   margin-bottom: 4px;
   font-family: Noto Sans;
   overflow-y: auto;

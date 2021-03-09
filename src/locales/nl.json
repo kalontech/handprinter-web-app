@@ -625,7 +625,7 @@
     "app.NotFoundPage.Link2": "Neem contact met ons op",
     "app.NotFoundPage.Text": "of",
     "app.NotFoundPage.Title": "Oeps! Er is iets misgegaan",
-    "app.organization.active.since": "%1$s has been active since %1$s",
+    "app.organization.active.since": "{organization} has been active since {date}",
     "app.organization.addAdminUsers": "Voeg admin-gebruikers toe",
     "app.organization.adminUsers": "Beheer gebruikers",
     "app.organization.adminUsersDescription": "Deze gebruikers kunnen acties uitvoeren en ideeën aan de organisatie toevoegen. U kunt het profiel ook bewerken en nieuwe gebruikers uitnodigen namens de organisatie.",
