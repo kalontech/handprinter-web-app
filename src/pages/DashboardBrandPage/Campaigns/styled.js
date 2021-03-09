@@ -26,12 +26,3 @@ export const Text = styled.p`
   line-height: 160%;
   margin: 10px 0 15px 11px;
 `
-
-export const HowCalculated = styled(Link)`
-  font-family: Noto Sans;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  color: #8bc428;
-  margin-left: 11px;
-`
