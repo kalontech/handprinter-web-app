@@ -18,7 +18,7 @@ export const StatisticsScrollTitle = styled.p`
 export const StatisticsScroll = styled.div`
   height: 705px;
   padding: 3px;
-  overflow: scroll;
+  overflow: hidden;
 
   ${media.largeDesktop`
     display: flex;
