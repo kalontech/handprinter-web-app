@@ -18,9 +18,8 @@ export const Content = styled.div`
 
 export const Title = styled.span`
   font-family: Noto Serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
+  font-weight: 800;
+  font-size: 18px;
   margin: 13px 20px;
 `
 

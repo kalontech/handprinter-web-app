@@ -116,7 +116,7 @@ function DashboardBrandPage(props) {
         </Column>
         <MainColumn>
           {!isReturnUser && <GetStarted />}
-          {isReturnUser && (
+          {isReturnUser && actionsTakenCount < 3 && (
             <PositiveImpacts user={user} takenActions={takenActions} />
           )}
           {!isReturnUser && <TakeAction />}

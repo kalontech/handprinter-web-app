@@ -46,10 +46,10 @@ export const InfoCount = styled.p`
 
 export const Name = styled.p`
   font-family: Noto Serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 22px;
+  font-weight: 800;
+  font-size: 18px;
   line-height: 150%;
+  margin-bottom: 16px;
 `
 
 export const Text = styled.p`
@@ -63,8 +63,7 @@ export const Text = styled.p`
 
 export const Heading = styled.p`
   font-family: Noto Sans;
-  font-style: normal;
-  font-weight: normal;
+  font-weight: 800;
   font-size: 18px;
   color: ${colors.dark};
 `

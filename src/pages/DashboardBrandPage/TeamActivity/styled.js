@@ -12,9 +12,8 @@ export const Container = styled.div`
 
 export const Name = styled.p`
   font-family: Noto Serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
+  font-weight: 800;
+  font-size: 18px;
   line-height: 150%;
   margin-bottom: 24px;
 `

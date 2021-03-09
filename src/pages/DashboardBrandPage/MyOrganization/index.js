@@ -133,8 +133,8 @@ export default function MyOrganization(props) {
               }}
             />
           </Text>
+          <GoalIcon src={chairImg} />
         </div>
-        <GoalIcon src={chairImg} />
       </div>
 
       <RowFlexCenter>

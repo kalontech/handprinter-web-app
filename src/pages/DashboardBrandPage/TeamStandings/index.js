@@ -2,6 +2,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import SuggestedIcon from 'assets/icons/SuggestedIcon'
 import gobletImg from 'assets/icons/goblet.svg'
+import { Divider } from 'antd'
 
 import CustomSkeleton from '../Skeleton'
 import {
@@ -51,6 +52,7 @@ export default function TeamStandings(props) {
                 </InfoRow>
               </Info>
             )}
+            {key < 3 && <Divider />}
           </div>
         ))}
     </Container>
