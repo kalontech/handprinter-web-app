@@ -33,12 +33,27 @@ function calculateNetPositiveDays(ratio, categories) {
 }
 
 export default function UserName(props) {
-  const { user, isReturnUser, ratio } = props
+  const { user, isReturnUser, ratio, calendar } = props
   const netPositiveDays = calculateNetPositiveDays(ratio, IMPACTS)
   const positiveDate = new Date(new Date().getFullYear(), 0, 1)
   positiveDate.setDate(
     positiveDate.getDate() + netPositiveDays.categories[0].days,
   )
+  const latestMonth = _.head(
+    Object.keys(_.get(calendar, ['climate', '2021'], {})).sort(
+      (a, b) => Number(b) - Number(a),
+    ),
+  )
+  let latestDate
+  if (latestMonth) {
+    console.log(_.get(calendar, ['climate', '2021', latestMonth], {}))
+    latestDate = _.head(
+      _.get(calendar, ['climate', '2021', latestMonth], {}).sort(
+        (a, b) => Number(b) - Number(a),
+      ),
+    )
+  }
+
   if (!user) return null
   return (
     <Container whiteBG={true}>
@@ -49,7 +64,10 @@ export default function UserName(props) {
             id="netPositiveDaysThisYear"
             values={{
               days: netPositiveDays.summNetDays || 0,
-              date: moment(positiveDate).format('MMM DD, YYYY'),
+              date: moment(
+                `${latestDate}/${Number(latestMonth) + 1}/2021`,
+                'DD/MM/YYYY',
+              ).format('MMM DD, YYYY'),
             }}
           />
         </div>

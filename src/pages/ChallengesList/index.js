@@ -32,7 +32,6 @@ function getChallengies(campaigns, competitions) {
       type: CHALLENGIES.CAMPAIGNS,
     })
   })
-  console.log(campaigns)
   competitions.forEach(competition => {
     challenges.push({
       ...competition,

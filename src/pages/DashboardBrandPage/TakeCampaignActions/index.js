@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import moment from 'moment'
-import { Col, Row } from 'antd'
+import { Col, Row, Skeleton } from 'antd'
 
 import ActionCard from 'components/ActionCard'
 
@@ -21,30 +21,27 @@ import {
   Dates,
   CampaignTitle,
   TextHeading,
-  SeeAllActions,
+  SkeletonContainer,
 } from './styled'
 import { EVENT_TYPES, logEvent } from '../../../amplitude'
 import CustomSkeleton from '../Skeleton'
-import { ImpactButton } from '../../ActionsPage/styled'
 
-export default function TakeCampaignActions({ campaigns, takenActions, intl }) {
-  const [campaign, setCampaign] = useState()
-  const [loading, setLoading] = useState(true)
+export default function TakeCampaignActions({ user, takenActions, intl }) {
+  const [campaign, setCampaign] = useState(user.latestCampaign)
 
   useEffect(() => {
     async function fetch() {
       try {
-        const latestCampaing = await getCampaign(campaigns[0]._id)
+        const latestCampaing = await getCampaign(user.latestCampaign._id)
         setCampaign(latestCampaing?.campaign)
       } catch (error) {
         console.error(error)
-      } finally {
-        setLoading(false)
       }
     }
     fetch()
-  }, [campaigns])
-  if (loading || !campaigns || !campaign) return <CustomSkeleton rows={20} />
+  }, [user])
+
+  if (!campaign) return <CustomSkeleton rows={20} />
   return (
     <Container>
       <Title>
@@ -53,15 +50,21 @@ export default function TakeCampaignActions({ campaigns, takenActions, intl }) {
       <Heading>
         <FormattedMessage id={'hsLatestCampaign'} />
       </Heading>
-      <ImageStyled src={campaign.banner.src} />
+      {campaign.banner ? (
+        <ImageStyled src={campaign.banner.src} />
+      ) : (
+        <SkeletonContainer>
+          <Skeleton active paragraph={{ rows: 2 }} />
+        </SkeletonContainer>
+      )}
       <Text>{campaign.description}</Text>
       <Dates>
         <FormattedMessage
           id="campaignRuns"
           values={{
             dates: `${moment(campaign.dateFrom).format('MMM D')} - ${moment(
-              campaign.dateFrom,
-            ).format('MMMM D, YYYY')}`,
+              campaign.dateTo,
+            ).format('MMM D, YYYY')}`,
           }}
         />
       </Dates>
@@ -105,6 +108,7 @@ export default function TakeCampaignActions({ campaigns, takenActions, intl }) {
 }
 
 TakeCampaignActions.propTypes = {
+  user: Object,
   takenActions: Object,
   intl: Object,
 }

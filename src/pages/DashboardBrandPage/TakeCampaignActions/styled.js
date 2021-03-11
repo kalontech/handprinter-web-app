@@ -45,6 +45,13 @@ export const ImageStyled = styled.img`
   overflow: hidden;
 `
 
+export const SkeletonContainer = styled.div`
+  height: 310px;
+  margin: 5px 40px;
+  border-radius: 12px;
+  overflow: hidden;
+`
+
 export const Dates = styled.span`
   font-family: Noto Sans;
   font-style: italic;

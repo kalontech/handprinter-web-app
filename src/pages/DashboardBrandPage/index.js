@@ -94,6 +94,7 @@ function DashboardBrandPage(props) {
   const actionsTakenCount =
     takenActions.length || _.get(user, 'userImpact.actions.length')
   const isReturnUser = actionsTakenCount > 0
+  console.log(user)
   return (
     <>
       {/* <Header user={user} organization={user.organization} /> */}
@@ -102,6 +103,7 @@ function DashboardBrandPage(props) {
           <UserName
             user={user}
             ratio={dashboardData?.ratio}
+            calendar={dashboardData?.calendar}
             isReturnUser={isReturnUser}
             actionsTakenCount={actionsTakenCount}
             personalStats={dashboardData?.stats?.personal}
@@ -128,7 +130,7 @@ function DashboardBrandPage(props) {
           {!isReturnUser && <TakeAction />}
           {isReturnUser && (
             <TakeCampaignActions
-              campaigns={campaigns}
+              user={user}
               takenActions={takenActions}
               intl={props.intl}
             />
