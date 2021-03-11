@@ -38,7 +38,6 @@ import { getBrandedConfig } from 'config/branded'
 
 import { logOut } from 'redux/accountStore'
 import { getUserInitialAvatar } from 'api'
-import * as apiUser from 'api/user'
 import { Creators as UserStoreCreators } from 'redux/userStore'
 
 import { GreenButton } from '../../pages/AboutHumanscalePage/styled'

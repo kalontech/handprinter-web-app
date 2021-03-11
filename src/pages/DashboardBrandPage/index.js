@@ -7,7 +7,6 @@ import _ from 'lodash'
 
 import { fetchCampaignsList } from '../../api/campaigns'
 
-import Header from './Header'
 import { Body, Column, MainColumn } from './styled'
 import GetStarted from './GetStarted'
 import UserName from './UserName'
