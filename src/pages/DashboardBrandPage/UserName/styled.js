@@ -12,6 +12,7 @@ export const Name = styled.p`
   font-family: Noto Serif;
   font-weight: 800;
   font-size: 18px;
+  margin-bottom: 16px;
   line-height: 150%;
 `
 

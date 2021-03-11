@@ -21,7 +21,7 @@ export default function MyTeam(props) {
   const [ranking, setRanking] = useState(0)
 
   useEffect(() => {
-    if (teams) {
+    if (teams && team) {
       setRanking(teams.findIndex(t => t._id === team._id) + 1)
     }
   }, [teams, team])
