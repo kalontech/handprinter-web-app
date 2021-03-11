@@ -132,7 +132,6 @@ function Header(props) {
   const [width, setWidth] = useState(window.innerWidth)
   const [isPhysicalUnit, setIsPhysicalUnit] = useState(false)
   const [isTimeUnit, setIsTimeUnit] = useState(true)
-  const [userImpactInUnits, setUserImpactInUnits] = useState(null)
 
   const selectedMenuItem = () => {
     const { location } = props
@@ -160,13 +159,6 @@ function Header(props) {
   }
 
   useEffect(() => {
-    if (_.get(props, 'user._id')) {
-      apiUser.getMe().then(data => {
-        setUserImpactInUnits(
-          _.get(data, 'user.userImpact.impactsInUnits.footprint'),
-        )
-      })
-    }
     window.addEventListener('resize', handleWindowSizeChange)
     return () => {
       window.removeEventListener('resize', handleWindowSizeChange)
@@ -195,7 +187,7 @@ function Header(props) {
 
   let $profileSettingsPopover = React.createRef()
   const { type, user, withoutHeaderContent, location, overrides } = props
-
+  const userImpactInUnits = _.get(user, 'userImpact.impactsInUnits.footprint')
   const isTablet = width < sizes.largeDesktop
   const isMobile = width < sizes.tablet
 

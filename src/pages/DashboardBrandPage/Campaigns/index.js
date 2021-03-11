@@ -1,37 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { FormattedMessage } from 'react-intl'
 
 import { Container, Name, Text } from './styled'
 import Achievements from '../Achievements'
-import { fetchCampaignsList } from '../../../api/campaigns'
+import CustomSkeleton from '../Skeleton'
 
 export default function Campaigns(props) {
-  const { user } = props
+  const { user, campaigns } = props
   const achievements = user?.achievements
   const hasAchievements = achievements?.length > 0
-  const [campaigns, setCampaigns] = useState()
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const {
-          campaigns: { docs: campaigns },
-        } = await fetchCampaignsList({
-          userId: user._id,
-        })
-        console.log(campaigns)
-        const filteredCampaigns = campaigns.filter(
-          c => new Date(c.dateFrom) > new Date(new Date().getFullYear(), 0, 1),
-        )
-        setCampaigns(filteredCampaigns)
-      } catch (error) {
-        console.error(error)
-      }
-    }
 
-    fetch()
-  }, [user])
-
-  console.log(achievements)
+  if (!campaigns) {
+    return <CustomSkeleton rows={6} />
+  }
 
   return (
     <Container whiteBG>
@@ -56,5 +37,6 @@ export default function Campaigns(props) {
 
 Campaigns.propTypes = {
   user: Object,
+  campaigns: Object,
   intl: Object,
 }

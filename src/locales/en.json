@@ -820,6 +820,7 @@
     "netPositiveStatusPlaceholder" : "Once you’ve completed your first challenge, you’ll start to see your Net Positive status here.",
     "netPositiveStatus" : "Net Positive Status",
     "netPositiveDaysSince" : "{days} Net Positive Days since {date}",
+    "netPositiveDaysThisYear" : "{days} Net Positive Days this year. At this rate, you’ll be Net Positive until {date}",
     "netPositiveDaysCount" : "{days} Days",
     "netPositiveDaysHowCalculated" : "How is this calculated?",
     "viewCompleteCalendar" : "View your complete calendar",

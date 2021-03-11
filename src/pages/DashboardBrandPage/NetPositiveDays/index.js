@@ -39,7 +39,6 @@ function calculateNetPositiveDays(ratio, categories) {
 
 export default function NetPositiveDays(props) {
   const { user, ratio } = props
-  const createdAt = user.createdAt
   const netPositiveDays = calculateNetPositiveDays(ratio, IMPACTS)
 
   return (
@@ -52,7 +51,9 @@ export default function NetPositiveDays(props) {
           id="netPositiveDaysSince"
           values={{
             days: netPositiveDays.summNetDays || 0,
-            date: moment(createdAt).format('MMM YYYY'),
+            date: moment(new Date(new Date().getFullYear(), 0, 1)).format(
+              'MMM YYYY',
+            ),
           }}
         />
       </Text>

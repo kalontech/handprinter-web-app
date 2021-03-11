@@ -24,34 +24,27 @@ import {
   MilestoneTitle,
   RowFlexCenter,
 } from './styled'
-import { getOrganization, search } from '../../../api/organization'
+import { getOrganization } from '../../../api/organization'
 import { IMPACT_CATEGORIES } from '../../../utils/constants'
 import { MilestoneImpactProgress } from '../../OrganizationDashboardPage/milestones'
 
 export default function MyOrganization(props) {
-  const { user } = props
-  const [organization, setOrganization] = useState()
-  const [loading, setLoading] = useState(true)
+  const { organization: organizationCompact } = props
+  const [organization, setOrganization] = useState(organizationCompact)
   useEffect(() => {
     async function fetch() {
       try {
-        const organizationsRes = await search(user?.belongsToBrand)
-        const organizationRes = await getOrganization(
-          organizationsRes?.organizations[0]?._id,
-        )
+        const organizationRes = await getOrganization(organizationCompact._id)
         setOrganization(organizationRes)
       } catch (error) {
         console.error(error)
-      } finally {
-        setLoading(false)
       }
     }
-    fetch()
-  }, [user?.belongsToBrand])
+    setTimeout(() => fetch(), 2000)
+  }, [])
 
-  if (loading) return <CustomSkeleton rows={16} />
-  if (!organization) return null
-  const { name, _id, userImpacts, info, goal, milestones } = organization
+  if (!organization) return <CustomSkeleton rows={16} />
+  const { name, _id, userImpacts, goal, milestones } = organization
 
   const currentProgress = _.get(userImpacts, 'impactsInUnits.footprint', {})
   const completedMilestones = milestones.filter(milestone => {
@@ -81,7 +74,7 @@ export default function MyOrganization(props) {
           <InfoText>
             <FormattedMessage id="app.actions.timeValues.other.MEMBERS" />
           </InfoText>
-          <InfoCount>{info.membersCount}</InfoCount>
+          <InfoCount>{organization.members.length}</InfoCount>
         </InfoRow>
         <InfoRow>
           <FlagIconComponent />
@@ -162,4 +155,5 @@ export default function MyOrganization(props) {
 
 MyOrganization.propTypes = {
   user: Object,
+  organization: Object,
 }

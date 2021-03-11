@@ -250,6 +250,7 @@ export const ActivityHeader = props => {
               {isDidAction && (
                 <UserName style={{ cursor: 'pointer' }}>
                   {' did action '}
+                  <br />
                   <strong onClick={navigateToAction}>{actionName}</strong>
                 </UserName>
               )}
@@ -303,12 +304,14 @@ export const ActivityHeader = props => {
                     {isDidAction && (
                       <span>
                         {' did action '}
+                        <br />
                         <strong onClick={navigateToAction}>{actionName}</strong>
                       </span>
                     )}
                     {isCommentedAction && (
                       <p>
                         {' commented on action '}
+                        <br />
                         <strong onClick={navigateToAction}>{actionName}</strong>
                       </p>
                     )}

@@ -22,7 +22,7 @@ function* logIn({ email, password, createOrganizationFlow }) {
       let to = '/account/dashboard'
       if (brandedConfig) {
         if (brandedConfig.brandName === 'Humanscale' && !user.firstLogin) {
-          to = '/account/dashboard'
+          to = '/challenges'
         } else to = '/pages/home'
       }
       yield call(history.push, to)
@@ -57,7 +57,7 @@ function* logInCode({ code, createOrganizationFlow }) {
       let to = '/account/dashboard'
       if (brandedConfig) {
         if (brandedConfig.brandName === 'Humanscale' && !user.firstLogin) {
-          to = '/account/dashboard'
+          to = '/challenges'
         } else to = '/pages/home'
       }
       yield call(history.push, to)

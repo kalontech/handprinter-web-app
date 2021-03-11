@@ -59,7 +59,7 @@ const RouteWrapper = ({
                     brandedConfig && brandedConfig.brandName === 'Humanscale'
                       ? user && user.firstLogin
                         ? '/pages/home'
-                        : '/account/dashboard'
+                        : '/challenges'
                       : '/account/dashboard'
                   }
                 />

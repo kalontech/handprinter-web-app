@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import * as apiOrganization from 'api/organization'
 import * as apiUser from 'api/user'
 import _ from 'lodash'
+
+import { fetchCampaignsList } from '../../api/campaigns'
 
 import Header from './Header'
 import { Body, Column, MainColumn } from './styled'
@@ -27,24 +28,9 @@ import { GROUPS_SUBSETS } from '../../utils/constants'
 function DashboardBrandPage(props) {
   const { user, history } = props
 
-  const [organization, setOrganization] = useState()
   const [dashboardData, setDashboardData] = useState()
   const [teams, setTeams] = useState()
-
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const res = await apiOrganization.search(user.belongsToBrand)
-        if (res && res.organizations) {
-          setOrganization(res.organizations[0])
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    fetch()
-  }, [user.belongsToBrand])
+  const [campaigns, setCampaigns] = useState()
 
   useEffect(() => {
     async function fetch() {
@@ -60,6 +46,26 @@ function DashboardBrandPage(props) {
 
     fetch()
   }, [user._id])
+
+  useEffect(() => {
+    async function fetch() {
+      try {
+        const {
+          campaigns: { docs: campaigns },
+        } = await fetchCampaignsList({
+          userId: user._id,
+        })
+        const filteredCampaigns = campaigns.filter(
+          c => new Date(c.dateFrom) > new Date(new Date().getFullYear(), 0, 1),
+        )
+        setCampaigns(filteredCampaigns)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetch()
+  }, [user])
 
   useEffect(() => {
     async function fetch() {
@@ -82,7 +88,7 @@ function DashboardBrandPage(props) {
         console.error(error)
       }
     }
-    fetch()
+    setTimeout(() => fetch(), 1000)
   }, [])
 
   const takenActions = _.get(dashboardData, 'takenActions', [])
@@ -91,11 +97,12 @@ function DashboardBrandPage(props) {
   const isReturnUser = actionsTakenCount > 0
   return (
     <>
-      <Header user={user} organization={organization} />
+      {/* <Header user={user} organization={user.organization} /> */}
       <Body>
         <Column>
           <UserName
             user={user}
+            ratio={dashboardData?.ratio}
             isReturnUser={isReturnUser}
             actionsTakenCount={actionsTakenCount}
             personalStats={dashboardData?.stats?.personal}
@@ -106,7 +113,7 @@ function DashboardBrandPage(props) {
           />
           <NetPositiveDays user={user} ratio={dashboardData?.ratio} />
 
-          <Campaigns user={user} intl={props.intl} />
+          <Campaigns user={user} campaigns={campaigns} intl={props.intl} />
           <MyNetwork
             user={user}
             isReturnUser={isReturnUser}
@@ -122,6 +129,7 @@ function DashboardBrandPage(props) {
           {!isReturnUser && <TakeAction />}
           {isReturnUser && (
             <TakeCampaignActions
+              campaigns={campaigns}
               takenActions={takenActions}
               intl={props.intl}
             />
@@ -129,7 +137,7 @@ function DashboardBrandPage(props) {
           <TeamActivity user={user} history={history} />
         </MainColumn>
         <Column>
-          <MyOrganization user={user} />
+          <MyOrganization organization={user.organization} />
           <MyTeam user={user} teams={teams} />
           <TeamStandings teams={teams} />
         </Column>

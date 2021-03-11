@@ -25,17 +25,18 @@ import CustomSkeleton from '../Skeleton'
 
 export default function PositiveImpacts(props) {
   const { user, takenActions } = props
-  const [action, setAction] = useState()
   const [loading, setLoading] = useState(true)
   const UIContextData = useContext(UIContextSettings)
   const userActions = user?.userImpact?.actions || []
   const tA = takenActions.length === 0 ? userActions : takenActions
+  const latestTakenAction = tA[tA.length - 1]?.action
+  const [actionPicture, setActionPicture] = useState()
+  const action = latestTakenAction
   useEffect(() => {
     async function fetch() {
       try {
-        const latestTakenAction = tA[tA.length - 1]?.action
         const res = await fetchAction({ slug: latestTakenAction?.slug })
-        if (res && res.action) setAction(res.action)
+        if (res && res.action) setActionPicture(res.action.picture)
       } catch (error) {
         console.error(error)
       } finally {
@@ -45,7 +46,6 @@ export default function PositiveImpacts(props) {
 
     fetch()
   }, [tA])
-  if (loading) return <CustomSkeleton rows={11} />
   if (!action) return null
   return (
     <Container>
@@ -66,7 +66,7 @@ export default function PositiveImpacts(props) {
           </Ocean>
           <FormattedMessage id={'youTookFirstAction3'} />
         </Heading>
-        <ImageStyled src={action.picture} />
+        {actionPicture && <ImageStyled src={actionPicture} />}
         <Text>{action.name}</Text>
         <FlexCenter>
           <ActionCardLabelSet
@@ -80,19 +80,19 @@ export default function PositiveImpacts(props) {
           <FormattedMessage id="yourActionCreatingImpact" />
           <Description> {action.description}</Description>
         </DescriptionBold>
-        <Description>
+        {/* TODO */}
+        {/* <Description>
           <FormattedMessage id="thisIsEquivelent" />
         </Description>
         <FlexCenter>
           <Chair src={chairImg} />
-          {/* TODO */}
           <Description>4 Smart Chairs</Description>
-        </FlexCenter>
+        </FlexCenter> */}
       </Content>
       {/* TODO */}
-      <HowCalculated to={'/account/dashboard'}>
+      {/* <HowCalculated to={'/account/dashboard'}>
         <FormattedMessage id="netPositiveDaysHowCalculated" />
-      </HowCalculated>
+      </HowCalculated> */}
     </Container>
   )
 }

@@ -27,16 +27,14 @@ import { EVENT_TYPES, logEvent } from '../../../amplitude'
 import CustomSkeleton from '../Skeleton'
 import { ImpactButton } from '../../ActionsPage/styled'
 
-export default function TakeCampaignActions({ takenActions, intl }) {
+export default function TakeCampaignActions({ campaigns, takenActions, intl }) {
   const [campaign, setCampaign] = useState()
   const [loading, setLoading] = useState(true)
-  const UIContextData = useContext(UIContextSettings)
 
   useEffect(() => {
     async function fetch() {
       try {
-        const res = await fetchCampaignsList()
-        const latestCampaing = await getCampaign(res?.campaigns?.docs[0]?._id)
+        const latestCampaing = await getCampaign(campaigns[0]._id)
         setCampaign(latestCampaing?.campaign)
       } catch (error) {
         console.error(error)
@@ -45,9 +43,8 @@ export default function TakeCampaignActions({ takenActions, intl }) {
       }
     }
     fetch()
-  }, [])
-  if (loading) return <CustomSkeleton rows={20} />
-  if (!campaign) return null
+  }, [campaigns])
+  if (loading || !campaigns || !campaign) return <CustomSkeleton rows={20} />
   return (
     <Container>
       <Title>
