@@ -719,6 +719,7 @@
     "app.pages.groups.member": "会员",
     "app.pages.groups.members": "会员",
     "app.pages.groups.membersCount": "{count}成员",
+    "app.pages.groups.actionsCount": "{count} actions",
     "app.pages.groups.myGroups": "我的团队",
     "app.pages.groups.owner": "所有者",
     "app.pages.groups.pending": "待批准",

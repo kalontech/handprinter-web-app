@@ -719,6 +719,7 @@
     "app.pages.groups.member": "Mitglied",
     "app.pages.groups.members": "Mitglieder",
     "app.pages.groups.membersCount": "{count} Mitglieder",
+    "app.pages.groups.actionsCount": "{count} actions",
     "app.pages.groups.myGroups": "Meine Gruppen",
     "app.pages.groups.owner": "Inhaber",
     "app.pages.groups.pending": "Ausstehende Genehmigung",

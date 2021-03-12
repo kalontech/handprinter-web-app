@@ -46,7 +46,7 @@ const CardContainer = styled.div`
   position: relative;
   max-width: ${props => (props.isSlide ? '380px' : '100%')};
   margin-right: ${props => (props.isSlide ? '20px' : '0')};
-  min-height: 364px;
+  min-height: ${props => (props.compact ? '0px' : '364px')};
   border-radius: 4px;
   box-shadow: 0 1px 10px 0 ${hexToRgba(colors.dark, 0.08)};
   background-color: ${colors.white};
@@ -112,6 +112,7 @@ const CardHeading = styled.h3`
   font-family: 'Noto Serif', serif;
   margin-bottom: 15px;
   text-align: left;
+  height: 80px;
 `
 
 const SuggestedInfoInitiator = styled(Link)`
@@ -178,7 +179,7 @@ const WildWrapper = styled.p`
 
 const ChallengeLabel = styled.div`
   position: absolute;
-  z-index: 1000;
+  z-index: 2;
   min-width: 100px;
   height: 23px;
   right: 8px;
@@ -223,6 +224,8 @@ const SWGWrap = styled.div``
 
 const ActionCard = props => {
   const {
+    compact,
+    takenAlready,
     to,
     picture,
     picturePreview,
@@ -292,13 +295,26 @@ const ActionCard = props => {
   return (
     <Link to={to} onClick={onClick}>
       <CardWrap>
-        <CardContainer isSlide={isSlide} style={styles && styles}>
-          {!isWillAvailable && (
+        <CardContainer
+          isSlide={isSlide}
+          style={styles && styles}
+          compact={compact}
+        >
+          {!isWillAvailable && !takenAlready && (
             <ChallengeLabel color="green">
               <SWGWrap>
                 <BigLeaf style={bigLeafStyles} />
               </SWGWrap>
               <p>| available to be taken</p>
+            </ChallengeLabel>
+          )}
+          {takenAlready && (
+            <ChallengeLabel color="blue">
+              <SWGWrap>
+                <SmallLeaf style={smallLeapStyles} />
+                <ArrowCircle style={arrowCircleStyles} />
+              </SWGWrap>
+              <p>Completed</p>
             </ChallengeLabel>
           )}
           {isWillAvailable && (
@@ -359,18 +375,20 @@ const ActionCard = props => {
               </IconsWrap>
             )}
           </CardImage>
-          <CardWrapper>
-            <CardHeading style={props.font}>{name}</CardHeading>
-            <ActionCardLabelSetWrapper>
-              {isWild ? popover : typeof impacts === 'function' && impacts()}
-              {impacts && typeof impacts !== 'function' && (
-                <ActionCardLabelSet
-                  impacts={impacts}
-                  showPhysicalValues={showPhysicalValues}
-                />
-              )}
-            </ActionCardLabelSetWrapper>
-          </CardWrapper>
+          {!compact && (
+            <CardWrapper>
+              <CardHeading style={props.font}>{name}</CardHeading>
+              <ActionCardLabelSetWrapper>
+                {isWild ? popover : typeof impacts === 'function' && impacts()}
+                {impacts && typeof impacts !== 'function' && (
+                  <ActionCardLabelSet
+                    impacts={impacts}
+                    showPhysicalValues={showPhysicalValues}
+                  />
+                )}
+              </ActionCardLabelSetWrapper>
+            </CardWrapper>
+          )}
         </CardContainer>
       </CardWrap>
 
@@ -415,6 +433,8 @@ const ActionCard = props => {
 }
 
 ActionCard.propTypes = {
+  compact: PropTypes.bool,
+  takenAlready: PropTypes.bool,
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   impacts: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   name: PropTypes.string.isRequired,

@@ -440,6 +440,10 @@ class GroupsPage extends React.PureComponent {
                       { id: 'app.pages.groups.membersCount' },
                       { count: item.info.membersCount },
                     )}
+                    actionsCounter={intl.formatMessage(
+                      { id: 'app.pages.groups.actionsCount' },
+                      { count: item.numberTakenActions },
+                    )}
                     picture={item.picture || getUserInitialAvatar(item.name)}
                     featured={
                       match.params.subset !== GROUPS_SUBSETS.MY && {

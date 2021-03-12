@@ -37,7 +37,7 @@ export const HeaderWrap = styled(Layout.Header)`
   position: relative;
   z-index: 970;
   background: ${colors.white};
-  height: 90px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -491,7 +491,6 @@ export const TakeActionButton = styled(PrimaryButton)`
 
 export const UnitsBlock = styled.div`
   position: absolute;
-  top: 34px;
   right: 90px;
   width: 44px;
   height: 22px;

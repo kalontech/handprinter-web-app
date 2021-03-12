@@ -1,3 +1,4 @@
+import icons from '../components/ActionCardLabel/icons'
 import colors from '../config/colors'
 
 export const IMPACT_CATEGORIES = {
@@ -10,6 +11,29 @@ export const IMPACT_CATEGORIES = {
   NETWORK_MEMBERS: 'networkMembers',
   ACTIONS_TAKEN: 'actionsTaken',
 }
+
+export const IMPACTS = [
+  {
+    name: IMPACT_CATEGORIES.CLIMATE,
+    icon: icons['positive']['climate'],
+  },
+  {
+    name: IMPACT_CATEGORIES.WATER,
+    icon: icons['positive']['water'],
+  },
+  {
+    name: IMPACT_CATEGORIES.ECOSYSTEM,
+    icon: icons['positive']['ecosystem'],
+  },
+  {
+    name: IMPACT_CATEGORIES.WASTE,
+    icon: icons['positive']['waste'],
+  },
+  {
+    name: IMPACT_CATEGORIES.HEALTH,
+    icon: icons['positive']['health'],
+  },
+]
 
 export const IMPACT_CATEGORIES_COLORS = {
   HEALTH: colors.blue,

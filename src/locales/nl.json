@@ -719,6 +719,7 @@
     "app.pages.groups.member": "Lid",
     "app.pages.groups.members": "leden",
     "app.pages.groups.membersCount": "{count} leden",
+    "app.pages.groups.actionsCount": "{count} actions",
     "app.pages.groups.myGroups": "Mijn groepen",
     "app.pages.groups.owner": "Eigenaar",
     "app.pages.groups.pending": "In afwachting van goedkeuring",
