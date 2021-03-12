@@ -22,6 +22,9 @@ export default function useDefaultFeeds(user) {
       if (user.belongsToBrand) {
         feeds.push(`timeline:brand-${user.belongsToBrand}`)
       }
+      if (user.belongsToOrganization) {
+        feeds.push(`timeline:brand-${user.belongsToOrganization}`)
+      }
       try {
         const resMyGroups = await fetchGroupsList({
           subset: GROUPS_SUBSETS.MY,
