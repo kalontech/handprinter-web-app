@@ -174,7 +174,10 @@ class SearchInfluencerInput extends React.Component<Props> {
                     }}
                     key={item._id}
                   >
-                    <SearchItemImg src={item.photo} alt={item.fullName} />
+                    <SearchItemImg
+                      src={(item.logo && item.logo.src) || item.photo}
+                      alt={item.fullName}
+                    />
                     <SearchItemColumn>
                       <SearchItemHeader>
                         {item.fullName || item.name}
