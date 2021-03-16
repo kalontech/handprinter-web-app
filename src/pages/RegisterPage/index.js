@@ -309,7 +309,6 @@ class RegisterPage extends Component {
       form: { getFieldDecorator },
       intl: { formatMessage },
       isRegistering,
-      overrides,
     } = this.props
     const { referrer, createOrganizationFlow, matchedUsersByCode } = this.state
 
@@ -538,7 +537,6 @@ RegisterPage.propTypes = {
   isRegistering: PropTypes.bool.isRequired,
   registerError: PropTypes.string,
   registerRequest: PropTypes.func.isRequired,
-  overrides: PropTypes.object.isRequired,
 }
 
 export default compose(

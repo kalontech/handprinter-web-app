@@ -37,7 +37,6 @@ import { fetchUpdateGroup } from 'api/groups'
 import {
   getOrganization,
   getOrganizationNetwork,
-  joinOrganization,
   getMembers,
 } from 'api/organization'
 
