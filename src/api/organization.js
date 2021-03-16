@@ -10,6 +10,9 @@ export const getOrganizationNetwork = id =>
 export const updateOne = (body, id) =>
   fetchAPI(`/organizations/${id}`, { body, method: 'POST' })
 
+export const joinOrganization = body =>
+  fetchAPI(`/organizations/join`, { body, method: 'POST' })
+
 export const getAdmins = id =>
   fetchAPI(`/organizations/${id}/admins`, { method: 'GET' })
 

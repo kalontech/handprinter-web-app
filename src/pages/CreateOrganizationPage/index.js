@@ -237,16 +237,12 @@ class CreateOrganizationPage extends Component {
   componentDidMount() {
     const {
       match: {
-        params: { invitationCode, eatonCode },
+        params: { invitationCode },
       },
     } = this.props
 
     animateScroll.scrollToTop()
 
-    if (eatonCode) {
-      const siloSecureCode = Buffer.from(eatonCode, 'base64').toString('ascii')
-      this.props.form.setFieldsValue({ siloSecureCode })
-    }
     if (invitationCode) this.fetchReferrer(invitationCode)
   }
 
@@ -288,7 +284,7 @@ class CreateOrganizationPage extends Component {
           fullName,
           country,
           invitationCode,
-          siloSecureCode,
+          organizationInviteCode,
         } = values
         const data = {
           email,
@@ -296,7 +292,7 @@ class CreateOrganizationPage extends Component {
           fullName,
           country,
           belongsToBrand: getBrandedHostnamePrefix(),
-          siloSecureCode,
+          organizationInviteCode,
         }
         if (invitationCode) data.invitationCode = invitationCode
         registerRequest(data)

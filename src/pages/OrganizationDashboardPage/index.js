@@ -37,8 +37,11 @@ import { fetchUpdateGroup } from 'api/groups'
 import {
   getOrganization,
   getOrganizationNetwork,
+  joinOrganization,
   getMembers,
 } from 'api/organization'
+
+import { Button } from 'antd'
 
 import { UIContextSettings } from '../../context/uiSettingsContext'
 
@@ -55,6 +58,7 @@ import { processedUnitValue } from '../../components/ActionCardLabelSet'
 import renderActivity from './activity'
 import Goal from './Goal'
 import { EVENT_TYPES, logEvent } from '../../amplitude'
+import JoinOrganization from '../../components/JoinOrganization'
 
 const Block = styled.section`
   display: flex;
@@ -621,6 +625,7 @@ class BrandPage extends PureComponent {
   state = {
     groupNetwork: undefined,
     modalVisible: false,
+    joinModalVisible: false,
     currentImpactCategory: 'climate',
     loadingButton: false,
     visibleTabs: false,
@@ -724,6 +729,10 @@ class BrandPage extends PureComponent {
     this.setState({ modalVisible: false })
   }
 
+  closeJoinModal = () => {
+    this.setState({ joinModalVisible: false })
+  }
+
   loadMore = async () => {
     const { newsPage } = this.state
     const { match, mutate, news } = this.props
@@ -773,6 +782,7 @@ class BrandPage extends PureComponent {
       visibleTabs,
       tabsType,
       modalVisible,
+      joinModalVisible,
       groupNetwork,
       width,
       activeTab,
@@ -889,9 +899,20 @@ class BrandPage extends PureComponent {
                       {group.name !== 'Humanscale' && (
                         <Title>{group.name}</Title>
                       )}
-                      {isMember && (
+                      {isMember ? (
                         <MemberLabel>
                           <FormattedMessage id="app.pages.groups.youAreMember" />
+                        </MemberLabel>
+                      ) : (
+                        <MemberLabel>
+                          <Button
+                            type="primary"
+                            onClick={async () => {
+                              this.setState({ joinModalVisible: true })
+                            }}
+                          >
+                            Join
+                          </Button>
                         </MemberLabel>
                       )}
                       <InfoBlock>
@@ -1419,6 +1440,16 @@ class BrandPage extends PureComponent {
           width="auto"
         >
           <GroupManage />
+        </Modal>
+        <Modal
+          visible={joinModalVisible}
+          onCancel={this.closeJoinModal}
+          centered
+          destroyOnClose
+          footer={null}
+          width="auto"
+        >
+          <JoinOrganization />
         </Modal>
       </Block>
     )

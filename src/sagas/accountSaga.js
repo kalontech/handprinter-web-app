@@ -74,7 +74,7 @@ function* register({
   country,
   invitationCode,
   belongsToBrand,
-  siloSecureCode,
+  organizationInviteCode,
   createOrganizationFlow,
 }) {
   try {
@@ -86,7 +86,7 @@ function* register({
       country,
       invitationCode,
       belongsToBrand,
-      siloSecureCode,
+      organizationInviteCode,
     )
     setUserData(email, belongsToBrand)
     logEvent(EVENT_TYPES.USER_REGISTRATION, { invitationCode })

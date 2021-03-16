@@ -37,7 +37,7 @@ export const HeaderWrap = styled(Layout.Header)`
   position: relative;
   z-index: 970;
   background: ${colors.white};
-  height: 60px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;

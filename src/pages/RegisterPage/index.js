@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import { animateScroll } from 'react-scroll/modules'
 import queryString from 'query-string'
 
+import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 import SearchableInput from 'components/SearchInfluencerInput'
 import registerFingerprintTop from 'assets/images/registerFingerprintTop.png'
 import registerFingerprintBot from 'assets/images/registerFingerprintBot.png'
@@ -211,7 +212,7 @@ class RegisterPage extends Component {
   componentDidMount() {
     const {
       match: {
-        params: { invitationCode, eatonCode },
+        params: { invitationCode },
       },
       location: { search },
     } = this.props
@@ -220,10 +221,6 @@ class RegisterPage extends Component {
     }
     animateScroll.scrollToTop()
 
-    if (eatonCode) {
-      const siloSecureCode = Buffer.from(eatonCode, 'base64').toString('ascii')
-      this.props.form.setFieldsValue({ siloSecureCode })
-    }
     if (invitationCode) this.fetchReferrer(invitationCode)
   }
 
@@ -267,7 +264,7 @@ class RegisterPage extends Component {
           fullName,
           country,
           invitationCode,
-          siloSecureCode,
+          organizationInviteCode,
         } = values
         const data = {
           email,
@@ -275,7 +272,7 @@ class RegisterPage extends Component {
           fullName,
           country,
           belongsToBrand: isBrand ? 'humanscale' : null,
-          siloSecureCode,
+          organizationInviteCode,
           createOrganizationFlow,
         }
         if (invitationCode) data.invitationCode = invitationCode
@@ -438,27 +435,26 @@ class RegisterPage extends Component {
                       />,
                     )}
                   </FormItem>
-                  {overrides && overrides.brandName === 'Eaton' && (
-                    <FormItem>
-                      {getFieldDecorator('siloSecureCode', {
-                        rules: [
-                          {
-                            required: true,
-                            message: formatMessage({
-                              id: 'app.errors.isRequired',
-                            }),
-                          },
-                        ],
-                      })(
-                        <Input
-                          type="text"
-                          placeholder={formatMessage({
-                            id: 'app.forms.eatonCode',
-                          })}
-                        />,
-                      )}
-                    </FormItem>
-                  )}
+                  <FormItem>
+                    {getFieldDecorator('organizationInviteCode')(
+                      <Input
+                        type="text"
+                        placeholder={formatMessage({
+                          id: 'app.forms.organizationCode',
+                        })}
+                        suffix={
+                          <InfoElement
+                            type={INFO_ELEMENT_TYPES.INFO}
+                            tooltipProps={{
+                              title: formatMessage({
+                                id: 'app.forms.organizationCodeHint',
+                              }),
+                            }}
+                          />
+                        }
+                      />,
+                    )}
+                  </FormItem>
                   <FormItem>
                     {getFieldDecorator('privacyPolicy', {
                       valuePropName: 'checked',
