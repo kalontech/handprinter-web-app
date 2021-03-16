@@ -6,21 +6,18 @@ import Feed from '../../../components/Feed'
 
 export default function TeamActivity(props) {
   const { user, history } = props
-  const team = user.myTeam
-  if (!team) return null
+  console.log(user.organization.name)
   return (
     <Container>
-      <Name>
-        <FormattedMessage id="teamActivity" />
-      </Name>
+      <Name>Organization Activity</Name>
       <Feed
         readFrom={{
           feedGroup: 'timeline',
-          userId: `group-${team._id}`,
+          userId: `brand-${user.organization.name.toLowerCase()}`,
         }}
         writeTo={{
           feedGroup: 'timeline',
-          userId: `group-${team._id}`,
+          userId: `brand-${user.organization.name.toLowerCase()}`,
         }}
         history={history}
       />
