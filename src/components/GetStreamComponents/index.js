@@ -17,7 +17,6 @@ import styled from 'styled-components'
 import ActionCardLabelSet from 'components/ActionCardLabelSet'
 import colors from 'config/colors'
 import media, { sizes } from 'utils/mediaQueryTemplate'
-
 import { Popover, Icon, Divider } from 'antd'
 
 import { FormattedMessage } from 'react-intl'
@@ -28,6 +27,8 @@ import LikeDefault from './LikeDefault.svg'
 import LikeFilled from './LikeFilled.svg'
 import { UIContextSettings } from '../../context/uiSettingsContext'
 import { EVENT_TYPES, logEvent } from '../../amplitude'
+
+var flatten = require('flat')
 
 const UserName = styled.span`
   font-family: Noto Sans;
@@ -73,7 +74,6 @@ export const ActivityFooter = props => {
   const numberOfComments = _.get(props, 'activity.reaction_counts.comment', 0)
   return (
     <>
-      <Divider style={{ margin: '10px 0px 0px 0px' }} />
       {props.activity.mentions && props.activity.mentions.length > 0 && (
         <Box sx={{ p: 3 }}>
           <Text sx={{ fontStyle: 'italic', mb: 1 }}>Mentions:</Text>
@@ -165,6 +165,7 @@ export const ActivityFooter = props => {
           />
         </Box>
       </Box>
+      <Divider style={{ margin: '10px 0px 0px 0px' }} />
     </>
   )
 }
@@ -220,6 +221,11 @@ export const ActivityHeader = props => {
     }
   }
 
+  const noImpacts =
+    actionImpacts &&
+    Object.values(flatten(actionImpacts, { safe: true })).filter(
+      v => v !== 'MINS' && v !== 0,
+    ).length === 0
   return (
     <Flex
       sx={{
@@ -243,14 +249,13 @@ export const ActivityHeader = props => {
             style={{ cursor: 'pointer' }}
           />
           <Box>
-            <Box>
+            <Box style={{ maxWidth: !noImpacts ? 280 : 'unset' }}>
               <UserName onClick={navigateToUser} style={{ cursor: 'pointer' }}>
                 <strong>{userName}</strong>
               </UserName>
               {isDidAction && (
                 <UserName style={{ cursor: 'pointer' }}>
                   {' did action '}
-                  <br />
                   <strong onClick={navigateToAction}>{actionName}</strong>
                 </UserName>
               )}
@@ -258,7 +263,6 @@ export const ActivityHeader = props => {
                 <UserName style={{ cursor: 'pointer' }}>
                   {' did action '}
                   <strong onClick={navigateToAction}>{actionName}</strong>
-                  <br />
                   {' and the related post below'}
                 </UserName>
               )}
@@ -304,14 +308,12 @@ export const ActivityHeader = props => {
                     {isDidAction && (
                       <span>
                         {' did action '}
-                        <br />
                         <strong onClick={navigateToAction}>{actionName}</strong>
                       </span>
                     )}
                     {isCommentedAction && (
                       <p>
                         {' commented on action '}
-                        <br />
                         <strong onClick={navigateToAction}>{actionName}</strong>
                       </p>
                     )}

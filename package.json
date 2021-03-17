@@ -46,6 +46,7 @@
     "everpolate": "^0.0.3",
     "exif-js": "^2.3.0",
     "file-loader": "2.0.0",
+    "flat": "^5.0.2",
     "fork-ts-checker-webpack-plugin-alt": "0.4.14",
     "fs-extra": "7.0.0",
     "html-webpack-plugin": "4.0.0-alpha.2",
