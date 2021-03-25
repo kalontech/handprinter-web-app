@@ -252,6 +252,7 @@ const Feed = ({
       )}
       {!hideFlatFeed && (
         <FlatFeed
+          options={{ reactions: { recent: true } }}
           Activity={props => {
             const userName = _.get(
               props,
@@ -265,6 +266,11 @@ const Feed = ({
               <Activity
                 {...props}
                 key={`root-${props.activity.id}`}
+                options={{
+                  reactions: {
+                    recent: true,
+                  },
+                }}
                 Content={
                   _.get(props, 'activity.object') !== '...' && props.Content
                 }
@@ -273,6 +279,7 @@ const Feed = ({
                     <ActivityFooter
                       key={`footer-${props.activity.id}`}
                       {...props}
+                      history={history}
                     />
                   )
                 }}

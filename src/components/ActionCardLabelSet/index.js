@@ -106,7 +106,10 @@ const ActionCardLabelSet = props => {
     return (
       <CardLabelWrap
         mobileFixedWidth={mobileFixedWidth}
-        style={{ justifyContent: justify ? 'center' : 'flex-start' }}
+        style={{
+          justifyContent: justify ? 'center' : 'flex-start',
+          flexWrap: 'wrap',
+        }}
       >
         {impacts.footprint &&
           Object.entries(impacts.footprint)

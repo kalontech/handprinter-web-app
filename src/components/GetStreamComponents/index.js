@@ -11,6 +11,7 @@ import {
   CommentList,
   ReactionToggleIcon,
   CommentItem,
+  InfiniteScrollPaginator,
 } from 'react-activity-feed'
 import { Avatar, Box, Flex, jsx, Text } from 'theme-ui'
 import styled from 'styled-components'
@@ -20,6 +21,8 @@ import media, { sizes } from 'utils/mediaQueryTemplate'
 import { Popover, Icon, Divider } from 'antd'
 
 import { FormattedMessage } from 'react-intl'
+
+import { connect } from 'getstream'
 
 import CommentDefault from './CommentDefault.svg'
 import CommentFilled from './CommentFilled.svg'
@@ -70,8 +73,11 @@ const DeletePostText = styled.span`
 `
 
 export const ActivityFooter = props => {
-  const [isShowComments, setIsShowComments] = useState(false)
+  // props.onToggleChildReaction()
   const numberOfComments = _.get(props, 'activity.reaction_counts.comment', 0)
+  const numberOfLikes = _.get(props, 'activity.reaction_counts.like', 0)
+  const [isShowComments, setIsShowComments] = useState(numberOfComments > 0)
+
   return (
     <>
       {props.activity.mentions && props.activity.mentions.length > 0 && (
@@ -135,7 +141,37 @@ export const ActivityFooter = props => {
         }}
       >
         <Flex>
-          <LikeButton {...props} />
+          {numberOfLikes > 0 ? (
+            <Popover
+              disabled={numberOfLikes > 0}
+              content={
+                <Box>
+                  {_.get(props, 'activity.latest_reactions.like', []).map(l => (
+                    <p
+                      key={l.user.id}
+                      onClick={() =>
+                        props.history.push(
+                          `/account/${l.user.id.replace('user-', '')}`,
+                        )
+                      }
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {l.user.data.name}
+                      <br />
+                    </p>
+                  ))}
+                </Box>
+              }
+            >
+              <Flex sx={{ flexDirection: 'row' }}>
+                <LikeButton {...props} />
+                <span style={{ alignSelf: 'center' }}>{numberOfLikes}</span>
+              </Flex>
+            </Popover>
+          ) : (
+            <LikeButton {...props} />
+          )}
+
           <Box p={2} />
           <CommentButton
             {...props}
@@ -159,7 +195,7 @@ export const ActivityFooter = props => {
             CommentItem={itemProps => (
               <React.Fragment>
                 <CommentItem {...itemProps} />
-                <LikeButton reaction={itemProps.comment} {...props} />
+                {/* <LikeButton reaction={itemProps.comment} {...props} /> */}
               </React.Fragment>
             )}
           />
