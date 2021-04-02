@@ -36,8 +36,11 @@ const StyledArrowIcon = styled(Icon)`
 
 const Header = props => {
   const [width, setWidth] = useState(window.innerWidth)
-  const { campaign, participantsCount, accomplishedUserActions } = props
-  const { name, description, dateTo } = campaign
+  const { campaign, participantsCount, accomplishedUserActions, intl } = props
+  const dateTo = campaign.dateTo
+  const name = campaign?.translatedName?.[intl.locale] || campaign.name
+  const description =
+    campaign?.translatedDescription?.[intl.locale] || campaign.description
   const accomplished = accomplishedUserActions.length
   const expired = moment().isAfter(dateTo)
 
@@ -53,17 +56,17 @@ const Header = props => {
   if (finished) statusLabelId = 'app.campaignPage.completed'
   const membersCount = props.participantsLoading
     ? ''
-    : props.intl.formatMessage(
+    : intl.formatMessage(
         { id: 'app.pages.groups.membersCount' },
         { count: participantsCount },
       )
 
   const tooltipText =
     accomplished >= numberToComplete
-      ? props.intl.formatMessage({
+      ? intl.formatMessage({
           id: 'app.competitions.you.reached.challenge',
         })
-      : props.intl.formatMessage(
+      : intl.formatMessage(
           { id: 'app.competitions.you.need.take' },
           {
             numberToComplete: numberToComplete - accomplished,

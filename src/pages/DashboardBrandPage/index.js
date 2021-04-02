@@ -94,10 +94,8 @@ function DashboardBrandPage(props) {
   const actionsTakenCount =
     takenActions.length || _.get(user, 'userImpact.actions.length')
   const isReturnUser = actionsTakenCount > 0
-  console.log(user)
   return (
     <>
-      {/* <Header user={user} organization={user.organization} /> */}
       <Body>
         <Column>
           <UserName

@@ -823,15 +823,16 @@ class GroupViewPage extends PureComponent {
                               total,
                             },
                           )
+                          const name =
+                            i.achievement?.translatedName?.[intl.locale] ||
+                            i.achievement?.name
                           return (
                             <AchievementPopover
                               key={i.id}
                               overlayClassName={'achievements-popover'}
                               content={
                                 <PopoverWrapper>
-                                  <PopoverTitle>
-                                    {_.get(i, 'achievement.name')}
-                                  </PopoverTitle>
+                                  <PopoverTitle>{name}</PopoverTitle>
                                   <PopoverText>{accomplishedLabel}</PopoverText>
                                 </PopoverWrapper>
                               }
@@ -911,7 +912,9 @@ class GroupViewPage extends PureComponent {
                                   content={
                                     <PopoverWrapper>
                                       <PopoverTitle>
-                                        {!!i.achievement && i.achievement.name}
+                                        {i.achievement?.translatedName?.[
+                                          intl.locale
+                                        ] || i.achievement?.name}
                                       </PopoverTitle>
                                       <PopoverText>
                                         {accomplishedLabel}

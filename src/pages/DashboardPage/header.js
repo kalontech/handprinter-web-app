@@ -2,13 +2,15 @@ import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import { Col, Row, Popover } from 'antd'
 import moment from 'moment'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import _ from 'lodash'
 import media from 'utils/mediaQueryTemplate'
 import colors from 'config/colors'
 
 import InfoElement, { INFO_ELEMENT_TYPES } from 'components/InfoElement'
 import { PrimaryButton, Modal } from 'components/Styled'
+
+import { compose } from 'redux'
 
 import { InfoElementWrap } from '.'
 
@@ -399,13 +401,16 @@ const Header = props => {
                 total,
               },
             )
+            const name =
+              i.achievement?.translatedName?.[props.intl.locale] ||
+              i.achievement?.name
             return (
               <AchievementPopover
                 key={i.id}
                 overlayClassName={'achievements-popover'}
                 content={
                   <PopoverWrapper>
-                    <PopoverTitle>{_.get(i, 'achievement.name')}</PopoverTitle>
+                    <PopoverTitle>{name}</PopoverTitle>
                     <PopoverText>{accomplishedLabel}</PopoverText>
                   </PopoverWrapper>
                 }
@@ -538,7 +543,8 @@ const Header = props => {
                     content={
                       <PopoverWrapper>
                         <PopoverTitle>
-                          {!!i.achievement && i.achievement.name}
+                          {i.achievement?.translatedName?.[props.intl.locale] ||
+                            i.achievement?.name}
                         </PopoverTitle>
                         <PopoverText>{accomplishedLabel}</PopoverText>
                       </PopoverWrapper>
@@ -566,6 +572,7 @@ Header.propTypes = {
   handleMoreAchievesShow: Function,
   user: Object,
   stats: Object,
+  intl: Object,
   footPrintReduction: Number,
   externalHandprint: Number,
   moreAchievesVisible: Boolean,
@@ -574,4 +581,4 @@ Header.propTypes = {
   myGroups: Array,
 }
 
-export default Header
+export default compose(injectIntl)(Header)

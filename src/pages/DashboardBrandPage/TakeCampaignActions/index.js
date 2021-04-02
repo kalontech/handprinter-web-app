@@ -1,16 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import moment from 'moment'
 import { Col, Row, Skeleton } from 'antd'
 
 import ActionCard from 'components/ActionCard'
 
-import { ACTION_STATES } from 'utils/constants'
-import Tooltip from 'components/Tooltip'
-
-import { fetchCampaignsList, getCampaign } from '../../../api/campaigns'
-import ActionCardLabelSet from '../../../components/ActionCardLabelSet'
-import { UIContextSettings } from '../../../context/uiSettingsContext'
+import { getCampaign } from '../../../api/campaigns'
 
 import {
   Container,
@@ -27,28 +22,51 @@ import { EVENT_TYPES, logEvent } from '../../../amplitude'
 import CustomSkeleton from '../Skeleton'
 
 export default function TakeCampaignActions({ user, takenActions, intl }) {
-  const [campaign, setCampaign] = useState(user.latestCampaign)
+  if (!user?.latestCampaigns) return null
+
+  return (
+    <Container>
+      <Title>
+        <FormattedMessage id={'app.actions.takeAction'} />
+      </Title>
+      {user.latestCampaigns.map((latestCampaign, index) => {
+        return (
+          <CampaignActions
+            key={latestCampaign._id}
+            campaignId={latestCampaign._id}
+            takenActions={takenActions}
+            isLatestCampaign={index === 0}
+            intl={intl}
+          />
+        )
+      })}
+    </Container>
+  )
+}
+
+function CampaignActions({ campaignId, takenActions, isLatestCampaign, intl }) {
+  const [campaign, setCampaign] = useState()
 
   useEffect(() => {
     async function fetch() {
       try {
-        const latestCampaing = await getCampaign(user.latestCampaign._id)
+        const latestCampaing = await getCampaign(campaignId)
         setCampaign(latestCampaing?.campaign)
       } catch (error) {
         console.error(error)
       }
     }
     fetch()
-  }, [user])
+  }, [campaignId])
 
   if (!campaign) return <CustomSkeleton rows={20} />
+  const name = campaign?.translatedName?.[intl.locale] || campaign.name
+  const description =
+    campaign?.translatedDescription?.[intl.locale] || campaign.description
   return (
-    <Container>
-      <Title>
-        <FormattedMessage id={'app.actions.takeAction'} />
-      </Title>
+    <>
       <Heading>
-        <FormattedMessage id={'hsLatestCampaign'} />
+        {isLatestCampaign ? <FormattedMessage id={'hsLatestCampaign'} /> : name}
       </Heading>
       {campaign.banner ? (
         <ImageStyled src={campaign.banner.src} />
@@ -57,7 +75,7 @@ export default function TakeCampaignActions({ user, takenActions, intl }) {
           <Skeleton active paragraph={{ rows: 2 }} />
         </SkeletonContainer>
       )}
-      <Text>{campaign.description}</Text>
+      <Text>{description}</Text>
       <Dates>
         <FormattedMessage
           id="campaignRuns"
@@ -103,7 +121,7 @@ export default function TakeCampaignActions({ user, takenActions, intl }) {
           </Row>
         </div>
       )}
-    </Container>
+    </>
   )
 }
 

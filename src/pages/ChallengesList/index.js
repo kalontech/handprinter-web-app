@@ -9,7 +9,9 @@ import CompetitionCard from 'components/CompetitionCard'
 
 import { DefaultButton } from 'components/Styled'
 
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
+
+import { compose } from 'redux'
 
 import { Block, Column, Container } from './styled'
 import { acceptInvitation } from '../../api/competitions'
@@ -53,7 +55,7 @@ function getChallengies(campaigns, competitions) {
   })
 }
 
-export default function ChallengesList(props) {
+function ChallengesList(props) {
   const [campaigns, loadingCampaigns] = useCampaignsList(props)
   const [competitions, loadingCompetitions] = useCompetitionsList(props)
   const challenges = getChallengies(campaigns, competitions)
@@ -75,6 +77,8 @@ export default function ChallengesList(props) {
               const to = isCampaign
                 ? `/challenges/campaigns/dashboard/${item._id}`
                 : `/challenges/competitions/dashboard/${item._id}`
+              const name =
+                item?.translatedName?.[props.intl.locale] || item.name
               return (
                 <Column key={item._id} xl={8} lg={12} md={12} xs={24}>
                   <CompetitionCard
@@ -82,7 +86,7 @@ export default function ChallengesList(props) {
                       logEvent(EVENT_TYPES.CHALLENGES_REVIEW_CAMPAIGN)
                     }
                     to={to}
-                    name={item.name}
+                    name={name}
                     picture={item.logo.src}
                     isCampaign={isCampaign}
                     dateTo={item.dateTo}
@@ -108,3 +112,9 @@ export default function ChallengesList(props) {
     </Block>
   )
 }
+
+ChallengesList.propTypes = {
+  intl: Object,
+}
+
+export default compose(injectIntl)(ChallengesList)
