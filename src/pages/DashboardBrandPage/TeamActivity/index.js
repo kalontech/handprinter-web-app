@@ -1,12 +1,11 @@
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
 
 import { Container, Name } from './styled'
 import Feed from '../../../components/Feed'
 
 export default function TeamActivity(props) {
   const { user, history } = props
-  console.log(user.organization.name)
+  if (!user.organization) return null
   return (
     <Container>
       <Name>Organization Activity</Name>
