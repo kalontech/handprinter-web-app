@@ -4,6 +4,7 @@ import moment from 'moment'
 import { Col, Row, Skeleton } from 'antd'
 
 import ActionCard from 'components/ActionCard'
+import ReactMarkdown from 'react-markdown'
 
 import { getCampaign } from '../../../api/campaigns'
 
@@ -21,15 +22,21 @@ import {
 import { EVENT_TYPES, logEvent } from '../../../amplitude'
 import CustomSkeleton from '../Skeleton'
 
-export default function TakeCampaignActions({ user, takenActions, intl }) {
-  if (!user?.latestCampaigns) return null
-
+export default function TakeCampaignActions({
+  user,
+  takenActions,
+  campaigns,
+  intl,
+}) {
+  const cs = user?.latestCampaigns || campaigns
+  console.log(cs)
+  if (!cs) return null
   return (
     <Container>
       <Title>
         <FormattedMessage id={'app.actions.takeAction'} />
       </Title>
-      {user.latestCampaigns.map((latestCampaign, index) => {
+      {cs.map((latestCampaign, index) => {
         return (
           <CampaignActions
             key={latestCampaign._id}
@@ -41,6 +48,14 @@ export default function TakeCampaignActions({ user, takenActions, intl }) {
         )
       })}
     </Container>
+  )
+}
+
+const LinkRenderer = linkProps => {
+  return (
+    <a href={linkProps.href} rel="noopener noreferrer" target="_blank">
+      {linkProps.children}
+    </a>
   )
 }
 
@@ -83,7 +98,12 @@ function CampaignActions({ campaignId, takenActions, isLatestCampaign, intl }) {
           <Skeleton active paragraph={{ rows: 2 }} />
         </SkeletonContainer>
       )}
-      <Text>{description}</Text>
+      <Text>
+        <ReactMarkdown
+          source={description}
+          renderers={{ link: LinkRenderer }}
+        />
+      </Text>
       <Dates>
         <FormattedMessage
           id="campaignRuns"

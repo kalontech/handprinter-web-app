@@ -255,7 +255,13 @@ class RegisterPage extends Component {
     const createOrganizationFlow = this.state.createOrganizationFlow
 
     validateFields((err, values) => {
-      let isBrand = values.email.endsWith('@humanscale.com')
+      let belongsToBrand, belongsToOrganization
+      if (values.email.endsWith('@humanscale.com')) {
+        belongsToBrand = 'humanscale'
+      }
+      if (values.email.endsWith('@stantec.com')) {
+        belongsToOrganization = 'stantec'
+      }
       if (!err) {
         delete values.formError
         const {
@@ -271,7 +277,8 @@ class RegisterPage extends Component {
           password,
           fullName,
           country,
-          belongsToBrand: isBrand ? 'humanscale' : null,
+          belongsToBrand,
+          belongsToOrganization,
           organizationInviteCode,
           createOrganizationFlow,
         }

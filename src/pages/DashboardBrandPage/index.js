@@ -129,17 +129,20 @@ function DashboardBrandPage(props) {
           {isReturnUser && (
             <TakeCampaignActions
               user={user}
+              campaigns={campaigns}
               takenActions={takenActions}
               intl={props.intl}
             />
           )}
           <TeamActivity user={user} history={history} />
         </MainColumn>
-        <Column>
-          <MyOrganization organization={user.organization} />
-          <MyTeam user={user} teams={teams} />
-          <TeamStandings teams={teams} />
-        </Column>
+        {user.belongsToBrand === 'humanscale' && (
+          <Column>
+            <MyOrganization organization={user.organization} />
+            <MyTeam user={user} teams={teams} />
+            <TeamStandings teams={teams} />
+          </Column>
+        )}
       </Body>
     </>
   )

@@ -46,7 +46,7 @@ import IncreaseOrganizationHandprintPage from './pages/IncreaseOrganizationHandp
 const { REACT_APP_ENVIRONMENT, REACT_APP_GA_TRACKING_CODE } = env
 
 export const history = createBrowserHistory()
-export const BRANDS_WITH_OWN_DASHBOARD = ['Humanscale']
+export const BRANDS_WITH_OWN_DASHBOARD = ['Humanscale', 'Stantec']
 
 if (REACT_APP_ENVIRONMENT === 'production') {
   GoogleAnalytics.initialize(REACT_APP_GA_TRACKING_CODE)
@@ -104,12 +104,7 @@ const AppRouter = () => {
           />
           <Route
             path="/account/dashboard/:subset?"
-            component={
-              brandedConfig &&
-              BRANDS_WITH_OWN_DASHBOARD.includes(brandedConfig.brandName)
-                ? DashboardBrandPage
-                : DashboardPage
-            }
+            component={DashboardBrandPage}
             requireAuthentication
             withoutCTA
           />
