@@ -6,6 +6,7 @@ import colors from 'config/colors'
 import { sizes } from 'utils/mediaQueryTemplate'
 import styled from 'styled-components'
 import { Icon } from 'antd'
+import ReactMarkdown from 'react-markdown'
 
 import {
   HeaderCamapingDescription,
@@ -132,7 +133,9 @@ const Header = props => {
           )}
         </DashboardHeaderUserName>
       )}
-      <HeaderCamapingDescription>{description}</HeaderCamapingDescription>
+      <HeaderCamapingDescription>
+        <ReactMarkdown source={description} />
+      </HeaderCamapingDescription>
       <Progress
         total={total}
         successCount={numberToComplete}

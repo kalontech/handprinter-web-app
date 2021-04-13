@@ -113,7 +113,7 @@ export const HeaderCamapingDescription = styled.p`
   margin-bottom: 36px;
   margin-top: 15px;
   width: 580px;
-  text-align: center;
+  text-align: left;
 
   ${media.phone`
     width: 280px;
