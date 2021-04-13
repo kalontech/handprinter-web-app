@@ -38,6 +38,7 @@ class ProgressiveImage extends React.Component {
     return {
       transition: '0.5s filter linear',
       filter: `${loading ? 'blur(50px)' : ''}`,
+      ...this.props.style,
     }
   }
 
@@ -52,6 +53,7 @@ ProgressiveImage.propTypes = {
   preview: Object,
   image: Object,
   alt: String,
+  style: Object,
 }
 
 export default ProgressiveImage

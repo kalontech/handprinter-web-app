@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -112,6 +112,16 @@ const CardHeading = styled.h3`
   font-family: 'Noto Serif', serif;
   margin-bottom: 15px;
   text-align: left;
+  height: 80px;
+`
+
+const CompactActionTitle = styled.h3`
+  font-size: 19px;
+  line-height: 1.37;
+  font-family: 'Noto Serif', serif;
+  margin-bottom: 15px;
+  text-align: center;
+  color: black;
   height: 80px;
 `
 
@@ -245,7 +255,7 @@ const ActionCard = props => {
     canBeHabit,
     availableFrom = moment().subtract(1, 'days'),
   } = props
-
+  const [hover, setHover] = useState(false)
   const popover = (
     <Tooltip
       title={() => (
@@ -294,59 +304,66 @@ const ActionCard = props => {
 
   return (
     <Link to={to} onClick={onClick}>
-      <CardWrap>
+      <CardWrap
+        onMouseEnter={() => compact && setHover(true)}
+        onMouseLeave={() => compact && setHover(false)}
+      >
         <CardContainer
           isSlide={isSlide}
           style={styles && styles}
           compact={compact}
         >
-          {!isWillAvailable && !takenAlready && (
-            <ChallengeLabel color="green">
-              <SWGWrap>
-                <BigLeaf style={bigLeafStyles} />
-              </SWGWrap>
-              <p>| available to be taken</p>
-            </ChallengeLabel>
-          )}
-          {takenAlready && (
-            <ChallengeLabel color="blue">
-              <SWGWrap>
-                <SmallLeaf style={smallLeapStyles} />
-                <ArrowCircle style={arrowCircleStyles} />
-              </SWGWrap>
-              <p>Completed</p>
-            </ChallengeLabel>
-          )}
-          {isWillAvailable && (
+          {!compact && (
             <>
-              <ChallengeLabel color="blue">
-                <SWGWrap>
-                  <SmallLeaf style={leap3Styles} />
-                  <DottedCircle style={dottedCircleStyles} />
-                </SWGWrap>
-                <p>
-                  | will be available again on{' '}
-                  {moment(availableFrom).format('MMMM Do, YYYY')}
-                </p>
-              </ChallengeLabel>
-              {isHabit === true && (
-                <ChallengeLabel color="dark" style={{ top: '35px' }}>
+              {!isWillAvailable && !takenAlready && (
+                <ChallengeLabel color="green">
                   <SWGWrap>
-                    <ArrowsCircle style={arrowCircleStyles} />
+                    <BigLeaf style={bigLeafStyles} />
                   </SWGWrap>
-                  <p>| Chosen as habit</p>
+                  <p>| available to be taken</p>
+                </ChallengeLabel>
+              )}
+              {takenAlready && (
+                <ChallengeLabel color="blue">
+                  <SWGWrap>
+                    <SmallLeaf style={smallLeapStyles} />
+                    <ArrowCircle style={arrowCircleStyles} />
+                  </SWGWrap>
+                  <p>Completed</p>
+                </ChallengeLabel>
+              )}
+              {isWillAvailable && (
+                <>
+                  <ChallengeLabel color="blue">
+                    <SWGWrap>
+                      <SmallLeaf style={leap3Styles} />
+                      <DottedCircle style={dottedCircleStyles} />
+                    </SWGWrap>
+                    <p>
+                      | will be available again on{' '}
+                      {moment(availableFrom).format('MMMM Do, YYYY')}
+                    </p>
+                  </ChallengeLabel>
+                  {isHabit === true && (
+                    <ChallengeLabel color="dark" style={{ top: '35px' }}>
+                      <SWGWrap>
+                        <ArrowsCircle style={arrowCircleStyles} />
+                      </SWGWrap>
+                      <p>| Chosen as habit</p>
+                    </ChallengeLabel>
+                  )}
+                </>
+              )}
+              {!availableFrom && !canBeHabit && (
+                <ChallengeLabel color="dark">
+                  <SWGWrap>
+                    <SmallLeaf style={smallLeapStyles} />
+                    <ArrowCircle style={arrowCircleStyles} />
+                  </SWGWrap>
+                  <p>| on {moment(availableFrom).format('MMMM Do, YYYY')}</p>
                 </ChallengeLabel>
               )}
             </>
-          )}
-          {!availableFrom && !canBeHabit && (
-            <ChallengeLabel color="dark">
-              <SWGWrap>
-                <SmallLeaf style={smallLeapStyles} />
-                <ArrowCircle style={arrowCircleStyles} />
-              </SWGWrap>
-              <p>| on {moment(availableFrom).format('MMMM Do, YYYY')}</p>
-            </ChallengeLabel>
           )}
           <CardImage>
             {picture && (
@@ -354,9 +371,55 @@ const ActionCard = props => {
                 alt={name}
                 preview={picturePreview}
                 image={picture}
+                style={{
+                  opacity: hover ? 0.1 : 1,
+                }}
               />
             )}
 
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                zIndex: 3,
+                width: '100%',
+                height: '100%',
+              }}
+            >
+              {hover && (
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    display: 'flex',
+                  }}
+                >
+                  <CompactActionTitle style={props.font}>
+                    {name}
+                  </CompactActionTitle>
+                </div>
+              )}
+              {compact && takenAlready && (
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    display: 'flex',
+                    backgroundColor: 'grey',
+                    opacity: 0.4,
+                  }}
+                >
+                  <Icon
+                    type="check-circle"
+                    style={{ fontSize: 120, color: 'white' }}
+                  />
+                </div>
+              )}
+            </div>
             {canChange && (
               <IconsWrap>
                 <ButtonIcon onClick={onEdit}>

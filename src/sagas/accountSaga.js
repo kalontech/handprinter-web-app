@@ -12,19 +12,13 @@ import { EVENT_TYPES, logEvent, setUserData } from '../amplitude'
 function* logIn({ email, password, createOrganizationFlow }) {
   try {
     const res = yield call(apiAuth.logIn, email, password)
-    const { token, user } = res
+    const { token } = res
     yield put(Creators.logInSuccess(token))
     yield call(prepareUserProfile)
-    const brandedConfig = getBrandedConfig()
     if (createOrganizationFlow) {
       yield call(history.push, '/account/create-organization')
     } else {
       let to = '/account/dashboard'
-      if (brandedConfig) {
-        if (brandedConfig.brandName === 'Humanscale' && !user.firstLogin) {
-          to = '/challenges'
-        } else to = '/pages/home'
-      }
       yield call(history.push, to)
     }
   } catch (error) {

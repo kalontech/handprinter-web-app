@@ -53,17 +53,7 @@ const RouteWrapper = ({
             if (requireAuthentication && !token) {
               return <Redirect to="/account/login" />
             } else if (unauthorizedOnly && token) {
-              return (
-                <Redirect
-                  to={
-                    brandedConfig && brandedConfig.brandName === 'Humanscale'
-                      ? user && user.firstLogin
-                        ? '/pages/home'
-                        : '/challenges'
-                      : '/account/dashboard'
-                  }
-                />
-              )
+              return <Redirect to={'/account/dashboard'} />
             } else {
               if (requireAuthentication && !user) {
                 return renderLoader(props)

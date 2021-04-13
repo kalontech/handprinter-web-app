@@ -66,7 +66,15 @@ function CampaignActions({ campaignId, takenActions, isLatestCampaign, intl }) {
   return (
     <>
       <Heading>
-        {isLatestCampaign ? <FormattedMessage id={'hsLatestCampaign'} /> : name}
+        {isLatestCampaign ? (
+          <>
+            <FormattedMessage id={'hsLatestCampaign1'} />
+            <br />
+            <FormattedMessage id={'hsLatestCampaign2'} />
+          </>
+        ) : (
+          name
+        )}
       </Heading>
       {campaign.banner ? (
         <ImageStyled src={campaign.banner.src} />
