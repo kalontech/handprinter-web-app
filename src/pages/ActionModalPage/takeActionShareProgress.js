@@ -78,7 +78,7 @@ function takeActionShareProgress(props) {
             context={{ action }}
             onSuccess={() => {
               logEvent(EVENT_TYPES.ACTION_ADDED_POST)
-              history.length > 1 ? history.goBack() : closeModal()
+              history.push('/account/dashboard')
             }}
           />
         </PostWrapper>
@@ -89,7 +89,7 @@ function takeActionShareProgress(props) {
               htmlType="submit"
               onClick={() => {
                 createFeedPost(action._id)
-                history.length > 1 ? history.goBack() : closeModal()
+                history.push('/account/dashboard')
               }}
             >
               <FormattedMessage id="app.actions.share.progress.skip" />

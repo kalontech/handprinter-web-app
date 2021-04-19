@@ -429,7 +429,7 @@ function ActionModalPage(props) {
                   <Button
                     type="primary"
                     onClick={() => {
-                      history.length > 1 ? history.goBack() : closeModal()
+                      history.push('/account/dashboard')
                     }}
                   >
                     <FormattedMessage id="app.actions.congratulations.nice" />
