@@ -83,7 +83,7 @@ function* register({
     if (createOrganizationFlow) {
       yield call(history.push, '/account/create-organization')
     } else {
-      yield call(history.push, '/pages/our-vision')
+      yield call(history.push, '/account/dashboard')
     }
   } catch (error) {
     yield put(Creators.registerFailure(decodeError(error)))
