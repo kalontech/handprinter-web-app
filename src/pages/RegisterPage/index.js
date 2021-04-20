@@ -259,12 +259,9 @@ class RegisterPage extends Component {
       if (values.email.endsWith('@humanscale.com')) {
         belongsToBrand = 'humanscale'
       }
-      if (values.email.endsWith('@stantec.com')) {
-        belongsToOrganization = 'stantec'
-      }
       if (!err) {
         delete values.formError
-        const {
+        let {
           email,
           password,
           fullName,
@@ -272,6 +269,9 @@ class RegisterPage extends Component {
           invitationCode,
           organizationInviteCode,
         } = values
+        if (values.email.endsWith('@stantec.com')) {
+          organizationInviteCode = 'stantec'
+        }
         const data = {
           email,
           password,

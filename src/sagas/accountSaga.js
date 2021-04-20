@@ -44,16 +44,10 @@ function* logInCode({ code, createOrganizationFlow }) {
     logEvent(EVENT_TYPES.USER_LOGIN)
     yield put(Creators.logInWithCodeSuccess(token))
     yield call(prepareUserProfile)
-    const brandedConfig = getBrandedConfig()
     if (createOrganizationFlow) {
       yield call(history.push, '/account/create-organization')
     } else {
       let to = '/account/dashboard'
-      if (brandedConfig) {
-        if (brandedConfig.brandName === 'Humanscale' && !user.firstLogin) {
-          to = '/challenges'
-        } else to = '/pages/home'
-      }
       yield call(history.push, to)
     }
   } catch (error) {

@@ -78,6 +78,7 @@ function takeActionShareProgress(props) {
             context={{ action }}
             onSuccess={() => {
               logEvent(EVENT_TYPES.ACTION_ADDED_POST)
+              closeModal()
               history.push('/account/dashboard')
             }}
           />
@@ -89,6 +90,7 @@ function takeActionShareProgress(props) {
               htmlType="submit"
               onClick={() => {
                 createFeedPost(action._id)
+                closeModal()
                 history.push('/account/dashboard')
               }}
             >

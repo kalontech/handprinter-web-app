@@ -429,6 +429,7 @@ function ActionModalPage(props) {
                   <Button
                     type="primary"
                     onClick={() => {
+                      closeModal()
                       history.push('/account/dashboard')
                     }}
                   >
@@ -543,7 +544,12 @@ function ActionModalPage(props) {
           style={{ color: closeBtnColor }}
           onClick={() => {
             onClose && onClose()
-            history.length > 1 ? history.goBack() : closeModal()
+            // closeModal()
+            if (!document.referrer) {
+              history.push('/account/dashboard')
+            } else {
+              history.length > 1 ? history.goBack() : closeModal()
+            }
           }}
         >
           <CloseIcon />
