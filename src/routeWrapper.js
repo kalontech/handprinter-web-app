@@ -51,7 +51,7 @@ const RouteWrapper = ({
         render={props => {
           if (ready) {
             if (requireAuthentication && !token) {
-              return <Redirect to="/account/login" />
+              return <Redirect to="/pages/home" />
             } else if (unauthorizedOnly && token) {
               return <Redirect to={'/account/dashboard'} />
             } else {

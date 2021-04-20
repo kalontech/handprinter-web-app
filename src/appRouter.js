@@ -65,7 +65,7 @@ const AppRouter = () => {
     <Router history={history}>
       <ErrorCatcher>
         <Switch>
-          <Redirect exact from="/" to="/pages/home" />
+          <Redirect exact from="/" to="/account/dashboard" />
           <Route
             path="/pages/home"
             component={
