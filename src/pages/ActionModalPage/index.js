@@ -544,8 +544,10 @@ function ActionModalPage(props) {
           style={{ color: closeBtnColor }}
           onClick={() => {
             onClose && onClose()
-            // closeModal()
-            if (!document.referrer) {
+            if (
+              !document.referrer ||
+              document.referrer.includes('handprinter.org')
+            ) {
               history.push('/account/dashboard')
             } else {
               history.length > 1 ? history.goBack() : closeModal()
