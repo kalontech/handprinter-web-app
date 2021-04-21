@@ -3,7 +3,6 @@ import { call, put } from 'redux-saga/effects'
 import { history } from 'appRouter'
 import decodeError from 'utils/decodeError'
 import { Creators } from 'redux/accountStore'
-import { getBrandedConfig } from 'config/branded'
 import * as apiAuth from 'api/auth'
 
 import { prepareUserProfile } from './helpers'

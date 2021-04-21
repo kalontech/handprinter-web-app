@@ -41,6 +41,8 @@ import InputForPassword from 'components/InputForPassword'
 import * as apiUser from 'api/user'
 import * as apiOrganization from 'api/organization'
 
+const brandedConfig = getBrandedConfig()
+
 export const BrandedBlockWrap = styled.div`
   position: relative;
   height: 100%;
@@ -269,6 +271,9 @@ class RegisterPage extends Component {
           invitationCode,
           organizationInviteCode,
         } = values
+        if (brandedConfig && brandedConfig.brandName === 'humanscale') {
+          invitationCode = 'humanscale'
+        }
         if (values.email.endsWith('@stantec.com')) {
           organizationInviteCode = 'stantec'
         }
