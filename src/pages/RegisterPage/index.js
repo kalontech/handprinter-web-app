@@ -41,6 +41,8 @@ import InputForPassword from 'components/InputForPassword'
 import * as apiUser from 'api/user'
 import * as apiOrganization from 'api/organization'
 
+import { getBrandedConfig } from '../../config/branded'
+
 const brandedConfig = getBrandedConfig()
 
 export const BrandedBlockWrap = styled.div`
