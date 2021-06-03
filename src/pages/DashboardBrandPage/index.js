@@ -71,6 +71,7 @@ function DashboardBrandPage(props) {
       try {
         const userGroups = await fetchGroupsList({
           subset: GROUPS_SUBSETS.TEAMS,
+          limit: 100,
         })
         const brandTeams =
           userGroups?.groups?.docs?.filter(
