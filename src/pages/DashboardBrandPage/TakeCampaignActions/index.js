@@ -29,7 +29,6 @@ export default function TakeCampaignActions({
   intl,
 }) {
   const cs = user?.latestCampaigns || campaigns
-  console.log(cs)
   if (!cs) return null
   return (
     <Container>
@@ -75,6 +74,12 @@ function CampaignActions({ campaignId, takenActions, isLatestCampaign, intl }) {
   }, [campaignId])
 
   if (!campaign) return <CustomSkeleton rows={20} />
+  takenActions = takenActions.filter(
+    tA =>
+      tA.createdAt >= campaign.dateFrom ||
+      (tA.isHabit && campaign.dateFrom <= tA.availableFrom),
+  )
+
   const name = campaign?.translatedName?.[intl.locale] || campaign.name
   const description =
     campaign?.translatedDescription?.[intl.locale] || campaign.description
