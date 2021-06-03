@@ -502,7 +502,6 @@ class GroupsPage extends React.PureComponent {
                             USER_GROUP_STATUSES.REQUESTING,
                         },
                       }
-                      console.log(item.name, match.params.subset, type)
                       if (
                         match.params.subset === GROUPS_SUBSETS.TEAMS &&
                         (type === BUTTON_TYPES.join ||
