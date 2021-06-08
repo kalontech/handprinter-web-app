@@ -140,7 +140,7 @@
     "app.actions.units.select.PhysicalUnits": "Physical Units",
     "app.actions.units.select.TimeUnits": "Time Units",
     "app.actions.wildCard.label": "Wild card",
-    "app.actions.wildCard.popup.content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    "app.actions.wildCard.popup.content": "The benefits of taking this action are impossible to model ahead of time, but could be huge -- try it out and find out!",
     "app.actionsPage.actionsNotFound": "Actions not found",
     "app.actionsPage.clearAllFilters": "Clear all filters",
     "app.actionsPage.engage.inputPlaceholder": "Enter a user's name or their email",
