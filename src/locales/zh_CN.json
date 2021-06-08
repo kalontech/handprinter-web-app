@@ -140,7 +140,7 @@
     "app.actions.units.select.PhysicalUnits": "物理单位",
     "app.actions.units.select.TimeUnits": "时间单位",
     "app.actions.wildCard.label": "通配符",
-    "app.actions.wildCard.popup.content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    "app.actions.wildCard.popup.content": "The benefits of taking this action are impossible to model ahead of time, but could be huge -- try it out and find out!",
     "app.actionsPage.actionsNotFound": "行动未找到",
     "app.actionsPage.clearAllFilters": "清除所有过滤条件",
     "app.actionsPage.engage.inputPlaceholder": "输入用户名或电子邮件",

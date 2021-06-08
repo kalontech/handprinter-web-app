@@ -140,7 +140,7 @@
     "app.actions.units.select.PhysicalUnits": "Fysieke",
     "app.actions.units.select.TimeUnits": "Tijdseenheden",
     "app.actions.wildCard.label": "Wild card",
-    "app.actions.wildCard.popup.content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    "app.actions.wildCard.popup.content": "The benefits of taking this action are impossible to model ahead of time, but could be huge -- try it out and find out!",
     "app.actionsPage.actionsNotFound": "Acties niet gevonden",
     "app.actionsPage.clearAllFilters": "Wis alle filters",
     "app.actionsPage.engage.inputPlaceholder": "Voer de naam van een gebruiker of zijn e-mailadres in",
