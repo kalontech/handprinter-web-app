@@ -29,23 +29,26 @@ export default function TakeCampaignActions({
   intl,
 }) {
   const cs = user?.latestCampaigns || campaigns
+  console.log(cs)
   if (!cs) return null
   return (
     <Container>
       <Title>
         <FormattedMessage id={'app.actions.takeAction'} />
       </Title>
-      {cs.map((latestCampaign, index) => {
-        return (
-          <CampaignActions
-            key={latestCampaign._id}
-            campaignId={latestCampaign._id}
-            takenActions={takenActions}
-            isLatestCampaign={index === 0}
-            intl={intl}
-          />
-        )
-      })}
+      {cs
+        .filter(cs => new Date(cs.dateTo) >= new Date())
+        .map((latestCampaign, index) => {
+          return (
+            <CampaignActions
+              key={latestCampaign._id}
+              campaignId={latestCampaign._id}
+              takenActions={takenActions}
+              isLatestCampaign={index === 0}
+              intl={intl}
+            />
+          )
+        })}
     </Container>
   )
 }
