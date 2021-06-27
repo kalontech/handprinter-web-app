@@ -5,18 +5,20 @@ import Feed from '../../../components/Feed'
 
 export default function TeamActivity(props) {
   const { user, history } = props
-  if (!user.organization) return null
+  const organization =
+    user.organization || user.belongsToOrganization || user.belongsToBrand
+  if (!organization) return null
   return (
     <Container>
       <Name>Organization Activity</Name>
       <Feed
         readFrom={{
           feedGroup: 'timeline',
-          userId: `brand-${user.organization.name.toLowerCase()}`,
+          userId: `brand-${organization.toLowerCase()}`,
         }}
         writeTo={{
           feedGroup: 'timeline',
-          userId: `brand-${user.organization.name.toLowerCase()}`,
+          userId: `brand-${organization.toLowerCase()}`,
         }}
         history={history}
       />
