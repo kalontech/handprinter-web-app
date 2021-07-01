@@ -6,7 +6,9 @@ import Feed from '../../../components/Feed'
 export default function TeamActivity(props) {
   const { user, history } = props
   const organization =
-    user.organization || user.belongsToOrganization || user.belongsToBrand
+    (user.organization && user.organization.name) ||
+    user.belongsToOrganization ||
+    user.belongsToBrand
   if (!organization) return null
   return (
     <Container>
