@@ -88,7 +88,7 @@ export default function MyOrganization(props) {
         <FormattedMessage
           id="brandGoals"
           values={{
-            brand: `${name} ${moment().year()}`,
+            brand: `${name}`,
           }}
         />
       </Heading>
@@ -108,7 +108,6 @@ export default function MyOrganization(props) {
           values={{
             curr: completedMilestones?.length,
             all: milestones?.length,
-            year: moment().year(),
           }}
         />
       </MilestoneTitle>
