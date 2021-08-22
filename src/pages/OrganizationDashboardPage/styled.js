@@ -18,17 +18,18 @@ export const StatisticsScrollTitle = styled.p`
 export const StatisticsScroll = styled.div`
   height: 705px;
   padding: 3px;
-  overflow: hidden;
+  padding-bottom: 24px;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
 
   ${media.largeDesktop`
     display: flex;
     flex-direction: column;
     align-items: center;
-  `}
-
-  ${media.phone`
+  `} ${media.phone`
     width: 100%;
-  `}
+  `};
 `
 
 export const StatisticsMain = styled.div`
