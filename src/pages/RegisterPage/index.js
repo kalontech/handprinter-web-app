@@ -219,6 +219,7 @@ class RegisterPage extends Component {
         params: { invitationCode },
       },
       location: { search },
+      form: { setFieldsValue },
     } = this.props
     if (queryString.parse(search).createOrganization) {
       this.setState({ createOrganizationFlow: true })
@@ -226,6 +227,12 @@ class RegisterPage extends Component {
     animateScroll.scrollToTop()
 
     if (invitationCode) this.fetchReferrer(invitationCode)
+    if (
+      brandedConfig &&
+      brandedConfig.brandName.toLowerCase() === 'humanscale'
+    ) {
+      setFieldsValue({ invitationCode: 'hpHS2021' })
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -274,7 +281,7 @@ class RegisterPage extends Component {
           organizationInviteCode,
         } = values
         if (brandedConfig && brandedConfig.brandName === 'humanscale') {
-          invitationCode = 'humanscale'
+          organizationInviteCode = 'humanscale'
         }
         if (values.email.endsWith('@stantec.com')) {
           organizationInviteCode = 'stantec'
@@ -442,6 +449,12 @@ class RegisterPage extends Component {
                   <FormItem>
                     {getFieldDecorator('invitationCode')(
                       <SearchableInput
+                        selectedValue={
+                          brandedConfig &&
+                          brandedConfig.brandName.toLowerCase() ===
+                            'humanscale' &&
+                          'hpHS2021'
+                        }
                         onSearch={this.handleCodeSearch}
                         suggestions={matchedUsersByCode}
                         onSelect={this.handleCodeSelect}

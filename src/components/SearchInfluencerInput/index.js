@@ -37,6 +37,7 @@ type Props = {
   onSearch: string => void,
   onChange: string => void,
   onSelect: string => void,
+  selectedValue: string,
 }
 
 class SearchInfluencerInput extends React.Component<Props> {
@@ -51,6 +52,13 @@ class SearchInfluencerInput extends React.Component<Props> {
     selectedMenuIndex: undefined, // user clicks dropdown item
     searchQuery: '',
     hoveringDropdownIndex: undefined,
+  }
+
+  componentDidMount() {
+    const { selectedValue } = this.props
+    if (selectedValue) {
+      this.setState({ selectedValue })
+    }
   }
 
   showDropdown = () => {
