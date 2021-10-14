@@ -346,6 +346,7 @@ const stubs = {
       climate: { 2019: { 1: [] } },
       health: { 2019: { 1: [] } },
       ecosystem: { 2019: { 1: [] } },
+      energy: { 2019: { 1: [] } },
       water: { 2019: { 1: [] } },
       waste: { 2019: { 1: [] } },
     },
@@ -354,6 +355,7 @@ const stubs = {
         climate: 0,
         health: 0,
         ecosystem: 0,
+        energy: 0,
         water: 0,
         waste: 0,
       },
@@ -361,6 +363,7 @@ const stubs = {
         climate: 0,
         health: 0,
         ecosystem: 0,
+        energy: 0,
         water: 0,
         waste: 0,
       },
@@ -373,6 +376,7 @@ const stubs = {
           climate: 0,
           health: 0,
           ecosystem: 0,
+          energy: 0,
           water: 0,
           waste: 0,
         },
@@ -755,14 +759,14 @@ class DashboardPage extends Component {
                         tab={
                           <span>
                             <StyledIcon
-                              component={() => icons['positive']['ecosystem']}
+                              component={() => icons['positive']['energy']}
                             />
                             <ImpactCategorySelectorName>
-                              <FormattedMessage id="app.impactCategories.ecosystem" />
+                              <FormattedMessage id="app.impactCategories.energy" />
                             </ImpactCategorySelectorName>
                           </span>
                         }
-                        key="ecosystem"
+                        key="energy"
                       />
                       <Tabs.TabPane
                         tab={

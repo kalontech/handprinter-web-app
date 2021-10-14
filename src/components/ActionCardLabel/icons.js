@@ -71,6 +71,29 @@ export default {
         </g>
       </svg>
     ),
+    energy: (
+      <svg width="20" height="20" viewBox="0 0 24 24">
+        <defs>
+          <path
+            id="a6"
+            d="M13 16.12a7 7 0 0 0 6.17-6.95c0-3.87-3.13-7-7-7s-7 3.13-7 7A6.98 6.98 0 0 0 11 16.06V20H5v2h14v-2h-6v-3.88z"
+          />
+          <path id="c6" d="M0 0h50v50H0z" />
+        </defs>
+        <g fill="none" fillRule="evenodd">
+          <mask id="b6" fill="#fff">
+            <use xlinkHref="#a6" />
+          </mask>
+          <g mask="url(#b6)">
+            <use
+              fill="currentColor"
+              transform="translate(-13 -13)"
+              xlinkHref="#c6"
+            />
+          </g>
+        </g>
+      </svg>
+    ),
     waste: (
       <svg width="20" height="20" viewBox="0 0 24 24">
         <defs>

@@ -515,6 +515,7 @@
     "app.impactCategories.health": "健康",
     "app.impactCategories.waste": "浪费",
     "app.impactCategories.water": "水",
+    "app.impactCategories.energy": "Energy",
     "app.increaseHandprintPage.customize": "定制",
     "app.increaseHandprintPage.description": "手印是积极的影响，而原因是您要这么做。当人们和组织通过您的邀请加入时，它们所产生的影响就是您的手印的一部分。因此，请其他人参加，并确保他们知道他们受到欢迎和需要。",
     "app.increaseHandprintPage.emptyError": "要发送邀请，请添加至少一个电子邮箱地址",

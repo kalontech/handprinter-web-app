@@ -7,6 +7,7 @@ export const IMPACT_CATEGORIES = {
   ECOSYSTEM: 'ecosystem',
   WATER: 'water',
   WASTE: 'waste',
+  ENERGY: 'energy',
   MEMBERS: 'members',
   NETWORK_MEMBERS: 'networkMembers',
   ACTIONS_TAKEN: 'actionsTaken',
@@ -22,7 +23,7 @@ export const IMPACTS = [
     icon: icons['positive']['water'],
   },
   {
-    name: IMPACT_CATEGORIES.ECOSYSTEM,
+    name: IMPACT_CATEGORIES.ENERGY,
     icon: icons['positive']['ecosystem'],
   },
   {
@@ -39,6 +40,7 @@ export const IMPACT_CATEGORIES_COLORS = {
   HEALTH: colors.blue,
   CLIMATE: colors.ocean,
   ECOSYSTEM: colors.green,
+  ENERGY: colors.green,
   WATER: colors.green,
   WASTE: colors.ocean,
   MEMBERS: colors.ocean,

@@ -1132,15 +1132,15 @@ class GroupViewPage extends PureComponent {
                                         <span>
                                           <StyledIcon
                                             component={() =>
-                                              icons['positive']['ecosystem']
+                                              icons['positive']['energy']
                                             }
                                           />
                                           <ImpactCategorySelectorName>
-                                            <FormattedMessage id="app.impactCategories.ecosystem" />
+                                            <FormattedMessage id="app.impactCategories.energy" />
                                           </ImpactCategorySelectorName>
                                         </span>
                                       }
-                                      key="ecosystem"
+                                      key="energy"
                                     />
                                     <Tabs.TabPane
                                       tab={

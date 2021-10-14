@@ -515,6 +515,8 @@
     "app.impactCategories.health": "Gezondheid",
     "app.impactCategories.waste": "Verspilling",
     "app.impactCategories.water": "Water",
+        "app.impactCategories.energy": "Energy",
+
     "app.increaseHandprintPage.customize": "Aanpassen",
     "app.increaseHandprintPage.description": "Handafdrukken zijn positieve effecten waarvan u een oorzaak bent. Wanneer mensen en organisaties meedoen via uw uitnodiging, maken de effecten die ze creëren deel uit van uw handafdruk. Nodig dus anderen uit en zorg ervoor dat ze weten dat ze welkom zijn en dat ze nodig zijn.",
     "app.increaseHandprintPage.emptyError": "Als u uitnodigingen wilt verzenden, voegt u minimaal één e-mail toe",

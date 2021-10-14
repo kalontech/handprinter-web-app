@@ -515,6 +515,7 @@
     "app.impactCategories.health": "Santé",
     "app.impactCategories.waste": "Déchets",
     "app.impactCategories.water": "Eau",
+    "app.impactCategories.energy": "Energy",
     "app.increaseHandprintPage.customize": "Personnaliser",
     "app.increaseHandprintPage.description": "Les empreintes de mains sont des impacts positifs dont vous êtes la cause. Lorsque des personnes et des organisations se joignent via votre invitation, les impacts qu'ils créent font partie de votre empreinte de main. Alors invitez les autres et assurez-vous qu'ils savent qu'ils sont les bienvenus et qu'ils sont nécessaires.",
     "app.increaseHandprintPage.emptyError": "Pour envoyer des invitations, ajoutez au moins un email.",
