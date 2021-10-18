@@ -74,6 +74,8 @@ const ActionCardLabelSet = props => {
       >
         {impactsInUnits.footprint &&
           Object.entries(impactsInUnits.footprint)
+            .filter(([category, timeValue]) => category !== 'ecosystem')
+
             .filter(([category, value]) => impactsInModeling || value > 0)
             .map(([category, value], index) => (
               <ActionCardPhysicalLabel
@@ -89,6 +91,8 @@ const ActionCardLabelSet = props => {
             ))}
         {impactsInUnits.handprint &&
           Object.entries(impactsInUnits.handprint)
+            .filter(([category, timeValue]) => category !== 'ecosystem')
+
             .filter(([category, value]) => impactsInModeling || value > 0)
             .map(([category, value], index) => (
               <ActionCardPhysicalLabel
