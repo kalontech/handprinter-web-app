@@ -24,7 +24,7 @@ export const IMPACTS = [
   },
   {
     name: IMPACT_CATEGORIES.ENERGY,
-    icon: icons['positive']['ecosystem'],
+    icon: icons['positive']['energy'],
   },
   {
     name: IMPACT_CATEGORIES.WASTE,
