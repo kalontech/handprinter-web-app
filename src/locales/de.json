@@ -95,6 +95,7 @@
     "app.actions.physicalValues.one.climate": "kgCO2e",
     "app.actions.physicalValues.one.climate.co2": "CO2",
     "app.actions.physicalValues.one.climate.kg": "kg",
+    "app.actions.physicalValues.one.energy": "kWh",
     "app.actions.physicalValues.one.ecosystem": "SP*YR",
     "app.actions.physicalValues.one.health": "DALYs",
     "app.actions.physicalValues.one.waste": "KG",
