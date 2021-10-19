@@ -95,6 +95,8 @@
     "app.actions.physicalValues.one.climate": "kgCO2e",
     "app.actions.physicalValues.one.climate.co2": "CO2",
     "app.actions.physicalValues.one.climate.kg": "kg",
+    "app.actions.physicalValues.one.energy": "kWh",
+
     "app.actions.physicalValues.one.ecosystem": "SP*YR",
     "app.actions.physicalValues.one.health": "DALYs",
     "app.actions.physicalValues.one.waste": "KG",
@@ -515,6 +517,8 @@
     "app.impactCategories.health": "Health",
     "app.impactCategories.waste": "Waste",
     "app.impactCategories.water": "Water",
+        "app.impactCategories.energy": "Energy",
+
     "app.increaseHandprintPage.customize": "Customize",
     "app.increaseHandprintPage.description": "Handprints are positive impacts of which you're a cause. When people and organizations join through your invitation, the impacts they create are part of your handprint. So invite others, and make sure they know they're welcome and they're needed.",
     "app.increaseHandprintPage.emptyError": "To send invites add at least one email",

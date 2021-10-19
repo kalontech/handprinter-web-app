@@ -66,6 +66,7 @@ const ActionCardLabelSet = props => {
   if (!impacts) return null
 
   if (showPhysicalValues && impactsInUnits) {
+    console.log(impactsInUnits)
     return (
       <CardLabelWrap
         mobileFixedWidth={mobileFixedWidth}
@@ -73,6 +74,8 @@ const ActionCardLabelSet = props => {
       >
         {impactsInUnits.footprint &&
           Object.entries(impactsInUnits.footprint)
+            .filter(([category, timeValue]) => category !== 'ecosystem')
+
             .filter(([category, value]) => impactsInModeling || value > 0)
             .map(([category, value], index) => (
               <ActionCardPhysicalLabel
@@ -88,6 +91,8 @@ const ActionCardLabelSet = props => {
             ))}
         {impactsInUnits.handprint &&
           Object.entries(impactsInUnits.handprint)
+            .filter(([category, timeValue]) => category !== 'ecosystem')
+
             .filter(([category, value]) => impactsInModeling || value > 0)
             .map(([category, value], index) => (
               <ActionCardPhysicalLabel
@@ -117,6 +122,7 @@ const ActionCardLabelSet = props => {
               ([category, timeValue]) =>
                 impactsInModeling || timeValue.minutes > 0,
             )
+            .filter(([category, timeValue]) => category !== 'ecosystem')
             .map(([category, timeValue], index) => (
               <ActionCardLabel
                 hideTooltipTitle={hideTooltipTitle}
@@ -140,6 +146,7 @@ const ActionCardLabelSet = props => {
               ([category, timeValue]) =>
                 impactsInModeling || timeValue.minutes > 0,
             )
+            .filter(([category, timeValue]) => category !== 'ecosystem')
             .map(([category, timeValue], index) => (
               <ActionCardLabel
                 hideTooltipTitle={hideTooltipTitle}

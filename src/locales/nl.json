@@ -97,6 +97,8 @@
     "app.actions.physicalValues.one.climate.kg": "kg",
     "app.actions.physicalValues.one.ecosystem": "SP*YR",
     "app.actions.physicalValues.one.health": "DALYs",
+    "app.actions.physicalValues.one.energy": "kWh",
+
     "app.actions.physicalValues.one.waste": "KG",
     "app.actions.physicalValues.one.water": "M<sup>3<\/sup>",
     "app.actions.reduceFootprint": "Je hebt je voetafdruk verkleind",
@@ -515,6 +517,8 @@
     "app.impactCategories.health": "Gezondheid",
     "app.impactCategories.waste": "Verspilling",
     "app.impactCategories.water": "Water",
+        "app.impactCategories.energy": "Energy",
+
     "app.increaseHandprintPage.customize": "Aanpassen",
     "app.increaseHandprintPage.description": "Handafdrukken zijn positieve effecten waarvan u een oorzaak bent. Wanneer mensen en organisaties meedoen via uw uitnodiging, maken de effecten die ze creëren deel uit van uw handafdruk. Nodig dus anderen uit en zorg ervoor dat ze weten dat ze welkom zijn en dat ze nodig zijn.",
     "app.increaseHandprintPage.emptyError": "Als u uitnodigingen wilt verzenden, voegt u minimaal één e-mail toe",

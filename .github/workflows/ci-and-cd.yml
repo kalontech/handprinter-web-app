@@ -30,22 +30,19 @@ jobs:
         docker push ${{ env.registry_image_name }}
     - name: Deploy to test
       uses: steebchen/kubectl@master
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.k8s_config_base64 }}
       if: contains(github.ref, 'test')
       with:
-        args: set image --namespace test --record deployments/${{ env.k8s_deployment_name }} ${{ env.k8s_deployment_name }}=${{ env.registry_image_name }}
+        config: ${{ secrets.k8s_config_base64 }}
+        command: set image --namespace test --record deployments/${{ env.k8s_deployment_name }} ${{ env.k8s_deployment_name }}=${{ env.registry_image_name }}
     - name: Deploy to staging
       uses: steebchen/kubectl@master
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.k8s_config_base64 }}
       if: contains(github.ref, 'staging')
       with:
-        args: set image --namespace staging --record deployments/${{ env.k8s_deployment_name }} ${{ env.k8s_deployment_name }}=${{ env.registry_image_name }}
+        config: ${{ secrets.k8s_config_base64 }}
+        command: set image --namespace staging --record deployments/${{ env.k8s_deployment_name }} ${{ env.k8s_deployment_name }}=${{ env.registry_image_name }}
     - name: Deploy to production
       uses: steebchen/kubectl@master
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.k8s_config_base64 }}
       if: contains(github.ref, 'v1')
       with:
-        args: set image --namespace production --record deployments/${{ env.k8s_deployment_name }} ${{ env.k8s_deployment_name }}=${{ env.registry_image_name }}
+        config: ${{ secrets.k8s_config_base64 }}
+        command: set image --namespace production --record deployments/${{ env.k8s_deployment_name }} ${{ env.k8s_deployment_name }}=${{ env.registry_image_name }}

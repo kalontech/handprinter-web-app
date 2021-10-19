@@ -96,6 +96,8 @@
     "app.actions.physicalValues.one.climate.co2": "CO2",
     "app.actions.physicalValues.one.climate.kg": "kg",
     "app.actions.physicalValues.one.ecosystem": "SP*YR",
+    "app.actions.physicalValues.one.energy": "kWh",
+
     "app.actions.physicalValues.one.health": "DALYs",
     "app.actions.physicalValues.one.waste": "KG",
     "app.actions.physicalValues.one.water": "M<sup>3<\/sup>",
@@ -515,6 +517,7 @@
     "app.impactCategories.health": "Saúde",
     "app.impactCategories.waste": "Desperdício",
     "app.impactCategories.water": "agua",
+    "app.impactCategories.energy": "Energy",
     "app.increaseHandprintPage.customize": "Customizar",
     "app.increaseHandprintPage.description": "As impressões das mãos são impactos positivos dos quais você é a causa. Quando pessoas e organizações aderem por meio de seu convite, os impactos que elas criam fazem parte de sua marca. Portanto, convide outras pessoas e certifique-se de que elas são bem-vindas e necessárias.",
     "app.increaseHandprintPage.emptyError": "Para enviar convites, adicione pelo menos um e-mail",
