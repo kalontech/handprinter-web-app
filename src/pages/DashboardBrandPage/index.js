@@ -55,7 +55,7 @@ function DashboardBrandPage(props) {
           userId: user._id,
         })
         const filteredCampaigns = campaigns.filter(
-          c => new Date(c.dateFrom) > new Date(new Date().getFullYear(), 0, 1),
+          c => new Date(c.dateFrom) > new Date(2021, 0, 1),
         )
         setCampaigns(filteredCampaigns)
       } catch (error) {
@@ -94,7 +94,8 @@ function DashboardBrandPage(props) {
   const takenActions = _.get(dashboardData, 'takenActions', [])
   const actionsTakenCount =
     takenActions.length || _.get(user, 'userImpact.actions.length')
-  const isReturnUser = actionsTakenCount > 0
+  const isReturnUser =
+    new Date(user.createdAt) < new Date(2022, 0, 1) || actionsTakenCount > 0
   return (
     <>
       <Body>
