@@ -58,7 +58,7 @@ const StyledActionCardWrapper = styled(ActionCardWrapper)`
 class LoginPage extends Component {
   state = {
     createOrganizationFlow: undefined,
-    loginWithEmailPassword: false,
+    loginWithEmailPassword: true,
   }
 
   componentDidMount() {
@@ -214,6 +214,19 @@ class LoginPage extends Component {
                     <FormItem>
                       {getFieldDecorator('formError')(<Input type="hidden" />)}
                     </FormItem>
+                    <ActionCardRegisterBlock>
+                      <span>
+                        Or use&nbsp;
+                        <a
+                          onClick={() =>
+                            this.setState({ loginWithEmailPassword: false })
+                          }
+                        >
+                          email magic link
+                        </a>
+                        &nbsp;instead.
+                      </span>
+                    </ActionCardRegisterBlock>
                     <ActionCardRegisterBlock>
                       <span>
                         <FormattedMessage id="app.loginPage.doNotHaveAnAccount" />{' '}
