@@ -27,10 +27,19 @@ export const fetchAPI = async (url, options) => {
     ...((options && options.headers) || {}),
   }
 
+  let cache = 'default'
+  if (
+    url &&
+    (url.includes('groups?subset=teams&limit=100') ||
+      url.includes('organizations/5ef4711a4d2be967868e3ec2'))
+  ) {
+    cache = 'force-cache'
+  }
   const transformedOptions = {
     ...options,
     body,
     headers,
+    cache,
     credentials: 'include',
   }
 
