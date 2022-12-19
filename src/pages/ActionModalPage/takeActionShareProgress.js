@@ -68,6 +68,21 @@ function takeActionShareProgress(props) {
           <FormattedMessage id="app.actions.share.progress.reduce.fp" />
         </TakenActionDescription>
         <PostWrapper>
+          <TakenActionAuthWrap>
+            <TakenActionAuthContent>
+              <DefaultButton
+                type="primary"
+                htmlType="submit"
+                onClick={() => {
+                  createFeedPost(action._id)
+                  closeModal()
+                  history.push('/account/dashboard')
+                }}
+              >
+                <FormattedMessage id="app.actions.share.progress.skip" />
+              </DefaultButton>
+            </TakenActionAuthContent>
+          </TakenActionAuthWrap>
           <Feed
             hideFlatFeed
             readFrom={{
@@ -83,21 +98,6 @@ function takeActionShareProgress(props) {
             }}
           />
         </PostWrapper>
-        <TakenActionAuthWrap>
-          <TakenActionAuthContent>
-            <DefaultButton
-              type="primary"
-              htmlType="submit"
-              onClick={() => {
-                createFeedPost(action._id)
-                closeModal()
-                history.push('/account/dashboard')
-              }}
-            >
-              <FormattedMessage id="app.actions.share.progress.skip" />
-            </DefaultButton>
-          </TakenActionAuthContent>
-        </TakenActionAuthWrap>
       </TakenActionPanel>
     </Fragment>
   )
