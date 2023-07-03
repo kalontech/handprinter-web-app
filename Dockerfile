@@ -8,6 +8,7 @@ COPY package*.json ./
 RUN npm install serve -g
 
 # Copy app build and scripts.
+COPy ./* ./
 COPY build/ ./build
 COPY scripts/ ./scripts
 
