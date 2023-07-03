@@ -1,7 +1,7 @@
 on:
-  release:
-    types:
-      - published
+  push:
+    branches:
+      - master
 env:
   k8s_deployment_name: hp-web-app
   registry_image_name: kalontech/hp-web-app:${{ github.sha }}
@@ -28,21 +28,21 @@ jobs:
         docker login --username ${{ secrets.registry_username }} --password ${{ secrets.registry_password }}
         docker build . --tag ${{ env.registry_image_name }}
         docker push ${{ env.registry_image_name }}
-    - name: Deploy to test
-      uses: steebchen/kubectl@master
-      if: contains(github.ref, 'test')
-      with:
-        config: ${{ secrets.k8s_config_base64 }}
-        command: set image --namespace test --record deployments/${{ env.k8s_deployment_name }} ${{ env.k8s_deployment_name }}=${{ env.registry_image_name }}
-    - name: Deploy to staging
-      uses: steebchen/kubectl@master
-      if: contains(github.ref, 'staging')
-      with:
-        config: ${{ secrets.k8s_config_base64 }}
-        command: set image --namespace staging --record deployments/${{ env.k8s_deployment_name }} ${{ env.k8s_deployment_name }}=${{ env.registry_image_name }}
-    - name: Deploy to production
-      uses: steebchen/kubectl@master
-      if: contains(github.ref, 'v1')
-      with:
-        config: ${{ secrets.k8s_config_base64 }}
-        command: set image --namespace production --record deployments/${{ env.k8s_deployment_name }} ${{ env.k8s_deployment_name }}=${{ env.registry_image_name }}
+    # - name: Deploy to test
+    #   uses: steebchen/kubectl@master
+    #   if: contains(github.ref, 'test')
+    #   with:
+    #     config: ${{ secrets.k8s_config_base64 }}
+    #     command: set image --namespace test --record deployments/${{ env.k8s_deployment_name }} ${{ env.k8s_deployment_name }}=${{ env.registry_image_name }}
+    # - name: Deploy to staging
+    #   uses: steebchen/kubectl@master
+    #   if: contains(github.ref, 'staging')
+    #   with:
+    #     config: ${{ secrets.k8s_config_base64 }}
+    #     command: set image --namespace staging --record deployments/${{ env.k8s_deployment_name }} ${{ env.k8s_deployment_name }}=${{ env.registry_image_name }}
+    # - name: Deploy to production
+    #   uses: steebchen/kubectl@master
+    #   if: contains(github.ref, 'v1')
+    #   with:
+    #     config: ${{ secrets.k8s_config_base64 }}
+    #     command: set image --namespace production --record deployments/${{ env.k8s_deployment_name }} ${{ env.k8s_deployment_name }}=${{ env.registry_image_name }}
