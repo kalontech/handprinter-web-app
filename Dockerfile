@@ -11,5 +11,5 @@ RUN npm install serve -g
 COPY build/ ./build
 COPY scripts/ ./scripts
 
-EXPOSE 5000
-CMD [ "npm", "run", "serve" ]
+EXPOSE 3000
+CMD [ "npm", "run", "start" ]
