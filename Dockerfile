@@ -8,9 +8,8 @@ COPY package*.json ./
 RUN npm install serve -g
 
 # Copy app build and scripts.
-COPy ./* ./
 COPY build/ ./build
 COPY scripts/ ./scripts
 
-EXPOSE 3000
-CMD [ "npm", "run", "start" ]
+EXPOSE 3002
+CMD [ "npm", "run", "serve" ]
