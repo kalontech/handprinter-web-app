@@ -40,12 +40,15 @@ export const fetchAPI = async (url, options) => {
     body,
     headers,
     cache,
-    credentials: 'include',
+    // credentials: 'include',
   }
 
-  const { data, error } = await fetch(`/api${url}`, transformedOptions).then(
-    response => response.json(),
-  )
+  const { REACT_APP_API_BASE_URL } = process.env
+
+  const { data, error } = await fetch(
+    `${REACT_APP_API_BASE_URL}${url}`,
+    transformedOptions,
+  ).then(response => response.json())
 
   Sentry.addBreadcrumb({
     category: 'fetch',

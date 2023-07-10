@@ -124,7 +124,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "npm run eslint && npm run stylelint && node scripts/test.js",
-    "serve": "npm run inject-env && serve -n -l 5000 --single build/",
+    "serve": "npm run inject-env && serve -n -l 3002 --single build/",
     "eslint": "eslint src/**/**/*.js",
     "eslint:fix": "npm run eslint --fix",
     "stylelint": "stylelint src/**/*.css",
